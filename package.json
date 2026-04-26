@@ -5,7 +5,7 @@
     "scripts": {
         "build": "nuxt build",
         "dev": "nuxt dev",
-        "generate": "nuxt generate",
+        "generate": "NUXT_STUDIO=false nuxt generate",
         "preview": "nuxt preview"
     },
     "dependencies": {
@@ -16,6 +16,7 @@
         "nuxt-studio": "1.6.1"
     },
     "devDependencies": {
-        "@nuxtjs/tailwindcss": "^6.14.0"
+        "@nuxtjs/tailwindcss": "^6.14.0",
+        "@types/node": "^25.6.0"
     }
 }

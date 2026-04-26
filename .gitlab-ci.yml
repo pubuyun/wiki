@@ -1,0 +1,23 @@
+image: node:22.16.0
+
+cache:
+    paths:
+        - .yarn/cache
+        - node_modules/
+
+before_script:
+    - corepack enable
+    - yarn install --immutable
+
+pages:
+    stage: deploy
+    script:
+        - yarn generate
+        - rm -rf public
+        - mv .output/public public
+
+    artifacts:
+        paths:
+            - public
+    only:
+        - main
