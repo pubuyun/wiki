@@ -31,14 +31,11 @@ const result = computed(() => miniSearch.search(toValue(query)));
             <li v-for="link of result" :key="link.id" class="mt-2">
                 <NuxtLink :to="link.id" @click="query = ''">
                     <div>
-                        {{
-                            link.title
-                        }}
+                        {{ link.title }}
                         <p class="text-gray-500 text-xs">{{ link.content }}</p>
                     </div>
                 </NuxtLink>
             </li>
-            
         </ul>
     </div>
 </template>

@@ -49,7 +49,7 @@ const navItems = [
 <template>
     <nav class="flex justify-between gap-60">
         <NuxtLink to="/" class="icon-section">
-            <img src="/favicon.ico" alt="Logo" class="h-10 w-10" />
+            <img src="/logo.jpg" alt="Logo" class="h-10 w-10" />
         </NuxtLink>
         <SearchBar />
         <div class="flex items-center gap-6 pr-10">

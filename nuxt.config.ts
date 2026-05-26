@@ -1,7 +1,8 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+import tailwindcss from "@tailwindcss/vite";
+
 export default defineNuxtConfig({
     modules: [
-        "@nuxtjs/tailwindcss",
         "@nuxt/content",
         ...(process.env.NUXT_STUDIO !== "false" ? ["nuxt-studio"] : []),
     ],
@@ -9,6 +10,7 @@ export default defineNuxtConfig({
         optimizeDeps: {
             include: ["@vue/devtools-core", "@vue/devtools-kit", "minisearch"],
         },
+        plugins: [tailwindcss()],
     },
     studio: {
         repository: {
@@ -18,6 +20,7 @@ export default defineNuxtConfig({
             branch: "main",
         },
     },
+    css: ["./app/styles/main.css"],
     devtools: { enabled: true },
     compatibilityDate: "2024-04-03",
 });

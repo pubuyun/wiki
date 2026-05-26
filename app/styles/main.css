@@ -1,12 +1,1 @@
-h1 {
-    @apply text-4xl font-bold my-4 text-center;
-}
-h2 {
-    @apply text-2xl font-semibold my-3;
-}
-h3 {
-    @apply text-xl font-medium my-2;
-}
-p {
-    @apply my-3 leading-relaxed;
-}
+@import "tailwindcss";

@@ -24,12 +24,20 @@ console.log(page);
 
 <template>
     <div>
-        <ContentRenderer v-if="page" :value="page" class="content" />
+        <ContentRenderer
+            v-if="page"
+            :value="page"
+            class="content"
+            enter-active-class="transition-all duration-400"
+            enter-from-class="opacity-0 blur-sm"
+            leave-active-class="transition-all duration-400"
+            leave-to-class="opacity-0 blur-sm"
+        />
     </div>
 </template>
 
 <style scoped>
-.content-enter-active,
+/* .content-enter-active,
 .content-leave-active {
     transition: all 0.4s;
 }
@@ -37,5 +45,5 @@ console.log(page);
 .content-leave-to {
     opacity: 0;
     filter: blur(1rem);
-}
+} */
 </style>
