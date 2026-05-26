@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup>
 import MiniSearch from "minisearch";
 
 const query = ref("");
@@ -29,11 +29,16 @@ const result = computed(() => miniSearch.search(toValue(query)));
         />
         <ul class="absolute bg-white border mt-1 w-120 max-h-60 overflow-auto">
             <li v-for="link of result" :key="link.id" class="mt-2">
-                <NuxtLink :to="link.id" @click="query = ''">{{
-                    link.title
-                }}</NuxtLink>
-                <p class="text-gray-500 text-xs">{{ link.content }}</p>
+                <NuxtLink :to="link.id" @click="query = ''">
+                    <div>
+                        {{
+                            link.title
+                        }}
+                        <p class="text-gray-500 text-xs">{{ link.content }}</p>
+                    </div>
+                </NuxtLink>
             </li>
+            
         </ul>
     </div>
 </template>
