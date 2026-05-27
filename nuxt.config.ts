@@ -23,4 +23,13 @@ export default defineNuxtConfig({
     css: ["./app/styles/main.css"],
     devtools: { enabled: true },
     compatibilityDate: "2024-04-03",
+    content: {
+        build: {
+            markdown: {
+                toc: {
+                    depth: 3,
+                },
+            },
+        },
+    },
 });

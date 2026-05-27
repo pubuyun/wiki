@@ -21,10 +21,4 @@ You can find an example of querying contents and rendering them in a [catch-all 
 
 ## Integrate Vue Component
 
-::alert{color="red"}
-The current [alert](https://github.com/nuxt/starter/blob/content/app/components/Alert.vue) and the [counter](https://github.com/nuxt/starter/blob/content/app/components/Counter.vue) below are `Vue` components integrated into the Markdown.
-::
-
-:counter
-
 Checkout out the [documentation](https://content.nuxt.com/docs/getting-started) to learn more.
