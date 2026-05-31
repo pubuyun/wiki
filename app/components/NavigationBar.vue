@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import Logo from "./NavigationBar/Logo.vue";
 import NavItem from "./NavigationBar/NavItem.vue";
 const navItems = [
     {
@@ -8,16 +9,16 @@ const navItems = [
     {
         title: "Project",
         links: [
-            { to: "contribution", label: "Contribution" },
-            { to: "description", label: "Description" },
-            { to: "safety-and-security", label: "Safety" },
+            { to: "/contribution", label: "Contribution" },
+            { to: "/description", label: "Description" },
+            { to: "/safety-and-security", label: "Safety" },
         ],
     },
     {
         title: "Wet lab",
         links: [
-            { to: "engineering", label: "Engineering" },
-            { to: "parts", label: "Parts" },
+            { to: "/engineering", label: "Engineering" },
+            { to: "/parts", label: "Parts" },
         ],
     },
     {
@@ -27,16 +28,16 @@ const navItems = [
     {
         title: "iHP",
         links: [
-            { to: "human-practices", label: "iHP" },
-            { to: "education", label: "Education" },
-            { to: "entrepreneurship", label: "Entrepreneurship" },
+            { to: "/human-practices", label: "iHP" },
+            { to: "/education", label: "Education" },
+            { to: "/entrepreneurship", label: "Entrepreneurship" },
         ],
     },
     {
         title: "Team",
         links: [
-            { to: "members", label: "Members" },
-            { to: "attributions", label: "Attributions" },
+            { to: "/members", label: "Members" },
+            { to: "/attributions", label: "Attributions" },
         ],
     },
 ];
@@ -47,7 +48,7 @@ const navItems = [
         class="flex h-24 items-center justify-between overflow-hidden bg-sun font-nunito"
     >
         <NuxtLink to="/" class="icon-section shirnk-0 flex h-full items-center">
-            <img src="/general/logo.webp" alt="Logo" class="h-full" />
+            <Logo />
             <span class="ml-8 text-6xl font-black text-cblue">EXPELLIODOR</span>
         </NuxtLink>
 
