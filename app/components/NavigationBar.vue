@@ -1,6 +1,8 @@
 <script setup lang="ts">
+import { NavigationMenuList, NavigationMenuRoot } from "radix-vue";
 import Logo from "./NavigationBar/Logo.vue";
 import NavItem from "./NavigationBar/NavItem.vue";
+
 const navItems = [
     {
         title: "Home",
@@ -22,10 +24,6 @@ const navItems = [
         ],
     },
     {
-        title: "Model",
-        to: "model",
-    },
-    {
         title: "iHP",
         links: [
             { to: "/human-practices", label: "iHP" },
@@ -40,27 +38,47 @@ const navItems = [
             { to: "/attributions", label: "Attributions" },
         ],
     },
+    {
+        title: "Model",
+        to: "/model",
+    },
 ];
 </script>
 
 <template>
-    <nav
-        class="flex h-24 items-center justify-between overflow-hidden bg-sun font-nunito"
+    <NavigationMenuRoot
+        as-child
+        aria-label="Primary navigation"
+        :delay-duration="100"
     >
-        <NuxtLink to="/" class="icon-section flex h-full shrink-0 items-center">
-            <Logo />
-            <span class="ml-8 text-6xl font-black text-cblue">EXPELLIODOR</span>
-        </NuxtLink>
+        <nav
+            class="flex h-24 items-center justify-between overflow-visible bg-sun font-nunito"
+        >
+            <NuxtLink
+                to="/"
+                class="icon-section flex h-full shrink-0 items-center"
+                aria-label="Go to homepage"
+            >
+                <Logo />
+                <span
+                    class="ml-8 text-6xl font-black text-cblue"
+                    aria-hidden="true"
+                    >EXPELLIODOR</span
+                >
+            </NuxtLink>
 
-        <!-- <SearchBar /> -->
-        <div class="flex h-full w-1/2 items-center justify-evenly gap-6">
-            <template v-for="item in navItems" :key="item.title">
+            <!-- <SearchBar /> -->
+            <NavigationMenuList
+                class="mr-8 flex h-full w-1/2 list-none items-center justify-evenly gap-6 p-0 whitespace-nowrap"
+            >
                 <NavItem
+                    v-for="item in navItems"
+                    :key="item.title"
                     :title="item.title"
                     :links="item.links || []"
                     :to="item.to"
                 />
-            </template>
-        </div>
-    </nav>
+            </NavigationMenuList>
+        </nav>
+    </NavigationMenuRoot>
 </template>

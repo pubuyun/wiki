@@ -1,9 +1,20 @@
 <template>
-    <div class="h-2 w-full bg-spray">
-        <div class="h-2 bg-azure" :style="{ width: `${progress}%` }"></div>
-    </div>
+    <ProgressRoot
+        :model-value="progress"
+        class="h-2 w-full bg-spray"
+        style="transform: translateZ(0)"
+    >
+        <ProgressIndicator
+            class="h-full bg-azure"
+            :style="{
+                transform: `translateX(-${100 - progress}%)`,
+                transition: 'transform 0.2s ease-out',
+            }"
+        />
+    </ProgressRoot>
 </template>
 <script setup lang="ts">
+import { ProgressIndicator, ProgressRoot } from "radix-vue";
 defineProps<{
     progress: number;
 }>();

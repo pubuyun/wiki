@@ -1,43 +1,71 @@
-<template>
-    <div class="group inline-block">
-        <button
-            class="inline-flex cursor-default items-center gap-1 px-1 py-2 text-2xl font-bold select-none"
-        >
-            <NuxtLink v-if="!links || to" :to="`/${to}`">
-                {{ title }}
-            </NuxtLink>
-            <span v-else>{{ title }}</span>
-            <span
-                v-if="links && links.length > 0"
-                class="text-lg transition-transform duration-200 group-hover:rotate-180"
-                aria-hidden="true"
-                >▼</span
-            >
-        </button>
-        <div
-            class="invisible absolute z-50 -translate-y-1 rounded-2xl bg-corn opacity-0 transition-all duration-150 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100"
-        >
-            <NuxtLink
-                v-for="link in links"
-                :key="link.to"
-                :to="link.to"
-                class="block px-4 py-2 text-xl text-cblue no-underline hover:bg-azure"
-            >
-                {{ link.label }}
-            </NuxtLink>
-        </div>
-    </div>
-</template>
-
 <script setup lang="ts">
+import {
+    NavigationMenuContent,
+    NavigationMenuItem,
+    NavigationMenuLink,
+    NavigationMenuTrigger,
+} from "radix-vue";
+import { computed } from "vue";
+
 interface DropdownLink {
     to: string;
     label: string;
 }
 
-defineProps<{
-    title: string;
-    to?: string;
-    links?: DropdownLink[];
-}>();
+const props = withDefaults(
+    defineProps<{
+        title: string;
+        to?: string;
+        links?: DropdownLink[];
+    }>(),
+    {
+        links: () => [],
+    },
+);
+
+const hasDropdown = computed(() => props.links.length > 0);
 </script>
+
+<template>
+    <NavigationMenuItem class="relative inline-block">
+        <NavigationMenuLink v-if="!hasDropdown" as-child>
+            <NuxtLink
+                :to="to"
+                class="inline-flex items-center px-1 py-2 text-2xl font-bold text-cblue no-underline outline-offset-4 hover:text-cblue focus-visible:outline-2 focus-visible:outline-cblue"
+            >
+                {{ title }}
+            </NuxtLink>
+        </NavigationMenuLink>
+
+        <template v-else>
+            <NavigationMenuTrigger
+                class="group inline-flex cursor-default list-none items-center gap-1 bg-transparent px-1 py-2 text-2xl font-bold text-cblue outline-offset-4 select-none hover:text-cblue focus-visible:outline-2 focus-visible:outline-cblue"
+            >
+                <span>{{ title }}</span>
+                <span
+                    class="text-lg transition-transform duration-200 group-focus-within:rotate-180 group-hover:rotate-180 group-data-[state=open]:rotate-180"
+                    aria-hidden="true"
+                    >&#9662;</span
+                >
+            </NavigationMenuTrigger>
+
+            <NavigationMenuContent
+                force-mount
+                class="absolute top-full left-0 z-50 max-h-0 overflow-hidden rounded-2xl bg-corn shadow-sm transition-[max-height] duration-500 ease-out data-[motion=from-end]:max-h-96 data-[motion=from-start]:max-h-96 data-[motion=to-end]:max-h-0 data-[motion=to-start]:max-h-0 data-[state=closed]:pointer-events-none data-[state=closed]:max-h-0 data-[state=open]:max-h-96"
+            >
+                <NavigationMenuLink
+                    v-for="link in links"
+                    :key="link.to"
+                    as-child
+                >
+                    <NuxtLink
+                        :to="link.to"
+                        class="block px-4 py-2 text-xl text-cblue no-underline -outline-offset-2 first:rounded-t-2xl last:rounded-b-2xl hover:bg-azure focus-visible:bg-azure focus-visible:outline-2 focus-visible:outline-cblue"
+                    >
+                        {{ link.label }}
+                    </NuxtLink>
+                </NavigationMenuLink>
+            </NavigationMenuContent>
+        </template>
+    </NavigationMenuItem>
+</template>
