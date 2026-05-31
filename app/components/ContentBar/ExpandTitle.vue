@@ -35,18 +35,22 @@ function keepExpandedContentVisible() {
                 viewBox="-25 -15 50 30"
             >
                 <path
-                    d="M 8 -5 Q 19 -6 19 0 Q 19 3 8 8 Q 4 9 -1 7 Q -5 5 -10 8 Q -14 10 -18 10 Q -23 10 -26 4 Q -28 -2 -23 -7 Q -15 -14 -10 -11 Q -5.806 -8.239 -3 -6 Q 2 -4 8 -5 Z"
+                    d="M 8 -8 Q 15 -12 19 0 Q 20 3 8 8 Q 4 10 -1 7 Q -5 5 -10 8 Q -14 10 -18 10 Q -23 10 -26 4 Q -28 -2 -23 -7 Q -15 -14 -10 -11 Q -5.806 -8.239 -3 -6 Q 0 -4 8 -8 Z"
                     :class="color"
                     :transform="
                         flip ? 'scale(1, -1) translate(5,0)' : 'translate(5,0)'
                     "
                 />
+                <text
+                    x="0"
+                    y="0"
+                    text-anchor="middle"
+                    dominant-baseline="central"
+                    class="fill-current font-belanosima text-[0.3em] font-semibold text-cblue"
+                >
+                    {{ h2.text }}
+                </text>
             </svg>
-            <span
-                class="z-10 col-1 row-1 mt-20 text-center font-belanosima text-3xl font-semibold text-cblue"
-            >
-                {{ h2.text }}
-            </span>
         </button>
     </div>
     <Transition
@@ -61,7 +65,7 @@ function keepExpandedContentVisible() {
         <ul
             ref="expandedList"
             v-if="isExpanded && h2.children?.length"
-            class="ml-20 list-disc space-y-2 overflow-hidden marker:text-2xl marker:text-cblue"
+            class="ml-20 list-disc space-y-2 marker:text-2xl marker:text-cblue"
         >
             <li v-for="value in h2.children" :key="value.id" class="">
                 <a

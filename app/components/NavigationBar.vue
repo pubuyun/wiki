@@ -47,7 +47,7 @@ const navItems = [
     <nav
         class="flex h-24 items-center justify-between overflow-hidden bg-sun font-nunito"
     >
-        <NuxtLink to="/" class="icon-section shirnk-0 flex h-full items-center">
+        <NuxtLink to="/" class="icon-section flex h-full shrink-0 items-center">
             <Logo />
             <span class="ml-8 text-6xl font-black text-cblue">EXPELLIODOR</span>
         </NuxtLink>

@@ -31,5 +31,5 @@ defineProps<{
     toc: ToCLink[];
 }>();
 
-const colors = ["fill-sun", "fill-reef", "fill-corn", "fill-bremuda"];
+const colors = ["fill-sun", "fill-reef", "fill-corn", "fill-bermuda"];
 </script>
