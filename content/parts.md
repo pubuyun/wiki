@@ -1,8 +1,11 @@
 ---
-title: Welcome to Nuxt Content Starter
-description: This is the main page displaying Markdown located at content/index.md.
+title: Parts
+description:
 ---
 
-# Parts
+## Overview
+
+::paragraph
 
 This is the parts page.
+::

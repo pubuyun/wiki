@@ -6,10 +6,6 @@ const navItems = [
         to: "/",
     },
     {
-        title: "Tutorial",
-        to: "tutorial",
-    },
-    {
         title: "Project",
         links: [
             { to: "contribution", label: "Contribution" },
@@ -47,22 +43,22 @@ const navItems = [
 </script>
 
 <template>
-    <nav class="flex justify-between gap-60">
-        <NuxtLink to="/" class="icon-section">
-            <img src="/logo.jpg" alt="Logo" class="h-10 w-10" />
+    <nav
+        class="flex h-24 items-center justify-between overflow-hidden bg-sun font-nunito"
+    >
+        <NuxtLink to="/" class="icon-section shirnk-0 flex h-full items-center">
+            <img src="/general/logo.webp" alt="Logo" class="h-full" />
+            <span class="ml-8 text-6xl font-black text-cblue">EXPELLIODOR</span>
         </NuxtLink>
-        <SearchBar />
-        <div class="flex items-center gap-6 pr-10">
+
+        <!-- <SearchBar /> -->
+        <div class="flex h-full w-1/2 items-center justify-evenly gap-6">
             <template v-for="item in navItems" :key="item.title">
                 <NavItem
-                    v-if="item.links"
                     :title="item.title"
-                    :links="item.links"
+                    :links="item.links || []"
+                    :to="item.to"
                 />
-
-                <NuxtLink v-else :to="item.to" class="navLink">
-                    {{ item.title }}
-                </NuxtLink>
             </template>
         </div>
     </nav>

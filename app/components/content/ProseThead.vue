@@ -1,5 +1,5 @@
 <template>
-  <thead>
-    <slot />
-  </thead>
+    <thead class="bg-lcyan">
+        <slot />
+    </thead>
 </template>

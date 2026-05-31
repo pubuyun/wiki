@@ -1,6 +1,13 @@
 <template>
-    <h1 :id="props.id" class="text-2xl font-bold">
-        <a v-if="generate" :href="`#${props.id}`">
+    <h1
+        :id="props.id"
+        class="mt-10 mb-6 scroll-mt-24 font-lilita-one text-4xl leading-tight font-bold sm:text-5xl"
+    >
+        <a
+            v-if="generate"
+            :href="`#${props.id}`"
+            class="text-inherit no-underline"
+        >
             <slot />
         </a>
         <slot v-else />

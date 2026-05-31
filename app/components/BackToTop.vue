@@ -11,13 +11,13 @@
         <button
             @click="scrollToTop"
             v-show="visible"
-            class="back-to-top fixed right-6 bottom-6 w-14 h-14 bg-transparent border-none cursor-pointer z-50"
+            class="back-to-top fixed right-6 bottom-6 z-50 h-14 w-14 cursor-pointer border-none bg-transparent"
             aria-label="Back to top"
         >
             <img
-                src="/BackToTop.png"
+                src="/general/BackToTop.png"
                 alt="Back to top"
-                class="w-full h-full object-contain"
+                class="h-full w-full object-contain"
             />
         </button>
     </Transition>

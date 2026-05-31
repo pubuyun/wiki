@@ -1,18 +1,27 @@
 <template>
-    <div class="dropdown">
-        <!-- 触发区域 -->
-        <span class="dropdown-trigger">
-            {{ title }}
-            <span class="arrow">▼</span>
-        </span>
-
-        <!-- 下拉菜单 -->
-        <div class="dropdown-menu">
+    <div class="group inline-block">
+        <button
+            class="inline-flex cursor-default items-center gap-1 px-1 py-2 text-2xl font-bold select-none"
+        >
+            <NuxtLink v-if="!links || to" :to="`/${to}`">
+                {{ title }}
+            </NuxtLink>
+            <span v-else>{{ title }}</span>
+            <span
+                v-if="links && links.length > 0"
+                class="text-lg transition-transform duration-200 group-hover:rotate-180"
+                aria-hidden="true"
+                >▼</span
+            >
+        </button>
+        <div
+            class="invisible absolute z-50 -translate-y-1 rounded-2xl bg-corn opacity-0 transition-all duration-150 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100"
+        >
             <NuxtLink
                 v-for="link in links"
                 :key="link.to"
                 :to="link.to"
-                class="dropdown-link"
+                class="block px-4 py-2 text-xl text-cblue no-underline hover:bg-azure"
             >
                 {{ link.label }}
             </NuxtLink>
@@ -28,69 +37,7 @@ interface DropdownLink {
 
 defineProps<{
     title: string;
-    links: DropdownLink[];
+    to?: string;
+    links?: DropdownLink[];
 }>();
 </script>
-
-<style scoped>
-.dropdown {
-    position: relative;
-    display: inline-block;
-}
-
-/* 触发文字样式 */
-.dropdown-trigger {
-    cursor: default;
-    user-select: none;
-    padding: 0.5rem 0.25rem;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.25rem;
-}
-
-.arrow {
-    transition: transform 0.2s;
-}
-.dropdown:hover .arrow {
-    transform: rotate(180deg);
-}
-
-.dropdown-menu {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    min-width: 10rem;
-    margin-top: 0.25rem;
-    padding: 0.25rem 0;
-    background-color: white;
-    border: 1px solid #e5e7eb;
-    border-radius: 0.375rem;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(-0.25rem);
-    transition:
-        opacity 0.15s,
-        visibility 0.15s,
-        transform 0.15s;
-}
-
-.dropdown:hover .dropdown-menu {
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0);
-}
-
-.dropdown-link {
-    display: block;
-    padding: 0.5rem 1rem;
-    font-size: 0.875rem;
-    color: #374151;
-    text-decoration: none;
-}
-
-.dropdown-link:hover {
-    background-color: #f3f4f6;
-}
-</style>

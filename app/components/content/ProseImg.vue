@@ -5,6 +5,7 @@
     :alt="props.alt"
     :width="props.width"
     :height="props.height"
+    class="my-8 w-full rounded-lg border border-lcyan bg-white object-cover shadow-sm"
   />
 </template>
 
