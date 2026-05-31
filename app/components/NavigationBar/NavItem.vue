@@ -39,7 +39,7 @@ const hasDropdown = computed(() => props.links.length > 0);
 
         <template v-else>
             <NavigationMenuTrigger
-                class="group inline-flex cursor-default list-none items-center gap-1 bg-transparent px-1 py-2 text-2xl font-bold text-cblue outline-offset-4 select-none hover:text-cblue focus-visible:outline-2 focus-visible:outline-cblue"
+                class="group inline-flex cursor-pointer list-none items-center gap-1 bg-transparent px-1 py-2 text-2xl font-bold text-cblue outline-offset-4 select-none hover:text-cblue focus-visible:outline-2 focus-visible:outline-cblue"
             >
                 <span>{{ title }}</span>
                 <span
@@ -51,7 +51,7 @@ const hasDropdown = computed(() => props.links.length > 0);
 
             <NavigationMenuContent
                 force-mount
-                class="absolute top-full left-0 z-50 max-h-0 overflow-hidden rounded-2xl bg-corn shadow-sm transition-[max-height] duration-500 ease-out data-[motion=from-end]:max-h-96 data-[motion=from-start]:max-h-96 data-[motion=to-end]:max-h-0 data-[motion=to-start]:max-h-0 data-[state=closed]:pointer-events-none data-[state=closed]:max-h-0 data-[state=open]:max-h-96"
+                class="absolute top-full left-0 z-50 max-h-0 min-w-max overflow-hidden rounded-2xl bg-corn shadow-sm transition-[max-height] duration-500 ease-out data-[state=closed]:!pointer-events-none data-[state=closed]:max-h-0 data-[state=open]:!pointer-events-auto data-[state=open]:max-h-96"
             >
                 <NavigationMenuLink
                     v-for="link in links"
@@ -60,6 +60,7 @@ const hasDropdown = computed(() => props.links.length > 0);
                 >
                     <NuxtLink
                         :to="link.to"
+                        @pointerdown.stop
                         class="block px-4 py-2 text-xl text-cblue no-underline -outline-offset-2 first:rounded-t-2xl last:rounded-b-2xl hover:bg-azure focus-visible:bg-azure focus-visible:outline-2 focus-visible:outline-cblue"
                     >
                         {{ link.label }}
