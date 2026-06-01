@@ -1,8 +1,10 @@
 <template>
-    <div
+    <nav
         class="sticky top-36 mb-6 max-h-[calc(100vh-11rem)] scrollbar-none overflow-y-auto rounded-[3.5em] bg-azure"
+        aria-labelledby="toc-title"
     >
         <h2
+            id="toc-title"
             class="my-3 mt-10 mb-10 flex items-center justify-center text-center font-belanosima text-6xl font-semibold text-corn"
         >
             Content
@@ -16,7 +18,7 @@
                 :flip="idx % 2 == 0"
             />
         </div>
-    </div>
+    </nav>
 </template>
 <script setup lang="ts">
 import ExpandTitle from "./ContentBar/ExpandTitle.vue";

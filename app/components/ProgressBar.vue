@@ -1,11 +1,12 @@
 <template>
     <ProgressRoot
         :model-value="progress"
-        class="h-2 w-full bg-spray"
+        aria-label="Reading progress"
+        class="h-2 w-full overflow-hidden bg-spray"
         style="transform: translateZ(0)"
     >
         <ProgressIndicator
-            class="h-full bg-azure"
+            class="h-full w-full bg-azure"
             :style="{
                 transform: `translateX(-${100 - progress}%)`,
                 transition: 'transform 0.2s ease-out',

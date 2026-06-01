@@ -1,10 +1,6 @@
 <template>
     <div class="grid leading-none">
-        <img
-            class="col-1 row-1 object-cover"
-            :src="imgSrc"
-            alt="Banner Image"
-        />
+        <img class="col-1 row-1 object-cover" :src="imgSrc" alt="" />
         <svg
             class="top-border col-1 row-1 self-end"
             viewBox="0 -10 40 10"

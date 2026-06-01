@@ -21,24 +21,38 @@ const result = computed(() => miniSearch.search(toValue(query)));
 </script>
 
 <template>
-    <div class="search-bar flex-col w-1/4">
+    <div class="search-bar w-1/4 flex-col">
         <input
             v-model="query"
             placeholder="Search..."
-            class="h-full border rounded w-full px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            class="h-full w-full rounded border px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none"
         />
         <ul
-            class="absolute bg-white border mt-1 w-1/4 max-h-60 overflow-auto"
+            class="absolute mt-1 max-h-60 w-1/4 overflow-auto border bg-white"
             :class="result.length > 0 ? 'block' : 'hidden'"
         >
             <li v-for="link of result" :key="link.id" class="mt-2">
                 <NuxtLink :to="link.id" @click="query = ''">
                     <div>
                         {{ link.title }}
-                        <p class="text-gray-500 text-xs">{{ link.content }}</p>
+                        <p class="text-xs text-gray-500">{{ link.content }}</p>
                     </div>
                 </NuxtLink>
             </li>
         </ul>
     </div>
 </template>
+
+<script setup lang="ts">
+import {
+    DialogClose,
+    DialogContent,
+    DialogDescription,
+    DialogOverlay,
+    DialogPortal,
+    DialogRoot,
+    DialogTitle,
+    DialogTrigger,
+} from "radix-vue";
+import { Icon } from "@iconify/vue";
+</script>
