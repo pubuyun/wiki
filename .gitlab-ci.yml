@@ -3,7 +3,6 @@ pages:
     variables:
         YARN_CACHE_FOLDER: .yarn-cache
     before_script:
-        - corepack enable
         - yarn install --frozen-lockfile --cache-folder .yarn-cache
     script:
         - export NUXT_APP_BASE_URL="/${CI_PROJECT_NAME}/"
