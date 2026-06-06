@@ -1,6 +1,6 @@
 <template>
     <div class="relative h-full">
-        <img src="/general/logo.webp" alt="Logo" class="relative h-full" />
+        <img src="https://static.igem.wiki/teams/6133/wiki/general/logo.webp" alt="Logo" class="relative h-full" />
         <svg
             class="animate-float absolute inset-0 h-full w-full"
             preserveAspectRatio="none"

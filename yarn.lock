@@ -666,6 +666,21 @@
     "@floating-ui/utils" "^0.2.11"
     vue-demi ">=0.13.0"
 
+"@fontsource-variable/nunito@^5.2.7":
+  version "5.2.7"
+  resolved "https://registry.yarnpkg.com/@fontsource-variable/nunito/-/nunito-5.2.7.tgz#9b21e574bf4a3060e60b06e0a10fb90edd86984c"
+  integrity sha512-2N8QhatkyKgSUbAGZO2FYLioxA32+RyI1EplVLawbpkGjUeui9Qg9VMrpkCaik1ydjFjfLV+kzQ0cGEsMrMenQ==
+
+"@fontsource/belanosima@^5.2.7":
+  version "5.2.7"
+  resolved "https://registry.yarnpkg.com/@fontsource/belanosima/-/belanosima-5.2.7.tgz#faa25d75eaca33efe9fcf0c8b2811b1209b85ae9"
+  integrity sha512-wum+SOlPhcVElg10UV3e7WpYSAApxOpWTy3K8Z3BN7p8/3a2m0ip01Y8X0pqisDryKTG30stzA2urzTg98uXyA==
+
+"@fontsource/lilita-one@^5.2.8":
+  version "5.2.8"
+  resolved "https://registry.yarnpkg.com/@fontsource/lilita-one/-/lilita-one-5.2.8.tgz#b70288ae8fbbb4c522e644d7434ed20da7a82911"
+  integrity sha512-fNDM2FPC5+HVy8nMywLXuObwrlxlfuldThK8p78OZwFzg/LYFG/iEmCy3pbURM9F2NVWX5W5+/ti1P28erQ2Bw==
+
 "@iconify-json/lucide@^1.2.102":
   version "1.2.109"
   resolved "https://registry.yarnpkg.com/@iconify-json/lucide/-/lucide-1.2.109.tgz#c770ec895df5c9bd13e2b4e88b80ccb9a57d7b5b"

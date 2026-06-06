@@ -1,7 +1,10 @@
 @import "tailwindcss";
-@import "./nunito.css"; /* font-family: Nunito */
-@import "./belanosima.css"; /* font-family: Belanosima */
-@import "./lilita-one.css"; /* font-family: Lilita_one */
+@import "@fontsource-variable/nunito/wght.css";
+@import "@fontsource-variable/nunito/wght-italic.css";
+@import "@fontsource/belanosima/latin-400.css";
+@import "@fontsource/belanosima/latin-600.css";
+@import "@fontsource/belanosima/latin-700.css";
+@import "@fontsource/lilita-one/latin-400.css";
 
 @theme {
     --color-bermuda: #65dbbe;
@@ -14,9 +17,9 @@
     --color-vred: #ff3e8a;
     --color-lcyan: #c6eeff;
     --color-spray: #81ebf9;
-    --font-nunito: Nunito, sans-serif;
-    --font-belanosima: Belanosima, serif;
-    --font-lilita-one: Lilita_one, cursive;
+    --font-nunito: "Nunito Variable", sans-serif;
+    --font-belanosima: "Belanosima", serif;
+    --font-lilita-one: "Lilita One", cursive;
     --font-main:
         -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 }
