@@ -1,6 +1,5 @@
 # Job name has to be `pages`. See https://docs.gitlab.com/ee/user/project/pages/#how-it-works
 pages:
-    image: node:lts
     variables:
         YARN_CACHE_FOLDER: .yarn-cache
     before_script:
