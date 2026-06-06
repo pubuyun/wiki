@@ -1,28 +1,29 @@
 # Job name has to be `pages`. See https://docs.gitlab.com/ee/user/project/pages/#how-it-works
 pages:
-  image: node
-  variables:
-    NUXT_APP_BASE_URL: /nuxt/
-  before_script:
-    - npm ci --cache .npm --prefer-offline
-    - corepack enable
-    - yarn install --immutable
-  script:
-    # Specify the steps involved to build your app here
-    - yarn generate
-  cache: # https://docs.gitlab.com/ee/ci/caching/#cache-nodejs-dependencies
-    key:
-      files:
-        - package-lock.json
-    paths:
-      - .npm/
-  artifacts:
-    paths:
-      # The directory that contains the built files to be published
-      - .output/public
-  # The directory that contains the built files to be published
-  publish: .output/public
-  rules:
-    # This ensures that only pushes to the default branch
-    # will trigger a pages deploy
-    - if: $CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH
+    image: node:lts
+    variables:
+        YARN_CACHE_FOLDER: .yarn-cache
+    before_script:
+        - corepack enable
+        - yarn install --frozen-lockfile --cache-folder .yarn-cache
+    script:
+        - export NUXT_APP_BASE_URL="/${CI_PROJECT_NAME}/"
+        - export NUXT_STUDIO="false"
+        - yarn generate
+        - rm -rf public
+        - mkdir public
+        - cp -a .output/public/. public/
+    cache:
+        key:
+            files:
+                - yarn.lock
+        paths:
+            - .yarn-cache/
+    artifacts:
+        paths:
+            - public
+    rules:
+        - if: $CI_COMMIT_BRANCH != $CI_DEFAULT_BRANCH
+          when: never
+        - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+          when: always
