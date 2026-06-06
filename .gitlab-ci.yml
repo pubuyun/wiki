@@ -10,12 +10,12 @@ stages:
 
 pages:
     stage: build
-    cache:
-        - key:
-              files:
-                  - yarn.lock
-          paths:
-              - .yarn-cache/
+    # cache:
+    #     - key:
+    #           files:
+    #               - yarn.lock
+    #       paths:
+    #           - .yarn-cache/
     before_script:
         - echo 'yarn-offline-mirror ".yarn-cache/"' >> .yarnrc
         - echo 'yarn-offline-mirror-pruning true' >> .yarnrc
