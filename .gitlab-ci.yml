@@ -38,7 +38,10 @@ pages:
 
 sync_github:
     stage: deploy
-    image: alpine/git
+    image:
+        name: alpine/git
+        entrypoint: [""]
+    dependencies: []
     script:
         - git remote add github "https://x-access-token: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@github.com/pubuyun/wiki.git"
         - git push github HEAD:main
