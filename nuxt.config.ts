@@ -20,10 +20,11 @@ export default defineNuxtConfig({
     },
     studio: {
         repository: {
-            provider: "github", // 'github' or 'gitlab'
-            owner: "pubuyun",
-            repo: "wiki",
+            provider: "gitlab",
+            owner: "2026",
+            repo: "greatbay-scie",
             branch: "main",
+            instanceUrl: "https://gitlab.igem.org",
         },
     },
     css: ["./app/styles/main.css"],

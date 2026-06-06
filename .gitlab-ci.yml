@@ -1,6 +1,10 @@
 # Job name has to be `pages`. See https://docs.gitlab.com/ee/user/project/pages/#how-it-works
 image: node:22
 
+stages:
+    - build
+    - deploy
+
 pages:
     stage: build
     cache:
@@ -28,3 +32,15 @@ pages:
           when: never
         - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
           when: always
+
+sync_github:
+    stage: deploy
+    image: alpine/git
+    script:
+        - git remote add github "https://x-access-token:${GITHUB_TOKEN}@github.com/pubuyun/wiki.git"
+        - git push github HEAD:main
+    rules:
+        - if: $CI_COMMIT_BRANCH != $CI_DEFAULT_BRANCH
+          when: never
+        - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+          when: on_success
