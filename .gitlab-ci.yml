@@ -19,7 +19,8 @@ pages:
     before_script:
         - echo 'yarn-offline-mirror ".yarn-cache/"' >> .yarnrc
         - echo 'yarn-offline-mirror-pruning true' >> .yarnrc
-        - yarn install --frozen-lockfile --ignore-optional
+        - 'node -e "const fs=require(\"fs\"); const p=require(\"./package.json\"); if (p.optionalDependencies) { delete p.optionalDependencies[\"nuxt-studio\"]; if (!Object.keys(p.optionalDependencies).length) delete p.optionalDependencies; } fs.writeFileSync(\"package.json\", JSON.stringify(p, null, 4) + \"\n\");"'
+        - yarn install --frozen-lockfile
     script:
         - export NUXT_APP_BASE_URL="/${CI_PROJECT_NAME}/"
         - yarn generate
