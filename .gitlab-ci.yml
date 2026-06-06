@@ -1,6 +1,9 @@
 # Job name has to be `pages`. See https://docs.gitlab.com/ee/user/project/pages/#how-it-works
 image: node:22-alpine
 
+variables:
+    NUXT_STUDIO: "false"
+
 stages:
     - build
     - deploy
@@ -16,10 +19,9 @@ pages:
     before_script:
         - echo 'yarn-offline-mirror ".yarn-cache/"' >> .yarnrc
         - echo 'yarn-offline-mirror-pruning true' >> .yarnrc
-        - yarn install --frozen-lockfile
+        - yarn install --frozen-lockfile --ignore-optional
     script:
         - export NUXT_APP_BASE_URL="/${CI_PROJECT_NAME}/"
-        - export NUXT_STUDIO="false"
         - yarn generate
         - rm -rf public
         - mkdir -p public
@@ -37,7 +39,7 @@ sync_github:
     stage: deploy
     image: alpine/git
     script:
-        - git remote add github "https://x-access-token:${GITHUB_TOKEN}@github.com/pubuyun/wiki.git"
+        - git remote add github "https://x-access-token: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@github.com/pubuyun/wiki.git"
         - git push github HEAD:main
     rules:
         - if: $CI_COMMIT_BRANCH != $CI_DEFAULT_BRANCH
