@@ -26,6 +26,11 @@ export default defineNuxtConfig({
             branch: "main",
             instanceUrl: "https://gitlab.igem.org",
         },
+        auth: {
+            gitlab: {
+                instanceUrl: "https://gitlab.igem.org",
+            },
+        },
     },
     css: ["./app/styles/main.css"],
     devtools: { enabled: true },
