@@ -1,23 +1,25 @@
 # Job name has to be `pages`. See https://docs.gitlab.com/ee/user/project/pages/#how-it-works
+image: node:22
+
 pages:
-    image: node:22
-    variables:
-        YARN_CACHE_FOLDER: .yarn-cache
+    stage: build
+    cache:
+        - key:
+              files:
+                  - yarn.lock
+          paths:
+              - .yarn-cache/
     before_script:
-        - yarn install --frozen-lockfile --cache-folder .yarn-cache
+        - echo 'yarn-offline-mirror ".yarn-cache/"' >> .yarnrc
+        - echo 'yarn-offline-mirror-pruning true' >> .yarnrc
+        - yarn install --frozen-lockfile
     script:
         - export NUXT_APP_BASE_URL="/${CI_PROJECT_NAME}/"
         - export NUXT_STUDIO="false"
         - yarn generate
         - rm -rf public
-        - mkdir public
+        - mkdir -p public
         - cp -a .output/public/. public/
-    cache:
-        key:
-            files:
-                - yarn.lock
-        paths:
-            - .yarn-cache/
     artifacts:
         paths:
             - public
