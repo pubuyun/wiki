@@ -1,0 +1,41 @@
+<template>
+    <h2 :id="props.id" class="flex flex-row items-center justify-center gap-8">
+        <!-- 这个h2必须在最外层 -->
+        <span class="flex h-min rounded-4xl bg-sun">
+            <span
+                class="mx-3 flex items-center justify-center text-center font-belanosima text-6xl font-semibold text-cblue"
+            >
+                <a
+                    v-if="props.id && generate"
+                    :href="`#${props.id}`"
+                    class="p-2 text-inherit no-underline"
+                >
+                    <slot />
+                </a>
+                <span v-else>
+                    <slot />
+                </span>
+            </span>
+        </span>
+        <span
+            aria-hidden="true"
+            class="my-10 flex-1 border-3 border-t-2 border-sun"
+        />
+    </h2>
+</template>
+
+<script setup lang="ts">
+import { computed, useRuntimeConfig } from "#imports";
+
+const props = defineProps<{ id?: string }>();
+
+const { headings } = useRuntimeConfig().public.mdc;
+const generate = computed(
+    () =>
+        props.id &&
+        ((typeof headings?.anchorLinks === "boolean" &&
+            headings?.anchorLinks === true) ||
+            (typeof headings?.anchorLinks === "object" &&
+                headings?.anchorLinks?.h2)),
+);
+</script>

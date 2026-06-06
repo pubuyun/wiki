@@ -1,0 +1,89 @@
+<template>
+    <Transition
+        name="fade"
+        enter-active-class="duration-300 ease-out"
+        enter-from-class="transform opacity-0"
+        enter-to-class="opacity-100"
+        leave-active-class="duration-200 ease-in"
+        leave-from-class="opacity-100"
+        leave-to-class="transform opacity-0"
+    >
+        <button
+            @click="scrollToTop"
+            v-show="visible"
+            class="back-to-top fixed right-6 bottom-6 z-50 h-24 w-24 cursor-pointer border-none bg-transparent"
+            aria-label="Back to top"
+        >
+            <svg
+                class="absolute top-0 left-0 z-60 h-full w-full opacity-0 transition-opacity duration-300 hover:opacity-100"
+                viewBox="0 -10 32 32"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+            >
+                <defs>
+                    <path
+                        id="text-path"
+                        d="M 0 0 Q 6.7519 -4.7341 15.8709 -6.0923"
+                    />
+                    <path
+                        id="text-path-inner"
+                        d="M 0 0 Q 6.7519 -4.7341 15.8709 -6.0923"
+                        transform="translate(2,4) "
+                    />
+                </defs>
+                <text
+                    x="0"
+                    y="0"
+                    text-anchor="middle"
+                    dominant-baseline="central"
+                    class="fill-current font-nunito text-[0.25em] font-bold text-bermuda"
+                >
+                    <textPath href="#text-path" startOffset="50%">
+                        BACK
+                    </textPath>
+                </text>
+                <text
+                    x="0"
+                    y="0"
+                    text-anchor="middle"
+                    dominant-baseline="central"
+                    class="fill-current font-nunito text-[0.25em] font-bold text-bermuda"
+                >
+                    <textPath href="#text-path-inner" startOffset="50%">
+                        TO TOP
+                    </textPath>
+                </text>
+            </svg>
+            <img
+                src="/general/BackToTop.png"
+                alt="Back to top"
+                class="top-0 left-0 z-100 h-full w-full object-contain"
+            />
+        </button>
+    </Transition>
+</template>
+
+<script setup>
+import { ref, onMounted, onUnmounted } from "vue";
+
+const visible = ref(false);
+
+function onScroll() {
+    visible.value = window.scrollY > 200;
+}
+
+function scrollToTop() {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+onMounted(() => {
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+});
+
+onUnmounted(() => {
+    window.removeEventListener("scroll", onScroll);
+});
+</script>
+
+<style scoped></style>

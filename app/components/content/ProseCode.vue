@@ -1,0 +1,6 @@
+<template>
+    <code
+        class="rounded-md bg-lcyan px-1.5 py-0.5 font-mono text-[0.9em] font-semibold"
+        ><slot
+    /></code>
+</template>
