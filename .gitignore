@@ -9,6 +9,10 @@ dist
 # Node dependencies
 node_modules
 .yarn
+!.yarn/
+.yarn/*
+!.yarn/releases/
+!.yarn/releases/yarn-*.cjs
 .corepack
 
 # Logs
