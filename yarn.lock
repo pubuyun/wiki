@@ -917,13 +917,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fontsource-variable/nunito@npm:^5.2.7":
-  version: 5.2.7
-  resolution: "@fontsource-variable/nunito@npm:5.2.7"
-  checksum: 10c0/3eea68c432b9450dbaf9265431a6bb5bc770430d5e7833dea48889feb474f5cda263c7e43ac584e3a51f6ed8463532c3e630ebf40384b125b492459ab73ab544
-  languageName: node
-  linkType: hard
-
 "@fontsource/belanosima@npm:^5.2.7":
   version: 5.2.7
   resolution: "@fontsource/belanosima@npm:5.2.7"
@@ -931,10 +924,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fontsource/lilita-one@npm:^5.2.8":
-  version: 5.2.8
-  resolution: "@fontsource/lilita-one@npm:5.2.8"
-  checksum: 10c0/7bf75de8c52a8488d6c24b8a0a02bcd01ed786b8d4f0ae8c7e86ccadf6b293f846ab3e65802870793ce36893317e642b1bd55c0e75016cce63ab8d20abc27f2d
+"@fontsource/momo-trust-display@npm:^5.2.1":
+  version: 5.2.1
+  resolution: "@fontsource/momo-trust-display@npm:5.2.1"
+  checksum: 10c0/956484ad52779fd77ac0e7b2b1411927e13e82541c4f6eee9ee8dbea18fcc4385e01933e15790da32ce446753b8fd62b8586a6c11794e583d7c03d000448e611
+  languageName: node
+  linkType: hard
+
+"@fontsource/righteous@npm:^5.2.7":
+  version: 5.2.7
+  resolution: "@fontsource/righteous@npm:5.2.7"
+  checksum: 10c0/9c1fffe7db9132d1f0499e81eb220e3a4c946807f99fb849a02ddcf88b74e97f4b2f17442876dec8238d96b0398291feee6a747006bf623c535666995b3250c7
   languageName: node
   linkType: hard
 
@@ -11389,9 +11389,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "wiki@workspace:."
   dependencies:
-    "@fontsource-variable/nunito": "npm:^5.2.7"
     "@fontsource/belanosima": "npm:^5.2.7"
-    "@fontsource/lilita-one": "npm:^5.2.8"
+    "@fontsource/momo-trust-display": "npm:^5.2.1"
+    "@fontsource/righteous": "npm:^5.2.7"
     "@iconify/vue": "npm:^5.0.1"
     "@nuxt/content": "npm:^3.13.0"
     "@tailwindcss/vite": "npm:^4.3.0"

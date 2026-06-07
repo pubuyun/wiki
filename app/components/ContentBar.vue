@@ -1,20 +1,18 @@
 <template>
     <nav
-        class="sticky top-36 mb-6 max-h-[calc(100vh-11rem)] rounded-[3.5em] bg-white font-nunito shadow-lg"
+        class="sticky top-36 mb-6 max-h-[calc(100vh-11rem)] rounded-[3.5em] bg-azure px-1 py-10 font-momo-trust-display shadow-lg"
         aria-labelledby="toc-title"
     >
-        <h2
+        <!-- <h2
             id="toc-title"
-            class="mx-auto flex w-5/6 -translate-y-1/2 items-center justify-center rounded-full bg-sun py-2 text-center text-5xl leading-none font-black text-cblue"
+            class="mx-auto flex w-5/6 -translate-y-1/2 items-center justify-center rounded-full bg-sun py-2 text-center text-5xl leading-none text-cblue"
         >
             Content
-        </h2>
+        </h2> -->
+        <h2 class="sr-only" id="toc-title">Table of contents</h2>
+
         <div
-            v-if="canScrollUp"
-            class="pointer-events-none absolute top-15 left-0 z-10 h-8 w-full bg-linear-to-b from-white to-transparent"
-        />
-        <div
-            class="max-h-[calc(100vh-18rem)] scrollbar-none overflow-y-auto"
+            class="max-h-full w-full scrollbar-none overflow-y-auto"
             ref="contentScroll"
             @scroll="updateScrollGradients"
         >
@@ -26,9 +24,16 @@
                 :flip="idx % 2 == 0"
             />
         </div>
+        <!-- 顶部渐变遮罩（相对于 nav 定位） -->
+        <div
+            v-if="canScrollUp"
+            class="pointer-events-none absolute top-10 right-1 left-1 z-10 h-8 rounded-t-2xl bg-linear-to-b from-azure to-transparent"
+        />
+
+        <!-- 底部渐变遮罩 -->
         <div
             v-if="canScrollDown"
-            class="pointer-events-none absolute bottom-12 left-0 z-10 h-8 w-full rounded-b-2xl bg-linear-to-t from-white to-transparent"
+            class="pointer-events-none absolute right-1 bottom-10 left-1 z-10 h-8 rounded-b-2xl bg-linear-to-t from-azure to-transparent"
         />
     </nav>
 </template>

@@ -12,7 +12,70 @@ if (!page.value) {
         fatal: true,
     });
 }
-// console.log(page.value.body.toc.links);
+
+const sections = computed(() => {
+    const children = bodyChildren(page.value?.body);
+    const result = [];
+    let currentSection = null;
+
+    for (const child of children) {
+        if (nodeTag(child) === "h2") {
+            currentSection = {
+                id: nodeProps(child)?.id ?? `section-${result.length}`,
+                heading: child,
+                children: [],
+            };
+            result.push(currentSection);
+            continue;
+        }
+
+        if (!currentSection) {
+            currentSection = {
+                id: "intro",
+                heading: null,
+                children: [],
+            };
+            result.push(currentSection);
+        }
+
+        currentSection.children.push(child);
+    }
+
+    return result;
+});
+
+function bodyChildren(body) {
+    return body?.children ?? body?.value ?? [];
+}
+
+function nodeTag(node) {
+    return Array.isArray(node) ? node[0] : node?.tag;
+}
+
+function nodeProps(node) {
+    return Array.isArray(node) ? node[1] : node?.props;
+}
+
+function sectionValue(children) {
+    return {
+        ...page.value,
+        body: bodyWithChildren(page.value.body, children),
+    };
+}
+
+function bodyWithChildren(body, children) {
+    if (body?.value) {
+        return {
+            ...body,
+            value: children,
+        };
+    }
+
+    return {
+        ...body,
+        children,
+    };
+}
 </script>
 
 <template>
@@ -24,14 +87,23 @@ if (!page.value) {
             <aside class="contents">
                 <ContentBar class="w-1/5 shrink-0" :toc="page.body.toc.links" />
             </aside>
-            <main class="flex-1">
-                <article class="contents">
+            <main class="flex flex-1 flex-col gap-6">
+                <section
+                    v-for="section in sections"
+                    :key="section.id"
+                    class="flex flex-col gap-4"
+                >
                     <ContentRenderer
-                        v-if="page"
-                        :value="page"
-                        class="content flex-1"
+                        v-if="section.heading"
+                        :value="sectionValue([section.heading])"
+                        class="content flex-1 text-white"
                     />
-                </article>
+                    <ContentRenderer
+                        v-if="section.children.length"
+                        :value="sectionValue(section.children)"
+                        class="content flex-1 rounded-4xl bg-white p-6 text-cblue"
+                    />
+                </section>
             </main>
         </div>
     </div>

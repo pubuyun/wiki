@@ -39,8 +39,11 @@ const navItems = [
         ],
     },
     {
-        title: "Model",
-        to: "/model",
+        title: "Dry Lab",
+        links: [
+            { to: "/model", label: "Model" },
+            { to: "/software", label: "Software" },
+        ],
     },
 ];
 </script>
@@ -52,24 +55,24 @@ const navItems = [
         :delay-duration="100"
     >
         <nav
-            class="flex h-24 items-center justify-between overflow-visible bg-corn font-nunito"
+            class="flex items-center justify-between gap-10 overflow-visible bg-corn font-righteous sm:h-6 md:h-12 lg:h-18 xl:h-24"
         >
             <NuxtLink
                 to="/"
-                class="icon-section flex h-full shrink-0 items-center"
+                class="icon-section flex h-full shrink-0 items-center gap-4"
                 aria-label="Go to homepage"
             >
                 <Logo />
                 <span
-                    class="ml-8 text-5xl font-black text-cblue"
+                    class="text-cblue lg:text-3xl xl:text-5xl"
                     aria-hidden="true"
-                    >EXPELLIODOR</span
+                    >Expelliodor</span
                 >
             </NuxtLink>
 
             <SearchBar />
             <NavigationMenuList
-                class="mr-8 flex h-full w-1/2 list-none items-center justify-evenly gap-4 p-0 whitespace-nowrap"
+                class="mr-8 flex h-full w-1/2 list-none items-center justify-evenly gap-4 p-0 whitespace-nowrap md:text-base lg:text-xl xl:text-2xl"
             >
                 <NavItem
                     v-for="item in navItems"

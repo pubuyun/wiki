@@ -15,7 +15,7 @@ function updateProgress() {
     const scrollTop = window.scrollY;
     const docHeight =
         document.documentElement.scrollHeight - window.innerHeight;
-    progress.value = (scrollTop / docHeight) * 100;
+    progress.value = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
 }
 onMounted(() => {
     window.addEventListener("scroll", updateProgress);

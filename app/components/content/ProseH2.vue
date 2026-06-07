@@ -3,7 +3,7 @@
         <!-- 这个h2必须在最外层 -->
         <span class="flex h-min rounded-4xl bg-sun">
             <span
-                class="mx-3 flex items-center justify-center text-center font-belanosima text-6xl font-semibold text-cblue"
+                class="mx-3 flex items-center justify-center text-center font-momo-trust-display text-6xl text-cblue"
             >
                 <a
                     v-if="props.id && generate"

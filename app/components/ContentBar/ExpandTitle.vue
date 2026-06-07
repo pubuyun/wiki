@@ -58,7 +58,7 @@ function keepExpandedContentVisible() {
                     y="0"
                     text-anchor="middle"
                     dominant-baseline="central"
-                    class="fill-current font-nunito text-[0.3em] font-bold text-cblue"
+                    class="fill-current font-momo-trust-display text-[0.3em] text-cblue"
                 >
                     {{ h2.text }}
                 </text>
@@ -86,7 +86,7 @@ function keepExpandedContentVisible() {
                 <li v-for="value in h2.children" :key="value.id">
                     <NuxtLink
                         :to="`#${value.id}`"
-                        class="block font-nunito text-xl text-cblue hover:text-corn"
+                        class="block font-momo-trust-display text-xl text-cblue hover:text-corn"
                     >
                         {{ value.text }}
                     </NuxtLink>

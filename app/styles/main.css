@@ -1,10 +1,9 @@
 @import "tailwindcss";
-@import "@fontsource-variable/nunito/wght.css";
-@import "@fontsource-variable/nunito/wght-italic.css";
+@import "@fontsource/momo-trust-display/latin-400.css";
+@import "@fontsource/righteous/latin-400.css";
 @import "@fontsource/belanosima/latin-400.css";
 @import "@fontsource/belanosima/latin-600.css";
 @import "@fontsource/belanosima/latin-700.css";
-@import "@fontsource/lilita-one/latin-400.css";
 
 @theme {
     --color-bermuda: #65dbbe;
@@ -17,9 +16,9 @@
     --color-vred: #ff3e8a;
     --color-lcyan: #c6eeff;
     --color-spray: #81ebf9;
-    --font-nunito: "Nunito Variable", sans-serif;
+    --font-momo-trust-display: "Momo Trust Display", sans-serif;
+    --font-righteous: "Righteous", sans-serif;
     --font-belanosima: "Belanosima", serif;
-    --font-lilita-one: "Lilita One", cursive;
     --font-main:
         -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 }

@@ -1,8 +1,9 @@
 <template>
     <DialogRoot v-model:open="isSearchOpen" class="">
+        <!-- Desktop / larger than lg -->
         <DialogTrigger
             aria-label="Open search dialog"
-            class="mr-8 ml-5 h-1/2 max-w-96 flex-1 rounded-full bg-cblue pr-3"
+            class="mr-8 ml-5 h-1/2 max-w-96 flex-1 rounded-full bg-cblue pr-3 max-xl:hidden"
         >
             <div class="flex h-full items-center gap-2 p-1 text-white">
                 <input
@@ -13,6 +14,15 @@
                 <Icon icon="lucide:search" class="h-5 w-5" aria-hidden="true" />
             </div>
         </DialogTrigger>
+
+        <!-- lg and lower -->
+        <DialogTrigger
+            aria-label="Open search dialog"
+            class="z-100 hidden items-center gap-2 rounded-full bg-sun px-4 py-4 text-cblue shadow-md hover:bg-azure focus:ring-2 focus:ring-bermuda focus:ring-offset-2 focus:outline-none max-xl:inline-flex"
+        >
+            <Icon icon="lucide:search" class="h-5 w-5" aria-hidden="true" />
+        </DialogTrigger>
+
         <DialogPortal>
             <Transition
                 enter-active-class="transition-opacity duration-200 ease-out"
@@ -97,14 +107,14 @@
                                         "
                                     >
                                         <article
-                                            class="font-nunito font-semibold"
+                                            class="font-momo-trust-display"
                                         >
                                             <h3 class="text-lg">
                                                 {{ displayTitle(link) }}
                                             </h3>
 
                                             <p
-                                                class="text-xs font-normal text-cblue"
+                                                class="text-xs text-cblue"
                                                 v-html="displayContent(link)"
                                             />
                                         </article>

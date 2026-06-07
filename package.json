@@ -9,9 +9,9 @@
         "preview": "nuxt preview"
     },
     "dependencies": {
-        "@fontsource-variable/nunito": "^5.2.7",
         "@fontsource/belanosima": "^5.2.7",
-        "@fontsource/lilita-one": "^5.2.8",
+        "@fontsource/momo-trust-display": "^5.2.1",
+        "@fontsource/righteous": "^5.2.7",
         "@nuxt/content": "^3.13.0",
         "@tailwindcss/vite": "^4.3.0",
         "better-sqlite3": "^12.9.0",

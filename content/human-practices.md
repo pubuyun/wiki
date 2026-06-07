@@ -5,7 +5,6 @@ description:
 
 ## Overview
 
-::paragraph
 
 This is the main page displaying Markdown located at [content/index.md](https://github.com/nuxt/starter/blob/content/content/index.md).
 
@@ -22,4 +21,3 @@ You can find an example of querying contents and rendering them in a [catch-all 
 ### Integrate Vue Component
 
 Checkout out the [documentation](https://content.nuxt.com/docs/getting-started) to learn more.
-::
