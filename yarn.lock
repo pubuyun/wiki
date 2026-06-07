@@ -11445,9 +11445,6 @@ __metadata:
     vite: "npm:^8.0.14"
     vue: "npm:^3.5.34"
     zod: "npm:^4.4.3"
-  dependenciesMeta:
-    nuxt-studio:
-      optional: true
   languageName: unknown
   linkType: soft
 

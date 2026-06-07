@@ -17,10 +17,10 @@
         "better-sqlite3": "^12.9.0",
         "minisearch": "^7.2.0",
         "nuxt": "^4.4.2",
+        "nuxt-studio": "1.6.1",
         "radix-vue": "^1.9.17",
         "tailwindcss": "^4.3.0",
-        "zod": "^4.4.3",
-        "nuxt-studio": "1.6.1"
+        "zod": "^4.4.3"
     },
     "devDependencies": {
         "@iconify/vue": "^5.0.1",
