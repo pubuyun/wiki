@@ -2,7 +2,7 @@
     "name": "wiki",
     "type": "module",
     "scripts": {
-        "build": "STUDIO_GITLAB_INSTANCE_URL=https://gitlab.igem.org nuxt build",
+        "build": "nuxt build",
         "dev": "nuxt dev",
         "generate": "NUXT_STUDIO=false nuxt generate",
         "preview": "nuxt preview"

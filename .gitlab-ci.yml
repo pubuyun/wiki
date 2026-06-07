@@ -10,8 +10,13 @@ pages:
         - key:
               files:
                   - yarn.lock
-          paths:
-              - .yarn-cache/
+                  - package.json
+              paths:
+                  - .yarn-cache/
+                  - node_modules/
+                  - .nuxt/
+                  - .cache/
+                  - node_modules/.cache/
     before_script:
         - echo 'yarn-offline-mirror ".yarn-cache/"' >> .yarnrc
         - echo 'yarn-offline-mirror-pruning true' >> .yarnrc
