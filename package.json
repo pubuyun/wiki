@@ -15,7 +15,6 @@
         "@nuxt/content": "^3.13.0",
         "@tailwindcss/vite": "^4.3.0",
         "better-sqlite3": "^12.9.0",
-        "minisearch": "^7.2.0",
         "nuxt": "^4.4.2",
         "nuxt-studio": "1.6.1",
         "radix-vue": "^1.9.17",

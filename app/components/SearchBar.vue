@@ -2,9 +2,16 @@
     <DialogRoot v-model:open="isSearchOpen" class="">
         <DialogTrigger
             aria-label="Open search dialog"
-            class="fixed bottom-2 left-2 z-100 inline-flex items-center gap-2 rounded-full bg-sun px-4 py-4 text-cblue shadow-md hover:bg-azure focus:ring-2 focus:ring-bermuda focus:ring-offset-2 focus:outline-none"
+            class="mr-8 ml-5 h-1/2 max-w-96 flex-1 rounded-full bg-cblue pr-3"
         >
-            <Icon icon="lucide:search" class="h-5 w-5" aria-hidden="true" />
+            <div class="flex h-full items-center gap-2 p-1 text-white">
+                <input
+                    class="h-full flex-1 rounded-full bg-white"
+                    readonly
+                    tabindex="-1"
+                />
+                <Icon icon="lucide:search" class="h-5 w-5" aria-hidden="true" />
+            </div>
         </DialogTrigger>
         <DialogPortal>
             <Transition
@@ -93,20 +100,12 @@
                                             class="font-nunito font-semibold"
                                         >
                                             <h3 class="text-lg">
-                                                {{ link.title }}
+                                                {{ displayTitle(link) }}
                                             </h3>
 
                                             <p
                                                 class="text-xs font-normal text-cblue"
-                                                v-html="
-                                                    highlightText(
-                                                        link.content.slice(
-                                                            0,
-                                                            200,
-                                                        ),
-                                                        link.terms,
-                                                    ) + '...'
-                                                "
+                                                v-html="displayContent(link)"
                                             />
                                         </article>
                                     </NuxtLink>
@@ -147,40 +146,50 @@ import { Icon } from "@iconify/vue";
 
 const isSearchOpen = ref(false);
 
-import MiniSearch from "minisearch";
-
 const query = ref("");
-const { data } = await useAsyncData("search", () =>
-    queryCollectionSearchSections("content"),
-);
-
-const miniSearch = new MiniSearch({
-    fields: ["title", "content"],
-    storeFields: ["title", "content"],
-    searchOptions: {
-        prefix: true,
-        fuzzy: 0.2,
-    },
+const result = ref([]);
+const { search } = useSearchCollection("content", {
+    minHeading: "h2",
+    maxHeading: "h3",
 });
 
-// Add data to the MiniSearch instance
-miniSearch.addAll(toValue(data.value) ?? []);
-const result = computed(() => miniSearch.search(toValue(query)));
 const hasResults = computed(() => result.value.length > 0 && query.value);
-watch(result, (newResult) => {
-    console.log("Search results:", newResult);
+let latestSearch = 0;
+
+function displayTitle(link) {
+    if (link.level !== 3) return link.title;
+
+    const h2Title = link.titles?.at(-1);
+    return h2Title ? `${h2Title}>${link.title}` : link.title;
+}
+
+function displayContent(link) {
+    return link.snippets?.content ?? `${link.content.slice(0, 200)}...`;
+}
+
+watch(query, async (value) => {
+    const currentSearch = ++latestSearch;
+    const searchTerm = value.trim();
+
+    if (!searchTerm) {
+        result.value = [];
+        return;
+    }
+
+    const searchResult = await search(searchTerm, {
+        limit: 50,
+        snippet: {
+            columns: ["content"],
+            around: 40,
+            tag: "strong",
+        },
+    });
+
+    if (currentSearch === latestSearch) {
+        result.value = searchResult;
+    }
+    console.log(searchResult);
 });
-
-function escapeRegExp(string) {
-    return string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-}
-
-function highlightText(text, terms) {
-    if (!terms || terms.length === 0) return text;
-    const pattern = terms.map((t) => escapeRegExp(t)).join("|");
-    const regex = new RegExp(`(${pattern})`, "gi");
-    return text.replace(regex, '<strong class="font-bold">$1</strong>');
-}
 
 // Scroll gradient logic
 const resultsList = ref(null);

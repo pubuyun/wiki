@@ -61,15 +61,15 @@ const navItems = [
             >
                 <Logo />
                 <span
-                    class="ml-8 text-6xl font-black text-cblue"
+                    class="ml-8 text-5xl font-black text-cblue"
                     aria-hidden="true"
                     >EXPELLIODOR</span
                 >
             </NuxtLink>
 
-            <!-- <SearchBar /> -->
+            <SearchBar />
             <NavigationMenuList
-                class="mr-8 flex h-full w-1/2 list-none items-center justify-evenly gap-6 p-0 whitespace-nowrap"
+                class="mr-8 flex h-full w-1/2 list-none items-center justify-evenly gap-4 p-0 whitespace-nowrap"
             >
                 <NavItem
                     v-for="item in navItems"

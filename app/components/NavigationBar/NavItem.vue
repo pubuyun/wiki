@@ -27,11 +27,11 @@ const hasDropdown = computed(() => props.links.length > 0);
 </script>
 
 <template>
-    <NavigationMenuItem class="relative inline-block">
+    <NavigationMenuItem class="relative inline-block text-xl">
         <NavigationMenuLink v-if="!hasDropdown" as-child>
             <NuxtLink
                 :to="to"
-                class="inline-flex items-center px-1 py-2 text-2xl font-bold text-cblue no-underline outline-offset-4 hover:text-cblue focus-visible:outline-2 focus-visible:outline-cblue"
+                class="inline-flex items-center px-1 py-2 font-bold text-cblue no-underline outline-offset-4 hover:text-cblue focus-visible:outline-2 focus-visible:outline-cblue"
             >
                 {{ title }}
             </NuxtLink>
@@ -39,7 +39,7 @@ const hasDropdown = computed(() => props.links.length > 0);
 
         <template v-else>
             <NavigationMenuTrigger
-                class="group inline-flex cursor-pointer list-none items-center gap-1 bg-transparent px-1 py-2 text-2xl font-bold text-cblue outline-offset-4 select-none hover:text-cblue focus-visible:outline-2 focus-visible:outline-cblue"
+                class="group inline-flex cursor-pointer list-none items-center gap-1 bg-transparent px-1 py-2 font-bold text-cblue outline-offset-4 select-none hover:text-cblue focus-visible:outline-2 focus-visible:outline-cblue"
             >
                 <span>{{ title }}</span>
                 <span
