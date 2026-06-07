@@ -3,7 +3,7 @@
     "packageManager": "yarn@4.9.1",
     "type": "module",
     "scripts": {
-        "build": "nuxt build",
+        "build": "nuxt build --preset=cloudflare_pages",
         "dev": "nuxt dev",
         "generate": "NUXT_STUDIO=false nuxt generate",
         "preview": "nuxt preview"
@@ -19,9 +19,7 @@
         "nuxt": "^4.4.2",
         "radix-vue": "^1.9.17",
         "tailwindcss": "^4.3.0",
-        "zod": "^4.4.3"
-    },
-    "optionalDependencies": {
+        "zod": "^4.4.3",
         "nuxt-studio": "1.6.1"
     },
     "devDependencies": {

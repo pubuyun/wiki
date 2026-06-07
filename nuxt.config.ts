@@ -25,12 +25,6 @@ export default defineNuxtConfig({
             repo: "wiki",
             branch: "main",
         },
-        auth: {
-            github: {
-                clientId: "Iv23liELgNti4Mb54i9u",
-                clientSecret: process.env.STUDIO_GITHUB_CLIENT_SECRET,
-            },
-        },
     },
     css: ["./app/styles/main.css"],
     devtools: { enabled: true },

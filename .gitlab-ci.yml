@@ -20,7 +20,6 @@ pages:
               - node_modules/.cache/
     before_script:
         - corepack enable
-        - 'node -e "const fs=require(\"fs\"); const p=require(\"./package.json\"); if (p.optionalDependencies) { delete p.optionalDependencies[\"nuxt-studio\"]; if (!Object.keys(p.optionalDependencies).length) delete p.optionalDependencies; } fs.writeFileSync(\"package.json\", JSON.stringify(p, null, 4) + \"\n\");"'
         - yarn install --no-immutable
     script:
         - export NUXT_APP_BASE_URL="/${CI_PROJECT_NAME}/"
