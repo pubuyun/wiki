@@ -4,18 +4,14 @@ image: node:22-alpine
 variables:
     NUXT_STUDIO: "false"
 
-stages:
-    - build
-    - deploy
-
 pages:
     stage: build
-    # cache:
-    #     - key:
-    #           files:
-    #               - yarn.lock
-    #       paths:
-    #           - .yarn-cache/
+    cache:
+        - key:
+              files:
+                  - yarn.lock
+          paths:
+              - .yarn-cache/
     before_script:
         - echo 'yarn-offline-mirror ".yarn-cache/"' >> .yarnrc
         - echo 'yarn-offline-mirror-pruning true' >> .yarnrc
@@ -26,7 +22,7 @@ pages:
         - yarn generate
         - rm -rf public
         - mkdir -p public
-        - cp -a dist/. public/
+        - cp -a .output/public/. public/
     artifacts:
         paths:
             - public
@@ -35,18 +31,3 @@ pages:
           when: never
         - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
           when: always
-
-sync_github:
-    stage: deploy
-    image:
-        name: alpine/git
-        entrypoint: [""]
-    dependencies: []
-    script:
-        - git remote add github "https://x-access-token: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@github.com/pubuyun/wiki.git"
-        - git push github HEAD:main
-    rules:
-        - if: $CI_COMMIT_BRANCH != $CI_DEFAULT_BRANCH
-          when: never
-        - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
-          when: on_success

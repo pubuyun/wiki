@@ -35,9 +35,6 @@ export default defineNuxtConfig({
     css: ["./app/styles/main.css"],
     devtools: { enabled: true },
     compatibilityDate: "2024-04-03",
-    nitro: {
-        preset: "cloudflare-pages",
-    },
     content: {
         build: {
             markdown: {
