@@ -106,15 +106,15 @@
                                             isSearchOpen = false;
                                         "
                                     >
-                                        <article
-                                            class="font-momo-trust-display"
-                                        >
-                                            <h3 class="text-lg">
+                                        <article>
+                                            <h3
+                                                class="font-momo-trust-display text-lg"
+                                            >
                                                 {{ displayTitle(link) }}
                                             </h3>
 
                                             <p
-                                                class="text-xs text-cblue"
+                                                class="text-xs font-normal text-cblue"
                                                 v-html="displayContent(link)"
                                             />
                                         </article>
@@ -170,7 +170,7 @@ function displayTitle(link) {
     if (link.level !== 3) return link.title;
 
     const h2Title = link.titles?.at(-1);
-    return h2Title ? `${h2Title}>${link.title}` : link.title;
+    return h2Title ? `${h2Title} > ${link.title}` : link.title;
 }
 
 function displayContent(link) {
