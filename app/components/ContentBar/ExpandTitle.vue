@@ -81,12 +81,12 @@ function keepExpandedContentVisible() {
             class="overflow-hidden"
         >
             <ul
-                class="ml-20 list-disc space-y-2 marker:text-2xl marker:text-cblue"
+                class="mx-6 list-disc space-y-2 marker:text-2xl marker:text-cblue"
             >
                 <li v-for="value in h2.children" :key="value.id">
                     <NuxtLink
                         :to="`#${value.id}`"
-                        class="block font-momo-trust-display text-xl text-cblue hover:text-corn"
+                        class="block text-center font-momo-trust-display text-cblue hover:text-corn lg:text-lg xl:text-xl"
                     >
                         {{ value.text }}
                     </NuxtLink>

@@ -85,7 +85,10 @@ function bodyWithChildren(body, children) {
             class="flex h-full flex-1 flex-row gap-15 bg-cblue p-10 text-white"
         >
             <aside class="contents">
-                <ContentBar class="w-1/5 shrink-0" :toc="page.body.toc.links" />
+                <ContentBar
+                    class="hidden w-1/5 shrink-0 lg:block"
+                    :toc="page.body.toc.links"
+                />
             </aside>
             <main class="flex flex-1 flex-col gap-6">
                 <section

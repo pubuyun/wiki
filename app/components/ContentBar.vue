@@ -1,6 +1,6 @@
 <template>
     <nav
-        class="sticky top-36 mb-6 max-h-[calc(100vh-11rem)] rounded-[3.5em] bg-azure px-1 py-10 font-momo-trust-display shadow-lg"
+        class="sticky top-36 mb-6 h-min max-h-[calc(100vh-11rem)] rounded-[3.5em] bg-azure px-1 py-10 font-momo-trust-display shadow-lg"
         aria-labelledby="toc-title"
     >
         <!-- <h2
