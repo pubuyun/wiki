@@ -21,7 +21,7 @@
                 :key="child.id"
                 :h2="child"
                 :color="colors[idx % colors.length]!"
-                :flip="idx % 2 == 0"
+                :flip="idx % 2 == 1"
             />
         </div>
         <!-- top gradient -->
