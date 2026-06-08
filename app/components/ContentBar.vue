@@ -24,16 +24,16 @@
                 :flip="idx % 2 == 0"
             />
         </div>
-        <!-- 顶部渐变遮罩（相对于 nav 定位） -->
+        <!-- top gradient -->
         <div
             v-if="canScrollUp"
-            class="pointer-events-none absolute top-10 right-1 left-1 z-10 h-8 rounded-t-2xl bg-linear-to-b from-azure to-transparent"
+            class="pointer-events-none absolute top-10 right-1 left-1 z-10 h-8 rounded-t-lg bg-linear-to-b from-azure to-transparent"
         />
 
-        <!-- 底部渐变遮罩 -->
+        <!-- bottom gradient -->
         <div
             v-if="canScrollDown"
-            class="pointer-events-none absolute right-1 bottom-10 left-1 z-10 h-8 rounded-b-2xl bg-linear-to-t from-azure to-transparent"
+            class="pointer-events-none absolute right-1 bottom-10 left-1 z-10 h-8 rounded-b-lg bg-linear-to-t from-azure to-transparent"
         />
     </nav>
 </template>

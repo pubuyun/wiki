@@ -35,16 +35,16 @@
                 />
             </Transition>
             <Transition
-                enter-active-class="transition-[max-height,opacity] duration-300 ease-out overflow-hidden"
-                enter-from-class="max-h-0 opacity-0"
-                enter-to-class="max-h-[87.5vh] opacity-100"
-                leave-active-class="transition-[max-height,opacity] duration-200 ease-in overflow-hidden"
-                leave-from-class="max-h-[87.5vh] opacity-100"
+                enter-active-class="transition-opacity duration-300 ease-out overflow-hidden"
+                enter-from-class="opacity-0"
+                enter-to-class="opacity-100"
+                leave-active-class="transition-[max-height,opacity] duration-400 ease-in overflow-hidden"
+                leave-from-class="max-h-[70vh] opacity-100"
                 leave-to-class="max-h-0 opacity-0"
             >
                 <DialogContent
                     v-if="isSearchOpen"
-                    class="fixed top-1/6 left-1/2 z-100 max-h-[70vh] min-h-1/6 w-1/2 -translate-x-1/2 overflow-hidden rounded-2xl bg-corn p-6 shadow-lg"
+                    class="fixed top-1/6 left-1/2 z-100 max-h-[70vh] w-1/2 -translate-x-1/2 overflow-hidden rounded-2xl bg-corn p-6 shadow-lg"
                 >
                     <DialogTitle class="sr-only">
                         Search site content
