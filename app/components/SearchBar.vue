@@ -9,6 +9,7 @@
                 <input
                     class="h-full flex-1 rounded-full bg-white"
                     readonly
+                    placeholder="Ctrl + K to search"
                     tabindex="-1"
                 />
                 <Icon icon="lucide:search" class="h-5 w-5" aria-hidden="true" />
@@ -59,6 +60,7 @@
                                 Search site content
                             </label>
                             <input
+                                ref="searchInput"
                                 v-model="query"
                                 type="search"
                                 id="site-search"
@@ -155,6 +157,7 @@ import {
 import { Icon } from "@iconify/vue";
 
 const isSearchOpen = ref(false);
+const searchInput = ref(null);
 
 const query = ref("");
 const result = ref([]);
@@ -165,6 +168,31 @@ const { search } = useSearchCollection("content", {
 
 const hasResults = computed(() => result.value.length > 0 && query.value);
 let latestSearch = 0;
+
+// Keyboard shortcut
+function openSearchFromShortcut(event) {
+    if (event.key.toLowerCase() !== "k" || (!event.ctrlKey && !event.metaKey)) {
+        return;
+    }
+
+    event.preventDefault();
+    isSearchOpen.value = true;
+}
+
+onMounted(() => {
+    window.addEventListener("keydown", openSearchFromShortcut);
+});
+
+onBeforeUnmount(() => {
+    window.removeEventListener("keydown", openSearchFromShortcut);
+});
+
+watch(isSearchOpen, async (open) => {
+    if (!open) return;
+
+    await nextTick();
+    searchInput.value?.focus();
+});
 
 function displayTitle(link) {
     if (link.level !== 3) return link.title;
