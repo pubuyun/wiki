@@ -12,7 +12,6 @@ export default defineNuxtConfig({
                 "@iconify/vue",
                 "@vue/devtools-core",
                 "@vue/devtools-kit",
-                "minisearch",
                 "radix-vue",
             ],
         },

@@ -1,6 +1,6 @@
 <template>
     <nav
-        class="sticky top-36 mb-6 h-min max-h-[calc(100vh-11rem)] rounded-[3.5em] bg-azure px-1 py-10 font-momo-trust-display shadow-lg"
+        class="sticky top-34 mb-6 max-h-[calc(100vh-11rem)] flex-col rounded-[3.5em] bg-azure px-1 py-10 font-momo-trust-display shadow-lg"
         aria-labelledby="toc-title"
     >
         <!-- <h2
@@ -12,7 +12,7 @@
         <h2 class="sr-only" id="toc-title">Table of contents</h2>
 
         <div
-            class="max-h-full w-full scrollbar-none overflow-y-auto"
+            class="max-h-full min-h-0 w-full flex-1 scrollbar-none overflow-y-auto"
             ref="contentScroll"
             @scroll="updateScrollGradients"
         >

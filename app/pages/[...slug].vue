@@ -86,7 +86,7 @@ function bodyWithChildren(body, children) {
         >
             <aside class="contents">
                 <ContentBar
-                    class="hidden w-1/5 shrink-0 lg:block"
+                    class="hidden w-1/5 lg:block"
                     :toc="page.body.toc.links"
                 />
             </aside>
