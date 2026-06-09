@@ -1,5 +1,8 @@
 <template>
-    <h2 :id="props.id" class="flex flex-row items-center justify-center gap-8">
+    <h2
+        :id="props.id"
+        class="scroll-mt-24 flex flex-row items-center justify-center gap-8"
+    >
         <!-- 这个h2必须在最外层 -->
         <span class="flex h-min rounded-4xl bg-sun">
             <span
