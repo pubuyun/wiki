@@ -7,9 +7,9 @@ banner: https://static.igem.wiki/teams/6133/wiki/drylab/model/bindercg3m3shcarto
 
 ### Philosophy
 
-Markdown is intended to be as easy-to-read and easy-to-write as is feasible.  :reference{#1 label="as"}  
+Markdown is intended to be as easy-to-read and easy-to-write as is feasible.  :reference{#1 label="bd"}  
 
-Readability, however, is emphasized above all else. A Markdown-formatted--- Unknown node: hardBreak ---document should be publishable as-is, as plain text, without looking--- Unknown node: hardBreak ---like it's been marked up with tags or formatting instructions. While--- Unknown node: hardBreak ---Markdown's syntax has been influenced by several existing text-to-HTML--- Unknown node: hardBreak ---filters -- including [Setext](http://docutils.sourceforge.net/mirror/setext.html), [atx](http://www.aaronsw.com/2002/atx/), [Textile](http://textism.com/tools/textile/), [reStructuredText](http://docutils.sourceforge.net/rst.html),--- Unknown node: hardBreak ---[Grutatext](http://www.triptico.com/software/grutatxt.html), and [EtText](http://ettext.taint.org/doc/) -- the single biggest source of--- Unknown node: hardBreak ---inspiration for Markdown's syntax is the format of plain text email.
+Readability, however, is emphasized above all else. A Markdown-formatted--- Unknown node: hardBreak ---document should be publishable as-is, as plain text, without looking--- Unknown node: hardBreak ---like it's been marked up with tags or formatting instructions. While--- Unknown node: hardBreak ---Markdown's syntax has been influenced by several existing text-to-HTML--- Unknown node: hardBreak ---filters -- including [Setext](http://docutils.sourceforge.net/mirror/setext.html), [atx](http://www.aaronsw.com/2002/atx/), [Textile](http://textism.com/tools/textile/), [reStructuredText](http://docutils.sourceforge.net/rst.html),--- Unknown node: hardBreak ---[Grutatext](http://www.triptico.com/software/grutatxt.html), and [EtText](http://ettext.taint.org/doc/) -- the single biggest source of--- Unknown node: hardBreak ---inspiration for Markdown's syntax is the format of plain text email. :reference{#2 label="gg"}  
 
 This line is added by NuxtStudio
 
@@ -27,7 +27,7 @@ This line is added by NuxtStudio
 >
 > > This is nested blockquote.
 >
-> Back to the first level.
+> Back to the first level. :reference{#3 label="3"}  
 
 ### Paragraphs and Line Breaks
 
@@ -86,7 +86,7 @@ and code blocks:
 
 ### Lists
 
-Markdown supports ordered (numbered) and unordered (bulleted) lists.
+Markdown supports ordered (numbered) and unordered (bulleted) lists. :reference{#4}  
 
 Unordered lists use asterisks, pluses, and hyphens -- interchangably
 \-- as list markers:
@@ -173,8 +173,7 @@ lazy:
   sit amet, consectetuer adipiscing elit.
 - Another item in the same list.
 
-To put a blockquote within a list item, the blockquote's `>`
-delimiters need to be indented:
+To put a blockquote within a list item, the blockquote's `>`--- Unknown node: hardBreak ---delimiters need to be indented: :reference{#5}  
 
 - A list item with a blockquote:
   > This is a blockquote
@@ -277,12 +276,10 @@ normal paragraph. For example:
 
 Use the `printf()` function.
 
-## Footnotes
+## Foot Notes
 
-::ref-list
-  :::ref-item{#1}
-  Reference ID 1
-  :::
-
-:ref-item
-::
+1. :ref-fn[Reference ID 1 Baidu.com]{#1 link="https://www.baidu.com"}
+2. :ref-fn[Reference ID 2 Google.com]{#2 link="https://www.google.com"}
+3. :ref-fn[Reference ID 3]{#3}
+4. :ref-fn[Reference ID 4]{#4}
+5. :ref-fn[Reference ID 5]{#5}

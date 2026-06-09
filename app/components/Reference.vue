@@ -1,8 +1,8 @@
 <template>
     <a
-        :href="`#fn-${id}`"
-        :id="`fnref-${id}`"
-        class="mx-0.5 align-super text-xs font-bold text-vred no-underline hover:text-persimmon"
+        :href="`#fnref-${id}`"
+        :id="`ref-${id}`"
+        class="mx-0.5 scroll-mt-24 align-super text-xs font-bold text-vred no-underline hover:text-persimmon"
     >
         {{ label || id }}
     </a>
