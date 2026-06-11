@@ -1,10 +1,8 @@
 ---
 title: Members
-description:
 ---
 
 ## Overview
-
 
 This is the main page displaying Markdown located at [content/index.md](https://github.com/nuxt/starter/blob/content/content/index.md).
 
@@ -13,6 +11,11 @@ Move to [about](/about) page.
 ### Manage your Contents
 
 Create new pages or modify the existing ones in `content/` directory.
+
+大家在这里写下自己的名字表示成功完成了文案编辑的测试任务：
+
+1. Willes
+2. Ion
 
 ### Query & Render Pages
 
