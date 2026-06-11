@@ -16,8 +16,7 @@ Create new pages or modify the existing ones in `content/` directory.
 
 1. Willes
 2. Ion
-3. Mark
-4. Emma
+3. Roxanne
 
 ### Query & Render Pages
 
