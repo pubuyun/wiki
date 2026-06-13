@@ -7,6 +7,7 @@
             v-if="props.id && generate"
             :href="`#${props.id}`"
             class="text-inherit no-underline"
+            @click="scrollToHash($event, props.id)"
         >
             <slot />
         </a>
@@ -18,6 +19,7 @@
 import { computed, useRuntimeConfig } from "#imports";
 
 const props = defineProps<{ id?: string }>();
+const { scrollToHash } = useHashScroll();
 
 const { headings } = useRuntimeConfig().public.mdc;
 const generate = computed(

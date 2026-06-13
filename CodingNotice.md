@@ -23,3 +23,12 @@ data-critical-image attribute is added to imgs that need to be loaded before the
         -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 }
 ```
+
+### Scrolling
+
+use this for navigation in the same page
+
+```js
+@click="scrollToHash($event, props.id)"
+const scrollToHash = useScrollToHash();
+```

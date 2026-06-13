@@ -3,6 +3,7 @@
         :href="props.href"
         :target="props.target"
         class="font-semibold text-azure underline decoration-azure/30 decoration-2 underline-offset-4 transition-colors hover:text-azure/80 hover:decoration-cblue/60"
+        @click="scrollToHash($event, props.href)"
     >
         <slot />
     </NuxtLink>
@@ -30,4 +31,6 @@ const props = defineProps({
         required: false,
     },
 });
+
+const { scrollToHash } = useHashScroll();
 </script>

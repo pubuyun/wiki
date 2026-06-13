@@ -46,6 +46,7 @@
                                     <a
                                         :href="`#${value.id}`"
                                         :class="h3Class(value.id)"
+                                        @click="scrollToHash($event, value.id)"
                                     >
                                         {{ value.text }}
                                     </a>
@@ -53,7 +54,12 @@
                             </ul>
                         </AccordionContent>
                     </AccordionItem>
-                    <a v-else :href="`#${child.id}`" :class="h2Class()">
+                    <a
+                        v-else
+                        :href="`#${child.id}`"
+                        :class="h2Class()"
+                        @click="scrollToHash($event, child.id)"
+                    >
                         <span
                             :class="h2DecorationClass(child.id)"
                             aria-hidden="true"
@@ -98,6 +104,7 @@ const h3Style =
     "block text-left font-momo-trust-display text-white hover:text-corn lg:text-lg xl:text-xl";
 const activeH3Style =
     "text-sun underline decoration-2 decoration-sun underline-offset-4";
+const scrollSpyActivationOffset = 8;
 
 interface ToCLink {
     id: string;
@@ -109,6 +116,7 @@ const props = defineProps<{
     toc: ToCLink[];
 }>();
 
+const { scrollToHash } = useHashScroll();
 const expandedItems = ref<string[]>([]);
 const activeH2Id = ref<string>();
 const activeH3Id = ref<string>();
@@ -177,7 +185,8 @@ function updateActiveHeading() {
     const headings = collectArticleHeadings();
     if (!headings.length) return;
 
-    const scrollLine = window.scrollY + getScrollPaddingTop();
+    const scrollLine =
+        window.scrollY + getScrollPaddingTop() + scrollSpyActivationOffset;
     let current = headings[0]!;
     for (const heading of headings) {
         if (headingStartOffset(heading) <= scrollLine) {
@@ -193,7 +202,8 @@ function updateActiveHeading() {
 
     if (
         currentH2Id &&
-        (expandedItems.value[0] !== currentH2Id || expandedItems.value.length > 1)
+        (expandedItems.value[0] !== currentH2Id ||
+            expandedItems.value.length > 1)
     ) {
         expandedItems.value = [currentH2Id];
     }
