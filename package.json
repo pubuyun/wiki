@@ -16,6 +16,8 @@
         "@tailwindcss/vite": "^4.3.0",
         "better-sqlite3": "^12.9.0",
         "echarts": "^6.0.0",
+        "molstar": "4.0.1",
+        "molstar-viewer-vue": "^1.1.1",
         "nuxt": "^4.4.2",
         "nuxt-echarts": "1.0.1",
         "nuxt-studio": "1.6.1",

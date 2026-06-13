@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
     <div class="p-4">Congratulations! You found the test page.</div>
     <div class="flex w-full flex-col">
         <VChart :option="option" autoresize />
@@ -24,4 +24,15 @@ const option = {
         },
     ],
 };
-</script>
+</script> -->
+<template>
+    <div class="relative flex flex-1 flex-col">
+        <ClientOnly>
+            <StructureViewer />
+        </ClientOnly>
+    </div>
+</template>
+
+<script></script>
+
+<style></style>
