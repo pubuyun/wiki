@@ -43,6 +43,7 @@ const navItems = [
         links: [
             { to: "/model", label: "Model" },
             { to: "/software", label: "Software" },
+            { to: "/test", label: "Test" },
         ],
     },
 ];

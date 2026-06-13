@@ -5,6 +5,7 @@ export default defineNuxtConfig({
     modules: [
         "@nuxt/content",
         ...(process.env.NUXT_STUDIO !== "false" ? ["nuxt-studio"] : []),
+        "nuxt-echarts",
     ],
     vite: {
         optimizeDeps: {
@@ -13,9 +14,15 @@ export default defineNuxtConfig({
                 "@vue/devtools-core",
                 "@vue/devtools-kit",
                 "radix-vue",
+                "vue-echarts",
             ],
         },
         plugins: [tailwindcss()],
+    },
+    echarts: {
+        renderer: "canvas",
+        charts: ["BarChart"],
+        components: ["TitleComponent", "TooltipComponent", "GridComponent"],
     },
     studio: {
         repository: {

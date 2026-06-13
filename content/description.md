@@ -1,5 +1,6 @@
 ---
 title: Description
+banner: https://static.igem.wiki/teams/6133/wiki/project/project/description-banner.avif
 ---
 
 ## Overview
@@ -41,7 +42,7 @@ significantly from most other text-to-HTML formatters (including Movable
 Type's "Convert Line Breaks" option) which translate every line break
 character in a paragraph into a `<br />` tag.
 
-When you *do* want to insert a `<br />` break tag using Markdown, you
+When you _do_ want to insert a `<br />` break tag using Markdown, you
 end a line with two or more spaces, then type return.
 
 ### Headers
@@ -165,27 +166,27 @@ paragraphs, but here again, Markdown will allow you to be
 lazy:
 
 - This is a list item with two paragraphs.
-  ```text
-    This is the second paragraph in the list item. You're
-  ```
-  : bronly required to indent the first line. Lorem ipsum dolor
-  sit amet, consectetuer adipiscing elit.
+    ```text
+      This is the second paragraph in the list item. You're
+    ```
+    : bronly required to indent the first line. Lorem ipsum dolor
+    sit amet, consectetuer adipiscing elit.
 - Another item in the same list.
 
 To put a blockquote within a list item, the blockquote's `>`
 delimiters need to be indented:
 
 - A list item with a blockquote:
-  > This is a blockquote
-  > inside a list item.
+    > This is a blockquote
+    > inside a list item.
 
 To put a code block within a list item, the code block needs
-to be indented *twice* -- 8 spaces or two tabs:
+to be indented _twice_ -- 8 spaces or two tabs:
 
 - A list item with a code block:
-  ```text
-    <code goes here>
-  ```
+    ```text
+      <code goes here>
+    ```
 
 ### Code Blocks
 
@@ -240,13 +241,13 @@ end tell
 
 ### Links
 
-Markdown supports two style of links: *inline* and *reference*.
+Markdown supports two style of links: _inline_ and _reference_.
 
 In both styles, the link text is delimited by [square brackets].
 
 To create an inline link, use a set of regular parentheses immediately
 after the link text's closing square bracket. Inside the parentheses,
-put the URL where you want the link to point, along with an *optional*
+put the URL where you want the link to point, along with an _optional_
 title for the link, surrounded in quotes. For example:
 
 This is [an example](http://example.com/) inline link.
@@ -260,9 +261,9 @@ emphasis. Text wrapped with one `*` or `_` will be wrapped with an
 HTML `<em>` tag; double `*`'s or `_`'s will be wrapped with an HTML
 `<strong>` tag. E.g., this input:
 
-*single asterisks*
+_single asterisks_
 
-*single underscores*
+_single underscores_
 
 **double asterisks**
 
