@@ -37,7 +37,7 @@
     </div>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import "molstar/build/viewer/molstar";
 import MolstarViewer from "molstar-viewer-vue";
 
@@ -81,13 +81,13 @@ const selectedStructureUrl = computed(
     max-height: 100%;
 }
 
-.structure-viewer :deep(.msp-layout-left) {
+.structure-viewer :deep(.msp-layout-left),
+.structure-viewer :deep(.msp-layout-bottom) {
     display: none;
 }
 
 .structure-viewer :deep(.msp-layout-main),
-.structure-viewer :deep(.msp-layout-top),
-.structure-viewer :deep(.msp-layout-bottom) {
+.structure-viewer :deep(.msp-layout-top) {
     left: 0;
 }
 </style>
