@@ -57,7 +57,7 @@ const navItems = [
         :delay-duration="100"
     >
         <nav
-            class="flex items-center justify-between gap-10 overflow-visible bg-corn font-righteous sm:h-6 md:h-12 lg:h-18 xl:h-24"
+            class="flex items-center justify-between gap-10 overflow-visible bg-corn font-righteous md:h-6 lg:h-12 xl:h-18"
         >
             <NuxtLink
                 to="/"
@@ -74,7 +74,7 @@ const navItems = [
 
             <SearchBar />
             <NavigationMenuList
-                class="mr-8 flex h-full w-1/2 list-none items-center justify-evenly gap-4 p-0 whitespace-nowrap md:text-base lg:text-xl xl:text-2xl"
+                class="mr-8 flex h-full w-1/2 list-none items-center justify-evenly gap-4 p-0 whitespace-nowrap md:text-base lg:text-lg xl:text-xl"
             >
                 <NavItem
                     v-for="item in navItems"

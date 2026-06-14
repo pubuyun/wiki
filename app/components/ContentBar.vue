@@ -1,6 +1,6 @@
 <template>
     <nav
-        class="sticky top-34 mb-6 max-h-[calc(100vh-11rem)] flex-col overflow-hidden rounded-r-[3.5em] bg-azure font-momo-trust-display shadow-lg"
+        class="sticky top-34 mb-6 max-h-[calc(100vh-11rem)] flex-col overflow-hidden rounded-r-[3.5em] bg-azure pt-20 pb-10 font-momo-trust-display shadow-lg"
         aria-labelledby="toc-title"
     >
         <h2 class="sr-only" id="toc-title">Table of contents</h2>
@@ -14,7 +14,6 @@
                 v-model="expandedItems"
                 type="multiple"
                 class="w-full"
-                @update:model-value="keepExpandedContentVisible"
             >
                 <template v-for="child in toc" :key="child.id">
                     <AccordionItem
@@ -74,13 +73,13 @@
         <!-- top gradient -->
         <div
             v-if="canScrollUp"
-            class="pointer-events-none absolute top-0 right-0 left-0 z-10 h-8 rounded-t-lg bg-linear-to-b from-azure to-transparent"
+            class="pointer-events-none absolute top-20 z-10 h-8 w-full bg-linear-to-b from-azure to-transparent"
         />
 
         <!-- bottom gradient -->
         <div
             v-if="canScrollDown"
-            class="pointer-events-none absolute right-0 bottom-0 left-0 z-10 h-8 rounded-b-lg bg-linear-to-t from-azure to-transparent"
+            class="pointer-events-none absolute bottom-10 z-10 h-8 w-full bg-linear-to-t from-azure to-transparent"
         />
     </nav>
 </template>
@@ -98,8 +97,8 @@ const h2Style =
 const h2DecorationStyle = "w-4 shrink-0 transition-colors duration-300";
 const activeH2DecorationStyle = "bg-cblue";
 const h2TextStyle =
-    "flex flex-1 items-center justify-center rounded-full px-4 py-3 text-center transition-colors duration-300 group-hover:bg-spray group-hover:text-cblue";
-const activeH2TextStyle = "text-cblue";
+    "mx-0 flex flex-1 items-center justify-center rounded-2xl px-4 py-3 text-center transition-[margin,background-color,color] duration-300 ease-out group-hover:mx-5 group-hover:bg-spray group-hover:text-cblue";
+const activeH2TextStyle = "rounded-none bg-bermuda text-cblue";
 const h3Style =
     "block text-left font-momo-trust-display text-white hover:text-corn lg:text-lg xl:text-xl";
 const activeH3Style =
@@ -123,6 +122,7 @@ const activeH3Id = ref<string>();
 const contentScroll = ref<HTMLDivElement | null>(null);
 const canScrollUp = ref(false);
 const canScrollDown = ref(false);
+let hashScrollUntil = 0;
 let stopScrollSpy: (() => void) | undefined;
 
 function updateScrollGradients() {
@@ -135,16 +135,6 @@ function updateScrollGradients() {
 
     canScrollUp.value = scrollTop > 0;
     canScrollDown.value = scrollTop + clientHeight < scrollHeight - 1;
-}
-async function keepExpandedContentVisible() {
-    await nextTick();
-    contentScroll.value
-        ?.querySelector(".content-bar-accordion-content[data-state='open']")
-        ?.scrollIntoView({
-            behavior: "smooth",
-            block: "nearest",
-            inline: "nearest",
-        });
 }
 function h2Class() {
     return h2Style;
@@ -181,7 +171,23 @@ function parentH2For(id: string) {
     )?.id;
 }
 
+function setActiveHeading(id: string, isH3: boolean) {
+    const currentH2Id = parentH2For(id);
+    activeH2Id.value = currentH2Id;
+    activeH3Id.value = isH3 ? id : undefined;
+
+    if (
+        currentH2Id &&
+        (expandedItems.value[0] !== currentH2Id ||
+            expandedItems.value.length > 1)
+    ) {
+        expandedItems.value = [currentH2Id];
+    }
+}
+
 function updateActiveHeading() {
+    if (Date.now() < hashScrollUntil) return;
+
     const headings = collectArticleHeadings();
     if (!headings.length) return;
 
@@ -194,19 +200,15 @@ function updateActiveHeading() {
         }
     }
 
-    const currentId = current.id;
-    const currentH2Id = parentH2For(currentId);
-    activeH2Id.value = currentH2Id;
-    activeH3Id.value =
-        current.tagName.toLowerCase() === "h3" ? currentId : undefined;
+    setActiveHeading(current.id, current.tagName.toLowerCase() === "h3");
+}
 
-    if (
-        currentH2Id &&
-        (expandedItems.value[0] !== currentH2Id ||
-            expandedItems.value.length > 1)
-    ) {
-        expandedItems.value = [currentH2Id];
-    }
+function lockToHashScrollDestination(id: string) {
+    const target = document.getElementById(id);
+    const isH3 = target?.tagName.toLowerCase() === "h3";
+
+    setActiveHeading(id, isH3);
+    hashScrollUntil = Date.now() + 1800;
 }
 
 function getScrollPaddingTop() {
@@ -230,15 +232,24 @@ function setupScrollSpy() {
         requestAnimationFrame(update);
         window.setTimeout(update, 300);
         window.setTimeout(update, 700);
+        window.setTimeout(update, 1850);
+    };
+    const updateForHashScroll = (event: Event) => {
+        const { id } = (event as CustomEvent<{ id?: string }>).detail ?? {};
+        if (id) {
+            lockToHashScrollDestination(id);
+        }
     };
 
     window.addEventListener("scroll", update, { passive: true });
     window.addEventListener("resize", update);
     window.addEventListener("hashchange", updateAfterAnchorScroll);
+    window.addEventListener("wiki:hash-scroll", updateForHashScroll);
     stopScrollSpy = () => {
         window.removeEventListener("scroll", update);
         window.removeEventListener("resize", update);
         window.removeEventListener("hashchange", updateAfterAnchorScroll);
+        window.removeEventListener("wiki:hash-scroll", updateForHashScroll);
     };
 
     update();

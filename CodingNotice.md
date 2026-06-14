@@ -29,6 +29,6 @@ data-critical-image attribute is added to imgs that need to be loaded before the
 use this for navigation in the same page
 
 ```js
-@click="scrollToHash($event, props.id)"
-const scrollToHash = useScrollToHash();
+@click="scrollToHash($event, to)"
+const { scrollToHash } = useHashScroll();
 ```

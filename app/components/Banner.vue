@@ -1,7 +1,7 @@
 <template>
     <div class="grid leading-none">
         <img
-            class="col-1 row-1 h-200 w-full object-cover"
+            class="col-1 row-1 h-[90vh] w-full object-cover"
             :src="imgSrc"
             alt=""
         />

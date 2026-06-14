@@ -3,6 +3,7 @@
         :href="`#fnref-${id}`"
         :id="`ref-${id}`"
         class="mx-0.5 scroll-mt-24 align-super text-xs font-bold text-vred no-underline hover:text-persimmon"
+        @click="scrollToHash($event, `fnref-${id}`)"
     >
         {{ label || id }}
     </a>
@@ -19,4 +20,5 @@ const props = defineProps({
         default: "",
     },
 });
+const { scrollToHash } = useHashScroll();
 </script>

@@ -13,6 +13,7 @@
         :href="`#ref-${id}`"
         class="ml-2 font-bold text-azure no-underline hover:text-vred"
         aria-label="Back to reference"
+        @click="scrollToHash($event, `#ref-${id}`)"
     >
         ↩
     </a>
@@ -29,4 +30,5 @@ const props = defineProps({
         default: "",
     },
 });
+const { scrollToHash } = useHashScroll();
 </script>

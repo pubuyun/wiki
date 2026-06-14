@@ -12,6 +12,9 @@ export function useHashScroll() {
         const hash = `#${encodeURIComponent(id)}`;
         const newUrl = `${window.location.pathname}${window.location.search}${hash}`;
         window.history.pushState(null, "", newUrl);
+        window.dispatchEvent(
+            new CustomEvent("wiki:hash-scroll", { detail: { id } }),
+        );
         scrollToTarget(target);
         window.dispatchEvent(
             new HashChangeEvent("hashchange", {
