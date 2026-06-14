@@ -1,12 +1,42 @@
 <template>
     <nav
-        class="sticky top-34 mb-6 max-h-[calc(100vh-11rem)] flex-col overflow-hidden rounded-r-[3.5em] bg-azure pt-20 pb-10 font-momo-trust-display shadow-lg"
+        :class="contentBarClass"
+        :data-content-bar-collapsed="collapsed"
         aria-labelledby="toc-title"
     >
         <h2 class="sr-only" id="toc-title">Table of contents</h2>
+        <button
+            type="button"
+            :class="collapseButtonClass"
+            :aria-controls="contentId"
+            :aria-expanded="!collapsed"
+            :aria-label="
+                collapsed
+                    ? 'Expand table of contents'
+                    : 'Collapse table of contents'
+            "
+            @click="collapsed = !collapsed"
+        >
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="-6 -7 18 14"
+                class="h-16 w-24 transition-transform duration-300"
+                :class="collapsed && 'rotate-180'"
+                aria-hidden="true"
+            >
+                <path d="M9 6 0 0 9-6Z" fill="currentColor" />
+                <path
+                    d="M-6 0 5-7 5.393-6.024-4 0 5.479 6.01 5 7-6 0Z"
+                    fill="currentColor"
+                />
+            </svg>
+        </button>
 
         <div
+            v-show="!collapsed"
+            :id="contentId"
             class="max-h-full min-h-0 w-full flex-1 scrollbar-none overflow-y-auto"
+            :aria-hidden="collapsed"
             ref="contentScroll"
             @scroll="updateScrollGradients"
         >
@@ -35,20 +65,30 @@
                         <AccordionContent
                             class="content-bar-accordion-content overflow-hidden data-[state=closed]:animate-[content-bar-slide-up_500ms_ease-in] data-[state=open]:animate-[content-bar-slide-down_500ms_ease-out]"
                         >
-                            <ul
-                                class="mr-6 ml-24 list-disc space-y-2 py-2 marker:text-2xl marker:text-white"
-                            >
+                            <ul class="ml-4 space-y-2 py-2">
                                 <li
                                     v-for="value in child.children"
                                     :key="value.id"
+                                    class="flex justify-center"
                                 >
-                                    <a
-                                        :href="`#${value.id}`"
-                                        :class="h3Class(value.id)"
-                                        @click="scrollToHash($event, value.id)"
+                                    <div
+                                        class="flex w-4/5 -translate-x-4 items-center"
                                     >
-                                        {{ value.text }}
-                                    </a>
+                                        <span
+                                            class="h-2 w-2 shrink-0 rounded-full bg-white"
+                                            aria-hidden="true"
+                                        />
+                                        <a
+                                            :href="`#${value.id}`"
+                                            :class="h3Class(value.id)"
+                                            :data-content-bar-h3-id="value.id"
+                                            @click="
+                                                scrollToHash($event, value.id)
+                                            "
+                                        >
+                                            {{ value.text }}
+                                        </a>
+                                    </div>
                                 </li>
                             </ul>
                         </AccordionContent>
@@ -72,13 +112,13 @@
         </div>
         <!-- top gradient -->
         <div
-            v-if="canScrollUp"
-            class="pointer-events-none absolute top-20 z-10 h-8 w-full bg-linear-to-b from-azure to-transparent"
+            v-if="!collapsed && canScrollUp"
+            class="pointer-events-none absolute top-18 z-10 h-8 w-full bg-linear-to-b from-azure to-transparent"
         />
 
         <!-- bottom gradient -->
         <div
-            v-if="canScrollDown"
+            v-if="!collapsed && canScrollDown"
             class="pointer-events-none absolute bottom-10 z-10 h-8 w-full bg-linear-to-t from-azure to-transparent"
         />
     </nav>
@@ -93,17 +133,22 @@ import {
 } from "radix-vue";
 
 const h2Style =
-    "group flex w-full items-stretch text-4xl text-white focus-visible:ring-2 focus-visible:ring-white focus-visible:outline-none";
-const h2DecorationStyle = "w-4 shrink-0 transition-colors duration-300";
-const activeH2DecorationStyle = "bg-cblue";
+    "group m-2 flex w-[calc(100%-1rem)] items-stretch text-white focus-visible:ring-2 focus-visible:ring-white focus-visible:outline-none md:text-lg lg:text-xl xl:text-2xl";
+const h2DecorationStyle =
+    "w-4 shrink-0 transition-[margin,width,background-color] duration-300 ease-out";
+const activeH2DecorationStyle = "-ml-2 w-6 bg-cblue";
 const h2TextStyle =
-    "mx-0 flex flex-1 items-center justify-center rounded-2xl px-4 py-3 text-center transition-[margin,background-color,color] duration-300 ease-out group-hover:mx-5 group-hover:bg-spray group-hover:text-cblue";
-const activeH2TextStyle = "rounded-none bg-bermuda text-cblue";
+    "flex flex-1 items-center justify-center rounded-2xl px-4 py-2 text-center transition-[margin,border-radius] duration-300 ease-out";
+const activeH2TextStyle = "-mr-2 rounded-none bg-bermuda text-cblue";
 const h3Style =
-    "block text-left font-momo-trust-display text-white hover:text-corn lg:text-lg xl:text-xl";
+    "block pl-4 text-left font-momo-trust-display text-white hover:text-corn md:text-md lg:text-lg xl:text-xl";
 const activeH3Style =
     "text-sun underline decoration-2 decoration-sun underline-offset-4";
 const scrollSpyActivationOffset = 8;
+const hashScrollLockDuration = 2400;
+const contentId = "content-bar-toc";
+const expandedContentBarClass = "w-1/6 pt-18 pb-10";
+const collapsedContentBarClass = "h-24 w-18 pt-6 pb-6";
 
 interface ToCLink {
     id: string;
@@ -116,6 +161,7 @@ const props = defineProps<{
 }>();
 
 const { scrollToHash } = useHashScroll();
+const collapsed = ref(false);
 const expandedItems = ref<string[]>([]);
 const activeH2Id = ref<string>();
 const activeH3Id = ref<string>();
@@ -124,6 +170,14 @@ const canScrollUp = ref(false);
 const canScrollDown = ref(false);
 let hashScrollUntil = 0;
 let stopScrollSpy: (() => void) | undefined;
+
+const contentBarClass = computed(() => [
+    "sticky top-34 mb-6 max-h-[calc(100vh-11rem)] flex-col overflow-hidden rounded-r-[3.5em] bg-azure font-momo-trust-display shadow-lg transition-[width,height,padding] duration-300 ease-out",
+    collapsed.value ? collapsedContentBarClass : expandedContentBarClass,
+]);
+const collapseButtonClass = computed(() => [
+    "absolute top-4 right-4 z-20 flex h-16 w-14 items-center justify-center rounded-full text-bermuda transition-colors duration-300 hover:text-spray focus-visible:ring-2 focus-visible:ring-white focus-visible:outline-none",
+]);
 
 function updateScrollGradients() {
     const el = contentScroll.value;
@@ -148,11 +202,44 @@ function h2DecorationClass(id: string) {
 }
 
 function h2TextClass(id: string) {
-    return [h2TextStyle, activeH2Id.value === id && activeH2TextStyle];
+    return [
+        h2TextStyle,
+        activeH2Id.value === id
+            ? activeH2TextStyle
+            : "group-hover:bg-spray group-hover:text-cblue",
+    ];
 }
 
 function h3Class(id: string) {
     return [h3Style, activeH3Id.value === id && activeH3Style];
+}
+
+async function keepActiveH3InView(id: string) {
+    if (collapsed.value) return;
+
+    await nextTick();
+    const scroller = contentScroll.value;
+    const link = findContentBarH3Link(id);
+    if (!scroller || !link) return;
+
+    const scrollerRect = scroller.getBoundingClientRect();
+    const linkRect = link.getBoundingClientRect();
+    const linkCenter = linkRect.top + linkRect.height / 2;
+    const scrollerCenter = scrollerRect.top + scrollerRect.height / 2;
+
+    scroller.scrollBy({
+        top: linkCenter - scrollerCenter,
+        behavior: "smooth",
+    });
+}
+
+function findContentBarH3Link(id: string) {
+    const escapedId =
+        typeof CSS !== "undefined" && CSS.escape ? CSS.escape(id) : id;
+
+    return contentScroll.value?.querySelector<HTMLElement>(
+        `[data-content-bar-h3-id="${escapedId}"]`,
+    );
 }
 
 function collectArticleHeadings() {
@@ -208,7 +295,7 @@ function lockToHashScrollDestination(id: string) {
     const isH3 = target?.tagName.toLowerCase() === "h3";
 
     setActiveHeading(id, isH3);
-    hashScrollUntil = Date.now() + 1800;
+    hashScrollUntil = Date.now() + hashScrollLockDuration;
 }
 
 function getScrollPaddingTop() {
@@ -229,10 +316,7 @@ function setupScrollSpy() {
     stopScrollSpy?.();
     const update = () => updateActiveHeading();
     const updateAfterAnchorScroll = () => {
-        requestAnimationFrame(update);
-        window.setTimeout(update, 300);
-        window.setTimeout(update, 700);
-        window.setTimeout(update, 1850);
+        window.setTimeout(update, hashScrollLockDuration + 50);
     };
     const updateForHashScroll = (event: Event) => {
         const { id } = (event as CustomEvent<{ id?: string }>).detail ?? {};
@@ -258,6 +342,11 @@ function setupScrollSpy() {
 watch(contentScroll, (newVal) => {
     if (newVal) {
         updateScrollGradients();
+    }
+});
+watch(activeH3Id, async (id) => {
+    if (id) {
+        await keepActiveH3InView(id);
     }
 });
 watch(
