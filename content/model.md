@@ -13,6 +13,12 @@ Readability, however, is emphasized above all else. A Markdown-formatted--- Unkn
 
 This line is added by NuxtStudio
 
+| Feature     | Description                         | Status   |
+| ----------- | ----------------------------------- | -------- |
+| MDC Syntax  | Vue components directly in Markdown | Ready    |
+| Code Blocks | Native syntax highlighting          | Built-in |
+| File-based  | Works like a local Headless CMS     | Active   |
+
 ## Block Elements
 
 > This is a blockquote with two paragraphs. Lorem ipsum dolor sit amet,

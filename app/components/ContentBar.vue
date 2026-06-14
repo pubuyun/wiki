@@ -5,6 +5,13 @@
         aria-labelledby="toc-title"
     >
         <h2 class="sr-only" id="toc-title">Table of contents</h2>
+        <div
+            v-show="!collapsed"
+            class="absolute top-4 right-18 left-0 z-10 flex h-16 items-center justify-center text-lg text-cblue xl:text-2xl"
+            aria-hidden="true"
+        >
+            Contents
+        </div>
         <button
             type="button"
             :class="collapseButtonClass"
@@ -65,7 +72,7 @@
                         <AccordionContent
                             class="content-bar-accordion-content overflow-hidden data-[state=closed]:animate-[content-bar-slide-up_500ms_ease-in] data-[state=open]:animate-[content-bar-slide-down_500ms_ease-out]"
                         >
-                            <ul class="ml-4 space-y-2 py-2">
+                            <ul class="ml-8 space-y-2">
                                 <li
                                     v-for="value in child.children"
                                     :key="value.id"
@@ -135,13 +142,13 @@ import {
 const h2Style =
     "group m-2 flex w-[calc(100%-1rem)] items-stretch text-white focus-visible:ring-2 focus-visible:ring-white focus-visible:outline-none md:text-lg lg:text-xl xl:text-2xl";
 const h2DecorationStyle =
-    "w-4 shrink-0 transition-[margin,width,background-color] duration-300 ease-out";
-const activeH2DecorationStyle = "-ml-2 w-6 bg-cblue";
+    "w-1 shrink-0 transition-[margin,width,background-color] duration-300 ease-out";
+const activeH2DecorationStyle = "-ml-2 w-1 bg-cblue";
 const h2TextStyle =
-    "flex flex-1 items-center justify-center rounded-2xl px-4 py-2 text-center transition-[margin,border-radius] duration-300 ease-out";
+    "flex flex-1 items-center justify-center rounded-2xl px-4 py-2 text-center transition-[margin,border-radius,color,background-color] duration-300 ease-out";
 const activeH2TextStyle = "-mr-2 rounded-none bg-bermuda text-cblue";
 const h3Style =
-    "block pl-4 text-left font-momo-trust-display text-white hover:text-corn md:text-md lg:text-lg xl:text-xl";
+    "block pl-4 text-left font-belanosima text-white hover:text-corn md:text-md lg:text-lg xl:text-xl";
 const activeH3Style =
     "text-sun underline decoration-2 decoration-sun underline-offset-4";
 const scrollSpyActivationOffset = 8;

@@ -3,7 +3,7 @@
         <!-- Desktop / larger than lg -->
         <DialogTrigger
             aria-label="Open search dialog"
-            class="mr-8 ml-5 h-1/2 max-w-96 flex-1 rounded-full bg-cblue pr-3 max-xl:hidden"
+            class="mr-8 ml-5 h-2/3 max-w-96 flex-1 rounded-full bg-cblue pr-3 max-xl:hidden"
         >
             <div class="flex h-full items-center gap-2 p-1 text-white">
                 <input
@@ -19,9 +19,9 @@
         <!-- lg and lower -->
         <DialogTrigger
             aria-label="Open search dialog"
-            class="z-100 hidden items-center gap-2 rounded-full bg-sun px-4 py-4 text-cblue shadow-md hover:bg-azure focus:ring-2 focus:ring-bermuda focus:ring-offset-2 focus:outline-none max-xl:inline-flex"
+            class="z-100 hidden items-center gap-2 rounded-full bg-sun p-2 text-cblue shadow-md hover:bg-azure focus:ring-2 focus:ring-bermuda focus:ring-offset-2 focus:outline-none max-xl:inline-flex"
         >
-            <Icon icon="lucide:search" class="h-5 w-5" aria-hidden="true" />
+            <Icon icon="lucide:search" class="h-3 w-3" aria-hidden="true" />
         </DialogTrigger>
 
         <DialogPortal>
