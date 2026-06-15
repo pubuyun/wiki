@@ -14,13 +14,11 @@ pages:
           paths:
               - .yarn/cache/
               - .yarn/berry/
-              - node_modules/
               - .nuxt/
               - .cache/
-              - node_modules/.cache/
     before_script:
         - corepack enable
-        - yarn install --no-immutable
+        - yarn install --immutable
     script:
         - export NUXT_APP_BASE_URL="/${CI_PROJECT_NAME}/"
         - yarn generate
