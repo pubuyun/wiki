@@ -20,6 +20,7 @@ Create new pages or modify the existing ones in `content/` directory.
 4. Sisi Sun
 5. Juan Zhang
 6. Nina
+7. Riley
 
 ### Query & Render Pages
 
