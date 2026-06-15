@@ -16,7 +16,7 @@
                 transform="translate(0,0.1)"
             />
             <path
-                class="fill-primary-dark"
+                class="fill-primary-deep"
                 d="M 0 0 V -9 c 0.3 0 1.473 0.275 3.585 2.585 q 2.067 1.96 4.483 0.805 q 1.642 -0.82 3.237 -0.836 q 1.509 0 2.779 1.04 c 4.291 3.395 4.703 -0.429 10.146 -0.422 Q 27.8 -5.9 30.3 -1.8 q 0.619 0.865 1.4 1.8"
                 transform="translate(0,0.1)"
             />

@@ -7,12 +7,12 @@ data-critical-image attribute is added to imgs that need to be loaded before the
 ```css
 @theme {
     --color-secondary: #65dbbe;
-    --color-primary-dark: #142e85;
+    --color-primary-deep: #142e85;
     --color-tertiary: #ffec8e;
     --color-tertiary: #ffda3a;
 
     --color-primary-norm: #4f7fff;
-    --color-primary-dark: #fa5c4f;
+    --color-primary-deep: #fa5c4f;
     --color-secondary: #ff3e8a;
     --color-primary-light: #c6eeff;
     --color-primary-light: #81ebf9;

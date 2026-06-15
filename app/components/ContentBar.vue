@@ -7,7 +7,7 @@
         <h2 class="sr-only" id="toc-title">Table of contents</h2>
         <div
             v-if="contentTextRendered"
-            class="absolute top-4 right-18 left-0 z-10 flex h-16 items-center justify-center text-primary-dark lg:text-xl xl:text-3xl"
+            class="absolute top-4 right-18 left-0 z-10 flex h-16 items-center justify-center text-primary-deep lg:text-xl xl:text-3xl"
             :class="contentTextClass"
             aria-hidden="true"
         >
@@ -145,7 +145,7 @@ const h2Style =
     "group m-2 flex w-[calc(100%-1rem)] items-stretch focus-visible:ring-2 focus-visible:ring-white focus-visible:outline-none md:text-lg lg:text-xl xl:text-2xl";
 const h2DecorationStyle =
     "w-1 shrink-0 transition-[margin,width,background-color] duration-300 ease-out";
-const activeH2DecorationStyle = "-ml-2 w-1 bg-primary-dark";
+const activeH2DecorationStyle = "-ml-2 w-1 bg-primary-deep";
 const h2TextStyle =
     "flex flex-1 items-center justify-start rounded-2xl px-4 py-2 text-left transition-[margin,border-radius,color,background-color] duration-300 ease-out";
 const activeH2TextStyle = "-mr-2 rounded-none bg-secondary text-primary-dark";

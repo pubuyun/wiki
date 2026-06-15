@@ -5,10 +5,11 @@
 @import "@fontsource/belanosima/latin-600.css";
 @import "@fontsource/belanosima/latin-700.css";
 
-@theme {
+@theme inline {
     --color-primary-light: var(--primary-light);
     --color-primary-norm: var(--primary-norm);
     --color-primary-dark: var(--primary-dark);
+    --color-primary-deep: var(--primary-deep);
     --color-secondary: var(--secondary);
     --color-tertiary: var(--tertiary);
     --font-momo-trust-display: "Momo Trust Display", sans-serif;
@@ -27,14 +28,16 @@ html {
     --primary-light: #81ebf9;
     --primary-norm: #4f7fff;
     --primary-dark: #142e85;
+    --primary-deep: #142e85;
     --secondary: #65dbbe;
     --tertiary: #ffda3a;
 }
 
 :root {
     --primary-light: #3a9aff;
-    --primary-norm: #261cc1;
-    --primary-dark: #1c0770;
+    --primary-norm: #4b68ff;
+    --primary-dark: #261cc1;
+    --primary-deep: #1c0770;
     --secondary: #f1ff5f;
     --tertiary: #67e8c3;
 }

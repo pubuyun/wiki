@@ -1,26 +1,11 @@
 <template>
     <div class="relative z-0 flex min-h-screen flex-col">
-        <header class="sticky top-0 z-100 flex w-full flex-col">
+        <header class="fixed top-0 z-100 flex w-full flex-col">
             <NavigationBar />
-            <ProgressBar :progress="progress" />
         </header>
         <slot />
         <Footer />
         <BackToTop />
     </div>
 </template>
-<script setup lang="ts">
-const progress = ref(0);
-function updateProgress() {
-    const scrollTop = window.scrollY;
-    const docHeight =
-        document.documentElement.scrollHeight - window.innerHeight;
-    progress.value = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
-}
-onMounted(() => {
-    window.addEventListener("scroll", updateProgress);
-});
-onUnmounted(() => {
-    window.removeEventListener("scroll", updateProgress);
-});
-</script>
+<script setup lang="ts"></script>

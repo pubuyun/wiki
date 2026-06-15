@@ -3,7 +3,7 @@
         <!-- Desktop / larger than lg -->
         <DialogTrigger
             aria-label="Open search dialog"
-            class="mr-8 ml-5 h-2/3 max-w-96 flex-1 rounded-full bg-primary-dark pr-3 max-xl:hidden"
+            class="bg-primary-deep mr-8 ml-5 h-2/3 max-w-96 flex-1 rounded-full pr-3 max-xl:hidden"
         >
             <div class="flex h-full items-center gap-2 p-1 text-white">
                 <input
@@ -19,7 +19,7 @@
         <!-- lg and lower -->
         <DialogTrigger
             aria-label="Open search dialog"
-            class="z-100 hidden items-center gap-2 rounded-full bg-tertiary p-2 text-primary-dark shadow-md hover:bg-primary-norm focus:ring-2 focus:ring-secondary focus:ring-offset-2 focus:outline-none max-xl:inline-flex"
+            class="text-primary-deep z-100 hidden items-center gap-2 rounded-full bg-tertiary p-2 shadow-md hover:bg-primary-norm focus:ring-2 focus:ring-secondary focus:ring-offset-2 focus:outline-none max-xl:inline-flex"
         >
             <Icon icon="lucide:search" class="h-3 w-3" aria-hidden="true" />
         </DialogTrigger>
@@ -54,7 +54,7 @@
                         class="flex max-h-[calc(70vh-3rem)] w-full flex-col justify-start gap-2"
                     >
                         <header
-                            class="shrink-0 text-center text-2xl font-bold text-primary-dark"
+                            class="text-primary-deep shrink-0 text-center text-2xl font-bold"
                         >
                             <label for="site-search" class="sr-only">
                                 Search site content
@@ -116,7 +116,7 @@
                                             </h3>
 
                                             <p
-                                                class="text-xs font-normal text-primary-dark"
+                                                class="text-primary-deep text-xs font-normal"
                                                 v-html="displayContent(link)"
                                             />
                                         </article>
@@ -131,7 +131,7 @@
                         </div>
                         <p
                             v-else-if="query"
-                            class="mt-4 text-center text-primary-dark"
+                            class="text-primary-deep mt-4 text-center"
                             aria-live="polite"
                         >
                             No results found.

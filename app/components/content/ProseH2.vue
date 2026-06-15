@@ -6,7 +6,7 @@
         <!-- 这个h2必须在最外层 -->
         <span class="flex h-min rounded-4xl bg-tertiary">
             <span
-                class="mx-6 my-1.5 flex items-center justify-center text-center font-momo-trust-display text-4xl text-primary-dark"
+                class="text-primary-deep mx-6 my-1.5 flex items-center justify-center text-center font-momo-trust-display text-4xl"
             >
                 <a
                     v-if="props.id && generate"

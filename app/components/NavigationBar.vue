@@ -48,6 +48,47 @@ const navItems = [
         ],
     },
 ];
+
+const navBackgroundOpacity = ref(0.5);
+
+function updateNavBackgroundOpacity() {
+    const fadeDistance = window.innerHeight * 0.7;
+    const scrollProgress =
+        fadeDistance > 0 ? Math.min(window.scrollY / fadeDistance, 1) : 1;
+
+    navBackgroundOpacity.value = 0.5 + scrollProgress * 0.5;
+}
+
+const opacityStyle = computed(() => ({
+    backgroundColor: `color-mix(in srgb, var(--primary-light) ${Math.round(
+        navBackgroundOpacity.value * 100,
+    )}%, transparent)`,
+}));
+
+onMounted(() => {
+    updateNavBackgroundOpacity();
+    window.addEventListener("scroll", updateNavBackgroundOpacity, {
+        passive: true,
+    });
+});
+
+onUnmounted(() => {
+    window.removeEventListener("scroll", updateNavBackgroundOpacity);
+});
+
+const progress = ref(0);
+function updateProgress() {
+    const scrollTop = window.scrollY;
+    const docHeight =
+        document.documentElement.scrollHeight - window.innerHeight;
+    progress.value = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+}
+onMounted(() => {
+    window.addEventListener("scroll", updateProgress);
+});
+onUnmounted(() => {
+    window.removeEventListener("scroll", updateProgress);
+});
 </script>
 
 <template>
@@ -57,7 +98,8 @@ const navItems = [
         :delay-duration="100"
     >
         <nav
-            class="flex items-center justify-between gap-10 overflow-visible bg-primary-light font-righteous md:h-8 lg:h-11 xl:h-14"
+            class="flex items-center justify-between gap-10 overflow-visible font-righteous md:h-8 lg:h-11 xl:h-14"
+            :style="opacityStyle"
         >
             <NuxtLink
                 to="/"
@@ -66,7 +108,7 @@ const navItems = [
             >
                 <Logo />
                 <span
-                    class="text-primary-dark lg:text-2xl xl:text-4xl"
+                    class="text-primary-deep lg:text-2xl xl:text-4xl"
                     aria-hidden="true"
                     >Expelliodor</span
                 >
@@ -86,4 +128,5 @@ const navItems = [
             </NavigationMenuList>
         </nav>
     </NavigationMenuRoot>
+    <ProgressBar :progress="progress" :style="opacityStyle" />
 </template>
