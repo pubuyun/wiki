@@ -16,6 +16,7 @@
     <NuxtRouteAnnouncer />
     <!-- automatically announces route changes -->
     <Loading />
+    <ClickAnimation />
     <NuxtLayout>
         <NuxtPage />
     </NuxtLayout>

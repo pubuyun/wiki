@@ -13,6 +13,7 @@ export default defineNuxtConfig({
                 "@iconify/vue",
                 "@vue/devtools-core",
                 "@vue/devtools-kit",
+                "molstar/build/viewer/molstar", // CJS
                 "radix-vue",
                 "vue-echarts",
             ],
