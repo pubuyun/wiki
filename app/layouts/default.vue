@@ -6,6 +6,7 @@
         <slot />
         <Footer />
         <BackToTop />
+        <ClickAnimation />
     </div>
 </template>
 <script setup lang="ts"></script>
