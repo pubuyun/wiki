@@ -6,8 +6,9 @@
     >
         <h2 class="sr-only" id="toc-title">Table of contents</h2>
         <div
-            v-show="!collapsed"
+            v-if="contentTextRendered"
             class="absolute top-4 right-18 left-0 z-10 flex h-16 items-center justify-center text-lg text-cblue xl:text-2xl"
+            :class="contentTextClass"
             aria-hidden="true"
         >
             Contents
@@ -40,10 +41,11 @@
         </button>
 
         <div
-            v-show="!collapsed"
+            v-if="contentTextRendered"
             :id="contentId"
             class="max-h-full min-h-0 w-full flex-1 scrollbar-none overflow-y-auto"
-            :aria-hidden="collapsed"
+            :class="contentTextClass"
+            :aria-hidden="!contentTextVisible"
             ref="contentScroll"
             @scroll="updateScrollGradients"
         >
@@ -119,13 +121,13 @@
         </div>
         <!-- top gradient -->
         <div
-            v-if="!collapsed && canScrollUp"
+            v-if="contentTextVisible && canScrollUp"
             class="pointer-events-none absolute top-18 z-10 h-8 w-full bg-linear-to-b from-azure to-transparent"
         />
 
         <!-- bottom gradient -->
         <div
-            v-if="!collapsed && canScrollDown"
+            v-if="contentTextVisible && canScrollDown"
             class="pointer-events-none absolute bottom-10 z-10 h-8 w-full bg-linear-to-t from-azure to-transparent"
         />
     </nav>
@@ -153,6 +155,7 @@ const activeH3Style =
     "text-sun underline decoration-2 decoration-sun underline-offset-4";
 const scrollSpyActivationOffset = 8;
 const hashScrollLockDuration = 2400;
+const contentBarTransitionDuration = 300;
 const contentId = "content-bar-toc";
 const expandedContentBarClass = "w-1/6 pt-18 pb-10";
 const collapsedContentBarClass = "h-24 w-18 pt-6 pb-6";
@@ -169,6 +172,8 @@ const props = defineProps<{
 
 const { scrollToHash } = useHashScroll();
 const collapsed = ref(false);
+const contentTextRendered = ref(!collapsed.value);
+const contentTextVisible = ref(!collapsed.value);
 const expandedItems = ref<string[]>([]);
 const activeH2Id = ref<string>();
 const activeH3Id = ref<string>();
@@ -177,14 +182,50 @@ const canScrollUp = ref(false);
 const canScrollDown = ref(false);
 let hashScrollUntil = 0;
 let stopScrollSpy: (() => void) | undefined;
+let contentTextRevealTimer: ReturnType<typeof setTimeout> | undefined;
+let syncingExpandedItems = false;
+let preserveUserExpandedItemsAfterHashScroll = false;
 
 const contentBarClass = computed(() => [
-    "sticky top-34 mb-6 max-h-[calc(100vh-11rem)] flex-col overflow-hidden rounded-r-[3.5em] bg-azure font-momo-trust-display shadow-lg transition-[width,height,padding] duration-300 ease-out",
+    "sticky top-34 mb-6 max-h-[calc(100vh-11rem)] flex-col overflow-hidden rounded-r-[3.5em] bg-azure font-momo-trust-display shadow-lg transition-[width,height,padding,translate] duration-300 ease-out",
     collapsed.value ? collapsedContentBarClass : expandedContentBarClass,
+    collapsed.value ? "-translate-x-6 hover:translate-x-0" : "translate-x-0",
 ]);
 const collapseButtonClass = computed(() => [
     "absolute top-4 right-4 z-20 flex h-16 w-14 items-center justify-center rounded-full text-bermuda transition-colors duration-300 hover:text-spray focus-visible:ring-2 focus-visible:ring-white focus-visible:outline-none",
 ]);
+const contentTextClass = computed(() => [
+    "transition-opacity duration-200 ease-out",
+    contentTextVisible.value ? "opacity-100" : "opacity-0",
+]);
+
+function clearContentTextRevealTimer() {
+    if (contentTextRevealTimer) {
+        clearTimeout(contentTextRevealTimer);
+        contentTextRevealTimer = undefined;
+    }
+}
+
+function hideContentText() {
+    clearContentTextRevealTimer();
+    contentTextVisible.value = false;
+    contentTextRendered.value = false;
+}
+
+function revealContentTextAfterResize() {
+    clearContentTextRevealTimer();
+    contentTextVisible.value = false;
+    contentTextRendered.value = false;
+
+    contentTextRevealTimer = setTimeout(async () => {
+        contentTextRendered.value = true;
+        await nextTick();
+        requestAnimationFrame(() => {
+            contentTextVisible.value = true;
+            updateScrollGradients();
+        });
+    }, contentBarTransitionDuration);
+}
 
 function updateScrollGradients() {
     const el = contentScroll.value;
@@ -265,17 +306,29 @@ function parentH2For(id: string) {
     )?.id;
 }
 
-function setActiveHeading(id: string, isH3: boolean) {
+async function syncExpandedItems(ids: string[]) {
+    syncingExpandedItems = true;
+    expandedItems.value = ids;
+    await nextTick();
+    syncingExpandedItems = false;
+}
+
+function setActiveHeading(
+    id: string,
+    isH3: boolean,
+    shouldSyncExpandedItems = true,
+) {
     const currentH2Id = parentH2For(id);
     activeH2Id.value = currentH2Id;
     activeH3Id.value = isH3 ? id : undefined;
 
     if (
+        shouldSyncExpandedItems &&
         currentH2Id &&
         (expandedItems.value[0] !== currentH2Id ||
             expandedItems.value.length > 1)
     ) {
-        expandedItems.value = [currentH2Id];
+        void syncExpandedItems([currentH2Id]);
     }
 }
 
@@ -294,15 +347,21 @@ function updateActiveHeading() {
         }
     }
 
-    setActiveHeading(current.id, current.tagName.toLowerCase() === "h3");
+    setActiveHeading(
+        current.id,
+        current.tagName.toLowerCase() === "h3",
+        !preserveUserExpandedItemsAfterHashScroll,
+    );
+    preserveUserExpandedItemsAfterHashScroll = false;
 }
 
 function lockToHashScrollDestination(id: string) {
     const target = document.getElementById(id);
     const isH3 = target?.tagName.toLowerCase() === "h3";
 
-    setActiveHeading(id, isH3);
     hashScrollUntil = Date.now() + hashScrollLockDuration;
+    preserveUserExpandedItemsAfterHashScroll = false;
+    setActiveHeading(id, isH3);
 }
 
 function getScrollPaddingTop() {
@@ -351,6 +410,18 @@ watch(contentScroll, (newVal) => {
         updateScrollGradients();
     }
 });
+watch(collapsed, (isCollapsed) => {
+    if (isCollapsed) {
+        hideContentText();
+    } else {
+        revealContentTextAfterResize();
+    }
+});
+watch(expandedItems, () => {
+    if (!syncingExpandedItems && Date.now() < hashScrollUntil) {
+        preserveUserExpandedItemsAfterHashScroll = true;
+    }
+});
 watch(activeH3Id, async (id) => {
     if (id) {
         await keepActiveH3InView(id);
@@ -369,6 +440,7 @@ onMounted(async () => {
     setupScrollSpy();
 });
 onBeforeUnmount(() => {
+    clearContentTextRevealTimer();
     stopScrollSpy?.();
 });
 </script>

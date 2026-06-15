@@ -51,7 +51,7 @@ const hasDropdown = computed(() => props.links.length > 0);
 
             <NavigationMenuContent
                 force-mount
-                class="absolute top-full left-0 z-50 max-h-0 min-w-max overflow-hidden rounded-2xl bg-corn shadow-sm transition-[max-height] duration-500 ease-out data-[state=closed]:!pointer-events-none data-[state=closed]:max-h-0 data-[state=open]:!pointer-events-auto data-[state=open]:max-h-96"
+                class="absolute top-full -left-1/3 z-50 max-h-0 min-w-max overflow-hidden rounded-2xl bg-corn shadow-sm transition-[max-height] duration-500 ease-out data-[state=closed]:pointer-events-none! data-[state=closed]:max-h-0 data-[state=open]:pointer-events-auto! data-[state=open]:max-h-96"
             >
                 <NavigationMenuLink
                     v-for="link in links"
