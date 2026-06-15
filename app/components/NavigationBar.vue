@@ -57,7 +57,7 @@ const navItems = [
         :delay-duration="100"
     >
         <nav
-            class="flex items-center justify-between gap-10 overflow-visible bg-corn font-righteous md:h-8 lg:h-11 xl:h-14"
+            class="flex items-center justify-between gap-10 overflow-visible bg-primary-light font-righteous md:h-8 lg:h-11 xl:h-14"
         >
             <NuxtLink
                 to="/"
@@ -66,7 +66,7 @@ const navItems = [
             >
                 <Logo />
                 <span
-                    class="text-cblue lg:text-2xl xl:text-4xl"
+                    class="text-primary-dark lg:text-2xl xl:text-4xl"
                     aria-hidden="true"
                     >Expelliodor</span
                 >

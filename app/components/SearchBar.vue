@@ -3,7 +3,7 @@
         <!-- Desktop / larger than lg -->
         <DialogTrigger
             aria-label="Open search dialog"
-            class="mr-8 ml-5 h-2/3 max-w-96 flex-1 rounded-full bg-cblue pr-3 max-xl:hidden"
+            class="mr-8 ml-5 h-2/3 max-w-96 flex-1 rounded-full bg-primary-dark pr-3 max-xl:hidden"
         >
             <div class="flex h-full items-center gap-2 p-1 text-white">
                 <input
@@ -19,7 +19,7 @@
         <!-- lg and lower -->
         <DialogTrigger
             aria-label="Open search dialog"
-            class="z-100 hidden items-center gap-2 rounded-full bg-sun p-2 text-cblue shadow-md hover:bg-azure focus:ring-2 focus:ring-bermuda focus:ring-offset-2 focus:outline-none max-xl:inline-flex"
+            class="z-100 hidden items-center gap-2 rounded-full bg-tertiary p-2 text-primary-dark shadow-md hover:bg-primary-norm focus:ring-2 focus:ring-secondary focus:ring-offset-2 focus:outline-none max-xl:inline-flex"
         >
             <Icon icon="lucide:search" class="h-3 w-3" aria-hidden="true" />
         </DialogTrigger>
@@ -45,7 +45,7 @@
             >
                 <DialogContent
                     v-if="isSearchOpen"
-                    class="fixed top-1/6 left-1/2 z-100 max-h-[70vh] w-1/2 -translate-x-1/2 overflow-hidden rounded-2xl bg-corn p-6 shadow-lg"
+                    class="fixed top-1/6 left-1/2 z-100 max-h-[70vh] w-1/2 -translate-x-1/2 overflow-hidden rounded-2xl bg-tertiary p-6 shadow-lg"
                 >
                     <DialogTitle class="sr-only">
                         Search site content
@@ -54,7 +54,7 @@
                         class="flex max-h-[calc(70vh-3rem)] w-full flex-col justify-start gap-2"
                     >
                         <header
-                            class="shrink-0 text-center text-2xl font-bold text-cblue"
+                            class="shrink-0 text-center text-2xl font-bold text-primary-dark"
                         >
                             <label for="site-search" class="sr-only">
                                 Search site content
@@ -87,12 +87,12 @@
                         >
                             <div
                                 v-if="canScrollUp"
-                                class="pointer-events-none absolute top-0 left-0 z-10 h-8 w-full bg-linear-to-b from-corn to-transparent"
+                                class="pointer-events-none absolute top-0 left-0 z-10 h-8 w-full bg-linear-to-b from-tertiary to-transparent"
                             />
 
                             <ul
                                 ref="resultsList"
-                                class="max-h-[calc(70vh-9rem)] w-full scrollbar-thin scrollbar-thumb-azure scrollbar-track-corn overflow-auto"
+                                class="max-h-[calc(70vh-9rem)] w-full scrollbar-thin scrollbar-thumb-primary-norm scrollbar-track-tertiary overflow-auto"
                                 @scroll="updateScrollGradients"
                                 aria-label="Search results"
                             >
@@ -116,7 +116,7 @@
                                             </h3>
 
                                             <p
-                                                class="text-xs font-normal text-cblue"
+                                                class="text-xs font-normal text-primary-dark"
                                                 v-html="displayContent(link)"
                                             />
                                         </article>
@@ -126,12 +126,12 @@
 
                             <div
                                 v-if="canScrollDown"
-                                class="pointer-events-none absolute bottom-0 left-0 z-10 h-8 w-full bg-linear-to-t from-corn to-transparent"
+                                class="pointer-events-none absolute bottom-0 left-0 z-10 h-8 w-full bg-linear-to-t from-tertiary to-transparent"
                             />
                         </div>
                         <p
                             v-else-if="query"
-                            class="mt-4 text-center text-cblue"
+                            class="mt-4 text-center text-primary-dark"
                             aria-live="polite"
                         >
                             No results found.

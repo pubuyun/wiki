@@ -1,12 +1,12 @@
 <template>
     <h2
         :id="props.id"
-        class="scroll-mt-24 flex flex-row items-center justify-center gap-8"
+        class="flex scroll-mt-24 flex-row items-center justify-center gap-8"
     >
         <!-- 这个h2必须在最外层 -->
-        <span class="flex h-min rounded-4xl bg-sun">
+        <span class="flex h-min rounded-4xl bg-tertiary">
             <span
-                class="mx-6 my-1.5 flex items-center justify-center text-center font-momo-trust-display text-4xl text-cblue"
+                class="mx-6 my-1.5 flex items-center justify-center text-center font-momo-trust-display text-4xl text-primary-dark"
             >
                 <a
                     v-if="props.id && generate"
@@ -23,7 +23,7 @@
         </span>
         <span
             aria-hidden="true"
-            class="my-10 flex-1 border-3 border-t-2 border-sun"
+            class="my-10 flex-1 border-3 border-t-2 border-tertiary"
         />
     </h2>
 </template>

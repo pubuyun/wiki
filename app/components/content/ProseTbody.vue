@@ -1,5 +1,5 @@
 <template>
-  <tbody class="divide-y divide-lcyan">
-    <slot />
-  </tbody>
+    <tbody class="divide-y divide-primary-light">
+        <slot />
+    </tbody>
 </template>

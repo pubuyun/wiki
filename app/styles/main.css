@@ -6,16 +6,11 @@
 @import "@fontsource/belanosima/latin-700.css";
 
 @theme {
-    --color-bermuda: #65dbbe;
-    --color-cblue: #142e85;
-    --color-corn: #ffec8e;
-    --color-sun: #ffda3a;
-    --color-reef: #d8ff99;
-    --color-azure: #4f7fff;
-    --color-persimmon: #fa5c4f;
-    --color-vred: #ff3e8a;
-    --color-lcyan: #c6eeff;
-    --color-spray: #81ebf9;
+    --color-primary-light: var(--primary-light);
+    --color-primary-norm: var(--primary-norm);
+    --color-primary-dark: var(--primary-dark);
+    --color-secondary: var(--secondary);
+    --color-tertiary: var(--tertiary);
     --font-momo-trust-display: "Momo Trust Display", sans-serif;
     --font-righteous: "Righteous", sans-serif;
     --font-belanosima: "Belanosima", serif;
@@ -26,4 +21,20 @@
 html {
     scroll-behavior: smooth;
     scroll-padding-top: 12rem;
+}
+
+.legacy {
+    --primary-light: #81ebf9;
+    --primary-norm: #4f7fff;
+    --primary-dark: #142e85;
+    --secondary: #65dbbe;
+    --tertiary: #ffda3a;
+}
+
+:root {
+    --primary-light: #3a9aff;
+    --primary-norm: #261cc1;
+    --primary-dark: #1c0770;
+    --secondary: #f1ff5f;
+    --tertiary: #67e8c3;
 }

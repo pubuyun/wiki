@@ -8,9 +8,9 @@
                 v-for="entry in pdbEntries"
                 :key="entry.id"
                 type="button"
-                class="flex min-w-34 flex-col gap-0.5 rounded-lg border border-cblue/20 bg-white px-3 py-2 text-left text-cblue transition-colors duration-[160ms] hover:border-cblue hover:bg-cblue hover:text-white"
+                class="border-primary-dark/20 text-primary-dark hover:border-primary-dark hover:bg-primary-dark flex min-w-34 flex-col gap-0.5 rounded-lg border bg-white px-3 py-2 text-left transition-colors duration-[160ms] hover:text-white"
                 :class="{
-                    'border-cblue bg-cblue text-white':
+                    'border-primary-dark bg-primary-dark text-white':
                         entry.id === selectedPdb,
                 }"
                 @click="selectedPdb = entry.id"

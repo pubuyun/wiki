@@ -1,5 +1,5 @@
 <template>
-    <section class="bg-white rounded-4xl p-6 my-6 text-cblue">
+    <section class="text-primary-dark my-6 rounded-4xl bg-white p-6">
         <slot />
     </section>
 </template>

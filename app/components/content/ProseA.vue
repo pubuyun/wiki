@@ -2,7 +2,7 @@
     <NuxtLink
         :href="props.href"
         :target="props.target"
-        class="font-semibold text-azure underline decoration-azure/30 decoration-2 underline-offset-4 transition-colors hover:text-azure/80 hover:decoration-cblue/60"
+        class="text-primary-norm decoration-primary-norm/30 hover:text-primary-norm/80 font-semibold underline decoration-2 underline-offset-4 transition-colors hover:decoration-primary-dark/60"
         @click="scrollToHash($event, props.href)"
     >
         <slot />

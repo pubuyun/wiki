@@ -6,16 +6,16 @@ data-critical-image attribute is added to imgs that need to be loaded before the
 
 ```css
 @theme {
-    --color-bermuda: #65dbbe;
-    --color-cblue: #142e85;
-    --color-corn: #ffec8e;
-    --color-sun: #ffda3a;
-    --color-reef: #d8ff99;
-    --color-azure: #4f7fff;
-    --color-persimmon: #fa5c4f;
-    --color-vred: #ff3e8a;
-    --color-lcyan: #c6eeff;
-    --color-spray: #81ebf9;
+    --color-secondary: #65dbbe;
+    --color-primary-dark: #142e85;
+    --color-tertiary: #ffec8e;
+    --color-tertiary: #ffda3a;
+
+    --color-primary-norm: #4f7fff;
+    --color-primary-dark: #fa5c4f;
+    --color-secondary: #ff3e8a;
+    --color-primary-light: #c6eeff;
+    --color-primary-light: #81ebf9;
     --font-momo-trust-display: "Momo Trust Display", sans-serif;
     --font-righteous: "Righteous", sans-serif;
     --font-belanosima: "Belanosima", serif;

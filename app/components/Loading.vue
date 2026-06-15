@@ -2,7 +2,7 @@
     <Transition name="fade">
         <div
             v-if="isLoading"
-            class="fixed inset-0 z-9999 flex items-center justify-center bg-cblue backdrop-blur-sm"
+            class="bg-primary-dark fixed inset-0 z-9999 flex items-center justify-center backdrop-blur-sm"
         >
             <img
                 src="https://static.igem.wiki/teams/6133/wiki/general/loading.webp"
