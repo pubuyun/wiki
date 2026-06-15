@@ -5,6 +5,10 @@
     </div>
 </template>
 <script setup lang="ts">
+definePageMeta({
+    layout: "static",
+});
+
 const option = {
     title: {
         text: "Example Chart",

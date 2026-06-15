@@ -33,6 +33,10 @@ const option = {
     </div>
 </template>
 
-<script></script>
+<script setup lang="ts">
+definePageMeta({
+    layout: "static",
+});
+</script>
 
 <style></style>

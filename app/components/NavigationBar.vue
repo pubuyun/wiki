@@ -3,6 +3,15 @@ import { NavigationMenuList, NavigationMenuRoot } from "radix-vue";
 import Logo from "./NavigationBar/Logo.vue";
 import NavItem from "./NavigationBar/NavItem.vue";
 
+const props = withDefaults(
+    defineProps<{
+        scrollOpacity?: boolean;
+    }>(),
+    {
+        scrollOpacity: true,
+    },
+);
+
 const navItems = [
     {
         title: "Home",
@@ -52,6 +61,10 @@ const navItems = [
 const navBackgroundOpacity = ref(0.5);
 
 function updateNavBackgroundOpacity() {
+    if (!props.scrollOpacity) {
+        return;
+    }
+
     const fadeDistance = window.innerHeight * 0.7;
     const scrollProgress =
         fadeDistance > 0 ? Math.min(window.scrollY / fadeDistance, 1) : 1;
@@ -66,14 +79,18 @@ const opacityStyle = computed(() => ({
 }));
 
 onMounted(() => {
-    updateNavBackgroundOpacity();
-    window.addEventListener("scroll", updateNavBackgroundOpacity, {
-        passive: true,
-    });
+    if (props.scrollOpacity) {
+        updateNavBackgroundOpacity();
+        window.addEventListener("scroll", updateNavBackgroundOpacity, {
+            passive: true,
+        });
+    }
 });
 
 onUnmounted(() => {
-    window.removeEventListener("scroll", updateNavBackgroundOpacity);
+    if (props.scrollOpacity) {
+        window.removeEventListener("scroll", updateNavBackgroundOpacity);
+    }
 });
 
 const progress = ref(0);
@@ -98,8 +115,8 @@ onUnmounted(() => {
         :delay-duration="100"
     >
         <nav
-            class="flex items-center justify-between gap-10 overflow-visible font-righteous md:h-8 lg:h-11 xl:h-14"
-            :style="opacityStyle"
+            class="flex items-center justify-between gap-10 overflow-visible bg-primary-light font-righteous md:h-8 lg:h-11 xl:h-14"
+            :style="props.scrollOpacity ? opacityStyle : undefined"
         >
             <NuxtLink
                 to="/"
@@ -128,5 +145,8 @@ onUnmounted(() => {
             </NavigationMenuList>
         </nav>
     </NavigationMenuRoot>
-    <ProgressBar :progress="progress" :style="opacityStyle" />
+    <ProgressBar
+        :progress="progress"
+        :style="props.scrollOpacity ? opacityStyle : undefined"
+    />
 </template>
