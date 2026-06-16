@@ -1,5 +1,5 @@
 # Job name has to be `pages`. See https://docs.gitlab.com/ee/user/project/pages/#how-it-works
-image: node:22-alpine
+image: node:22
 
 variables:
     NUXT_STUDIO: "false"
