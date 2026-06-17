@@ -3,7 +3,7 @@
     "packageManager": "yarn@4.9.1",
     "type": "module",
     "scripts": {
-        "build": "nuxt build --preset static",
+        "build": "nuxt build",
         "dev": "nuxt dev",
         "generate": "NUXT_STUDIO=false nuxt generate",
         "preview": "nuxt preview"

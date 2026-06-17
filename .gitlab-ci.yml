@@ -14,8 +14,7 @@ pages:
           paths:
               - .yarn/cache/
               - .yarn/berry/
-              - .nuxt/
-              - .cache/
+              - node_modules/.cache/nuxt/
     before_script:
         - corepack enable
         - yarn install --immutable

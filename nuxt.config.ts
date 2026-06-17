@@ -45,4 +45,7 @@ export default defineNuxtConfig({
             },
         },
     },
+    experimental: {
+        buildCache: true,
+    },
 });
