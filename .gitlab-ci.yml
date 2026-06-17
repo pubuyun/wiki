@@ -6,9 +6,7 @@ variables:
 
 pages:
     stage: build
-    timeout: 5m
-    variables:
-        RUNNER_SCRIPT_TIMEOUT: 20m
+    timeout: 20m
     cache:
         - key:
               files:
