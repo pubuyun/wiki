@@ -14,7 +14,7 @@
 
 <script setup>
 import "molstar/build/viewer/molstar";
-import MolstarViewer from "molstar-viewer-vue";
+import MolstarViewer from "./MolStar/MolStarViewer.vue";
 
 defineProps({
     structureUrl: {
