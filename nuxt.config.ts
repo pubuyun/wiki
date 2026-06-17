@@ -34,7 +34,7 @@ export default defineNuxtConfig({
         },
     },
     css: ["./app/styles/main.css"],
-    devtools: { enabled: true },
+    devtools: { enabled: process.env.NODE_ENV !== "production" },
     compatibilityDate: "2024-04-03",
     content: {
         build: {
@@ -43,6 +43,11 @@ export default defineNuxtConfig({
                     depth: 3,
                 },
             },
+        },
+    },
+    nitro: {
+        prerender: {
+            concurrency: 2,
         },
     },
     experimental: {

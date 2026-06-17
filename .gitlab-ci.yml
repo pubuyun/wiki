@@ -6,6 +6,9 @@ variables:
 
 pages:
     stage: build
+    timeout: 5m
+    variables:
+        RUNNER_SCRIPT_TIMEOUT: 20m
     cache:
         - key:
               files:
@@ -14,10 +17,10 @@ pages:
           paths:
               - .yarn/cache/
               - .yarn/berry/
-              - node_modules/.cache/nuxt/
+              - node_modules/
     before_script:
         - corepack enable
-        - yarn install --immutable
+        - yarn install --immutable --inline-builds
     script:
         - export NUXT_APP_BASE_URL="/${CI_PROJECT_NAME}/"
         - yarn generate
