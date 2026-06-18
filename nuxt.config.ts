@@ -45,11 +45,6 @@ export default defineNuxtConfig({
             },
         },
     },
-    nitro: {
-        prerender: {
-            concurrency: 2,
-        },
-    },
     experimental: {
         buildCache: true,
     },
