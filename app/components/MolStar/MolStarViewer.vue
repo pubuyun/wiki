@@ -1,11 +1,11 @@
 <script setup>
 import "molstar/build/viewer/molstar.css";
 import {
-    Viewer,
     setDebugMode,
     setTimingMode,
     ExtensionMap,
 } from "molstar/build/viewer/molstar";
+const { Viewer } = await import("molstar/build/viewer/molstar");
 import { onMounted, watch, onBeforeUnmount } from "vue";
 import { useRoute } from "vue-router";
 

@@ -4,7 +4,7 @@
             v-for="effect in effects"
             :key="effect.id"
             class="pointer-events-none absolute h-32 w-32 max-w-none -translate-x-1/2 -translate-y-1/2 object-contain select-none"
-            :src="clickImageSrc"
+            src="https://static.igem.wiki/teams/6133/wiki/general/clicking-animation.webp"
             alt=""
             :style="{
                 left: `${effect.x}px`,
@@ -16,7 +16,6 @@
 
 <script setup lang="ts">
 import { onMounted, onUnmounted, ref } from "vue";
-import clickImageSrc from "../../images/general/click.webp";
 
 const effects = ref<{ id: number; x: number; y: number }[]>([]);
 let nextId = 0;

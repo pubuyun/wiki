@@ -8,6 +8,13 @@
             :structure-url="structureUrl"
             :structure-url-format="structureUrlFormat"
             :hide-controls
+            :disabled-extensions="[
+                'volseg',
+                'backgrounds',
+                'model-export',
+                'mp4-export',
+                'geo-export',
+            ]"
         />
     </div>
 </template>
