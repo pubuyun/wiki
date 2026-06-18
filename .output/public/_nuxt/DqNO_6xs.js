@@ -1,0 +1,1 @@
+import{_ as s,o as r,c as t,dM as o}from"./BB_UK_EX.js";const a={},c={class:"leading-7marker:font-bold marker:text-primary-norm my-5 list-decimal space-y-1 pl-6 text-base"};function n(e,l){return r(),t("ol",c,[o(e.$slots,"default")])}const m=Object.assign(s(a,[["render",n]]),{__name:"ProseOl"});export{m as default};

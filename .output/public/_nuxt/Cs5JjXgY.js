@@ -1,0 +1,1 @@
+import{_ as r,o,c as s,dM as t}from"./BB_UK_EX.js";const a={},n={class:"border border-primary-light px-4 py-3 align-top leading-6"};function c(e,d){return o(),s("td",n,[t(e.$slots,"default")])}const l=Object.assign(r(a,[["render",c]]),{__name:"ProseTd"});export{l as default};

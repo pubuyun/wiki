@@ -1,0 +1,1 @@
+import{_ as e,o as s,c as o,dM as t}from"./BB_UK_EX.js";const a={},c={class:"border-b border-primary-light last:border-b-0"};function n(r,_){return s(),o("tr",c,[t(r.$slots,"default")])}const l=Object.assign(e(a,[["render",n]]),{__name:"ProseTr"});export{l as default};

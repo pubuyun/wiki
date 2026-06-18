@@ -1,0 +1,1 @@
+import{_ as o,o as s,c as t,dM as n}from"./BB_UK_EX.js";const r={},c={class:"rounded-md bg-primary-light px-1.5 py-0.5 font-mono text-[0.9em] font-semibold"};function a(e,d){return s(),t("code",c,[n(e.$slots,"default")])}const l=Object.assign(o(r,[["render",a]]),{__name:"ProseCode"});export{l as default};

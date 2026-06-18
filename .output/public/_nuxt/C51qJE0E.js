@@ -1,0 +1,1 @@
+import{_ as s,o as t,c as o,dM as a}from"./BB_UK_EX.js";const c={},n={class:"my-2 text-base leading-8"};function r(e,_){return t(),o("p",n,[a(e.$slots,"default")])}const d=Object.assign(s(c,[["render",r]]),{__name:"ProseP"});export{d as default};

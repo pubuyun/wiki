@@ -13,19 +13,12 @@ pages:
     #           - .yarn/berry/
     #           - node_modules/
     before_script:
-        - corepack enable
-        - yarn install --immutable --inline-builds
+        # - corepack enable
+        # - yarn install --immutable --inline-builds
     script:
-        - export NUXT_APP_BASE_URL="/${CI_PROJECT_NAME}/"
-        - yarn generate
-        - rm -rf public
+        # - yarn generate
         - mkdir -p public
         - cp -a .output/public/. public/
     artifacts:
         paths:
             - public
-    rules:
-        - if: $CI_COMMIT_BRANCH != $CI_DEFAULT_BRANCH
-          when: never
-        - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
-          when: always

@@ -1,0 +1,1 @@
+import{_ as s,o as t,c as a,dM as o}from"./BB_UK_EX.js";const r={},c={class:"bg-primary-light"};function n(e,_){return t(),a("thead",c,[o(e.$slots,"default")])}const l=Object.assign(s(r,[["render",n]]),{__name:"ProseThead"});export{l as default};
