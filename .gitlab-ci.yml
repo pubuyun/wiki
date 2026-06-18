@@ -3,15 +3,15 @@ image: node:22
 
 pages:
     stage: build
-    cache:
-        - key:
-              files:
-                  - yarn.lock
-                  - package.json
-          paths:
-              - .yarn/cache/
-              - .yarn/berry/
-              - node_modules/
+    # cache:
+    #     - key:
+    #           files:
+    #               - yarn.lock
+    #               - package.json
+    #       paths:
+    #           - .yarn/cache/
+    #           - .yarn/berry/
+    #           - node_modules/
     before_script:
         - corepack enable
         - yarn install --immutable --inline-builds
