@@ -58,7 +58,8 @@ const navItems = [
     },
 ];
 
-const navBackgroundOpacity = ref(0.5);
+const initialOpacity = 0.7;
+const navBackgroundOpacity = ref(initialOpacity);
 
 function updateNavBackgroundOpacity() {
     if (!props.scrollOpacity) {
@@ -69,7 +70,8 @@ function updateNavBackgroundOpacity() {
     const scrollProgress =
         fadeDistance > 0 ? Math.min(window.scrollY / fadeDistance, 1) : 1;
 
-    navBackgroundOpacity.value = 0.5 + scrollProgress * 0.5;
+    navBackgroundOpacity.value =
+        initialOpacity + scrollProgress * (1 - initialOpacity);
 }
 
 const opacityStyle = computed(() => ({

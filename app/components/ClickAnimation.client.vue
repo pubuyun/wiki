@@ -4,7 +4,7 @@
             v-for="effect in effects"
             :key="effect.id"
             class="pointer-events-none absolute h-32 w-32 max-w-none -translate-x-1/2 -translate-y-1/2 object-contain select-none"
-            src="https://static.igem.wiki/teams/6133/wiki/general/clicking-animation.webp"
+            :src="`https://static.igem.wiki/teams/6133/wiki/general/clicking-animation.webp?click=${effect.id}`"
             alt=""
             :style="{
                 left: `${effect.x}px`,
