@@ -1,0 +1,1 @@
+import{_ as s,o,c as t,dM as c}from"./BB_UK_EX.js";const n={},r={class:"my-1 pl-1 leading-7"};function a(e,_){return o(),t("li",r,[c(e.$slots,"default")])}const i=Object.assign(s(n,[["render",a]]),{__name:"ProseLi"});export{i as default};

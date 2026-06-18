@@ -1,0 +1,1 @@
+import{_ as s,o,c as t,dM as r}from"./BB_UK_EX.js";const a={},l={class:"my-8 w-full border-collapse overflow-hidden rounded-lg text-left text-smshadow-sm"};function c(e,n){return o(),t("table",l,[r(e.$slots,"default")])}const _=Object.assign(s(a,[["render",c]]),{__name:"ProseTable"});export{_ as default};

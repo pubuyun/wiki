@@ -1,0 +1,1 @@
+import{_ as o,o as r,c as t,dM as s}from"./BB_UK_EX.js";const c={},a={class:"my-6 border-l-4 border-secondary bg-primary-light/35 py-3 pr-4 pl-5 text-lg leading-8 italic"};function l(e,n){return r(),t("blockquote",a,[s(e.$slots,"default")])}const d=Object.assign(o(c,[["render",l]]),{__name:"ProseBlockquote"});export{d as default};

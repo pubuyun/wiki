@@ -1,0 +1,1 @@
+import{_ as o,o as s,c as t,dM as r}from"./BB_UK_EX.js";const c={},a={class:"divide-y divide-primary-light"};function d(e,n){return s(),t("tbody",a,[r(e.$slots,"default")])}const i=Object.assign(o(c,[["render",d]]),{__name:"ProseTbody"});export{i as default};
