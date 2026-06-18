@@ -3,18 +3,18 @@ image: node:22-bookworm-slim
 
 pages:
     stage: build
-    # cache:
-    #     - key:
-    #           files:
-    #               - yarn.lock
-    #               - package.json
-    #       paths:
-    #           - .yarn/cache/
-    #           - .yarn/berry/
-    #           - node_modules/
+    cache:
+        - key:
+              files:
+                  - yarn.lock
+                  - package.json
+          paths:
+              - .yarn/cache/
+              - .yarn/berry/
+              - node_modules/
     before_script:
-        # - corepack enable
-        # - yarn install --immutable --inline-builds
+        - corepack enable
+        - yarn install --immutable --inline-builds
     script:
         # - yarn generate
         - mkdir -p public
