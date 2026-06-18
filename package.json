@@ -5,7 +5,7 @@
     "scripts": {
         "build": "nuxt build",
         "dev": "nuxt dev",
-        "generate": "NUXT_STUDIO=false nuxt generate",
+        "generate": "NUXT_STUDIO=false NUXT_APP_BASE_URL=\"/greatbay-scie/\" nuxt generate",
         "preview": "nuxt preview"
     },
     "dependencies": {
