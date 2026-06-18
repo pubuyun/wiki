@@ -1,1 +1,0 @@
-import{_ as o,o as s,c as t,dM as n}from"./BB_UK_EX.js";const r={},c={class:"font-bold"};function a(e,_){return s(),t("strong",c,[n(e.$slots,"default")])}const d=Object.assign(o(r,[["render",a]]),{__name:"ProseStrong"});export{d as default};

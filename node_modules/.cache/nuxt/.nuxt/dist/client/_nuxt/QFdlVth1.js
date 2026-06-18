@@ -1,1 +1,0 @@
-import{_ as s,o,c as t,dM as c}from"./BB_UK_EX.js";const r={},a={class:"italic"};function n(e,_){return o(),t("em",a,[c(e.$slots,"default")])}const m=Object.assign(s(r,[["render",n]]),{__name:"ProseEm"});export{m as default};
