@@ -16,7 +16,7 @@ pages:
         - corepack enable
         - yarn install --immutable --inline-builds
     script:
-        # - yarn generate
+        - yarn generate
         - mkdir -p public
         - cp -a .output/public/. public/
     artifacts:
