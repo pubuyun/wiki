@@ -60,7 +60,7 @@
                         :value="child.id"
                         class="overflow-hidden text-white"
                     >
-                        <AccordionHeader class="flex">
+                        <AccordionHeader class="flex h-min gap-0">
                             <AccordionTrigger :class="h2Class()">
                                 <span
                                     :class="h2DecorationClass(child.id)"
@@ -74,7 +74,7 @@
                         <AccordionContent
                             class="content-bar-accordion-content overflow-hidden data-[state=closed]:animate-[content-bar-slide-up_500ms_ease-in] data-[state=open]:animate-[content-bar-slide-down_500ms_ease-out]"
                         >
-                            <ul class="ml-8 space-y-2">
+                            <ul class="ml-8 space-y-1">
                                 <li
                                     v-for="value in child.children"
                                     :key="value.id"
@@ -142,7 +142,7 @@ import {
 } from "radix-vue";
 
 const h2Style =
-    "group m-2 flex w-[calc(100%-1rem)] items-stretch focus-visible:ring-2 focus-visible:ring-white focus-visible:outline-none md:text-lg lg:text-xl xl:text-2xl";
+    "group mx-2 my-0.5 flex w-[calc(100%-1rem)] items-stretch focus-visible:ring-2 focus-visible:ring-white focus-visible:outline-none md:text-lg lg:text-xl xl:text-2xl";
 const h2DecorationStyle =
     "w-1 shrink-0 transition-[margin,width,background-color] duration-300 ease-out";
 const activeH2DecorationStyle = "-ml-2 w-1 bg-primary-deep";
