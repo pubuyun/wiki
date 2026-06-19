@@ -4,6 +4,8 @@
     >
         <MolstarViewer
             v-if="showViewer"
+            collapseLeftPanel="true"
+            hideControls="true"
             :key="structureUrl"
             :structure-url="structureUrl"
             :structure-url-format="structureUrlFormat"
@@ -20,7 +22,6 @@
 </template>
 
 <script setup>
-import "molstar/build/viewer/molstar";
 import MolstarViewer from "./MolStar/MolStarViewer.vue";
 
 defineProps({
@@ -42,7 +43,7 @@ function cleanupMolstarDomState() {
     document.body.style.position = "";
     document.body.style.touchAction = "";
 
-    document.querySelectorAll("#molStarWrapper").forEach((element) => {
+    document.querySelectorAll(".molstar-viewer").forEach((element) => {
         if (!element.closest(".structure-viewer")) {
             element.remove();
         }
@@ -55,7 +56,7 @@ onBeforeUnmount(() => {
 </script>
 
 <style scoped>
-.structure-viewer :deep(#molStarWrapper) {
+.structure-viewer :deep(.molstar-viewer) {
     position: relative;
     top: auto;
     left: auto;
@@ -80,10 +81,6 @@ onBeforeUnmount(() => {
     max-height: 100%;
 }
 
-.structure-viewer :deep(.msp-layout-left),
-.structure-viewer :deep(.msp-layout-bottom) {
-    display: none;
-}
 .structure-viewer :deep(.msp-layout-main),
 .structure-viewer :deep(.msp-layout-top) {
     left: 0;

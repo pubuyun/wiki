@@ -13,7 +13,6 @@ export default defineNuxtConfig({
                 "@iconify/vue",
                 "@vue/devtools-core",
                 "@vue/devtools-kit",
-                "molstar/build/viewer/molstar", // CJS
                 "radix-vue",
                 "vue-echarts",
             ],
@@ -31,6 +30,12 @@ export default defineNuxtConfig({
             owner: "pubuyun",
             repo: "wiki",
             branch: "main",
+        },
+    },
+    runtimeConfig: {
+        public: {
+            molstarBaseUrl:
+                "https://static.igem.wiki/teams/6133/wiki/molstar/4-0-1",
         },
     },
     css: ["./app/styles/main.css"],

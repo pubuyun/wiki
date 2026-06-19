@@ -1,1 +1,0 @@
-import{_ as o,o as r,c as s,dM as t}from"./BB_UK_EX.js";const n={},a={class:"border border-secondary/60 bg-primary-light/70 px-4 py-3 align-bottom font-bold"};function c(e,_){return r(),s("th",a,[t(e.$slots,"default")])}const l=Object.assign(o(n,[["render",c]]),{__name:"ProseTh"});export{l as default};
