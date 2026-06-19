@@ -10,8 +10,13 @@ pages:
                   - package.json
           paths:
               - .yarn/cache/
-              - .yarn/berry/
-              - node_modules/
+
+        - key:
+              prefix: build-cache-$CI_COMMIT_REF_SLUG
+              files:
+                  - yarn.lock
+          paths:
+              - node_modules/.cache/
     before_script:
         - corepack enable
         - yarn install --immutable --inline-builds
