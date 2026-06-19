@@ -16,7 +16,6 @@
         "@nuxt/content": "^3.13.0",
         "better-sqlite3": "^12.9.0",
         "echarts": "^6.0.0",
-        "molstar": "4.0.1",
         "nuxt-echarts": "1.0.1",
         "nuxt-studio": "1.6.1",
         "radix-vue": "^1.9.17",
