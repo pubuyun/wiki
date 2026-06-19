@@ -4,12 +4,12 @@
     >
         <MolstarViewer
             v-if="showViewer"
-            collapseLeftPanel="true"
-            hideControls="true"
+            :show-left-panel="false"
+            :show-log="false"
+            :hide-controls="true"
             :key="structureUrl"
             :structure-url="structureUrl"
             :structure-url-format="structureUrlFormat"
-            :hide-controls
             :disabled-extensions="[
                 'volseg',
                 'backgrounds',
