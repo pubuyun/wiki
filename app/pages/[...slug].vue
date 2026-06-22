@@ -82,7 +82,7 @@ function bodyWithChildren(body, children) {
     <div v-if="page" class="flex flex-1 flex-col">
         <Banner v-if="page" :title="page.title" :imgSrc="page.meta?.banner" />
         <div
-            class="content-layout bg-primary-deep flex h-full flex-1 flex-row p-10 text-white lg:pl-0"
+            class="content-layout flex h-full flex-1 flex-row bg-primary-deep p-10 text-white lg:pl-0"
         >
             <aside class="contents">
                 <ContentBar
@@ -104,7 +104,7 @@ function bodyWithChildren(body, children) {
                     <ContentRenderer
                         v-if="section.children.length"
                         :value="sectionValue(section.children)"
-                        class="content text-primary-deep flex-1 rounded-4xl bg-white p-6"
+                        class="content flex-1 rounded-4xl bg-white p-6 text-primary-deep"
                     />
                 </section>
             </main>

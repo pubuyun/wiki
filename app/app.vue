@@ -1,24 +1,26 @@
 <template>
-    <NuxtAnnouncer />
-    <!-- 
-        NuxtAnnouncer can announce messages to screen readers.
-        const { polite, assertive } = useAnnouncer()
+    <div :class="{ colorblind: colorblindMode }">
+        <NuxtAnnouncer />
+        <!-- 
+            NuxtAnnouncer can announce messages to screen readers.
+            const { polite, assertive } = useAnnouncer()
 
-        async function submitForm () {
-            try {
-                await $fetch('/api/contact', { method: 'POST', body: formData })
-                polite('Message sent successfully')
-            } catch (error) {
-                assertive('Error: Failed to send message')
+            async function submitForm () {
+                try {
+                    await $fetch('/api/contact', { method: 'POST', body: formData })
+                    polite('Message sent successfully')
+                } catch (error) {
+                    assertive('Error: Failed to send message')
+                }
             }
-        }
-    -->
-    <NuxtRouteAnnouncer />
-    <!-- automatically announces route changes -->
-    <Loading />
-    <NuxtLayout>
-        <NuxtPage />
-    </NuxtLayout>
+        -->
+        <NuxtRouteAnnouncer />
+        <!-- automatically announces route changes -->
+        <Loading />
+        <NuxtLayout>
+            <NuxtPage />
+        </NuxtLayout>
+    </div>
 </template>
 
 <style>
@@ -27,6 +29,8 @@
 
 <script setup lang="ts">
 import { wikiTheme } from "./styles/echarts";
+
+const colorblindMode = useState<boolean>("colorblind-mode", () => false);
 
 provide(THEME_KEY, wikiTheme);
 </script>

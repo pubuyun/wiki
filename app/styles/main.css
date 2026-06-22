@@ -25,12 +25,12 @@ html {
 }
 
 .colorblind {
-    --primary-light: #81ebf9;
-    --primary-norm: #4f7fff;
-    --primary-dark: #142e85;
-    --primary-deep: #142e85;
-    --secondary: #65dbbe;
-    --tertiary: #ffda3a;
+    --primary-light: #d55e00;
+    --primary-norm: #0072b2;
+    --primary-dark: #000000;
+    --primary-deep: #000000;
+    --secondary: #f0e442;
+    --tertiary: #56b4e9;
 }
 
 :root {
