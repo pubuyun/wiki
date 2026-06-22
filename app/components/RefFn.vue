@@ -1,21 +1,31 @@
 <template>
     <a
+        v-if="link"
+        :id="`fnref-${id}`"
         :href="link"
         target="_blank"
-        :id="`fnref-${id}`"
-        class="hover:text-secondary font-bold text-primary-norm no-underline"
-        aria-label="Reference link"
+        rel="noopener noreferrer"
+        class="rounded-sm font-bold text-primary-norm no-underline hover:text-secondary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-secondary"
     >
         <slot mdc-unwrap="p" />
+        <span class="sr-only"> (opens in a new tab)</span>
     </a>
+    <span
+        v-else
+        :id="`fnref-${id}`"
+        tabindex="-1"
+        class="rounded-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-secondary"
+    >
+        <slot mdc-unwrap="p" />
+    </span>
 
     <a
         :href="`#ref-${id}`"
-        class="hover:text-secondary ml-2 font-bold text-primary-norm no-underline"
-        aria-label="Back to reference"
+        class="ml-2 rounded-sm font-bold text-primary-norm no-underline hover:text-secondary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-secondary"
+        :aria-label="`Back to reference ${id} in the text`"
         @click="scrollToHash($event, `#ref-${id}`)"
     >
-        ↩
+        <span aria-hidden="true">↩</span>
     </a>
 </template>
 

@@ -43,7 +43,7 @@
         <div
             v-if="contentTextRendered"
             :id="contentId"
-            class="max-h-full min-h-0 w-full flex-1 scrollbar-none overflow-y-auto"
+            class="my-2 max-h-full min-h-0 w-full flex-1 scrollbar-none overflow-y-auto"
             :class="contentTextClass"
             :aria-hidden="!contentTextVisible"
             ref="contentScroll"
@@ -122,13 +122,13 @@
         <!-- top gradient -->
         <div
             v-if="contentTextVisible && canScrollUp"
-            class="pointer-events-none absolute top-18 z-10 h-8 w-full bg-linear-to-b from-primary-norm to-transparent"
+            class="pointer-events-none absolute top-20 z-10 h-8 w-full bg-linear-to-b from-primary-norm to-transparent"
         />
 
         <!-- bottom gradient -->
         <div
             v-if="contentTextVisible && canScrollDown"
-            class="pointer-events-none absolute bottom-10 z-10 h-8 w-full bg-linear-to-t from-primary-norm to-transparent"
+            class="pointer-events-none absolute bottom-8 z-10 h-8 w-full bg-linear-to-t from-primary-norm to-transparent"
         />
     </nav>
 </template>

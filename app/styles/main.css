@@ -24,7 +24,7 @@ html {
     scroll-padding-top: 12rem;
 }
 
-.legacy {
+.colorblind {
     --primary-light: #81ebf9;
     --primary-norm: #4f7fff;
     --primary-dark: #142e85;
@@ -40,4 +40,12 @@ html {
     --primary-deep: #1c0770;
     --secondary: #f1ff5f;
     --tertiary: #67e8c3;
+}
+
+.colorblind button:hover {
+    text-decoration: underline;
+}
+.colorblind a:hover {
+    border: 2px solid currentColor;
+    border-radius: 0.25rem;
 }

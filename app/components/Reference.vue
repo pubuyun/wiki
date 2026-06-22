@@ -2,10 +2,11 @@
     <a
         :href="`#fnref-${id}`"
         :id="`ref-${id}`"
-        class="hover:text-primary-deep mx-0.5 scroll-mt-24 align-super text-xs font-bold text-secondary no-underline"
+        class="mx-0.5 scroll-mt-24 rounded-sm align-super text-xs font-bold text-secondary no-underline hover:text-primary-deep focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-deep"
+        :aria-label="`Go to reference ${label || id}`"
         @click="scrollToHash($event, `fnref-${id}`)"
     >
-        {{ label || id }}
+        <span aria-hidden="true">{{ label || id }}</span>
     </a>
 </template>
 

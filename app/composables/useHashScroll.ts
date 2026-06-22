@@ -1,5 +1,9 @@
 export function useHashScroll() {
-    function scrollToHash(event: MouseEvent, hashOrId?: string | null) {
+    function scrollToHash(
+        event: MouseEvent,
+        hashOrId?: string | null,
+        options: { focus?: boolean } = { focus: true },
+    ) {
         const id = normalizeHashId(hashOrId);
         if (!id) return false;
 
@@ -16,6 +20,9 @@ export function useHashScroll() {
             new CustomEvent("wiki:hash-scroll", { detail: { id } }),
         );
         scrollToTarget(target);
+        if (options.focus) {
+            focusTarget(target);
+        }
         window.dispatchEvent(
             new HashChangeEvent("hashchange", {
                 oldURL: oldUrl,
@@ -77,5 +84,27 @@ function scrollToTarget(target: HTMLElement) {
         scrollPaddingTop -
         scrollMarginTop;
 
-    window.scrollTo({ top, behavior: "smooth" });
+    const behavior = window.matchMedia("(prefers-reduced-motion: reduce)")
+        .matches
+        ? "auto"
+        : "smooth";
+
+    window.scrollTo({ top, behavior });
+}
+
+function focusTarget(target: HTMLElement) {
+    const needsTemporaryTabIndex = !target.matches(
+        "a[href], button, input, select, textarea, [tabindex]",
+    );
+
+    if (needsTemporaryTabIndex) {
+        target.setAttribute("tabindex", "-1");
+        target.addEventListener(
+            "blur",
+            () => target.removeAttribute("tabindex"),
+            { once: true },
+        );
+    }
+
+    target.focus({ preventScroll: true });
 }
