@@ -3,23 +3,27 @@
         <!-- Desktop / larger than lg -->
         <DialogTrigger
             aria-label="Open search dialog"
-            class="bg-primary-deep mr-8 ml-5 h-2/3 max-w-96 flex-1 rounded-full pr-3 max-xl:hidden"
+            class="mr-8 ml-5 h-2/3 max-w-96 flex-1 rounded-full bg-primary-norm pr-3 max-xl:hidden"
         >
-            <div class="flex h-full items-center gap-2 p-1 text-white">
+            <div class="flex h-full items-center gap-2 p-1 text-textcolor">
                 <input
-                    class="h-full flex-1 rounded-full bg-white"
+                    class="h-full flex-1 rounded-full bg-textbg"
                     readonly
-                    placeholder="Ctrl + K to search"
+                    placeholder="   Ctrl + K to search"
                     tabindex="-1"
                 />
-                <Icon icon="lucide:search" class="h-5 w-5" aria-hidden="true" />
+                <Icon
+                    icon="lucide:search"
+                    class="h-5 w-5 text-textbg"
+                    aria-hidden="true"
+                />
             </div>
         </DialogTrigger>
 
         <!-- lg and lower -->
         <DialogTrigger
             aria-label="Open search dialog"
-            class="text-primary-deep z-100 hidden items-center gap-2 rounded-full bg-tertiary p-2 shadow-md hover:bg-primary-norm focus:ring-2 focus:ring-secondary focus:ring-offset-2 focus:outline-none max-xl:inline-flex"
+            class="z-100 hidden items-center gap-2 rounded-full bg-tertiary p-2 text-primary-deep shadow-md hover:bg-primary-norm focus:ring-2 focus:ring-secondary focus:ring-offset-2 focus:outline-none max-xl:inline-flex"
         >
             <Icon icon="lucide:search" class="h-3 w-3" aria-hidden="true" />
         </DialogTrigger>
@@ -54,7 +58,7 @@
                         class="flex max-h-[calc(70vh-3rem)] w-full flex-col justify-start gap-2"
                     >
                         <header
-                            class="text-primary-deep shrink-0 text-center text-2xl font-bold"
+                            class="shrink-0 text-center text-2xl font-bold text-primary-deep"
                         >
                             <label for="site-search" class="sr-only">
                                 Search site content
@@ -116,7 +120,7 @@
                                             </h3>
 
                                             <p
-                                                class="text-primary-deep text-xs font-normal"
+                                                class="text-xs font-normal text-primary-deep"
                                                 v-html="displayContent(link)"
                                             />
                                         </article>
@@ -131,7 +135,7 @@
                         </div>
                         <p
                             v-else-if="query"
-                            class="text-primary-deep mt-4 text-center"
+                            class="mt-4 text-center text-primary-deep"
                             aria-live="polite"
                         >
                             No results found.

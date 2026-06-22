@@ -5,7 +5,7 @@
         :alt="props.alt"
         :width="props.width"
         :height="props.height"
-        class="my-8 w-full rounded-lg border border-primary-light bg-white object-cover shadow-sm"
+        class="my-8 w-full rounded-lg border border-primary-light bg-textbg object-cover shadow-sm"
     />
 </template>
 
@@ -36,7 +36,6 @@ const props = defineProps({
 
 const refinedSrc = computed(() => {
     if (props.src?.startsWith("/") && !props.src.startsWith("//")) {
-        // @ts-expect-error runtime config is not typed
         const _base = withLeadingSlash(
             withTrailingSlash(useRuntimeConfig().app.baseURL),
         );

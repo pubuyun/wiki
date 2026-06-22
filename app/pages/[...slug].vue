@@ -104,7 +104,7 @@ function bodyWithChildren(body, children) {
                     <ContentRenderer
                         v-if="section.children.length"
                         :value="sectionValue(section.children)"
-                        class="content flex-1 rounded-4xl bg-white p-6 text-primary-deep"
+                        class="content paragraph flex-1 rounded-4xl bg-textbg p-6 text-textcolor"
                     />
                 </section>
             </main>

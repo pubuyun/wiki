@@ -10,6 +10,8 @@
     --color-primary-norm: var(--primary-norm);
     --color-primary-dark: var(--primary-dark);
     --color-primary-deep: var(--primary-deep);
+    --color-textbg: var(--textbg);
+    --color-textcolor: var(--textcolor);
     --color-secondary: var(--secondary);
     --color-tertiary: var(--tertiary);
     --font-momo-trust-display: "Momo Trust Display", sans-serif;
@@ -23,14 +25,37 @@ html {
     scroll-behavior: smooth;
     scroll-padding-top: 12rem;
 }
+.colorblind.dark {
+    --primary-light: #d55e00;
+    --primary-norm: #0072b2;
+    --primary-dark: #000000;
+    --primary-deep: #000000;
+    --textbg: #222222;
+    --textcolor: #ffffff;
+    --secondary: #f0e442;
+    --tertiary: #56b4e9;
+}
 
 .colorblind {
     --primary-light: #d55e00;
     --primary-norm: #0072b2;
     --primary-dark: #000000;
     --primary-deep: #000000;
+    --textbg: #ffffff;
+    --textcolor: #000000;
     --secondary: #f0e442;
     --tertiary: #56b4e9;
+}
+
+.dark {
+    --primary-light: #3a9aff;
+    --primary-norm: #4b68ff;
+    --primary-dark: #0c25a4;
+    --primary-deep: #1c0770;
+    --textbg: #120544;
+    --textcolor: #ffffff;
+    --secondary: #f1ff5f;
+    --tertiary: #67e8c3;
 }
 
 :root {
@@ -38,6 +63,8 @@ html {
     --primary-norm: #4b68ff;
     --primary-dark: #261cc1;
     --primary-deep: #1c0770;
+    --textbg: #ffffff;
+    --textcolor: #000000;
     --secondary: #f1ff5f;
     --tertiary: #67e8c3;
 }

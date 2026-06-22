@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { NavigationMenuList, NavigationMenuRoot } from "radix-vue";
 import ColorblindModeToggle from "./NavigationBar/ColorblindModeToggle.vue";
+import DarkModeToggle from "./NavigationBar/DarkModeToggle.vue";
 import Logo from "./NavigationBar/Logo.vue";
 import NavItem from "./NavigationBar/NavItem.vue";
 
@@ -136,6 +137,7 @@ onUnmounted(() => {
 
             <SearchBar />
             <ColorblindModeToggle />
+            <DarkModeToggle />
             <NavigationMenuList
                 class="mr-8 flex h-full w-1/2 list-none items-center justify-evenly gap-4 p-0 whitespace-nowrap md:text-base lg:text-lg xl:text-xl"
             >
