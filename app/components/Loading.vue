@@ -5,7 +5,7 @@
             class="bg-primary-deep fixed inset-0 z-9999 flex items-center justify-center backdrop-blur-sm"
         >
             <img
-                v-if="shouldLoadImage"
+                v-if="isImageReady"
                 :src="loadingImageUrl"
                 alt="Loading"
                 class="h-96"
@@ -23,17 +23,32 @@ const { isLoading } = useLoadingIndicator();
 
 const loadingImageUrl =
     "https://static.igem.wiki/teams/6133/wiki/general/loading.webp";
-const shouldLoadImage = ref(false);
+const isImageReady = ref(false);
+
+let loadImageAfterPageLoad: (() => void) | undefined;
 
 onMounted(() => {
-    const loadImage = () => {
-        shouldLoadImage.value = true;
+    loadImageAfterPageLoad = () => {
+        const image = new Image();
+
+        image.decoding = "async";
+        image.setAttribute("fetchpriority", "low");
+        image.onload = () => {
+            isImageReady.value = true;
+        };
+        image.src = loadingImageUrl;
     };
 
     if (document.readyState === "complete") {
-        loadImage();
+        loadImageAfterPageLoad();
     } else {
-        window.addEventListener("load", loadImage, { once: true });
+        window.addEventListener("load", loadImageAfterPageLoad, { once: true });
+    }
+});
+
+onBeforeUnmount(() => {
+    if (loadImageAfterPageLoad) {
+        window.removeEventListener("load", loadImageAfterPageLoad);
     }
 });
 </script>
