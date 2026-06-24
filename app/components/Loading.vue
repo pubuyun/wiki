@@ -17,9 +17,32 @@ const canShowRouteLoading = ref(false);
 const nuxtApp = useNuxtApp();
 const router = useRouter();
 
+const loadingImageUrl =
+    "https://static.igem.wiki/teams/6133/wiki/general/loading.webp";
+
+const preloadLoadingImage = () => {
+    const image = new Image();
+
+    image.decoding = "async";
+    image.src = loadingImageUrl;
+};
+
+const runWhenIdle = (callback: () => void) => {
+    if ("requestIdleCallback" in window) {
+        window.requestIdleCallback(callback, { timeout: 3000 });
+    } else {
+        window.setTimeout(callback, 1000);
+    }
+};
+
 onMounted(async () => {
     await router.isReady();
+
     canShowRouteLoading.value = true;
+
+    onNuxtReady(() => {
+        runWhenIdle(preloadLoadingImage);
+    });
 });
 
 nuxtApp.hook("page:loading:start", () => {
@@ -31,9 +54,6 @@ nuxtApp.hook("page:loading:start", () => {
 nuxtApp.hook("page:loading:end", () => {
     showLoading.value = false;
 });
-
-const loadingImageUrl =
-    "https://static.igem.wiki/teams/6133/wiki/general/loading.webp";
 </script>
 
 <style scoped>
