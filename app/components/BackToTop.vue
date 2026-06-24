@@ -54,10 +54,12 @@
                     </textPath>
                 </text>
             </svg>
-            <img
+            <NuxtImg
                 src="https://static.igem.wiki/teams/6133/wiki/general/backtotop.avif"
                 alt="Back to top"
                 class="top-0 left-0 z-100 h-full w-full object-contain"
+                loading="lazy"
+                decoding="async"
             />
         </button>
     </Transition>
