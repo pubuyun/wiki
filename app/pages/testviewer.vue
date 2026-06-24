@@ -6,7 +6,7 @@
             >
                 <StructureViewer
                     ref="structureViewerRef"
-                    structure-url="https://files.rcsb.org/download/6EXS.pdb"
+                    structure-url="https://static.igem.wiki/teams/6133/wiki/drylab/model/binders/pdb/br1.js"
                     structure-url-format="pdb"
                 />
             </div>
