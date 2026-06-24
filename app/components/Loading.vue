@@ -4,7 +4,7 @@
             v-if="showLoading"
             class="fixed inset-0 z-9999 flex items-center justify-center bg-primary-deep backdrop-blur-sm"
         >
-            <NuxtImg :src="loadingImageUrl" alt="Loading" class="h-96" />
+            <img :src="loadingImageUrl" alt="Loading" class="h-96" />
             <span class="sr-only">Loading...</span>
         </div>
     </Transition>
