@@ -54,7 +54,7 @@ const navItems = [
         links: [
             { to: "/model", label: "Model" },
             { to: "/software", label: "Software" },
-            { to: "/testviewer", label: "Test Viewer" },
+            { to: "/viewbinder", label: "Binder Viewer" },
             { to: "/testgraph", label: "Test Graph" },
         ],
     },
