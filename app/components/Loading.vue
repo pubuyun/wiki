@@ -1,56 +1,39 @@
 <template>
     <Transition name="fade">
         <div
-            v-if="isLoading"
-            class="bg-primary-deep fixed inset-0 z-9999 flex items-center justify-center backdrop-blur-sm"
+            v-if="showLoading"
+            class="fixed inset-0 z-9999 flex items-center justify-center bg-primary-deep backdrop-blur-sm"
         >
-            <img
-                v-if="isImageReady"
-                :src="loadingImageUrl"
-                alt="Loading"
-                class="h-96"
-                loading="lazy"
-                decoding="async"
-                fetchpriority="low"
-            />
+            <NuxtImg :src="loadingImageUrl" alt="Loading" class="h-96" />
             <span class="sr-only">Loading...</span>
         </div>
     </Transition>
 </template>
 
 <script setup lang="ts">
-const { isLoading } = useLoadingIndicator();
+const showLoading = ref(false);
+const canShowRouteLoading = ref(false);
+
+const nuxtApp = useNuxtApp();
+const router = useRouter();
+
+onMounted(async () => {
+    await router.isReady();
+    canShowRouteLoading.value = true;
+});
+
+nuxtApp.hook("page:loading:start", () => {
+    if (canShowRouteLoading.value) {
+        showLoading.value = true;
+    }
+});
+
+nuxtApp.hook("page:loading:end", () => {
+    showLoading.value = false;
+});
 
 const loadingImageUrl =
     "https://static.igem.wiki/teams/6133/wiki/general/loading.webp";
-const isImageReady = ref(false);
-
-let loadImageAfterPageLoad: (() => void) | undefined;
-
-onMounted(() => {
-    loadImageAfterPageLoad = () => {
-        const image = new Image();
-
-        image.decoding = "async";
-        image.setAttribute("fetchpriority", "low");
-        image.onload = () => {
-            isImageReady.value = true;
-        };
-        image.src = loadingImageUrl;
-    };
-
-    if (document.readyState === "complete") {
-        loadImageAfterPageLoad();
-    } else {
-        window.addEventListener("load", loadImageAfterPageLoad, { once: true });
-    }
-});
-
-onBeforeUnmount(() => {
-    if (loadImageAfterPageLoad) {
-        window.removeEventListener("load", loadImageAfterPageLoad);
-    }
-});
 </script>
 
 <style scoped>

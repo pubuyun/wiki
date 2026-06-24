@@ -8,7 +8,7 @@
         class="rounded-sm font-bold text-primary-norm no-underline hover:text-secondary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-secondary"
     >
         <slot mdc-unwrap="p" />
-        <span class="sr-only"> (opens in a new tab)</span>
+        <span class="sr-only">opens in a new tab</span>
     </a>
     <span
         v-else
