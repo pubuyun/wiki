@@ -2,7 +2,7 @@
     <Transition name="fade">
         <div
             v-if="showLoading"
-            class="fixed inset-0 z-9999 flex items-center justify-center bg-primary-deep backdrop-blur-sm"
+            class="fixed inset-0 z-9999 flex flex-col items-center justify-center bg-primary-deep backdrop-blur-sm"
         >
             <img :src="loadingImageUrl" alt="Loading" class="h-96" />
             <p class="mt-4 text-white text-xl font-semibold tracking-wide">
