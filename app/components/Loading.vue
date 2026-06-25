@@ -4,12 +4,13 @@
             v-if="showLoading"
             class="fixed inset-0 z-9999 flex flex-col items-center justify-center bg-primary-deep backdrop-blur-sm"
         >
-         <div class="flex flex-col items-center">
-  <img :src="loadingImageUrl" alt="Loading" class="h-96" />
-  <p class="mt-4 text-white text-xl font-semibold tracking-wide">
-    Loading...
-  </p>
-</div>
+ 7  <div class="relative flex items-center justify-center">
+8    <img :src="loadingImageUrl" alt="Loading" class="h-96" />
+9
+10  <p class="absolute top-8 text-white text-2xl font-bold tracking-widest">
+11     Loading...
+12   </p>
+13 </div>
             <span class="sr-only">Loading...</span>
         </div>
     </Transition>
