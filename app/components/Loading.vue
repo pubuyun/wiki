@@ -4,12 +4,12 @@
             v-if="showLoading"
             class="fixed inset-0 z-9999 flex flex-col items-center justify-center bg-primary-deep backdrop-blur-sm"
         >
- <div class="relative flex justify-center">
-  <img :src="loadingImageUrl" alt="Loading" class="h-96" />
-
-  <p class="absolute top-8 text-white text-2xl font-bold tracking-widest">
+ <div class="flex flex-col items-center">
+  <p class="mb-6 text-white text-4xl font-bold tracking-widest">
     Loading...
   </p>
+
+  <img :src="loadingImageUrl" alt="Loading" class="h-96" />
 </div>
             <span class="sr-only">Loading...</span>
         </div>
