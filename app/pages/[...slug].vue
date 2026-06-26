@@ -82,7 +82,7 @@ function bodyWithChildren(body, children) {
     <div v-if="page" class="flex flex-1 flex-col">
         <Banner v-if="page" :title="page.title" :imgSrc="page.meta?.banner" />
         <div
-            class="content-layout flex h-full flex-1 flex-row bg-primary-bg p-10 text-white lg:pl-0"
+            class="flex h-full flex-1 flex-row gap-8 bg-primary-bg p-10 text-white lg:pl-0"
         >
             <aside class="contents">
                 <ContentBar
@@ -112,13 +112,4 @@ function bodyWithChildren(body, children) {
     </div>
 </template>
 
-<style>
-.content-layout {
-    gap: 3.75rem;
-    transition: gap 300ms ease-out;
-}
-
-.content-layout:has([data-content-bar-collapsed="true"]) {
-    gap: 2rem;
-}
-</style>
+<style></style>

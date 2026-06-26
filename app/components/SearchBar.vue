@@ -3,30 +3,30 @@
         <!-- Desktop / larger than lg -->
         <DialogTrigger
             aria-label="Open search dialog"
-            class="mr-8 ml-5 h-2/3 max-w-96 flex-1 rounded-full bg-primary-norm pr-3 max-xl:hidden"
+            class="mr-8 ml-5 h-3/4 max-w-48 flex-1 rounded-full bg-primary-norm pr-3"
         >
             <div class="flex h-full items-center gap-2 p-1 text-textcolor">
                 <input
-                    class="h-full flex-1 rounded-full bg-textbg"
+                    class="h-full min-w-0 flex-1 rounded-full bg-textbg px-3"
                     readonly
-                    placeholder="   Ctrl + K to search"
+                    placeholder="Ctrl + K"
                     tabindex="-1"
                 />
                 <Icon
                     icon="lucide:search"
-                    class="h-5 w-5 text-textbg"
+                    class="h-5 w-5 shrink-0 text-textbg"
                     aria-hidden="true"
                 />
             </div>
         </DialogTrigger>
 
         <!-- lg and lower -->
-        <DialogTrigger
+        <!-- <DialogTrigger
             aria-label="Open search dialog"
             class="z-100 hidden items-center gap-2 rounded-full bg-tertiary p-2 text-primary-deep shadow-md hover:bg-primary-norm focus:ring-2 focus:ring-secondary focus:ring-offset-2 focus:outline-none max-xl:inline-flex"
         >
             <Icon icon="lucide:search" class="h-3 w-3" aria-hidden="true" />
-        </DialogTrigger>
+        </DialogTrigger> -->
 
         <DialogPortal>
             <Transition

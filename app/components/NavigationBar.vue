@@ -16,10 +16,6 @@ const props = withDefaults(
 
 const navItems = [
     {
-        title: "Home",
-        to: "/",
-    },
-    {
         title: "Project",
         links: [
             { to: "/contribution", label: "Contribution" },
@@ -119,7 +115,7 @@ onUnmounted(() => {
         :delay-duration="100"
     >
         <nav
-            class="flex items-center justify-between gap-10 overflow-visible bg-primary-light font-righteous md:h-8 lg:h-11 xl:h-14"
+            class="flex items-center justify-between gap-6 overflow-visible bg-primary-light font-righteous md:h-8 lg:h-11 xl:h-14"
             :style="props.scrollOpacity ? opacityStyle : undefined"
         >
             <NuxtLink
@@ -134,13 +130,6 @@ onUnmounted(() => {
                     >Expelliodor</span
                 >
             </NuxtLink>
-
-            <SearchBar />
-            <span class="flex items-center gap-2">
-                <ColorblindModeToggle />
-                <DarkModeToggle />
-            </span>
-
             <NavigationMenuList
                 class="mr-8 flex h-full w-1/2 list-none items-center justify-evenly gap-4 p-0 whitespace-nowrap md:text-base lg:text-lg xl:text-xl"
             >
@@ -152,6 +141,13 @@ onUnmounted(() => {
                     :to="item.to"
                 />
             </NavigationMenuList>
+            <div
+                class="h-full flex-1 items-center justify-end gap-2 md:flex lg:gap-4 xl:gap-6"
+            >
+                <ColorblindModeToggle />
+                <DarkModeToggle />
+                <SearchBar />
+            </div>
         </nav>
     </NavigationMenuRoot>
     <ProgressBar
