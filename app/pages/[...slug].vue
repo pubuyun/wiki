@@ -82,7 +82,7 @@ function bodyWithChildren(body, children) {
     <div v-if="page" class="flex flex-1 flex-col">
         <Banner v-if="page" :title="page.title" :imgSrc="page.meta?.banner" />
         <div
-            class="content-layout flex h-full flex-1 flex-row bg-primary-deep p-10 text-white lg:pl-0"
+            class="content-layout flex h-full flex-1 flex-row bg-primary-bg p-10 text-white lg:pl-0"
         >
             <aside class="contents">
                 <ContentBar

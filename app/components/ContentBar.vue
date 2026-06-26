@@ -145,7 +145,7 @@ const h2Style =
     "group mx-2 my-0.5 flex w-[calc(100%-1rem)] items-stretch focus-visible:ring-2 focus-visible:ring-white focus-visible:outline-none md:text-lg lg:text-xl xl:text-2xl";
 const h2DecorationStyle =
     "w-1 shrink-0 transition-[margin,width,background-color] duration-300 ease-out";
-const activeH2DecorationStyle = "-ml-2 w-1 bg-primary-deep";
+const activeH2DecorationStyle = "-ml-2 w-1 bg-primary-bg";
 const h2TextStyle =
     "flex flex-1 items-center justify-start rounded-2xl px-4 py-2 text-left transition-[margin,border-radius,color,background-color] duration-300 ease-out";
 const activeH2TextStyle = "-mr-2 rounded-none bg-secondary text-primary-dark";

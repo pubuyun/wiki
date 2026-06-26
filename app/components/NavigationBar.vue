@@ -136,8 +136,11 @@ onUnmounted(() => {
             </NuxtLink>
 
             <SearchBar />
-            <ColorblindModeToggle />
-            <DarkModeToggle />
+            <span class="flex items-center gap-2">
+                <ColorblindModeToggle />
+                <DarkModeToggle />
+            </span>
+
             <NavigationMenuList
                 class="mr-8 flex h-full w-1/2 list-none items-center justify-evenly gap-4 p-0 whitespace-nowrap md:text-base lg:text-lg xl:text-xl"
             >
