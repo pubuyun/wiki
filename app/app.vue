@@ -1,5 +1,5 @@
 <template>
-    <div :class="{ colorblind: colorblindMode, dark: darkMode }">
+    <div>
         <NuxtAnnouncer />
         <!-- 
             NuxtAnnouncer can announce messages to screen readers.
@@ -32,6 +32,18 @@ import { wikiTheme } from "./styles/echarts";
 
 const colorblindMode = useState<boolean>("colorblind-mode", () => false);
 const darkMode = useState<boolean>("dark-mode", () => false);
+
+const themeClass = computed(() =>
+    [colorblindMode.value && "colorblind", darkMode.value && "dark"]
+        .filter(Boolean)
+        .join(" "),
+);
+
+useHead({
+    bodyAttrs: {
+        class: themeClass,
+    },
+});
 
 provide(THEME_KEY, wikiTheme);
 </script>
