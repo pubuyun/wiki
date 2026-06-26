@@ -1,7 +1,7 @@
 <template>
     <Transition name="fade">
         <div
-            v-if="showLoading"
+            v-if="showLoading && isLoadingImageLoaded"
             class="fixed inset-0 z-9999 flex items-center justify-center bg-primary-deep backdrop-blur-sm"
         >
             <img :src="loadingImageUrl" class="h-96" />
@@ -13,6 +13,7 @@
 <script setup lang="ts">
 const showLoading = ref(false);
 const canShowRouteLoading = ref(false);
+const isLoadingImageLoaded = ref(false);
 
 const nuxtApp = useNuxtApp();
 const router = useRouter();
@@ -24,6 +25,9 @@ const preloadLoadingImage = () => {
     const image = new Image();
 
     image.decoding = "async";
+    image.onload = () => {
+        isLoadingImageLoaded.value = true;
+    };
     image.src = loadingImageUrl;
 };
 
@@ -46,7 +50,7 @@ onMounted(async () => {
 });
 
 nuxtApp.hook("page:loading:start", () => {
-    if (canShowRouteLoading.value) {
+    if (canShowRouteLoading.value && isLoadingImageLoaded.value) {
         showLoading.value = true;
     }
 });
