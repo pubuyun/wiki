@@ -4,7 +4,13 @@
             v-if="showLoading && isLoadingImageLoaded"
             class="fixed inset-0 z-9999 flex items-center justify-center bg-primary-bg backdrop-blur-sm"
         >
-            <img :src="loadingImageUrl" class="h-96" />
+            <div class="flex flex-col items-center">
+                <p class="mb-6 text-4xl font-bold tracking-widest text-white">
+                    Loading...
+                </p>
+
+                <img :src="loadingImageUrl" class="h-96" />
+            </div>
             <span class="sr-only">Loading...</span>
         </div>
     </Transition>
