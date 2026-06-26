@@ -165,7 +165,8 @@ const searchInput = ref(null);
 
 const query = ref("");
 const result = ref([]);
-const { search } = useSearchCollection("content", {
+const { search, init: initSearch } = useSearchCollection("content", {
+    immediate: false,
     minHeading: "h2",
     maxHeading: "h3",
 });
@@ -196,6 +197,7 @@ watch(isSearchOpen, async (open) => {
 
     await nextTick();
     searchInput.value?.focus();
+    initSearch();
 });
 
 function displayTitle(link) {
@@ -230,7 +232,6 @@ watch(query, async (value) => {
     if (currentSearch === latestSearch) {
         result.value = searchResult;
     }
-    console.log(searchResult);
 });
 
 // Scroll gradient logic
