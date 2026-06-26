@@ -82,14 +82,8 @@ function bodyWithChildren(body, children) {
     <div v-if="page" class="flex flex-1 flex-col">
         <Banner v-if="page" :title="page.title" :imgSrc="page.meta?.banner" />
         <div
-            class="flex h-full flex-1 flex-row gap-8 bg-primary-bg p-10 text-white lg:pl-0"
+            class="flex h-full flex-1 flex-row gap-8 bg-primary-bg p-10 text-white lg:pr-0"
         >
-            <aside class="contents">
-                <ContentBar
-                    class="hidden lg:block"
-                    :toc="page.body.toc.links"
-                />
-            </aside>
             <main class="flex flex-1 flex-col gap-6">
                 <section
                     v-for="section in sections"
@@ -108,6 +102,12 @@ function bodyWithChildren(body, children) {
                     />
                 </section>
             </main>
+            <aside class="contents">
+                <ContentBar
+                    class="hidden lg:flex"
+                    :toc="page.body.toc.links"
+                />
+            </aside>
         </div>
     </div>
 </template>

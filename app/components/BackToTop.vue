@@ -11,7 +11,7 @@
         <button
             @click="scrollToTop"
             v-show="visible"
-            class="back-to-top fixed right-6 bottom-6 z-50 h-24 w-24 cursor-pointer border-none bg-transparent"
+            class="back-to-top fixed right-6 bottom-6 z-50 h-24 w-24 cursor-pointer border-none bg-transparent lg:hidden"
             aria-label="Back to top"
         >
             <svg

@@ -1,19 +1,51 @@
 <template>
     <nav
-        class="sticky top-24 mb-6 max-h-[calc(100vh-8rem)] w-1/6 flex-col overflow-hidden rounded-l-[3.5em] bg-primary-norm pt-18 pb-10 font-momo-trust-display shadow-lg"
+        :class="contentBarClass"
+        :data-content-bar-collapsed="collapsed"
         aria-labelledby="toc-title"
     >
         <h2 class="sr-only" id="toc-title">Table of contents</h2>
         <div
-            class="absolute inset-x-0 top-4 z-10 flex h-16 items-center justify-center text-primary-deep lg:text-xl xl:text-3xl"
+            v-if="contentTextRendered"
+            class="absolute top-4 right-18 left-0 z-10 flex h-16 items-center justify-center text-primary-deep lg:text-xl xl:text-3xl"
+            :class="contentTextClass"
             aria-hidden="true"
         >
             Contents
         </div>
+        <button
+            type="button"
+            :class="collapseButtonClass"
+            :aria-controls="contentId"
+            :aria-expanded="!collapsed"
+            :aria-label="
+                collapsed
+                    ? 'Expand table of contents'
+                    : 'Collapse table of contents'
+            "
+            @click="collapsed = !collapsed"
+        >
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="-6 -7 18 14"
+                class="h-16 w-24 transition-transform duration-300"
+                :class="collapsed && 'rotate-180'"
+                aria-hidden="true"
+            >
+                <path d="M9 6 0 0 9-6Z" fill="currentColor" />
+                <path
+                    d="M-6 0 5-7 5.393-6.024-4 0 5.479 6.01 5 7-6 0Z"
+                    fill="currentColor"
+                />
+            </svg>
+        </button>
 
         <div
+            v-if="contentTextRendered"
             :id="contentId"
             class="my-2 max-h-full min-h-0 w-full flex-1 scrollbar-none overflow-y-auto"
+            :class="contentTextClass"
+            :aria-hidden="!contentTextVisible"
             ref="contentScroll"
             @scroll="updateScrollGradients"
         >
@@ -89,13 +121,13 @@
         </div>
         <!-- top gradient -->
         <div
-            v-if="canScrollUp"
+            v-if="contentTextVisible && canScrollUp"
             class="pointer-events-none absolute top-20 z-10 h-8 w-full bg-linear-to-b from-primary-norm to-transparent"
         />
 
         <!-- bottom gradient -->
         <div
-            v-if="canScrollDown"
+            v-if="contentTextVisible && canScrollDown"
             class="pointer-events-none absolute bottom-8 z-10 h-8 w-full bg-linear-to-t from-primary-norm to-transparent"
         />
     </nav>
@@ -123,7 +155,10 @@ const activeH3Style =
     "text-secondary underline decoration-2 decoration-secondary underline-offset-4";
 const scrollSpyActivationOffset = 8;
 const hashScrollLockDuration = 2400;
+const contentBarTransitionDuration = 300;
 const contentId = "content-bar-toc";
+const expandedContentBarClass = "w-1/6 pt-18 pb-10";
+const collapsedContentBarClass = "h-24 w-18 pt-6 pb-6";
 
 interface ToCLink {
     id: string;
@@ -136,6 +171,9 @@ const props = defineProps<{
 }>();
 
 const { scrollToHash } = useHashScroll();
+const collapsed = ref(false);
+const contentTextRendered = ref(!collapsed.value);
+const contentTextVisible = ref(!collapsed.value);
 const expandedItems = ref<string[]>([]);
 const activeH2Id = ref<string>();
 const activeH3Id = ref<string>();
@@ -144,8 +182,50 @@ const canScrollUp = ref(false);
 const canScrollDown = ref(false);
 let hashScrollUntil = 0;
 let stopScrollSpy: (() => void) | undefined;
+let contentTextRevealTimer: ReturnType<typeof setTimeout> | undefined;
 let syncingExpandedItems = false;
 let preserveUserExpandedItemsAfterHashScroll = false;
+
+const contentBarClass = computed(() => [
+    "sticky top-34 mb-6 max-h-[calc(100vh-11rem)] flex-col overflow-hidden rounded-r-[3.5em] bg-primary-norm  font-momo-trust-display shadow-lg transition-[width,height,padding,translate] duration-300 ease-out",
+    collapsed.value ? collapsedContentBarClass : expandedContentBarClass,
+    collapsed.value ? "-translate-x-6 hover:translate-x-0" : "translate-x-0",
+]);
+const collapseButtonClass = computed(() => [
+    "absolute top-4 right-4 z-20 flex h-16 w-14 items-center justify-center rounded-full text-secondary transition-colors duration-300 hover:text-primary-light focus-visible:ring-2 focus-visible:ring-white focus-visible:outline-none",
+]);
+const contentTextClass = computed(() => [
+    "transition-opacity duration-200 ease-out",
+    contentTextVisible.value ? "opacity-100" : "opacity-0",
+]);
+
+function clearContentTextRevealTimer() {
+    if (contentTextRevealTimer) {
+        clearTimeout(contentTextRevealTimer);
+        contentTextRevealTimer = undefined;
+    }
+}
+
+function hideContentText() {
+    clearContentTextRevealTimer();
+    contentTextVisible.value = false;
+    contentTextRendered.value = false;
+}
+
+function revealContentTextAfterResize() {
+    clearContentTextRevealTimer();
+    contentTextVisible.value = false;
+    contentTextRendered.value = false;
+
+    contentTextRevealTimer = setTimeout(async () => {
+        contentTextRendered.value = true;
+        await nextTick();
+        requestAnimationFrame(() => {
+            contentTextVisible.value = true;
+            updateScrollGradients();
+        });
+    }, contentBarTransitionDuration);
+}
 
 function updateScrollGradients() {
     const el = contentScroll.value;
@@ -183,6 +263,8 @@ function h3Class(id: string) {
 }
 
 async function keepActiveH3InView(id: string) {
+    if (collapsed.value) return;
+
     await nextTick();
     const scroller = contentScroll.value;
     const link = findContentBarH3Link(id);
@@ -328,6 +410,13 @@ watch(contentScroll, (newVal) => {
         updateScrollGradients();
     }
 });
+watch(collapsed, (isCollapsed) => {
+    if (isCollapsed) {
+        hideContentText();
+    } else {
+        revealContentTextAfterResize();
+    }
+});
 watch(expandedItems, () => {
     if (!syncingExpandedItems && Date.now() < hashScrollUntil) {
         preserveUserExpandedItemsAfterHashScroll = true;
@@ -351,6 +440,7 @@ onMounted(async () => {
     setupScrollSpy();
 });
 onBeforeUnmount(() => {
+    clearContentTextRevealTimer();
     stopScrollSpy?.();
 });
 </script>
