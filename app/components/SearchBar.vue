@@ -125,10 +125,7 @@
                                 >
                                     <NuxtLink
                                         :to="link.id"
-                                        @click="
-                                            query = '';
-                                            isSearchOpen = false;
-                                        "
+                                        @click="handleResultClick($event, link)"
                                     >
                                         <article>
                                             <h3
@@ -181,6 +178,7 @@ import { vAutoAnimate } from "@formkit/auto-animate/vue";
 
 const isSearchOpen = ref(false);
 const searchInput = ref(null);
+const { scrollToHash } = useHashScroll();
 
 const query = ref("");
 const result = ref([]);
@@ -228,6 +226,60 @@ function displayTitle(link) {
 
 function displayContent(link) {
     return link.snippets?.content ?? `${link.content.slice(0, 200)}...`;
+}
+
+async function handleResultClick(event, link) {
+    const target = parseSearchTarget(link.id);
+    if (!target) return;
+
+    event.preventDefault();
+    query.value = "";
+    isSearchOpen.value = false;
+
+    await navigateTo(target.fullPath);
+    if (!target.hash) return;
+
+    await scrollToSearchTarget(event, target.hash);
+}
+
+function parseSearchTarget(id) {
+    if (!id) return null;
+
+    try {
+        const url = new URL(id, window.location.href);
+        return {
+            fullPath: `${url.pathname}${url.search}${url.hash}`,
+            pathWithQuery: `${url.pathname}${url.search}`,
+            hash: url.hash ? decodeHash(url.hash.slice(1)) : "",
+        };
+    } catch {
+        const [pathWithQuery, hash = ""] = id.split("#");
+        return {
+            fullPath: id,
+            pathWithQuery,
+            hash: decodeHash(hash),
+        };
+    }
+}
+
+async function scrollToSearchTarget(event, hash) {
+    for (let attempt = 0; attempt < 10; attempt += 1) {
+        await nextTick();
+
+        if (scrollToHash(event, hash)) {
+            return;
+        }
+
+        await new Promise((resolve) => window.setTimeout(resolve, 50));
+    }
+}
+
+function decodeHash(value) {
+    try {
+        return decodeURIComponent(value);
+    } catch {
+        return value;
+    }
 }
 
 watch(query, async (value) => {
