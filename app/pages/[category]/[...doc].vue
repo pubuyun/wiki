@@ -127,14 +127,15 @@ function bodyWithChildren(body: any, children: any[]) {
             <ContentRenderer
                 v-if="section.heading"
                 :value="sectionValue([section.heading])"
-                class="content min-w-0 flex-1 overflow-wrap-anywhere text-white"
+                class="content overflow-wrap-anywhere min-w-0 flex-1 text-white"
             />
             <ContentRenderer
                 v-if="section.children.length"
                 :value="sectionValue(section.children)"
-                class="content paragraph min-w-0 flex-1 overflow-wrap-anywhere rounded-2xl bg-textbg p-4 text-textcolor sm:rounded-3xl sm:p-5 lg:rounded-4xl lg:p-6"
+                class="content paragraph overflow-wrap-anywhere min-w-0 flex-1 rounded-2xl bg-textbg p-4 text-textcolor sm:rounded-3xl sm:p-5 lg:rounded-4xl lg:p-6"
             />
         </section>
+        <Footer />
     </main>
 </template>
 

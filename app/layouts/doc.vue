@@ -37,7 +37,6 @@ const hasRightSidebar = computed(
                 </aside>
             </ClientOnly>
         </div>
-        <Footer />
         <BackToTop />
         <ClickAnimation />
     </div>
