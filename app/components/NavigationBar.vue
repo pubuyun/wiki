@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { NavigationMenuList, NavigationMenuRoot } from "radix-vue";
+import BrandIcon from "./BrandIcon.vue";
 import ColorblindModeToggle from "./NavigationBar/ColorblindModeToggle.vue";
 import DarkModeToggle from "./NavigationBar/DarkModeToggle.vue";
-import Logo from "./NavigationBar/Logo.vue";
 import NavItem from "./NavigationBar/NavItem.vue";
 
 const props = withDefaults(
@@ -10,7 +10,7 @@ const props = withDefaults(
         scrollOpacity?: boolean;
     }>(),
     {
-        scrollOpacity: true,
+        scrollOpacity: false,
     },
 );
 
@@ -105,13 +105,13 @@ const opacityStyle = computed(() => ({
 }));
 
 const navVisibilityClass = computed(() =>
-    navHidden.value
-        ? "pointer-events-none -translate-y-full"
-        : "translate-y-0",
+    navHidden.value ? "pointer-events-none -translate-y-full" : "translate-y-0",
 );
 
 const progressVisibilityClass = computed(() =>
-    navHidden.value ? "-translate-y-full opacity-0" : "translate-y-0 opacity-100",
+    navHidden.value
+        ? "-translate-y-full opacity-0"
+        : "translate-y-0 opacity-100",
 );
 
 function updateScrollState() {
@@ -168,7 +168,7 @@ function updateProgress() {
                 class="icon-section flex h-full shrink-0 items-center gap-4"
                 aria-label="Go to homepage"
             >
-                <Logo />
+                <BrandIcon />
                 <span
                     class="text-primary-deep lg:text-2xl xl:text-4xl"
                     aria-hidden="true"

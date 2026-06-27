@@ -20,6 +20,7 @@
         </svg>
     </div>
 </template>
+
 <style scoped>
 @keyframes float {
     0% {

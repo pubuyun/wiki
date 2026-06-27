@@ -1,6 +1,6 @@
 <template>
     <nav
-        class="sticky top-16 mb-6 max-h-[calc(100vh-5rem)] w-1/6 flex-col overflow-hidden rounded-l-[3.5em] bg-primary-norm pt-18 pb-10 font-momo-trust-display shadow-lg"
+        class="sticky top-17 mb-6 max-h-[calc(100vh-5rem)] w-1/6 flex-col overflow-hidden rounded-l-[3.5em] bg-primary-norm pt-18 pb-10 font-momo-trust-display shadow-lg"
         aria-labelledby="toc-title"
     >
         <h2 class="sr-only" id="toc-title">Table of contents</h2>

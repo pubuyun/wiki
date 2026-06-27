@@ -1,6 +1,5 @@
 ---
-title: Entrepreneurship
-description:
+title: Overview
 ---
 
 ## Overview
