@@ -55,6 +55,10 @@
                         Search site content
                     </DialogTitle>
                     <div
+                        v-auto-animate="{
+                            duration: 220,
+                            easing: 'ease-out',
+                        }"
                         class="flex max-h-[calc(70vh-3rem)] w-full flex-col justify-start gap-2"
                     >
                         <header
@@ -96,6 +100,10 @@
 
                             <ul
                                 ref="resultsList"
+                                v-auto-animate="{
+                                    duration: 180,
+                                    easing: 'ease-out',
+                                }"
                                 class="max-h-[calc(70vh-9rem)] w-full scrollbar-thin scrollbar-thumb-primary-norm scrollbar-track-tertiary overflow-auto"
                                 @scroll="updateScrollGradients"
                                 aria-label="Search results"
@@ -159,6 +167,7 @@ import {
     DialogTrigger,
 } from "radix-vue";
 import { Icon } from "@iconify/vue";
+import { vAutoAnimate } from "@formkit/auto-animate/vue";
 
 const isSearchOpen = ref(false);
 const searchInput = ref(null);

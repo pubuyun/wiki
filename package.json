@@ -13,6 +13,7 @@
         "@fontsource/belanosima": "^5.2.7",
         "@fontsource/momo-trust-display": "^5.2.1",
         "@fontsource/righteous": "^5.2.7",
+        "@formkit/auto-animate": "^0.9.0",
         "@nuxt/content": "^3.13.0",
         "better-sqlite3": "^12.9.0",
         "echarts": "^6.0.0",

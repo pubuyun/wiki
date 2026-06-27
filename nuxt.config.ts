@@ -6,6 +6,7 @@ export default defineNuxtConfig({
         "@nuxt/content",
         ...(process.env.NUXT_STUDIO !== "false" ? ["nuxt-studio"] : []),
         "nuxt-echarts",
+        "@formkit/auto-animate/nuxt",
     ],
     vite: {
         optimizeDeps: {

@@ -16,7 +16,7 @@
     </Transition>
 </template>
 
-<script setup lang="ts">
+<script setup>
 const showLoading = ref(false);
 const canShowRouteLoading = ref(false);
 const isLoadingImageLoaded = ref(false);
@@ -37,7 +37,7 @@ const preloadLoadingImage = () => {
     image.src = loadingImageUrl;
 };
 
-const runWhenIdle = (callback: () => void) => {
+const runWhenIdle = (callback) => {
     if ("requestIdleCallback" in window) {
         window.requestIdleCallback(callback, { timeout: 3000 });
     } else {
