@@ -31,6 +31,7 @@ const hasCategoryNavigation = computed(
 const categoryTitle = computed(
     () => contentLayout.value.categoryTitle || contentLayout.value.page?.title,
 );
+const categoryPath = computed(() => contentLayout.value.categoryPath);
 
 watch(
     () => [open.value, route.fullPath, hasCategoryNavigation.value] as const,
@@ -113,11 +114,14 @@ function categoryItemValue(id: string) {
 
                     <div class="min-h-0 flex-1 overflow-y-auto px-4 py-5">
                         <div v-if="activeView === 'category'" class="space-y-4">
-                            <h2
-                                class="font-righteous text-xl text-primary-deep"
+                            <NuxtLink
+                                :to="categoryPath"
+                                class="block rounded-md font-righteous text-xl text-primary-deep transition-colors hover:bg-primary-norm/20 focus-visible:outline-2 focus-visible:outline-primary-deep"
+                                :aria-label="`Go to ${categoryTitle}`"
+                                @click="closeDialog"
                             >
                                 {{ categoryTitle }}
-                            </h2>
+                            </NuxtLink>
                             <AccordionRoot type="multiple" class="space-y-2">
                                 <template
                                     v-for="node in categoryNodes"
