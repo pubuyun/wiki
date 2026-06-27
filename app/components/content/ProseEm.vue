@@ -1,16 +1,19 @@
 <template>
     <TooltipProvider v-if="matchedTerm" :delay-duration="150">
-        <TooltipRoot>
+        <TooltipRoot v-model:open="tooltipOpen">
             <TooltipTrigger as-child>
                 <button
+                    ref="triggerEl"
                     type="button"
                     class="font-inherit inline cursor-help border-0 bg-transparent p-0 text-inherit not-italic underline decoration-tertiary decoration-2 underline-offset-4 transition-colors hover:text-primary-norm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-tertiary"
+                    @click="toggleTooltipForTouch"
                 >
                     <slot />
                 </button>
             </TooltipTrigger>
             <TooltipPortal>
                 <TooltipContent
+                    ref="contentEl"
                     :side-offset="6"
                     class="z-50 max-w-xs rounded-md bg-primary-dark px-3 py-2 text-sm leading-relaxed text-textbg shadow-lg"
                 >
@@ -34,7 +37,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, useSlots } from "vue";
+import { computed, onBeforeUnmount, onMounted, ref, useSlots } from "vue";
 import {
     TooltipArrow,
     TooltipContent,
@@ -51,6 +54,9 @@ type GlossaryTerm = {
 };
 
 const slots = useSlots();
+const tooltipOpen = ref(false);
+const triggerEl = ref<HTMLElement | null>(null);
+const contentEl = ref<HTMLElement | null>(null);
 
 const { data: glossaryTerms } = await useAsyncData("glossary-terms", () =>
     queryCollection("glossary").all(),
@@ -77,4 +83,41 @@ const matchedTerm = computed(() => {
 function normalizeTerm(term: string): string {
     return term.trim().toLocaleLowerCase();
 }
+
+function isTouchTooltipInteraction() {
+    if (typeof window === "undefined") return false;
+
+    return window.matchMedia("(hover: none), (pointer: coarse)").matches;
+}
+
+function toggleTooltipForTouch(event: MouseEvent) {
+    if (!isTouchTooltipInteraction()) return;
+
+    event.preventDefault();
+    tooltipOpen.value = !tooltipOpen.value;
+}
+
+function closeTooltipOnOutsidePointer(event: PointerEvent) {
+    if (!tooltipOpen.value || !isTouchTooltipInteraction()) return;
+
+    const target = event.target;
+    if (!(target instanceof Node)) return;
+
+    if (
+        triggerEl.value?.contains(target) ||
+        contentEl.value?.contains(target)
+    ) {
+        return;
+    }
+
+    tooltipOpen.value = false;
+}
+
+onMounted(() => {
+    document.addEventListener("pointerdown", closeTooltipOnOutsidePointer);
+});
+
+onBeforeUnmount(() => {
+    document.removeEventListener("pointerdown", closeTooltipOnOutsidePointer);
+});
 </script>

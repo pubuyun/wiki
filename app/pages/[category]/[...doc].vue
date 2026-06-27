@@ -115,22 +115,31 @@ function bodyWithChildren(body: any, children: any[]) {
 </script>
 
 <template>
-    <main v-if="page" class="mt-20 flex flex-1 flex-col gap-6">
+    <main
+        v-if="page"
+        class="mt-16 flex w-full max-w-[100vw] min-w-0 flex-1 flex-col gap-4 overflow-x-hidden px-4 sm:mt-20 sm:gap-6 sm:px-6 lg:px-0"
+    >
         <section
             v-for="section in sections"
             :key="section.id"
-            class="flex flex-col gap-4"
+            class="flex max-w-full min-w-0 flex-col gap-4"
         >
             <ContentRenderer
                 v-if="section.heading"
                 :value="sectionValue([section.heading])"
-                class="content flex-1 text-white"
+                class="content min-w-0 flex-1 overflow-wrap-anywhere text-white"
             />
             <ContentRenderer
                 v-if="section.children.length"
                 :value="sectionValue(section.children)"
-                class="content paragraph flex-1 rounded-4xl bg-textbg p-6 text-textcolor"
+                class="content paragraph min-w-0 flex-1 overflow-wrap-anywhere rounded-2xl bg-textbg p-4 text-textcolor sm:rounded-3xl sm:p-5 lg:rounded-4xl lg:p-6"
             />
         </section>
     </main>
 </template>
+
+<style scoped>
+.overflow-wrap-anywhere {
+    overflow-wrap: anywhere;
+}
+</style>

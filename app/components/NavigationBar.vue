@@ -4,6 +4,8 @@ import BrandIcon from "./BrandIcon.vue";
 import ColorblindModeToggle from "./NavigationBar/ColorblindModeToggle.vue";
 import DarkModeToggle from "./NavigationBar/DarkModeToggle.vue";
 import NavItem from "./NavigationBar/NavItem.vue";
+import PhoneNavigationDialog from "./PhoneNavigationDialog.vue";
+import { siteNavGroups } from "~/utils/site-navigation";
 
 const props = withDefaults(
     defineProps<{
@@ -13,48 +15,6 @@ const props = withDefaults(
         scrollOpacity: false,
     },
 );
-
-const navItems = [
-    {
-        title: "Project",
-        links: [
-            { to: "/contribution", label: "Contribution" },
-            { to: "/description", label: "Description" },
-            { to: "/safety-and-security", label: "Safety" },
-        ],
-    },
-    {
-        title: "Wet lab",
-        links: [
-            { to: "/engineering", label: "Engineering" },
-            { to: "/parts", label: "Parts" },
-        ],
-    },
-    {
-        title: "iHP",
-        links: [
-            { to: "/human-practices", label: "iHP" },
-            { to: "/education", label: "Education" },
-            { to: "/entrepreneurship", label: "Entrepreneurship" },
-        ],
-    },
-    {
-        title: "Team",
-        links: [
-            { to: "/members", label: "Members" },
-            { to: "/attributions", label: "Attributions" },
-        ],
-    },
-    {
-        title: "Dry Lab",
-        links: [
-            { to: "/model", label: "Model" },
-            { to: "/software", label: "Software" },
-            { to: "/viewbinder", label: "Binder Viewer" },
-            { to: "/testgraph", label: "Test Graph" },
-        ],
-    },
-];
 
 const initialOpacity = 0.7;
 const navBackgroundOpacity = ref(initialOpacity);
@@ -159,10 +119,11 @@ function updateProgress() {
         :delay-duration="100"
     >
         <nav
-            class="flex items-center justify-between gap-6 overflow-visible bg-primary-light font-righteous transition-transform duration-300 ease-out will-change-transform sm:h-8 lg:h-11 xl:h-14"
+            class="flex h-12 items-center justify-between gap-3 overflow-visible bg-primary-light px-3 font-righteous transition-transform duration-300 ease-out will-change-transform sm:h-10 sm:gap-4 sm:px-4 lg:h-11 lg:gap-6 xl:h-14"
             :class="navVisibilityClass"
             :style="props.scrollOpacity ? opacityStyle : undefined"
         >
+            <PhoneNavigationDialog />
             <NuxtLink
                 to="/"
                 class="icon-section flex h-full shrink-0 items-center gap-4"
@@ -170,7 +131,7 @@ function updateProgress() {
             >
                 <BrandIcon />
                 <span
-                    class="text-primary-deep lg:text-2xl xl:text-4xl"
+                    class="text-lg text-primary-deep sm:text-base lg:text-2xl xl:text-4xl"
                     aria-hidden="true"
                     >Expelliodor</span
                 >
@@ -179,14 +140,14 @@ function updateProgress() {
                 class="mr-8 hidden h-full w-1/2 list-none items-center justify-evenly gap-4 p-0 whitespace-nowrap sm:text-base lg:flex lg:text-lg xl:text-xl"
             >
                 <NavItem
-                    v-for="item in navItems"
+                    v-for="item in siteNavGroups"
                     :key="item.title"
                     :title="item.title"
                     :links="item.links || []"
                 />
             </NavigationMenuList>
             <div
-                class="h-full flex-1 flex-row items-center justify-end gap-2 sm:flex lg:gap-4 xl:gap-6"
+                class="flex h-full flex-1 flex-row items-center justify-end gap-2 lg:gap-4 xl:gap-6"
             >
                 <ColorblindModeToggle />
                 <DarkModeToggle />

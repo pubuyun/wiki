@@ -15,23 +15,27 @@ const hasRightSidebar = computed(
             <NavigationBar scroll-opacity />
         </header>
         <div class="flex flex-1 flex-col">
-            <Banner
-                v-if="page"
-                :title="page.title"
-                :imgSrc="page.meta?.banner"
-            />
+            <ClientOnly>
+                <Banner
+                    v-if="page"
+                    :title="page.title"
+                    :imgSrc="page.meta?.banner"
+                />
+            </ClientOnly>
             <div
                 class="flex h-full flex-1 flex-row gap-8 bg-primary-bg py-20 text-white"
                 :class="hasRightSidebar ? 'lg:pr-0' : ''"
             >
                 <slot />
-                <aside class="contents">
-                    <ContentBar
-                        v-if="hasRightSidebar"
-                        class="hidden lg:flex"
-                        :toc="page.body.toc.links"
-                    />
-                </aside>
+                <ClientOnly>
+                    <aside class="contents">
+                        <ContentBar
+                            v-if="hasRightSidebar"
+                            class="hidden lg:flex"
+                            :toc="page.body.toc.links"
+                        />
+                    </aside>
+                </ClientOnly>
             </div>
         </div>
         <Footer />

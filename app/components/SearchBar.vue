@@ -3,18 +3,20 @@
         <!-- Desktop / larger than lg -->
         <DialogTrigger
             aria-label="Open search dialog"
-            class="mr-8 ml-5 h-3/4 max-w-48 flex-1 rounded-full bg-primary-norm pr-3"
+            class="flex size-9 shrink-0 items-center justify-center rounded-md text-primary-deep transition-colors hover:bg-primary-norm/20 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-deep sm:mr-8 sm:ml-5 sm:h-3/4 sm:max-w-48 sm:flex-1 sm:justify-start sm:rounded-full sm:bg-primary-norm sm:pr-3 sm:text-textcolor sm:hover:bg-primary-norm"
         >
-            <div class="flex h-full items-center gap-2 p-1 text-textcolor">
+            <div
+                class="flex h-full w-full items-center justify-center gap-2 p-1 sm:justify-start"
+            >
                 <input
-                    class="h-full min-w-0 flex-1 rounded-full bg-textbg px-3"
+                    class="hidden h-full min-w-0 flex-1 rounded-full bg-textbg px-3 sm:block"
                     readonly
                     placeholder="Ctrl + K"
                     tabindex="-1"
                 />
                 <Icon
                     icon="lucide:search"
-                    class="h-5 w-5 shrink-0 text-textbg"
+                    class="size-5 shrink-0 sm:text-textbg"
                     aria-hidden="true"
                 />
             </div>
@@ -29,16 +31,9 @@
         </DialogTrigger> -->
 
         <DialogPortal>
-            <Transition
-                enter-active-class="transition-opacity duration-200 ease-out"
-                enter-from-class="opacity-0"
-                leave-active-class="transition-opacity duration-150 ease-in"
-                leave-to-class="opacity-0"
-            >
-                <DialogOverlay
-                    class="fixed top-0 left-0 z-30 h-full w-full bg-black opacity-50"
-                />
-            </Transition>
+            <DialogOverlay
+                class="fixed top-0 left-0 z-30 h-full w-full bg-black opacity-50"
+            />
             <Transition
                 enter-active-class="transition-opacity duration-300 ease-out overflow-hidden"
                 enter-from-class="opacity-0"
@@ -49,7 +44,7 @@
             >
                 <DialogContent
                     v-if="isSearchOpen"
-                    class="fixed top-1/6 left-1/2 z-100 max-h-[70vh] w-1/2 -translate-x-1/2 overflow-hidden rounded-2xl bg-tertiary p-6 shadow-lg"
+                    class="fixed inset-0 z-100 h-dvh w-dvw overflow-hidden bg-tertiary p-4 shadow-lg sm:top-1/6 sm:left-1/2 sm:inset-auto sm:h-auto sm:max-h-[70vh] sm:w-1/2 sm:-translate-x-1/2 sm:rounded-2xl sm:p-6"
                 >
                     <DialogTitle class="sr-only">
                         Search site content
@@ -59,7 +54,7 @@
                             duration: 220,
                             easing: 'ease-out',
                         }"
-                        class="flex max-h-[calc(70vh-3rem)] w-full flex-col justify-start gap-2"
+                        class="flex h-full max-h-[calc(100dvh-2rem)] w-full flex-col justify-start gap-2 sm:max-h-[calc(70vh-3rem)]"
                     >
                         <header
                             class="shrink-0 text-center text-2xl font-bold text-primary-deep"
@@ -67,16 +62,31 @@
                             <label for="site-search" class="sr-only">
                                 Search site content
                             </label>
-                            <input
-                                ref="searchInput"
-                                v-model="query"
-                                type="search"
-                                id="site-search"
-                                autocomplete="off"
-                                placeholder="Search..."
-                                aria-describedby="search-result-count"
-                                class="h-10 w-full rounded border px-4 py-2 outline-none"
-                            />
+                            <div class="relative">
+                                <input
+                                    ref="searchInput"
+                                    v-model="query"
+                                    type="text"
+                                    role="searchbox"
+                                    id="site-search"
+                                    autocomplete="off"
+                                    placeholder="Search..."
+                                    aria-describedby="search-result-count"
+                                    class="h-12 w-full rounded border py-2 pr-12 pl-4 outline-none sm:h-10"
+                                />
+                                <button
+                                    type="button"
+                                    aria-label="Close search dialog"
+                                    class="absolute top-1/2 right-2 flex size-8 -translate-y-1/2 items-center justify-center rounded-md text-primary-deep transition-colors hover:bg-primary-norm/20 focus-visible:outline-2 focus-visible:outline-primary-deep"
+                                    @click="isSearchOpen = false"
+                                >
+                                    <Icon
+                                        icon="lucide:x"
+                                        class="size-5"
+                                        aria-hidden="true"
+                                    />
+                                </button>
+                            </div>
                             <p
                                 id="search-result-count"
                                 class="sr-only"
@@ -104,7 +114,7 @@
                                     duration: 180,
                                     easing: 'ease-out',
                                 }"
-                                class="max-h-[calc(70vh-9rem)] w-full scrollbar-thin scrollbar-thumb-primary-norm scrollbar-track-tertiary overflow-auto"
+                                class="max-h-[calc(100dvh-8rem)] w-full scrollbar-thin scrollbar-thumb-primary-norm scrollbar-track-tertiary overflow-auto sm:max-h-[calc(70vh-9rem)]"
                                 @scroll="updateScrollGradients"
                                 aria-label="Search results"
                             >
