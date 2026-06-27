@@ -84,12 +84,7 @@ function scrollToTarget(target: HTMLElement) {
         scrollPaddingTop -
         scrollMarginTop;
 
-    const behavior = window.matchMedia("(prefers-reduced-motion: reduce)")
-        .matches
-        ? "auto"
-        : "smooth";
-
-    window.scrollTo({ top, behavior });
+    window.scrollTo({ top, behavior: "auto" });
 }
 
 function focusTarget(target: HTMLElement) {

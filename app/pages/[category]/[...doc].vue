@@ -5,6 +5,7 @@ definePageMeta({
 
 const route = useRoute();
 const category = computed(() => String(route.params.category ?? ""));
+const categoryPath = computed(() => `/${category.value}`);
 const activePath = computed(() => normalizeContentPath(route.path));
 
 const { data: page } = await useAsyncData(`content-${activePath.value}`, () =>
@@ -18,7 +19,7 @@ const { data: allPages } = await useAsyncData("content-navigation", () =>
 const pages = computed(() => allPages.value ?? []);
 const children = computed(() => categoryPages(pages.value, category.value));
 const categoryRootPage = computed(() =>
-    pages.value.find((item) => item.path === `/${category.value}`),
+    pages.value.find((item) => item.path === categoryPath.value),
 );
 const categoryTitle = computed(
     () => categoryRootPage.value?.title ?? titleizeSlug(category.value),
@@ -72,6 +73,7 @@ watchEffect(() => {
     contentLayout.value = {
         page: page.value,
         categoryTitle: categoryTitle.value,
+        categoryPath: categoryPath.value,
         categoryNavNodes: categoryNavNodes.value,
         activePath: activePath.value,
         showRightSidebar: true,
@@ -141,7 +143,6 @@ function bodyWithChildren(body: any, children: any[]) {
                 class="content paragraph overflow-wrap-anywhere min-w-0 flex-1 rounded-2xl bg-textbg p-4 text-textcolor sm:rounded-3xl sm:p-5 lg:rounded-4xl lg:p-6"
             />
         </section>
-        <Footer />
     </main>
 </template>
 

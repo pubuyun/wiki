@@ -277,7 +277,7 @@ async function keepActiveH3InView(id: string) {
 
     scroller.scrollBy({
         top: linkCenter - scrollerCenter,
-        behavior: "smooth",
+        behavior: "auto",
     });
 }
 

@@ -42,14 +42,18 @@ function updateNavVisibility() {
     const scrollY = Math.max(window.scrollY, 0);
     const scrollDelta = scrollY - lastScrollY.value;
 
+    if (scrollY <= hideAfterScrollY) {
+        navHidden.value = false;
+        lastScrollY.value = scrollY;
+        return;
+    }
+
     if (Date.now() < ignoreVisibilityUntil) {
         lastScrollY.value = scrollY;
         return;
     }
 
-    if (scrollY <= hideAfterScrollY) {
-        navHidden.value = false;
-    } else if (scrollDelta > scrollDirectionThreshold) {
+    if (scrollDelta > scrollDirectionThreshold) {
         navHidden.value = true;
     } else if (scrollDelta < -scrollDirectionThreshold) {
         navHidden.value = false;

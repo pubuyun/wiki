@@ -48,6 +48,7 @@ watchEffect(() => {
     contentLayout.value = {
         page: displayPage.value,
         categoryTitle: displayPage.value.title ?? titleizeSlug(slug.value),
+        categoryPath: pagePath.value,
         categoryNavNodes: categoryNavNodes.value,
         activePath: pagePath.value,
         showRightSidebar: false,

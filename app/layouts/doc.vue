@@ -3,6 +3,7 @@ const contentLayout = useContentLayoutState();
 
 const page = computed(() => contentLayout.value.page);
 const categoryTitle = computed(() => contentLayout.value.categoryTitle);
+const categoryPath = computed(() => contentLayout.value.categoryPath);
 const categoryNavNodes = computed(() => contentLayout.value.categoryNavNodes);
 const activePath = computed(() => contentLayout.value.activePath);
 const hasRightSidebar = computed(
@@ -21,6 +22,7 @@ const hasRightSidebar = computed(
                     <CategoryBar
                         class="hidden lg:flex"
                         :title="categoryTitle"
+                        :title-to="categoryPath"
                         :nodes="categoryNavNodes"
                         :active-path="activePath"
                     />
@@ -38,6 +40,7 @@ const hasRightSidebar = computed(
             </ClientOnly>
         </div>
         <BackToTop />
+        <Footer />
         <ClickAnimation />
     </div>
 </template>

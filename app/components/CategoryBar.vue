@@ -23,9 +23,18 @@
             v-if="contentRendered"
             class="absolute top-16 right-4 left-4 z-10 flex h-12 items-center justify-center text-primary-deep lg:text-xl xl:text-3xl"
             :class="contentClass"
-            aria-hidden="true"
         >
-            {{ title }}
+            <NuxtLink
+                v-if="titleTo"
+                :to="titleTo"
+                class="rounded-md px-2 text-center transition-colors hover:text-secondary focus-visible:ring-2 focus-visible:ring-white focus-visible:outline-none"
+                :aria-label="`Go to ${title}`"
+            >
+                {{ title }}
+            </NuxtLink>
+            <span v-else>
+                {{ title }}
+            </span>
         </div>
         <button
             type="button"
@@ -163,6 +172,7 @@ import type { ContentNavNode } from "~/utils/content-pages";
 
 const props = defineProps<{
     title: string;
+    titleTo?: string;
     nodes: ContentNavNode[];
     activePath: string;
 }>();
