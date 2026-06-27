@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup>
 const contentLayout = useContentLayoutState();
 
 const page = computed(() => contentLayout.value.page);

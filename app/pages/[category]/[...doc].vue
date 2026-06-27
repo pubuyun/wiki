@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup>
 definePageMeta({
     layout: "doc",
 });
@@ -80,19 +80,19 @@ watchEffect(() => {
     };
 });
 
-function bodyChildren(body: any) {
+function bodyChildren(body) {
     return body?.children ?? body?.value ?? [];
 }
 
-function nodeTag(node: any) {
+function nodeTag(node) {
     return Array.isArray(node) ? node[0] : node?.tag;
 }
 
-function nodeProps(node: any) {
+function nodeProps(node) {
     return Array.isArray(node) ? node[1] : node?.props;
 }
 
-function sectionValue(children: any[]) {
+function sectionValue(children) {
     if (!page.value) return {};
 
     return {
@@ -101,7 +101,7 @@ function sectionValue(children: any[]) {
     };
 }
 
-function bodyWithChildren(body: any, children: any[]) {
+function bodyWithChildren(body, children) {
     if (body?.value) {
         return {
             ...body,
