@@ -5,7 +5,9 @@
             class="fixed inset-0 z-9999 flex items-center justify-center bg-primary-bg backdrop-blur-sm"
         >
             <div class="flex flex-col items-center">
-                <p class="mb-6 text-4xl font-bold tracking-widest text-white">
+                <p
+                    class="mb-6 font-righteous text-4xl font-bold tracking-widest text-white"
+                >
                     Loading...
                 </p>
 

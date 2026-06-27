@@ -119,6 +119,12 @@ function bodyWithChildren(body: any, children: any[]) {
         v-if="page"
         class="mt-16 flex w-full max-w-[100vw] min-w-0 flex-1 flex-col gap-4 overflow-x-hidden px-4 sm:mt-20 sm:gap-6 sm:px-6 lg:px-0"
     >
+        <ClientOnly>
+            <MobileContentBar
+                v-if="page.body?.toc?.links?.length"
+                :toc="page.body.toc.links"
+            />
+        </ClientOnly>
         <section
             v-for="section in sections"
             :key="section.id"
