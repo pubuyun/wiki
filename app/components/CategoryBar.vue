@@ -84,21 +84,34 @@
                             class="overflow-hidden text-white"
                         >
                             <AccordionHeader class="flex h-min gap-0">
-                                <AccordionTrigger :class="folderClass(node)">
+                                <div :class="folderClass(node)">
                                     <span
                                         :class="decorationClass(node)"
                                         aria-hidden="true"
                                     />
-                                    <span :class="folderTextClass(node)">
+                                    <NuxtLink
+                                        v-if="node.path"
+                                        :to="node.path"
+                                        :class="folderTextClass(node)"
+                                    >
                                         {{ node.label }}
+                                    </NuxtLink>
+                                    <span v-else :class="folderTextClass(node)">
+                                        {{ node.label }}
+                                    </span>
+                                    <AccordionTrigger
+                                        :class="folderToggleClass(node)"
+                                        :title="`Expand or collapse ${node.label}`"
+                                        :aria-label="`Expand or collapse ${node.label}`"
+                                    >
                                         <span
-                                            class="ml-2 shrink-0 transition-transform duration-300 group-data-[state=open]:rotate-90"
+                                            class="transition-transform duration-300 group-data-[state=open]:rotate-90"
                                             aria-hidden="true"
                                         >
                                             &#9656;
                                         </span>
-                                    </span>
-                                </AccordionTrigger>
+                                    </AccordionTrigger>
+                                </div>
                             </AccordionHeader>
                             <AccordionContent
                                 class="category-sidebar-accordion-content overflow-hidden data-[state=closed]:animate-[category-sidebar-slide-up_500ms_ease-in] data-[state=open]:animate-[category-sidebar-slide-down_500ms_ease-out]"
@@ -209,8 +222,15 @@ function folderClass(node: ContentNavNode) {
 
 function folderTextClass(node: ContentNavNode) {
     return [
-        "flex flex-1 items-center justify-between rounded-2xl px-4 py-2 text-left transition-[margin,border-radius,color,background-color] duration-300 ease-out group-hover:bg-primary-light group-hover:text-primary-dark",
-        node.active && "-mr-2 rounded-none bg-secondary text-primary-dark",
+        "flex min-w-0 flex-1 items-center rounded-l-2xl px-4 py-2 text-left no-underline transition-[margin,border-radius,color,background-color] duration-300 ease-out group-hover:bg-primary-light group-hover:text-primary-dark",
+        node.active && "rounded-none bg-secondary text-primary-dark",
+    ];
+}
+
+function folderToggleClass(node: ContentNavNode) {
+    return [
+        "group flex w-14 shrink-0 items-center justify-center rounded-r-2xl px-4 py-2 transition-[margin,border-radius,color,background-color] duration-300 ease-out hover:bg-secondary hover:text-primary-dark focus-visible:ring-2 focus-visible:ring-white focus-visible:outline-none xl:w-16",
+        node.active && "-mr-2 rounded-none bg-secondary/85 text-primary-dark",
     ];
 }
 

@@ -10,6 +10,7 @@ export interface ContentNavNode {
 interface ContentPageLike {
     path: string;
     title?: string;
+    description?: string;
 }
 
 export function normalizeContentPath(path: string) {
@@ -89,6 +90,6 @@ function markActiveFolders(nodes: ContentNavNode[]) {
         if (!node.children?.length) continue;
 
         markActiveFolders(node.children);
-        node.active = node.children.some((child) => child.active);
+        node.active = Boolean(node.active || node.children.some((child) => child.active));
     }
 }

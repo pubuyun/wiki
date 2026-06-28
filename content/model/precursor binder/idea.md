@@ -1,3 +1,7 @@
+---
+description: This page describes an idea
+---
+
 ## ACT I
 
 ### PROLOGUE

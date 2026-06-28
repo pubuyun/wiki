@@ -1,6 +1,7 @@
 <script setup>
 definePageMeta({
     layout: "doc",
+    key: (route) => route.fullPath,
 });
 
 const route = useRoute();
@@ -18,6 +19,32 @@ const { data: allPages } = await useAsyncData("content-navigation", () =>
 
 const pages = computed(() => allPages.value ?? []);
 const children = computed(() => categoryPages(pages.value, category.value));
+const currentPageIndex = computed(() =>
+    children.value.findIndex((item) => item.path === activePath.value),
+);
+const previousPage = computed(() =>
+    currentPageIndex.value > 0
+        ? children.value[currentPageIndex.value - 1]
+        : null,
+);
+const nextPage = computed(() =>
+    currentPageIndex.value >= 0 &&
+    currentPageIndex.value < children.value.length - 1
+        ? children.value[currentPageIndex.value + 1]
+        : null,
+);
+const currentFolderCards = computed(() => {
+    const prefix = `${activePath.value}/`;
+
+    return pages.value
+        .filter((item) => {
+            if (!item.path?.startsWith(prefix)) return false;
+
+            const relativePath = item.path.slice(prefix.length);
+            return Boolean(relativePath) && !relativePath.includes("/");
+        })
+        .sort((a, b) => a.path.localeCompare(b.path));
+});
 const categoryRootPage = computed(() =>
     pages.value.find((item) => item.path === categoryPath.value),
 );
@@ -114,6 +141,17 @@ function bodyWithChildren(body, children) {
         children,
     };
 }
+
+function pageDescription(item) {
+    return item.description || item.meta?.description || "";
+}
+
+function pageTitle(item) {
+    return (
+        item.title ||
+        titleizeSlug(item.path?.split("/").filter(Boolean).at(-1) ?? "")
+    );
+}
 </script>
 
 <template>
@@ -143,6 +181,61 @@ function bodyWithChildren(body, children) {
                 class="content paragraph overflow-wrap-anywhere min-w-0 flex-1 rounded-2xl bg-textbg p-4 text-textcolor sm:rounded-3xl sm:p-5 lg:rounded-4xl lg:p-6"
             />
         </section>
+        <section
+            v-if="currentFolderCards.length"
+            class="grid max-w-full min-w-0 gap-4 sm:grid-cols-2 xl:grid-cols-3"
+            aria-label="Current folder documents"
+        >
+            <NuxtLink
+                v-for="doc in currentFolderCards"
+                :key="doc.path"
+                :to="doc.path"
+                class="group flex min-h-36 min-w-0 flex-col gap-3 rounded-2xl border-2 border-primary-light bg-textbg p-4 text-textcolor no-underline transition hover:-translate-y-px hover:border-secondary hover:text-primary-deep focus-visible:-translate-y-px focus-visible:border-secondary focus-visible:text-primary-deep focus-visible:outline-none sm:rounded-3xl sm:p-5 lg:rounded-4xl lg:p-6"
+            >
+                <h2
+                    class="font-belanosima text-2xl leading-tight [overflow-wrap:anywhere]"
+                >
+                    {{ doc.title }}
+                </h2>
+                <p
+                    v-if="pageDescription(doc)"
+                    class="font-main text-base leading-relaxed text-textcolor/85 transition group-hover:text-primary-deep/85"
+                >
+                    {{ pageDescription(doc) }}
+                </p>
+            </NuxtLink>
+        </section>
+        <nav
+            v-if="previousPage || nextPage"
+            class="my-6 grid gap-3 sm:grid-cols-2"
+            aria-label="Docs pages"
+        >
+            <NuxtLink
+                v-if="previousPage"
+                class="my-1 flex min-w-0 flex-col gap-1 rounded-2xl border-2 border-primary-light bg-textbg p-4 text-textcolor no-underline transition hover:-translate-y-px hover:border-secondary hover:text-primary-deep focus-visible:-translate-y-px focus-visible:border-secondary focus-visible:text-primary-deep focus-visible:outline-none"
+                :to="previousPage.path"
+            >
+                <div class="font-main text-sm opacity-70">Previous</div>
+                <div
+                    class="font-belanosima text-lg leading-tight [overflow-wrap:anywhere]"
+                >
+                    {{ pageTitle(previousPage) }}
+                </div>
+            </NuxtLink>
+            <span v-else aria-hidden="true" />
+            <NuxtLink
+                v-if="nextPage"
+                class="my-1 flex min-w-0 flex-col items-end gap-1 rounded-2xl border-2 border-primary-light bg-textbg p-4 text-right text-textcolor no-underline transition hover:-translate-y-px hover:border-secondary hover:text-primary-deep focus-visible:-translate-y-px focus-visible:border-secondary focus-visible:text-primary-deep focus-visible:outline-none"
+                :to="nextPage.path"
+            >
+                <div class="font-main text-sm opacity-70">Next</div>
+                <div
+                    class="font-belanosima text-lg leading-tight [overflow-wrap:anywhere]"
+                >
+                    {{ pageTitle(nextPage) }}
+                </div>
+            </NuxtLink>
+        </nav>
     </main>
 </template>
 

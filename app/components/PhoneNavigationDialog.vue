@@ -17,6 +17,7 @@ import { Icon } from "@iconify/vue";
 import { siteNavGroups } from "~/utils/site-navigation";
 
 const route = useRoute();
+const router = useRouter();
 const contentLayout = useContentLayoutState();
 const open = ref(false);
 const activeView = ref<"main" | "category">("main");
@@ -49,6 +50,12 @@ function closeDialog() {
 
 function categoryItemValue(id: string) {
     return `category:${id}`;
+}
+
+function navigateFolder(node: { path?: string }) {
+    if (!node.path) return;
+
+    router.push(node.path);
 }
 </script>
 
@@ -139,6 +146,7 @@ function categoryItemValue(id: string) {
                                                     node.active &&
                                                     'bg-secondary text-primary-dark'
                                                 "
+                                                @click="navigateFolder(node)"
                                             >
                                                 <span>{{ node.label }}</span>
                                                 <Icon

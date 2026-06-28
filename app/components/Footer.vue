@@ -1,5 +1,5 @@
 <template>
-    <footer class="footer bg-primary-bg p-5 text-white">
+    <footer class="footer bg-primary-norm p-5 text-white">
         <hr />
         <!-- The following MUST be on every page: license information and link to the repository on gitlab.igem.org -->
         <div class="row mt-4">

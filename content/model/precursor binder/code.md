@@ -1,3 +1,7 @@
+---
+description: This page describes a code
+---
+
 ## ACT I
 
 ### SCENE I. Elsinore. A platform before the castle.
