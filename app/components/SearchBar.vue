@@ -9,7 +9,7 @@
                 class="flex h-full w-full items-center justify-center gap-2 p-1 sm:justify-start"
             >
                 <input
-                    class="hidden h-full min-w-0 flex-1 rounded-full bg-textbg px-3 sm:block"
+                    class="hidden h-full min-w-0 flex-1 rounded-full bg-textbg px-3 text-textcolor sm:block"
                     readonly
                     placeholder="Ctrl + K"
                     tabindex="-1"
@@ -44,7 +44,7 @@
             >
                 <DialogContent
                     v-if="isSearchOpen"
-                    class="fixed inset-0 z-100 h-dvh w-dvw overflow-hidden bg-tertiary p-4 shadow-lg sm:top-1/6 sm:left-1/2 sm:inset-auto sm:h-auto sm:max-h-[70vh] sm:w-1/2 sm:-translate-x-1/2 sm:rounded-2xl sm:p-6"
+                    class="fixed inset-0 z-100 h-dvh w-dvw overflow-hidden bg-tertiary p-4 shadow-lg sm:inset-auto sm:top-1/6 sm:left-1/2 sm:h-auto sm:max-h-[70vh] sm:w-1/2 sm:-translate-x-1/2 sm:rounded-2xl sm:p-6"
                 >
                     <DialogTitle class="sr-only">
                         Search site content
