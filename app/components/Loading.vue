@@ -22,6 +22,7 @@
 const showLoading = ref(false);
 const canShowRouteLoading = ref(false);
 const isLoadingImageLoaded = ref(false);
+const shouldSkipRouteLoading = ref(false);
 
 const nuxtApp = useNuxtApp();
 const router = useRouter();
@@ -47,6 +48,23 @@ const runWhenIdle = (callback) => {
     }
 };
 
+const categoryFromPath = (path) => {
+    const [category] = path.split("?")[0].split("#")[0].split("/").filter(Boolean);
+
+    return category ?? "";
+};
+
+const isSameCategoryContentNavigation = (to, from) => {
+    if (!from.matched.length || to.path === from.path) {
+        return false;
+    }
+
+    const toCategory = categoryFromPath(to.path);
+    const fromCategory = categoryFromPath(from.path);
+
+    return Boolean(toCategory && toCategory === fromCategory);
+};
+
 onMounted(async () => {
     await router.isReady();
 
@@ -57,8 +75,20 @@ onMounted(async () => {
     });
 });
 
+router.beforeEach((to, from) => {
+    shouldSkipRouteLoading.value = isSameCategoryContentNavigation(to, from);
+});
+
 nuxtApp.hook("page:loading:start", () => {
-    if (canShowRouteLoading.value && isLoadingImageLoaded.value) {
+    if (shouldSkipRouteLoading.value) {
+        showLoading.value = false;
+        return;
+    }
+
+    if (
+        canShowRouteLoading.value &&
+        isLoadingImageLoaded.value
+    ) {
         showLoading.value = true;
     }
 });
