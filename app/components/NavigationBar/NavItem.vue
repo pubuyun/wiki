@@ -31,7 +31,10 @@ const hasDropdown = computed(() => props.links.length > 0);
         <NavigationMenuTrigger
             class="group inline-flex cursor-pointer list-none items-center gap-1 bg-transparent px-1 py-2 text-primary-deep outline-offset-4 select-none hover:text-primary-deep focus-visible:outline-2 focus-visible:outline-primary-deep"
         >
-            <span>{{ title }}</span>
+            <span
+                class="decoration-2 underline-offset-2 group-hover:underline group-focus-visible:underline"
+                >{{ title }}</span
+            >
             <span
                 class="text-lg transition-transform duration-200 group-focus-within:rotate-180 group-hover:rotate-180 group-data-[state=open]:rotate-180"
                 aria-hidden="true"
