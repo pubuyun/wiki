@@ -28,7 +28,6 @@
 </style>
 
 <script setup lang="ts">
-const THEME_KEY = "theme";
 import { wikiTheme } from "./styles/echarts";
 
 const colorblindMode = useState<boolean>("colorblind-mode", () => false);
