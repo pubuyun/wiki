@@ -26,10 +26,13 @@
         >
             <NuxtLink
                 :to="titleTo"
-                class="min-w-0 rounded-md px-2 py-1 text-2xl font-semibold wrap-break-word transition-colors hover:bg-primary-light hover:text-primary-dark focus-visible:ring-2 focus-visible:ring-primary-deep focus-visible:outline-none xl:text-4xl dark:hover:text-textcolor"
+                class="category-sidebar-title min-w-0 rounded-md px-2 py-1 font-semibold transition-colors hover:bg-primary-light hover:text-primary-dark focus-visible:ring-2 focus-visible:ring-primary-deep focus-visible:outline-none dark:hover:text-textcolor"
+                :style="titleStyle"
                 :aria-label="`Go to ${title}`"
             >
-                {{ title }}
+                <span ref="titleText" class="category-sidebar-title-text">
+                    {{ title }}
+                </span>
             </NuxtLink>
             <button
                 type="button"
@@ -205,12 +208,15 @@ const collapsed = ref(false);
 const contentRendered = ref(!collapsed.value);
 const contentVisible = ref(!collapsed.value);
 const contentScroll = ref<HTMLDivElement | null>(null);
+const titleText = ref<HTMLElement | null>(null);
+const titleScale = ref(1);
 const expandedItems = ref<string[]>([]);
 const canScrollUp = ref(false);
 const canScrollDown = ref(false);
 const transitionDuration = 200;
 const contentId = "category-sidebar-nav";
 let contentRevealTimer: ReturnType<typeof setTimeout> | undefined;
+let titleResizeObserver: ResizeObserver | undefined;
 
 const sidebarClass = computed(() => [
     "sticky top-0 h-screen max-h-screen flex-col overflow-hidden border-r border-white/20 bg-primary-norm font-momo-trust-display text-white shadow-sm transition-[width,height,padding,translate] duration-200 ease-out",
@@ -229,6 +235,10 @@ const contentClass = computed(() => [
     "transition-opacity duration-200 ease-out",
     contentVisible.value ? "opacity-100" : "opacity-0",
 ]);
+
+const titleStyle = computed(() => ({
+    "--category-sidebar-title-scale": titleScale.value,
+}));
 
 function folderClass(node: ContentNavNode) {
     return [
@@ -281,6 +291,27 @@ function updateScrollGradients() {
 
     canScrollUp.value = el.scrollTop > 0;
     canScrollDown.value = el.scrollTop + el.clientHeight < el.scrollHeight - 1;
+}
+
+function updateTitleScale() {
+    const el = titleText.value;
+    const container = el?.parentElement;
+    if (!el || !container) return;
+
+    titleScale.value = 1;
+    requestAnimationFrame(() => {
+        const styles = getComputedStyle(container);
+        const availableWidth =
+            container.clientWidth -
+            Number.parseFloat(styles.paddingLeft) -
+            Number.parseFloat(styles.paddingRight);
+        const textWidth = el.scrollWidth;
+
+        titleScale.value =
+            availableWidth > 0 && textWidth > availableWidth
+                ? Math.max(0.72, availableWidth / textWidth)
+                : 1;
+    });
 }
 
 function clearContentRevealTimer() {
@@ -350,8 +381,28 @@ watch(contentScroll, (newVal) => {
     }
 });
 
+watch(titleText, (newVal) => {
+    titleResizeObserver?.disconnect();
+
+    if (newVal) {
+        titleResizeObserver = new ResizeObserver(updateTitleScale);
+        titleResizeObserver.observe(newVal);
+        titleResizeObserver.observe(newVal.parentElement!);
+        updateTitleScale();
+    }
+});
+
+watch(
+    () => props.title,
+    async () => {
+        await nextTick();
+        updateTitleScale();
+    },
+);
+
 onBeforeUnmount(() => {
     clearContentRevealTimer();
+    titleResizeObserver?.disconnect();
 });
 </script>
 
@@ -368,7 +419,28 @@ onBeforeUnmount(() => {
     --category-sidebar-child-item-gap: 0.25rem;
 }
 
+.category-sidebar-title {
+    display: inline-flex;
+    justify-content: center;
+    max-width: min(100%, calc(20vw - 4rem));
+    overflow: visible;
+    font-size: 1.5rem;
+    line-height: 1.1;
+    text-align: center;
+    text-wrap: nowrap;
+}
+
+.category-sidebar-title-text {
+    display: inline-block;
+    transform: scaleX(var(--category-sidebar-title-scale, 1));
+    transform-origin: center;
+}
+
 @media (width >= 80rem) {
+    .category-sidebar-title {
+        font-size: 2.25rem;
+    }
+
     .category-sidebar-scroll-content {
         --category-sidebar-child-item-height: 2.5rem;
     }
