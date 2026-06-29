@@ -12,7 +12,7 @@ import {
     DialogRoot,
     DialogTitle,
     DialogTrigger,
-} from "radix-vue";
+} from "reka-ui";
 import { Icon } from "@iconify/vue";
 import { siteNavGroups } from "~/utils/site-navigation";
 
@@ -258,13 +258,13 @@ function navigateFolder(node: { path?: string }) {
         height: 0;
     }
     to {
-        height: var(--radix-accordion-content-height);
+        height: var(--reka-accordion-content-height);
     }
 }
 
 @keyframes phone-menu-slide-up {
     from {
-        height: var(--radix-accordion-content-height);
+        height: var(--reka-accordion-content-height);
     }
     to {
         height: 0;

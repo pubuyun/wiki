@@ -14,7 +14,7 @@ export default defineNuxtConfig({
                 "@iconify/vue",
                 "@vue/devtools-core",
                 "@vue/devtools-kit",
-                "radix-vue",
+                "reka-ui",
                 "vue-echarts",
             ],
         },

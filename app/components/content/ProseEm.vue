@@ -45,7 +45,7 @@ import {
     TooltipProvider,
     TooltipRoot,
     TooltipTrigger,
-} from "radix-vue";
+} from "reka-ui";
 
 type GlossaryTerm = {
     term: string;

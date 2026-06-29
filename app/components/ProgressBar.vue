@@ -15,7 +15,7 @@
     </ProgressRoot>
 </template>
 <script setup lang="ts">
-import { ProgressIndicator, ProgressRoot } from "radix-vue";
+import { ProgressIndicator, ProgressRoot } from "reka-ui";
 
 defineProps<{
     progress: number;

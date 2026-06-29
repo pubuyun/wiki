@@ -172,7 +172,7 @@ import {
     DialogRoot,
     DialogTitle,
     DialogTrigger,
-} from "radix-vue";
+} from "reka-ui";
 import { Icon } from "@iconify/vue";
 import { vAutoAnimate } from "@formkit/auto-animate/vue";
 

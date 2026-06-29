@@ -176,7 +176,7 @@ import {
     AccordionItem,
     AccordionRoot,
     AccordionTrigger,
-} from "radix-vue";
+} from "reka-ui";
 import type { ContentNavNode } from "~/utils/content-pages";
 
 const props = defineProps<{
@@ -370,14 +370,14 @@ onBeforeUnmount(() => {
         border-bottom-width: 2px;
     }
     to {
-        height: var(--radix-accordion-content-height);
+        height: var(--reka-accordion-content-height);
         border-bottom-width: 0px;
     }
 }
 
 @keyframes category-sidebar-slide-up {
     from {
-        height: var(--radix-accordion-content-height);
+        height: var(--reka-accordion-content-height);
         border-bottom-width: 2px;
     }
     to {

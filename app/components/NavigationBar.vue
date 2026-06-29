@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { NavigationMenuList, NavigationMenuRoot } from "radix-vue";
+import { NavigationMenuList, NavigationMenuRoot } from "reka-ui";
 import BrandIcon from "./BrandIcon.vue";
 import ColorblindModeToggle from "./NavigationBar/ColorblindModeToggle.vue";
 import DarkModeToggle from "./NavigationBar/DarkModeToggle.vue";

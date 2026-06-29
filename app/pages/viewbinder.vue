@@ -74,7 +74,7 @@ import {
     SelectTrigger,
     SelectValue,
     SelectViewport,
-} from "radix-vue";
+} from "reka-ui";
 import cycle1Binders from "~/data/model/cycle1binders.json";
 import cycle2Binders from "~/data/model/cycle2binders.json";
 

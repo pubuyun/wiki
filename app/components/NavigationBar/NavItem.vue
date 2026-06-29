@@ -4,7 +4,7 @@ import {
     NavigationMenuItem,
     NavigationMenuLink,
     NavigationMenuTrigger,
-} from "radix-vue";
+} from "reka-ui";
 import { computed } from "vue";
 
 interface DropdownLink {

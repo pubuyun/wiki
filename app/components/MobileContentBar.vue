@@ -59,7 +59,7 @@ import {
     AccordionItem,
     AccordionRoot,
     AccordionTrigger,
-} from "radix-vue";
+} from "reka-ui";
 
 interface ToCLink {
     id: string;
@@ -89,13 +89,13 @@ const flatToc = computed(() =>
         height: 0;
     }
     to {
-        height: var(--radix-accordion-content-height);
+        height: var(--reka-accordion-content-height);
     }
 }
 
 @keyframes mobile-content-bar-slide-up {
     from {
-        height: var(--radix-accordion-content-height);
+        height: var(--reka-accordion-content-height);
     }
     to {
         height: 0;

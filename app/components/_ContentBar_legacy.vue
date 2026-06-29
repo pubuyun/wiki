@@ -139,7 +139,7 @@ import {
     AccordionItem,
     AccordionRoot,
     AccordionTrigger,
-} from "radix-vue";
+} from "reka-ui";
 
 const h2Style =
     "group mx-2 my-0.5 flex w-[calc(100%-1rem)] items-stretch focus-visible:ring-2 focus-visible:ring-white focus-visible:outline-none md:text-lg lg:text-xl xl:text-2xl";
@@ -451,14 +451,14 @@ onBeforeUnmount(() => {
         border-bottom-width: 2px;
     }
     to {
-        height: var(--radix-accordion-content-height);
+        height: var(--reka-accordion-content-height);
         border-bottom-width: 0px;
     }
 }
 
 @keyframes content-bar-slide-up {
     from {
-        height: var(--radix-accordion-content-height);
+        height: var(--reka-accordion-content-height);
         border-bottom-width: 2px;
     }
     to {
