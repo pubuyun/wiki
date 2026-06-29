@@ -31,7 +31,7 @@
                         transform="translate(2,4) "
                     />
                 </defs>
-                <g transform="translate(16,0)">
+                <g transform="translate(16, 0) scale(-1, 1)">
                     <text
                         x="0"
                         y="0"
