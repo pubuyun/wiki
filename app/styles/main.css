@@ -50,15 +50,15 @@ html {
 }
 
 .dark {
-    --primary-light: #4b68ff;
-    --primary-bg: #120544;
-    --primary-norm: #261cc1;
-    --primary-dark: #0c25a4;
-    --primary-deep: #1c0770;
-    --textbg: #181818;
-    --textcolor: #ffffff;
-    --secondary: #f1ff5f;
-    --tertiary: #67e8c3;
+    --primary-light: #dbeafe;
+    --primary-bg: #0f2f5f;
+    --primary-norm: #1f5fbf;
+    --primary-dark: #1d4ed8;
+    --primary-deep: #102a43;
+    --textbg: #eeffec;
+    --textcolor: #111827;
+    --secondary: #d7b46a;
+    --tertiary: #9bd3cb;
 }
 
 :root {
