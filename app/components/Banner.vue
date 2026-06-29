@@ -26,7 +26,7 @@
                 y="-1"
                 :textLength="title.length > 12 ? 20 : undefined"
                 lengthAdjust="spacingAndGlyphs"
-                class="z-20 col-1 row-1 mx-auto w-full self-end justify-self-start fill-white p-14 text-start font-momo-trust-display text-[0.25em] text-white"
+                class="z-20 col-1 row-1 mx-auto w-full self-end justify-self-start fill-white p-14 text-start font-momo-trust-display text-[0.23em] text-white"
             >
                 {{ title }}
             </text>
