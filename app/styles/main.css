@@ -73,10 +73,22 @@ html {
     --tertiary: #67e8c3;
 }
 
+/* 
 .colorblind button:hover {
     text-decoration: underline;
 }
+*/
 .colorblind a:hover {
     border: 2px solid currentColor;
     border-radius: 0.25rem;
+}
+
+.colorblind .site-search-result:hover {
+    border-color: currentColor;
+}
+
+.colorblind .site-search-result:focus-visible {
+    border-color: currentColor;
+    outline: 2px solid currentColor;
+    outline-offset: 2px;
 }

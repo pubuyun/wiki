@@ -125,6 +125,7 @@
                                 >
                                     <NuxtLink
                                         :to="link.id"
+                                        class="site-search-result block rounded border border-transparent px-3 py-2"
                                         @click="handleResultClick($event, link)"
                                     >
                                         <article>
