@@ -37,6 +37,7 @@
                     text-anchor="middle"
                     dominant-baseline="central"
                     class="fill-current font-momo-trust-display text-[0.25em] text-secondary"
+                    style="color: #3a9aff"
                 >
                     <textPath href="#text-path" startOffset="50%">
                         BACK
@@ -48,6 +49,7 @@
                     text-anchor="middle"
                     dominant-baseline="central"
                     class="fill-current font-momo-trust-display text-[0.25em] text-secondary"
+                    style="color: #3a9aff"
                 >
                     <textPath href="#text-path-inner" startOffset="50%">
                         TO TOP
@@ -57,7 +59,7 @@
             <img
                 src="https://static.igem.wiki/teams/6133/wiki/general/backtotop-new.avif"
                 alt="Back to top"
-                class="absolute inset-0 z-10 h-full w-full object-contain"
+                class="top-0 left-0 z-100 h-full w-full object-contain"
                 loading="lazy"
                 decoding="async"
             />
