@@ -15,7 +15,7 @@
             aria-label="Back to top"
         >
             <svg
-                class="absolute top-0 left-0 z-60 h-full w-full opacity-0 transition-opacity duration-300 hover:opacity-100"
+                class="pointer-events-none absolute inset-0 z-20 h-full w-full opacity-100"
                 viewBox="0 -10 32 32"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
@@ -57,7 +57,7 @@
             <img
                 src="https://static.igem.wiki/teams/6133/wiki/general/backtotop-new.avif"
                 alt="Back to top"
-                class="top-0 left-0 z-100 h-full w-full object-contain"
+                class="absolute inset-0 z-10 h-full w-full object-contain"
                 loading="lazy"
                 decoding="async"
             />
