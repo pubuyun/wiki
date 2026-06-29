@@ -26,11 +26,14 @@
         >
             <NuxtLink
                 :to="titleTo"
-                class="category-sidebar-title min-w-0 rounded-md px-2 py-1 font-semibold transition-colors hover:bg-primary-light hover:text-primary-dark focus-visible:ring-2 focus-visible:ring-primary-deep focus-visible:outline-none dark:hover:text-textcolor"
+                class="inline-flex min-w-0 max-w-[min(100%,calc(20vw-4rem))] justify-center overflow-visible rounded-md px-2 py-1 text-center text-2xl leading-[1.1] font-semibold whitespace-nowrap transition-colors hover:bg-primary-light hover:text-primary-dark focus-visible:ring-2 focus-visible:ring-primary-deep focus-visible:outline-none xl:text-4xl dark:hover:text-textcolor"
                 :style="titleStyle"
                 :aria-label="`Go to ${title}`"
             >
-                <span ref="titleText" class="category-sidebar-title-text">
+                <span
+                    ref="titleText"
+                    class="inline-block origin-center scale-x-[var(--category-sidebar-title-scale,1)]"
+                >
                     {{ title }}
                 </span>
             </NuxtLink>
@@ -419,28 +422,7 @@ onBeforeUnmount(() => {
     --category-sidebar-child-item-gap: 0.25rem;
 }
 
-.category-sidebar-title {
-    display: inline-flex;
-    justify-content: center;
-    max-width: min(100%, calc(20vw - 4rem));
-    overflow: visible;
-    font-size: 1.5rem;
-    line-height: 1.1;
-    text-align: center;
-    text-wrap: nowrap;
-}
-
-.category-sidebar-title-text {
-    display: inline-block;
-    transform: scaleX(var(--category-sidebar-title-scale, 1));
-    transform-origin: center;
-}
-
 @media (width >= 80rem) {
-    .category-sidebar-title {
-        font-size: 2.25rem;
-    }
-
     .category-sidebar-scroll-content {
         --category-sidebar-child-item-height: 2.5rem;
     }
