@@ -12,7 +12,7 @@ const { data: page } = await useAsyncData(`content-${pagePath.value}`, () =>
 );
 
 const { data: allPages } = await useAsyncData("content-navigation", () =>
-    queryCollection("content").all(),
+    queryCollection("content").select("path", "title", "description").all(),
 );
 
 const pages = computed(() => allPages.value ?? []);
