@@ -8,7 +8,7 @@
         <NuxtLink
             v-if="!collapsed"
             to="/"
-            class="icon-section absolute top-0 left-0 z-10 flex shrink-0 items-center gap-4 font-righteous sm:h-8 lg:h-11 xl:h-14"
+            class="icon-section absolute top-0 left-4 z-10 flex h-11 shrink-0 items-center gap-4 font-righteous xl:h-14"
             aria-label="Go to homepage"
         >
             <BrandIcon />
@@ -21,18 +21,38 @@
         </NuxtLink>
         <div
             v-if="contentRendered"
-            class="absolute top-16 right-4 left-4 z-10 flex h-12 items-center justify-center text-primary-deep lg:text-xl xl:text-3xl"
+            class="absolute top-14 right-3 left-3 z-10 flex min-h-9 items-center justify-center gap-2 text-secondary xl:top-16"
             :class="contentClass"
         >
             <NuxtLink
                 :to="titleTo"
-                class="rounded-md px-2 text-center transition-colors hover:text-secondary focus-visible:ring-2 focus-visible:ring-white focus-visible:outline-none"
+                class="min-w-0 rounded-md px-2 py-1 text-2xl font-semibold wrap-break-word transition-colors hover:bg-primary-light hover:text-primary-dark focus-visible:ring-2 focus-visible:ring-primary-deep focus-visible:outline-none xl:text-4xl"
                 :aria-label="`Go to ${title}`"
             >
                 {{ title }}
             </NuxtLink>
+            <button
+                type="button"
+                :class="titleCollapseButtonClass"
+                :aria-controls="contentId"
+                :aria-expanded="!collapsed"
+                aria-label="Collapse category navigation"
+                @click="collapsed = true"
+            >
+                <svg
+                    viewBox="0 0 24 24"
+                    class="size-8 xl:size-10"
+                    aria-hidden="true"
+                >
+                    <path
+                        d="M16.5 5.8C16.5 4.7 15.2 4.1 14.3 4.8L6.6 10.9C5.8 11.5 5.8 12.5 6.6 13.1L14.3 19.2C15.2 19.9 16.5 19.3 16.5 18.2V5.8Z"
+                        fill="currentColor"
+                    />
+                </svg>
+            </button>
         </div>
         <button
+            v-if="collapsed"
             type="button"
             :class="collapseButtonClass"
             :aria-controls="contentId"
@@ -42,22 +62,12 @@
                     ? 'Expand category navigation'
                     : 'Collapse category navigation'
             "
-            @click="collapsed = !collapsed"
+            @click="collapsed = false"
         >
-            <svg
-                viewBox="-6 -6 14 12"
-                version="1.1"
-                id="svg2"
-                class="h-5 w-5 transition-transform duration-300"
-                :class="collapsed && 'rotate-180'"
-                aria-hidden="true"
-            >
-                <defs id="defs2" />
-                <path d="M 8,6 -1,0 8,-6 Z" id="path1" class="fill-tertiary" />
+            <svg viewBox="0 0 24 24" class="size-10" aria-hidden="true">
                 <path
-                    d="M -6,-0.01275599 3.2047333,-6 v 1.1974489 l -7.1592371,4.78979511 7.1592371,4.78979509 v 1.1974488 z"
-                    id="path2"
-                    class="fill-tertiary"
+                    d="M7.5 5.8C7.5 4.7 8.8 4.1 9.7 4.8L17.4 10.9C18.2 11.5 18.2 12.5 17.4 13.1L9.7 19.2C8.8 19.9 7.5 19.3 7.5 18.2V5.8Z"
+                    fill="currentColor"
                 />
             </svg>
         </button>
@@ -66,7 +76,7 @@
             v-if="contentRendered"
             :id="contentId"
             ref="contentScroll"
-            class="category-sidebar-scroll my-2 max-h-full min-h-0 w-full flex-1 overflow-y-auto"
+            class="category-sidebar-scroll mt-[5.75rem] max-h-full min-h-0 w-full flex-1 overflow-y-auto px-3 pb-4 xl:mt-[6.5rem]"
             :class="contentClass"
             :aria-hidden="!contentVisible"
             @scroll="updateScrollGradients"
@@ -85,10 +95,6 @@
                         >
                             <AccordionHeader class="flex h-min gap-0">
                                 <div :class="folderClass(node)">
-                                    <span
-                                        :class="decorationClass(node)"
-                                        aria-hidden="true"
-                                    />
                                     <NuxtLink
                                         v-if="node.path"
                                         :to="node.path"
@@ -116,28 +122,41 @@
                             <AccordionContent
                                 class="category-sidebar-accordion-content overflow-hidden data-[state=closed]:animate-[category-sidebar-slide-up_500ms_ease-in] data-[state=open]:animate-[category-sidebar-slide-down_500ms_ease-out]"
                             >
-                                <ul
-                                    class="ml-4 space-y-1 border-l border-white/25 pl-2"
-                                >
-                                    <li
-                                        v-for="child in node.children"
-                                        :key="child.id"
+                                <div class="relative ml-4 pl-2">
+                                    <div
+                                        class="pointer-events-none absolute top-0 bottom-0 left-0 w-0.5 rounded-full bg-white/25"
+                                        aria-hidden="true"
+                                    />
+                                    <div
+                                        v-if="activeChildIndex(node) >= 0"
+                                        class="pointer-events-none absolute left-0 h-9 w-0.5 rounded-full bg-tertiary transition-transform duration-200 ease-out xl:h-10"
+                                        :style="activeChildIndicatorStyle(node)"
+                                        aria-hidden="true"
+                                    />
+                                    <ul
+                                        class="space-y-[var(--category-sidebar-child-item-gap)]"
                                     >
-                                        <NuxtLink
-                                            v-if="child.path"
-                                            :to="child.path"
-                                            :class="linkClass(1)"
+                                        <li
+                                            v-for="child in node.children"
+                                            :key="child.id"
+                                            class="relative"
                                         >
-                                            <span
-                                                :class="decorationClass(child)"
-                                                aria-hidden="true"
-                                            />
-                                            <span :class="linkTextClass(child)">
-                                                {{ child.label }}
-                                            </span>
-                                        </NuxtLink>
-                                    </li>
-                                </ul>
+                                            <NuxtLink
+                                                v-if="child.path"
+                                                :to="child.path"
+                                                :class="linkClass(1)"
+                                            >
+                                                <span
+                                                    :class="
+                                                        linkTextClass(child, 1)
+                                                    "
+                                                >
+                                                    {{ child.label }}
+                                                </span>
+                                            </NuxtLink>
+                                        </li>
+                                    </ul>
+                                </div>
                             </AccordionContent>
                         </AccordionItem>
                         <NuxtLink
@@ -145,11 +164,7 @@
                             :to="node.path"
                             :class="linkClass(0)"
                         >
-                            <span
-                                :class="decorationClass(node)"
-                                aria-hidden="true"
-                            />
-                            <span :class="linkTextClass(node)">
+                            <span :class="linkTextClass(node, 0)">
                                 {{ node.label }}
                             </span>
                         </NuxtLink>
@@ -160,11 +175,11 @@
 
         <div
             v-if="contentVisible && canScrollUp"
-            class="pointer-events-none absolute top-30 z-10 h-8 w-full bg-linear-to-b from-primary-norm to-transparent"
+            class="pointer-events-none absolute top-[5.75rem] z-10 h-8 w-full bg-linear-to-b from-primary-norm to-transparent xl:top-[6.5rem]"
         />
         <div
             v-if="contentVisible && canScrollDown"
-            class="pointer-events-none absolute bottom-8 z-10 h-8 w-full bg-linear-to-t from-primary-norm to-transparent"
+            class="pointer-events-none absolute bottom-0 z-10 h-8 w-full bg-linear-to-t from-primary-norm to-transparent"
         />
     </nav>
 </template>
@@ -198,15 +213,17 @@ const contentId = "category-sidebar-nav";
 let contentRevealTimer: ReturnType<typeof setTimeout> | undefined;
 
 const sidebarClass = computed(() => [
-    "sticky top-0 h-screen max-h-screen flex-col overflow-hidden bg-primary-norm font-momo-trust-display shadow-lg transition-[width,height,padding,translate] duration-200 ease-out",
-    collapsed.value ? "w-12 py-6" : "w-1/5 pt-30 pb-16",
+    "sticky top-0 h-screen max-h-screen flex-col overflow-hidden border-r border-white/20 bg-primary-norm font-momo-trust-display text-white shadow-sm transition-[width,height,padding,translate] duration-200 ease-out",
+    collapsed.value ? "w-12 py-6" : "w-1/5 pt-4",
     "translate-x-0",
 ]);
 
 const collapseButtonClass = computed(() => [
-    "absolute left-0 z-20 flex w-full items-center justify-center bg-primary-dark transition-opacity duration-200 hover:opacity-80 focus-visible:ring-2 focus-visible:ring-white focus-visible:outline-none",
-    collapsed.value ? "top-0 h-full" : "bottom-0 h-10",
+    "absolute inset-0 z-20 flex w-full items-center justify-center bg-primary-norm text-2xl text-secondary transition-colors duration-200 hover:bg-primary-light hover:text-primary-dark focus-visible:ring-2 focus-visible:ring-primary-deep focus-visible:outline-none",
 ]);
+
+const titleCollapseButtonClass =
+    "flex size-10 shrink-0 items-center justify-center rounded-full text-xl leading-none text-secondary transition-colors duration-200 hover:bg-primary-light hover:text-primary-dark focus-visible:ring-2 focus-visible:ring-primary-deep focus-visible:outline-none xl:size-12 xl:text-2xl";
 
 const contentClass = computed(() => [
     "transition-opacity duration-200 ease-out",
@@ -215,46 +232,47 @@ const contentClass = computed(() => [
 
 function folderClass(node: ContentNavNode) {
     return [
-        "group mx-2 my-0.5 flex w-[calc(100%-1rem)] items-stretch focus-visible:ring-2 focus-visible:ring-white focus-visible:outline-none md:text-lg lg:text-xl xl:text-2xl",
-        node.active && "text-secondary",
+        "group my-0.5 flex w-full items-stretch text-base focus-visible:ring-2 focus-visible:ring-primary-deep focus-visible:outline-none xl:text-lg",
     ];
 }
 
 function folderTextClass(node: ContentNavNode) {
     return [
-        "flex min-w-0 flex-1 items-center rounded-l-2xl px-4 py-2 text-left no-underline transition-[margin,border-radius,color,background-color] duration-300 ease-out group-hover:bg-primary-light group-hover:text-primary-dark",
-        node.active && "rounded-none bg-secondary text-primary-dark",
+        "flex min-w-0 flex-1 items-center rounded-l-md px-3 py-2 text-left no-underline transition-[border-radius,color,background-color] duration-200 ease-out group-hover:bg-primary-light group-hover:text-primary-dark",
+        node.active && "bg-tertiary font-semibold text-primary-dark",
     ];
 }
 
 function folderToggleClass(node: ContentNavNode) {
     return [
-        "group flex w-14 shrink-0 items-center justify-center rounded-r-2xl px-4 py-2 transition-[margin,border-radius,color,background-color] duration-300 ease-out hover:bg-secondary hover:text-primary-dark focus-visible:ring-2 focus-visible:ring-white focus-visible:outline-none xl:w-16",
-        node.active && "-mr-2 rounded-none bg-secondary/85 text-primary-dark",
+        "group flex w-10 shrink-0 items-center justify-center rounded-r-md px-3 py-2 text-white/70 transition-[border-radius,color,background-color] duration-200 ease-out hover:bg-primary-light hover:text-primary-dark focus-visible:ring-2 focus-visible:ring-primary-deep focus-visible:outline-none",
+        node.active && "bg-tertiary text-primary-dark",
     ];
 }
 
 function linkClass(depth: 0 | 1) {
     return [
-        "group mx-2 my-0.5 flex w-[calc(100%-1rem)] items-stretch focus-visible:ring-2 focus-visible:ring-white focus-visible:outline-none",
-        depth === 0
-            ? "md:text-lg lg:text-xl xl:text-2xl"
-            : "font-belanosima md:text-md lg:text-lg xl:text-xl",
+        "group my-0.5 flex w-full items-stretch text-base focus-visible:ring-2 focus-visible:ring-primary-deep focus-visible:outline-none xl:text-lg",
+        depth === 1 && "font-belanosima text-sm text-white/80 xl:text-base",
     ];
 }
 
-function linkTextClass(node: ContentNavNode) {
+function linkTextClass(node: ContentNavNode, depth: 0 | 1) {
     return [
-        "flex flex-1 items-center justify-start rounded-2xl px-4 py-2 text-left transition-[margin,border-radius,color,background-color] duration-300 ease-out group-hover:bg-primary-light group-hover:text-primary-dark",
-        node.active && "-mr-2 rounded-none bg-secondary text-primary-dark",
+        "flex min-w-0 flex-1 items-center justify-start rounded-md px-3 text-left transition-[border-radius,color,background-color] duration-200 ease-out group-hover:bg-primary-light group-hover:text-primary-dark",
+        depth === 1 ? "h-9 py-0 xl:h-10" : "py-2",
+        node.active && "font-semibold text-tertiary",
     ];
 }
 
-function decorationClass(node: ContentNavNode) {
-    return [
-        "w-1 shrink-0 transition-[margin,width,background-color] duration-300 ease-out",
-        node.active && "-ml-2 bg-primary-bg",
-    ];
+function activeChildIndex(node: ContentNavNode) {
+    return node.children?.findIndex((child) => child.active) ?? -1;
+}
+
+function activeChildIndicatorStyle(node: ContentNavNode) {
+    return {
+        transform: `translateY(calc(${Math.max(activeChildIndex(node), 0)} * (var(--category-sidebar-child-item-height) + var(--category-sidebar-child-item-gap))))`,
+    };
 }
 
 function updateScrollGradients() {
@@ -340,12 +358,20 @@ onBeforeUnmount(() => {
 <style>
 .category-sidebar-scroll {
     direction: rtl;
-    scrollbar-color: var(--secondary) var(--primary-dark);
+    scrollbar-color: var(--secondary) transparent;
     scrollbar-width: thin;
 }
 
 .category-sidebar-scroll-content {
     direction: ltr;
+    --category-sidebar-child-item-height: 2.25rem;
+    --category-sidebar-child-item-gap: 0.25rem;
+}
+
+@media (width >= 80rem) {
+    .category-sidebar-scroll-content {
+        --category-sidebar-child-item-height: 2.5rem;
+    }
 }
 
 .category-sidebar-scroll::-webkit-scrollbar {
@@ -353,15 +379,16 @@ onBeforeUnmount(() => {
 }
 
 .category-sidebar-scroll::-webkit-scrollbar-track {
-    background: var(--primary-dark);
+    background: transparent;
 }
 
 .category-sidebar-scroll::-webkit-scrollbar-thumb {
     background: var(--secondary);
+    border-radius: 9999px;
 }
 
 .category-sidebar-scroll::-webkit-scrollbar-thumb:hover {
-    background: var(--tertiary);
+    background: var(--primary-norm);
 }
 
 @keyframes category-sidebar-slide-down {

@@ -62,15 +62,15 @@ html {
 }
 
 :root {
-    --primary-light: #3a9aff;
+    --primary-light: #aed5ff;
     --primary-bg: #1c0770;
-    --primary-norm: #4b68ff;
+    --primary-norm: #4277ff;
     --primary-dark: #261cc1;
     --primary-deep: #1c0770;
-    --textbg: #ffffff;
+    --textbg: #eeffec;
     --textcolor: #000000;
     --secondary: #f1ff5f;
-    --tertiary: #67e8c3;
+    --tertiary: #67e9df;
 }
 
 /* 

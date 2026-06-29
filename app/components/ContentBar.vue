@@ -10,7 +10,9 @@
             On this page
         </h2>
 
-        <div class="relative max-h-[calc(100vh-13rem)] overflow-y-auto">
+        <div
+            class="relative max-h-[calc(100vh-13rem)] scrollbar-thin scrollbar-thumb-primary-norm scrollbar-track-primary-bg overflow-auto"
+        >
             <div
                 class="pointer-events-none absolute top-0 left-0 w-3"
                 :style="indicatorStyle"
