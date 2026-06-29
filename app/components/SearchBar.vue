@@ -3,7 +3,7 @@
         <!-- Desktop / larger than lg -->
         <DialogTrigger
             aria-label="Open search dialog"
-            class="flex size-9 shrink-0 items-center justify-center rounded-md text-primary-deep transition-colors hover:bg-primary-norm/20 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-deep sm:mr-8 sm:ml-5 sm:h-3/4 sm:max-w-48 sm:flex-1 sm:justify-start sm:rounded-full sm:bg-primary-light sm:pr-3 sm:text-primary-deep sm:hover:bg-primary-norm sm:hover:text-textcolor dark:text-textcolor dark:sm:bg-primary-bg dark:sm:text-textcolor dark:sm:hover:bg-primary-norm"
+            class="flex size-9 shrink-0 items-center justify-center rounded-md bg-primary-norm/20 text-primary-deep transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-deep sm:mr-8 sm:ml-5 sm:h-3/4 sm:max-w-48 sm:flex-1 sm:justify-start sm:rounded-full sm:bg-primary-norm sm:pr-3 sm:text-textcolor dark:text-textcolor dark:sm:bg-primary-norm"
         >
             <div
                 class="flex h-full w-full items-center justify-center gap-2 p-1 sm:justify-start"
@@ -16,7 +16,7 @@
                 />
                 <Icon
                     icon="lucide:search"
-                    class="size-5 shrink-0 sm:text-primary-deep dark:sm:text-textcolor"
+                    class="size-5 shrink-0 dark:sm:text-textcolor"
                     aria-hidden="true"
                 />
             </div>
