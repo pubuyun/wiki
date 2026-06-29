@@ -5,6 +5,8 @@
 @import "@fontsource/belanosima/latin-600.css";
 @import "@fontsource/belanosima/latin-700.css";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme inline {
     --color-primary-light: var(--primary-light);
     --color-primary-bg: var(--primary-bg);
@@ -50,15 +52,15 @@ html {
 }
 
 .dark {
-    --primary-light: #dbeafe;
-    --primary-bg: #0f2f5f;
-    --primary-norm: #1f5fbf;
-    --primary-dark: #1d4ed8;
-    --primary-deep: #102a43;
-    --textbg: #eeffec;
-    --textcolor: #111827;
-    --secondary: #d7b46a;
-    --tertiary: #9bd3cb;
+    --primary-light: #4b68ff;
+    --primary-bg: #120544;
+    --primary-norm: #261cc1;
+    --primary-dark: #0c25a4;
+    --primary-deep: #1c0770;
+    --textbg: #181818;
+    --textcolor: #ffffff;
+    --secondary: #f1ff5f;
+    --tertiary: #67e8c3;
 }
 
 :root {
@@ -73,11 +75,37 @@ html {
     --tertiary: #67e9df;
 }
 
-/* 
+/* Alternative
+
+.dark {
+    --primary-light: #93c5fd;
+    --primary-bg: #081b33;
+    --primary-norm: #1f5fbf;
+    --primary-dark: #3b82f6;
+    --primary-deep: #dbeafe;
+    --textbg: #0f172a;
+    --textcolor: #f8fafc;
+    --secondary: #f3d38b;
+    --tertiary: #8edbd2;
+}
+
+:root {
+    --primary-light: #dbeafe;
+    --primary-bg: #0f2f5f;
+    --primary-norm: #1f5fbf;
+    --primary-dark: #1d4ed8;
+    --primary-deep: #102a43;
+    --textbg: #eeffec;
+    --textcolor: #111827;
+    --secondary: #d7b46a;
+    --tertiary: #9bd3cb;
+}
+*/
+
 .colorblind button:hover {
     text-decoration: underline;
 }
-*/
+
 .colorblind a:hover {
     border: 2px solid currentColor;
     border-radius: 0.25rem;

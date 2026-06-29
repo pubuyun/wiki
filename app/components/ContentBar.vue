@@ -1,12 +1,9 @@
 <template>
     <nav
-        class="sticky top-20 mb-6 w-52 shrink-0 flex-col self-start pr-6 font-belanosima text-base text-textbg xl:w-60"
+        class="sticky top-20 mb-6 w-52 shrink-0 flex-col self-start pr-6 font-belanosima text-base text-textbg xl:w-60 dark:text-textcolor"
         aria-labelledby="toc-title"
     >
-        <h2
-            id="toc-title"
-            class="mb-4 font-momo-trust-display text-base text-textbg"
-        >
+        <h2 id="toc-title" class="mb-4 font-momo-trust-display text-base">
             On this page
         </h2>
 
@@ -136,7 +133,9 @@ function linkClass(link: ToCLink) {
     return [
         "block h-7 truncate py-1.5 pr-3 leading-4 transition-colors duration-200 ease-out hover:text-secondary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-secondary",
         link.depth === 3 ? "pl-9 text-sm" : "pl-4 text-base",
-        activeId.value === link.id ? "text-tertiary" : "text-textbg",
+        activeId.value === link.id
+            ? "text-tertiary"
+            : "text-textbg dark:text-textcolor",
     ];
 }
 

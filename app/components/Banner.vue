@@ -11,7 +11,7 @@
             preserveAspectRatio="none"
         >
             <path
-                class="fill-textbg"
+                class="fill-textbg dark:fill-textcolor"
                 d="M 0 0 L 0 -9 c 1.4 0 3.2 0.5 4.436 1.875 Q 7.8 -3.8 9.4 -4.8 Q 10.788 -5.629 12.2 -6 Q 14.4 -6.3 15.4 -5.5 C 20.795 -1.028 22 -5.5 26.2 -5.5 Q 29.7 -5.5 31.7 -2.3 Q 32.363 -1.158 33.4 0"
                 transform="translate(0,0.1)"
             />
@@ -26,7 +26,7 @@
                 y="-1"
                 :textLength="title.length > 12 ? 20 : undefined"
                 lengthAdjust="spacingAndGlyphs"
-                class="z-20 col-1 row-1 mx-auto w-full self-end justify-self-start fill-textbg p-14 text-start font-momo-trust-display text-[0.23em] text-textbg"
+                class="z-20 col-1 row-1 mx-auto w-full self-end justify-self-start fill-textbg p-14 text-start font-momo-trust-display text-[0.23em] text-textbg dark:fill-textcolor dark:text-textcolor"
             >
                 {{ title }}
             </text>

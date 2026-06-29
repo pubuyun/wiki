@@ -13,7 +13,7 @@
         >
             <BrandIcon />
             <span
-                class="text-primary-deep lg:text-2xl xl:text-4xl"
+                class="text-primary-deep lg:text-2xl xl:text-4xl dark:text-textcolor"
                 aria-hidden="true"
             >
                 Expelliodor
@@ -26,7 +26,7 @@
         >
             <NuxtLink
                 :to="titleTo"
-                class="min-w-0 rounded-md px-2 py-1 text-2xl font-semibold wrap-break-word transition-colors hover:bg-primary-light hover:text-primary-dark focus-visible:ring-2 focus-visible:ring-primary-deep focus-visible:outline-none xl:text-4xl"
+                class="min-w-0 rounded-md px-2 py-1 text-2xl font-semibold wrap-break-word transition-colors hover:bg-primary-light hover:text-primary-dark focus-visible:ring-2 focus-visible:ring-primary-deep focus-visible:outline-none xl:text-4xl dark:hover:text-textcolor"
                 :aria-label="`Go to ${title}`"
             >
                 {{ title }}
@@ -219,11 +219,11 @@ const sidebarClass = computed(() => [
 ]);
 
 const collapseButtonClass = computed(() => [
-    "absolute inset-0 z-20 flex w-full items-center justify-center bg-primary-norm text-2xl text-secondary transition-colors duration-200 hover:bg-primary-light hover:text-primary-dark focus-visible:ring-2 focus-visible:ring-primary-deep focus-visible:outline-none",
+    "absolute inset-0 z-20 flex w-full items-center justify-center bg-primary-norm text-2xl text-secondary transition-colors duration-200 hover:bg-primary-light hover:text-primary-dark focus-visible:ring-2 focus-visible:ring-primary-deep focus-visible:outline-none dark:hover:text-textcolor",
 ]);
 
 const titleCollapseButtonClass =
-    "flex size-10 shrink-0 items-center justify-center rounded-full text-xl leading-none text-secondary transition-colors duration-200 hover:bg-primary-light hover:text-primary-dark focus-visible:ring-2 focus-visible:ring-primary-deep focus-visible:outline-none xl:size-12 xl:text-2xl";
+    "flex size-10 shrink-0 items-center justify-center rounded-full text-xl leading-none text-secondary transition-colors duration-200 hover:bg-primary-light hover:text-primary-dark focus-visible:ring-2 focus-visible:ring-primary-deep focus-visible:outline-none xl:size-12 xl:text-2xl dark:hover:text-textcolor";
 
 const contentClass = computed(() => [
     "transition-opacity duration-200 ease-out",
@@ -238,14 +238,14 @@ function folderClass(node: ContentNavNode) {
 
 function folderTextClass(node: ContentNavNode) {
     return [
-        "flex min-w-0 flex-1 items-center rounded-l-md px-3 py-2 text-left no-underline transition-[border-radius,color,background-color] duration-200 ease-out group-hover:bg-primary-light group-hover:text-primary-dark",
+        "flex min-w-0 flex-1 items-center rounded-l-md px-3 py-2 text-left no-underline transition-[border-radius,color,background-color] duration-200 ease-out group-hover:bg-primary-light group-hover:text-primary-dark dark:group-hover:text-textcolor",
         node.active && "bg-tertiary font-semibold text-primary-dark",
     ];
 }
 
 function folderToggleClass(node: ContentNavNode) {
     return [
-        "group flex w-10 shrink-0 items-center justify-center rounded-r-md px-3 py-2 text-white/70 transition-[border-radius,color,background-color] duration-200 ease-out hover:bg-primary-light hover:text-primary-dark focus-visible:ring-2 focus-visible:ring-primary-deep focus-visible:outline-none",
+        "group flex w-10 shrink-0 items-center justify-center rounded-r-md px-3 py-2 text-white/70 transition-[border-radius,color,background-color] duration-200 ease-out hover:bg-primary-light hover:text-primary-dark focus-visible:ring-2 focus-visible:ring-primary-deep focus-visible:outline-none dark:hover:text-textcolor",
         node.active && "bg-tertiary text-primary-dark",
     ];
 }
@@ -259,7 +259,7 @@ function linkClass(depth: 0 | 1) {
 
 function linkTextClass(node: ContentNavNode, depth: 0 | 1) {
     return [
-        "flex min-w-0 flex-1 items-center justify-start rounded-md px-3 text-left transition-[border-radius,color,background-color] duration-200 ease-out group-hover:bg-primary-light group-hover:text-primary-dark",
+        "flex min-w-0 flex-1 items-center justify-start rounded-md px-3 text-left transition-[border-radius,color,background-color] duration-200 ease-out group-hover:bg-primary-light group-hover:text-primary-dark dark:group-hover:text-textcolor",
         depth === 1 ? "h-9 py-0 xl:h-10" : "py-2",
         node.active && "font-semibold text-tertiary",
     ];

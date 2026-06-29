@@ -3,20 +3,20 @@
         <!-- Desktop / larger than lg -->
         <DialogTrigger
             aria-label="Open search dialog"
-            class="flex size-9 shrink-0 items-center justify-center rounded-md text-primary-deep transition-colors hover:bg-primary-norm/20 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-deep sm:mr-8 sm:ml-5 sm:h-3/4 sm:max-w-48 sm:flex-1 sm:justify-start sm:rounded-full sm:bg-primary-norm sm:pr-3 sm:text-textcolor sm:hover:bg-primary-norm"
+            class="flex size-9 shrink-0 items-center justify-center rounded-md text-primary-deep transition-colors hover:bg-primary-norm/20 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-deep sm:mr-8 sm:ml-5 sm:h-3/4 sm:max-w-48 sm:flex-1 sm:justify-start sm:rounded-full sm:bg-primary-light sm:pr-3 sm:text-primary-deep sm:hover:bg-primary-norm sm:hover:text-textcolor dark:text-textcolor dark:sm:bg-primary-bg dark:sm:text-textcolor dark:sm:hover:bg-primary-norm"
         >
             <div
                 class="flex h-full w-full items-center justify-center gap-2 p-1 sm:justify-start"
             >
                 <input
-                    class="hidden h-full min-w-0 flex-1 rounded-full bg-textbg px-3 text-textcolor sm:block"
+                    class="hidden h-full min-w-0 flex-1 rounded-full bg-textbg px-3 text-textcolor placeholder:text-textcolor/60 sm:block"
                     readonly
                     placeholder="Ctrl + K"
                     tabindex="-1"
                 />
                 <Icon
                     icon="lucide:search"
-                    class="size-5 shrink-0 sm:text-textbg"
+                    class="size-5 shrink-0 sm:text-primary-deep dark:sm:text-textcolor"
                     aria-hidden="true"
                 />
             </div>
@@ -44,7 +44,7 @@
             >
                 <DialogContent
                     v-if="isSearchOpen"
-                    class="fixed inset-0 z-100 h-dvh w-dvw overflow-hidden bg-tertiary p-4 shadow-lg sm:inset-auto sm:top-1/6 sm:left-1/2 sm:h-auto sm:max-h-[70vh] sm:w-1/2 sm:-translate-x-1/2 sm:rounded-2xl sm:p-6"
+                    class="fixed inset-0 z-100 h-dvh w-dvw overflow-hidden bg-primary-light p-4 text-primary-deep shadow-lg sm:inset-auto sm:top-1/6 sm:left-1/2 sm:h-auto sm:max-h-[70vh] sm:w-1/2 sm:-translate-x-1/2 sm:rounded-2xl sm:p-6 dark:bg-primary-bg dark:text-textcolor"
                 >
                     <DialogTitle class="sr-only">
                         Search site content
@@ -57,7 +57,7 @@
                         class="flex h-full max-h-[calc(100dvh-2rem)] w-full flex-col justify-start gap-2 sm:max-h-[calc(70vh-3rem)]"
                     >
                         <header
-                            class="shrink-0 text-center text-2xl font-bold text-primary-deep"
+                            class="shrink-0 text-center text-2xl font-bold text-primary-deep dark:text-textcolor"
                         >
                             <label for="site-search" class="sr-only">
                                 Search site content
@@ -72,12 +72,12 @@
                                     autocomplete="off"
                                     placeholder="Search..."
                                     aria-describedby="search-result-count"
-                                    class="h-12 w-full rounded border py-2 pr-12 pl-4 outline-none sm:h-10"
+                                    class="h-12 w-full rounded border border-primary-light bg-textbg py-2 pr-12 pl-4 text-textcolor outline-none placeholder:text-textcolor/60 focus:border-secondary sm:h-10"
                                 />
                                 <button
                                     type="button"
                                     aria-label="Close search dialog"
-                                    class="absolute top-1/2 right-2 flex size-8 -translate-y-1/2 items-center justify-center rounded-md text-primary-deep transition-colors hover:bg-primary-norm/20 focus-visible:outline-2 focus-visible:outline-primary-deep"
+                                    class="absolute top-1/2 right-2 flex size-8 -translate-y-1/2 items-center justify-center rounded-md text-primary-deep transition-colors hover:bg-primary-norm hover:text-textcolor focus-visible:outline-2 focus-visible:outline-primary-deep dark:text-textcolor dark:hover:text-textcolor"
                                     @click="isSearchOpen = false"
                                 >
                                     <Icon
@@ -105,7 +105,7 @@
                         >
                             <div
                                 v-if="canScrollUp"
-                                class="pointer-events-none absolute top-0 left-0 z-10 h-8 w-full bg-linear-to-b from-tertiary to-transparent"
+                                class="pointer-events-none absolute top-0 left-0 z-10 h-8 w-full bg-linear-to-b from-primary-light to-transparent dark:from-primary-bg"
                             />
 
                             <ul
@@ -114,7 +114,7 @@
                                     duration: 180,
                                     easing: 'ease-out',
                                 }"
-                                class="max-h-[calc(100dvh-8rem)] w-full scrollbar-thin scrollbar-thumb-primary-norm scrollbar-track-tertiary overflow-auto sm:max-h-[calc(70vh-9rem)]"
+                                class="max-h-[calc(100dvh-8rem)] w-full scrollbar-thin scrollbar-thumb-primary-norm scrollbar-track-primary-light overflow-auto sm:max-h-[calc(70vh-9rem)] dark:scrollbar-thumb-primary-light dark:scrollbar-track-primary-bg"
                                 @scroll="updateScrollGradients"
                                 aria-label="Search results"
                             >
@@ -125,7 +125,7 @@
                                 >
                                     <NuxtLink
                                         :to="link.id"
-                                        class="site-search-result block rounded border border-transparent px-3 py-2"
+                                        class="site-search-result block rounded border border-transparent px-3 py-2 transition-colors hover:bg-primary-norm/40 focus-visible:bg-primary-norm/40"
                                         @click="handleResultClick($event, link)"
                                     >
                                         <article>
@@ -136,7 +136,7 @@
                                             </h3>
 
                                             <p
-                                                class="text-xs font-normal text-primary-deep"
+                                                class="text-xs font-normal text-primary-deep/80 dark:text-textcolor/80"
                                                 v-html="displayContent(link)"
                                             />
                                         </article>
@@ -146,12 +146,12 @@
 
                             <div
                                 v-if="canScrollDown"
-                                class="pointer-events-none absolute bottom-0 left-0 z-10 h-8 w-full bg-linear-to-t from-tertiary to-transparent"
+                                class="pointer-events-none absolute bottom-0 left-0 z-10 h-8 w-full bg-linear-to-t from-primary-light to-transparent dark:from-primary-bg"
                             />
                         </div>
                         <p
                             v-else-if="query"
-                            class="mt-4 text-center text-primary-deep"
+                            class="mt-4 text-center text-primary-deep dark:text-textcolor"
                             aria-live="polite"
                         >
                             No results found.
