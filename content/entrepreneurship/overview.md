@@ -7,8 +7,6 @@ title: Overview
 
 This is the main page displaying Markdown located at [content/index.md](https://github.com/nuxt/starter/blob/content/content/index.md).
 
-Move to [about](/about) page.
-
 ### Manage your Contents
 
 Create new pages or modify the existing ones in `content/` directory.
