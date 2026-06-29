@@ -26,16 +26,16 @@ const hasRightSidebar = computed(
                 class="flex h-full flex-1 flex-row gap-8 bg-primary-bg py-20 text-white"
                 :class="hasRightSidebar ? 'lg:pr-0' : ''"
             >
-                <slot />
                 <ClientOnly>
                     <aside class="contents">
                         <ContentBar
                             v-if="hasRightSidebar"
-                            class="hidden lg:flex"
+                            class="order-last hidden lg:flex"
                             :toc="page.body.toc.links"
                         />
                     </aside>
                 </ClientOnly>
+                <slot />
             </div>
         </div>
         <Footer />

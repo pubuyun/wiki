@@ -28,16 +28,16 @@ const hasRightSidebar = computed(
                     />
                 </aside>
             </ClientOnly>
-            <slot />
             <ClientOnly>
                 <aside class="contents">
                     <ContentBar
                         v-if="hasRightSidebar"
-                        class="hidden lg:flex"
+                        class="order-last hidden lg:flex"
                         :toc="page.body.toc.links"
                     />
                 </aside>
             </ClientOnly>
+            <slot />
         </div>
         <BackToTop />
         <Footer />
