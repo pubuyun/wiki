@@ -31,30 +31,32 @@
                         transform="translate(2,4) "
                     />
                 </defs>
-                <text
-                    x="0"
-                    y="0"
-                    text-anchor="middle"
-                    dominant-baseline="central"
-                    class="fill-current font-momo-trust-display text-[0.25em] text-secondary"
-                    style="color: #3a9aff"
-                >
-                    <textPath href="#text-path" startOffset="50%">
-                        BACK
-                    </textPath>
-                </text>
-                <text
-                    x="0"
-                    y="0"
-                    text-anchor="middle"
-                    dominant-baseline="central"
-                    class="fill-current font-momo-trust-display text-[0.25em] text-secondary"
-                    style="color: #3a9aff"
-                >
-                    <textPath href="#text-path-inner" startOffset="50%">
-                        TO TOP
-                    </textPath>
-                </text>
+                <g transform="translate(16,0)">
+                    <text
+                        x="0"
+                        y="0"
+                        text-anchor="middle"
+                        dominant-baseline="central"
+                        class="fill-current font-momo-trust-display text-[0.25em] text-secondary"
+                        style="color: #3a9aff"
+                    >
+                        <textPath href="#text-path" startOffset="50%">
+                            BACK
+                        </textPath>
+                    </text>
+                    <text
+                        x="0"
+                        y="0"
+                        text-anchor="middle"
+                        dominant-baseline="central"
+                        class="fill-current font-momo-trust-display text-[0.25em] text-secondary"
+                        style="color: #3a9aff"
+                    >
+                        <textPath href="#text-path-inner" startOffset="50%">
+                            TO TOP
+                        </textPath>
+                    </text>
+                </g>
             </svg>
             <img
                 src="https://static.igem.wiki/teams/6133/wiki/general/backtotop-new.avif"
