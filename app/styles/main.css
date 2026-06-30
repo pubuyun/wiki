@@ -77,21 +77,21 @@ html {
 }
 
 .colorblind.dark {
-    --primary-light: #93c5fd;
+    --primary-light: #3b82f6;
     --primary-bg: #081b33;
-    --primary-norm: #1f5fbf;
-    --primary-dark: #3b82f6;
+    --primary-norm: #2b538f;
+    --primary-dark: #3c536e;
     --primary-deep: #dbeafe;
     --textbg: #0f172a;
     --textcolor: #f8fafc;
     --secondary: #f3d38b;
-    --tertiary: #8edbd2;
+    --tertiary: #73aaa2;
 }
 
 .colorblind {
     --primary-light: #dbeafe;
     --primary-bg: #0f2f5f;
-    --primary-norm: #1f5fbf;
+    --primary-norm: #2b538f;
     --primary-dark: #1d4ed8;
     --primary-deep: #102a43;
     --textbg: #eeffec;

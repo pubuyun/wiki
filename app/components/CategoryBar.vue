@@ -26,7 +26,7 @@
         >
             <NuxtLink
                 :to="titleTo"
-                class="inline-flex min-w-0 max-w-[min(100%,calc(20vw-4rem))] justify-center overflow-visible rounded-md px-2 py-1 text-center text-2xl leading-[1.1] font-semibold whitespace-nowrap transition-colors hover:bg-primary-light hover:text-primary-dark focus-visible:ring-2 focus-visible:ring-primary-deep focus-visible:outline-none xl:text-4xl dark:hover:text-textcolor"
+                class="inline-flex max-w-[min(100%,calc(20vw-4rem))] min-w-0 justify-center overflow-visible rounded-md px-2 py-1 text-center text-2xl leading-[1.1] font-semibold whitespace-nowrap transition-colors hover:bg-primary-light hover:text-primary-dark focus-visible:ring-2 focus-visible:ring-primary-deep focus-visible:outline-none xl:text-4xl dark:hover:text-textcolor"
                 :style="titleStyle"
                 :aria-label="`Go to ${title}`"
             >
@@ -113,7 +113,6 @@
                                     </span>
                                     <AccordionTrigger
                                         :class="folderToggleClass(node)"
-                                        :title="`Expand or collapse ${node.label}`"
                                         :aria-label="`Expand or collapse ${node.label}`"
                                     >
                                         <span
