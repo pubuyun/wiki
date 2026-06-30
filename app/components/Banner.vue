@@ -22,11 +22,11 @@
             />
 
             <text
-                x="2"
-                y="-1"
-                :textLength="title.length > 12 ? 20 : undefined"
-                lengthAdjust="spacingAndGlyphs"
-                class="z-20 col-1 row-1 mx-auto w-full self-end justify-self-start fill-textbg p-14 text-start font-momo-trust-display text-[0.23em] text-textbg dark:fill-textcolor dark:text-textcolor"
+                x="1"
+                y="-0.7"
+                class="z-20 col-1 row-1 mx-auto w-full self-end justify-self-start fill-textbg p-14 text-start font-momo-trust-display text-textbg dark:fill-textcolor dark:text-textcolor"
+                :font-size="title.length > 15 ? 2.8 : 3.3"
+                :letter-spacing="title.length > 15 ? 0.05 : 0.05"
             >
                 {{ title }}
             </text>
