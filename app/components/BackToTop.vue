@@ -92,11 +92,11 @@ onUnmounted(() => {
 
 <style scoped>
 .back-to-top {
-    right: 2px !important; /* 手机端默认 */
+    right: 2px !important;
 }
 @media (min-width: 640px) {
     .back-to-top {
-        right: 24px !important; /* 电脑端（但电脑端按钮被 lg:hidden 隐藏，此值不影响显示） */
+        right: 24px !important;
     }
 }
 </style>
