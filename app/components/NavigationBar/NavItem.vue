@@ -29,10 +29,10 @@ const hasDropdown = computed(() => props.links.length > 0);
 <template>
     <NavigationMenuItem class="relative inline-block">
         <NavigationMenuTrigger
-            class="group inline-flex cursor-pointer list-none items-center gap-1 bg-transparent px-1 py-2 text-primary-deep outline-offset-4 select-none hover:text-primary-deep focus-visible:outline-2 focus-visible:outline-primary-deep dark:text-textcolor dark:hover:text-secondary"
+            class="nav-menu-trigger group inline-flex cursor-pointer list-none items-center gap-1 bg-transparent px-1 py-2 text-primary-deep outline-offset-4 select-none hover:text-primary-deep focus-visible:outline-2 focus-visible:outline-primary-deep dark:text-textcolor dark:hover:text-secondary"
         >
             <span
-                class="decoration-2 underline-offset-2 group-hover:underline group-focus-visible:underline"
+                class="decoration-2 underline-offset-2 colorblind:group-hover:underline colorblind:group-focus-visible:underline"
                 >{{ title }}</span
             >
             <span

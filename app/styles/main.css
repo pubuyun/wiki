@@ -6,6 +6,7 @@
 @import "@fontsource/belanosima/latin-700.css";
 
 @custom-variant dark (&:where(.dark, .dark *));
+@custom-variant colorblind (&:where(.colorblind, .colorblind *));
 
 @theme inline {
     --color-primary-light: var(--primary-light);
@@ -27,7 +28,7 @@
 html {
     scroll-padding-top: 12rem;
 }
-.colorblind.dark {
+/* .colorblind.dark {
     --primary-light: #d55e00;
     --primary-bg: #000000;
     --primary-norm: #0072b2;
@@ -49,7 +50,7 @@ html {
     --textcolor: #000000;
     --secondary: #f0e442;
     --tertiary: #56b4e9;
-}
+} */
 
 .dark {
     --primary-light: #4b68ff;
@@ -75,9 +76,7 @@ html {
     --tertiary: #67e9df;
 }
 
-/* Alternative
-
-.dark {
+.colorblind.dark {
     --primary-light: #93c5fd;
     --primary-bg: #081b33;
     --primary-norm: #1f5fbf;
@@ -89,7 +88,7 @@ html {
     --tertiary: #8edbd2;
 }
 
-:root {
+.colorblind {
     --primary-light: #dbeafe;
     --primary-bg: #0f2f5f;
     --primary-norm: #1f5fbf;
@@ -100,10 +99,9 @@ html {
     --secondary: #d7b46a;
     --tertiary: #9bd3cb;
 }
-*/
 
-.colorblind button:hover {
-    text-decoration: underline;
+.colorblind button:not(.nav-menu-trigger):hover {
+    text-decoration-line: underline;
 }
 
 .colorblind a:hover {
@@ -111,7 +109,7 @@ html {
     border-radius: 0.25rem;
 }
 
-.colorblind .site-search-result:hover {
+/* .colorblind .site-search-result:hover {
     border-color: currentColor;
 }
 
@@ -119,4 +117,4 @@ html {
     border-color: currentColor;
     outline: 2px solid currentColor;
     outline-offset: 2px;
-}
+} */
