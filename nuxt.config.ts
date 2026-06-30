@@ -6,6 +6,8 @@ export default defineNuxtConfig({
         "@nuxt/content",
         ...(process.env.NUXT_STUDIO !== "false" ? ["nuxt-studio"] : []),
         "nuxt-echarts",
+        "@nuxt/a11y",
+        "@vercel/speed-insights",
         "@formkit/auto-animate/nuxt",
     ],
     vite: {

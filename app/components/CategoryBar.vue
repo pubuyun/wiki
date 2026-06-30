@@ -13,7 +13,7 @@
         >
             <BrandIcon />
             <span
-                class="text-primary-deep lg:text-2xl xl:text-3xl dark:text-textcolor"
+                class="text-primary-light lg:text-2xl xl:text-3xl dark:text-textcolor"
                 aria-hidden="true"
             >
                 Expelliodor
@@ -21,7 +21,7 @@
         </NuxtLink>
         <div
             v-if="contentRendered"
-            class="absolute top-14 right-3 left-3 z-10 flex min-h-9 items-center justify-center gap-2 text-secondary xl:top-16"
+            class="absolute top-16 right-3 left-3 z-10 flex min-h-9 items-center justify-center gap-2 text-secondary xl:top-20"
             :class="contentClass"
         >
             <NuxtLink
@@ -82,7 +82,7 @@
             v-if="contentRendered"
             :id="contentId"
             ref="contentScroll"
-            class="category-sidebar-scroll mt-[5.75rem] max-h-full min-h-0 w-full flex-1 overflow-y-auto px-3 pb-4 xl:mt-[6.5rem]"
+            class="category-sidebar-scroll mt-28 max-h-full min-h-0 w-full flex-1 overflow-y-auto px-3 pb-4 xl:mt-36"
             :class="contentClass"
             :aria-hidden="!contentVisible"
             @scroll="updateScrollGradients"
@@ -221,7 +221,7 @@ let contentRevealTimer: ReturnType<typeof setTimeout> | undefined;
 let titleResizeObserver: ResizeObserver | undefined;
 
 const sidebarClass = computed(() => [
-    "sticky top-0 h-screen max-h-screen flex-col overflow-hidden bg-primary-dark font-momo-trust-display text-white shadow-sm transition-[width,height,padding,translate] duration-200 ease-out",
+    "sticky top-0 h-screen max-h-screen flex-col overflow-hidden bg-primary-bg font-momo-trust-display text-white shadow-sm transition-[width,height,padding,translate] duration-200 ease-out border-r border-white/20",
     collapsed.value ? "w-12 py-6" : "w-66 pt-4",
     "translate-x-0",
 ]);
