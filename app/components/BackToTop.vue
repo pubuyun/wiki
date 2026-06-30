@@ -11,7 +11,7 @@
         <button
             @click="scrollToTop"
             v-show="visible"
-            class="back-to-top fixed right-6 bottom-6 z-50 h-24 w-24 cursor-pointer border-none bg-transparent lg:hidden"
+            class="back-to-top fixed bottom-6 z-50 h-24 w-24 cursor-pointer border-none bg-transparent lg:hidden"
             aria-label="Back to top"
         >
             <svg
@@ -90,4 +90,13 @@ onUnmounted(() => {
 });
 </script>
 
-<style scoped></style>
+<style scoped>
+.back-to-top {
+    right: 2px !important; /* 手机端默认 */
+}
+@media (min-width: 640px) {
+    .back-to-top {
+        right: 24px !important; /* 电脑端（但电脑端按钮被 lg:hidden 隐藏，此值不影响显示） */
+    }
+}
+</style>
