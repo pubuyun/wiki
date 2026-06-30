@@ -135,7 +135,7 @@ function updateProgress() {
             >
                 <BrandIcon />
                 <span
-                    class="text-lg text-primary-deep sm:text-base lg:text-2xl xl:text-4xl dark:text-textcolor"
+                    class="text-lg text-primary-deep sm:text-base lg:text-2xl xl:text-3xl dark:text-textcolor"
                     aria-hidden="true"
                     >Expelliodor</span
                 >
@@ -159,10 +159,10 @@ function updateProgress() {
             </div>
         </nav>
     </NavigationMenuRoot>
-    <!-- <ProgressBar
+    <ProgressBar
         :progress="progress"
-        class="transition-[transform,opacity] duration-300 ease-out will-change-transform"
+        class="sr-only transition-[transform,opacity] duration-300 ease-out will-change-transform"
         :class="progressVisibilityClass"
         :style="props.scrollOpacity ? opacityStyle : undefined"
-    /> -->
+    />
 </template>

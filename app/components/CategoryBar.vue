@@ -13,7 +13,7 @@
         >
             <BrandIcon />
             <span
-                class="text-primary-deep lg:text-2xl xl:text-4xl dark:text-textcolor"
+                class="text-primary-deep lg:text-2xl xl:text-3xl dark:text-textcolor"
                 aria-hidden="true"
             >
                 Expelliodor
@@ -221,13 +221,13 @@ let contentRevealTimer: ReturnType<typeof setTimeout> | undefined;
 let titleResizeObserver: ResizeObserver | undefined;
 
 const sidebarClass = computed(() => [
-    "sticky top-0 h-screen max-h-screen flex-col overflow-hidden border-r border-white/20 bg-primary-norm font-momo-trust-display text-white shadow-sm transition-[width,height,padding,translate] duration-200 ease-out",
-    collapsed.value ? "w-12 py-6" : "w-1/5 pt-4",
+    "sticky top-0 h-screen max-h-screen flex-col overflow-hidden bg-primary-dark font-momo-trust-display text-white shadow-sm transition-[width,height,padding,translate] duration-200 ease-out",
+    collapsed.value ? "w-12 py-6" : "w-66 pt-4",
     "translate-x-0",
 ]);
 
 const collapseButtonClass = computed(() => [
-    "absolute inset-0 z-20 flex w-full items-center justify-center bg-primary-norm text-2xl text-secondary transition-colors duration-200 hover:bg-primary-light hover:text-primary-dark focus-visible:ring-2 focus-visible:ring-primary-deep focus-visible:outline-none dark:hover:text-textcolor",
+    "absolute inset-0 z-20 flex w-full items-center justify-center text-2xl text-secondary transition-colors duration-200 hover:bg-primary-light hover:text-primary-dark focus-visible:ring-2 focus-visible:ring-primary-deep focus-visible:outline-none dark:hover:text-textcolor",
 ]);
 
 const titleCollapseButtonClass =
