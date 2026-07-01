@@ -4,9 +4,9 @@
         class="flex scroll-mt-24 flex-row items-center justify-center gap-8"
     >
         <!-- 这个h2必须在最外层 -->
-        <span class="flex h-min rounded-4xl bg-tertiary">
+        <span class="flex h-min rounded-4xl bg-accent-warm">
             <span
-                class="text-primary-deep mx-6 my-1.5 flex items-center justify-center text-center font-momo-trust-display text-4xl"
+                class="mx-6 my-1.5 flex items-center justify-center text-center font-momo-trust-display text-4xl text-text-on-accent"
             >
                 <a
                     v-if="props.id && generate"
@@ -23,7 +23,7 @@
         </span>
         <span
             aria-hidden="true"
-            class="my-10 flex-1 border-3 border-t-2 border-tertiary"
+            class="my-10 flex-1 border-3 border-t-2 border-accent-warm"
         />
     </h2>
 </template>

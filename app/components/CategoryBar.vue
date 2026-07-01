@@ -13,7 +13,7 @@
         >
             <BrandIcon />
             <span
-                class="text-primary-light lg:text-2xl xl:text-3xl dark:text-textcolor"
+                class="text-accent-secondary lg:text-2xl xl:text-3xl"
                 aria-hidden="true"
             >
                 Expelliodor
@@ -21,12 +21,12 @@
         </NuxtLink>
         <div
             v-if="contentRendered"
-            class="absolute top-16 right-3 left-3 z-10 flex min-h-9 items-center justify-center gap-2 text-secondary xl:top-20"
+            class="absolute top-16 right-3 left-3 z-10 flex min-h-9 items-center justify-center gap-2 text-accent-secondary xl:top-20"
             :class="contentClass"
         >
             <NuxtLink
                 :to="titleTo"
-                class="inline-flex max-w-[min(100%,calc(20vw-4rem))] min-w-0 justify-center overflow-visible rounded-md px-2 py-1 text-center text-2xl leading-[1.1] font-semibold whitespace-nowrap transition-colors hover:bg-primary-light hover:text-primary-dark focus-visible:ring-2 focus-visible:ring-primary-deep focus-visible:outline-none xl:text-4xl dark:hover:text-textcolor"
+                class="inline-flex max-w-[min(100%,calc(20vw-4rem))] min-w-0 justify-center overflow-visible rounded-md px-2 py-1 text-center text-2xl leading-[1.1] font-semibold whitespace-nowrap transition-colors hover:bg-interactive-hover-bg hover:text-interactive-hover-text focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:outline-none xl:text-4xl"
                 :style="titleStyle"
                 :aria-label="`Go to ${title}`"
             >
@@ -97,7 +97,7 @@
                         <AccordionItem
                             v-if="node.children?.length"
                             :value="node.id"
-                            class="overflow-hidden text-white"
+                            class="overflow-hidden text-accent-secondary"
                         >
                             <AccordionHeader class="flex h-min gap-0">
                                 <div :class="folderClass(node)">
@@ -125,7 +125,7 @@
                                 </div>
                             </AccordionHeader>
                             <AccordionContent
-                                class="category-sidebar-accordion-content overflow-hidden data-[state=closed]:animate-[category-sidebar-slide-up_500ms_ease-in] data-[state=open]:animate-[category-sidebar-slide-down_500ms_ease-out]"
+                                class="category-sidebar-accordion-content overflow-hidden data-[state=closed]:animate-[category-sidebar-slide-up_200ms_ease-in] data-[state=open]:animate-[category-sidebar-slide-down_200ms_ease-out]"
                             >
                                 <div class="relative ml-4 pl-2">
                                     <div
@@ -134,7 +134,7 @@
                                     />
                                     <div
                                         v-if="activeChildIndex(node) >= 0"
-                                        class="pointer-events-none absolute left-0 h-9 w-0.5 rounded-full bg-tertiary transition-transform duration-200 ease-out xl:h-10"
+                                        class="pointer-events-none absolute left-0 h-9 w-0.5 rounded-full bg-accent-warm transition-transform duration-200 ease-out xl:h-10"
                                         :style="activeChildIndicatorStyle(node)"
                                         aria-hidden="true"
                                     />
@@ -180,11 +180,11 @@
 
         <div
             v-if="contentVisible && canScrollUp"
-            class="pointer-events-none absolute top-[5.75rem] z-10 h-8 w-full bg-linear-to-b from-primary-norm to-transparent xl:top-[6.5rem]"
+            class="pointer-events-none absolute top-[5.75rem] z-10 h-8 w-full bg-linear-to-b from-accent-primary to-transparent xl:top-[6.5rem]"
         />
         <div
             v-if="contentVisible && canScrollDown"
-            class="pointer-events-none absolute bottom-0 z-10 h-8 w-full bg-linear-to-t from-primary-norm to-transparent"
+            class="pointer-events-none absolute bottom-0 z-10 h-8 w-full bg-linear-to-t from-accent-primary to-transparent"
         />
     </nav>
 </template>
@@ -221,17 +221,17 @@ let contentRevealTimer: ReturnType<typeof setTimeout> | undefined;
 let titleResizeObserver: ResizeObserver | undefined;
 
 const sidebarClass = computed(() => [
-    "sticky top-0 h-screen max-h-screen flex-col overflow-hidden bg-primary-bg font-momo-trust-display text-white shadow-sm transition-[width,height,padding,translate] duration-200 ease-out border-r border-white/20",
+    "sticky top-0 h-screen max-h-screen flex-col overflow-hidden bg-surface-sidebar font-momo-trust-display text-accent-secondary shadow-sm transition-[width,height,padding,translate] duration-200 ease-out border-r border-white/20",
     collapsed.value ? "w-12 py-6" : "w-66 pt-4",
     "translate-x-0",
 ]);
 
 const collapseButtonClass = computed(() => [
-    "absolute inset-0 z-20 flex w-full items-center justify-center text-2xl text-secondary transition-colors duration-200 hover:bg-primary-light hover:text-primary-dark focus-visible:ring-2 focus-visible:ring-primary-deep focus-visible:outline-none dark:hover:text-textcolor",
+    "absolute inset-0 z-20 flex w-full items-center justify-center text-2xl text-accent-secondary transition-colors duration-200 hover:bg-interactive-hover-bg hover:text-interactive-hover-text focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:outline-none",
 ]);
 
 const titleCollapseButtonClass =
-    "flex size-10 shrink-0 items-center justify-center rounded-full text-xl leading-none text-secondary transition-colors duration-200 hover:bg-primary-light hover:text-primary-dark focus-visible:ring-2 focus-visible:ring-primary-deep focus-visible:outline-none xl:size-12 xl:text-2xl dark:hover:text-textcolor";
+    "flex size-10 shrink-0 items-center justify-center rounded-full text-xl leading-none text-accent-secondary transition-colors duration-200 hover:bg-interactive-hover-bg hover:text-interactive-hover-text focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:outline-none xl:size-12 xl:text-2xl";
 
 const contentClass = computed(() => [
     "transition-opacity duration-200 ease-out",
@@ -244,36 +244,41 @@ const titleStyle = computed(() => ({
 
 function folderClass(node: ContentNavNode) {
     return [
-        "group my-0.5 flex w-full items-stretch text-base focus-visible:ring-2 focus-visible:ring-primary-deep focus-visible:outline-none xl:text-lg",
+        "group my-0.5 flex w-full items-stretch text-base focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:outline-none xl:text-lg",
     ];
 }
 
 function folderTextClass(node: ContentNavNode) {
     return [
-        "flex min-w-0 flex-1 items-center rounded-l-md px-3 py-2 text-left no-underline transition-[border-radius,color,background-color] duration-200 ease-out group-hover:bg-primary-light group-hover:text-primary-dark dark:group-hover:text-textcolor",
-        node.active && "bg-tertiary font-semibold text-primary-dark",
+        "flex min-w-0 flex-1 items-center rounded-l-md px-3 py-2 text-left no-underline transition-[border-radius,color,background-color] duration-200 ease-out group-hover:bg-interactive-hover-bg group-hover:text-interactive-hover-text",
+        node.active &&
+            "bg-active-bg font-semibold text-active-text",
     ];
 }
 
 function folderToggleClass(node: ContentNavNode) {
     return [
-        "group flex w-10 shrink-0 items-center justify-center rounded-r-md px-3 py-2 text-white/70 transition-[border-radius,color,background-color] duration-200 ease-out hover:bg-primary-light hover:text-primary-dark focus-visible:ring-2 focus-visible:ring-primary-deep focus-visible:outline-none dark:hover:text-textcolor",
-        node.active && "bg-tertiary text-primary-dark",
+        "group flex w-10 shrink-0 items-center justify-center rounded-r-md px-3 py-2 text-accent-secondary transition-[border-radius,color,background-color] duration-200 ease-out hover:bg-interactive-hover-bg hover:text-interactive-hover-text group-hover:bg-interactive-hover-bg group-hover:text-interactive-hover-text focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:outline-none",
+        node.active &&
+            "bg-active-bg font-semibold text-active-text",
     ];
 }
 
 function linkClass(depth: 0 | 1) {
     return [
-        "group my-0.5 flex w-full items-stretch text-base focus-visible:ring-2 focus-visible:ring-primary-deep focus-visible:outline-none xl:text-lg",
-        depth === 1 && "font-belanosima text-sm text-white/80 xl:text-base",
+        "group my-0.5 flex w-full items-stretch text-base focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:outline-none xl:text-lg",
+        depth === 1 && "font-belanosima text-sm xl:text-base",
     ];
 }
 
 function linkTextClass(node: ContentNavNode, depth: 0 | 1) {
     return [
-        "flex min-w-0 flex-1 items-center justify-start rounded-md px-3 text-left transition-[border-radius,color,background-color] duration-200 ease-out group-hover:bg-primary-light group-hover:text-primary-dark dark:group-hover:text-textcolor",
+        "flex min-w-0 flex-1 items-center justify-start rounded-md px-3 text-left transition-[border-radius,color,background-color] duration-200 ease-out group-hover:bg-interactive-hover-bg group-hover:text-interactive-hover-text",
         depth === 1 ? "h-9 py-0 xl:h-10" : "py-2",
-        node.active && "font-semibold text-tertiary",
+        node.active &&
+            (depth === 1
+                ? "font-semibold text-accent-warm"
+                : "bg-active-bg font-semibold text-active-text"),
     ];
 }
 
@@ -411,7 +416,7 @@ onBeforeUnmount(() => {
 <style>
 .category-sidebar-scroll {
     direction: rtl;
-    scrollbar-color: var(--secondary) transparent;
+    scrollbar-color: var(--accent-secondary) transparent;
     scrollbar-width: thin;
 }
 
@@ -436,12 +441,12 @@ onBeforeUnmount(() => {
 }
 
 .category-sidebar-scroll::-webkit-scrollbar-thumb {
-    background: var(--secondary);
+    background: var(--accent-secondary);
     border-radius: 9999px;
 }
 
 .category-sidebar-scroll::-webkit-scrollbar-thumb:hover {
-    background: var(--primary-norm);
+    background: var(--accent-primary);
 }
 
 @keyframes category-sidebar-slide-down {

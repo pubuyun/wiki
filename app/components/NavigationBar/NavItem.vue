@@ -29,7 +29,7 @@ const hasDropdown = computed(() => props.links.length > 0);
 <template>
     <NavigationMenuItem class="relative inline-block">
         <NavigationMenuTrigger
-            class="nav-menu-trigger group inline-flex cursor-pointer list-none items-center gap-1 bg-transparent px-1 py-2 text-primary-deep outline-offset-4 select-none hover:text-primary-deep focus-visible:outline-2 focus-visible:outline-primary-deep dark:text-textcolor dark:hover:text-secondary"
+            class="nav-menu-trigger group inline-flex cursor-pointer list-none items-center gap-1 bg-transparent px-1 py-2 text-accent-secondary outline-offset-4 select-none hover:text-accent-secondary focus-visible:outline-2 focus-visible:outline-focus-ring"
         >
             <span
                 class="decoration-2 underline-offset-2 colorblind:group-hover:underline colorblind:group-focus-visible:underline"
@@ -44,13 +44,13 @@ const hasDropdown = computed(() => props.links.length > 0);
 
         <NavigationMenuContent
             force-mount
-            class="absolute top-full -left-1/3 z-50 max-h-0 min-w-max overflow-hidden rounded-2xl bg-primary-light text-primary-deep shadow-sm transition-[max-height] duration-500 ease-out data-[state=closed]:pointer-events-none! data-[state=closed]:max-h-0 data-[state=open]:pointer-events-auto! data-[state=open]:max-h-96 dark:text-textcolor"
+            class="absolute top-full -left-1/3 z-50 max-h-0 min-w-max overflow-hidden rounded-2xl bg-surface-popover text-accent-secondary shadow-sm transition-[max-height] duration-500 ease-out data-[state=closed]:pointer-events-none! data-[state=closed]:max-h-0 data-[state=open]:pointer-events-auto! data-[state=open]:max-h-96"
         >
             <NavigationMenuLink v-for="link in links" :key="link.to" as-child>
                 <NuxtLink
                     :to="link.to"
                     @pointerdown.stop
-                    class="block px-4 py-2 text-xl text-primary-deep no-underline -outline-offset-2 first:rounded-t-2xl last:rounded-b-2xl hover:bg-primary-norm hover:text-textcolor focus-visible:bg-primary-norm focus-visible:text-textcolor focus-visible:outline-2 focus-visible:outline-primary-deep dark:text-textcolor dark:hover:text-textcolor dark:focus-visible:outline-primary-light"
+                    class="block px-4 py-2 text-xl text-accent-secondary no-underline -outline-offset-2 first:rounded-t-2xl last:rounded-b-2xl hover:bg-interactive-hover-bg hover:text-interactive-hover-text focus-visible:bg-interactive-hover-bg focus-visible:text-interactive-hover-text focus-visible:outline-2 focus-visible:outline-focus-ring"
                 >
                     {{ link.label }}
                 </NuxtLink>

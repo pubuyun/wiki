@@ -1,11 +1,11 @@
 <template>
     <div
-        class="relative flex flex-1 flex-col gap-4 p-4 text-textcolor lg:flex-row"
+        class="relative flex flex-1 flex-col gap-4 p-4 text-text-main lg:flex-row"
     >
         <aside class="flex w-full flex-col gap-4 lg:w-1/3">
             <SelectRoot v-model="selectedBinderKey">
                 <SelectTrigger
-                    class="inline-flex h-10 w-full items-center justify-between gap-2 rounded border border-primary-norm bg-textbg px-3 text-left text-sm text-primary-deep outline-none hover:bg-tertiary focus:ring-2 focus:ring-secondary"
+                    class="inline-flex h-10 w-full items-center justify-between gap-2 rounded border border-accent-primary bg-surface-content px-3 text-left text-sm text-text-brand outline-none hover:bg-accent-warm focus:ring-2 focus:ring-focus-ring"
                     aria-label="Select binder"
                 >
                     <SelectValue placeholder="Select binder" />
@@ -16,7 +16,7 @@
 
                 <SelectPortal>
                     <SelectContent
-                        class="z-100 max-h-80 overflow-hidden rounded border border-primary-norm bg-textbg text-primary-deep shadow-lg"
+                        class="z-100 max-h-80 overflow-hidden rounded border border-accent-primary bg-surface-content text-text-brand shadow-lg"
                         position="popper"
                         :side-offset="4"
                     >
@@ -25,7 +25,7 @@
                                 v-for="binder in selectedBinders"
                                 :key="binder.optionKey"
                                 :value="binder.optionKey"
-                                class="relative flex min-h-9 cursor-pointer items-center rounded px-8 py-2 text-sm outline-none select-none data-highlighted:bg-tertiary data-highlighted:text-primary-deep"
+                                class="relative flex min-h-9 cursor-pointer items-center rounded px-8 py-2 text-sm outline-none select-none data-highlighted:bg-accent-warm data-highlighted:text-text-brand"
                             >
                                 <SelectItemIndicator
                                     class="absolute left-2 inline-flex items-center"
@@ -42,7 +42,7 @@
             </SelectRoot>
 
             <pre
-                class="min-h-0 flex-1 rounded border border-primary-norm bg-textbg p-4 text-sm leading-6 wrap-break-word whitespace-pre-wrap text-primary-deep"
+                class="min-h-0 flex-1 rounded border border-accent-primary bg-surface-content p-4 text-sm leading-6 wrap-break-word whitespace-pre-wrap text-text-brand"
                 >{{ selectedBinderText }}</pre
             >
         </aside>

@@ -23,7 +23,7 @@ const hasRightSidebar = computed(
                 />
             </ClientOnly>
             <div
-                class="flex h-full flex-1 flex-row gap-8 bg-primary-bg py-20 text-white"
+                class="flex h-full flex-1 flex-row gap-8 bg-surface-page py-20 text-text-inverse"
                 :class="hasRightSidebar ? 'lg:pr-0' : ''"
             >
                 <ClientOnly>

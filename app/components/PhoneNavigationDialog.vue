@@ -63,7 +63,7 @@ function navigateFolder(node: { path?: string }) {
     <DialogRoot v-model:open="open">
         <DialogTrigger
             aria-label="Open navigation menu"
-            class="flex size-9 shrink-0 items-center justify-center rounded-md text-primary-deep transition-colors hover:bg-primary-norm/20 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-deep lg:hidden"
+            class="flex size-9 shrink-0 items-center justify-center rounded-md text-text-inverse transition-colors hover:bg-interactive-hover-bg hover:text-interactive-hover-text focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring lg:hidden"
         >
             <Icon icon="lucide:menu" class="size-5" aria-hidden="true" />
         </DialogTrigger>
@@ -80,15 +80,15 @@ function navigateFolder(node: { path?: string }) {
                 leave-to-class="translate-x-full"
             >
                 <DialogContent
-                    class="fixed top-0 right-0 z-101 flex h-dvh w-[min(21rem,88vw)] flex-col overflow-hidden bg-primary-light text-primary-deep shadow-2xl outline-none lg:hidden"
+                    class="fixed top-0 right-0 z-101 flex h-dvh w-[min(21rem,88vw)] flex-col overflow-hidden bg-surface-popover text-text-main shadow-2xl outline-none lg:hidden"
                 >
                     <header
-                        class="flex h-14 shrink-0 items-center justify-between border-b border-primary-deep/20 px-4"
+                        class="flex h-14 shrink-0 items-center justify-between border-b border-default px-4"
                     >
                         <button
                             v-if="activeView === 'category'"
                             type="button"
-                            class="inline-flex items-center gap-2 rounded-md px-2 py-1 text-sm transition-colors hover:bg-primary-norm/20 focus-visible:outline-2 focus-visible:outline-primary-deep"
+                            class="inline-flex items-center gap-2 rounded-md px-2 py-1 text-sm transition-colors hover:bg-interactive-hover-bg hover:text-interactive-hover-text focus-visible:outline-2 focus-visible:outline-focus-ring"
                             @click="activeView = 'main'"
                         >
                             <Icon
@@ -106,14 +106,14 @@ function navigateFolder(node: { path?: string }) {
                         </DialogTitle>
                         <DialogTitle
                             v-else
-                            class="font-righteous text-lg text-primary-deep"
+                            class="font-righteous text-lg text-text-main"
                         >
                             Menu
                         </DialogTitle>
 
                         <DialogClose
                             aria-label="Close navigation menu"
-                            class="flex size-9 items-center justify-center rounded-md transition-colors hover:bg-primary-norm/20 focus-visible:outline-2 focus-visible:outline-primary-deep"
+                            class="flex size-9 items-center justify-center rounded-md transition-colors hover:bg-interactive-hover-bg hover:text-interactive-hover-text focus-visible:outline-2 focus-visible:outline-focus-ring"
                         >
                             <Icon icon="lucide:x" class="size-5" />
                         </DialogClose>
@@ -123,7 +123,7 @@ function navigateFolder(node: { path?: string }) {
                         <div v-if="activeView === 'category'" class="space-y-4">
                             <NuxtLink
                                 :to="categoryPath"
-                                class="block rounded-md font-righteous text-xl text-primary-deep transition-colors hover:bg-primary-norm/20 focus-visible:outline-2 focus-visible:outline-primary-deep"
+                                class="block rounded-md font-righteous text-xl text-text-main transition-colors hover:bg-interactive-hover-bg hover:text-interactive-hover-text focus-visible:outline-2 focus-visible:outline-focus-ring"
                                 :aria-label="`Go to ${categoryTitle}`"
                                 @click="closeDialog"
                             >
@@ -137,14 +137,14 @@ function navigateFolder(node: { path?: string }) {
                                     <AccordionItem
                                         v-if="node.children?.length"
                                         :value="categoryItemValue(node.id)"
-                                        class="overflow-hidden rounded-md bg-primary-norm/20"
+                                        class="overflow-hidden rounded-md bg-surface-muted"
                                     >
                                         <AccordionHeader>
                                             <AccordionTrigger
-                                                class="group flex w-full items-center justify-between gap-3 px-3 py-2 text-left font-momo-trust-display focus-visible:outline-2 focus-visible:outline-primary-deep"
+                                                class="group flex w-full items-center justify-between gap-3 px-3 py-2 text-left font-momo-trust-display focus-visible:outline-2 focus-visible:outline-focus-ring"
                                                 :class="
                                                     node.active &&
-                                                    'bg-secondary text-primary-dark'
+                                                    'bg-active-bg text-active-text'
                                                 "
                                                 @click="navigateFolder(node)"
                                             >
@@ -167,10 +167,10 @@ function navigateFolder(node: { path?: string }) {
                                                     <NuxtLink
                                                         v-if="child.path"
                                                         :to="child.path"
-                                                        class="block rounded-md px-3 py-2 font-belanosima text-primary-deep hover:bg-primary-norm/20"
+                                                        class="block rounded-md px-3 py-2 font-belanosima text-text-main hover:bg-interactive-hover-bg hover:text-interactive-hover-text"
                                                         :class="
                                                             child.active &&
-                                                            'bg-secondary text-primary-dark'
+                                                            'bg-active-bg text-active-text'
                                                         "
                                                         @click="closeDialog"
                                                     >
@@ -184,10 +184,10 @@ function navigateFolder(node: { path?: string }) {
                                     <NuxtLink
                                         v-else-if="node.path"
                                         :to="node.path"
-                                        class="block rounded-md px-3 py-2 font-momo-trust-display text-primary-deep hover:bg-primary-norm/20"
+                                        class="block rounded-md px-3 py-2 font-momo-trust-display text-text-main hover:bg-interactive-hover-bg hover:text-interactive-hover-text"
                                         :class="
                                             node.active &&
-                                            'bg-secondary text-primary-dark'
+                                            'bg-active-bg text-active-text'
                                         "
                                         @click="closeDialog"
                                     >
@@ -207,11 +207,11 @@ function navigateFolder(node: { path?: string }) {
                                 v-for="group in siteNavGroups"
                                 :key="group.title"
                                 :value="group.title"
-                                class="overflow-hidden rounded-md bg-primary-norm/20"
+                                class="overflow-hidden rounded-md bg-surface-muted"
                             >
                                 <AccordionHeader>
                                     <AccordionTrigger
-                                        class="group flex w-full items-center justify-between gap-3 px-3 py-2 text-left font-righteous focus-visible:outline-2 focus-visible:outline-primary-deep"
+                                        class="group flex w-full items-center justify-between gap-3 px-3 py-2 text-left font-righteous focus-visible:outline-2 focus-visible:outline-focus-ring"
                                     >
                                         <span>{{ group.title }}</span>
                                         <Icon
@@ -231,10 +231,10 @@ function navigateFolder(node: { path?: string }) {
                                         >
                                             <NuxtLink
                                                 :to="link.to"
-                                                class="block rounded-md px-3 py-2 font-belanosima text-primary-deep hover:bg-primary-norm/20"
+                                                class="block rounded-md px-3 py-2 font-belanosima text-text-main hover:bg-interactive-hover-bg hover:text-interactive-hover-text"
                                                 :class="
                                                     route.path === link.to &&
-                                                    'bg-secondary text-primary-dark'
+                                                    'bg-active-bg text-active-text'
                                                 "
                                                 @click="closeDialog"
                                             >

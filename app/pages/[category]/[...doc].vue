@@ -157,7 +157,7 @@ function pageTitle(item) {
 <template>
     <main
         v-if="page"
-        class="mt-16 flex w-full max-w-[100vw] min-w-0 flex-1 flex-col gap-4 overflow-x-hidden px-4 sm:mt-20 sm:gap-6 sm:px-6 lg:px-0"
+        class="mt-16 flex w-full max-w-[100vw] min-w-0 flex-1 flex-col gap-4 overflow-x-visible px-4 sm:mt-20 sm:gap-6 sm:px-6 lg:px-0"
     >
         <ClientOnly>
             <MobileContentBar
@@ -173,13 +173,21 @@ function pageTitle(item) {
             <ContentRenderer
                 v-if="section.heading"
                 :value="sectionValue([section.heading])"
-                class="content overflow-wrap-anywhere min-w-0 flex-1 text-white"
+                class="content overflow-wrap-anywhere min-w-0 flex-1 text-text-inverse"
             />
-            <ContentRenderer
+            <div
                 v-if="section.children.length"
-                :value="sectionValue(section.children)"
-                class="content paragraph overflow-wrap-anywhere min-w-0 flex-1 rounded-2xl bg-textbg p-4 text-textcolor sm:rounded-3xl sm:p-5 lg:rounded-4xl lg:p-6"
-            />
+                class="relative -translate-x-2 pr-2"
+            >
+                <div
+                    class="absolute inset-0 translate-x-2 translate-y-4 rounded-2xl bg-accent-warm sm:rounded-3xl lg:rounded-4xl"
+                    aria-hidden="true"
+                />
+                <ContentRenderer
+                    :value="sectionValue(section.children)"
+                    class="content paragraph overflow-wrap-anywhere relative min-w-0 rounded-2xl bg-surface-content p-4 text-text-main sm:rounded-3xl sm:p-5 lg:rounded-4xl lg:p-6"
+                />
+            </div>
         </section>
         <section
             v-if="currentFolderCards.length"
@@ -190,7 +198,7 @@ function pageTitle(item) {
                 v-for="doc in currentFolderCards"
                 :key="doc.path"
                 :to="doc.path"
-                class="group flex min-h-36 min-w-0 flex-col gap-3 rounded-2xl border-2 border-primary-light bg-textbg p-4 text-textcolor no-underline transition hover:-translate-y-px hover:border-secondary hover:text-primary-deep focus-visible:-translate-y-px focus-visible:border-secondary focus-visible:text-primary-deep focus-visible:outline-none sm:rounded-3xl sm:p-5 lg:rounded-4xl lg:p-6"
+                class="group flex min-h-36 min-w-0 flex-col gap-3 rounded-2xl border-2 border-surface-muted bg-surface-content p-4 text-text-main no-underline transition hover:-translate-y-px hover:border-accent-secondary hover:text-text-brand focus-visible:-translate-y-px focus-visible:border-focus-ring focus-visible:text-text-brand focus-visible:outline-none sm:rounded-3xl sm:p-5 lg:rounded-4xl lg:p-6"
             >
                 <h2
                     class="font-belanosima text-2xl leading-tight [overflow-wrap:anywhere]"
@@ -199,7 +207,7 @@ function pageTitle(item) {
                 </h2>
                 <p
                     v-if="pageDescription(doc)"
-                    class="font-main text-base leading-relaxed text-textcolor/85 transition group-hover:text-primary-deep/85"
+                    class="font-main text-base leading-relaxed text-text-main/85 transition group-hover:text-text-brand/85"
                 >
                     {{ pageDescription(doc) }}
                 </p>
@@ -212,7 +220,7 @@ function pageTitle(item) {
         >
             <NuxtLink
                 v-if="previousPage"
-                class="my-1 flex min-w-0 flex-col gap-1 rounded-2xl border-2 border-primary-light bg-textbg p-4 text-textcolor no-underline transition hover:-translate-y-px hover:border-secondary hover:text-primary-deep focus-visible:-translate-y-px focus-visible:border-secondary focus-visible:text-primary-deep focus-visible:outline-none"
+                class="my-1 flex min-w-0 flex-col gap-1 rounded-2xl border-2 border-surface-muted bg-surface-content p-4 text-text-main no-underline transition hover:-translate-y-px hover:border-accent-secondary hover:text-text-brand focus-visible:-translate-y-px focus-visible:border-focus-ring focus-visible:text-text-brand focus-visible:outline-none"
                 :to="previousPage.path"
             >
                 <div class="font-main text-sm opacity-70">Previous</div>
@@ -225,7 +233,7 @@ function pageTitle(item) {
             <span v-else aria-hidden="true" />
             <NuxtLink
                 v-if="nextPage"
-                class="my-1 flex min-w-0 flex-col items-end gap-1 rounded-2xl border-2 border-primary-light bg-textbg p-4 text-right text-textcolor no-underline transition hover:-translate-y-px hover:border-secondary hover:text-primary-deep focus-visible:-translate-y-px focus-visible:border-secondary focus-visible:text-primary-deep focus-visible:outline-none"
+                class="my-1 flex min-w-0 flex-col items-end gap-1 rounded-2xl border-2 border-surface-muted bg-surface-content p-4 text-right text-text-main no-underline transition hover:-translate-y-px hover:border-accent-secondary hover:text-text-brand focus-visible:-translate-y-px focus-visible:border-focus-ring focus-visible:text-text-brand focus-visible:outline-none"
                 :to="nextPage.path"
             >
                 <div class="font-main text-sm opacity-70">Next</div>

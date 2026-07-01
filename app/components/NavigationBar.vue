@@ -63,7 +63,7 @@ function updateNavVisibility() {
 }
 
 const opacityStyle = computed(() => ({
-    backgroundColor: `color-mix(in srgb, var(--primary-light) ${Math.round(
+    backgroundColor: `color-mix(in srgb, var(--navigation-bar-bg) ${Math.round(
         navBackgroundOpacity.value * 100,
     )}%, transparent)`,
 }));
@@ -123,7 +123,7 @@ function updateProgress() {
         :delay-duration="100"
     >
         <nav
-            class="flex h-12 items-center justify-between gap-3 overflow-visible bg-primary-light px-3 font-righteous transition-transform duration-300 ease-out will-change-transform sm:h-10 sm:gap-4 sm:px-4 lg:h-11 lg:gap-6 xl:h-14"
+            class="flex h-12 items-center justify-between gap-3 overflow-visible bg-[var(--navigation-bar-bg)] [--navigation-bar-bg:var(--surface-nav)] px-3 font-righteous transition-transform duration-300 ease-out will-change-transform sm:h-10 sm:gap-4 sm:px-4 lg:h-11 lg:gap-6 xl:h-14"
             :class="navVisibilityClass"
             :style="props.scrollOpacity ? opacityStyle : undefined"
         >
@@ -135,7 +135,7 @@ function updateProgress() {
             >
                 <BrandIcon />
                 <span
-                    class="text-lg text-primary-deep sm:text-base lg:text-2xl xl:text-3xl dark:text-textcolor"
+                    class="text-lg text-accent-warm sm:text-base lg:text-2xl xl:text-3xl"
                     aria-hidden="true"
                     >Expelliodor</span
                 >

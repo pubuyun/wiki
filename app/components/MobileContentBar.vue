@@ -1,6 +1,6 @@
 <template>
     <nav
-        class="w-full rounded-2xl bg-primary-norm font-belanosima text-white shadow-lg lg:hidden"
+        class="w-full rounded-2xl bg-surface-sidebar font-belanosima text-text-inverse shadow-lg lg:hidden"
         aria-labelledby="mobile-toc-title"
     >
         <AccordionRoot
@@ -12,7 +12,7 @@
             <AccordionItem value="toc">
                 <AccordionHeader>
                     <AccordionTrigger
-                        class="group flex w-full items-center justify-between gap-4 rounded-2xl px-5 py-4 text-left text-xl text-secondary focus-visible:ring-2 focus-visible:ring-white focus-visible:outline-none"
+                        class="group flex w-full items-center justify-between gap-4 rounded-2xl px-5 py-4 text-left text-xl text-accent-secondary focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:outline-none"
                     >
                         <span id="mobile-toc-title">On this page</span>
                         <span
@@ -34,10 +34,10 @@
                         >
                             <a
                                 :href="`#${link.id}`"
-                                class="block rounded-lg px-2 py-1 text-base text-white hover:bg-primary-light hover:text-primary-dark focus-visible:ring-2 focus-visible:ring-white focus-visible:outline-none"
+                                class="block rounded-lg px-2 py-1 text-base text-text-inverse hover:bg-interactive-hover-bg hover:text-interactive-hover-text focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:outline-none"
                                 :class="
                                     link.depth === 3
-                                        ? 'text-sm text-white/85'
+                                        ? 'text-sm text-text-inverse/85'
                                         : 'text-lg'
                                 "
                                 @click="scrollToHash($event, link.id)"

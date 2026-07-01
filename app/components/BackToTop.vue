@@ -37,7 +37,7 @@
                         y="0"
                         text-anchor="middle"
                         dominant-baseline="central"
-                        class="fill-current font-momo-trust-display text-[0.25em] text-secondary"
+                        class="fill-current font-momo-trust-display text-[0.25em] text-accent-secondary"
                     >
                         <textPath href="#text-path" startOffset="50%">
                             BACK
@@ -48,7 +48,7 @@
                         y="0"
                         text-anchor="middle"
                         dominant-baseline="central"
-                        class="fill-current font-momo-trust-display text-[0.25em] text-secondary"
+                        class="fill-current font-momo-trust-display text-[0.25em] text-accent-secondary"
                     >
                         <textPath href="#text-path-inner" startOffset="50%">
                             TO TOP

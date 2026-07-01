@@ -1,5 +1,5 @@
 <template>
-    <tbody class="divide-y divide-primary-light">
+    <tbody class="divide-y divide-surface-muted">
         <slot />
     </tbody>
 </template>
