@@ -28,7 +28,8 @@
 html {
     scroll-padding-top: 12rem;
 }
-/* .colorblind.dark {
+
+.colorblind.dark {
     --primary-light: #d55e00;
     --primary-bg: #000000;
     --primary-norm: #0072b2;
@@ -50,7 +51,7 @@ html {
     --textcolor: #000000;
     --secondary: #f0e442;
     --tertiary: #56b4e9;
-} */
+}
 
 .dark {
     --primary-light: #4b68ff;
@@ -76,7 +77,7 @@ html {
     --tertiary: #67e9df;
 }
 
-.colorblind.dark {
+/* .colorblind.dark {
     --primary-light: #3b82f6;
     --primary-bg: #081b33;
     --primary-norm: #2b538f;
@@ -98,7 +99,7 @@ html {
     --textcolor: #111827;
     --secondary: #d7b46a;
     --tertiary: #9bd3cb;
-}
+} */
 
 .colorblind button:not(.nav-menu-trigger):hover {
     text-decoration-line: underline;
