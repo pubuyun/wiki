@@ -19,7 +19,7 @@
     --color-text-muted: var(--text-muted);
     --color-text-inverse: var(--text-inverse);
     --color-text-on-accent: var(--text-on-accent);
-    --color-text-brand: var(--text-brand);
+    --color-text-emphasized: var(--text-emphasized);
     --color-accent-primary: var(--accent-primary);
     --color-accent-secondary: var(--accent-secondary);
     --color-accent-warm: var(--accent-warm);
@@ -52,7 +52,7 @@ html {
     --text-muted: #ffffffcc;
     --text-inverse: #f0e442;
     --text-on-accent: #000000;
-    --text-brand: #f0e442;
+    --text-emphasized: #f0e442;
     --accent-primary: #0072b2;
     --accent-secondary: #f0e442;
     --accent-warm: #d55e00;
@@ -76,7 +76,7 @@ html {
     --text-muted: #000000cc;
     --text-inverse: #56b4e9;
     --text-on-accent: #000000;
-    --text-brand: #000000;
+    --text-emphasized: #000000;
     --accent-primary: #02402f;
     --accent-secondary: #56b4e9;
     --accent-warm: #883c01;
@@ -100,16 +100,16 @@ html {
     --text-muted: #fff5c2cc;
     --text-inverse: #fff5c2;
     --text-on-accent: #03061a;
-    --text-brand: #fff5c2;
+    --text-emphasized: #fff5c2;
     --accent-primary: #5aa6ff;
     --accent-secondary: #fff5c2;
-    --accent-warm: #ffc24a;
-    --accent-active: #ffc24a;
+    --accent-warm: #d79612;
+    --accent-active: #d79612;
     --interactive-hover-bg: #fff5c2;
     --interactive-hover-text: #03061a;
-    --active-bg: #ffc24a;
+    --active-bg: #d79612;
     --active-text: #03061a;
-    --focus-ring: #ffc24a;
+    --focus-ring: #d79612;
     --border-default: #fff5c266;
 }
 
@@ -118,13 +118,13 @@ html {
     --surface-content: #fff5c2;
     --surface-nav: #007dff;
     --surface-sidebar: #0955d5;
-    --surface-popover: #007dff;
-    --surface-muted: #d9eaff;
+    --surface-popover: #00baf2;
+    --surface-muted: #00baf2;
     --text-main: #103098;
     --text-muted: #103098cc;
     --text-inverse: #fff5c2;
-    --text-on-accent: #1c0770;
-    --text-brand: #1c0770;
+    --text-on-accent: #103098;
+    --text-emphasized: #103098;
     --accent-primary: #007dff;
     --accent-secondary: #fff5c2;
     --accent-warm: #fab826;
@@ -133,7 +133,7 @@ html {
     --interactive-hover-text: #103098;
     --active-bg: #007dff;
     --active-text: #fff5c2;
-    --focus-ring: #1c0770;
+    --focus-ring: #103098;
     --border-default: #007dff99;
 }
 

@@ -7,7 +7,7 @@
         <h2 class="sr-only" id="toc-title">Table of contents</h2>
         <div
             v-if="contentTextRendered"
-            class="absolute top-4 right-18 left-0 z-10 flex h-16 items-center justify-center text-text-brand lg:text-xl xl:text-3xl"
+            class="text-text-emphasized absolute top-4 right-18 left-0 z-10 flex h-16 items-center justify-center lg:text-xl xl:text-3xl"
             :class="contentTextClass"
             aria-hidden="true"
         >

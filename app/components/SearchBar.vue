@@ -3,7 +3,7 @@
         <!-- Desktop / larger than lg -->
         <DialogTrigger
             aria-label="Open search dialog"
-            class="flex size-9 shrink-0 items-center justify-center rounded-md bg-surface-nav text-text-inverse transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring sm:mr-8 sm:ml-5 sm:h-3/4 sm:max-w-48 sm:flex-1 sm:justify-start sm:rounded-full sm:bg-surface-nav sm:pr-3"
+            class="flex size-9 shrink-0 items-center justify-center rounded-md bg-surface-page text-text-inverse transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring sm:mr-8 sm:ml-5 sm:h-3/4 sm:max-w-48 sm:flex-1 sm:justify-start sm:rounded-full sm:pr-3"
         >
             <div
                 class="flex h-full w-full items-center justify-center gap-2 p-1 sm:justify-start"
@@ -77,7 +77,7 @@
                                 <button
                                     type="button"
                                     aria-label="Close search dialog"
-                                    class="absolute top-1/2 right-2 flex size-8 -translate-y-1/2 items-center justify-center rounded-md text-text-brand transition-colors hover:bg-interactive-hover-bg hover:text-interactive-hover-text focus-visible:outline-2 focus-visible:outline-focus-ring"
+                                    class="absolute top-1/2 right-2 flex size-8 -translate-y-1/2 items-center justify-center rounded-md text-text-emphasized transition-colors hover:bg-interactive-hover-bg hover:text-interactive-hover-text focus-visible:outline-2 focus-visible:outline-focus-ring"
                                     @click="isSearchOpen = false"
                                 >
                                     <Icon

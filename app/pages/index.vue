@@ -6,7 +6,7 @@ definePageMeta({
 
 <template>
     <div>this is the home page</div>
-    <NuxtLink to="/description" class="text-text-brand underline"
+    <NuxtLink to="/description" class="text-text-emphasized underline"
         >Go to project description</NuxtLink
     >
 </template>

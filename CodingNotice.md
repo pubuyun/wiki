@@ -17,7 +17,7 @@ Text - text
 - `text-muted`: secondary copy, summaries, and descriptions.
 - `text-inverse`: text on dark surfaces.
 - `text-on-accent`: text placed on accent backgrounds.
-- `text-brand`: strongly emphasized text.
+- `text-emphasized`: strongly emphasized text.
 
 Accent - highlight colors
 
