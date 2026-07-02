@@ -156,13 +156,13 @@ function updateProgress() {
             >
                 <ColorblindModeToggle />
                 <DarkModeToggle />
-                <!-- <SearchBar /> -->
-                <ProgressBar
+                <SearchBar /> 
+               <!-- <ProgressBar 
   :progress="progress"
   class="sr-only transition-[transform,opacity] duration-300 ease-out will-change-transform"
   :class="progressVisibilityClass"
   :style="props.scrollOpacity ? opacityStyle : undefined"
-/>
+/> -->
             </div>
   
 </NavigationMenuRoot>
