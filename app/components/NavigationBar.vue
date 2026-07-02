@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { NavigationMenuList, NavigationMenuRoot } from "reka-ui";
 import BrandIcon from "./BrandIcon.vue";
-import ColorblindModeToggle from "./NavigationBar/ColorblindModeToggle.vue";
 import DarkModeToggle from "./NavigationBar/DarkModeToggle.vue";
 import NavItem from "./NavigationBar/NavItem.vue";
 import PhoneNavigationDialog from "./PhoneNavigationDialog.vue";
@@ -123,7 +122,7 @@ function updateProgress() {
         :delay-duration="100"
     >
         <nav
-            class="flex h-12 items-center justify-between gap-3 overflow-visible bg-[var(--navigation-bar-bg)] [--navigation-bar-bg:var(--surface-nav)] px-3 font-righteous transition-transform duration-300 ease-out will-change-transform sm:h-10 sm:gap-4 sm:px-4 lg:h-11 lg:gap-6 xl:h-14"
+            class="flex h-12 items-center justify-between gap-3 overflow-visible bg-[var(--navigation-bar-bg)] px-3 font-righteous transition-transform duration-300 ease-out will-change-transform [--navigation-bar-bg:var(--surface-nav)] sm:h-10 sm:gap-4 sm:px-4 lg:h-11 lg:gap-6 xl:h-14"
             :class="navVisibilityClass"
             :style="props.scrollOpacity ? opacityStyle : undefined"
         >
@@ -153,7 +152,6 @@ function updateProgress() {
             <div
                 class="flex h-full flex-1 flex-row items-center justify-end gap-2 lg:gap-4 xl:gap-6"
             >
-                <ColorblindModeToggle />
                 <DarkModeToggle />
                 <SearchBar />
             </div>

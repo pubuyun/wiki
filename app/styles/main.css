@@ -194,3 +194,52 @@ input[type="submit"],
     border: 2px solid currentColor;
     border-radius: 0.25rem;
 }
+
+.colorblind .colorblind-toggle {
+    background-color: #56b4e9;
+    border-color: #56b4e9;
+    color: #000000;
+}
+
+.colorblind .colorblind-toggle[data-state="on"] {
+    background-color: #7cc7f0;
+    border-color: #7cc7f0;
+    color: #000000;
+}
+
+.colorblind .colorblind-toggle:focus-visible {
+    outline-color: #56b4e9;
+}
+
+.colorblind.dark .colorblind-toggle {
+    background-color: #f0e442;
+    border-color: #f0e442;
+    color: #000000;
+}
+
+.colorblind.dark .colorblind-toggle[data-state="on"] {
+    background-color: #fff45c;
+    border-color: #fff45c;
+    color: #000000;
+}
+
+.colorblind.dark .colorblind-toggle:focus-visible {
+    outline-color: #f0e442;
+}
+
+.colorblind .colorblind-toggle {
+    position: relative;
+}
+
+.colorblind .colorblind-toggle:hover::after {
+    content: "";
+    position: absolute;
+    inset: -8px;
+    border: 3px solid #56b4e9;
+    border-radius: 0.5rem;
+    pointer-events: none;
+}
+
+.colorblind.dark .colorblind-toggle:hover::after {
+    border-color: #f0e442;
+}
