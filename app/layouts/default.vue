@@ -1,6 +1,6 @@
 <template>
     <div class="relative z-0 flex min-h-screen flex-col">
-        <header class="fixed top-0 z-100 flex w-full flex-col">
+      <header class="fixed top-0 z-100 flex w-full flex-col" aria-label="site header">
             <NavigationBar />
         </header>
         <slot />

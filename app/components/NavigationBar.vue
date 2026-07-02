@@ -122,7 +122,7 @@ function updateProgress() {
         aria-label="Primary navigation"
         :delay-duration="100"
     >
-        <nav
+        <div
             class="flex h-12 items-center justify-between gap-3 overflow-visible bg-[var(--navigation-bar-bg)] [--navigation-bar-bg:var(--surface-nav)] px-3 font-righteous transition-transform duration-300 ease-out will-change-transform sm:h-10 sm:gap-4 sm:px-4 lg:h-11 lg:gap-6 xl:h-14"
             :class="navVisibilityClass"
             :style="props.scrollOpacity ? opacityStyle : undefined"
