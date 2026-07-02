@@ -121,6 +121,7 @@ function updateProgress() {
         as-child
         aria-label="Primary navigation"
         :delay-duration="100"
+        >
     
         <div
             class="flex h-12 items-center justify-between gap-3 overflow-visible bg-[var(--navigation-bar-bg)] [--navigation-bar-bg:var(--surface-nav)] px-3 font-righteous transition-transform duration-300 ease-out will-change-transform sm:h-10 sm:gap-4 sm:px-4 lg:h-11 lg:gap-6 xl:h-14"
@@ -141,7 +142,7 @@ function updateProgress() {
                 >
             </NuxtLink>
             <NavigationMenuList
-                class="mr-8 hidden h-full w-1/2 list-none items-center justify-evenly gap-4 p-0 whitespace-nowrap sm:text-base lg:flex lg:text-lg xl:text-xl"
+               class="mr-8 hidden h-full w-1/2 list-none items-center justify-evenly gap-4 p-0 whitespace-nowrap"
             >
                 <NavItem
                     v-for="item in siteNavGroups"
@@ -157,12 +158,11 @@ function updateProgress() {
                 <DarkModeToggle />
                 <SearchBar />
             </div>
-        </nav>
-    </NavigationMenuRoot>
-    <ProgressBar
-        :progress="progress"
-        class="sr-only transition-[transform,opacity] duration-300 ease-out will-change-transform"
-        :class="progressVisibilityClass"
-        :style="props.scrollOpacity ? opacityStyle : undefined"
-    />
+  <ProgressBar
+  :progress="progress"
+  class="sr-only transition-[transform,opacity] duration-300 ease-out will-change-transform"
+  :class="progressVisibilityClass"
+  :style="props.scrollOpacity ? opacityStyle : undefined"
+/>
+</NavigationMenuRoot>
 </template>
