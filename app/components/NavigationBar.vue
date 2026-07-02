@@ -156,7 +156,7 @@ function updateProgress() {
             >
                 <ColorblindModeToggle />
                 <DarkModeToggle />
-                <SearchBar />
+                <!-- <SearchBar /> -->
                 <ProgressBar
   :progress="progress"
   class="sr-only transition-[transform,opacity] duration-300 ease-out will-change-transform"
