@@ -1,4 +1,4 @@
 ---
-title: Entrepreneurship
+title: Entrep
 description:
 ---

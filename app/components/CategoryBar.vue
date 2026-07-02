@@ -26,13 +26,13 @@
         >
             <NuxtLink
                 :to="titleTo"
-                class="inline-flex max-w-[min(100%,calc(20vw-4rem))] min-w-0 justify-center overflow-visible rounded-md px-2 py-1 text-center text-2xl leading-[1.1] font-semibold whitespace-nowrap transition-colors hover:bg-interactive-hover-bg hover:text-interactive-hover-text focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:outline-none xl:text-4xl"
+                class="inline-flex w-[min(100%,calc(20vw-4rem))] min-w-0 justify-center overflow-visible rounded-md px-2 py-1 text-center text-2xl leading-[1.1] font-semibold whitespace-nowrap transition-colors hover:bg-interactive-hover-bg hover:text-interactive-hover-text focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:outline-none xl:text-4xl"
                 :style="titleStyle"
                 :aria-label="`Go to ${title}`"
             >
                 <span
                     ref="titleText"
-                    class="inline-block origin-center scale-x-[var(--category-sidebar-title-scale,1)]"
+                    class="inline-block [font-size:calc(1em*var(--category-sidebar-title-font-scale,1))]"
                 >
                     {{ title }}
                 </span>
@@ -211,7 +211,7 @@ const contentRendered = ref(!collapsed.value);
 const contentVisible = ref(!collapsed.value);
 const contentScroll = ref<HTMLDivElement | null>(null);
 const titleText = ref<HTMLElement | null>(null);
-const titleScale = ref(1);
+const titleFontScale = ref(1);
 const expandedItems = ref<string[]>([]);
 const canScrollUp = ref(false);
 const canScrollDown = ref(false);
@@ -239,7 +239,7 @@ const contentClass = computed(() => [
 ]);
 
 const titleStyle = computed(() => ({
-    "--category-sidebar-title-scale": titleScale.value,
+    "--category-sidebar-title-font-scale": titleFontScale.value,
 }));
 
 function folderClass(node: ContentNavNode) {
@@ -251,16 +251,14 @@ function folderClass(node: ContentNavNode) {
 function folderTextClass(node: ContentNavNode) {
     return [
         "flex min-w-0 flex-1 items-center rounded-l-md px-3 py-2 text-left no-underline transition-[border-radius,color,background-color] duration-200 ease-out group-hover:bg-interactive-hover-bg group-hover:text-interactive-hover-text",
-        node.active &&
-            "bg-active-bg font-semibold text-active-text",
+        node.active && "bg-active-bg font-semibold text-active-text",
     ];
 }
 
 function folderToggleClass(node: ContentNavNode) {
     return [
         "group flex w-10 shrink-0 items-center justify-center rounded-r-md px-3 py-2 text-accent-secondary transition-[border-radius,color,background-color] duration-200 ease-out hover:bg-interactive-hover-bg hover:text-interactive-hover-text group-hover:bg-interactive-hover-bg group-hover:text-interactive-hover-text focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:outline-none",
-        node.active &&
-            "bg-active-bg font-semibold text-active-text",
+        node.active && "bg-active-bg font-semibold text-active-text",
     ];
 }
 
@@ -305,7 +303,7 @@ function updateTitleScale() {
     const container = el?.parentElement;
     if (!el || !container) return;
 
-    titleScale.value = 1;
+    titleFontScale.value = 1;
     requestAnimationFrame(() => {
         const styles = getComputedStyle(container);
         const availableWidth =
@@ -314,9 +312,9 @@ function updateTitleScale() {
             Number.parseFloat(styles.paddingRight);
         const textWidth = el.scrollWidth;
 
-        titleScale.value =
+        titleFontScale.value =
             availableWidth > 0 && textWidth > availableWidth
-                ? Math.max(0.72, availableWidth / textWidth)
+                ? Math.max(0.8, availableWidth / textWidth)
                 : 1;
     });
 }
@@ -393,7 +391,6 @@ watch(titleText, (newVal) => {
 
     if (newVal) {
         titleResizeObserver = new ResizeObserver(updateTitleScale);
-        titleResizeObserver.observe(newVal);
         titleResizeObserver.observe(newVal.parentElement!);
         updateTitleScale();
     }
