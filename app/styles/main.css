@@ -41,6 +41,55 @@ html {
     scroll-padding-top: 12rem;
 }
 
+html,
+body {
+    cursor: url("https://static.igem.wiki/teams/6133/wiki/general/cursor/default.ico"), auto;
+}
+
+[data-tooltip],
+abbr[title],
+.cursor-help {
+    cursor: url("https://static.igem.wiki/teams/6133/wiki/general/cursor/help.ico"), help;
+}
+
+input:not([type]),
+input[type="date"],
+input[type="datetime-local"],
+input[type="email"],
+input[type="month"],
+input[type="number"],
+input[type="password"],
+input[type="search"],
+input[type="tel"],
+input[type="text"],
+input[type="time"],
+input[type="url"],
+input[type="week"],
+textarea,
+[contenteditable="true"],
+.cursor-text {
+    cursor: url("https://static.igem.wiki/teams/6133/wiki/general/cursor/text.ico"), text;
+}
+
+a,
+button,
+[role="button"],
+summary,
+label,
+select,
+input[type="button"],
+input[type="checkbox"],
+input[type="color"],
+input[type="file"],
+input[type="image"],
+input[type="radio"],
+input[type="range"],
+input[type="reset"],
+input[type="submit"],
+.cursor-pointer {
+    cursor: url("https://static.igem.wiki/teams/6133/wiki/general/cursor/pointer.ico"), pointer;
+}
+
 .colorblind.dark {
     --surface-page: #000000;
     --surface-content: #222222;
