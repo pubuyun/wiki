@@ -20,6 +20,9 @@
         <NuxtLayout>
             <NuxtPage />
         </NuxtLayout>
+        <div class="fixed right-4 bottom-4 z-50">
+            <ColorblindModeToggle />
+        </div>
     </div>
 </template>
 
@@ -28,8 +31,10 @@
 </style>
 
 <script setup lang="ts">
-const THEME_KEY = "theme";
+import ColorblindModeToggle from "./components/NavigationBar/ColorblindModeToggle.vue";
 import { wikiTheme } from "./styles/echarts";
+
+const THEME_KEY = "theme";
 
 const colorblindMode = useState<boolean>("colorblind-mode", () => false);
 const darkMode = useState<boolean>("dark-mode", () => false);
