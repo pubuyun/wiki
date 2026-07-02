@@ -43,13 +43,13 @@ html {
 
 html,
 body {
-    cursor: url("https://static.igem.wiki/teams/6133/wiki/general/cursor/default.ico"), auto;
+    cursor: url("/cursor/default-32px.png") 9 4, auto;
 }
 
 [data-tooltip],
 abbr[title],
 .cursor-help {
-    cursor: url("https://static.igem.wiki/teams/6133/wiki/general/cursor/help.ico"), help;
+    cursor: url("/cursor/help-32px.png") 2 2, help;
 }
 
 input:not([type]),
@@ -68,7 +68,7 @@ input[type="week"],
 textarea,
 [contenteditable="true"],
 .cursor-text {
-    cursor: url("https://static.igem.wiki/teams/6133/wiki/general/cursor/text.ico"), text;
+    cursor: url("/cursor/text-32px.png") 16 16, text;
 }
 
 a,
@@ -87,7 +87,7 @@ input[type="range"],
 input[type="reset"],
 input[type="submit"],
 .cursor-pointer {
-    cursor: url("https://static.igem.wiki/teams/6133/wiki/general/cursor/pointer.ico"), pointer;
+    cursor: url("/cursor/pointer-32px.png") 12 2, pointer;
 }
 
 .colorblind.dark {
