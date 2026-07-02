@@ -154,15 +154,15 @@ function updateProgress() {
             <div
                 class="flex h-full flex-1 flex-row items-center justify-end gap-2 lg:gap-4 xl:gap-6"
             >
-                <ColorblindModeToggle />
+               <!-- <ColorblindModeToggle /> -->
                 <DarkModeToggle />
                 <SearchBar /> 
-               <!-- <ProgressBar 
+               <ProgressBar 
   :progress="progress"
   class="sr-only transition-[transform,opacity] duration-300 ease-out will-change-transform"
   :class="progressVisibilityClass"
   :style="props.scrollOpacity ? opacityStyle : undefined"
-/> -->
+/> 
             </div>
   
 </NavigationMenuRoot>
