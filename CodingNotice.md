@@ -1,39 +1,6 @@
 ### Color scheme
 
-Components should use the purpose of a color.
-
-Surface - backgrounds
-
-- `surface-page`: page or layout background.
-- `surface-content`: article cards, content blocks, and input interiors.
-- `surface-nav`: top navigation background.
-- `surface-sidebar`: sidebars and dark tool surfaces.
-- `surface-popover`: dialogs, dropdowns, and floating panels.
-- `surface-muted`: subtle sections, table heads, muted containers, and tracks.
-
-Text - text
-
-- `text-main`: default body text.
-- `text-muted`: secondary copy, summaries, and descriptions.
-- `text-inverse`: text on dark surfaces.
-- `text-on-accent`: text placed on accent backgrounds.
-- `text-emphasized`: strongly emphasized text.
-
-Accent - highlight colors
-
-- `accent-primary`: primary brand accent.
-- `accent-secondary`: secondary accent.
-- `accent-warm`: warm decorative accent.
-- `accent-active`: emphasis when no background change.
-
-Interaction - UI states
-
-- `interactive-hover-bg`: hover background.
-- `interactive-hover-text`: hover text color.
-- `active-bg`: active background.
-- `active-text`: text on `active-bg`.
-- `focus-ring`: keyboard focus outline.
-- `border-default`: default border color.
+https://m3.material.io/styles/color/roles
 
 Avoid theme-specific color patches `dark:hover:*`
 

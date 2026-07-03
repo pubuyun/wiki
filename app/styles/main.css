@@ -44,7 +44,7 @@ html {
 html,
 body {
     cursor:
-        url("https://static.igem.wiki/teams/6133/wiki/general/cursor/default.ico"),
+        url("/cursor/default-32px.png") 9 4,
         auto;
 }
 
@@ -52,7 +52,7 @@ body {
 abbr[title],
 .cursor-help {
     cursor:
-        url("https://static.igem.wiki/teams/6133/wiki/general/cursor/help.ico"),
+        url("/cursor/help-32px.png") 2 2,
         help;
 }
 
@@ -73,7 +73,7 @@ textarea,
 [contenteditable="true"],
 .cursor-text {
     cursor:
-        url("https://static.igem.wiki/teams/6133/wiki/general/cursor/text.ico"),
+        url("/cursor/text-32px.png") 16 16,
         text;
 }
 
@@ -94,7 +94,7 @@ input[type="reset"],
 input[type="submit"],
 .cursor-pointer {
     cursor:
-        url("https://static.igem.wiki/teams/6133/wiki/general/cursor/pointer.ico"),
+        url("/cursor/pointer-32px.png") 12 2,
         pointer;
 }
 
