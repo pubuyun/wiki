@@ -18,7 +18,7 @@ const hasRightSidebar = computed(
         <header class="fixed top-0 z-100 flex w-full flex-col">
             <NavigationBar />
         </header>
-        <div
+        <main
             class="flex h-full flex-1 flex-row gap-8 bg-surface text-on-surface"
         >
             <ClientOnly>
@@ -42,7 +42,7 @@ const hasRightSidebar = computed(
                 </aside>
             </ClientOnly>
             <slot />
-        </div>
+        </main>
         <BackToTop />
         <Footer />
         <ColorblindModeToggle />
