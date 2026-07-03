@@ -16,7 +16,7 @@ const hasRightSidebar = computed(
         <header class="fixed top-0 z-100 flex w-full flex-col">
             <NavigationBar scroll-opacity />
         </header>
-        <div class="flex flex-1 flex-col">
+        <main class="flex flex-1 flex-col">
             <ClientOnly>
                 <Banner
                     v-if="page"
@@ -37,9 +37,11 @@ const hasRightSidebar = computed(
                         />
                     </aside>
                 </ClientOnly>
-                <slot />
+                <div class="flex-1">
+                    <slot />
+                </div>
             </div>
-        </div>
+        </main>
         <Footer />
         <ColorblindModeToggle />
         <BackToTop />
