@@ -185,7 +185,7 @@ function pageTitle(item) {
                 />
                 <ContentRenderer
                     :value="sectionValue(section.children)"
-                    class="content paragraph overflow-wrap-anywhere relative min-w-0 rounded-2xl bg-secondary-container p-4 text-on-secondary-container sm:rounded-3xl sm:p-5 lg:rounded-4xl lg:p-6"
+                    class="content paragraph overflow-wrap-anywhere relative min-w-0 rounded-2xl bg-secondary p-4 text-on-secondary sm:rounded-3xl sm:p-5 lg:rounded-4xl lg:p-6"
                 />
             </div>
         </section>
@@ -198,7 +198,7 @@ function pageTitle(item) {
                 v-for="doc in currentFolderCards"
                 :key="doc.path"
                 :to="doc.path"
-                class="group flex min-h-36 min-w-0 flex-col gap-3 rounded-2xl border-2 border-surface-variant bg-secondary-container p-4 text-on-secondary-container no-underline transition hover:-translate-y-px hover:border-secondary hover:text-on-secondary-container focus-visible:-translate-y-px focus-visible:border-outline focus-visible:text-on-secondary-container focus-visible:outline-none sm:rounded-3xl sm:p-5 lg:rounded-4xl lg:p-6"
+                class="group flex min-h-36 min-w-0 flex-col gap-3 rounded-2xl border-2 border-surface-variant bg-secondary p-4 text-on-secondary no-underline transition hover:-translate-y-px hover:border-secondary hover:text-on-secondary focus-visible:-translate-y-px focus-visible:border-outline focus-visible:text-on-secondary focus-visible:outline-none sm:rounded-3xl sm:p-5 lg:rounded-4xl lg:p-6"
             >
                 <h2
                     class="font-belanosima text-2xl leading-tight wrap-anywhere"
@@ -207,7 +207,7 @@ function pageTitle(item) {
                 </h2>
                 <p
                     v-if="pageDescription(doc)"
-                    class="font-main text-base leading-relaxed text-on-secondary-container/85 transition group-hover:text-on-secondary-container/85"
+                    class="font-main text-base leading-relaxed text-on-secondary/85 transition group-hover:text-on-secondary/85"
                 >
                     {{ pageDescription(doc) }}
                 </p>
@@ -220,7 +220,7 @@ function pageTitle(item) {
         >
             <NuxtLink
                 v-if="previousPage"
-                class="my-1 flex min-w-0 flex-col gap-1 rounded-2xl border-2 border-surface-variant bg-secondary-container p-4 text-on-secondary-container no-underline transition hover:-translate-y-px hover:border-secondary hover:text-on-secondary-container focus-visible:-translate-y-px focus-visible:border-outline focus-visible:text-on-secondary-container focus-visible:outline-none"
+                class="my-1 flex min-w-0 flex-col gap-1 rounded-2xl border-2 border-surface-variant bg-secondary p-4 text-on-secondary no-underline transition hover:-translate-y-px hover:border-secondary hover:text-on-secondary focus-visible:-translate-y-px focus-visible:border-outline focus-visible:text-on-secondary focus-visible:outline-none"
                 :to="previousPage.path"
             >
                 <div class="font-main text-sm opacity-70">Previous</div>
@@ -233,7 +233,7 @@ function pageTitle(item) {
             <span v-else aria-hidden="true" />
             <NuxtLink
                 v-if="nextPage"
-                class="my-1 flex min-w-0 flex-col items-end gap-1 rounded-2xl border-2 border-surface-variant bg-secondary-container p-4 text-right text-on-secondary-container no-underline transition hover:-translate-y-px hover:border-secondary hover:text-on-secondary-container focus-visible:-translate-y-px focus-visible:border-outline focus-visible:text-on-secondary-container focus-visible:outline-none"
+                class="my-1 flex min-w-0 flex-col items-end gap-1 rounded-2xl border-2 border-surface-variant bg-secondary p-4 text-right text-on-secondary no-underline transition hover:-translate-y-px hover:border-secondary hover:text-on-secondary focus-visible:-translate-y-px focus-visible:border-outline focus-visible:text-on-secondary focus-visible:outline-none"
                 :to="nextPage.path"
             >
                 <div class="font-main text-sm opacity-70">Next</div>

@@ -8,7 +8,7 @@ const colorblindMode = useState<boolean>("colorblind-mode", () => false);
 <template>
     <Toggle
         v-model="colorblindMode"
-        class="fixed right-4 bottom-4 z-50 flex size-9 shrink-0 items-center justify-center rounded-md border-2 border-outline-variant bg-surface-container-highest text-on-surface shadow-lg transition-colors hover:bg-secondary hover:text-on-secondary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-outline data-[state=on]:border-primary data-[state=on]:bg-primary-container data-[state=on]:text-on-primary-container"
+        class="fixed right-4 bottom-4 z-50 flex size-9 shrink-0 items-center justify-center rounded-md border-2 border-outline-variant bg-surface-container-highest text-on-surface shadow-lg transition-colors hover:bg-secondary hover:text-on-secondary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-outline data-[state=on]:border-primary data-[state=on]:bg-primary data-[state=on]:text-on-primary"
         :aria-label="`${colorblindMode ? 'Disable' : 'Enable'} colorblind mode`"
         :title="`${colorblindMode ? 'Disable' : 'Enable'} colorblind mode`"
     >

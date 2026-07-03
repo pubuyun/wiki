@@ -1,11 +1,11 @@
 <template>
     <div
-        class="relative flex flex-1 flex-col gap-4 p-4 text-on-secondary-container lg:flex-row"
+        class="relative flex flex-1 flex-col gap-4 p-4 text-on-secondary lg:flex-row"
     >
         <aside class="flex w-full flex-col gap-4 lg:w-1/3">
             <SelectRoot v-model="selectedBinderKey">
                 <SelectTrigger
-                    class="inline-flex h-10 w-full items-center justify-between gap-2 rounded border border-surface-tint bg-secondary-container px-3 text-left text-sm text-on-secondary-container outline-none hover:bg-primary hover:text-on-primary focus:ring-2 focus:ring-outline"
+                    class="inline-flex h-10 w-full items-center justify-between gap-2 rounded border border-surface-tint bg-secondary px-3 text-left text-sm text-on-secondary outline-none hover:bg-primary hover:text-on-primary focus:ring-2 focus:ring-outline"
                     aria-label="Select binder"
                 >
                     <SelectValue placeholder="Select binder" />
@@ -16,7 +16,7 @@
 
                 <SelectPortal>
                     <SelectContent
-                        class="z-100 max-h-80 overflow-hidden rounded border border-surface-tint bg-secondary-container text-on-secondary-container shadow-lg"
+                        class="z-100 max-h-80 overflow-hidden rounded border border-surface-tint bg-secondary text-on-secondary shadow-lg"
                         position="popper"
                         :side-offset="4"
                     >
@@ -42,7 +42,7 @@
             </SelectRoot>
 
             <pre
-                class="min-h-0 flex-1 rounded border border-surface-tint bg-secondary-container p-4 text-sm leading-6 wrap-break-word whitespace-pre-wrap text-on-secondary-container"
+                class="min-h-0 flex-1 rounded border border-surface-tint bg-secondary p-4 text-sm leading-6 wrap-break-word whitespace-pre-wrap text-on-secondary"
                 >{{ selectedBinderText }}</pre
             >
         </aside>

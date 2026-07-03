@@ -252,7 +252,7 @@ function folderTextClass(node: ContentNavNode) {
     return [
         "flex min-w-0 flex-1 items-center rounded-l-md px-3 py-2 text-left no-underline transition-[border-radius,color,background-color] duration-200 ease-out group-hover:bg-secondary group-hover:text-on-secondary",
         node.active &&
-            "bg-primary-container font-semibold text-on-primary-container",
+            "bg-primary font-semibold text-on-primary",
     ];
 }
 
@@ -260,7 +260,7 @@ function folderToggleClass(node: ContentNavNode) {
     return [
         "group flex w-10 shrink-0 items-center justify-center rounded-r-md px-3 py-2 text-on-surface transition-[border-radius,color,background-color] duration-200 ease-out hover:bg-secondary hover:text-on-secondary group-hover:bg-secondary group-hover:text-on-secondary focus-visible:ring-2 focus-visible:ring-outline focus-visible:outline-none",
         node.active &&
-            "bg-primary-container font-semibold text-on-primary-container",
+            "bg-primary font-semibold text-on-primary",
     ];
 }
 
@@ -278,7 +278,7 @@ function linkTextClass(node: ContentNavNode, depth: 0 | 1) {
         node.active &&
             (depth === 1
                 ? "font-semibold text-primary"
-                : "bg-primary-container font-semibold text-on-primary-container"),
+                : "bg-primary font-semibold text-on-primary"),
     ];
 }
 

@@ -11,14 +11,9 @@
 @theme inline {
     --color-primary: var(--primary);
     --color-on-primary: var(--on-primary);
-    --color-primary-container: var(--primary-container);
-    --color-on-primary-container: var(--on-primary-container);
 
     --color-secondary: var(--secondary);
     --color-on-secondary: var(--on-secondary);
-    --color-secondary-container: var(--secondary-container);
-    --color-on-secondary-container: var(--on-secondary-container);
-    --color-on-secondary-container-muted: var(--on-secondary-container-muted);
 
     --color-surface: var(--surface);
     --color-on-surface: var(--on-surface);
@@ -102,14 +97,9 @@ input[type="submit"],
 .colorblind.dark {
     --primary: #e69f00;
     --on-primary: #000000;
-    --primary-container: #e69f00;
-    --on-primary-container: #000000;
 
     --secondary: #f0e442;
     --on-secondary: #000000;
-    --secondary-container: #0072b2;
-    --on-secondary-container: #f0e442;
-    --on-secondary-container-muted: #f0e442cc;
 
     --surface: #000000;
     --on-surface: #f0e442;
@@ -126,14 +116,9 @@ input[type="submit"],
 .colorblind {
     --primary: #e69f00;
     --on-primary: #000000;
-    --primary-container: #0072b2;
-    --on-primary-container: #f0e442;
 
     --secondary: #f0e442;
     --on-secondary: #000000;
-    --secondary-container: #f0e442;
-    --on-secondary-container: #000000;
-    --on-secondary-container-muted: #000000cc;
 
     --surface: #0072b2;
     --on-surface: #f0e442;
@@ -150,14 +135,9 @@ input[type="submit"],
 /* .dark {
     --primary: #d79612;
     --on-primary: #03061a;
-    --primary-container: #d79612;
-    --on-primary-container: #03061a;
 
     --secondary: #fff5c2;
     --on-secondary: #03061a;
-    --secondary-container: #0b1438;
-    --on-secondary-container: #fff5c2;
-    --on-secondary-container-muted: #fff5c2cc;
 
     --surface: #050b2a;
     --on-surface: #fff5c2;
@@ -175,13 +155,9 @@ input[type="submit"],
 .dark {
     --primary: #67e9df;
     --on-primary: #1c0770;
-    --primary-container: #67e9df;
-    --on-primary-container: #1c0770;
 
     --secondary: #eeffec;
     --on-secondary: #1c0770;
-    --secondary-container: #eeffec;
-    --on-secondary-container: #1c0770;
 
     --surface: #1c0770;
     --on-surface: #fff5c2;
@@ -198,14 +174,9 @@ input[type="submit"],
 :root {
     --primary: #fab826;
     --on-primary: #103098;
-    --primary-container: #fab826;
-    --on-primary-container: #103098;
 
     --secondary: #fff5c2;
     --on-secondary: #103098;
-    --secondary-container: #fff5c2;
-    --on-secondary-container: #103098;
-    --on-secondary-container-muted: #103098cc;
 
     --surface: #103098;
     --on-surface: #fff5c2;

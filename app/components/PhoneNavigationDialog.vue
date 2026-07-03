@@ -142,7 +142,7 @@ function navigateFolder(node: { path?: string }) {
                                                 class="group flex w-full items-center justify-between gap-3 px-3 py-2 text-left font-momo-trust-display focus-visible:outline-2 focus-visible:outline-outline"
                                                 :class="
                                                     node.active &&
-                                                    'bg-primary-container text-on-primary-container'
+                                                    'bg-primary text-on-primary'
                                                 "
                                                 @click="navigateFolder(node)"
                                             >
@@ -168,7 +168,7 @@ function navigateFolder(node: { path?: string }) {
                                                         class="block rounded-md px-3 py-2 font-belanosima text-on-surface hover:bg-secondary hover:text-on-secondary"
                                                         :class="
                                                             child.active &&
-                                                            'bg-primary-container text-on-primary-container'
+                                                            'bg-primary text-on-primary'
                                                         "
                                                         @click="closeDialog"
                                                     >
@@ -185,7 +185,7 @@ function navigateFolder(node: { path?: string }) {
                                         class="block rounded-md px-3 py-2 font-momo-trust-display text-on-surface hover:bg-secondary hover:text-on-secondary"
                                         :class="
                                             node.active &&
-                                            'bg-primary-container text-on-primary-container'
+                                            'bg-primary text-on-primary'
                                         "
                                         @click="closeDialog"
                                     >
@@ -232,7 +232,7 @@ function navigateFolder(node: { path?: string }) {
                                                 class="block rounded-md px-3 py-2 font-belanosima text-on-surface hover:bg-secondary hover:text-on-secondary"
                                                 :class="
                                                     route.path === link.to &&
-                                                    'bg-primary-container text-on-primary-container'
+                                                    'bg-primary text-on-primary'
                                                 "
                                                 @click="closeDialog"
                                             >

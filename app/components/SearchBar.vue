@@ -9,7 +9,7 @@
                 class="flex h-full w-full items-center justify-center gap-2 p-1 sm:justify-start"
             >
                 <input
-                    class="hidden h-full min-w-0 flex-1 rounded-full bg-secondary-container px-3 text-on-secondary-container placeholder:text-on-secondary-container/60 sm:block"
+                    class="hidden h-full min-w-0 flex-1 rounded-full bg-secondary px-3 text-on-secondary placeholder:text-on-secondary/60 sm:block"
                     readonly
                     placeholder="Ctrl + K"
                     tabindex="-1"
@@ -72,7 +72,7 @@
                                     autocomplete="off"
                                     placeholder="Search..."
                                     aria-describedby="search-result-count"
-                                    class="h-12 w-full rounded border border-surface-variant bg-secondary-container py-2 pr-12 pl-4 text-on-secondary-container outline-none placeholder:text-on-secondary-container/60 focus:border-secondary sm:h-10"
+                                    class="h-12 w-full rounded border border-surface-variant bg-secondary py-2 pr-12 pl-4 text-on-secondary outline-none placeholder:text-on-secondary/60 focus:border-secondary sm:h-10"
                                 />
                                 <button
                                     type="button"
