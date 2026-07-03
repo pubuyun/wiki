@@ -2,11 +2,11 @@
     <Transition name="fade">
         <div
             v-if="showLoading && isLoadingImageLoaded"
-            class="fixed inset-0 z-9999 flex items-center justify-center bg-surface-page backdrop-blur-sm"
+            class="fixed inset-0 z-9999 flex items-center justify-center bg-surface backdrop-blur-sm"
         >
             <div class="flex flex-col items-center">
                 <p
-                    class="mb-6 font-righteous text-4xl font-bold tracking-widest text-text-inverse"
+                    class="mb-6 font-righteous text-4xl font-bold tracking-widest text-on-surface"
                 >
                     Loading...
                 </p>
@@ -49,7 +49,11 @@ const runWhenIdle = (callback) => {
 };
 
 const categoryFromPath = (path) => {
-    const [category] = path.split("?")[0].split("#")[0].split("/").filter(Boolean);
+    const [category] = path
+        .split("?")[0]
+        .split("#")[0]
+        .split("/")
+        .filter(Boolean);
 
     return category ?? "";
 };
@@ -85,10 +89,7 @@ nuxtApp.hook("page:loading:start", () => {
         return;
     }
 
-    if (
-        canShowRouteLoading.value &&
-        isLoadingImageLoaded.value
-    ) {
+    if (canShowRouteLoading.value && isLoadingImageLoaded.value) {
         showLoading.value = true;
     }
 });

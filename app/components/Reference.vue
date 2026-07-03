@@ -2,7 +2,7 @@
     <a
         :href="`#fnref-${id}`"
         :id="`ref-${id}`"
-        class="hover:text-text-emphasized mx-0.5 scroll-mt-24 rounded-sm align-super text-xs font-bold text-accent-primary no-underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring"
+        class="mx-0.5 scroll-mt-24 rounded-sm align-super text-xs font-bold text-surface-tint no-underline hover:text-on-secondary-container focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-outline"
         :aria-label="`Go to reference ${label || id}`"
         @click="scrollToHash($event, `fnref-${id}`)"
     >

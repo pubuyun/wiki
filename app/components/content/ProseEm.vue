@@ -5,7 +5,7 @@
                 <button
                     ref="triggerEl"
                     type="button"
-                    class="font-inherit inline cursor-help border-0 bg-transparent p-0 text-inherit not-italic underline decoration-accent-warm decoration-2 underline-offset-4 transition-colors hover:text-accent-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-warm"
+                    class="font-inherit inline cursor-help border-0 bg-transparent p-0 text-inherit not-italic underline decoration-primary decoration-2 underline-offset-4 transition-colors hover:text-surface-tint focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
                     @click="toggleTooltipForTouch"
                 >
                     <slot />
@@ -15,18 +15,18 @@
                 <TooltipContent
                     ref="contentEl"
                     :side-offset="6"
-                    class="z-50 max-w-xs rounded-md bg-surface-sidebar px-3 py-2 text-sm leading-relaxed text-text-inverse shadow-lg"
+                    class="z-50 max-w-xs rounded-md bg-surface-container-high px-3 py-2 text-sm leading-relaxed text-on-surface shadow-lg"
                 >
                     <p>{{ matchedTerm.detail }}</p>
                     <NuxtLink
                         v-if="matchedTerm.link"
                         :to="matchedTerm.link"
-                        class="mt-2 inline-block font-semibold text-accent-warm underline decoration-accent-warm/60 decoration-2 underline-offset-4"
+                        class="mt-2 inline-block font-semibold text-primary underline decoration-primary/60 decoration-2 underline-offset-4"
                         target="_blank"
                     >
                         Learn more
                     </NuxtLink>
-                    <TooltipArrow class="fill-surface-sidebar" />
+                    <TooltipArrow class="fill-surface-container-high" />
                 </TooltipContent>
             </TooltipPortal>
         </TooltipRoot>

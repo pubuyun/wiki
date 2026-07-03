@@ -18,7 +18,9 @@ const hasRightSidebar = computed(
         <header class="fixed top-0 z-100 flex w-full flex-col">
             <NavigationBar />
         </header>
-        <div class="flex h-full flex-1 flex-row gap-8 bg-surface-page text-text-inverse">
+        <div
+            class="flex h-full flex-1 flex-row gap-8 bg-surface text-on-surface"
+        >
             <ClientOnly>
                 <aside v-if="page" class="contents">
                     <CategoryBar

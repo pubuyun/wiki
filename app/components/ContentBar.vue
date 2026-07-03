@@ -1,6 +1,6 @@
 <template>
     <nav
-        class="sticky top-20 mb-6 w-52 shrink-0 flex-col self-start pr-6 font-belanosima text-base text-text-inverse xl:w-60 "
+        class="sticky top-20 mb-6 w-52 shrink-0 flex-col self-start pr-6 font-belanosima text-base text-on-surface xl:w-60"
         aria-labelledby="toc-title"
     >
         <h2 id="toc-title" class="mb-4 font-momo-trust-display text-base">
@@ -8,16 +8,16 @@
         </h2>
 
         <div
-            class="relative max-h-[calc(100vh-13rem)] scrollbar-thin scrollbar-thumb-accent-primary scrollbar-track-surface-page overflow-auto"
+            class="relative max-h-[calc(100vh-13rem)] scrollbar-thin scrollbar-thumb-surface-tint scrollbar-track-surface overflow-auto"
         >
             <div
                 class="pointer-events-none absolute top-0 left-0 w-3"
                 :style="indicatorStyle"
                 aria-hidden="true"
             >
-                <div class="absolute inset-0 bg-accent-primary" />
+                <div class="absolute inset-0 bg-surface-tint" />
                 <div
-                    class="absolute inset-x-0 top-0 bg-accent-warm transition-transform duration-200 ease-out"
+                    class="absolute inset-x-0 top-0 bg-primary transition-transform duration-200 ease-out"
                     :style="activeIndicatorStyle"
                 />
             </div>
@@ -131,11 +131,9 @@ const activeIndicatorStyle = computed(() => ({
 
 function linkClass(link: ToCLink) {
     return [
-        "block h-7 truncate py-1.5 pr-3 leading-4 transition-colors duration-200 ease-out hover:text-accent-warm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring",
+        "block h-7 truncate py-1.5 pr-3 leading-4 transition-colors duration-200 ease-out hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-outline",
         link.depth === 3 ? "pl-9 text-sm" : "pl-4 text-base",
-        activeId.value === link.id
-            ? "text-accent-warm"
-            : "text-text-inverse ",
+        activeId.value === link.id ? "text-primary" : "text-on-surface ",
     ];
 }
 

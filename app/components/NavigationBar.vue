@@ -122,7 +122,7 @@ function updateProgress() {
         :delay-duration="100"
     >
         <nav
-            class="flex h-12 items-center justify-between gap-3 overflow-visible bg-[var(--navigation-bar-bg)] px-3 font-righteous transition-transform duration-300 ease-out will-change-transform [--navigation-bar-bg:var(--surface-nav)] sm:h-10 sm:gap-4 sm:px-4 lg:h-11 lg:gap-6 xl:h-14"
+            class="flex h-12 items-center justify-between gap-3 overflow-visible bg-[var(--navigation-bar-bg)] px-3 font-righteous transition-transform duration-300 ease-out will-change-transform [--navigation-bar-bg:var(--surface-bright)] sm:h-10 sm:gap-4 sm:px-4 lg:h-11 lg:gap-6 xl:h-14"
             :class="navVisibilityClass"
             :style="props.scrollOpacity ? opacityStyle : undefined"
         >
@@ -134,7 +134,7 @@ function updateProgress() {
             >
                 <BrandIcon />
                 <span
-                    class="text-lg text-accent-warm sm:text-base lg:text-2xl xl:text-3xl"
+                    class="text-lg text-primary sm:text-base lg:text-2xl xl:text-3xl"
                     aria-hidden="true"
                     >Expelliodor</span
                 >

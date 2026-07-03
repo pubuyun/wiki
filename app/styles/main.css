@@ -9,27 +9,28 @@
 @custom-variant colorblind (&:where(.colorblind, .colorblind *));
 
 @theme inline {
-    --color-surface-page: var(--surface-page);
-    --color-surface-content: var(--surface-content);
-    --color-surface-nav: var(--surface-nav);
-    --color-surface-sidebar: var(--surface-sidebar);
-    --color-surface-popover: var(--surface-popover);
-    --color-surface-muted: var(--surface-muted);
-    --color-text-main: var(--text-main);
-    --color-text-muted: var(--text-muted);
-    --color-text-inverse: var(--text-inverse);
-    --color-text-on-accent: var(--text-on-accent);
-    --color-text-emphasized: var(--text-emphasized);
-    --color-accent-primary: var(--accent-primary);
-    --color-accent-secondary: var(--accent-secondary);
-    --color-accent-warm: var(--accent-warm);
-    --color-accent-active: var(--accent-active);
-    --color-interactive-hover-bg: var(--interactive-hover-bg);
-    --color-interactive-hover-text: var(--interactive-hover-text);
-    --color-active-bg: var(--active-bg);
-    --color-active-text: var(--active-text);
-    --color-focus-ring: var(--focus-ring);
-    --color-border-default: var(--border-default);
+    --color-primary: var(--primary);
+    --color-on-primary: var(--on-primary);
+    --color-primary-container: var(--primary-container);
+    --color-on-primary-container: var(--on-primary-container);
+
+    --color-secondary: var(--secondary);
+    --color-on-secondary: var(--on-secondary);
+    --color-secondary-container: var(--secondary-container);
+    --color-on-secondary-container: var(--on-secondary-container);
+    --color-on-secondary-container-muted: var(--on-secondary-container-muted);
+
+    --color-surface: var(--surface);
+    --color-on-surface: var(--on-surface);
+    --color-surface-bright: var(--surface-bright);
+    --color-surface-tint: var(--surface-tint);
+    --color-surface-container-high: var(--surface-container-high);
+    --color-surface-container-highest: var(--surface-container-highest);
+    --color-surface-variant: var(--surface-variant);
+
+    --color-outline: var(--outline);
+    --color-outline-variant: var(--outline-variant);
+
     --font-momo-trust-display: "Momo Trust Display", sans-serif;
     --font-righteous: "Righteous", sans-serif;
     --font-belanosima: "Belanosima", serif;
@@ -99,99 +100,99 @@ input[type="submit"],
 }
 
 .colorblind.dark {
-    --surface-page: #000000;
-    --surface-content: #0072b2;
-    --surface-nav: #000000;
-    --surface-sidebar: #0072b2;
-    --surface-popover: #0072b2;
-    --surface-muted: #009e73;
-    --text-main: #f0e442;
-    --text-muted: #f0e442cc;
-    --text-inverse: #f0e442;
-    --text-on-accent: #000000;
-    --text-emphasized: #f0e442;
-    --accent-primary: #56b4e9;
-    --accent-secondary: #f0e442;
-    --accent-warm: #e69f00;
-    --accent-active: #e69f00;
-    --interactive-hover-bg: #f0e442;
-    --interactive-hover-text: #000000;
-    --active-bg: #e69f00;
-    --active-text: #000000;
-    --focus-ring: #e69f00;
-    --border-default: #f0e44299;
+    --primary: #e69f00;
+    --on-primary: #000000;
+    --primary-container: #e69f00;
+    --on-primary-container: #000000;
+
+    --secondary: #f0e442;
+    --on-secondary: #000000;
+    --secondary-container: #0072b2;
+    --on-secondary-container: #f0e442;
+    --on-secondary-container-muted: #f0e442cc;
+
+    --surface: #000000;
+    --on-surface: #f0e442;
+    --surface-bright: #000000;
+    --surface-tint: #56b4e9;
+    --surface-container-high: #0072b2;
+    --surface-container-highest: #0072b2;
+    --surface-variant: #009e73;
+
+    --outline: #e69f00;
+    --outline-variant: #f0e44299;
 }
 
 .colorblind {
-    --surface-page: #0072b2;
-    --surface-content: #f0e442;
-    --surface-nav: #0072b2;
-    --surface-sidebar: #56b4e9;
-    --surface-popover: #56b4e9;
-    --surface-muted: #56b4e9;
-    --text-main: #000000;
-    --text-muted: #000000cc;
-    --text-inverse: #f0e442;
-    --text-on-accent: #000000;
-    --text-emphasized: #000000;
-    --accent-primary: #0072b2;
-    --accent-secondary: #f0e442;
-    --accent-warm: #e69f00;
-    --accent-active: #e69f00;
-    --interactive-hover-bg: #f0e442;
-    --interactive-hover-text: #000000;
-    --active-bg: #0072b2;
-    --active-text: #f0e442;
-    --focus-ring: #0072b2;
-    --border-default: #0072b299;
+    --primary: #e69f00;
+    --on-primary: #000000;
+    --primary-container: #0072b2;
+    --on-primary-container: #f0e442;
+
+    --secondary: #f0e442;
+    --on-secondary: #000000;
+    --secondary-container: #f0e442;
+    --on-secondary-container: #000000;
+    --on-secondary-container-muted: #000000cc;
+
+    --surface: #0072b2;
+    --on-surface: #f0e442;
+    --surface-bright: #0072b2;
+    --surface-tint: #0072b2;
+    --surface-container-high: #56b4e9;
+    --surface-container-highest: #56b4e9;
+    --surface-variant: #56b4e9;
+
+    --outline: #0072b2;
+    --outline-variant: #0072b299;
 }
 
 .dark {
-    --surface-page: #050b2a;
-    --surface-content: #0b1438;
-    --surface-nav: #071a54;
-    --surface-sidebar: #071a54;
-    --surface-popover: #0b1438;
-    --surface-muted: #10245f;
-    --text-main: #fff5c2;
-    --text-muted: #fff5c2cc;
-    --text-inverse: #fff5c2;
-    --text-on-accent: #03061a;
-    --text-emphasized: #fff5c2;
-    --accent-primary: #5aa6ff;
-    --accent-secondary: #fff5c2;
-    --accent-warm: #d79612;
-    --accent-active: #d79612;
-    --interactive-hover-bg: #fff5c2;
-    --interactive-hover-text: #03061a;
-    --active-bg: #d79612;
-    --active-text: #03061a;
-    --focus-ring: #d79612;
-    --border-default: #fff5c266;
+    --primary: #d79612;
+    --on-primary: #03061a;
+    --primary-container: #d79612;
+    --on-primary-container: #03061a;
+
+    --secondary: #fff5c2;
+    --on-secondary: #03061a;
+    --secondary-container: #0b1438;
+    --on-secondary-container: #fff5c2;
+    --on-secondary-container-muted: #fff5c2cc;
+
+    --surface: #050b2a;
+    --on-surface: #fff5c2;
+    --surface-bright: #071a54;
+    --surface-tint: #5aa6ff;
+    --surface-container-high: #071a54;
+    --surface-container-highest: #0b1438;
+    --surface-variant: #10245f;
+
+    --outline: #d79612;
+    --outline-variant: #fff5c266;
 }
 
 :root {
-    --surface-page: #103098;
-    --surface-content: #fff5c2;
-    --surface-nav: #007dff;
-    --surface-sidebar: #0955d5;
-    --surface-popover: #00baf2;
-    --surface-muted: #00baf2;
-    --text-main: #103098;
-    --text-muted: #103098cc;
-    --text-inverse: #fff5c2;
-    --text-on-accent: #103098;
-    --text-emphasized: #103098;
-    --accent-primary: #007dff;
-    --accent-secondary: #fff5c2;
-    --accent-warm: #fab826;
-    --accent-active: #fab826;
-    --interactive-hover-bg: #fff5c2;
-    --interactive-hover-text: #103098;
-    --active-bg: #007dff;
-    --active-text: #fff5c2;
-    --focus-ring: #103098;
-    --border-default: #007dff99;
+    --primary: #fab826;
+    --on-primary: #103098;
+    --primary-container: #007dff;
+    --on-primary-container: #fff5c2;
+
+    --secondary: #fff5c2;
+    --on-secondary: #103098;
+    --secondary-container: #fff5c2;
+    --on-secondary-container: #103098;
+    --on-secondary-container-muted: #103098cc;
+
+    --surface: #103098;
+    --on-surface: #fff5c2;
+    --surface-bright: #007dff;
+    --surface-tint: #007dff;
+    --surface-container-high: #0955d5;
+    --surface-container-highest: #00baf2;
+    --surface-variant: #00baf2;
+
+    --outline: #103098;
+    --outline-variant: #007dff99;
 }
 
 .colorblind button:not(.nav-menu-trigger):hover {

@@ -7,7 +7,7 @@
         <h2 class="sr-only" id="toc-title">Table of contents</h2>
         <div
             v-if="contentTextRendered"
-            class="text-text-emphasized absolute top-4 right-18 left-0 z-10 flex h-16 items-center justify-center lg:text-xl xl:text-3xl"
+            class="absolute top-4 right-18 left-0 z-10 flex h-16 items-center justify-center text-on-surface lg:text-xl xl:text-3xl"
             :class="contentTextClass"
             aria-hidden="true"
         >
@@ -58,7 +58,7 @@
                     <AccordionItem
                         v-if="child.children?.length"
                         :value="child.id"
-                        class="overflow-hidden text-text-inverse"
+                        class="overflow-hidden text-on-surface"
                     >
                         <AccordionHeader class="flex h-min gap-0">
                             <AccordionTrigger :class="h2Class()">
@@ -122,13 +122,13 @@
         <!-- top gradient -->
         <div
             v-if="contentTextVisible && canScrollUp"
-            class="pointer-events-none absolute top-20 z-10 h-8 w-full bg-linear-to-b from-accent-primary to-transparent"
+            class="pointer-events-none absolute top-20 z-10 h-8 w-full bg-linear-to-b from-surface-tint to-transparent"
         />
 
         <!-- bottom gradient -->
         <div
             v-if="contentTextVisible && canScrollDown"
-            class="pointer-events-none absolute bottom-8 z-10 h-8 w-full bg-linear-to-t from-accent-primary to-transparent"
+            class="pointer-events-none absolute bottom-8 z-10 h-8 w-full bg-linear-to-t from-surface-tint to-transparent"
         />
     </nav>
 </template>
@@ -142,17 +142,18 @@ import {
 } from "reka-ui";
 
 const h2Style =
-    "group mx-2 my-0.5 flex w-[calc(100%-1rem)] items-stretch focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:outline-none md:text-lg lg:text-xl xl:text-2xl";
+    "group mx-2 my-0.5 flex w-[calc(100%-1rem)] items-stretch focus-visible:ring-2 focus-visible:ring-outline focus-visible:outline-none md:text-lg lg:text-xl xl:text-2xl";
 const h2DecorationStyle =
     "w-1 shrink-0 transition-[margin,width,background-color] duration-300 ease-out";
-const activeH2DecorationStyle = "-ml-2 w-1 bg-surface-page";
+const activeH2DecorationStyle = "-ml-2 w-1 bg-surface";
 const h2TextStyle =
     "flex flex-1 items-center justify-start rounded-2xl px-4 py-2 text-left transition-[margin,border-radius,color,background-color] duration-300 ease-out";
-const activeH2TextStyle = "-mr-2 rounded-none bg-active-bg text-active-text";
+const activeH2TextStyle =
+    "-mr-2 rounded-none bg-primary-container text-on-primary-container";
 const h3Style =
-    "block pl-4 text-left font-belanosima hover:text-accent-secondary md:text-md lg:text-lg xl:text-xl";
+    "block pl-4 text-left font-belanosima hover:text-secondary md:text-md lg:text-lg xl:text-xl";
 const activeH3Style =
-    "text-accent-secondary underline decoration-2 decoration-accent-secondary underline-offset-4";
+    "text-secondary underline decoration-2 decoration-secondary underline-offset-4";
 const scrollSpyActivationOffset = 8;
 const hashScrollLockDuration = 2400;
 const contentBarTransitionDuration = 300;
@@ -187,12 +188,12 @@ let syncingExpandedItems = false;
 let preserveUserExpandedItemsAfterHashScroll = false;
 
 const contentBarClass = computed(() => [
-    "sticky top-34 mb-6 max-h-[calc(100vh-11rem)] flex-col overflow-hidden rounded-r-[3.5em] bg-surface-sidebar  font-momo-trust-display shadow-lg transition-[width,height,padding,translate] duration-300 ease-out",
+    "sticky top-34 mb-6 max-h-[calc(100vh-11rem)] flex-col overflow-hidden rounded-r-[3.5em] bg-surface-container-high  font-momo-trust-display shadow-lg transition-[width,height,padding,translate] duration-300 ease-out",
     collapsed.value ? collapsedContentBarClass : expandedContentBarClass,
     collapsed.value ? "-translate-x-6 hover:translate-x-0" : "translate-x-0",
 ]);
 const collapseButtonClass = computed(() => [
-    "absolute top-4 right-4 z-20 flex h-16 w-14 items-center justify-center rounded-full text-accent-secondary transition-colors duration-300 hover:text-text-inverse focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:outline-none",
+    "absolute top-4 right-4 z-20 flex h-16 w-14 items-center justify-center rounded-full text-on-surface transition-colors duration-300 hover:text-on-surface focus-visible:ring-2 focus-visible:ring-outline focus-visible:outline-none",
 ]);
 const contentTextClass = computed(() => [
     "transition-opacity duration-200 ease-out",
@@ -254,7 +255,7 @@ function h2TextClass(id: string) {
         h2TextStyle,
         activeH2Id.value === id
             ? activeH2TextStyle
-            : "group-hover:bg-interactive-hover-bg group-hover:text-interactive-hover-text",
+            : "group-hover:bg-secondary group-hover:text-on-secondary",
     ];
 }
 

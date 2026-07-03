@@ -1,6 +1,6 @@
 <template>
     <code
-        class="rounded-md bg-surface-muted px-1.5 py-0.5 font-mono text-[0.9em] font-semibold"
+        class="rounded-md bg-surface-variant px-1.5 py-0.5 font-mono text-[0.9em] font-semibold"
         ><slot
     /></code>
 </template>

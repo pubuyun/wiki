@@ -2,11 +2,11 @@
     <ProgressRoot
         :model-value="Math.min(Math.max(progress, 0), 100)"
         aria-label="Reading progress"
-        class="bg-surface-muted h-2 w-full overflow-hidden"
+        class="h-2 w-full overflow-hidden bg-surface-variant"
         style="transform: translateZ(0)"
     >
         <ProgressIndicator
-            class="h-full w-full bg-accent-primary"
+            class="h-full w-full bg-surface-tint"
             :style="{
                 transform: `translateX(-${100 - progress}%)`,
                 transition: 'transform 0.2s ease-out',

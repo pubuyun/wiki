@@ -13,7 +13,7 @@
         >
             <BrandIcon />
             <span
-                class="text-accent-secondary lg:text-2xl xl:text-3xl"
+                class="text-secondary lg:text-2xl xl:text-3xl"
                 aria-hidden="true"
             >
                 Expelliodor
@@ -21,12 +21,12 @@
         </NuxtLink>
         <div
             v-if="contentRendered"
-            class="absolute top-16 right-3 left-3 z-10 flex min-h-9 items-center justify-center gap-2 text-accent-secondary xl:top-20"
+            class="absolute top-16 right-3 left-3 z-10 flex min-h-9 items-center justify-center gap-2 text-secondary xl:top-20"
             :class="contentClass"
         >
             <NuxtLink
                 :to="titleTo"
-                class="inline-flex w-[min(100%,calc(20vw-4rem))] min-w-0 justify-center overflow-visible rounded-md px-2 py-1 text-center text-2xl leading-[1.1] font-semibold whitespace-nowrap transition-colors hover:bg-interactive-hover-bg hover:text-interactive-hover-text focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:outline-none xl:text-4xl"
+                class="inline-flex w-[min(100%,calc(20vw-4rem))] min-w-0 justify-center overflow-visible rounded-md px-2 py-1 text-center text-2xl leading-[1.1] font-semibold whitespace-nowrap transition-colors hover:bg-secondary hover:text-on-secondary focus-visible:ring-2 focus-visible:ring-outline focus-visible:outline-none xl:text-4xl"
                 :style="titleStyle"
                 :aria-label="`Go to ${title}`"
             >
@@ -97,7 +97,7 @@
                         <AccordionItem
                             v-if="node.children?.length"
                             :value="node.id"
-                            class="overflow-hidden text-accent-secondary"
+                            class="overflow-hidden text-secondary"
                         >
                             <AccordionHeader class="flex h-min gap-0">
                                 <div :class="folderClass(node)">
@@ -134,7 +134,7 @@
                                     />
                                     <div
                                         v-if="activeChildIndex(node) >= 0"
-                                        class="pointer-events-none absolute left-0 h-9 w-0.5 rounded-full bg-accent-warm transition-transform duration-200 ease-out xl:h-10"
+                                        class="pointer-events-none absolute left-0 h-9 w-0.5 rounded-full bg-primary transition-transform duration-200 ease-out xl:h-10"
                                         :style="activeChildIndicatorStyle(node)"
                                         aria-hidden="true"
                                     />
@@ -180,11 +180,11 @@
 
         <div
             v-if="contentVisible && canScrollUp"
-            class="pointer-events-none absolute top-[5.75rem] z-10 h-8 w-full bg-linear-to-b from-accent-primary to-transparent xl:top-[6.5rem]"
+            class="pointer-events-none absolute top-[5.75rem] z-10 h-8 w-full bg-linear-to-b from-surface-tint to-transparent xl:top-[6.5rem]"
         />
         <div
             v-if="contentVisible && canScrollDown"
-            class="pointer-events-none absolute bottom-0 z-10 h-8 w-full bg-linear-to-t from-accent-primary to-transparent"
+            class="pointer-events-none absolute bottom-0 z-10 h-8 w-full bg-linear-to-t from-surface-tint to-transparent"
         />
     </nav>
 </template>
@@ -221,17 +221,17 @@ let contentRevealTimer: ReturnType<typeof setTimeout> | undefined;
 let titleResizeObserver: ResizeObserver | undefined;
 
 const sidebarClass = computed(() => [
-    "sticky top-0 h-screen max-h-screen flex-col overflow-hidden bg-surface-sidebar font-momo-trust-display text-accent-secondary shadow-sm transition-[width,height,padding,translate] duration-200 ease-out border-r border-white/20",
+    "sticky top-0 h-screen max-h-screen flex-col overflow-hidden bg-surface-container-high font-momo-trust-display text-on-surface shadow-sm transition-[width,height,padding,translate] duration-200 ease-out border-r border-white/20",
     collapsed.value ? "w-12 py-6" : "w-66 pt-4",
     "translate-x-0",
 ]);
 
 const collapseButtonClass = computed(() => [
-    "absolute inset-0 z-20 flex w-full items-center justify-center text-2xl text-accent-secondary transition-colors duration-200 hover:bg-interactive-hover-bg hover:text-interactive-hover-text focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:outline-none",
+    "absolute inset-0 z-20 flex w-full items-center justify-center text-2xl text-on-surface transition-colors duration-200 hover:bg-secondary hover:text-on-secondary focus-visible:ring-2 focus-visible:ring-outline focus-visible:outline-none",
 ]);
 
 const titleCollapseButtonClass =
-    "flex size-10 shrink-0 items-center justify-center rounded-full text-xl leading-none text-accent-secondary transition-colors duration-200 hover:bg-interactive-hover-bg hover:text-interactive-hover-text focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:outline-none xl:size-12 xl:text-2xl";
+    "flex size-10 shrink-0 items-center justify-center rounded-full text-xl leading-none text-on-surface transition-colors duration-200 hover:bg-secondary hover:text-on-secondary focus-visible:ring-2 focus-visible:ring-outline focus-visible:outline-none xl:size-12 xl:text-2xl";
 
 const contentClass = computed(() => [
     "transition-opacity duration-200 ease-out",
@@ -244,39 +244,41 @@ const titleStyle = computed(() => ({
 
 function folderClass(node: ContentNavNode) {
     return [
-        "group my-0.5 flex w-full items-stretch text-base focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:outline-none xl:text-lg",
+        "group my-0.5 flex w-full items-stretch text-base focus-visible:ring-2 focus-visible:ring-outline focus-visible:outline-none xl:text-lg",
     ];
 }
 
 function folderTextClass(node: ContentNavNode) {
     return [
-        "flex min-w-0 flex-1 items-center rounded-l-md px-3 py-2 text-left no-underline transition-[border-radius,color,background-color] duration-200 ease-out group-hover:bg-interactive-hover-bg group-hover:text-interactive-hover-text",
-        node.active && "bg-active-bg font-semibold text-active-text",
+        "flex min-w-0 flex-1 items-center rounded-l-md px-3 py-2 text-left no-underline transition-[border-radius,color,background-color] duration-200 ease-out group-hover:bg-secondary group-hover:text-on-secondary",
+        node.active &&
+            "bg-primary-container font-semibold text-on-primary-container",
     ];
 }
 
 function folderToggleClass(node: ContentNavNode) {
     return [
-        "group flex w-10 shrink-0 items-center justify-center rounded-r-md px-3 py-2 text-accent-secondary transition-[border-radius,color,background-color] duration-200 ease-out hover:bg-interactive-hover-bg hover:text-interactive-hover-text group-hover:bg-interactive-hover-bg group-hover:text-interactive-hover-text focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:outline-none",
-        node.active && "bg-active-bg font-semibold text-active-text",
+        "group flex w-10 shrink-0 items-center justify-center rounded-r-md px-3 py-2 text-on-surface transition-[border-radius,color,background-color] duration-200 ease-out hover:bg-secondary hover:text-on-secondary group-hover:bg-secondary group-hover:text-on-secondary focus-visible:ring-2 focus-visible:ring-outline focus-visible:outline-none",
+        node.active &&
+            "bg-primary-container font-semibold text-on-primary-container",
     ];
 }
 
 function linkClass(depth: 0 | 1) {
     return [
-        "group my-0.5 flex w-full items-stretch text-base focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:outline-none xl:text-lg",
+        "group my-0.5 flex w-full items-stretch text-base focus-visible:ring-2 focus-visible:ring-outline focus-visible:outline-none xl:text-lg",
         depth === 1 && "font-belanosima text-sm xl:text-base",
     ];
 }
 
 function linkTextClass(node: ContentNavNode, depth: 0 | 1) {
     return [
-        "flex min-w-0 flex-1 items-center justify-start rounded-md px-3 text-left transition-[border-radius,color,background-color] duration-200 ease-out group-hover:bg-interactive-hover-bg group-hover:text-interactive-hover-text",
+        "flex min-w-0 flex-1 items-center justify-start rounded-md px-3 text-left transition-[border-radius,color,background-color] duration-200 ease-out group-hover:bg-secondary group-hover:text-on-secondary",
         depth === 1 ? "h-9 py-0 xl:h-10" : "py-2",
         node.active &&
             (depth === 1
-                ? "font-semibold text-accent-warm"
-                : "bg-active-bg font-semibold text-active-text"),
+                ? "font-semibold text-primary"
+                : "bg-primary-container font-semibold text-on-primary-container"),
     ];
 }
 
@@ -413,7 +415,7 @@ onBeforeUnmount(() => {
 <style>
 .category-sidebar-scroll {
     direction: rtl;
-    scrollbar-color: var(--accent-secondary) transparent;
+    scrollbar-color: var(--secondary) transparent;
     scrollbar-width: thin;
 }
 
@@ -438,12 +440,12 @@ onBeforeUnmount(() => {
 }
 
 .category-sidebar-scroll::-webkit-scrollbar-thumb {
-    background: var(--accent-secondary);
+    background: var(--secondary);
     border-radius: 9999px;
 }
 
 .category-sidebar-scroll::-webkit-scrollbar-thumb:hover {
-    background: var(--accent-primary);
+    background: var(--surface-tint);
 }
 
 @keyframes category-sidebar-slide-down {
