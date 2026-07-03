@@ -1,4 +1,6 @@
 <script setup>
+import ColorblindModeToggle from "~/components/NavigationBar/ColorblindModeToggle.vue";
+
 const contentLayout = useContentLayoutState();
 
 const page = computed(() => contentLayout.value.page);
@@ -41,6 +43,7 @@ const hasRightSidebar = computed(
         </div>
         <BackToTop />
         <Footer />
+        <ColorblindModeToggle />
         <ClickAnimation />
     </div>
 </template>

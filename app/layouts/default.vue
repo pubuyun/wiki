@@ -5,8 +5,11 @@
         </header>
         <slot />
         <Footer />
+        <ColorblindModeToggle />
         <BackToTop />
         <ClickAnimation />
     </div>
 </template>
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import ColorblindModeToggle from "~/components/NavigationBar/ColorblindModeToggle.vue";
+</script>
