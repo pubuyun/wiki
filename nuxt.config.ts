@@ -2,6 +2,13 @@
 import tailwindcss from "@tailwindcss/vite";
 
 export default defineNuxtConfig({
+    app: {
+        head: {
+            htmlAttrs: {
+                lang: "en",
+            },
+        },
+    },
     modules: [
         "@nuxt/content",
         ...(process.env.NUXT_STUDIO !== "false" ? ["nuxt-studio"] : []),
