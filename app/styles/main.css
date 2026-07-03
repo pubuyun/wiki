@@ -147,7 +147,7 @@ input[type="submit"],
     --outline-variant: #0072b299;
 }
 
-.dark {
+/* .dark {
     --primary: #d79612;
     --on-primary: #03061a;
     --primary-container: #d79612;
@@ -169,13 +169,37 @@ input[type="submit"],
 
     --outline: #d79612;
     --outline-variant: #fff5c266;
+} */
+
+/* legacy color for testing in dark mode */
+.dark {
+    --primary: #67e9df;
+    --on-primary: #1c0770;
+    --primary-container: #67e9df;
+    --on-primary-container: #1c0770;
+
+    --secondary: #eeffec;
+    --on-secondary: #1c0770;
+    --secondary-container: #eeffec;
+    --on-secondary-container: #1c0770;
+
+    --surface: #1c0770;
+    --on-surface: #fff5c2;
+    --surface-bright: #4277ff;
+    --surface-tint: #4277ff;
+    --surface-container-high: #261cc1;
+    --surface-container-highest: #4277ff;
+    --surface-variant: #4277ff;
+
+    --outline: #1c0770;
+    --outline-variant: #007dff99;
 }
 
 :root {
     --primary: #fab826;
     --on-primary: #103098;
-    --primary-container: #007dff;
-    --on-primary-container: #fff5c2;
+    --primary-container: #fab826;
+    --on-primary-container: #103098;
 
     --secondary: #fff5c2;
     --on-secondary: #103098;
