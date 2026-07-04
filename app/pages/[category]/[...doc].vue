@@ -168,7 +168,7 @@ function pageTitle(item) {
         <section
             v-for="section in sections"
             :key="section.id"
-            class="flex max-w-full min-w-0 flex-col gap-4"
+            class="mb-4 flex max-w-full min-w-0 flex-col gap-4"
         >
             <ContentRenderer
                 v-if="section.heading"
