@@ -7,8 +7,10 @@
             <slot />
         </main>
         <Footer />
-        <ColorblindModeToggle />
-        <BackToTop />
+        <aside aria-label="Page utilities">
+            <ColorblindModeToggle />
+            <BackToTop />
+        </aside>
     </div>
 </template>
 <script setup lang="ts">

@@ -3,6 +3,8 @@
         <div
             v-if="showLoading && isLoadingImageLoaded"
             class="fixed inset-0 z-9999 flex items-center justify-center bg-surface backdrop-blur-sm"
+            role="status"
+            aria-live="polite"
         >
             <div class="flex flex-col items-center">
                 <p

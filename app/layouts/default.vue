@@ -6,10 +6,11 @@
         <main class="flex-1">
             <slot />
         </main>
-        <slot />
         <Footer />
-        <ColorblindModeToggle />
-        <BackToTop />
+        <aside aria-label="Page utilities">
+            <ColorblindModeToggle />
+            <BackToTop />
+        </aside>
         <ClickAnimation />
     </div>
 </template>

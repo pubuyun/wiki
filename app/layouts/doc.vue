@@ -43,9 +43,11 @@ const hasRightSidebar = computed(
             </ClientOnly>
             <slot />
         </main>
-        <BackToTop />
         <Footer />
-        <ColorblindModeToggle />
+        <aside aria-label="Page utilities">
+            <ColorblindModeToggle />
+            <BackToTop />
+        </aside>
         <ClickAnimation />
     </div>
 </template>
