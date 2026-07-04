@@ -44,7 +44,7 @@
             >
                 <DialogContent
                     v-if="isSearchOpen"
-                    class="fixed inset-0 z-100 h-dvh w-dvw overflow-hidden bg-surface-container-highest p-4 text-on-surface shadow-lg sm:inset-auto sm:top-1/6 sm:left-1/2 sm:h-auto sm:max-h-[70vh] sm:w-1/2 sm:-translate-x-1/2 sm:rounded-2xl sm:p-6"
+                    class="fixed inset-0 z-100 h-dvh w-dvw overflow-hidden bg-surface-container-high p-4 text-on-surface shadow-lg sm:inset-auto sm:top-16 sm:left-1/2 sm:h-auto sm:max-h-[min(48rem,calc(100dvh-4rem))] sm:w-200 sm:max-w-[calc(100dvw-2rem)] sm:-translate-x-1/2 sm:rounded-2xl sm:p-6"
                 >
                     <DialogTitle class="sr-only">
                         Search site content
@@ -54,7 +54,7 @@
                             duration: 220,
                             easing: 'ease-out',
                         }"
-                        class="flex h-full max-h-[calc(100dvh-2rem)] w-full flex-col justify-start gap-2 sm:max-h-[calc(70vh-3rem)]"
+                        class="flex h-full max-h-[calc(100dvh-2rem)] w-full flex-col justify-start gap-2 sm:max-h-[min(45rem,calc(100dvh-7rem))]"
                     >
                         <header
                             class="shrink-0 text-center text-2xl font-bold text-on-surface"
@@ -105,7 +105,7 @@
                         >
                             <div
                                 v-if="canScrollUp"
-                                class="pointer-events-none absolute top-0 left-0 z-10 h-8 w-full bg-linear-to-b from-surface-container-highest to-transparent"
+                                class="pointer-events-none absolute top-0 left-0 z-10 h-8 w-full bg-linear-to-b from-surface-container-high to-transparent"
                             />
 
                             <ul
@@ -114,39 +114,141 @@
                                     duration: 180,
                                     easing: 'ease-out',
                                 }"
-                                class="max-h-[calc(100dvh-8rem)] w-full scrollbar-thin scrollbar-thumb-surface-tint scrollbar-track-surface-variant overflow-auto sm:max-h-[calc(70vh-9rem)]"
+                                class="site-search-results-scroll max-h-[calc(100dvh-8rem)] w-full overflow-auto sm:max-h-[min(39rem,calc(100dvh-13rem))]"
                                 @scroll="updateScrollGradients"
                                 aria-label="Search results"
                             >
                                 <li
-                                    v-for="link of result"
-                                    :key="link.id"
-                                    class="mt-2 w-full px-4 py-2"
+                                    v-for="categoryGroup of groupedResults"
+                                    :key="categoryGroup.key"
+                                    class="w-full px-2 py-2 sm:px-4"
                                 >
-                                    <NuxtLink
-                                        :to="link.id"
-                                        class="site-search-result block rounded border border-transparent px-3 py-2 transition-colors hover:bg-secondary hover:text-on-secondary focus-visible:bg-secondary focus-visible:text-on-secondary"
-                                        @click="handleResultClick($event, link)"
+                                    <section
+                                        class="flex min-w-0 flex-col gap-2"
+                                        :aria-label="`${categoryGroup.label} search results`"
                                     >
-                                        <article>
-                                            <h3
-                                                class="font-momo-trust-display text-lg"
-                                            >
-                                                {{ displayTitle(link) }}
-                                            </h3>
+                                        <div
+                                            class="px-3 text-base font-bold tracking-wide text-on-surface uppercase"
+                                        >
+                                            {{ categoryGroup.label }}
+                                        </div>
 
-                                            <p
-                                                class="text-xs font-normal text-on-surface/85"
-                                                v-html="displayContent(link)"
-                                            />
-                                        </article>
-                                    </NuxtLink>
+                                        <div
+                                            v-for="documentGroup of categoryGroup.documents"
+                                            :key="documentGroup.key"
+                                            class="min-w-0"
+                                        >
+                                            <NuxtLink
+                                                :to="documentGroup.key"
+                                                class="site-search-result group flex min-h-12 min-w-0 items-center gap-2 rounded border border-transparent bg-surface-tint px-3 py-2 text-on-surface transition-colors hover:bg-secondary hover:text-on-secondary"
+                                                @click="
+                                                    handleDocumentClick(
+                                                        $event,
+                                                        documentGroup.key,
+                                                    )
+                                                "
+                                            >
+                                                <Icon
+                                                    icon="lucide:file-text"
+                                                    class="size-5 shrink-0 text-on-surface/70 transition-colors group-hover:text-on-secondary/80"
+                                                    aria-hidden="true"
+                                                />
+                                                <span
+                                                    class="truncate text-sm font-semibold"
+                                                >
+                                                    {{ documentGroup.label }}
+                                                </span>
+                                                <Icon
+                                                    icon="lucide:corner-down-left"
+                                                    class="ml-auto size-4 shrink-0 text-on-surface/45 transition-colors group-hover:text-on-secondary/65"
+                                                    aria-hidden="true"
+                                                />
+                                            </NuxtLink>
+
+                                            <ul
+                                                class="mt-1 flex min-w-0 flex-col gap-1"
+                                                :aria-label="`${documentGroup.label} results`"
+                                            >
+                                                <li
+                                                    v-for="link of documentGroup.links"
+                                                    :key="link.id"
+                                                    class="min-w-0"
+                                                >
+                                                    <NuxtLink
+                                                        :to="link.id"
+                                                        class="site-search-result group flex min-w-0 items-center gap-2 rounded border border-transparent bg-surface-tint px-3 py-2 transition-colors hover:bg-secondary hover:text-on-secondary"
+                                                        @click="
+                                                            handleResultClick(
+                                                                $event,
+                                                                link,
+                                                            )
+                                                        "
+                                                    >
+                                                        <svg
+                                                            class="ml-5 h-9 w-5 shrink-0 text-on-surface/45 transition-colors group-hover:text-on-secondary/65 sm:ml-7"
+                                                            viewBox="0 0 24 54"
+                                                            aria-hidden="true"
+                                                        >
+                                                            <g
+                                                                stroke="currentColor"
+                                                                fill="none"
+                                                                fill-rule="evenodd"
+                                                                stroke-linecap="round"
+                                                                stroke-linejoin="round"
+                                                            >
+                                                                <path
+                                                                    d="M8 6v21M20 27H8.3"
+                                                                />
+                                                            </g>
+                                                        </svg>
+                                                        <Icon
+                                                            :icon="
+                                                                isTitleHit(link)
+                                                                    ? 'lucide:hash'
+                                                                    : 'lucide:align-left'
+                                                            "
+                                                            class="size-5 shrink-0 text-on-surface/65 transition-colors group-hover:text-on-secondary/80"
+                                                            aria-hidden="true"
+                                                        />
+                                                        <span
+                                                            class="flex min-w-0 flex-1 flex-col gap-0.5"
+                                                        >
+                                                            <span
+                                                                class="min-w-0 truncate text-xs font-normal text-on-surface/90 transition-colors group-hover:text-on-secondary/90"
+                                                            >
+                                                                {{
+                                                                    displayHitTitle(
+                                                                        link,
+                                                                    )
+                                                                }}
+                                                            </span>
+                                                            <span
+                                                                class="truncate text-[0.7rem] text-on-surface/60 transition-colors group-hover:text-on-secondary/70"
+                                                            >
+                                                                {{
+                                                                    displayHitPath(
+                                                                        link,
+                                                                        documentGroup.label,
+                                                                    )
+                                                                }}
+                                                            </span>
+                                                        </span>
+                                                        <Icon
+                                                            icon="lucide:corner-down-left"
+                                                            class="size-4 shrink-0 text-on-surface/45 transition-colors group-hover:text-on-secondary/65"
+                                                            aria-hidden="true"
+                                                        />
+                                                    </NuxtLink>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </section>
                                 </li>
                             </ul>
 
                             <div
                                 v-if="canScrollDown"
-                                class="pointer-events-none absolute bottom-0 left-0 z-10 h-8 w-full bg-linear-to-t from-surface-container-highest to-transparent"
+                                class="pointer-events-none absolute bottom-0 left-0 z-10 h-8 w-full bg-linear-to-t from-surface-container-high to-transparent"
                             />
                         </div>
                         <p
@@ -174,8 +276,10 @@ import {
     DialogTitle,
     DialogTrigger,
 } from "reka-ui";
+import MiniSearch from "minisearch";
 import { Icon } from "@iconify/vue";
 import { vAutoAnimate } from "@formkit/auto-animate/vue";
+import { siteNavGroups } from "~/utils/site-navigation";
 
 const isSearchOpen = ref(false);
 const searchInput = ref(null);
@@ -183,13 +287,46 @@ const { scrollToHash } = useHashScroll();
 
 const query = ref("");
 const result = ref([]);
-const { search, init: initSearch } = useSearchCollection("content", {
-    immediate: false,
-    minHeading: "h2",
-    maxHeading: "h3",
+const searchResultLimit = 20;
+const { data: searchSections } = await useAsyncData(
+    "content-search-sections",
+    () =>
+        queryCollectionSearchSections("content", {
+            minHeading: "h2",
+            maxHeading: "h3",
+        }),
+);
+const miniSearch = computed(() => {
+    const index = new MiniSearch({
+        idField: "searchId",
+        fields: ["title", "content"],
+        storeFields: ["originalId", "title", "titles", "content", "level"],
+        searchOptions: {
+            prefix: true,
+            fuzzy: 0.2,
+            boost: {
+                title: 2,
+            },
+        },
+    });
+
+    index.addAll(
+        (searchSections.value ?? []).map((section, index) => ({
+            ...section,
+            originalId: section.id,
+            searchId: `${section.id}:${index}`,
+        })),
+    );
+    return index;
 });
 
 const hasResults = computed(() => result.value.length > 0 && query.value);
+const categoryLabels = new Map(
+    siteNavGroups.flatMap((group) =>
+        group.links.map((link) => [normalizeContentPath(link.to), link.label]),
+    ),
+);
+const groupedResults = computed(() => groupSearchResults(result.value));
 let latestSearch = 0;
 
 // Keyboard shortcut
@@ -215,18 +352,119 @@ watch(isSearchOpen, async (open) => {
 
     await nextTick();
     searchInput.value?.focus();
-    initSearch();
 });
 
-function displayTitle(link) {
-    if (link.level !== 3) return link.title;
-
-    const h2Title = link.titles?.at(-1);
-    return h2Title ? `${h2Title} > ${link.title}` : link.title;
+function isTitleHit(link) {
+    return matchedFields(link).includes("title");
 }
 
-function displayContent(link) {
-    return link.snippets?.content ?? `${link.content.slice(0, 200)}...`;
+function displayHitTitle(link) {
+    if (isTitleHit(link)) {
+        return link.title;
+    }
+
+    return `${link.content?.slice(0, 200) ?? ""}...`;
+}
+
+function displayHitPath(link, documentLabel) {
+    if (!isTitleHit(link)) {
+        return documentLabel;
+    }
+
+    const parentTitle = link.level > 2 ? link.titles?.at(-1) : "";
+    return parentTitle ? `${documentLabel} > ${parentTitle}` : documentLabel;
+}
+
+function matchedFields(link) {
+    return [...new Set(Object.values(link.match ?? {}).flat())];
+}
+
+function searchWithMiniSearch(searchTerm) {
+    return miniSearch.value
+        .search(searchTerm)
+        .slice(0, searchResultLimit)
+        .map((link) => ({
+            ...link,
+            id: link.originalId,
+        }));
+}
+
+function groupSearchResults(links) {
+    const categoryGroups = [];
+    const categoryLookup = new Map();
+
+    for (const link of links) {
+        const target = parseSearchTarget(link.id);
+        if (!target) continue;
+
+        const pathSegments = target.pathWithQuery
+            .split("?")[0]
+            .split("/")
+            .filter(Boolean);
+        const categorySlug = pathSegments[0] ?? "";
+        const categoryPath = categorySlug ? `/${categorySlug}` : "/";
+        const categoryKey = categoryPath;
+        const documentPath = `/${pathSegments.join("/")}`;
+        const documentKey = documentPath || link.id;
+
+        let categoryGroup = categoryLookup.get(categoryKey);
+        if (!categoryGroup) {
+            categoryGroup = {
+                key: categoryKey,
+                label:
+                    categoryLabels.get(categoryPath) ??
+                    titleizePathSegment(categorySlug || "Search results"),
+                documents: [],
+                documentLookup: new Map(),
+            };
+            categoryLookup.set(categoryKey, categoryGroup);
+            categoryGroups.push(categoryGroup);
+        }
+
+        let documentGroup = categoryGroup.documentLookup.get(documentKey);
+        if (!documentGroup) {
+            documentGroup = {
+                key: documentKey,
+                label: displayDocumentPath(pathSegments),
+                links: [],
+            };
+            categoryGroup.documentLookup.set(documentKey, documentGroup);
+            categoryGroup.documents.push(documentGroup);
+        }
+
+        documentGroup.links.push(link);
+    }
+
+    return categoryGroups.map(({ documentLookup, ...categoryGroup }) => ({
+        ...categoryGroup,
+        documents: categoryGroup.documents,
+    }));
+}
+
+function displayDocumentPath(pathSegments) {
+    const documentSegments = pathSegments.slice(1);
+
+    if (!documentSegments.length) {
+        return titleizePathSegment(pathSegments[0] ?? "Page");
+    }
+
+    return documentSegments.map(titleizePathSegment).join(" > ");
+}
+
+function titleizePathSegment(value) {
+    return decodePathSegment(value)
+        .split(/[-\s]+/)
+        .filter(Boolean)
+        .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+        .join(" ");
+}
+
+function decodePathSegment(value) {
+    try {
+        return decodeURIComponent(value);
+    } catch {
+        return value;
+    }
 }
 
 async function handleResultClick(event, link) {
@@ -241,6 +479,14 @@ async function handleResultClick(event, link) {
     if (!target.hash) return;
 
     await scrollToSearchTarget(event, target.hash);
+}
+
+async function handleDocumentClick(event, path) {
+    event.preventDefault();
+    query.value = "";
+    isSearchOpen.value = false;
+
+    await navigateTo(path);
 }
 
 function parseSearchTarget(id) {
@@ -292,14 +538,7 @@ watch(query, async (value) => {
         return;
     }
 
-    const searchResult = await search(searchTerm, {
-        limit: 50,
-        snippet: {
-            columns: ["content"],
-            around: 40,
-            tag: "strong",
-        },
-    });
+    const searchResult = searchWithMiniSearch(searchTerm);
 
     if (currentSearch === latestSearch) {
         result.value = searchResult;
@@ -331,3 +570,27 @@ watch(
     { flush: "post" },
 );
 </script>
+
+<style scoped>
+.site-search-results-scroll {
+    scrollbar-color: var(--secondary) var(--surface-container-high);
+    scrollbar-width: thin;
+}
+
+.site-search-results-scroll::-webkit-scrollbar {
+    width: 0.5rem;
+}
+
+.site-search-results-scroll::-webkit-scrollbar-track {
+    background: var(--surface-container-high);
+}
+
+.site-search-results-scroll::-webkit-scrollbar-thumb {
+    background: var(--secondary);
+    border-radius: 999px;
+}
+
+.site-search-results-scroll::-webkit-scrollbar-thumb:hover {
+    background: var(--primary);
+}
+</style>
