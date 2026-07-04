@@ -1,6 +1,6 @@
 <script setup lang="ts">
 definePageMeta({
-    layout: "content",
+    layout: "category",
 });
 
 const route = useRoute();

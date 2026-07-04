@@ -21,26 +21,24 @@ const hasRightSidebar = computed(
         <main
             class="flex h-full flex-1 flex-row gap-8 bg-surface text-on-surface"
         >
-            <ClientOnly>
-                <aside v-if="page" class="contents">
-                    <CategoryBar
-                        class="hidden lg:flex"
-                        :title="categoryTitle"
-                        :title-to="categoryPath"
-                        :nodes="categoryNavNodes"
-                        :active-path="activePath"
-                    />
-                </aside>
-            </ClientOnly>
-            <ClientOnly>
-                <aside class="contents">
-                    <ContentBar
-                        v-if="hasRightSidebar"
-                        class="order-last hidden lg:flex"
-                        :toc="page.body.toc.links"
-                    />
-                </aside>
-            </ClientOnly>
+            <aside v-if="page" class="contents">
+                <CategoryBar
+                    class="hidden lg:flex"
+                    :title="categoryTitle"
+                    :title-to="categoryPath"
+                    :nodes="categoryNavNodes"
+                    :active-path="activePath"
+                />
+            </aside>
+
+            <aside class="contents">
+                <ContentBar
+                    v-if="hasRightSidebar"
+                    class="order-last hidden lg:flex"
+                    :toc="page.body.toc.links"
+                />
+            </aside>
+
             <slot />
         </main>
         <Footer />
