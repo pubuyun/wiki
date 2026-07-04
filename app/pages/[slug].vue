@@ -57,7 +57,7 @@ watchEffect(() => {
 </script>
 
 <template>
-    <main v-if="displayPage">
+    <article v-if="displayPage">
         <ul>
             <li v-for="node in categoryNavNodes" :key="node.id">
                 <NuxtLink v-if="node.path" :to="node.path">
@@ -76,5 +76,5 @@ watchEffect(() => {
             </li>
         </ul>
         <ContentRenderer :value="displayPage" />
-    </main>
+    </article>
 </template>
