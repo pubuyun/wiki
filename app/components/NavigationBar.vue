@@ -1,9 +1,7 @@
 <script setup lang="ts">
 import { NavigationMenuList, NavigationMenuRoot } from "reka-ui";
-import BrandIcon from "./BrandIcon.vue";
 import DarkModeToggle from "./NavigationBar/DarkModeToggle.vue";
 import NavItem from "./NavigationBar/NavItem.vue";
-import PhoneNavigationDialog from "./PhoneNavigationDialog.vue";
 import { siteNavGroups } from "~/utils/site-navigation";
 
 const props = withDefaults(
@@ -126,7 +124,7 @@ function updateProgress() {
             :class="navVisibilityClass"
             :style="props.scrollOpacity ? opacityStyle : undefined"
         >
-            <PhoneNavigationDialog />
+            <MobileNavigationDialog />
             <NuxtLink
                 to="/"
                 class="icon-section flex h-full shrink-0 items-center gap-4"
