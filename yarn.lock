@@ -5705,7 +5705,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fuse.js@npm:^7.3.0":
+"fuse.js@npm:^7.3.0, fuse.js@npm:^7.4.2":
   version: 7.4.2
   resolution: "fuse.js@npm:7.4.2"
   checksum: 10c0/b83e50e0cdbeca995ea373e19569c7d89a8a9af64e5752cc23d06e823332a699a5f14f0c6e4036f7e2b4cbd9ed960761cec6b20ea8a3bf3905b1af0cfa296447
@@ -11472,6 +11472,7 @@ __metadata:
     "@vercel/speed-insights": "npm:^2.0.0"
     better-sqlite3: "npm:^12.9.0"
     echarts: "npm:^6.0.0"
+    fuse.js: "npm:^7.4.2"
     nuxt: "npm:^4.4.2"
     nuxt-echarts: "npm:1.0.1"
     nuxt-studio: "npm:1.6.1"

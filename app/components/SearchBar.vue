@@ -22,14 +22,6 @@
             </div>
         </DialogTrigger>
 
-        <!-- lg and lower -->
-        <!-- <DialogTrigger
-            aria-label="Open search dialog"
-            class="z-100 hidden items-center gap-2 rounded-full bg-primary p-2 text-on-primary shadow-md hover:bg-secondary hover:text-on-secondary focus:ring-2 focus:ring-outline focus:ring-offset-2 focus:outline-none max-xl:inline-flex"
-        >
-            <Icon icon="lucide:search" class="h-3 w-3" aria-hidden="true" />
-        </DialogTrigger> -->
-
         <DialogPortal>
             <DialogOverlay
                 class="fixed top-0 left-0 z-30 h-full w-full bg-black opacity-50"
@@ -171,7 +163,7 @@
                                             >
                                                 <li
                                                     v-for="link of documentGroup.links"
-                                                    :key="link.id"
+                                                    :key="link.searchId"
                                                     class="min-w-0"
                                                 >
                                                     <NuxtLink
@@ -216,21 +208,53 @@
                                                             <span
                                                                 class="min-w-0 truncate text-xs font-normal text-on-surface/90 transition-colors group-hover:text-on-secondary/90"
                                                             >
-                                                                {{
-                                                                    displayHitTitle(
+                                                                <template
+                                                                    v-for="(
+                                                                        segment,
+                                                                        index
+                                                                    ) of displayHitSegments(
                                                                         link,
-                                                                    )
-                                                                }}
+                                                                    )"
+                                                                    :key="index"
+                                                                >
+                                                                    <span
+                                                                        :class="
+                                                                            segment.matched
+                                                                                ? 'font-semibold text-primary underline decoration-primary decoration-2 underline-offset-3'
+                                                                                : ''
+                                                                        "
+                                                                    >
+                                                                        {{
+                                                                            segment.text
+                                                                        }}
+                                                                    </span>
+                                                                </template>
                                                             </span>
                                                             <span
                                                                 class="truncate text-[0.7rem] text-on-surface/60 transition-colors group-hover:text-on-secondary/70"
                                                             >
-                                                                {{
-                                                                    displayHitPath(
+                                                                <template
+                                                                    v-for="(
+                                                                        segment,
+                                                                        index
+                                                                    ) of displayPathSegments(
                                                                         link,
                                                                         documentGroup.label,
-                                                                    )
-                                                                }}
+                                                                    )"
+                                                                    :key="index"
+                                                                >
+                                                                    <span
+                                                                        :class="
+                                                                            segment.matched
+                                                                                ? 'font-semibold text-primary underline decoration-primary decoration-2 underline-offset-3'
+                                                                                : ''
+                                                                        "
+                                                                    >
+                                                                        {{
+                                                                            segment.text
+                                                                        }}
+                                                                    </span>
+                                                                </template>
                                                             </span>
                                                         </span>
                                                         <Icon
@@ -267,16 +291,14 @@
 
 <script setup>
 import {
-    DialogClose,
     DialogContent,
-    DialogDescription,
     DialogOverlay,
     DialogPortal,
     DialogRoot,
     DialogTitle,
     DialogTrigger,
 } from "reka-ui";
-import MiniSearch from "minisearch";
+import Fuse from "fuse.js";
 import { Icon } from "@iconify/vue";
 import { vAutoAnimate } from "@formkit/auto-animate/vue";
 import { siteNavGroups } from "~/utils/site-navigation";
@@ -296,28 +318,28 @@ const { data: searchSections } = await useAsyncData(
             maxHeading: "h3",
         }),
 );
-const miniSearch = computed(() => {
-    const index = new MiniSearch({
-        idField: "searchId",
-        fields: ["title", "content"],
-        storeFields: ["originalId", "title", "titles", "content", "level"],
-        searchOptions: {
-            prefix: true,
-            fuzzy: 0.2,
-            boost: {
-                title: 2,
+const searchDocuments = computed(() => {
+    return (searchSections.value ?? []).map((section, index) => ({
+        ...section,
+        searchId: `${section.id}:${index}`,
+    }));
+});
+const fuse = computed(() => {
+    return new Fuse(searchDocuments.value, {
+        includeMatches: true,
+        ignoreLocation: true,
+        threshold: 0.35,
+        keys: [
+            {
+                name: "title",
+                weight: 2,
             },
-        },
+            {
+                name: "content",
+                weight: 1,
+            },
+        ],
     });
-
-    index.addAll(
-        (searchSections.value ?? []).map((section, index) => ({
-            ...section,
-            originalId: section.id,
-            searchId: `${section.id}:${index}`,
-        })),
-    );
-    return index;
 });
 
 const hasResults = computed(() => result.value.length > 0 && query.value);
@@ -327,7 +349,6 @@ const categoryLabels = new Map(
     ),
 );
 const groupedResults = computed(() => groupSearchResults(result.value));
-let latestSearch = 0;
 
 // Keyboard shortcut
 function openSearchFromShortcut(event) {
@@ -355,37 +376,77 @@ watch(isSearchOpen, async (open) => {
 });
 
 function isTitleHit(link) {
-    return matchedFields(link).includes("title");
+    return link.matches?.some((match) => match.key === "title") ?? false;
 }
 
-function displayHitTitle(link) {
-    if (isTitleHit(link)) {
-        return link.title;
-    }
-
-    return `${link.content?.slice(0, 200) ?? ""}...`;
+function displayHitSegments(link) {
+    const field = isTitleHit(link) ? "title" : "content";
+    const value = field === "title" ? link.title : link.content;
+    const text = field === "title" ? value : `${value?.slice(0, 200) ?? ""}...`;
+    return matchedSegments(text, matchForField(link, field)?.indices);
 }
 
-function displayHitPath(link, documentLabel) {
+function displayPathSegments(link, documentLabel) {
     if (!isTitleHit(link)) {
-        return documentLabel;
+        return [{ text: documentLabel, matched: false }];
     }
 
     const parentTitle = link.level > 2 ? link.titles?.at(-1) : "";
-    return parentTitle ? `${documentLabel} > ${parentTitle}` : documentLabel;
+    const path = parentTitle
+        ? `${documentLabel} > ${parentTitle}`
+        : documentLabel;
+    return [{ text: path, matched: false }];
 }
 
-function matchedFields(link) {
-    return [...new Set(Object.values(link.match ?? {}).flat())];
+function matchForField(link, field) {
+    return link.matches?.find((match) => match.key === field);
 }
 
-function searchWithMiniSearch(searchTerm) {
-    return miniSearch.value
+function matchedSegments(text, indices = []) {
+    if (!indices.length) {
+        return [{ text, matched: false }];
+    }
+
+    const segments = [];
+    let cursor = 0;
+
+    for (const [rawStart, rawEnd] of indices) {
+        const start = Math.max(0, rawStart);
+        const end = Math.min(text.length - 1, rawEnd);
+        if (start > end || start >= text.length) continue;
+
+        if (start > cursor) {
+            segments.push({
+                text: text.slice(cursor, start),
+                matched: false,
+            });
+        }
+
+        segments.push({
+            text: text.slice(start, end + 1),
+            matched: true,
+        });
+        cursor = end + 1;
+    }
+
+    if (cursor < text.length) {
+        segments.push({
+            text: text.slice(cursor),
+            matched: false,
+        });
+    }
+
+    return segments.filter((segment) => segment.text);
+}
+
+function searchWithFuse(searchTerm) {
+    return fuse.value
         .search(searchTerm)
         .slice(0, searchResultLimit)
-        .map((link) => ({
-            ...link,
-            id: link.originalId,
+        .map(({ item, matches, score }) => ({
+            ...item,
+            matches,
+            score,
         }));
 }
 
@@ -452,14 +513,14 @@ function displayDocumentPath(pathSegments) {
 }
 
 function titleizePathSegment(value) {
-    return decodePathSegment(value)
+    return safeDecode(value)
         .split(/[-\s]+/)
         .filter(Boolean)
         .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
         .join(" ");
 }
 
-function decodePathSegment(value) {
+function safeDecode(value) {
     try {
         return decodeURIComponent(value);
     } catch {
@@ -472,8 +533,7 @@ async function handleResultClick(event, link) {
     if (!target) return;
 
     event.preventDefault();
-    query.value = "";
-    isSearchOpen.value = false;
+    closeSearch();
 
     await navigateTo(target.fullPath);
     if (!target.hash) return;
@@ -483,10 +543,14 @@ async function handleResultClick(event, link) {
 
 async function handleDocumentClick(event, path) {
     event.preventDefault();
-    query.value = "";
-    isSearchOpen.value = false;
+    closeSearch();
 
     await navigateTo(path);
+}
+
+function closeSearch() {
+    query.value = "";
+    isSearchOpen.value = false;
 }
 
 function parseSearchTarget(id) {
@@ -497,14 +561,14 @@ function parseSearchTarget(id) {
         return {
             fullPath: `${url.pathname}${url.search}${url.hash}`,
             pathWithQuery: `${url.pathname}${url.search}`,
-            hash: url.hash ? decodeHash(url.hash.slice(1)) : "",
+            hash: url.hash ? safeDecode(url.hash.slice(1)) : "",
         };
     } catch {
         const [pathWithQuery, hash = ""] = id.split("#");
         return {
             fullPath: id,
             pathWithQuery,
-            hash: decodeHash(hash),
+            hash: safeDecode(hash),
         };
     }
 }
@@ -521,28 +585,9 @@ async function scrollToSearchTarget(event, hash) {
     }
 }
 
-function decodeHash(value) {
-    try {
-        return decodeURIComponent(value);
-    } catch {
-        return value;
-    }
-}
-
-watch(query, async (value) => {
-    const currentSearch = ++latestSearch;
+watch(query, (value) => {
     const searchTerm = value.trim();
-
-    if (!searchTerm) {
-        result.value = [];
-        return;
-    }
-
-    const searchResult = searchWithMiniSearch(searchTerm);
-
-    if (currentSearch === latestSearch) {
-        result.value = searchResult;
-    }
+    result.value = searchTerm ? searchWithFuse(searchTerm) : [];
 });
 
 // Scroll gradient logic

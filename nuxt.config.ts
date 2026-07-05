@@ -24,7 +24,6 @@ export default defineNuxtConfig({
                 "@vue/devtools-core",
                 "@vue/devtools-kit",
                 "reka-ui",
-                "minisearch",
                 "vue-echarts",
             ],
         },
