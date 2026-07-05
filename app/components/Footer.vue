@@ -1,5 +1,5 @@
 <template>
-    <footer class="footer bg-surface-tint p-5 text-on-surface">
+    <footer class="footer bg-surface p-5 text-on-surface">
         <hr />
         <!-- The following MUST be on every page: license information and link to the repository on gitlab.igem.org -->
         <div class="row mt-4">

@@ -175,13 +175,13 @@ input[type="submit"],
     --primary: #fab826;
     --on-primary: #103098;
 
-    --secondary: #fff5c2;
+    --secondary: #fffdf4;
     --on-secondary: #103098;
 
     --surface: #103098;
-    --on-surface: #fff5c2;
-    --surface-bright: #007dff;
-    --surface-tint: #007dff;
+    --on-surface: #fffdf4;
+    --surface-bright: #0b61db;
+    --surface-tint: #0b61db;
     --surface-container-high: #0955d5;
     --surface-container-highest: #00baf2;
     --surface-variant: #00baf2;
