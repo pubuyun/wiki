@@ -276,6 +276,13 @@
                             />
                         </div>
                         <p
+                            v-else-if="searchIndexLoading && query"
+                            class="mt-4 text-center text-on-surface"
+                            aria-live="polite"
+                        >
+                            Searching...
+                        </p>
+                        <p
                             v-else-if="query"
                             class="mt-4 text-center text-on-surface"
                             aria-live="polite"
@@ -298,7 +305,6 @@ import {
     DialogTitle,
     DialogTrigger,
 } from "reka-ui";
-import Fuse from "fuse.js";
 import { Icon } from "@iconify/vue";
 import { vAutoAnimate } from "@formkit/auto-animate/vue";
 import { siteNavGroups } from "~/utils/site-navigation";
@@ -310,37 +316,56 @@ const { scrollToHash } = useHashScroll();
 const query = ref("");
 const result = ref([]);
 const searchResultLimit = 20;
-const { data: searchSections } = await useAsyncData(
-    "content-search-sections",
-    () =>
-        queryCollectionSearchSections("content", {
-            minHeading: "h2",
-            maxHeading: "h3",
-        }),
-);
+const searchSections = shallowRef([]);
+const searchIndex = shallowRef(null);
+const searchIndexLoading = ref(false);
+let searchIndexPromise = null;
+let searchRevision = 0;
+
 const searchDocuments = computed(() => {
     return (searchSections.value ?? []).map((section, index) => ({
         ...section,
         searchId: `${section.id}:${index}`,
     }));
 });
-const fuse = computed(() => {
-    return new Fuse(searchDocuments.value, {
-        includeMatches: true,
-        ignoreLocation: true,
-        threshold: 0.35,
-        keys: [
-            {
-                name: "title",
-                weight: 2,
-            },
-            {
-                name: "content",
-                weight: 1,
-            },
-        ],
-    });
-});
+
+async function loadSearchIndex() {
+    if (searchIndex.value) return searchIndex.value;
+    if (searchIndexPromise) return searchIndexPromise;
+
+    searchIndexLoading.value = true;
+    searchIndexPromise = Promise.all([
+        import("fuse.js"),
+        queryCollectionSearchSections("content", {
+            minHeading: "h2",
+            maxHeading: "h3",
+        }),
+    ])
+        .then(([{ default: Fuse }, sections]) => {
+            searchSections.value = sections ?? [];
+            searchIndex.value = new Fuse(searchDocuments.value, {
+                includeMatches: true,
+                ignoreLocation: true,
+                threshold: 0.35,
+                keys: [
+                    {
+                        name: "title",
+                        weight: 2,
+                    },
+                    {
+                        name: "content",
+                        weight: 1,
+                    },
+                ],
+            });
+            return searchIndex.value;
+        })
+        .finally(() => {
+            searchIndexLoading.value = false;
+        });
+
+    return searchIndexPromise;
+}
 
 const hasResults = computed(() => result.value.length > 0 && query.value);
 const categoryLabels = new Map(
@@ -373,6 +398,7 @@ watch(isSearchOpen, async (open) => {
 
     await nextTick();
     searchInput.value?.focus();
+    await loadSearchIndex();
 });
 
 function isTitleHit(link) {
@@ -440,7 +466,9 @@ function matchedSegments(text, indices = []) {
 }
 
 function searchWithFuse(searchTerm) {
-    return fuse.value
+    if (!searchIndex.value) return [];
+
+    return searchIndex.value
         .search(searchTerm)
         .slice(0, searchResultLimit)
         .map(({ item, matches, score }) => ({
@@ -585,9 +613,26 @@ async function scrollToSearchTarget(event, hash) {
     }
 }
 
-watch(query, (value) => {
+watch(query, async (value) => {
     const searchTerm = value.trim();
-    result.value = searchTerm ? searchWithFuse(searchTerm) : [];
+    const revision = ++searchRevision;
+
+    if (!searchTerm) {
+        result.value = [];
+        return;
+    }
+
+    try {
+        await loadSearchIndex();
+    } catch (error) {
+        console.error("Failed to load search index.", error);
+        result.value = [];
+        return;
+    }
+
+    if (revision === searchRevision) {
+        result.value = searchWithFuse(searchTerm);
+    }
 });
 
 // Scroll gradient logic
