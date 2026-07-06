@@ -316,56 +316,17 @@ const { scrollToHash } = useHashScroll();
 const query = ref("");
 const result = ref([]);
 const searchResultLimit = 20;
-const searchSections = shallowRef([]);
-const searchIndex = shallowRef(null);
-const searchIndexLoading = ref(false);
-let searchIndexPromise = null;
 let searchRevision = 0;
-
-const searchDocuments = computed(() => {
-    return (searchSections.value ?? []).map((section, index) => ({
-        ...section,
-        searchId: `${section.id}:${index}`,
-    }));
+const {
+    status: searchStatus,
+    search,
+    init: initSearch,
+} = useSearchCollection("content", {
+    immediate: false,
+    minHeading: "h2",
+    maxHeading: "h3",
 });
-
-async function loadSearchIndex() {
-    if (searchIndex.value) return searchIndex.value;
-    if (searchIndexPromise) return searchIndexPromise;
-
-    searchIndexLoading.value = true;
-    searchIndexPromise = Promise.all([
-        import("fuse.js"),
-        queryCollectionSearchSections("content", {
-            minHeading: "h2",
-            maxHeading: "h3",
-        }),
-    ])
-        .then(([{ default: Fuse }, sections]) => {
-            searchSections.value = sections ?? [];
-            searchIndex.value = new Fuse(searchDocuments.value, {
-                includeMatches: true,
-                ignoreLocation: true,
-                threshold: 0.35,
-                keys: [
-                    {
-                        name: "title",
-                        weight: 2,
-                    },
-                    {
-                        name: "content",
-                        weight: 1,
-                    },
-                ],
-            });
-            return searchIndex.value;
-        })
-        .finally(() => {
-            searchIndexLoading.value = false;
-        });
-
-    return searchIndexPromise;
-}
+const searchIndexLoading = computed(() => searchStatus.value === "loading");
 
 const hasResults = computed(() => result.value.length > 0 && query.value);
 const categoryLabels = new Map(
@@ -398,18 +359,24 @@ watch(isSearchOpen, async (open) => {
 
     await nextTick();
     searchInput.value?.focus();
-    await loadSearchIndex();
+
+    try {
+        await initSearch();
+    } catch (error) {
+        console.error("Failed to initialize search.", error);
+    }
 });
 
 function isTitleHit(link) {
-    return link.matches?.some((match) => match.key === "title") ?? false;
+    return hasMarkedSnippet(link.snippets?.title);
 }
 
 function displayHitSegments(link) {
-    const field = isTitleHit(link) ? "title" : "content";
-    const value = field === "title" ? link.title : link.content;
-    const text = field === "title" ? value : `${value?.slice(0, 200) ?? ""}...`;
-    return matchedSegments(text, matchForField(link, field)?.indices);
+    const snippet = isTitleHit(link)
+        ? link.snippets?.title
+        : link.snippets?.content;
+    const text = snippet ?? `${link.content?.slice(0, 200) ?? ""}...`;
+    return markedSegments(text);
 }
 
 function displayPathSegments(link, documentLabel) {
@@ -424,58 +391,58 @@ function displayPathSegments(link, documentLabel) {
     return [{ text: path, matched: false }];
 }
 
-function matchForField(link, field) {
-    return link.matches?.find((match) => match.key === field);
+function hasMarkedSnippet(value) {
+    return /<\/?mark>/i.test(value ?? "");
 }
 
-function matchedSegments(text, indices = []) {
-    if (!indices.length) {
+function markedSegments(text) {
+    const tagPattern = /<\/?mark>/gi;
+    const tags = [...text.matchAll(tagPattern)];
+
+    if (!tags.length) {
         return [{ text, matched: false }];
     }
 
     const segments = [];
     let cursor = 0;
+    let matched = false;
 
-    for (const [rawStart, rawEnd] of indices) {
-        const start = Math.max(0, rawStart);
-        const end = Math.min(text.length - 1, rawEnd);
-        if (start > end || start >= text.length) continue;
-
-        if (start > cursor) {
+    for (const tag of tags) {
+        if (tag.index > cursor) {
             segments.push({
-                text: text.slice(cursor, start),
-                matched: false,
+                text: text.slice(cursor, tag.index),
+                matched,
             });
         }
 
-        segments.push({
-            text: text.slice(start, end + 1),
-            matched: true,
-        });
-        cursor = end + 1;
+        matched = tag[0].toLowerCase() === "<mark>";
+        cursor = tag.index + tag[0].length;
     }
 
     if (cursor < text.length) {
         segments.push({
             text: text.slice(cursor),
-            matched: false,
+            matched,
         });
     }
 
     return segments.filter((segment) => segment.text);
 }
 
-function searchWithFuse(searchTerm) {
-    if (!searchIndex.value) return [];
+async function searchWithNuxtContent(searchTerm) {
+    const links = await search(searchTerm, {
+        limit: searchResultLimit,
+        snippet: {
+            columns: ["title", "content"],
+            around: 30,
+            tag: "mark",
+        },
+    });
 
-    return searchIndex.value
-        .search(searchTerm)
-        .slice(0, searchResultLimit)
-        .map(({ item, matches, score }) => ({
-            ...item,
-            matches,
-            score,
-        }));
+    return links.map((link, index) => ({
+        ...link,
+        searchId: `${link.id}:${index}`,
+    }));
 }
 
 function groupSearchResults(links) {
@@ -623,15 +590,14 @@ watch(query, async (value) => {
     }
 
     try {
-        await loadSearchIndex();
-    } catch (error) {
-        console.error("Failed to load search index.", error);
-        result.value = [];
-        return;
-    }
+        const links = await searchWithNuxtContent(searchTerm);
 
-    if (revision === searchRevision) {
-        result.value = searchWithFuse(searchTerm);
+        if (revision === searchRevision) {
+            result.value = links;
+        }
+    } catch (error) {
+        console.error("Failed to search content.", error);
+        result.value = [];
     }
 });
 
