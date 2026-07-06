@@ -31,8 +31,13 @@ export default defineNuxtConfig({
     },
     echarts: {
         renderer: "canvas",
-        charts: ["BarChart"],
-        components: ["TitleComponent", "TooltipComponent", "GridComponent"],
+        charts: ["BarChart", "LineChart"],
+        components: [
+            "TitleComponent",
+            "TooltipComponent",
+            "GridComponent",
+            "LegendComponent",
+        ],
     },
     studio: {
         repository: {
