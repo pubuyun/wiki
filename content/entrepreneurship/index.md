@@ -2,5 +2,3 @@
 title: Entrep
 description:
 ---
-
-# Entrepreneurship

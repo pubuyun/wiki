@@ -1,7 +1,6 @@
 ---
 description: This page describes a code
 ---
-# Code
 
 ## ACT I
 

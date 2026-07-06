@@ -1,7 +1,6 @@
 ---
 description: This page describes an idea
 ---
-# idea
 
 ## ACT I
 

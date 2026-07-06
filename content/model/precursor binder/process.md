@@ -1,7 +1,6 @@
 ---
 description: This page describes a process
 ---
-# process
 
 ## ACT I
 

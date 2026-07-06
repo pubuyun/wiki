@@ -2,5 +2,3 @@
 title: Safety
 description:
 ---
-
-# Safety

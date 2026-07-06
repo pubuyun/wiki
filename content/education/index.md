@@ -2,5 +2,3 @@
 title: Education
 description:
 ---
-
-# Education 

@@ -2,7 +2,6 @@
 title: Education
 discription:
 ---
-# Overview
 
 ## Overview
 
