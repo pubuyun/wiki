@@ -66,6 +66,6 @@ export default defineNuxtConfig({
         },
     },
     experimental: {
-        buildCache: false,
+        buildCache: true,
     },
 });
