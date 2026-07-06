@@ -151,7 +151,15 @@ function updateProgress() {
                 class="flex h-full flex-1 flex-row items-center justify-end gap-2 lg:gap-4 xl:gap-6"
             >
                 <DarkModeToggle />
-                <LazySearchBar />
+                <ClientOnly>
+                    <SearchBar />
+                    <template #fallback>
+                        <div
+                            aria-hidden="true"
+                            class="flex size-9 shrink-0 rounded-md bg-surface sm:mr-8 sm:ml-5 sm:h-3/4 sm:max-w-48 sm:flex-1 sm:rounded-full"
+                        />
+                    </template>
+                </ClientOnly>
             </div>
         </nav>
     </NavigationMenuRoot>
