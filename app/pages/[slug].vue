@@ -37,6 +37,11 @@ if (!displayPage.value) {
     });
 }
 
+useSeoMeta({
+    title: () => pageSeoTitle(displayPage.value),
+    description: () => pageDescription(displayPage.value),
+});
+
 const categoryNavNodes = computed(() =>
     buildCategoryNavTree(children.value, slug.value, pagePath.value),
 );

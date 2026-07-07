@@ -2,6 +2,9 @@
 definePageMeta({
     layout: "static",
 });
+useSeoMeta({
+    title: "Expelliodor",
+});
 </script>
 
 <template>

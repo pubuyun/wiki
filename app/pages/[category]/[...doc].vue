@@ -93,6 +93,11 @@ if (!page.value || !children.value.length) {
     });
 }
 
+useSeoMeta({
+    title: () => pageSeoTitle(page.value),
+    description: () => pageDescription(page.value),
+});
+
 const contentLayout = useContentLayoutState();
 watchEffect(() => {
     if (!page.value) return;
@@ -142,16 +147,6 @@ function bodyWithChildren(body, children) {
     };
 }
 
-function pageDescription(item) {
-    return item.description || item.meta?.description || "";
-}
-
-function pageTitle(item) {
-    return (
-        item.title ||
-        titleizeSlug(item.path?.split("/").filter(Boolean).at(-1) ?? "")
-    );
-}
 </script>
 
 <template>

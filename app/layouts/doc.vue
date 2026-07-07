@@ -21,7 +21,11 @@ const hasRightSidebar = computed(
         <main
             class="flex h-full flex-1 flex-row gap-8 bg-surface text-on-surface"
         >
-            <aside v-if="page" class="contents">
+            <aside
+                v-if="page"
+                class="contents"
+                aria-label="Category navigation"
+            >
                 <CategoryBar
                     class="hidden lg:flex"
                     :title="categoryTitle"
@@ -31,9 +35,12 @@ const hasRightSidebar = computed(
                 />
             </aside>
 
-            <aside class="contents">
+            <aside
+                v-if="hasRightSidebar"
+                class="contents"
+                aria-label="Page contents"
+            >
                 <ContentBar
-                    v-if="hasRightSidebar"
                     class="order-last hidden lg:flex"
                     :toc="page.body.toc.links"
                 />

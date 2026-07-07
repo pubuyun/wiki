@@ -8,12 +8,12 @@
             <div
                 class="flex h-full w-full items-center justify-center gap-2 p-1 sm:justify-start"
             >
-                <input
-                    class="hidden h-full min-w-0 flex-1 rounded-full bg-secondary px-3 text-on-secondary placeholder:text-on-secondary/60 sm:block"
-                    readonly
-                    placeholder="Ctrl + K"
-                    tabindex="-1"
-                />
+                <span
+                    class="hidden h-full min-w-0 flex-1 items-center rounded-full bg-secondary px-3 text-sm text-on-secondary/60 sm:flex"
+                    aria-hidden="true"
+                >
+                    Ctrl + K
+                </span>
                 <Icon
                     icon="lucide:search"
                     class="size-5 shrink-0"
@@ -48,7 +48,7 @@
                         }"
                         class="flex h-full max-h-[calc(100dvh-2rem)] w-full flex-col justify-start gap-2 sm:max-h-[min(45rem,calc(100dvh-7rem))]"
                     >
-                        <header
+                        <div
                             class="shrink-0 text-center text-2xl font-bold text-on-surface"
                         >
                             <label for="site-search" class="sr-only">
@@ -89,7 +89,7 @@
                                 }}
                                 found.
                             </p>
-                        </header>
+                        </div>
 
                         <div
                             v-if="hasResults"

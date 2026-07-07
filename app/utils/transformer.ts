@@ -30,14 +30,9 @@ function transformFootNotes(markdown: string) {
             }
 
             return line.replace(
-                /^(\s*)(\d+)\.\s+(?!:ref-fn)(?:\[([^\]]+)\]\(([^)]+)\)|(.+?))\s*$/,
-                (_match, indent, id, linkText, link, plainText) => {
-                    const text = linkText ?? plainText.trim();
-                    const linkProp = link
-                        ? ` link="${link.replace(/"/g, "&quot;")}"`
-                        : "";
-
-                    return `${indent}${id}. :ref-fn[${text}]{#${id}${linkProp}}`;
+                /^(\s*)(\d+)\.\s+(?!:ref-fn)(.+?)\s*$/,
+                (_match, indent, id, text) => {
+                    return `${indent}${id}. :ref-fn[${text.trim()}]{#${id}}`;
                 },
             );
         })
