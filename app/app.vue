@@ -42,6 +42,8 @@ const themeClass = computed(() =>
 );
 
 useHead({
+    title: "GreatBay Wiki",
+    titleTemplate: "%s - GreatBay Wiki",
     bodyAttrs: {
         class: themeClass,
     },

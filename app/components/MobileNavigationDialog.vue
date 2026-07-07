@@ -78,9 +78,9 @@ function navigateFolder(node: { path?: string }) {
                 leave-to-class="translate-x-full"
             >
                 <DialogContent
-                    class="fixed top-0 right-0 z-101 flex h-dvh w-[min(21rem,88vw)] flex-col overflow-hidden bg-surface-container-highest text-on-surface shadow-2xl outline-none lg:hidden"
+                    class="fixed top-0 right-0 z-101 flex h-dvh w-[min(21rem,88vw)] flex-col overflow-hidden bg-surface-bright text-on-surface shadow-2xl outline-none lg:hidden"
                 >
-                    <header
+                    <div
                         class="flex h-14 shrink-0 items-center justify-between border-b border-outline-variant px-4"
                     >
                         <button
@@ -115,7 +115,7 @@ function navigateFolder(node: { path?: string }) {
                         >
                             <Icon icon="lucide:x" class="size-5" />
                         </DialogClose>
-                    </header>
+                    </div>
 
                     <div class="min-h-0 flex-1 overflow-y-auto px-4 py-5">
                         <div v-if="activeView === 'category'" class="space-y-4">
@@ -135,7 +135,7 @@ function navigateFolder(node: { path?: string }) {
                                     <AccordionItem
                                         v-if="node.children?.length"
                                         :value="categoryItemValue(node.id)"
-                                        class="overflow-hidden rounded-md bg-surface-variant"
+                                        class="overflow-hidden rounded-md bg-surface-bright"
                                     >
                                         <AccordionHeader>
                                             <AccordionTrigger
@@ -205,7 +205,7 @@ function navigateFolder(node: { path?: string }) {
                                 v-for="group in siteNavGroups"
                                 :key="group.title"
                                 :value="group.title"
-                                class="overflow-hidden rounded-md bg-surface-variant"
+                                class="overflow-hidden rounded-md bg-surface-bright"
                             >
                                 <AccordionHeader>
                                     <AccordionTrigger

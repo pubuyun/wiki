@@ -4,6 +4,7 @@ import tailwindcss from "@tailwindcss/vite";
 export default defineNuxtConfig({
     app: {
         head: {
+            title: "Expelliodor",
             htmlAttrs: {
                 lang: "en",
             },
@@ -31,8 +32,13 @@ export default defineNuxtConfig({
     },
     echarts: {
         renderer: "canvas",
-        charts: ["BarChart"],
-        components: ["TitleComponent", "TooltipComponent", "GridComponent"],
+        charts: ["BarChart", "LineChart"],
+        components: [
+            "TitleComponent",
+            "TooltipComponent",
+            "GridComponent",
+            "LegendComponent",
+        ],
     },
     studio: {
         repository: {
@@ -53,6 +59,7 @@ export default defineNuxtConfig({
     compatibilityDate: "2024-04-03",
     content: {
         build: {
+            transformers: ["~~/app/utils/transformer"],
             markdown: {
                 toc: {
                     depth: 3,
@@ -60,6 +67,7 @@ export default defineNuxtConfig({
             },
         },
     },
+
     experimental: {
         buildCache: true,
     },

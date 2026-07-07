@@ -1,31 +1,18 @@
 <template>
-    <div class="p-4">Congratulations! You found the test graph page.</div>
-    <div class="flex min-h-32 w-full flex-1 flex-col">
-        <VChart class="min-h-32 flex-1" :option="option" autoresize />
+    <div class="flex min-h-dvh flex-col gap-4 bg-surface p-4 text-on-surface">
+        <RmsdXvgChart
+            :xvg="[rmsdLigXvg, rmsdProtXvg]"
+            title="RMSD"
+            :series-name="['Ligand', 'Protein']"
+            height-class="min-h-[28rem]"
+        />
     </div>
 </template>
 <script setup lang="ts">
+import rmsdLigXvg from "~/data/model/samples/cycle1/run_complex_job_0_n_42_id_26_beam_orig3_bm1-s0to100br0-s100to200br2_mpnn_seq1_complex_model_lig.js?raw";
+import rmsdProtXvg from "~/data/model/samples/cycle1/run_complex_job_0_n_42_id_26_beam_orig3_bm1-s0to100br0-s100to200br2_mpnn_seq1_complex_model_prot.js?raw";
+
 definePageMeta({
     layout: "static",
 });
-
-const option = {
-    title: {
-        text: "Example Chart",
-    },
-    tooltip: {},
-    xAxis: {
-        type: "category",
-        data: ["Mon", "Tue", "Wed", "Thu", "Fri"],
-    },
-    yAxis: {
-        type: "value",
-    },
-    series: [
-        {
-            type: "bar",
-            data: [120, 200, 150, 80, 70],
-        },
-    ],
-};
 </script>

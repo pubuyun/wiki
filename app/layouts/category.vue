@@ -26,9 +26,12 @@ const hasRightSidebar = computed(
                 class="flex h-full flex-1 flex-row gap-8 bg-surface py-20 text-on-surface"
                 :class="hasRightSidebar ? 'lg:pr-0' : ''"
             >
-                <aside class="contents">
+                <aside
+                    v-if="hasRightSidebar"
+                    class="contents"
+                    aria-label="Page contents"
+                >
                     <ContentBar
-                        v-if="hasRightSidebar"
                         class="order-last hidden lg:flex"
                         :toc="page.body.toc.links"
                     />

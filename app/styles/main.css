@@ -4,6 +4,7 @@
 @import "@fontsource/belanosima/latin-400.css";
 @import "@fontsource/belanosima/latin-600.css";
 @import "@fontsource/belanosima/latin-700.css";
+@import "@fontsource/opendyslexic/latin-400.css";
 
 @custom-variant dark (&:where(.dark, .dark *));
 @custom-variant colorblind (&:where(.colorblind, .colorblind *));
@@ -29,6 +30,7 @@
     --font-momo-trust-display: "Momo Trust Display", sans-serif;
     --font-righteous: "Righteous", sans-serif;
     --font-belanosima: "Belanosima", serif;
+    --font-opendyslexic: "OpenDyslexic", sans-serif;
     --font-main:
         -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 }
@@ -124,7 +126,7 @@ input[type="submit"],
     --on-surface: #f0e442;
     --surface-bright: #0072b2;
     --surface-tint: #0072b2;
-    --surface-container-high: #56b4e9;
+    --surface-container-high: #0072b2;
     --surface-container-highest: #56b4e9;
     --surface-variant: #56b4e9;
 

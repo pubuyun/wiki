@@ -1,9 +1,7 @@
 <script setup lang="ts">
 import { NavigationMenuList, NavigationMenuRoot } from "reka-ui";
-import BrandIcon from "./BrandIcon.vue";
 import DarkModeToggle from "./NavigationBar/DarkModeToggle.vue";
 import NavItem from "./NavigationBar/NavItem.vue";
-import PhoneNavigationDialog from "./PhoneNavigationDialog.vue";
 import { siteNavGroups } from "~/utils/site-navigation";
 
 const props = withDefaults(
@@ -126,7 +124,7 @@ function updateProgress() {
             :class="navVisibilityClass"
             :style="props.scrollOpacity ? opacityStyle : undefined"
         >
-            <PhoneNavigationDialog />
+            <MobileNavigationDialog />
             <NuxtLink
                 to="/"
                 class="icon-section flex h-full shrink-0 items-center gap-4"
@@ -153,7 +151,15 @@ function updateProgress() {
                 class="flex h-full flex-1 flex-row items-center justify-end gap-2 lg:gap-4 xl:gap-6"
             >
                 <DarkModeToggle />
-                <SearchBar />
+                <ClientOnly>
+                    <SearchBar />
+                    <template #fallback>
+                        <div
+                            aria-hidden="true"
+                            class="flex size-9 shrink-0 rounded-md bg-surface sm:mr-8 sm:ml-5 sm:h-3/4 sm:max-w-48 sm:flex-1 sm:rounded-full"
+                        />
+                    </template>
+                </ClientOnly>
             </div>
         </nav>
     </NavigationMenuRoot>
