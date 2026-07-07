@@ -6,7 +6,7 @@
         :aria-label="`Go to reference ${label || id}`"
         @click="scrollToHash($event, `fnref-${id}`)"
     >
-        <span aria-hidden="true">{{ label || id }}</span>
+        <span>{{ label || id }}</span>
     </a>
 </template>
 
