@@ -5,7 +5,7 @@
         :href="link"
         target="_blank"
         rel="noopener noreferrer"
-        class="rounded-sm font-bold text-surface-tint no-underline hover:text-secondary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-outline"
+        class="rounded-sm font-bold text-surface-tint no-underline hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-outline"
     >
         <slot mdc-unwrap="p" />
         <span class="sr-only">opens in a new tab</span>
@@ -21,15 +21,16 @@
 
     <a
         :href="`#ref-${id}`"
-        class="ml-2 rounded-sm font-bold text-surface-tint no-underline hover:text-secondary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-outline"
+        class="ml-2 inline-flex align-baseline rounded-sm font-bold text-surface-tint no-underline hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-outline"
         :aria-label="`Back to reference ${id} in the text`"
         @click="scrollToHash($event, `#ref-${id}`)"
     >
-        <span aria-hidden="true">?</span>
+        <Icon icon="mingcute:back-fill" class="h-4 w-4 align-middle" />
     </a>
 </template>
 
 <script setup lang="ts">
+import { Icon } from "@iconify/vue";
 const props = defineProps({
     id: {
         type: String,

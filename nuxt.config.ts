@@ -58,6 +58,7 @@ export default defineNuxtConfig({
     compatibilityDate: "2024-04-03",
     content: {
         build: {
+            transformers: ["~~/app/utils/transformer"],
             markdown: {
                 toc: {
                     depth: 3,
@@ -65,6 +66,7 @@ export default defineNuxtConfig({
             },
         },
     },
+
     experimental: {
         buildCache: true,
     },
