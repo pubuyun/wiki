@@ -132,7 +132,7 @@ function updateProgress() {
             >
                 <BrandIcon />
                 <span
-                    class="text-lg text-on-surface sm:text-base lg:text-2xl xl:text-3xl"
+                    class="text-lg text-surface-variant sm:text-base lg:text-2xl xl:text-3xl"
                     aria-hidden="true"
                     >Expelliodor</span
                 >

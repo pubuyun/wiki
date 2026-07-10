@@ -11,7 +11,7 @@
             preserveAspectRatio="none"
         >
             <path
-                class="fill-on-surface"
+                class="fill-surface-variant"
                 d="M 0 0 L 0 -9 c 1.4 0 3.2 0.5 4.436 1.875 Q 7.8 -3.8 9.4 -4.8 Q 10.826 -5.635 12.333 -5.702 Q 15.642 -6.255 18.136 -3.995 C 22.382 -1.057 22.574 -4.4 22.395 -3.467 Q 29.325 -5.392 34.01 -1.444 Q 35.806 0.009 36.423 0"
                 transform="translate(0,0.1)"
             />

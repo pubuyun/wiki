@@ -100,7 +100,7 @@ input[type="submit"],
     --primary: #e69f00;
     --on-primary: #000000;
 
-    --secondary: #f0e442;
+    --secondary: #f8ffff;
     --on-secondary: #000000;
 
     --surface: #000000;
@@ -117,18 +117,18 @@ input[type="submit"],
 
 .colorblind {
     --primary: #e69f00;
-    --on-primary: #000000;
+    --on-primary: #153866;
 
-    --secondary: #f0e442;
-    --on-secondary: #000000;
+    --secondary: #f8ffff;
+    --on-secondary: #153866;
 
-    --surface: #0072b2;
-    --on-surface: #f0e442;
-    --surface-bright: #0072b2;
+    --surface: #0083cc;
+    --on-surface: #f8ffff;
+    --surface-bright: #0083cc;
     --surface-tint: #0072b2;
     --surface-container-high: #0072b2;
     --surface-container-highest: #56b4e9;
-    --surface-variant: #56b4e9;
+    --surface-variant: #f0e442;
 
     --outline: #0072b2;
     --outline-variant: #0072b299;
@@ -155,41 +155,40 @@ input[type="submit"],
 
 /* legacy color for testing in dark mode */
 .dark {
-    --primary: #67e9df;
-    --on-primary: #1c0770;
+    --primary: #ffb145;
+    --on-primary: #03316d;
 
-    --secondary: #eeffec;
-    --on-secondary: #1c0770;
+    --secondary: #0a4296;
+    --on-secondary: #f8ffff;
 
-    --surface: #1c0770;
-    --on-surface: #fff5c2;
-    --surface-bright: #4277ff;
-    --surface-tint: #4277ff;
-    --surface-container-high: #261cc1;
-    --surface-container-highest: #4277ff;
-    --surface-variant: #4277ff;
+    --surface: #03316d;
+    --on-surface: #f8ffff;
+    --surface-bright: #2e6dbf;
+    --surface-tint: #2e6dbf;
+    --surface-container-high: #2e6dbf;
+    --surface-container-highest: #2e6dbf;
+    --surface-variant: #ffdd6b;
 
-    --outline: #1c0770;
-    --outline-variant: #007dff99;
+    --outline: #03316d;
+    --outline-variant: #2e6dbf;
 }
-
 :root {
-    --primary: #fab826;
-    --on-primary: #103098;
+    --primary: #ffb145;
+    --on-primary: #03316d;
 
-    --secondary: #fffdf4;
-    --on-secondary: #103098;
+    --secondary: #f8ffff;
+    --on-secondary: #03316d;
 
-    --surface: #103098;
-    --on-surface: #fffdf4;
-    --surface-bright: #0b61db;
-    --surface-tint: #0b61db;
-    --surface-container-high: #0955d5;
-    --surface-container-highest: #00baf2;
-    --surface-variant: #00baf2;
+    --surface: #03316d;
+    --on-surface: #f8ffff;
+    --surface-bright: #2e6dbf;
+    --surface-tint: #2e6dbf;
+    --surface-container-high: #2e6dbf;
+    --surface-container-highest: #2e6dbf;
+    --surface-variant: #ffdd6b;
 
-    --outline: #103098;
-    --outline-variant: #007dff99;
+    --outline: #03316d;
+    --outline-variant: #2e6dbf;
 }
 
 .colorblind button:not(.nav-menu-trigger):hover {
