@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { NavigationMenuList, NavigationMenuRoot } from "reka-ui";
-import DarkModeToggle from "./NavigationBar/DarkModeToggle.vue";
 import NavItem from "./NavigationBar/NavItem.vue";
 import { siteNavGroups } from "~/utils/site-navigation";
 
@@ -150,7 +149,6 @@ function updateProgress() {
             <div
                 class="flex h-full flex-1 flex-row items-center justify-end gap-2 lg:gap-4 xl:gap-6"
             >
-                <DarkModeToggle />
                 <ClientOnly>
                     <SearchBar />
                     <template #fallback>

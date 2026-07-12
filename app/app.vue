@@ -20,6 +20,7 @@
         <NuxtLayout>
             <NuxtPage />
         </NuxtLayout>
+        <AccessibilityMenu />
     </div>
 </template>
 
@@ -29,14 +30,20 @@
 
 <script setup lang="ts">
 import { wikiTheme } from "./styles/echarts";
+import AccessibilityMenu from "./components/AccessibilityMenu.vue";
 
 const THEME_KEY = "theme";
 
 const colorblindMode = useState<boolean>("colorblind-mode", () => false);
 const darkMode = useState<boolean>("dark-mode", () => false);
+const dyslexiaMode = useState<boolean>("dyslexia-mode", () => false);
 
 const themeClass = computed(() =>
-    [colorblindMode.value && "colorblind", darkMode.value && "dark"]
+    [
+        colorblindMode.value && "colorblind",
+        darkMode.value && "dark",
+        dyslexiaMode.value && "dyslexia",
+    ]
         .filter(Boolean)
         .join(" "),
 );

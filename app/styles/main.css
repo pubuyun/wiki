@@ -200,3 +200,8 @@ input[type="submit"],
     border: 2px solid currentColor;
     border-radius: 0.25rem;
 }
+
+body.dyslexia main,
+body.dyslexia main * {
+    font-family: var(--font-opendyslexic);
+}

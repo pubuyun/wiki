@@ -8,12 +8,8 @@
         </main>
         <Footer />
         <aside aria-label="Page utilities">
-            <ColorblindModeToggle />
             <BackToTop />
         </aside>
         <ClickAnimation />
     </div>
 </template>
-<script setup lang="ts">
-import ColorblindModeToggle from "~/components/NavigationBar/ColorblindModeToggle.vue";
-</script>
