@@ -44,6 +44,7 @@ const hasRightSidebar = computed(
                 />
             </aside>
 
+            <AccessibilityMenu />
             <slot />
         </main>
         <Footer />

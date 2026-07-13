@@ -34,6 +34,7 @@ const hasRightSidebar = computed(
                         :toc="page.body.toc.links"
                     />
                 </aside>
+                <AccessibilityMenu />
                 <slot />
             </div>
         </main>

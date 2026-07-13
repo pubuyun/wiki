@@ -20,7 +20,6 @@
         <NuxtLayout>
             <NuxtPage />
         </NuxtLayout>
-        <AccessibilityMenu />
     </div>
 </template>
 
@@ -30,7 +29,6 @@
 
 <script setup lang="ts">
 import { wikiTheme } from "./styles/echarts";
-import AccessibilityMenu from "./components/AccessibilityMenu.vue";
 
 const THEME_KEY = "theme";
 
