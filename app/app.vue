@@ -49,8 +49,8 @@ const themeClass = computed(() =>
 );
 
 useHead({
-    title: "GreatBay Wiki",
-    titleTemplate: "%s - GreatBay Wiki",
+    title: "GreatBay-SCIE - iGEM 2026",
+    titleTemplate: "%s | GreatBay-SCIE - iGEM 2026",
     bodyAttrs: {
         class: themeClass,
     },

@@ -21,5 +21,5 @@ export function pageTitle(item?: PageInfoLike | null) {
 }
 
 export function pageSeoTitle(item?: PageInfoLike | null) {
-    return `${pageTitle(item)} | Expelliodor`;
+    return `${pageTitle(item)}`;
 }
