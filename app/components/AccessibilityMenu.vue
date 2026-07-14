@@ -16,7 +16,8 @@ const isOpen = ref(false);
             <!-- bottom-right -->
             <button
                 type="button"
-                class="col-start-2 row-start-2 flex size-12 items-center justify-center rounded-full border-[3px] bg-primary text-on-primary shadow-lg transition-[transform,border-color] hover:scale-105 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-outline"
+                class="flex size-12 items-center justify-center rounded-full border-[3px] bg-primary text-on-primary shadow-lg transition-[transform,border-color] hover:scale-105 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-outline"
+                style="grid-area: 2 / 2"
                 :class="isOpen ? 'border-secondary' : 'border-transparent'"
                 :aria-expanded="isOpen"
                 :aria-label="
@@ -39,7 +40,7 @@ const isOpen = ref(false);
             </button>
 
             <!-- top-right -->
-            <div class="col-start-2 row-start-1 size-12">
+            <div class="size-12" style="grid-area: 1 / 2">
                 <Transition
                     enter-active-class="accessibility-option-top-right-enter-active"
                     leave-active-class="accessibility-option-top-right-leave-active"
@@ -51,7 +52,7 @@ const isOpen = ref(false);
             </div>
 
             <!-- top-left -->
-            <div class="col-start-1 row-start-1 size-12">
+            <div class="size-12" style="grid-area: 1 / 1">
                 <Transition
                     enter-active-class="accessibility-option-top-left-enter-active"
                     leave-active-class="accessibility-option-top-left-leave-active"
@@ -63,7 +64,7 @@ const isOpen = ref(false);
             </div>
 
             <!-- bottom-left -->
-            <div class="col-start-1 row-start-2 size-12">
+            <div class="size-12" style="grid-area: 2 / 1">
                 <Transition
                     enter-active-class="accessibility-option-bottom-left-enter-active"
                     leave-active-class="accessibility-option-bottom-left-leave-active"
