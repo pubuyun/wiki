@@ -13,46 +13,10 @@ const isOpen = ref(false);
         aria-label="Accessibility options"
     >
         <div class="grid grid-cols-2 gap-2">
-            <!-- top-left -->
-            <div class="size-12">
-                <Transition
-                    enter-active-class="accessibility-option-top-left-enter-active"
-                    leave-active-class="accessibility-option-top-left-leave-active"
-                >
-                    <div v-if="isOpen" class="size-12">
-                        <DarkModeToggle />
-                    </div>
-                </Transition>
-            </div>
-
-            <!-- top-right -->
-            <div class="size-12">
-                <Transition
-                    enter-active-class="accessibility-option-top-right-enter-active"
-                    leave-active-class="accessibility-option-top-right-leave-active"
-                >
-                    <div v-if="isOpen" class="size-12">
-                        <ColorblindModeToggle />
-                    </div>
-                </Transition>
-            </div>
-
-            <!-- bottom-left -->
-            <div class="size-12">
-                <Transition
-                    enter-active-class="accessibility-option-bottom-left-enter-active"
-                    leave-active-class="accessibility-option-bottom-left-leave-active"
-                >
-                    <div v-if="isOpen" class="size-12">
-                        <DyslexiaModeToggle />
-                    </div>
-                </Transition>
-            </div>
-
             <!-- bottom-right -->
             <button
                 type="button"
-                class="order-4 flex size-12 items-center justify-center rounded-full border-[3px] bg-primary text-on-primary shadow-lg transition-[transform,border-color] hover:scale-105 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-outline"
+                class="col-start-2 row-start-2 flex size-12 items-center justify-center rounded-full border-[3px] bg-primary text-on-primary shadow-lg transition-[transform,border-color] hover:scale-105 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-outline"
                 :class="isOpen ? 'border-secondary' : 'border-transparent'"
                 :aria-expanded="isOpen"
                 :aria-label="
@@ -73,6 +37,42 @@ const isOpen = ref(false);
                     aria-hidden="true"
                 />
             </button>
+
+            <!-- top-right -->
+            <div class="col-start-2 row-start-1 size-12">
+                <Transition
+                    enter-active-class="accessibility-option-top-right-enter-active"
+                    leave-active-class="accessibility-option-top-right-leave-active"
+                >
+                    <div v-if="isOpen" class="size-12">
+                        <ColorblindModeToggle />
+                    </div>
+                </Transition>
+            </div>
+
+            <!-- top-left -->
+            <div class="col-start-1 row-start-1 size-12">
+                <Transition
+                    enter-active-class="accessibility-option-top-left-enter-active"
+                    leave-active-class="accessibility-option-top-left-leave-active"
+                >
+                    <div v-if="isOpen" class="size-12">
+                        <DarkModeToggle />
+                    </div>
+                </Transition>
+            </div>
+
+            <!-- bottom-left -->
+            <div class="col-start-1 row-start-2 size-12">
+                <Transition
+                    enter-active-class="accessibility-option-bottom-left-enter-active"
+                    leave-active-class="accessibility-option-bottom-left-leave-active"
+                >
+                    <div v-if="isOpen" class="size-12">
+                        <DyslexiaModeToggle />
+                    </div>
+                </Transition>
+            </div>
         </div>
     </aside>
 </template>
