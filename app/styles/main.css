@@ -156,39 +156,38 @@ input[type="submit"],
 /* legacy color for testing in dark mode */
 .dark {
     --primary: #ffb145;
-    --on-primary: #03316d;
+    --on-primary: #f8ffff;
 
     --secondary: #0a4296;
     --on-secondary: #f8ffff;
 
     --surface: #03316d;
     --on-surface: #f8ffff;
-    --surface-bright: #2e6dbf;
+    --surface-bright: #3c83e0;
     --surface-tint: #2e6dbf;
     --surface-container-high: #2e6dbf;
     --surface-container-highest: #2e6dbf;
     --surface-variant: #ffdd6b;
 
-    --outline: #03316d;
+    --outline: #f8ffff;
     --outline-variant: #2e6dbf;
 }
 :root {
-    --primary: #ffb145;
-    --on-primary: #03316d;
+    --primary: #f2b236;
+    --on-primary: #103098;
 
-    --secondary: #f8ffff;
-    --on-secondary: #03316d;
+    --secondary: #faf8f5;
+    --on-secondary: #103098;
+    --surface: #b9eaec;
+    --on-surface: #0853d1;
+    --surface-bright: #3699ff;
+    --surface-tint: #b9eaec;
+    --surface-container-high: #5fbde3;
+    --surface-container-highest: #5fbde3;
+    --surface-variant: #eeeba3;
 
-    --surface: #03316d;
-    --on-surface: #f8ffff;
-    --surface-bright: #2e6dbf;
-    --surface-tint: #2e6dbf;
-    --surface-container-high: #2e6dbf;
-    --surface-container-highest: #2e6dbf;
-    --surface-variant: #ffdd6b;
-
-    --outline: #03316d;
-    --outline-variant: #2e6dbf;
+    --outline: #103098;
+    --outline-variant: #0853d1;
 }
 
 .colorblind button:not(.nav-menu-trigger):hover {
