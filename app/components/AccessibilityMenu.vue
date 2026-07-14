@@ -89,19 +89,27 @@ const isOpen = ref(false);
 }
 
 .accessibility-option-top-left-enter-active {
-    animation: accessibility-option-top-left-in 260ms ease-out both;
+    --accessibility-option-x: 3.5rem;
+    --accessibility-option-y: 3.5rem;
+    animation: accessibility-option-in 260ms ease-out both;
 }
 
 .accessibility-option-top-left-leave-active {
-    animation: accessibility-option-top-left-out 260ms ease-in both;
+    --accessibility-option-x: 3.5rem;
+    --accessibility-option-y: 3.5rem;
+    animation: accessibility-option-out 260ms ease-in both;
 }
 
 .accessibility-option-top-right-enter-active {
-    animation: accessibility-option-top-right-in 180ms ease-out both;
+    --accessibility-option-x: 0;
+    --accessibility-option-y: 3.5rem;
+    animation: accessibility-option-in 180ms ease-out both;
 }
 
 .accessibility-option-top-right-leave-active {
-    animation: accessibility-option-top-right-out 180ms ease-in both;
+    --accessibility-option-x: 0;
+    --accessibility-option-y: 3.5rem;
+    animation: accessibility-option-out 180ms ease-in both;
 }
 
 .accessibility-option-bottom-left-enter-active {
@@ -112,10 +120,14 @@ const isOpen = ref(false);
     animation: accessibility-option-bottom-left-out 420ms ease-in-out both;
 }
 
-@keyframes accessibility-option-top-left-in {
+@keyframes accessibility-option-in {
     from {
         opacity: 0;
-        transform: translate(3.5rem, 3.5rem) scale(0.9);
+        transform: translate(
+                var(--accessibility-option-x),
+                var(--accessibility-option-y)
+            )
+            scale(0.9);
     }
     to {
         opacity: 1;
@@ -123,36 +135,18 @@ const isOpen = ref(false);
     }
 }
 
-@keyframes accessibility-option-top-left-out {
+@keyframes accessibility-option-out {
     from {
         opacity: 1;
         transform: translate(0, 0) scale(1);
     }
     to {
         opacity: 0;
-        transform: translate(3.5rem, 3.5rem) scale(0.9);
-    }
-}
-
-@keyframes accessibility-option-top-right-in {
-    from {
-        opacity: 0;
-        transform: translateY(3.5rem) scale(0.9);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-    }
-}
-
-@keyframes accessibility-option-top-right-out {
-    from {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-    }
-    to {
-        opacity: 0;
-        transform: translateY(3.5rem) scale(0.9);
+        transform: translate(
+                var(--accessibility-option-x),
+                var(--accessibility-option-y)
+            )
+            scale(0.9);
     }
 }
 
