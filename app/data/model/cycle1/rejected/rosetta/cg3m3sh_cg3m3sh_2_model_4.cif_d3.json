@@ -1,0 +1,19 @@
+{
+  "source": "rfdiffusion",
+  "name": "cg3m3sh_cg3m3sh_2_model_4.cif_d3",
+  "_id": "cg3m3sh_cg3m3sh_2_model_4.cif_d3",
+  "pLDDT(%)": 84.73,
+  "i_pAE": 1.23,
+  "ptm": 0.9206,
+  "iptm": 0.8849,
+  "conf_ranking_score": 0.8921,
+  "Buried_SASA(nm2)": 4.422,
+  "cg3m3sh_deltag": -17.26,
+  "_3m3sh_deltag": -25.51,
+  "Melting Temperature": 46.3924,
+  "_optimum ph": 7.726313,
+  "_rmsd_lig_url": "https://static.igem.wiki/teams/6133/wiki/drylab/model/binders/md/cycle1/rrmsd/run-cg3m3sh-cg3m3sh-2-model-4-cif-d3-model-lig.js",
+  "_rmsd_prot_url": "https://static.igem.wiki/teams/6133/wiki/drylab/model/binders/md/cycle1/rrmsd/run-cg3m3sh-cg3m3sh-2-model-4-cif-d3-model-prot.js",
+  "selected": false,
+  "_pdb_url": "https://static.igem.wiki/teams/6133/wiki/drylab/model/binders/pdb/cg3m3sh-cg3m3sh-2-model-4-cif-d3-model.js"
+}
