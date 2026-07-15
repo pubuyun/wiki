@@ -5,6 +5,7 @@ pages:
     stage: build
     variables:
         NUXT_APP_BASE_URL: "/greatbay-scie/"
+        NODE_OPTIONS: "--max-old-space-size=8192"
     cache:
         - key:
               files:
