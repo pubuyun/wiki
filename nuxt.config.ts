@@ -38,6 +38,8 @@ export default defineNuxtConfig({
             "TooltipComponent",
             "GridComponent",
             "LegendComponent",
+            "ToolboxComponent",
+            "DataZoomComponent",
         ],
     },
     studio: {
