@@ -32,7 +32,10 @@
                 Back to Previous
             </button>
 
-            <div class="min-h-0 flex-1 overflow-auto p-2">
+            <div
+                ref="treeScrollContainerRef"
+                class="min-h-0 flex-1 overflow-auto p-2"
+            >
                 <TreeRoot
                     v-model="selectedTreeNode"
                     v-model:expanded="expandedKeys"
@@ -273,6 +276,7 @@ const route = useRoute();
 const router = useRouter();
 const previousNonBinderPath = ref<string | null>(null);
 const isUnsupportedViewport = ref(false);
+const treeScrollContainerRef = ref<HTMLElement | null>(null);
 let viewportReturnTimer: ReturnType<typeof setTimeout> | undefined;
 let viewportQuery: MediaQueryList | undefined;
 
@@ -363,6 +367,34 @@ watch([selectedTreeNode, activeTab], ([node, tab]) => {
     if (route.path !== target) void navigateTo(target, { replace: true });
 });
 
+function centerSelectedTreeNode(behavior: ScrollBehavior) {
+    const container = treeScrollContainerRef.value;
+    const selectedItem = container?.querySelector<HTMLElement>(
+        '[role="treeitem"][data-selected]',
+    );
+    if (!container || !selectedItem) return;
+
+    const containerRect = container.getBoundingClientRect();
+    const itemRect = selectedItem.getBoundingClientRect();
+    const top =
+        container.scrollTop +
+        itemRect.top -
+        containerRect.top -
+        container.clientHeight / 2 +
+        itemRect.height / 2;
+
+    container.scrollTo({ top: Math.max(0, top), behavior });
+}
+
+watch(
+    () => selectedTreeNode.value?.key,
+    async (key) => {
+        if (!key || !import.meta.client) return;
+        await nextTick();
+        centerSelectedTreeNode("smooth");
+    },
+);
+
 const selectedBinder = computed(() => selectedTreeNode.value?.record);
 const visibleProperties = computed(() =>
     Object.entries(selectedBinder.value ?? {}).filter(
@@ -415,6 +447,8 @@ onMounted(() => {
     viewportQuery = window.matchMedia("(max-width: 1023px)");
     viewportQuery.addEventListener("change", updateViewportSupport);
     updateViewportSupport();
+
+    void nextTick(() => centerSelectedTreeNode("auto"));
 });
 
 onBeforeUnmount(() => {
