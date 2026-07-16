@@ -1,5 +1,0 @@
-{
-    "framework": "nuxtjs",
-    "installCommand": "node .yarn/releases/yarn-4.9.1.cjs install",
-    "buildCommand": "NITRO_PRESET=vercel node .yarn/releases/yarn-4.9.1.cjs build"
-}

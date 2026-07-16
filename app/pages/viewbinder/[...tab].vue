@@ -218,12 +218,12 @@ type TreeNode = {
     key: string;
     label: string;
     children?: TreeNode[];
-    record?: BinderRecord;
+    loadRecord?: () => Promise<BinderRecord>;
 };
 
 const modules = import.meta.glob<BinderRecord>(
     "../../data/model/cycle*/{selected,rejected}/{proteina,rosetta}/*.json",
-    { eager: true, import: "default" },
+    { import: "default" },
 );
 
 function titleCase(segment: string) {
@@ -237,7 +237,7 @@ function titleCase(segment: string) {
 function buildTree(): TreeNode[] {
     const roots: TreeNode[] = [];
 
-    for (const [path, record] of Object.entries(modules).sort(([a], [b]) =>
+    for (const [path, loadRecord] of Object.entries(modules).sort(([a], [b]) =>
         a.localeCompare(b),
     )) {
         const relativePath = path.split("/model/")[1];
@@ -258,7 +258,7 @@ function buildTree(): TreeNode[] {
                     label: isFile
                         ? segment.replace(/\.json$/i, "")
                         : titleCase(segment),
-                    ...(isFile ? { record } : { children: [] }),
+                    ...(isFile ? { loadRecord } : { children: [] }),
                 };
                 siblings.push(node);
             }
@@ -279,7 +279,7 @@ function flattenTree(nodes: TreeNode[]): TreeNode[] {
 
 const treeItems = buildTree();
 const allTreeNodes = flattenTree(treeItems);
-const firstFileNode = allTreeNodes.find((node) => node.record);
+const firstFileNode = allTreeNodes.find((node) => node.loadRecord);
 const route = useRoute();
 const router = useRouter();
 const previousNonBinderPath = ref<string | null>(null);
@@ -312,7 +312,7 @@ function catchallTab() {
 
 function binderRoute(node: TreeNode, tab: TabValue) {
     const [cycle = "", status = "", source = ""] = node.key.split("/");
-    const name = node.record?.name ?? node.label;
+    const name = node.label;
     const segments = [cycle, status, source, name, tab].map((segment) =>
         encodeURIComponent(segment),
     );
@@ -325,7 +325,8 @@ function findRouteNode() {
     if (!isTabValue(currentTab)) return undefined;
 
     return allTreeNodes.find(
-        (node) => node.record && binderRoute(node, currentTab) === route.path,
+        (node) =>
+            node.loadRecord && binderRoute(node, currentTab) === route.path,
     );
 }
 
@@ -369,7 +370,7 @@ watch(
 );
 
 watch([selectedTreeNode, activeTab], ([node, tab]) => {
-    if (!node?.record) return;
+    if (!node?.loadRecord) return;
 
     const target = binderRoute(node, tab);
     if (route.path !== target) void navigateTo(target, { replace: true });
@@ -403,7 +404,22 @@ watch(
     },
 );
 
-const selectedBinder = computed(() => selectedTreeNode.value?.record);
+const selectedBinder = shallowRef<BinderRecord>();
+let recordLoadId = 0;
+
+watch(
+    () => selectedTreeNode.value,
+    async (node) => {
+        const loadId = ++recordLoadId;
+        selectedBinder.value = undefined;
+        if (!node?.loadRecord) return;
+
+        const record = await node.loadRecord();
+        if (loadId === recordLoadId) selectedBinder.value = record;
+    },
+    { immediate: true },
+);
+
 const visibleProperties = computed(() =>
     Object.entries(selectedBinder.value ?? {}).filter(
         ([key]) => !key.startsWith("_"),

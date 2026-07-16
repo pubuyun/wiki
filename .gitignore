@@ -30,3 +30,5 @@ logs
 !.env.example
 
 pnpm-lock.yaml
+
+graphify-out
