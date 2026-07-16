@@ -60,11 +60,6 @@ export default defineNuxtConfig({
     },
     css: ["./app/styles/main.css"],
     devtools: { enabled: isDevServer },
-    nitro: {
-        prerender: {
-            routes: ["/search-index.json"],
-        },
-    },
     compatibilityDate: "2024-04-03",
     content: {
         experimental: {
