@@ -156,17 +156,25 @@
                     value="md-graph"
                     class="min-h-0 flex-1 overflow-auto p-3 outline-none"
                 >
-                    <RmsdXvgChart
-                        v-if="selectedBinder"
-                        :key="selectedBinder._id"
-                        :src="[
-                            selectedBinder._rmsd_lig_url,
-                            selectedBinder._rmsd_prot_url,
-                        ]"
-                        title="RMSD"
-                        :series-name="['Ligand', 'Protein']"
-                        height-class="min-h-[32rem] lg:h-full"
-                    />
+                    <ClientOnly>
+                        <LazyRmsdXvgChartClient
+                            v-if="activeTab === 'md-graph' && selectedBinder"
+                            :key="selectedBinder._id"
+                            :src="[
+                                selectedBinder._rmsd_lig_url,
+                                selectedBinder._rmsd_prot_url,
+                            ]"
+                            title="RMSD"
+                            :series-name="['Ligand', 'Protein']"
+                            height-class="min-h-[32rem] lg:h-full"
+                        />
+                        <template #fallback>
+                            <div
+                                class="min-h-[32rem] lg:h-full"
+                                aria-hidden="true"
+                            />
+                        </template>
+                    </ClientOnly>
                 </TabsContent>
 
                 <TabsContent value="vmd-animation" class="min-h-0 flex-1" />

@@ -1,6 +1,8 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 import tailwindcss from "@tailwindcss/vite";
 
+const isDevServer = process.env.NODE_ENV === "development";
+
 export default defineNuxtConfig({
     app: {
         head: {
@@ -14,8 +16,7 @@ export default defineNuxtConfig({
         "@nuxt/content",
         ...(process.env.NUXT_STUDIO !== "false" ? ["nuxt-studio"] : []),
         "nuxt-echarts",
-        "@nuxt/a11y",
-        "@vercel/speed-insights",
+        ...(isDevServer ? ["@nuxt/a11y"] : []),
         "@formkit/auto-animate/nuxt",
     ],
     vite: {
@@ -57,7 +58,12 @@ export default defineNuxtConfig({
         },
     },
     css: ["./app/styles/main.css"],
-    devtools: { enabled: process.env.NODE_ENV !== "production" },
+    devtools: { enabled: isDevServer },
+    nitro: {
+        prerender: {
+            routes: ["/search-index.json"],
+        },
+    },
     compatibilityDate: "2024-04-03",
     content: {
         build: {

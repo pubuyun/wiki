@@ -321,6 +321,8 @@ const searchIndex = shallowRef(null);
 const searchIndexLoading = ref(false);
 let searchIndexPromise = null;
 let searchRevision = 0;
+const runtimeConfig = useRuntimeConfig();
+const searchIndexUrl = `${runtimeConfig.app.baseURL.replace(/\/?$/, "/")}search-index.json`;
 
 const searchDocuments = computed(() => {
     return (searchSections.value ?? []).map((section, index) => ({
@@ -336,10 +338,7 @@ async function loadSearchIndex() {
     searchIndexLoading.value = true;
     searchIndexPromise = Promise.all([
         import("fuse.js"),
-        queryCollectionSearchSections("content", {
-            minHeading: "h2",
-            maxHeading: "h3",
-        }),
+        $fetch(searchIndexUrl),
     ])
         .then(([{ default: Fuse }, sections]) => {
             searchSections.value = sections ?? [];

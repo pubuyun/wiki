@@ -23,10 +23,6 @@
     </div>
 </template>
 
-<style>
-@import "./styles/main.css";
-</style>
-
 <script setup lang="ts">
 import { wikiTheme } from "./styles/echarts";
 
@@ -35,6 +31,14 @@ const THEME_KEY = "theme";
 const colorblindMode = useState<boolean>("colorblind-mode", () => false);
 const darkMode = useState<boolean>("dark-mode", () => false);
 const dyslexiaMode = useState<boolean>("dyslexia-mode", () => false);
+
+watch(
+    dyslexiaMode,
+    (enabled) => {
+        if (enabled) void import("./styles/opendyslexic.css");
+    },
+    { immediate: true },
+);
 
 const themeClass = computed(() =>
     [

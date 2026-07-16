@@ -1,11 +1,16 @@
 <template>
     <div class="flex min-h-dvh flex-col gap-4 bg-surface p-4 text-on-surface">
-        <RmsdXvgChart
-            :xvg="[rmsdLigXvg, rmsdProtXvg]"
-            title="RMSD"
-            :series-name="['Ligand', 'Protein']"
-            height-class="min-h-[28rem]"
-        />
+        <ClientOnly>
+            <LazyRmsdXvgChartClient
+                :xvg="[rmsdLigXvg, rmsdProtXvg]"
+                title="RMSD"
+                :series-name="['Ligand', 'Protein']"
+                height-class="min-h-[28rem]"
+            />
+            <template #fallback>
+                <div class="min-h-[28rem]" aria-hidden="true" />
+            </template>
+        </ClientOnly>
     </div>
 </template>
 <script setup lang="ts">
