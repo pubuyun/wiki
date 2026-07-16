@@ -33,15 +33,15 @@ export default defineNuxtConfig({
         plugins: [tailwindcss()],
     },
     echarts: {
-        renderer: "canvas",
-        charts: ["BarChart", "LineChart"],
+        renderer: "svg",
+        charts: ["LineChart"],
         components: [
             "TitleComponent",
             "TooltipComponent",
             "GridComponent",
             "LegendComponent",
-            "ToolboxComponent",
-            "DataZoomComponent",
+            // "ToolboxComponent",
+            // "DataZoomComponent",
         ],
     },
     studio: {
