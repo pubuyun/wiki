@@ -27,6 +27,7 @@ export default defineNuxtConfig({
                 "@vue/devtools-kit",
                 "reka-ui",
                 "vue-echarts",
+                "fuse.js",
             ],
         },
         plugins: [tailwindcss()],
