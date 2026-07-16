@@ -1,0 +1,5 @@
+{
+    "$schema": "https://openapi.vercel.sh/vercel.json",
+    "installCommand": "node .yarn/releases/yarn-4.9.1.cjs install --immutable",
+    "buildCommand": "node .yarn/releases/yarn-4.9.1.cjs run build"
+}
