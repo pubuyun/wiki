@@ -67,6 +67,9 @@ export default defineNuxtConfig({
     },
     compatibilityDate: "2024-04-03",
     content: {
+        experimental: {
+            sqliteConnector: "native",
+        },
         build: {
             transformers: ["~~/app/utils/transformer"],
             markdown: {
@@ -78,6 +81,6 @@ export default defineNuxtConfig({
     },
 
     experimental: {
-        buildCache: true,
+        buildCache: false,
     },
 });

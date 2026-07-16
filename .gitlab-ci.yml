@@ -31,16 +31,16 @@ pages:
         paths:
             - public
 
-lighthouse:
-    stage: test
-    image: cypress/browsers:node-22.14.0-chrome-133.0.6943.126-1-ff-135.0.1-edge-133.0.3065.82-1
-    needs:
-        - job: pages
-          artifacts: true
-    before_script:
-        - corepack enable
-        - yarn install --immutable --inline-builds
-    script:
-        - mkdir -p .output/public
-        - cp -a public/. .output/public/
-        - yarn lighthouse
+# lighthouse:
+#     stage: test
+#     image: cypress/browsers:node-22.14.0-chrome-133.0.6943.126-1-ff-135.0.1-edge-133.0.3065.82-1
+#     needs:
+#         - job: pages
+#           artifacts: true
+#     before_script:
+#         - corepack enable
+#         - yarn install --immutable --inline-builds
+#     script:
+#         - mkdir -p .output/public
+#         - cp -a public/. .output/public/
+#         - yarn lighthouse

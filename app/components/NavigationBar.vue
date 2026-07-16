@@ -150,7 +150,9 @@ function updateProgress() {
                 class="flex h-full flex-1 flex-row items-center justify-end gap-2 lg:gap-4 xl:gap-6"
             >
                 <ClientOnly>
-                    <SearchBar />
+                    <LazySearchBar
+                        hydrate-on-interaction="pointerover,focusin,click,keydown"
+                    />
                     <template #fallback>
                         <div
                             aria-hidden="true"
