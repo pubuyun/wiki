@@ -12,7 +12,7 @@ pages:
                   - yarn.lock
                   - package.json
           paths:
-              - .yarn/cache/
+              - .yarn/
 
         - key:
               prefix: build-cache-$CI_COMMIT_REF_SLUG
