@@ -32,88 +32,14 @@ install:
 # Job name has to be `pages`.
 pages:
     stage: build
-    variables:
-        FF_TIMESTAMPS: "true"
-        NODE_OPTIONS: >-
-            --max-old-space-size=1400
-            --trace-uncaught
-            --trace-warnings
-            --report-on-fatalerror
-            --report-directory=.ci-diagnostics
     needs:
         - job: install
     cache:
         - <<: *install-cache
-    before_script:
-        - test -x node_modules/.bin/nuxt
     script:
-        - |
-            mkdir -p .ci-diagnostics
-            echo "Node: $(node --version)"
-            echo "CPU: $(nproc)"
-            echo "NUXT_STUDIO=false"
-            echo "NUXT_APP_BASE_URL=/greatbay-scie/"
-            echo "Memory limit:"
-            cat /sys/fs/cgroup/memory.max 2>/dev/null || true
-            echo "Memory usage before build:"
-            cat /sys/fs/cgroup/memory.current 2>/dev/null || true
-            grep -E 'MemTotal|MemAvailable' /proc/meminfo || true
-            df -h
-            status=0
-            NUXT_STUDIO=false NUXT_APP_BASE_URL="/greatbay-scie/" ./node_modules/.bin/nuxt generate >.ci-diagnostics/generate.log 2>&1 || status=$?
-            echo "Last 300 lines of generate.log:"
-            tail -n 300 .ci-diagnostics/generate.log
-            echo "Memory usage after build:"
-            cat /sys/fs/cgroup/memory.current 2>/dev/null || true
-            echo "Peak memory usage:"
-            cat /sys/fs/cgroup/memory.peak 2>/dev/null || true
-            echo "Memory events:"
-            cat /sys/fs/cgroup/memory.events 2>/dev/null || true
-            echo "generate exit code=$status"
-            exit "$status"
+        - NUXT_STUDIO=false NUXT_APP_BASE_URL="/greatbay-scie/" ./node_modules/.bin/nuxt generate
         - mkdir -p public
         - cp -a .output/public/. public/
     artifacts:
-        when: always
-        expire_in: 7 days
         paths:
             - public/
-            - .ci-diagnostics/
-# pages:
-#     stage: build
-#     needs:
-#         - job: install
-#     cache:
-#         - <<: *install-cache
-#         - key:
-#               prefix: build-cache-$CI_COMMIT_REF_SLUG
-#               files:
-#                   - yarn.lock
-#           paths:
-#               - node_modules/.cache/
-#           policy: pull-push
-#           when: on_success
-#     before_script:
-#         - corepack enable
-#         - yarn install --immutable
-#     script:
-#         - yarn generate
-#         - mkdir -p public
-#         - cp -a .output/public/. public/
-#     artifacts:
-#         paths:
-#             - public/
-
-# lighthouse:
-#     stage: test
-#     image: cypress/browsers:node-22.14.0-chrome-133.0.6943.126-1-ff-135.0.1-edge-133.0.3065.82-1
-#     needs:
-#         - job: pages
-#           artifacts: true
-#     before_script:
-#         - corepack enable
-#         - yarn install --immutable --inline-builds
-#     script:
-#         - mkdir -p .output/public
-#         - cp -a public/. .output/public/
-#         - yarn lighthouse
