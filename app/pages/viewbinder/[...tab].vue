@@ -157,7 +157,7 @@
                     class="min-h-0 flex-1 overflow-auto p-3 outline-none"
                 >
                     <ClientOnly>
-                        <LazyRmsdXvgChartClient
+                        <LazyRmsdXvgChart
                             v-if="activeTab === 'md-graph' && selectedBinder"
                             :key="selectedBinder._id"
                             :src="[
