@@ -34,32 +34,70 @@ install:
 # https://docs.gitlab.com/ee/user/project/pages/#how-it-works
 pages:
     stage: build
+    variables:
+        DEBUG: "nuxt:*,vite:*"
+        FF_TIMESTAMPS: "true"
+        NODE_OPTIONS: >-
+            --max-old-space-size=3072
+            --trace-uncaught
+            --trace-warnings
+            --report-on-fatalerror
+            --report-directory=.ci-diagnostics
     needs:
         - job: install
     cache:
-        # Reuse the dependency downloads saved by the install job. This cache is
-        # read-only here, so a failed build cannot replace a valid install cache.
-        - <<: *install-cache
-        # GitLab uploads this cache only after a successful build. The next build
-        # on the same branch can therefore reuse the last successful build cache.
-        - key:
-              prefix: build-cache-$CI_COMMIT_REF_SLUG
-              files:
-                  - yarn.lock
-          paths:
-              - node_modules/.cache/
-          policy: pull-push
-          when: on_success
+        # 保留原来的 cache 配置
     before_script:
         - corepack enable
         - yarn install --immutable
     script:
-        - yarn generate
+        - |
+            set -x
+            mkdir -p .ci-diagnostics
+            echo "Node: $(node --version)"
+            echo "Yarn: $(yarn --version)"
+            echo "CPU: $(nproc)"
+            free -h || true
+            df -h
+            trap 'code=$?; echo "generate exit code=$code"; free -h || true; df -h; exit $code' EXIT
+            yarn generate 2>&1 | tee .ci-diagnostics/generate.log
+            exit ${PIPESTATUS[0]}
         - mkdir -p public
         - cp -a .output/public/. public/
     artifacts:
+        when: always
+        expire_in: 7 days
         paths:
             - public/
+            - .ci-diagnostics/
+# pages:
+#     stage: build
+#     needs:
+#         - job: install
+#     cache:
+#         # Reuse the dependency downloads saved by the install job. This cache is
+#         # read-only here, so a failed build cannot replace a valid install cache.
+#         - <<: *install-cache
+#         # GitLab uploads this cache only after a successful build. The next build
+#         # on the same branch can therefore reuse the last successful build cache.
+#         - key:
+#               prefix: build-cache-$CI_COMMIT_REF_SLUG
+#               files:
+#                   - yarn.lock
+#           paths:
+#               - node_modules/.cache/
+#           policy: pull-push
+#           when: on_success
+#     before_script:
+#         - corepack enable
+#         - yarn install --immutable
+#     script:
+#         - yarn generate
+#         - mkdir -p public
+#         - cp -a .output/public/. public/
+#     artifacts:
+#         paths:
+#             - public/
 
 # lighthouse:
 #     stage: test
