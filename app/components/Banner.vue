@@ -1,9 +1,17 @@
 <template>
     <div class="grid leading-none">
         <img
+            v-if="imgSrc"
             class="col-1 row-1 h-[90vh] w-full object-cover"
             :src="imgSrc"
             alt=""
+            :style="{ objectPosition: imgPosition }"
+        />
+
+        <div
+            v-else
+            class="col-1 row-1 h-[90vh] w-full bg-on-surface"
+            aria-hidden="true"
         />
         <svg
             class="top-border col-1 row-1 self-end"
@@ -38,8 +46,14 @@
     </div>
 </template>
 <script setup lang="ts">
-defineProps<{
-    imgSrc: string;
-    title: string;
-}>();
+withDefaults(
+    defineProps<{
+        title: string;
+        imgSrc?: string;
+        imgPosition?: string;
+    }>(),
+    {
+        imgPosition: "50% center",
+    },
+);
 </script>
