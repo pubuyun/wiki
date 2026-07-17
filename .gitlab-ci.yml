@@ -11,13 +11,12 @@ variables:
 
 .install-cache: &install-cache
     key:
-        prefix: yarn-install
+        prefix: node-modules
         files:
             - yarn.lock
             - package.json
     paths:
-        - .yarn/cache/
-        - .yarn/berry/
+        - node_modules/
     policy: pull
 
 install:
@@ -45,22 +44,12 @@ pages:
         - job: install
     cache:
         - <<: *install-cache
-        - key:
-              prefix: build-cache-$CI_COMMIT_REF_SLUG
-              files:
-                  - yarn.lock
-          paths:
-              - node_modules/.cache/
-          policy: pull-push
-          when: on_success
     before_script:
-        - corepack enable
-        - yarn install --immutable
+        - test -x node_modules/.bin/nuxt
     script:
         - |
             mkdir -p .ci-diagnostics
             echo "Node: $(node --version)"
-            echo "Yarn: $(yarn --version)"
             echo "CPU: $(nproc)"
             echo "Memory limit:"
             cat /sys/fs/cgroup/memory.max 2>/dev/null || true
@@ -69,7 +58,7 @@ pages:
             grep -E 'MemTotal|MemAvailable' /proc/meminfo || true
             df -h
             status=0
-            yarn generate >.ci-diagnostics/generate.log 2>&1 || status=$?
+            ./node_modules/.bin/nuxt generate >.ci-diagnostics/generate.log 2>&1 || status=$?
             echo "Last 300 lines of generate.log:"
             tail -n 300 .ci-diagnostics/generate.log
             echo "Memory usage after build:"
