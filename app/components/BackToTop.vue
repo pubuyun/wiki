@@ -11,7 +11,7 @@
         <button
             @click="scrollToTop"
             v-show="visible"
-            class="back-to-top fixed bottom-6 z-50 h-24 w-24 cursor-pointer border-none bg-transparent lg:hidden"
+            class="fixed right-[2px] bottom-6 z-50 h-24 w-24 cursor-pointer border-none bg-transparent sm:right-6 lg:hidden"
             aria-label="Back to top"
         >
             <svg
@@ -89,14 +89,3 @@ onUnmounted(() => {
     window.removeEventListener("scroll", onScroll);
 });
 </script>
-
-<style scoped>
-.back-to-top {
-    right: 2px !important;
-}
-@media (min-width: 640px) {
-    .back-to-top {
-        right: 24px !important;
-    }
-}
-</style>

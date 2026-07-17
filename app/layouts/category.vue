@@ -18,6 +18,7 @@ const hasRightSidebar = computed(
         <header class="fixed top-0 z-100 flex w-full flex-col">
             <NavigationBar scroll-opacity />
         </header>
+
         <main class="flex flex-1 bg-surface text-on-surface">
             <CategoryBar
                 v-if="page"
@@ -32,11 +33,12 @@ const hasRightSidebar = computed(
                 <Banner
                     v-if="page"
                     :title="page.title"
-                    :imgSrc="page.meta?.banner"
+                    :img-src="page.meta?.banner"
+                    :img-position="page.meta?.bannerPosition"
                 />
 
                 <div
-                    class="flex min-w-0 flex-1 flex-row gap-8 py-20"
+                    class="flex min-w-0 flex-1 flex-row gap-8 pt-6 pb-20"
                     :class="hasRightSidebar ? 'lg:pr-0' : ''"
                 >
                     <aside
@@ -54,10 +56,14 @@ const hasRightSidebar = computed(
                 </div>
             </div>
         </main>
+
         <Footer />
+
         <aside aria-label="Page utilities">
+            <AccessibilityMenu />
             <BackToTop />
         </aside>
+
         <ClickAnimation />
     </div>
 </template>

@@ -1,12 +1,21 @@
 <template>
-    <component
-        :is="ImageComponent"
-        :src="refinedSrc"
-        :alt="props.alt"
-        :width="props.width"
-        :height="props.height"
-        class="my-8 w-full rounded-lg border border-surface-variant bg-secondary object-cover shadow-sm"
-    />
+    <LightboxImage :src="[refinedSrc]" :alt="props.alt">
+        <template #default="{ open }">
+            <component
+                :is="ImageComponent"
+                :src="refinedSrc"
+                :alt="props.alt"
+                :width="props.width"
+                :height="props.height"
+                class="my-8 w-full cursor-zoom-in rounded-lg border border-surface-variant bg-secondary object-cover shadow-sm"
+                role="button"
+                tabindex="0"
+                @click="open(0)"
+                @keydown.enter="open(0)"
+                @keydown.space.prevent="open(0)"
+            />
+        </template>
+    </LightboxImage>
 </template>
 
 <script setup lang="ts">

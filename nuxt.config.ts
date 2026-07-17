@@ -1,6 +1,8 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 import tailwindcss from "@tailwindcss/vite";
 
+const isDevServer = process.env.NODE_ENV === "development";
+
 export default defineNuxtConfig({
     app: {
         head: {
@@ -14,8 +16,7 @@ export default defineNuxtConfig({
         "@nuxt/content",
         ...(process.env.NUXT_STUDIO !== "false" ? ["nuxt-studio"] : []),
         "nuxt-echarts",
-        "@nuxt/a11y",
-        "@vercel/speed-insights",
+        ...(isDevServer ? ["@nuxt/a11y"] : []),
         "@formkit/auto-animate/nuxt",
     ],
     vite: {
@@ -26,18 +27,21 @@ export default defineNuxtConfig({
                 "@vue/devtools-kit",
                 "reka-ui",
                 "vue-echarts",
+                "fuse.js",
             ],
         },
         plugins: [tailwindcss()],
     },
     echarts: {
-        renderer: "canvas",
-        charts: ["BarChart", "LineChart"],
+        renderer: "svg",
+        charts: ["LineChart"],
         components: [
             "TitleComponent",
             "TooltipComponent",
             "GridComponent",
             "LegendComponent",
+            // "ToolboxComponent",
+            // "DataZoomComponent",
         ],
     },
     studio: {
@@ -55,9 +59,12 @@ export default defineNuxtConfig({
         },
     },
     css: ["./app/styles/main.css"],
-    devtools: { enabled: process.env.NODE_ENV !== "production" },
+    devtools: { enabled: isDevServer },
     compatibilityDate: "2024-04-03",
     content: {
+        experimental: {
+            sqliteConnector: "native",
+        },
         build: {
             transformers: ["~~/app/utils/transformer"],
             markdown: {
@@ -69,6 +76,6 @@ export default defineNuxtConfig({
     },
 
     experimental: {
-        buildCache: true,
+        buildCache: false,
     },
 });

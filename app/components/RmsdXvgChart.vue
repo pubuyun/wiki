@@ -3,10 +3,16 @@
         class="flex w-full flex-col rounded border border-surface-tint bg-secondary p-4 text-on-secondary"
         :class="heightClass"
     >
-        <div v-if="errorMessage" class="flex flex-1 items-center justify-center text-sm">
+        <div
+            v-if="errorMessage"
+            class="flex flex-1 items-center justify-center text-sm"
+        >
             {{ errorMessage }}
         </div>
-        <div v-else-if="pending" class="flex flex-1 items-center justify-center text-sm">
+        <div
+            v-else-if="pending"
+            class="flex flex-1 items-center justify-center text-sm"
+        >
             Loading RMSD data...
         </div>
         <VChart v-else class="min-h-72 flex-1" :option="option" autoresize />
@@ -70,7 +76,8 @@ watchEffect(async () => {
 });
 
 const parsedItems = computed(() => {
-    const inputs = xvgInputs.value.length > 0 ? xvgInputs.value : fetchedXvg.value;
+    const inputs =
+        xvgInputs.value.length > 0 ? xvgInputs.value : fetchedXvg.value;
 
     return inputs.map((xvg, index) =>
         parseXvg(xvg, seriesNames.value[index] || `RMSD ${index + 1}`),
@@ -94,6 +101,20 @@ const allSeries = computed(() =>
     ),
 );
 
+const xAxisRange = computed(() => {
+    let min = Infinity;
+    let max = -Infinity;
+
+    for (const series of allSeries.value) {
+        for (const [x] of series.values) {
+            min = Math.min(min, x);
+            max = Math.max(max, x);
+        }
+    }
+
+    return Number.isFinite(min) && Number.isFinite(max) ? { min, max } : null;
+});
+
 const option = computed<EChartsOption>(() => ({
     title: {
         text: props.title || firstParsed.value.title,
@@ -109,15 +130,42 @@ const option = computed<EChartsOption>(() => ({
         valueFormatter: (value) =>
             typeof value === "number" ? value.toFixed(3) : String(value),
     },
+    toolbox: {
+        show: true,
+        right: 16,
+        feature: {
+            dataZoom: {
+                xAxisIndex: 0,
+                yAxisIndex: "none",
+            },
+            restore: {},
+            saveAsImage: {},
+        },
+    },
+    dataZoom: [
+        {
+            type: "inside",
+            xAxisIndex: 0,
+            filterMode: "none",
+        },
+        {
+            type: "slider",
+            xAxisIndex: 0,
+            filterMode: "none",
+            bottom: 12,
+        },
+    ],
     grid: {
         top: firstParsed.value.subtitle ? 104 : 84,
         right: 28,
-        bottom: 56,
+        bottom: 90,
         left: 64,
         containLabel: true,
     },
     xAxis: {
         type: "value",
+        min: xAxisRange.value?.min,
+        max: xAxisRange.value?.max,
         name: firstParsed.value.xAxisLabel,
         nameLocation: "middle",
         nameGap: 32,

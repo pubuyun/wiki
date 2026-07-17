@@ -3,6 +3,7 @@
         <header class="fixed top-0 z-100 flex w-full flex-col">
             <NavigationBar />
         </header>
+        <AccessibilityMenu />
         <main class="flex-1">
             <slot />
         </main>

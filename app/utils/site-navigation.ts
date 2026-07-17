@@ -43,7 +43,6 @@ export const siteNavGroups: SiteNavGroup[] = [
             { to: "/model", label: "Model" },
             { to: "/software", label: "Software" },
             { to: "/viewbinder", label: "Binder Viewer" },
-            { to: "/testgraph", label: "Test Graph" },
         ],
     },
 ];
