@@ -27,7 +27,12 @@ install:
     before_script:
         - corepack enable
     script:
-        - yarn install --immutable
+        - |
+            if [ -x node_modules/.bin/nuxt ]; then
+                echo "node_modules cache hit, skipping install"
+            else
+                yarn install --immutable
+            fi
 
 # Job name has to be `pages`.
 pages:
