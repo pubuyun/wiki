@@ -51,6 +51,8 @@ pages:
             mkdir -p .ci-diagnostics
             echo "Node: $(node --version)"
             echo "CPU: $(nproc)"
+            echo "NUXT_STUDIO=false"
+            echo "NUXT_APP_BASE_URL=/greatbay-scie/"
             echo "Memory limit:"
             cat /sys/fs/cgroup/memory.max 2>/dev/null || true
             echo "Memory usage before build:"
@@ -58,7 +60,7 @@ pages:
             grep -E 'MemTotal|MemAvailable' /proc/meminfo || true
             df -h
             status=0
-            ./node_modules/.bin/nuxt generate >.ci-diagnostics/generate.log 2>&1 || status=$?
+            NUXT_STUDIO=false NUXT_APP_BASE_URL="/greatbay-scie/" ./node_modules/.bin/nuxt generate >.ci-diagnostics/generate.log 2>&1 || status=$?
             echo "Last 300 lines of generate.log:"
             tail -n 300 .ci-diagnostics/generate.log
             echo "Memory usage after build:"
