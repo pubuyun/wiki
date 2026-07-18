@@ -38,10 +38,9 @@
 
     --color-surface: var(--surface);
     --color-on-surface: var(--on-surface);
-    --color-surface-bright: var(--surface-bright);
+    --color-surface-navigation: var(--surface-navigation);
     --color-surface-tint: var(--surface-tint);
-    --color-surface-container-high: var(--surface-container-high);
-    --color-surface-container-highest: var(--surface-container-highest);
+    --color-surface-elevated: var(--surface-elevated);
     --color-surface-variant: var(--surface-variant);
 
     --color-outline: var(--outline);
@@ -125,10 +124,9 @@ input[type="submit"],
 
     --surface: #000000;
     --on-surface: #f0e442;
-    --surface-bright: #000000;
+    --surface-navigation: #000000;
     --surface-tint: #56b4e9;
-    --surface-container-high: #0072b2;
-    --surface-container-highest: #0072b2;
+    --surface-elevated: #0072b2;
     --surface-variant: #009e73;
 
     --outline: #e69f00;
@@ -144,10 +142,9 @@ input[type="submit"],
 
     --surface: #0083cc;
     --on-surface: #f8ffff;
-    --surface-bright: #0083cc;
+    --surface-navigation: #0083cc;
     --surface-tint: #0072b2;
-    --surface-container-high: #0072b2;
-    --surface-container-highest: #56b4e9;
+    --surface-elevated: #0072b2;
     --surface-variant: #f0e442;
 
     --outline: #0072b2;
@@ -163,10 +160,9 @@ input[type="submit"],
 
     --surface: #050b2a;
     --on-surface: #fff5c2;
-    --surface-bright: #071a54;
+    --surface-navigation: #071a54;
     --surface-tint: #5aa6ff;
-    --surface-container-high: #071a54;
-    --surface-container-highest: #0b1438;
+    --surface-elevated: #071a54;
     --surface-variant: #10245f;
 
     --outline: #d79612;
@@ -176,17 +172,16 @@ input[type="submit"],
 /* legacy color for testing in dark mode */
 .dark {
     --primary: #ffb145;
-    --on-primary: #f8ffff;
+    --on-primary: #03316d;
 
     --secondary: #0a4296;
     --on-secondary: #f8ffff;
 
     --surface: #03316d;
     --on-surface: #f8ffff;
-    --surface-bright: #3c83e0;
+    --surface-navigation: #3c83e0;
     --surface-tint: #2e6dbf;
-    --surface-container-high: #2e6dbf;
-    --surface-container-highest: #2e6dbf;
+    --surface-elevated: #2e6dbf;
     --surface-variant: #ffdd6b;
 
     --outline: #f8ffff;
@@ -200,10 +195,9 @@ input[type="submit"],
     --on-secondary: #103098;
     --surface: #b9eaec;
     --on-surface: #0853d1;
-    --surface-bright: #3699ff;
+    --surface-navigation: #3699ff;
     --surface-tint: #b9eaec;
-    --surface-container-high: #5fbde3;
-    --surface-container-highest: #5fbde3;
+    --surface-elevated: #5fbde3;
     --surface-variant: #eeeba3;
 
     --outline: #103098;

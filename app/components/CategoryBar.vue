@@ -13,7 +13,7 @@
         >
             <BrandIcon />
             <span
-                class="text-secondary lg:text-2xl xl:text-3xl"
+                class="text-on-surface lg:text-2xl xl:text-3xl"
                 aria-hidden="true"
             >
                 Expelliodor
@@ -21,7 +21,7 @@
         </NuxtLink>
         <div
             v-if="contentRendered"
-            class="absolute top-16 right-3 left-3 z-10 flex min-h-9 items-center justify-center gap-2 text-secondary xl:top-20"
+            class="absolute top-16 right-3 left-3 z-10 flex min-h-9 items-center justify-center gap-2 text-on-surface xl:top-20"
             :class="contentClass"
         >
             <NuxtLink
@@ -97,7 +97,7 @@
                         <AccordionItem
                             v-if="node.children?.length"
                             :value="node.id"
-                            class="overflow-hidden text-secondary"
+                            class="overflow-hidden text-on-surface"
                         >
                             <AccordionHeader class="flex h-min gap-0">
                                 <div :class="folderClass(node)">
@@ -221,7 +221,7 @@ let contentRevealTimer: ReturnType<typeof setTimeout> | undefined;
 let titleResizeObserver: ResizeObserver | undefined;
 
 const sidebarClass = computed(() => [
-    "sticky top-0 h-screen max-h-screen flex-col overflow-hidden bg-surface-container-high font-momo-trust-display text-on-surface shadow-sm transition-[width,height,padding,translate] duration-200 ease-out border-r border-white/20",
+    "sticky top-0 h-screen max-h-screen flex-col overflow-hidden bg-surface-elevated font-momo-trust-display text-on-surface shadow-sm transition-[width,height,padding,translate] duration-200 ease-out border-r border-white/20",
     collapsed.value ? "w-12 py-6" : "w-66 pt-4",
     "translate-x-0",
 ]);
@@ -251,16 +251,14 @@ function folderClass(node: ContentNavNode) {
 function folderTextClass(node: ContentNavNode) {
     return [
         "flex min-w-0 flex-1 items-center rounded-l-md px-3 py-2 text-left no-underline transition-[border-radius,color,background-color] duration-200 ease-out group-hover:bg-secondary group-hover:text-on-secondary",
-        node.active &&
-            "bg-primary font-semibold text-on-primary",
+        node.active && "bg-primary font-semibold text-on-primary",
     ];
 }
 
 function folderToggleClass(node: ContentNavNode) {
     return [
         "group flex w-10 shrink-0 items-center justify-center rounded-r-md px-3 py-2 text-on-surface transition-[border-radius,color,background-color] duration-200 ease-out hover:bg-secondary hover:text-on-secondary group-hover:bg-secondary group-hover:text-on-secondary focus-visible:ring-2 focus-visible:ring-outline focus-visible:outline-none",
-        node.active &&
-            "bg-primary font-semibold text-on-primary",
+        node.active && "bg-primary font-semibold text-on-primary",
     ];
 }
 

@@ -78,7 +78,7 @@ function navigateFolder(node: { path?: string }) {
                 leave-to-class="translate-x-full"
             >
                 <DialogContent
-                    class="fixed top-0 right-0 z-101 flex h-dvh w-[min(21rem,88vw)] flex-col overflow-hidden bg-surface-bright text-on-surface shadow-2xl outline-none lg:hidden"
+                    class="bg-surface-navigation fixed top-0 right-0 z-101 flex h-dvh w-[min(21rem,88vw)] flex-col overflow-hidden text-on-surface shadow-2xl outline-none lg:hidden"
                 >
                     <div
                         class="flex h-14 shrink-0 items-center justify-between border-b border-outline-variant px-4"
@@ -135,7 +135,7 @@ function navigateFolder(node: { path?: string }) {
                                     <AccordionItem
                                         v-if="node.children?.length"
                                         :value="categoryItemValue(node.id)"
-                                        class="overflow-hidden rounded-md bg-surface-bright"
+                                        class="bg-surface-navigation overflow-hidden rounded-md"
                                     >
                                         <AccordionHeader>
                                             <AccordionTrigger
@@ -205,7 +205,7 @@ function navigateFolder(node: { path?: string }) {
                                 v-for="group in siteNavGroups"
                                 :key="group.title"
                                 :value="group.title"
-                                class="overflow-hidden rounded-md bg-surface-bright"
+                                class="bg-surface-navigation overflow-hidden rounded-md"
                             >
                                 <AccordionHeader>
                                     <AccordionTrigger

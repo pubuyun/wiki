@@ -1,6 +1,6 @@
 <template>
     <nav
-        class="w-full rounded-2xl bg-surface-container-high font-belanosima text-on-surface shadow-lg lg:hidden"
+        class="bg-surface-elevated w-full rounded-2xl font-belanosima text-on-surface shadow-lg lg:hidden"
         aria-labelledby="mobile-toc-title"
     >
         <AccordionRoot

@@ -148,8 +148,7 @@ const h2DecorationStyle =
 const activeH2DecorationStyle = "-ml-2 w-1 bg-surface";
 const h2TextStyle =
     "flex flex-1 items-center justify-start rounded-2xl px-4 py-2 text-left transition-[margin,border-radius,color,background-color] duration-300 ease-out";
-const activeH2TextStyle =
-    "-mr-2 rounded-none bg-primary text-on-primary";
+const activeH2TextStyle = "-mr-2 rounded-none bg-primary text-on-primary";
 const h3Style =
     "block pl-4 text-left font-belanosima hover:text-secondary md:text-md lg:text-lg xl:text-xl";
 const activeH3Style =
@@ -188,7 +187,7 @@ let syncingExpandedItems = false;
 let preserveUserExpandedItemsAfterHashScroll = false;
 
 const contentBarClass = computed(() => [
-    "sticky top-34 mb-6 max-h-[calc(100vh-11rem)] flex-col overflow-hidden rounded-r-[3.5em] bg-surface-container-high  font-momo-trust-display shadow-lg transition-[width,height,padding,translate] duration-300 ease-out",
+    "sticky top-34 mb-6 max-h-[calc(100vh-11rem)] flex-col overflow-hidden rounded-r-[3.5em] bg-surface-elevated  font-momo-trust-display shadow-lg transition-[width,height,padding,translate] duration-300 ease-out",
     collapsed.value ? collapsedContentBarClass : expandedContentBarClass,
     collapsed.value ? "-translate-x-6 hover:translate-x-0" : "translate-x-0",
 ]);

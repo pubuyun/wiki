@@ -36,7 +36,7 @@
             >
                 <DialogContent
                     v-if="isSearchOpen"
-                    class="fixed inset-x-0 top-0 z-100 h-fit max-h-[calc(100dvh-1rem)] w-dvw overflow-hidden rounded-b-2xl bg-surface-container-high p-4 text-on-surface shadow-lg sm:inset-auto sm:top-16 sm:left-1/2 sm:h-auto sm:max-h-[min(48rem,calc(100dvh-4rem))] sm:w-200 sm:max-w-[calc(100dvw-2rem)] sm:-translate-x-1/2 sm:rounded-2xl sm:p-6"
+                    class="bg-surface-elevated fixed inset-x-0 top-0 z-100 h-fit max-h-[calc(100dvh-1rem)] w-dvw overflow-hidden rounded-b-2xl p-4 text-on-surface shadow-lg sm:inset-auto sm:top-16 sm:left-1/2 sm:h-auto sm:max-h-[min(48rem,calc(100dvh-4rem))] sm:w-200 sm:max-w-[calc(100dvw-2rem)] sm:-translate-x-1/2 sm:rounded-2xl sm:p-6"
                 >
                     <DialogTitle class="sr-only">
                         Search site content
@@ -97,7 +97,7 @@
                         >
                             <div
                                 v-if="canScrollUp"
-                                class="pointer-events-none absolute top-0 left-0 z-10 h-8 w-full bg-linear-to-b from-surface-container-high to-transparent"
+                                class="from-surface-elevated pointer-events-none absolute top-0 left-0 z-10 h-8 w-full bg-linear-to-b to-transparent"
                             />
 
                             <ul
@@ -272,7 +272,7 @@
 
                             <div
                                 v-if="canScrollDown"
-                                class="pointer-events-none absolute bottom-0 left-0 z-10 h-8 w-full bg-linear-to-t from-surface-container-high to-transparent"
+                                class="from-surface-elevated pointer-events-none absolute bottom-0 left-0 z-10 h-8 w-full bg-linear-to-t to-transparent"
                             />
                         </div>
                         <p
@@ -663,7 +663,7 @@ watch(
 
 <style scoped>
 .site-search-results-scroll {
-    scrollbar-color: var(--secondary) var(--surface-container-high);
+    scrollbar-color: var(--secondary) var(--surface-elevated);
     scrollbar-width: thin;
 }
 
@@ -672,7 +672,7 @@ watch(
 }
 
 .site-search-results-scroll::-webkit-scrollbar-track {
-    background: var(--surface-container-high);
+    background: var(--surface-elevated);
 }
 
 .site-search-results-scroll::-webkit-scrollbar-thumb {

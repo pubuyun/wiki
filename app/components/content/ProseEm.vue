@@ -15,7 +15,7 @@
                 <TooltipContent
                     ref="contentEl"
                     :side-offset="6"
-                    class="z-50 max-w-xs rounded-md bg-surface-container-high px-3 py-2 text-sm leading-relaxed text-on-surface shadow-lg"
+                    class="bg-surface-elevated z-50 max-w-xs rounded-md px-3 py-2 text-sm leading-relaxed text-on-surface shadow-lg"
                 >
                     <p>{{ matchedTerm.detail }}</p>
                     <NuxtLink
@@ -26,7 +26,7 @@
                     >
                         Learn more
                     </NuxtLink>
-                    <TooltipArrow class="fill-surface-container-high" />
+                    <TooltipArrow class="fill-surface-elevated" />
                 </TooltipContent>
             </TooltipPortal>
         </TooltipRoot>
