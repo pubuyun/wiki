@@ -29,7 +29,7 @@ const hasDropdown = computed(() => props.links.length > 0);
 <template>
     <NavigationMenuItem class="relative inline-block">
         <NavigationMenuTrigger
-            class="nav-menu-trigger group inline-flex cursor-pointer list-none items-center gap-1 bg-transparent px-1 py-2 text-on-secondary outline-offset-4 select-none hover:text-secondary focus-visible:outline-2 focus-visible:outline-outline"
+            class="nav-menu-trigger group inline-flex cursor-pointer list-none items-center gap-1 bg-transparent px-1 py-2 text-on-surface outline-offset-4 select-none hover:text-secondary focus-visible:outline-2 focus-visible:outline-outline"
         >
             <span
                 class="decoration-2 underline-offset-2 colorblind:group-hover:underline colorblind:group-focus-visible:underline"
@@ -44,13 +44,13 @@ const hasDropdown = computed(() => props.links.length > 0);
 
         <NavigationMenuContent
             force-mount
-            class="bg-surface-elevated absolute top-full -left-1/3 z-50 max-h-0 min-w-max overflow-hidden rounded-2xl text-on-surface shadow-sm transition-[max-height] duration-500 ease-out data-[state=closed]:pointer-events-none! data-[state=closed]:max-h-0 data-[state=open]:pointer-events-auto! data-[state=open]:max-h-96"
+            class="absolute top-full -left-1/3 z-50 max-h-0 min-w-max overflow-hidden rounded-2xl bg-surface-bright text-on-surface shadow-sm transition-[max-height] duration-500 ease-out data-[state=closed]:pointer-events-none! data-[state=closed]:max-h-0 data-[state=open]:pointer-events-auto! data-[state=open]:max-h-96"
         >
             <NavigationMenuLink v-for="link in links" :key="link.to" as-child>
                 <NuxtLink
                     :to="link.to"
                     @pointerdown.stop
-                    class="block px-4 py-2 text-xl text-on-surface no-underline -outline-offset-2 first:rounded-t-2xl last:rounded-b-2xl hover:bg-secondary hover:text-on-secondary focus-visible:bg-secondary focus-visible:text-on-secondary focus-visible:outline-2 focus-visible:outline-outline"
+                    class="block px-4 py-2 text-xl text-on-surface no-underline -outline-offset-2 first:rounded-t-2xl last:rounded-b-2xl hover:bg-surface-variant hover:text-on-surface focus-visible:bg-surface-variant focus-visible:text-on-surface focus-visible:outline-2 focus-visible:outline-outline"
                 >
                     {{ link.label }}
                 </NuxtLink>

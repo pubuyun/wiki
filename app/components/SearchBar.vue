@@ -3,13 +3,13 @@
         <!-- Desktop / larger than lg -->
         <DialogTrigger
             aria-label="Open search dialog"
-            class="flex size-9 shrink-0 items-center justify-center rounded-md bg-surface text-on-surface transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-outline sm:mr-8 sm:ml-5 sm:h-3/4 sm:max-w-48 sm:flex-1 sm:justify-start sm:rounded-full sm:pr-3"
+            class="flex size-9 shrink-0 items-center justify-center rounded-md bg-surface-bright text-on-surface transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-outline sm:mr-8 sm:ml-5 sm:h-3/4 sm:max-w-48 sm:flex-1 sm:justify-start sm:rounded-full sm:pr-3"
         >
             <div
                 class="flex h-full w-full items-center justify-center gap-2 p-1 sm:justify-start"
             >
                 <span
-                    class="hidden h-full min-w-0 flex-1 items-center rounded-full bg-secondary px-3 text-sm text-on-secondary/60 sm:flex"
+                    class="hidden h-full min-w-0 flex-1 items-center rounded-full bg-surface-navigation px-3 text-sm text-on-surface/60 sm:flex"
                     aria-hidden="true"
                 >
                     Ctrl + K
@@ -64,12 +64,12 @@
                                     autocomplete="off"
                                     placeholder="Search..."
                                     aria-describedby="search-result-count"
-                                    class="h-12 w-full rounded border border-surface-variant bg-secondary py-2 pr-12 pl-4 text-on-secondary outline-none placeholder:text-on-secondary/60 focus:border-secondary sm:h-10"
+                                    class="h-12 w-full rounded border border-surface-variant bg-surface-bright py-2 pr-12 pl-4 text-on-surface outline-none placeholder:text-on-surface/60 focus:border-surface-variant sm:h-10"
                                 />
                                 <button
                                     type="button"
                                     aria-label="Close search dialog"
-                                    class="absolute top-1/2 right-2 flex size-8 -translate-y-1/2 items-center justify-center rounded-md text-on-surface transition-colors hover:bg-secondary hover:text-on-secondary focus-visible:outline-2 focus-visible:outline-outline"
+                                    class="absolute top-1/2 right-2 flex size-8 -translate-y-1/2 items-center justify-center rounded-md text-on-surface transition-colors hover:bg-surface-variant hover:text-on-surface focus-visible:outline-2 focus-visible:outline-outline"
                                     @click="isSearchOpen = false"
                                 >
                                     <Icon
@@ -132,7 +132,7 @@
                                         >
                                             <NuxtLink
                                                 :to="documentGroup.key"
-                                                class="site-search-result group bg-surface-bright flex min-h-12 min-w-0 items-center gap-2 rounded border border-transparent px-3 py-2 text-on-surface transition-colors hover:bg-secondary hover:text-on-secondary"
+                                                class="site-search-result group flex min-h-12 min-w-0 items-center gap-2 rounded border border-transparent bg-surface-bright px-3 py-2 text-on-surface transition-colors hover:bg-secondary hover:text-on-secondary"
                                                 @click="
                                                     handleDocumentClick(
                                                         $event,
@@ -168,7 +168,7 @@
                                                 >
                                                     <NuxtLink
                                                         :to="link.id"
-                                                        class="site-search-result group bg-surface-bright flex min-w-0 items-center gap-2 rounded border border-transparent px-3 py-2 transition-colors hover:bg-secondary hover:text-on-secondary"
+                                                        class="site-search-result group flex min-w-0 items-center gap-2 rounded border border-transparent bg-surface-bright px-3 py-2 transition-colors hover:bg-secondary hover:text-on-secondary"
                                                         @click="
                                                             handleResultClick(
                                                                 $event,
