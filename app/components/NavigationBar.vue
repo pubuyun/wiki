@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { NavigationMenuList, NavigationMenuRoot } from "reka-ui";
 import NavItem from "./NavigationBar/NavItem.vue";
+import DarkModeToggle from "./AccessibilityMenu/DarkModeToggle.vue";
 import { siteNavGroups } from "~/utils/site-navigation";
 
 const navHidden = ref(false);
@@ -112,10 +113,9 @@ onUnmounted(() => {
             <div
                 class="flex h-full flex-1 flex-row items-center justify-end gap-2 lg:gap-4 xl:gap-6"
             >
+                <DarkModeToggle />
                 <ClientOnly>
-                    <LazySearchBar
-                        hydrate-on-interaction="pointerover,focusin,click,keydown"
-                    />
+                    <LazySearchBar />
                     <template #fallback>
                         <div
                             aria-hidden="true"

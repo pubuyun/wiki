@@ -1,21 +1,25 @@
 <script setup lang="ts">
 import { Icon } from "@iconify/vue";
-import { Toggle } from "reka-ui";
+import { SwitchRoot, SwitchThumb } from "reka-ui";
 
 const darkMode = useState<boolean>("dark-mode", () => false);
 </script>
 
 <template>
-    <Toggle
+    <SwitchRoot
         v-model="darkMode"
-        class="bg-surface-elevated flex size-12 shrink-0 items-center justify-center rounded-xl border-[3px] border-transparent text-on-primary shadow-lg transition-[transform,border-color] hover:scale-105 hover:brightness-95 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-outline data-[state=on]:border-primary"
+        class="flex h-8 w-14 shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent bg-secondary p-1 shadow-md transition-[background-color,border-color,transform] hover:scale-105 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-outline"
         :aria-label="`${darkMode ? 'Disable' : 'Enable'} dark mode`"
         :title="`${darkMode ? 'Disable' : 'Enable'} dark mode`"
     >
-        <Icon
-            :icon="darkMode ? 'lucide:moon' : 'lucide:sun'"
-            class="size-5"
-            aria-hidden="true"
-        />
-    </Toggle>
+        <SwitchThumb
+            class="flex size-5 items-center justify-center rounded-full bg-primary text-on-primary shadow-sm transition-transform duration-200 will-change-transform data-[state=checked]:translate-x-6"
+        >
+            <Icon
+                :icon="darkMode ? 'lucide:moon' : 'lucide:sun'"
+                class="size-3.5"
+                aria-hidden="true"
+            />
+        </SwitchThumb>
+    </SwitchRoot>
 </template>

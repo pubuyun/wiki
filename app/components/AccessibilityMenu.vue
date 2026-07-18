@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Icon } from "@iconify/vue";
-import DarkModeToggle from "./AccessibilityMenu/DarkModeToggle.vue";
+import AccessibilityBackToTop from "./AccessibilityMenu/AccessibilityBackToTop.vue";
 import ColorblindModeToggle from "./AccessibilityMenu/ColorblindModeToggle.vue";
 import DyslexiaModeToggle from "./AccessibilityMenu/DyslexiaModeToggle.vue";
 
@@ -65,7 +65,7 @@ onUnmounted(() => {
                     leave-active-class="accessibility-option-top-right-leave-active"
                 >
                     <div v-if="isOpen" class="size-12">
-                        <ColorblindModeToggle />
+                        <AccessibilityBackToTop />
                     </div>
                 </Transition>
             </div>
@@ -77,7 +77,7 @@ onUnmounted(() => {
                     leave-active-class="accessibility-option-top-left-leave-active"
                 >
                     <div v-if="isOpen" class="size-12">
-                        <DarkModeToggle />
+                        <ColorblindModeToggle />
                     </div>
                 </Transition>
             </div>
