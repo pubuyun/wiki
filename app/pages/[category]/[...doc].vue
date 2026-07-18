@@ -146,18 +146,16 @@ function bodyWithChildren(body, children) {
         children,
     };
 }
-
 </script>
 
 <template>
     <article
         v-if="page"
         class="mt-16 flex w-full max-w-[100vw] min-w-0 flex-1 flex-col gap-4 overflow-x-visible px-4 sm:mt-20 sm:gap-6 sm:px-6 lg:px-0"
-    >   
-         <h1 class="sr-only">
+    >
+        <h1 class="sr-only">
             {{ pageTitle(page) }}
         </h1>
-
 
         <ClientOnly>
             <MobileContentBar
@@ -198,7 +196,7 @@ function bodyWithChildren(body, children) {
                 v-for="doc in currentFolderCards"
                 :key="doc.path"
                 :to="doc.path"
-                class="group flex min-h-36 min-w-0 flex-col gap-3 rounded-2xl border-2 border-surface-variant bg-secondary p-4 text-on-secondary no-underline transition hover:-translate-y-px hover:border-secondary hover:text-on-secondary focus-visible:-translate-y-px focus-visible:border-outline focus-visible:text-on-secondary focus-visible:outline-none sm:rounded-3xl sm:p-5 lg:rounded-4xl lg:p-6"
+                class="group flex min-h-36 min-w-0 flex-col gap-3 rounded-2xl border-2 border-outline bg-secondary p-4 text-on-secondary no-underline transition hover:-translate-y-px hover:border-secondary hover:text-on-secondary focus-visible:-translate-y-px focus-visible:border-outline focus-visible:text-on-secondary focus-visible:outline-none sm:rounded-3xl sm:p-5 lg:rounded-4xl lg:p-6"
             >
                 <h2
                     class="font-belanosima text-2xl leading-tight wrap-anywhere"
@@ -220,7 +218,7 @@ function bodyWithChildren(body, children) {
         >
             <NuxtLink
                 v-if="previousPage"
-                class="my-1 flex min-w-0 flex-col gap-1 rounded-2xl border-2 border-surface-variant bg-secondary p-4 text-on-secondary no-underline transition hover:-translate-y-px hover:border-secondary hover:text-on-secondary focus-visible:-translate-y-px focus-visible:border-outline focus-visible:text-on-secondary focus-visible:outline-none"
+                class="my-1 flex min-w-0 flex-col gap-1 rounded-2xl border-2 border-outline bg-secondary p-4 text-on-secondary no-underline transition hover:-translate-y-px hover:border-secondary hover:text-on-secondary focus-visible:-translate-y-px focus-visible:border-outline focus-visible:text-on-secondary focus-visible:outline-none"
                 :to="previousPage.path"
             >
                 <div class="font-main text-sm opacity-70">Previous</div>
@@ -233,7 +231,7 @@ function bodyWithChildren(body, children) {
             <span v-else aria-hidden="true" />
             <NuxtLink
                 v-if="nextPage"
-                class="my-1 flex min-w-0 flex-col items-end gap-1 rounded-2xl border-2 border-surface-variant bg-secondary p-4 text-right text-on-secondary no-underline transition hover:-translate-y-px hover:border-secondary hover:text-on-secondary focus-visible:-translate-y-px focus-visible:border-outline focus-visible:text-on-secondary focus-visible:outline-none"
+                class="my-1 flex min-w-0 flex-col items-end gap-1 rounded-2xl border-2 border-outline bg-secondary p-4 text-right text-on-secondary no-underline transition hover:-translate-y-px hover:border-secondary hover:text-on-secondary focus-visible:-translate-y-px focus-visible:border-outline focus-visible:text-on-secondary focus-visible:outline-none"
                 :to="nextPage.path"
             >
                 <div class="font-main text-sm opacity-70">Next</div>

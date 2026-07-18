@@ -7,7 +7,7 @@
                 :alt="props.alt"
                 :width="props.width"
                 :height="props.height"
-                class="my-8 w-full cursor-zoom-in rounded-lg border border-surface-variant bg-secondary object-cover shadow-sm"
+                class="my-8 w-full cursor-zoom-in rounded-lg border border-outline bg-secondary object-cover shadow-sm"
                 role="button"
                 tabindex="0"
                 @click="open(0)"

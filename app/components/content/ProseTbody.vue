@@ -1,5 +1,5 @@
 <template>
-    <tbody class="divide-y divide-surface-variant">
+    <tbody class="divide-y divide-primary">
         <slot />
     </tbody>
 </template>

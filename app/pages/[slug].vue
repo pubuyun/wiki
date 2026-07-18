@@ -121,7 +121,7 @@ watchEffect(() => {
                         v-for="child in node.children"
                         :key="child.id"
                         :to="child.path"
-                        class="group flex min-h-36 min-w-0 flex-col gap-3 rounded-2xl border-2 border-surface-variant bg-secondary p-4 text-on-secondary no-underline transition hover:-translate-y-px hover:border-secondary focus-visible:-translate-y-px focus-visible:border-outline focus-visible:outline-none sm:p-5 lg:p-6"
+                        class="group flex min-h-36 min-w-0 flex-col gap-3 rounded-2xl border-2 border-outline bg-secondary p-4 text-on-secondary no-underline transition hover:-translate-y-px hover:border-secondary focus-visible:-translate-y-px focus-visible:border-outline focus-visible:outline-none sm:p-5 lg:p-6"
                     >
                         <h3
                             class="font-belanosima text-2xl leading-tight wrap-anywhere"
@@ -148,7 +148,7 @@ watchEffect(() => {
                     v-for="node in standaloneNavNodes"
                     :key="node.id"
                     :to="node.path"
-                    class="group flex min-h-36 min-w-0 flex-col gap-3 rounded-2xl border-2 border-surface-variant bg-secondary p-4 text-on-secondary no-underline transition hover:-translate-y-px hover:border-secondary focus-visible:-translate-y-px focus-visible:border-outline focus-visible:outline-none sm:p-5 lg:p-6"
+                    class="group flex min-h-36 min-w-0 flex-col gap-3 rounded-2xl border-2 border-outline bg-secondary p-4 text-on-secondary no-underline transition hover:-translate-y-px hover:border-secondary focus-visible:-translate-y-px focus-visible:border-outline focus-visible:outline-none sm:p-5 lg:p-6"
                 >
                     <h2
                         class="font-belanosima text-2xl leading-tight wrap-anywhere"

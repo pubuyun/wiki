@@ -64,12 +64,12 @@
                                     autocomplete="off"
                                     placeholder="Search..."
                                     aria-describedby="search-result-count"
-                                    class="h-12 w-full rounded border border-surface-variant bg-surface-bright py-2 pr-12 pl-4 text-on-surface outline-none placeholder:text-on-surface/60 focus:border-surface-variant sm:h-10"
+                                    class="h-12 w-full rounded border border-outline bg-surface-bright py-2 pr-12 pl-4 text-on-surface outline-none placeholder:text-on-surface/60 focus:border-outline sm:h-10"
                                 />
                                 <button
                                     type="button"
                                     aria-label="Close search dialog"
-                                    class="absolute top-1/2 right-2 flex size-8 -translate-y-1/2 items-center justify-center rounded-md text-on-surface transition-colors hover:bg-surface-variant hover:text-on-surface focus-visible:outline-2 focus-visible:outline-outline"
+                                    class="absolute top-1/2 right-2 flex size-8 -translate-y-1/2 items-center justify-center rounded-md text-on-surface transition-colors hover:bg-primary hover:text-on-primary focus-visible:outline-2 focus-visible:outline-outline"
                                     @click="isSearchOpen = false"
                                 >
                                     <Icon

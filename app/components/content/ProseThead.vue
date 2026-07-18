@@ -1,5 +1,5 @@
 <template>
-    <thead class="bg-surface-variant">
+    <thead class="bg-primary">
         <slot />
     </thead>
 </template>

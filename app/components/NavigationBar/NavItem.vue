@@ -50,7 +50,7 @@ const hasDropdown = computed(() => props.links.length > 0);
                 <NuxtLink
                     :to="link.to"
                     @pointerdown.stop
-                    class="block px-4 py-2 text-xl text-on-surface no-underline -outline-offset-2 first:rounded-t-2xl last:rounded-b-2xl hover:bg-surface-variant hover:text-on-surface focus-visible:bg-surface-variant focus-visible:text-on-surface focus-visible:outline-2 focus-visible:outline-outline"
+                    class="block px-4 py-2 text-xl text-on-surface no-underline -outline-offset-2 first:rounded-t-2xl last:rounded-b-2xl hover:bg-primary hover:text-on-primary focus-visible:bg-primary focus-visible:text-on-primary focus-visible:outline-2 focus-visible:outline-outline"
                 >
                     {{ link.label }}
                 </NuxtLink>
