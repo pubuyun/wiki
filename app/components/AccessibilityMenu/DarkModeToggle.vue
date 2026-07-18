@@ -8,7 +8,7 @@ const darkMode = useState<boolean>("dark-mode", () => false);
 <template>
     <Toggle
         v-model="darkMode"
-        class="flex size-9 shrink-0 items-center justify-center rounded-md text-on-surface transition-colors hover:bg-secondary hover:text-on-secondary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-outline data-[state=on]:bg-surface data-[state=on]:text-on-surface"
+        class="flex size-12 shrink-0 items-center justify-center rounded-xl border-[3px] border-transparent bg-surface-container-highest text-on-primary shadow-lg transition-[transform,border-color] hover:scale-105 hover:brightness-95 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-outline data-[state=on]:border-primary"
         :aria-label="`${darkMode ? 'Disable' : 'Enable'} dark mode`"
         :title="`${darkMode ? 'Disable' : 'Enable'} dark mode`"
     >

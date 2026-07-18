@@ -43,7 +43,7 @@ function playClickAnimation(event: PointerEvent) {
 
     window.setTimeout(() => {
         effects.value = effects.value.filter((effect) => effect.id !== id);
-    }, 650);
+    }, 630);
 }
 
 onMounted(() => {

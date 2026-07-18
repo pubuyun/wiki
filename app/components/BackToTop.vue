@@ -11,7 +11,7 @@
         <button
             @click="scrollToTop"
             v-show="visible"
-            class="back-to-top fixed bottom-6 z-50 h-24 w-24 cursor-pointer border-none bg-transparent lg:hidden"
+            class="fixed right-[2px] bottom-6 z-50 h-24 w-24 cursor-pointer border-none bg-transparent sm:right-6 lg:hidden"
             aria-label="Back to top"
         >
             <svg
@@ -69,15 +69,35 @@
 
 <script setup>
 import { ref, onMounted, onUnmounted } from "vue";
+import { gsap } from "gsap";
 
 const visible = ref(false);
+const scrollPosition = { y: 0 };
+let scrollTween;
 
 function onScroll() {
     visible.value = window.scrollY > 200;
 }
 
 function scrollToTop() {
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    scrollTween?.kill();
+
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        window.scrollTo(0, 0);
+        return;
+    }
+
+    scrollPosition.y = window.scrollY;
+    scrollTween = gsap.to(scrollPosition, {
+        y: 0,
+        duration: 0.3,
+        ease: "power2.out",
+        overwrite: true,
+        onUpdate: () => window.scrollTo(0, scrollPosition.y),
+        onComplete: () => {
+            scrollTween = undefined;
+        },
+    });
 }
 
 onMounted(() => {
@@ -86,17 +106,7 @@ onMounted(() => {
 });
 
 onUnmounted(() => {
+    scrollTween?.kill();
     window.removeEventListener("scroll", onScroll);
 });
 </script>
-
-<style scoped>
-.back-to-top {
-    right: 2px !important;
-}
-@media (min-width: 640px) {
-    .back-to-top {
-        right: 24px !important;
-    }
-}
-</style>

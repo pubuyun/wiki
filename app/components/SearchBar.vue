@@ -36,7 +36,7 @@
             >
                 <DialogContent
                     v-if="isSearchOpen"
-                    class="fixed inset-0 z-100 h-dvh w-dvw overflow-hidden bg-surface-container-high p-4 text-on-surface shadow-lg sm:inset-auto sm:top-16 sm:left-1/2 sm:h-auto sm:max-h-[min(48rem,calc(100dvh-4rem))] sm:w-200 sm:max-w-[calc(100dvw-2rem)] sm:-translate-x-1/2 sm:rounded-2xl sm:p-6"
+                    class="fixed inset-x-0 top-0 z-100 h-fit max-h-[calc(100dvh-1rem)] w-dvw overflow-hidden rounded-b-2xl bg-surface-container-high p-4 text-on-surface shadow-lg sm:inset-auto sm:top-16 sm:left-1/2 sm:h-auto sm:max-h-[min(48rem,calc(100dvh-4rem))] sm:w-200 sm:max-w-[calc(100dvw-2rem)] sm:-translate-x-1/2 sm:rounded-2xl sm:p-6"
                 >
                     <DialogTitle class="sr-only">
                         Search site content
@@ -46,7 +46,7 @@
                             duration: 220,
                             easing: 'ease-out',
                         }"
-                        class="flex h-full max-h-[calc(100dvh-2rem)] w-full flex-col justify-start gap-2 sm:max-h-[min(45rem,calc(100dvh-7rem))]"
+                        class="flex h-auto max-h-[calc(100dvh-2rem)] w-full flex-col justify-start gap-2 sm:max-h-[min(45rem,calc(100dvh-7rem))]"
                     >
                         <div
                             class="shrink-0 text-center text-2xl font-bold text-on-surface"

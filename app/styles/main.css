@@ -1,10 +1,30 @@
 @import "tailwindcss";
-@import "@fontsource/momo-trust-display/latin-400.css";
-@import "@fontsource/righteous/latin-400.css";
-@import "@fontsource/belanosima/latin-400.css";
-@import "@fontsource/belanosima/latin-600.css";
-@import "@fontsource/belanosima/latin-700.css";
-@import "@fontsource/opendyslexic/latin-400.css";
+@font-face {
+    font-family: "Momo Trust Display";
+    font-style: normal;
+    font-display: swap;
+    font-weight: 400;
+    src: url("@fontsource/momo-trust-display/files/momo-trust-display-latin-400-normal.woff2")
+        format("woff2");
+}
+
+@font-face {
+    font-family: "Righteous";
+    font-style: normal;
+    font-display: swap;
+    font-weight: 400;
+    src: url("@fontsource/righteous/files/righteous-latin-400-normal.woff2")
+        format("woff2");
+}
+
+@font-face {
+    font-family: "Belanosima";
+    font-style: normal;
+    font-display: swap;
+    font-weight: 400;
+    src: url("@fontsource/belanosima/files/belanosima-latin-400-normal.woff2")
+        format("woff2");
+}
 
 @custom-variant dark (&:where(.dark, .dark *));
 @custom-variant colorblind (&:where(.colorblind, .colorblind *));
@@ -197,4 +217,9 @@ input[type="submit"],
 .colorblind a:hover {
     border: 2px solid currentColor;
     border-radius: 0.25rem;
+}
+
+body.dyslexia main,
+body.dyslexia main * {
+    font-family: var(--font-opendyslexic);
 }

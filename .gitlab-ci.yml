@@ -1,31 +1,50 @@
-# Job name has to be `pages`. See https://docs.gitlab.com/ee/user/project/pages/#how-it-works
 image: node:22-bookworm-slim
 
-pages:
-    stage: build
-    variables:
-        NUXT_APP_BASE_URL: "/greatbay-scie/"
-    cache:
-        - key:
-              files:
-                  - yarn.lock
-                  - package.json
-          paths:
-              - .yarn/cache/
+stages:
+    - install
+    - build
 
-        - key:
-              prefix: build-cache-$CI_COMMIT_REF_SLUG
-              files:
-                  - yarn.lock
-          paths:
-              - node_modules/.cache/
+variables:
+    NUXT_APP_BASE_URL: "/greatbay-scie/"
+    NUXT_STUDIO: "false"
+    NODE_OPTIONS: "--max-old-space-size=1400"
+
+.install-cache: &install-cache
+    key:
+        prefix: node-modules
+        files:
+            - yarn.lock
+            - package.json
+    paths:
+        - node_modules/
+    policy: pull
+
+install:
+    stage: install
+    cache:
+        - <<: *install-cache
+          policy: pull-push
     before_script:
         - corepack enable
-        - yarn install --immutable --inline-builds
     script:
-        - yarn generate
+        - |
+            if [ -x node_modules/.bin/nuxt ]; then
+                echo "node_modules cache hit, skipping install"
+            else
+                yarn install --immutable
+            fi
+
+# Job name has to be `pages`.
+pages:
+    stage: build
+    needs:
+        - job: install
+    cache:
+        - <<: *install-cache
+    script:
+        - NUXT_STUDIO=false NUXT_APP_BASE_URL="/greatbay-scie/" ./node_modules/.bin/nuxt generate
         - mkdir -p public
         - cp -a .output/public/. public/
     artifacts:
         paths:
-            - public
+            - public/

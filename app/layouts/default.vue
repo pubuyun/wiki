@@ -3,17 +3,14 @@
         <header class="fixed top-0 z-100 flex w-full flex-col">
             <NavigationBar />
         </header>
+        <AccessibilityMenu />
         <main class="flex-1">
             <slot />
         </main>
         <Footer />
         <aside aria-label="Page utilities">
-            <ColorblindModeToggle />
             <BackToTop />
         </aside>
         <ClickAnimation />
     </div>
 </template>
-<script setup lang="ts">
-import ColorblindModeToggle from "~/components/NavigationBar/ColorblindModeToggle.vue";
-</script>

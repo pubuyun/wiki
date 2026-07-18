@@ -1,0 +1,19 @@
+{
+  "source": "proteina_complexa",
+  "name": "complex_job_0_n_135_id_53_beam_orig2_bm3-s0to100br1-s100to200br0-s200to300br2-s300to400br1_mpnn_seq1_complex_model",
+  "_id": "complex_job_0_n_135_id_53_beam_orig2_bm3-s0to100br1-s100to200br0-s200to300br2-s300to400br1_mpnn_seq1_complex_model",
+  "pLDDT(%)": 88.13,
+  "i_pAE": 0.149032,
+  "ptm": 0.930869877,
+  "iptm": 0.899088144,
+  "conf_ranking_score": 0.9054,
+  "Buried_SASA(nm2)": 8.134,
+  "cg3m3sh_deltag": -36.13,
+  "_3m3sh_deltag": -19.58,
+  "Melting Temperature": 83.9685263032261,
+  "_optimum ph": 7.34890140186739,
+  "_rmsd_lig_url": "https://static.igem.wiki/teams/6133/wiki/drylab/model/binders/md/cycle1/crmsd/run-complex-job-0-n-135-id-53-beam-orig2-bm3-s0to100br1-s100to200br0-s200to300br2-s300to400br1-mpnn-seq1-complex-model-lig.js",
+  "_rmsd_prot_url": "https://static.igem.wiki/teams/6133/wiki/drylab/model/binders/md/cycle1/crmsd/run-complex-job-0-n-135-id-53-beam-orig2-bm3-s0to100br1-s100to200br0-s200to300br2-s300to400br1-mpnn-seq1-complex-model-prot.js",
+  "selected": false,
+  "_pdb_url": "https://static.igem.wiki/teams/6133/wiki/drylab/model/binders/pdb/complex-job-0-n-135-id-53-beam-orig2-bm3-s0to100br1-s100to200br0-s200to300br2-s300to400br1-mpnn-seq1-complex-model.js"
+}
