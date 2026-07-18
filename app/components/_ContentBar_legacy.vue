@@ -122,13 +122,13 @@
         <!-- top gradient -->
         <div
             v-if="contentTextVisible && canScrollUp"
-            class="pointer-events-none absolute top-20 z-10 h-8 w-full bg-linear-to-b from-surface-tint to-transparent"
+            class="from-surface-bright pointer-events-none absolute top-20 z-10 h-8 w-full bg-linear-to-b to-transparent"
         />
 
         <!-- bottom gradient -->
         <div
             v-if="contentTextVisible && canScrollDown"
-            class="pointer-events-none absolute bottom-8 z-10 h-8 w-full bg-linear-to-t from-surface-tint to-transparent"
+            class="from-surface-bright pointer-events-none absolute bottom-8 z-10 h-8 w-full bg-linear-to-t to-transparent"
         />
     </nav>
 </template>

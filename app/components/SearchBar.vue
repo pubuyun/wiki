@@ -36,7 +36,7 @@
             >
                 <DialogContent
                     v-if="isSearchOpen"
-                    class="bg-surface-elevated fixed inset-x-0 top-0 z-100 h-fit max-h-[calc(100dvh-1rem)] w-dvw overflow-hidden rounded-b-2xl p-4 text-on-surface shadow-lg sm:inset-auto sm:top-16 sm:left-1/2 sm:h-auto sm:max-h-[min(48rem,calc(100dvh-4rem))] sm:w-200 sm:max-w-[calc(100dvw-2rem)] sm:-translate-x-1/2 sm:rounded-2xl sm:p-6"
+                    class="fixed inset-x-0 top-0 z-100 h-fit max-h-[calc(100dvh-1rem)] w-dvw overflow-hidden rounded-b-2xl bg-surface-elevated p-4 text-on-surface shadow-lg sm:inset-auto sm:top-16 sm:left-1/2 sm:h-auto sm:max-h-[min(48rem,calc(100dvh-4rem))] sm:w-200 sm:max-w-[calc(100dvw-2rem)] sm:-translate-x-1/2 sm:rounded-2xl sm:p-6"
                 >
                     <DialogTitle class="sr-only">
                         Search site content
@@ -97,7 +97,7 @@
                         >
                             <div
                                 v-if="canScrollUp"
-                                class="from-surface-elevated pointer-events-none absolute top-0 left-0 z-10 h-8 w-full bg-linear-to-b to-transparent"
+                                class="pointer-events-none absolute top-0 left-0 z-10 h-8 w-full bg-linear-to-b from-surface-elevated to-transparent"
                             />
 
                             <ul
@@ -132,7 +132,7 @@
                                         >
                                             <NuxtLink
                                                 :to="documentGroup.key"
-                                                class="site-search-result group flex min-h-12 min-w-0 items-center gap-2 rounded border border-transparent bg-surface-tint px-3 py-2 text-on-surface transition-colors hover:bg-secondary hover:text-on-secondary"
+                                                class="site-search-result group bg-surface-bright flex min-h-12 min-w-0 items-center gap-2 rounded border border-transparent px-3 py-2 text-on-surface transition-colors hover:bg-secondary hover:text-on-secondary"
                                                 @click="
                                                     handleDocumentClick(
                                                         $event,
@@ -168,7 +168,7 @@
                                                 >
                                                     <NuxtLink
                                                         :to="link.id"
-                                                        class="site-search-result group flex min-w-0 items-center gap-2 rounded border border-transparent bg-surface-tint px-3 py-2 transition-colors hover:bg-secondary hover:text-on-secondary"
+                                                        class="site-search-result group bg-surface-bright flex min-w-0 items-center gap-2 rounded border border-transparent px-3 py-2 transition-colors hover:bg-secondary hover:text-on-secondary"
                                                         @click="
                                                             handleResultClick(
                                                                 $event,
@@ -272,7 +272,7 @@
 
                             <div
                                 v-if="canScrollDown"
-                                class="from-surface-elevated pointer-events-none absolute bottom-0 left-0 z-10 h-8 w-full bg-linear-to-t to-transparent"
+                                class="pointer-events-none absolute bottom-0 left-0 z-10 h-8 w-full bg-linear-to-t from-surface-elevated to-transparent"
                             />
                         </div>
                         <p

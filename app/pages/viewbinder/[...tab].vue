@@ -20,12 +20,12 @@
         </div>
 
         <aside
-            class="flex min-h-96 min-w-0 flex-col overflow-hidden rounded-xl border border-surface-tint bg-secondary text-on-secondary"
+            class="border-surface-bright flex min-h-96 min-w-0 flex-col overflow-hidden rounded-xl border bg-secondary text-on-secondary"
             aria-label="Binder files"
         >
             <button
                 type="button"
-                class="flex h-12 shrink-0 items-center gap-2 border-b border-surface-tint px-4 text-left text-sm font-semibold transition-colors hover:bg-primary hover:text-on-primary focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-outline"
+                class="border-surface-bright flex h-12 shrink-0 items-center gap-2 border-b px-4 text-left text-sm font-semibold transition-colors hover:bg-primary hover:text-on-primary focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-outline"
                 @click="goBack"
             >
                 <Icon icon="lucide:arrow-left" class="size-4" />
@@ -92,7 +92,7 @@
         </aside>
 
         <section
-            class="min-h-128 min-w-0 overflow-hidden rounded-xl border border-surface-tint bg-secondary lg:min-h-0"
+            class="border-surface-bright min-h-128 min-w-0 overflow-hidden rounded-xl border bg-secondary lg:min-h-0"
             aria-label="Molecular structure viewer"
         >
             <ClientOnly>
@@ -109,12 +109,12 @@
         </section>
 
         <aside
-            class="min-h-128 min-w-0 overflow-hidden rounded-xl border border-surface-tint bg-secondary text-on-secondary lg:min-h-0"
+            class="border-surface-bright min-h-128 min-w-0 overflow-hidden rounded-xl border bg-secondary text-on-secondary lg:min-h-0"
             aria-label="Binder details"
         >
             <TabsRoot v-model="activeTab" class="flex h-full min-h-0 flex-col">
                 <TabsList
-                    class="flex shrink-0 overflow-x-auto border-b border-surface-tint p-1"
+                    class="border-surface-bright flex shrink-0 overflow-x-auto border-b p-1"
                     aria-label="Binder detail views"
                 >
                     <TabsTrigger
@@ -133,7 +133,7 @@
                 >
                     <dl
                         v-if="selectedBinder"
-                        class="divide-y divide-surface-tint/30"
+                        class="divide-surface-bright/30 divide-y"
                     >
                         <div
                             v-for="([key, value], index) in visibleProperties"

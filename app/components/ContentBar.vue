@@ -8,14 +8,14 @@
         </h2>
 
         <div
-            class="relative max-h-[calc(100vh-13rem)] scrollbar-thin scrollbar-thumb-surface-tint scrollbar-track-surface overflow-auto"
+            class="scrollbar-thumb-surface-bright relative max-h-[calc(100vh-13rem)] scrollbar-thin scrollbar-track-surface overflow-auto"
         >
             <div
                 class="pointer-events-none absolute top-0 left-0 w-3"
                 :style="indicatorStyle"
                 aria-hidden="true"
             >
-                <div class="absolute inset-0 bg-surface-tint" />
+                <div class="bg-surface-bright absolute inset-0" />
                 <div
                     class="absolute inset-x-0 top-0 bg-primary transition-transform duration-200 ease-out"
                     :style="activeIndicatorStyle"

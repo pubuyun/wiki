@@ -9,7 +9,7 @@
 
     <a
         :href="`#ref-${id}`"
-        class="ml-2 inline-flex align-baseline rounded-sm font-bold text-surface-tint no-underline hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-outline"
+        class="text-surface-bright ml-2 inline-flex rounded-sm align-baseline font-bold no-underline hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-outline"
         :aria-label="`Back to reference ${id} in the text`"
         @click="scrollToHash($event, `#ref-${id}`)"
     >

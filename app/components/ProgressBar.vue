@@ -6,7 +6,7 @@
         style="transform: translateZ(0)"
     >
         <ProgressIndicator
-            class="h-full w-full bg-surface-tint"
+            class="bg-surface-bright h-full w-full"
             :style="{
                 transform: `translateX(-${100 - progress}%)`,
                 transition: 'transform 0.2s ease-out',

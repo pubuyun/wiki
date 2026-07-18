@@ -5,7 +5,7 @@
                 <button
                     ref="triggerEl"
                     type="button"
-                    class="font-inherit inline cursor-help border-0 bg-transparent p-0 text-inherit not-italic underline decoration-primary decoration-2 underline-offset-4 transition-colors hover:text-surface-tint focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+                    class="font-inherit hover:text-surface-bright inline cursor-help border-0 bg-transparent p-0 text-inherit not-italic underline decoration-primary decoration-2 underline-offset-4 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
                     @click="toggleTooltipForTouch"
                 >
                     <slot />
@@ -15,7 +15,7 @@
                 <TooltipContent
                     ref="contentEl"
                     :side-offset="6"
-                    class="bg-surface-elevated z-50 max-w-xs rounded-md px-3 py-2 text-sm leading-relaxed text-on-surface shadow-lg"
+                    class="z-50 max-w-xs rounded-md bg-surface-elevated px-3 py-2 text-sm leading-relaxed text-on-surface shadow-lg"
                 >
                     <p>{{ matchedTerm.detail }}</p>
                     <NuxtLink

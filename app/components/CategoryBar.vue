@@ -180,11 +180,11 @@
 
         <div
             v-if="contentVisible && canScrollUp"
-            class="pointer-events-none absolute top-[5.75rem] z-10 h-8 w-full bg-linear-to-b from-surface-tint to-transparent xl:top-[6.5rem]"
+            class="from-surface-bright pointer-events-none absolute top-[5.75rem] z-10 h-8 w-full bg-linear-to-b to-transparent xl:top-[6.5rem]"
         />
         <div
             v-if="contentVisible && canScrollDown"
-            class="pointer-events-none absolute bottom-0 z-10 h-8 w-full bg-linear-to-t from-surface-tint to-transparent"
+            class="from-surface-bright pointer-events-none absolute bottom-0 z-10 h-8 w-full bg-linear-to-t to-transparent"
         />
     </nav>
 </template>
@@ -443,7 +443,7 @@ onBeforeUnmount(() => {
 }
 
 .category-sidebar-scroll::-webkit-scrollbar-thumb:hover {
-    background: var(--surface-tint);
+    background: var(--surface-bright);
 }
 
 @keyframes category-sidebar-slide-down {

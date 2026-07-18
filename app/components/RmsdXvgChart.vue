@@ -1,6 +1,6 @@
 <template>
     <div
-        class="flex w-full flex-col rounded border border-surface-tint bg-secondary p-4 text-on-secondary"
+        class="border-surface-bright flex w-full flex-col rounded border bg-secondary p-4 text-on-secondary"
         :class="heightClass"
     >
         <div
