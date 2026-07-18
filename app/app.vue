@@ -27,10 +27,33 @@
 import { wikiTheme } from "./styles/echarts";
 
 const THEME_KEY = "theme";
+const DARK_MODE_COOKIE = "wiki-dark-mode";
+const COLORBLIND_MODE_COOKIE = "wiki-colorblind-mode";
 
-const colorblindMode = useState<boolean>("colorblind-mode", () => false);
-const darkMode = useState<boolean>("dark-mode", () => false);
+const savedColorblindMode = useCookie<boolean>(COLORBLIND_MODE_COOKIE, {
+    default: () => false,
+    maxAge: 60 * 60 * 24 * 365,
+    sameSite: "lax",
+});
+const colorblindMode = useState<boolean>(
+    "colorblind-mode",
+    () => savedColorblindMode.value,
+);
+const savedDarkMode = useCookie<boolean>(DARK_MODE_COOKIE, {
+    default: () => false,
+    maxAge: 60 * 60 * 24 * 365,
+    sameSite: "lax",
+});
+const darkMode = useState<boolean>("dark-mode", () => savedDarkMode.value);
 const dyslexiaMode = useState<boolean>("dyslexia-mode", () => false);
+
+watch(colorblindMode, (enabled) => {
+    savedColorblindMode.value = enabled;
+});
+
+watch(darkMode, (enabled) => {
+    savedDarkMode.value = enabled;
+});
 
 watch(
     dyslexiaMode,
