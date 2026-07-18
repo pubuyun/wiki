@@ -28,6 +28,8 @@ export default defineNuxtConfig({
                 "reka-ui",
                 "vue-echarts",
                 "fuse.js",
+                "gsap",
+                "vue-easy-lightbox",
             ],
         },
         plugins: [tailwindcss()],
