@@ -3,36 +3,12 @@ import { NavigationMenuList, NavigationMenuRoot } from "reka-ui";
 import NavItem from "./NavigationBar/NavItem.vue";
 import { siteNavGroups } from "~/utils/site-navigation";
 
-const props = withDefaults(
-    defineProps<{
-        scrollOpacity?: boolean;
-    }>(),
-    {
-        scrollOpacity: false,
-    },
-);
-
-const initialOpacity = 0.7;
-const navBackgroundOpacity = ref(initialOpacity);
 const navHidden = ref(false);
 const lastScrollY = ref(0);
 const scrollDirectionThreshold = 6;
 const hideAfterScrollY = 80;
 const ignoreHashScrollDuration = 2400;
 let ignoreVisibilityUntil = 0;
-
-function updateNavBackgroundOpacity() {
-    if (!props.scrollOpacity) {
-        return;
-    }
-
-    const fadeDistance = window.innerHeight * 0.7;
-    const scrollProgress =
-        fadeDistance > 0 ? Math.min(window.scrollY / fadeDistance, 1) : 1;
-
-    navBackgroundOpacity.value =
-        initialOpacity + scrollProgress * (1 - initialOpacity);
-}
 
 function updateNavVisibility() {
     const scrollY = Math.max(window.scrollY, 0);
@@ -58,24 +34,20 @@ function updateNavVisibility() {
     lastScrollY.value = scrollY;
 }
 
-const opacityStyle = computed(() => ({
-    backgroundColor: `color-mix(in srgb, var(--navigation-bar-bg) ${Math.round(
-        navBackgroundOpacity.value * 100,
-    )}%, transparent)`,
-}));
-
 const navVisibilityClass = computed(() =>
     navHidden.value ? "pointer-events-none -translate-y-full" : "translate-y-0",
 );
 
-const progressVisibilityClass = computed(() =>
-    navHidden.value
-        ? "-translate-y-full opacity-0"
-        : "translate-y-0 opacity-100",
-);
+const progress = ref(0);
+
+function updateProgress() {
+    const scrollTop = window.scrollY;
+    const docHeight =
+        document.documentElement.scrollHeight - window.innerHeight;
+    progress.value = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+}
 
 function updateScrollState() {
-    updateNavBackgroundOpacity();
     updateNavVisibility();
     updateProgress();
 }
@@ -102,14 +74,6 @@ onUnmounted(() => {
         ignoreHashScrollVisibilityChange,
     );
 });
-
-const progress = ref(0);
-function updateProgress() {
-    const scrollTop = window.scrollY;
-    const docHeight =
-        document.documentElement.scrollHeight - window.innerHeight;
-    progress.value = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
-}
 </script>
 
 <template>
@@ -121,7 +85,6 @@ function updateProgress() {
         <nav
             class="flex h-12 items-center justify-between gap-3 overflow-visible bg-(--navigation-bar-bg) px-3 font-righteous transition-transform duration-300 ease-out will-change-transform [--navigation-bar-bg:var(--surface-bright)] sm:h-10 sm:gap-4 sm:px-4 lg:h-11 lg:gap-6 xl:h-14"
             :class="navVisibilityClass"
-            :style="props.scrollOpacity ? opacityStyle : undefined"
         >
             <MobileNavigationDialog />
             <NuxtLink
@@ -163,10 +126,5 @@ function updateProgress() {
             </div>
         </nav>
     </NavigationMenuRoot>
-    <ProgressBar
-        :progress="progress"
-        class="sr-only transition-[transform,opacity] duration-300 ease-out will-change-transform"
-        :class="progressVisibilityClass"
-        :style="props.scrollOpacity ? opacityStyle : undefined"
-    />
+    <ProgressBar :progress="progress" class="sr-only" />
 </template>

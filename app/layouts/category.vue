@@ -16,7 +16,7 @@ const hasRightSidebar = computed(
 <template>
     <div class="relative z-0 flex min-h-screen flex-col">
         <header class="fixed top-0 z-100 flex w-full flex-col">
-            <NavigationBar scroll-opacity />
+            <NavigationBar />
         </header>
 
         <main class="flex flex-1 bg-surface text-on-surface">
@@ -35,8 +35,13 @@ const hasRightSidebar = computed(
                     :title="page.title"
                     :img-src="page.meta?.banner"
                     :img-position="page.meta?.bannerPosition"
+                    :description="
+                        page.path === categoryPath
+                            ? pageDescription(page)
+                            : undefined
+                    "
                 />
-
+                <hr class="mx-12" />
                 <div
                     class="flex min-w-0 flex-1 flex-row gap-8 pt-6 pb-20"
                     :class="hasRightSidebar ? 'lg:pr-0' : ''"

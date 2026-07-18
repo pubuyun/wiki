@@ -5,11 +5,30 @@ import ColorblindModeToggle from "./AccessibilityMenu/ColorblindModeToggle.vue";
 import DyslexiaModeToggle from "./AccessibilityMenu/DyslexiaModeToggle.vue";
 
 const isOpen = ref(false);
+const isBackToTopVisible = ref(false);
+
+function onScroll() {
+    isBackToTopVisible.value = window.scrollY > 200;
+
+    if (isBackToTopVisible.value) {
+        isOpen.value = false;
+    }
+}
+
+onMounted(() => {
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+});
+
+onUnmounted(() => {
+    window.removeEventListener("scroll", onScroll);
+});
 </script>
 
 <template>
     <aside
         class="fixed right-4 bottom-4 z-50"
+        :class="isBackToTopVisible ? 'hidden lg:block' : undefined"
         aria-label="Accessibility options"
     >
         <div class="grid grid-cols-2 gap-2">

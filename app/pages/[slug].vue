@@ -3,6 +3,8 @@ definePageMeta({
     layout: "category",
 });
 
+import { Icon } from "@iconify/vue";
+
 const route = useRoute();
 const slug = computed(() => String(route.params.slug ?? ""));
 const pagePath = computed(() => `/${slug.value}`);
@@ -50,9 +52,17 @@ const groupedNavNodes = computed(() =>
     categoryNavNodes.value.filter((node) => node.children?.length),
 );
 
+const overviewPath = computed(() => `${pagePath.value}/overview`);
+const overviewNode = computed(() =>
+    categoryNavNodes.value.find((node) => node.path === overviewPath.value),
+);
+
 const standaloneNavNodes = computed(() =>
     categoryNavNodes.value.filter(
-        (node) => !node.children?.length && node.path,
+        (node) =>
+            !node.children?.length &&
+            node.path &&
+            node.path !== overviewPath.value,
     ),
 );
 
@@ -81,14 +91,8 @@ watchEffect(() => {
 <template>
     <article
         v-if="displayPage"
-        class="flex min-w-0 flex-1 flex-col gap-10 px-4 sm:px-6 lg:px-8 xl:px-12"
+        class="flex min-w-0 flex-1 flex-col gap-10 px-4 pt-4 sm:px-6 lg:px-8 xl:px-12"
     >
-        <p
-            v-if="pageDescription(displayPage)"
-            class="w-full max-w-4xl min-w-0 font-main text-base leading-relaxed wrap-anywhere text-on-surface sm:text-lg"
-        >
-            {{ pageDescription(displayPage) }}
-        </p>
         <nav
             class="flex min-w-0 flex-col gap-10"
             aria-label="Category documents"
@@ -160,6 +164,14 @@ watchEffect(() => {
                     </p>
                 </NuxtLink>
             </section>
+            <NuxtLink
+                v-if="overviewNode?.path"
+                :to="overviewNode.path"
+                class="inline-flex w-fit items-center gap-3 rounded-full bg-primary px-6 py-3 font-belanosima text-xl text-on-primary no-underline shadow-md transition hover:-translate-y-0.5 hover:shadow-lg focus-visible:-translate-y-0.5 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-outline sm:px-8 sm:py-4 sm:text-2xl"
+            >
+                Go to Overview
+                <Icon icon="line-md:arrow-right" class="h-6 w-6" />
+            </NuxtLink>
         </nav>
     </article>
 </template>
