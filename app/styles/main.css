@@ -164,21 +164,21 @@ input[type="submit"],
     --outline: #f8ffff;
     --outline-variant: #2e6dbf;
 }
+
 :root {
-    --primary: #ffb145;
-    --on-primary: #03316d;
+    --primary: #f2b236;
+    --on-primary: #103098;
 
-    --secondary: #ffffff;
-    --on-secondary: #2f2f2f;
+    --secondary: #faf8f5;
+    --on-secondary: #103098;
+    --surface: #b9eaec;
+    --on-surface: #0853d1;
+    --surface-navigation: #3699ff;
+    --surface-bright: #b9eaec;
+    --surface-elevated: #5fbde3;
 
-    --surface: #03316d;
-    --on-surface: #f8ffff;
-    --surface-navigation: #2e6dbf;
-    --surface-bright: #2f85f5;
-    --surface-elevated: #2e6dbf;
-
-    --outline: #f8ffff;
-    --outline-variant: #2e6dbf;
+    --outline: #103098;
+    --outline-variant: #0853d1;
 }
 
 .colorblind button:not(.nav-menu-trigger):hover {
