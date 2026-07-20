@@ -26,7 +26,7 @@
         >
             <NuxtLink
                 :to="titleTo"
-                class="inline-flex w-[min(100%,calc(20vw-4rem))] min-w-0 justify-center overflow-visible rounded-md px-2 py-1 text-center text-2xl leading-[1.1] font-semibold whitespace-nowrap transition-colors hover:bg-secondary hover:text-on-secondary focus-visible:ring-2 focus-visible:ring-outline focus-visible:outline-none xl:text-4xl"
+                class="inline-flex min-w-0 flex-1 justify-center overflow-visible rounded-md px-2 py-1 text-center text-2xl leading-[1.1] font-semibold whitespace-nowrap transition-colors hover:bg-secondary hover:text-on-secondary focus-visible:ring-2 focus-visible:ring-outline focus-visible:outline-none xl:text-4xl"
                 :style="titleStyle"
                 :aria-label="`Go to ${title}`"
             >
@@ -180,11 +180,11 @@
 
         <div
             v-if="contentVisible && canScrollUp"
-            class="from-surface-bright pointer-events-none absolute top-[5.75rem] z-10 h-8 w-full bg-linear-to-b to-transparent xl:top-[6.5rem]"
+            class="pointer-events-none absolute top-[5.75rem] z-10 h-8 w-full bg-linear-to-b from-surface-bright to-transparent xl:top-[6.5rem]"
         />
         <div
             v-if="contentVisible && canScrollDown"
-            class="from-surface-bright pointer-events-none absolute bottom-0 z-10 h-8 w-full bg-linear-to-t to-transparent"
+            class="pointer-events-none absolute bottom-0 z-10 h-8 w-full bg-linear-to-t from-surface-bright to-transparent"
         />
     </nav>
 </template>
@@ -206,6 +206,7 @@ const props = defineProps<{
     activePath: string;
 }>();
 
+const dyslexiaMode = useState<boolean>("dyslexia-mode", () => false);
 const collapsed = ref(false);
 const contentRendered = ref(!collapsed.value);
 const contentVisible = ref(!collapsed.value);
@@ -219,6 +220,7 @@ const transitionDuration = 200;
 const contentId = "category-sidebar-nav";
 let contentRevealTimer: ReturnType<typeof setTimeout> | undefined;
 let titleResizeObserver: ResizeObserver | undefined;
+let titleScaleFrame: number | undefined;
 
 const sidebarClass = computed(() => [
     "sticky top-0 h-screen max-h-screen flex-col overflow-hidden bg-surface-elevated font-momo-trust-display text-on-surface shadow-sm transition-[width,height,padding,translate] duration-200 ease-out border-r border-white/20",
@@ -303,8 +305,13 @@ function updateTitleScale() {
     const container = el?.parentElement;
     if (!el || !container) return;
 
+    if (titleScaleFrame !== undefined) {
+        cancelAnimationFrame(titleScaleFrame);
+    }
+
     titleFontScale.value = 1;
-    requestAnimationFrame(() => {
+    titleScaleFrame = requestAnimationFrame(() => {
+        titleScaleFrame = undefined;
         const styles = getComputedStyle(container);
         const availableWidth =
             container.clientWidth -
@@ -314,9 +321,21 @@ function updateTitleScale() {
 
         titleFontScale.value =
             availableWidth > 0 && textWidth > availableWidth
-                ? Math.max(0.8, availableWidth / textWidth)
+                ? Math.max(0.6, availableWidth / textWidth)
                 : 1;
     });
+}
+
+async function refreshTitleScale() {
+    await nextTick();
+    updateTitleScale();
+
+    await document.fonts.ready;
+    updateTitleScale();
+}
+
+function handleFontLoadingDone() {
+    updateTitleScale();
 }
 
 function clearContentRevealTimer() {
@@ -404,9 +423,22 @@ watch(
     },
 );
 
+watch(dyslexiaMode, () => {
+    void refreshTitleScale();
+});
+
+onMounted(() => {
+    document.fonts.addEventListener("loadingdone", handleFontLoadingDone);
+    void refreshTitleScale();
+});
+
 onBeforeUnmount(() => {
     clearContentRevealTimer();
     titleResizeObserver?.disconnect();
+    if (titleScaleFrame !== undefined) {
+        cancelAnimationFrame(titleScaleFrame);
+    }
+    document.fonts.removeEventListener("loadingdone", handleFontLoadingDone);
 });
 </script>
 
