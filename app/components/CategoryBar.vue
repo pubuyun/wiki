@@ -223,7 +223,7 @@ let titleResizeObserver: ResizeObserver | undefined;
 let titleScaleFrame: number | undefined;
 
 const sidebarClass = computed(() => [
-    "sticky top-0 h-screen max-h-screen flex-col overflow-hidden bg-surface-elevated font-momo-trust-display text-on-surface transition-[width,height,padding,translate] duration-200 ease-out border-r border-white/20",
+    "sticky top-0 h-screen max-h-screen flex-col overflow-hidden bg-surface-elevated font-momo-trust-display text-on-surface transition-[width,height,padding,translate] duration-200 ease-out",
     collapsed.value ? "w-12 py-6" : "w-66 pt-4",
     "translate-x-0",
 ]);

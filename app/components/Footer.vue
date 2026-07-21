@@ -28,11 +28,11 @@ const wavePaths = [
     {
         id: "accent",
         fill: "fill-primary",
-        d: "M 0 -60 L 0 -360 C 201 -360 210 -144 473 -209 C 1089 -180 1148 -274 1330 -290 C 1460 -277 1592 -233 1700 -285 L 1700 -60 Z",
+        d: "M 0 -60 L 0 -350 C 209 -307 198 -136 513 -140 C 1089 -180 1146 -300 1311 -300 C 1422 -300 1592 -200 1698 -200 L 1700 -60 Z",
     },
     {
         id: "footer",
-        fill: "fill-on-secondary",
+        fill: "fill-on-secondary dark:fill-surface-elevated",
         d: "M 0 0 L 0 -300 C 140 -167 378 -166 593 -258 C 768 -314 799 -400 1171 -246 C 1432 -144 1399 -400 1700 -400 L 1700 0 Z",
     },
 ];
@@ -45,7 +45,7 @@ const footerLinkClass =
 
 <template>
     <footer
-        class="relative isolate mt-auto overflow-hidden bg-on-secondary text-secondary"
+        class="relative isolate mt-auto overflow-hidden bg-on-secondary text-secondary dark:bg-surface-elevated dark:text-on-surface"
     >
         <div
             class="relative h-24 bg-surface sm:h-32 lg:h-44"
@@ -70,9 +70,11 @@ const footerLinkClass =
             </svg>
         </div>
 
-        <div class="-mt-px bg-on-secondary px-4 pb-5 sm:px-6 lg:px-8">
+        <div
+            class="-mt-px bg-on-secondary px-4 pb-5 sm:px-6 lg:px-8 dark:bg-surface-elevated"
+        >
             <div
-                class="mx-8 border-t border-secondary sm:mx-6 lg:mx-4"
+                class="mx-8 border-t border-secondary sm:mx-6 lg:mx-4 dark:border-on-surface"
                 aria-hidden="true"
             />
 
@@ -169,7 +171,7 @@ const footerLinkClass =
                             />
                             <h2
                                 id="footer-team-title"
-                                class="footer-team-name min-w-0 border-b-4 border-secondary pb-1 font-righteous text-3xl leading-none font-bold whitespace-nowrap sm:text-5xl xl:text-5xl 2xl:text-6xl"
+                                class="footer-team-name min-w-0 border-b-4 border-secondary pb-1 font-righteous text-3xl leading-none font-bold whitespace-nowrap sm:text-5xl xl:text-5xl 2xl:text-6xl dark:border-on-surface"
                             >
                                 GreatBay-SCIE
                             </h2>
@@ -203,7 +205,7 @@ const footerLinkClass =
 
             <!-- Required on every iGEM page. -->
             <div
-                class="mx-auto max-w-7xl border-t border-secondary/70 pt-4 text-sm leading-relaxed"
+                class="mx-auto max-w-7xl border-t border-secondary/70 pt-4 text-sm leading-relaxed dark:border-on-surface/70"
             >
                 <p>
                     © 2026 - Content on this site is licensed under a
