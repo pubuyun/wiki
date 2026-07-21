@@ -47,7 +47,7 @@ const hasRightSidebar = computed(
             <AccessibilityMenu />
             <slot />
         </main>
-        <Footer />
+        <Footer has-category-sidebar />
         <aside aria-label="Page utilities">
             <BackToTop />
         </aside>

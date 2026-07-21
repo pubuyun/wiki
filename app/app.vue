@@ -25,6 +25,7 @@
 
 <script setup lang="ts">
 import { wikiTheme } from "./styles/echarts";
+import "./styles/opendyslexic.css";
 
 const THEME_KEY = "theme";
 const DARK_MODE_COOKIE = "wiki-dark-mode";
@@ -54,14 +55,6 @@ watch(colorblindMode, (enabled) => {
 watch(darkMode, (enabled) => {
     savedDarkMode.value = enabled;
 });
-
-watch(
-    dyslexiaMode,
-    (enabled) => {
-        if (enabled) void import("./styles/opendyslexic.css");
-    },
-    { immediate: true },
-);
 
 const themeClass = computed(() =>
     [

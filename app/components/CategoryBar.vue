@@ -207,7 +207,7 @@ const props = defineProps<{
 }>();
 
 const dyslexiaMode = useState<boolean>("dyslexia-mode", () => false);
-const collapsed = ref(false);
+const collapsed = useState<boolean>("category-sidebar-collapsed", () => false);
 const contentRendered = ref(!collapsed.value);
 const contentVisible = ref(!collapsed.value);
 const contentScroll = ref<HTMLDivElement | null>(null);
@@ -223,7 +223,7 @@ let titleResizeObserver: ResizeObserver | undefined;
 let titleScaleFrame: number | undefined;
 
 const sidebarClass = computed(() => [
-    "sticky top-0 h-screen max-h-screen flex-col overflow-hidden bg-surface-elevated font-momo-trust-display text-on-surface shadow-sm transition-[width,height,padding,translate] duration-200 ease-out border-r border-white/20",
+    "sticky top-0 h-screen max-h-screen flex-col overflow-hidden bg-surface-elevated font-momo-trust-display text-on-surface transition-[width,height,padding,translate] duration-200 ease-out border-r border-white/20",
     collapsed.value ? "w-12 py-6" : "w-66 pt-4",
     "translate-x-0",
 ]);
@@ -328,9 +328,18 @@ function updateTitleScale() {
 
 async function refreshTitleScale() {
     await nextTick();
-    updateTitleScale();
+    await new Promise<void>((resolve) =>
+        requestAnimationFrame(() => resolve()),
+    );
+
+    if (dyslexiaMode.value) {
+        await document.fonts.load("1em OpenDyslexic", props.title);
+    }
 
     await document.fonts.ready;
+    await new Promise<void>((resolve) =>
+        requestAnimationFrame(() => resolve()),
+    );
     updateTitleScale();
 }
 
@@ -423,9 +432,7 @@ watch(
     },
 );
 
-watch(dyslexiaMode, () => {
-    void refreshTitleScale();
-});
+watch(dyslexiaMode, () => void refreshTitleScale(), { flush: "post" });
 
 onMounted(() => {
     document.fonts.addEventListener("loadingdone", handleFontLoadingDone);
