@@ -25,16 +25,43 @@ function normalizeBaseUrl(baseUrl: string) {
 }
 
 function loadStylesheet(href: string) {
+    const absoluteHref = new URL(href, document.baseURI).href;
     const existing = document.querySelector<HTMLLinkElement>(
         'link[data-molstar-stylesheet="true"]',
     );
 
     if (existing) {
-        if (existing.dataset.loaded === "true") return Promise.resolve();
+        if (
+            existing.href === absoluteHref &&
+            existing.dataset.loaded === "true"
+        ) {
+            return Promise.resolve();
+        }
 
         return new Promise<void>((resolve, reject) => {
-            existing.addEventListener("load", () => resolve(), { once: true });
-            existing.addEventListener("error", () => reject(), { once: true });
+            existing.dataset.loaded = "false";
+            existing.addEventListener(
+                "load",
+                () => {
+                    existing.dataset.loaded = "true";
+                    resolve();
+                },
+                { once: true },
+            );
+            existing.addEventListener(
+                "error",
+                () =>
+                    reject(
+                        new Error(
+                            `Unable to load Mol* CSS from ${absoluteHref}`,
+                        ),
+                    ),
+                { once: true },
+            );
+
+            if (existing.href !== absoluteHref) {
+                existing.href = absoluteHref;
+            }
         });
     }
 
@@ -58,6 +85,19 @@ function loadStylesheet(href: string) {
         );
         document.head.appendChild(stylesheet);
     });
+}
+
+export function setMolstarTheme(baseUrl: string, darkMode: boolean) {
+    const normalizedBaseUrl = normalizeBaseUrl(baseUrl);
+
+    if (!normalizedBaseUrl) {
+        return Promise.reject(
+            new Error("NUXT_PUBLIC_MOLSTAR_BASE_URL is not configured."),
+        );
+    }
+
+    const theme = darkMode ? "dark" : "light";
+    return loadStylesheet(`${normalizedBaseUrl}/theme/${theme}.css`);
 }
 
 function loadScript(src: string) {
@@ -92,7 +132,7 @@ function loadScript(src: string) {
     });
 }
 
-export function loadMolstar(baseUrl: string) {
+export function loadMolstar(baseUrl: string, darkMode = false) {
     const normalizedBaseUrl = normalizeBaseUrl(baseUrl);
 
     if (!normalizedBaseUrl) {
@@ -103,7 +143,11 @@ export function loadMolstar(baseUrl: string) {
         );
     }
 
-    if (window.molstar) return Promise.resolve(window.molstar);
+    const stylesheet = setMolstarTheme(normalizedBaseUrl, darkMode);
+
+    if (window.molstar) {
+        return stylesheet.then(() => window.molstar!);
+    }
 
     if (loading) {
         if (loadedBaseUrl !== normalizedBaseUrl) {
@@ -114,14 +158,16 @@ export function loadMolstar(baseUrl: string) {
             );
         }
 
-        return loading;
+        return Promise.all([stylesheet, loading]).then(
+            ([, molstar]) => molstar,
+        );
     }
 
     loadedBaseUrl = normalizedBaseUrl;
     window.__MOLSTAR_ASSET_BASE_URL__ = `${normalizedBaseUrl}/`;
 
     loading = Promise.all([
-        loadStylesheet(`${normalizedBaseUrl}/molstar.css`),
+        stylesheet,
         loadScript(`${normalizedBaseUrl}/molstar.js`),
     ])
         .then(([, molstar]) => molstar)

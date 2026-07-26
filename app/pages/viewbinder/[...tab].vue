@@ -1,6 +1,6 @@
 <template>
     <div
-        class="grid min-h-dvh max-w-full gap-4 overflow-hidden bg-surface p-4 text-on-surface lg:h-[calc(100dvh-4rem)] lg:min-h-0 lg:grid-cols-[minmax(12rem,0.7fr)_minmax(0,1.5fr)_minmax(18rem,1fr)]"
+        class="flex min-h-dvh max-w-full flex-col overflow-hidden bg-surface p-4 text-on-surface lg:h-[calc(100dvh-4rem)] lg:min-h-0"
     >
         <div
             v-if="isUnsupportedViewport"
@@ -19,174 +19,266 @@
             </div>
         </div>
 
-        <aside
-            class="border-surface-bright flex min-h-96 min-w-0 flex-col overflow-hidden rounded-xl border bg-secondary text-on-secondary"
-            aria-label="Binder files"
+        <SplitterGroup
+            id="viewbinder-layout"
+            direction="horizontal"
+            :keyboard-resize-by="2"
+            class="min-h-0 flex-1"
         >
-            <button
-                type="button"
-                class="border-surface-bright flex h-12 shrink-0 items-center gap-2 border-b px-4 text-left text-sm font-semibold transition-colors hover:bg-primary hover:text-on-primary focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-outline"
-                @click="goBack"
+            <SplitterPanel
+                id="viewbinder-tree-panel"
+                :default-size="21"
+                :min-size="14"
             >
-                <Icon icon="lucide:arrow-left" class="size-4" />
-                Back to Previous
-            </button>
-
-            <div
-                ref="treeScrollContainerRef"
-                class="min-h-0 flex-1 overflow-auto p-2"
-            >
-                <TreeRoot
-                    v-model="selectedTreeNode"
-                    v-model:expanded="expandedKeys"
-                    :items="treeItems"
-                    :get-key="(item) => item.key"
-                    class="flex min-w-max flex-col gap-0.5"
-                    aria-label="Model data files"
-                >
-                    <template #default="{ flattenItems }">
-                        <TreeItem
-                            v-for="item in flattenItems"
-                            :key="item._id"
-                            v-slot="{ isExpanded, isSelected }"
-                            v-bind="item.bind"
-                            as="button"
-                            type="button"
-                            class="group flex h-8 min-w-full items-center gap-1.5 rounded px-2 text-left text-sm transition-colors outline-none hover:bg-primary/20 focus-visible:ring-2 focus-visible:ring-outline data-[selected]:bg-primary data-[selected]:text-on-primary"
-                            :style="{
-                                paddingLeft: `${(item.level - 1) * 16 + 8}px`,
-                            }"
-                            @select="
-                                item.hasChildren && $event.preventDefault()
-                            "
-                        >
-                            <Icon
-                                v-if="item.hasChildren"
-                                icon="lucide:chevron-right"
-                                class="size-4 shrink-0 transition-transform"
-                                :class="{ 'rotate-90': isExpanded }"
-                            />
-                            <span v-else class="w-4 shrink-0" />
-                            <Icon
-                                :icon="
-                                    item.hasChildren
-                                        ? isExpanded
-                                            ? 'lucide:folder-open'
-                                            : 'lucide:folder'
-                                        : 'lucide:file-json'
-                                "
-                                class="size-4 shrink-0"
-                                :class="
-                                    isSelected
-                                        ? 'text-on-primary'
-                                        : 'text-on-secondary/65'
-                                "
-                            />
-                            <span class="max-w-72 truncate pr-2">
-                                {{ item.value.label }}
-                            </span>
-                        </TreeItem>
-                    </template>
-                </TreeRoot>
-            </div>
-        </aside>
-
-        <section
-            class="border-surface-bright min-h-128 min-w-0 overflow-hidden rounded-xl border bg-secondary lg:min-h-0"
-            aria-label="Molecular structure viewer"
-        >
-            <ClientOnly>
-                <StructureViewer
-                    :structure-url="selectedBinder?._pdb_url ?? ''"
-                    structure-url-format="pdb"
-                />
-                <template #fallback>
-                    <div class="grid h-full place-items-center text-sm">
-                        Loading structure viewer...
-                    </div>
-                </template>
-            </ClientOnly>
-        </section>
-
-        <aside
-            class="border-surface-bright min-h-128 min-w-0 overflow-hidden rounded-xl border bg-secondary text-on-secondary lg:min-h-0"
-            aria-label="Binder details"
-        >
-            <TabsRoot v-model="activeTab" class="flex h-full min-h-0 flex-col">
-                <TabsList
-                    class="border-surface-bright flex shrink-0 overflow-x-auto border-b p-1"
-                    aria-label="Binder detail views"
-                >
-                    <TabsTrigger
-                        v-for="tab in tabs"
-                        :key="tab.value"
-                        :value="tab.value"
-                        class="shrink-0 rounded-md px-3 py-2 text-sm font-medium transition-colors outline-none hover:bg-primary/20 focus-visible:ring-2 focus-visible:ring-outline data-[state=active]:bg-primary data-[state=active]:text-on-primary"
+                <div class="flex h-full min-w-0 flex-col gap-4">
+                    <button
+                        type="button"
+                        class="flex h-12 w-full shrink-0 items-center gap-3 rounded-xl bg-transparent px-4 text-left font-momo-trust-display text-xl text-primary transition-colors hover:bg-primary hover:text-on-primary focus-visible:bg-primary focus-visible:text-on-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-outline active:bg-primary active:text-on-primary"
+                        @click="goBack"
                     >
-                        {{ tab.label }}
-                    </TabsTrigger>
-                </TabsList>
+                        <Icon
+                            icon="lucide:arrow-left"
+                            class="size-6 shrink-0"
+                        />
+                        Back to Previous
+                    </button>
 
-                <TabsContent
-                    value="info"
-                    class="min-h-0 flex-1 overflow-auto p-4 outline-none"
-                >
-                    <dl
-                        v-if="selectedBinder"
-                        class="divide-surface-bright/30 divide-y"
+                    <aside
+                        class="flex min-h-0 min-w-0 flex-1 flex-col overflow-hidden rounded-xl border border-surface-bright bg-secondary text-on-secondary"
+                        aria-label="Binder files"
                     >
                         <div
-                            v-for="([key, value], index) in visibleProperties"
-                            :key="`${key}:${index}`"
-                            class="grid gap-1 py-3 first:pt-0 sm:grid-cols-[minmax(8rem,0.8fr)_minmax(0,1.2fr)] sm:gap-3"
+                            ref="treeScrollContainerRef"
+                            class="min-h-0 flex-1 overflow-x-hidden overflow-y-auto p-2"
                         >
-                            <dt class="text-sm font-semibold break-words">
-                                {{ key }}
-                            </dt>
-                            <dd
-                                class="text-sm break-words text-on-secondary/80"
+                            <TreeRoot
+                                v-model="selectedTreeNode"
+                                v-model:expanded="expandedKeys"
+                                :items="treeItems"
+                                :get-key="(item) => item.key"
+                                class="flex w-full min-w-0 flex-col gap-0.5 overflow-hidden font-momo-trust-display"
+                                aria-label="Model data files"
                             >
-                                {{ formatValue(value) }}
-                            </dd>
+                                <template #default="{ flattenItems }">
+                                    <TreeItem
+                                        v-for="item in flattenItems"
+                                        :key="item._id"
+                                        v-slot="{ isExpanded, isSelected }"
+                                        v-bind="item.bind"
+                                        as="button"
+                                        type="button"
+                                        class="group flex h-8 w-full min-w-0 items-center gap-1.5 overflow-hidden rounded px-2 text-left text-sm transition-colors outline-none hover:bg-primary/20 focus-visible:ring-2 focus-visible:ring-outline data-[selected]:bg-primary data-[selected]:text-on-primary"
+                                        :style="{
+                                            paddingLeft: `${(item.level - 1) * 16 + 8}px`,
+                                        }"
+                                        @select="
+                                            item.hasChildren &&
+                                            $event.preventDefault()
+                                        "
+                                    >
+                                        <Icon
+                                            v-if="item.hasChildren"
+                                            icon="lucide:chevron-right"
+                                            class="size-4 shrink-0 transition-transform"
+                                            :class="{
+                                                'rotate-90': isExpanded,
+                                            }"
+                                        />
+                                        <span v-else class="w-4 shrink-0" />
+                                        <Icon
+                                            :icon="
+                                                item.hasChildren
+                                                    ? isExpanded
+                                                        ? 'lucide:folder-open'
+                                                        : 'lucide:folder'
+                                                    : 'solar:dna-bold'
+                                            "
+                                            class="size-4 shrink-0"
+                                            :class="
+                                                isSelected
+                                                    ? 'text-on-primary'
+                                                    : 'text-on-secondary/65'
+                                            "
+                                        />
+                                        <span
+                                            class="min-w-0 flex-1 truncate pr-2"
+                                        >
+                                            {{ item.value.label }}
+                                        </span>
+                                    </TreeItem>
+                                </template>
+                            </TreeRoot>
                         </div>
-                    </dl>
-                </TabsContent>
+                    </aside>
+                </div>
+            </SplitterPanel>
 
-                <TabsContent
-                    value="md-graph"
-                    class="min-h-0 flex-1 overflow-auto p-3 outline-none"
-                >
-                    <ClientOnly>
-                        <LazyRmsdXvgChart
-                            v-if="activeTab === 'md-graph' && selectedBinder"
-                            :key="selectedBinder._id"
-                            :src="[
-                                selectedBinder._rmsd_lig_url,
-                                selectedBinder._rmsd_prot_url,
-                            ]"
-                            title="RMSD"
-                            :series-name="['Ligand', 'Protein']"
-                            height-class="min-h-[32rem] lg:h-full"
-                        />
-                        <template #fallback>
-                            <div
-                                class="min-h-[32rem] lg:h-full"
-                                aria-hidden="true"
+            <SplitterResizeHandle
+                id="viewbinder-tree-viewer-handle"
+                class="w-4 shrink-0 cursor-col-resize bg-transparent outline-none"
+                aria-label="Resize file tree and structure viewer"
+            />
+
+            <SplitterPanel
+                id="viewbinder-viewer-panel"
+                :default-size="47"
+                :min-size="30"
+            >
+                <div class="flex h-full min-w-0 flex-col gap-4">
+                    <h1
+                        class="w-fit max-w-full shrink-0 truncate rounded-xl bg-surface-elevated px-4 py-2 text-xl leading-none font-semibold text-on-surface shadow-sm"
+                        :title="viewerFileName"
+                    >
+                        {{ viewerFileName }}
+                    </h1>
+
+                    <section
+                        class="min-h-0 min-w-0 flex-1 overflow-hidden rounded-xl border border-surface-bright bg-secondary"
+                        aria-label="Molecular structure viewer"
+                    >
+                        <ClientOnly>
+                            <StructureViewer
+                                :structure-url="selectedBinder?._pdb_url ?? ''"
+                                structure-url-format="pdb"
                             />
-                        </template>
-                    </ClientOnly>
-                </TabsContent>
+                            <template #fallback>
+                                <div
+                                    class="grid h-full place-items-center text-sm"
+                                >
+                                    Loading structure viewer...
+                                </div>
+                            </template>
+                        </ClientOnly>
+                    </section>
+                </div>
+            </SplitterPanel>
 
-                <TabsContent value="vmd-animation" class="min-h-0 flex-1" />
-                <TabsContent value="experiment-result" class="min-h-0 flex-1" />
-            </TabsRoot>
-        </aside>
+            <SplitterResizeHandle
+                id="viewbinder-viewer-details-handle"
+                class="w-4 shrink-0 cursor-col-resize bg-transparent outline-none"
+                aria-label="Resize structure viewer and binder details"
+            />
+
+            <SplitterPanel
+                id="viewbinder-details-panel"
+                :default-size="32"
+                :min-size="22"
+            >
+                <aside
+                    class="mr-2 mb-2 h-[calc(100%-0.5rem)] min-h-0 min-w-0 overflow-hidden rounded-xl border border-surface-bright bg-secondary text-on-secondary shadow-[8px_8px_0_var(--color-primary)]"
+                    aria-label="Binder details"
+                >
+                    <TabsRoot
+                        v-model="activeTab"
+                        class="flex h-full min-h-0 flex-col"
+                    >
+                        <TabsList
+                            class="flex shrink-0 gap-1 overflow-x-auto border-b border-surface-bright bg-surface-elevated p-1 font-momo-trust-display"
+                            aria-label="Binder detail views"
+                        >
+                            <TabsTrigger
+                                v-for="tab in tabs"
+                            :key="tab.value"
+                            :value="tab.value"
+                            class="flex min-w-0 flex-1 items-center justify-center gap-1.5 rounded-full px-4 py-2 text-sm leading-tight text-primary transition-colors outline-none hover:bg-primary/20 focus-visible:ring-2 focus-visible:ring-outline data-[state=active]:bg-primary data-[state=active]:text-on-primary xl:text-base"
+                            >
+                                <span>{{ tab.label }}</span>
+                                <Icon
+                                    v-if="tab.value === 'md-graph'"
+                                    :icon="
+                                        isSelectedBinder
+                                            ? 'lucide:circle-check-big'
+                                            : 'lucide:circle-x'
+                                    "
+                                    class="size-5 shrink-0"
+                                    :class="
+                                        isSelectedBinder
+                                            ? 'text-green-500'
+                                            : 'text-red-500'
+                                    "
+                                    aria-hidden="true"
+                                />
+                            </TabsTrigger>
+                        </TabsList>
+
+                        <TabsContent
+                            value="info"
+                            class="min-h-0 flex-1 overflow-auto p-4 outline-none"
+                        >
+                            <dl
+                                v-if="selectedBinder"
+                                class="divide-y divide-surface-bright/30"
+                            >
+                                <div
+                                    v-for="(
+                                        [key, value], index
+                                    ) in visibleProperties"
+                                    :key="`${key}:${index}`"
+                                    class="grid gap-1 py-3 first:pt-0 sm:grid-cols-[minmax(8rem,0.8fr)_minmax(0,1.2fr)] sm:gap-3"
+                                >
+                                    <dt
+                                        class="text-sm font-semibold break-words"
+                                    >
+                                        {{ key }}
+                                    </dt>
+                                    <dd
+                                        class="text-sm break-words text-on-secondary/80"
+                                    >
+                                        {{ formatValue(value) }}
+                                    </dd>
+                                </div>
+                            </dl>
+                        </TabsContent>
+
+                        <TabsContent
+                            value="md-graph"
+                            class="min-h-0 flex-1 overflow-auto p-3 outline-none"
+                        >
+                            <ClientOnly>
+                                <LazyRmsdXvgChart
+                                    v-if="
+                                        activeTab === 'md-graph' &&
+                                        selectedBinder
+                                    "
+                                    :key="selectedBinder._id"
+                                    :src="[
+                                        selectedBinder._rmsd_lig_url,
+                                        selectedBinder._rmsd_prot_url,
+                                    ]"
+                                    title="RMSD"
+                                    :series-name="['Ligand', 'Protein']"
+                                    height-class="min-h-[32rem] lg:h-full"
+                                />
+                                <template #fallback>
+                                    <div
+                                        class="min-h-[32rem] lg:h-full"
+                                        aria-hidden="true"
+                                    />
+                                </template>
+                            </ClientOnly>
+                        </TabsContent>
+
+                        <TabsContent
+                            value="vmd-animation"
+                            class="min-h-0 flex-1"
+                        />
+                        <TabsContent
+                            value="experiment-result"
+                            class="min-h-0 flex-1"
+                        />
+                    </TabsRoot>
+                </aside>
+            </SplitterPanel>
+        </SplitterGroup>
     </div>
 </template>
 
 <script setup lang="ts">
 import { Icon } from "@iconify/vue";
 import {
+    SplitterGroup,
+    SplitterPanel,
+    SplitterResizeHandle,
     TabsContent,
     TabsList,
     TabsRoot,
@@ -221,10 +313,9 @@ type TreeNode = {
     loadRecord?: () => Promise<BinderRecord>;
 };
 
-const modules = import.meta.glob<BinderRecord>(
-    "../../data/model/cycle*/{selected,rejected}/{proteina,rosetta}/*.json",
-    { import: "default" },
-);
+const modules = import.meta.glob<BinderRecord>("../../data/model/**/*.json", {
+    import: "default",
+});
 
 function titleCase(segment: string) {
     if (/^cycle\d+$/i.test(segment)) {
@@ -311,13 +402,11 @@ function catchallTab() {
 }
 
 function binderRoute(node: TreeNode, tab: TabValue) {
-    const [cycle = "", status = "", source = ""] = node.key.split("/");
-    const name = node.label;
-    const segments = [cycle, status, source, name, tab].map((segment) =>
-        encodeURIComponent(segment),
-    );
+    const segments = node.key.split("/");
+    segments[segments.length - 1] = node.label;
+    segments.push(tab);
 
-    return `/viewbinder/${segments.join("/")}`;
+    return `/viewbinder/${segments.map(encodeURIComponent).join("/")}`;
 }
 
 function findRouteNode() {
@@ -424,6 +513,13 @@ const visibleProperties = computed(() =>
     Object.entries(selectedBinder.value ?? {}).filter(
         ([key]) => !key.startsWith("_"),
     ),
+);
+const viewerFileName = computed(
+    () =>
+        selectedBinder.value?.name || selectedTreeNode.value?.label || "Viewer",
+);
+const isSelectedBinder = computed(
+    () => selectedTreeNode.value?.key.split("/").includes("selected") ?? false,
 );
 
 function formatValue(value: BinderValue) {

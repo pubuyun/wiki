@@ -1,10 +1,11 @@
 <script setup>
 import { onBeforeUnmount, onMounted, watch } from "vue";
 import { useRoute } from "vue-router";
-import { loadMolstar } from "~/utils/molstar.client";
+import { loadMolstar, setMolstarTheme } from "~/utils/molstar.client";
 
 const route = useRoute();
 const runtimeConfig = useRuntimeConfig();
+const darkMode = useState("dark-mode", () => false);
 
 const props = defineProps({
     fileData: { type: [String, Array], default: "" },
@@ -53,6 +54,22 @@ const viewerContainer = ref(null);
 let molstarApi = null;
 let molStarViewer = null;
 let unmounted = false;
+
+function applyMolstarTheme(enabled) {
+    molStarViewer?.plugin?.canvas3d?.setProps({
+        renderer: {
+            backgroundColor: enabled ? 0x000000 : 0xfcfbf9,
+        },
+    });
+
+    setMolstarTheme(runtimeConfig.public.molstarBaseUrl, enabled).catch(
+        (error) => {
+            console.error("Failed to load Mol* theme:", error);
+        },
+    );
+}
+
+watch(darkMode, applyMolstarTheme);
 
 function queryString(query, name) {
     const value = query[name];
@@ -105,7 +122,10 @@ watch(
 );
 
 async function render() {
-    molstarApi = await loadMolstar(runtimeConfig.public.molstarBaseUrl);
+    molstarApi = await loadMolstar(
+        runtimeConfig.public.molstarBaseUrl,
+        darkMode.value,
+    );
 
     if (unmounted || !viewerContainer.value) return;
 
@@ -187,6 +207,7 @@ async function render() {
     }
 
     molStarViewer = viewer;
+    applyMolstarTheme(darkMode.value);
 
     const snapshotId =
         queryString(query, "snapshot-id")?.trim() || props.snapshotId;
