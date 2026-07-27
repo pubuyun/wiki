@@ -60,7 +60,7 @@ html {
 html,
 body {
     cursor:
-        url("/cursor/default-32px.png") 9 4,
+        url("/cursor/default-32px.png") 7 0,
         auto;
 }
 
@@ -68,7 +68,7 @@ body {
 abbr[title],
 .cursor-help {
     cursor:
-        url("/cursor/help-32px.png") 2 2,
+        url("/cursor/help-32px.png") 2 0,
         help;
 }
 
@@ -110,7 +110,7 @@ input[type="reset"],
 input[type="submit"],
 .cursor-pointer {
     cursor:
-        url("/cursor/pointer-32px.png") 12 2,
+        url("/cursor/pointer-32px.png") 16 0,
         pointer;
 }
 
