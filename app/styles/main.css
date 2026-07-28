@@ -166,23 +166,23 @@ input[type="submit"],
 }
 
 :root {
-    --primary: #f1920e;
-    --on-primary: #03316d;
+    --primary: #2b6cbf;
+    --on-primary: #ffffff;
 
-    --secondary: #f8ffff;
-    --on-secondary: #444444;
+    --secondary: #f7fafc;
+    --on-secondary: #3f3730;
 
-    --surface: #0a3b79;
-    --on-surface: #f8ffff;
-    --surface-navigation: #3978c9;
-    --surface-bright: #4590f7;
-    --surface-elevated: #3978c9;
+    --surface: #e5f0f8;
+    --on-surface: #334e5f;
+    --surface-navigation: #9ed3f3;
+    --surface-bright: #eff9fe;
+    --surface-elevated: #9ed3f3;
 
-    --outline: #f8ffff;
-    --outline-variant: #2e6dbf;
+    --outline: #58798c;
+    --outline-variant: #8fb5c9;
 }
 
-/* :root {
+/* :root { 只换文本框
     --primary: #f2b236;
     --on-primary: #103098;
 

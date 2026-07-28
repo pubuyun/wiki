@@ -41,7 +41,7 @@ const colorblindMode = useState<boolean>(
     () => savedColorblindMode.value,
 );
 const savedDarkMode = useCookie<boolean>(DARK_MODE_COOKIE, {
-    default: () => false,
+    default: () => true,
     maxAge: 60 * 60 * 24 * 365,
     sameSite: "lax",
 });
