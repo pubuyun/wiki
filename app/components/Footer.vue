@@ -32,7 +32,7 @@ const wavePaths = [
     },
     {
         id: "footer",
-        fill: "fill-on-secondary dark:fill-surface-elevated",
+        fill: "fill-surface-elevated",
         d: "M 0 0 L 0 -300 C 140 -167 378 -166 593 -258 C 768 -314 799 -400 1171 -246 C 1432 -144 1399 -400 1700 -400 L 1700 0 Z",
     },
 ];
@@ -45,7 +45,7 @@ const footerLinkClass =
 
 <template>
     <footer
-        class="relative isolate mt-auto overflow-hidden bg-on-secondary text-secondary dark:bg-surface-elevated dark:text-on-surface"
+        class="relative isolate mt-auto overflow-hidden bg-surface-elevated text-on-surface"
     >
         <div
             class="relative h-24 bg-surface sm:h-32 lg:h-44"
@@ -70,11 +70,9 @@ const footerLinkClass =
             </svg>
         </div>
 
-        <div
-            class="-mt-px bg-on-secondary px-4 pb-5 sm:px-6 lg:px-8 dark:bg-surface-elevated"
-        >
+        <div class="-mt-px bg-surface-elevated px-4 pb-5 sm:px-6 lg:px-8">
             <div
-                class="mx-8 border-t border-secondary sm:mx-6 lg:mx-4 dark:border-on-surface"
+                class="mx-8 border-t border-on-surface sm:mx-6 lg:mx-4"
                 aria-hidden="true"
             />
 
@@ -171,7 +169,7 @@ const footerLinkClass =
                             />
                             <h2
                                 id="footer-team-title"
-                                class="footer-team-name min-w-0 border-b-4 border-secondary pb-1 font-righteous text-3xl leading-none font-bold whitespace-nowrap sm:text-5xl xl:text-5xl 2xl:text-6xl dark:border-on-surface"
+                                class="footer-team-name min-w-0 border-b-4 border-on-surface pb-1 font-righteous text-3xl leading-none font-bold whitespace-nowrap sm:text-5xl xl:text-5xl 2xl:text-6xl"
                             >
                                 GreatBay-SCIE
                             </h2>
@@ -205,7 +203,7 @@ const footerLinkClass =
 
             <!-- Required on every iGEM page. -->
             <div
-                class="mx-auto max-w-7xl border-t border-secondary/70 pt-4 text-sm leading-relaxed dark:border-on-surface/70"
+                class="mx-auto max-w-7xl border-t border-on-surface/70 pt-4 text-sm leading-relaxed"
             >
                 <p>
                     © 2026 - Content on this site is licensed under a
