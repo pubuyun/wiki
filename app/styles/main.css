@@ -166,6 +166,23 @@ input[type="submit"],
 }
 
 :root {
+    --primary: #f1920e;
+    --on-primary: #03316d;
+
+    --secondary: #f8ffff;
+    --on-secondary: #444444;
+
+    --surface: #0a3b79;
+    --on-surface: #f8ffff;
+    --surface-navigation: #3978c9;
+    --surface-bright: #4590f7;
+    --surface-elevated: #3978c9;
+
+    --outline: #f8ffff;
+    --outline-variant: #2e6dbf;
+}
+
+/* :root {
     --primary: #f2b236;
     --on-primary: #103098;
 
@@ -178,8 +195,8 @@ input[type="submit"],
     --surface-elevated: #5fbde3;
 
     --outline: #103098;
-    --outline-variant: #0853d1;
-}
+    --outline-variant: #0853d1; 
+} */
 
 .colorblind button:not(.nav-menu-trigger):hover {
     text-decoration-line: underline;
