@@ -144,6 +144,10 @@ defineExpose({ open });
 </template>
 
 <style scoped>
+:global(.vel-fade-enter-active) {
+    transition-duration: 0s;
+}
+
 .lightbox-tool-button {
     display: flex;
     width: 3rem;
