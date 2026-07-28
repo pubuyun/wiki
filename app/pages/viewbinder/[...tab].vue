@@ -165,7 +165,7 @@
                 :min-size="22"
             >
                 <aside
-                    class="mr-2 mb-2 h-[calc(100%-0.5rem)] min-h-0 min-w-0 overflow-hidden rounded-xl border border-surface-bright bg-secondary text-on-secondary shadow-[8px_8px_0_var(--color-primary)]"
+                    class="mr-3 mb-3 h-[calc(100%-0.75rem)] min-h-0 min-w-0 overflow-hidden rounded-xl border border-surface-bright bg-secondary text-on-secondary shadow-[12px_12px_0_var(--color-primary)]"
                     aria-label="Binder details"
                 >
                     <TabsRoot
