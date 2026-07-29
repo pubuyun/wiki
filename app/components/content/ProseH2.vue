@@ -24,9 +24,9 @@
                 <slot />
             </span>
         </span>
-        <span v-else class="flex h-min rounded-4xl bg-primary">
+        <span v-else class="flex h-min rounded-4xl bg-accent">
             <span
-                class="mx-6 my-1.5 flex items-center justify-center text-center font-momo-trust-display text-4xl text-on-primary"
+                class="mx-6 my-1.5 flex items-center justify-center text-center font-momo-trust-display text-4xl text-on-accent"
             >
                 <a
                     v-if="props.id && generate"
@@ -46,7 +46,7 @@
             :class="
                 isFootNote
                     ? 'mt-2 w-full border-t-3 border-primary'
-                    : 'my-10 flex-1 border-3 border-t-2 border-primary'
+                    : 'my-10 flex-1 border-3 border-t-2 border-accent'
             "
         />
     </h2>

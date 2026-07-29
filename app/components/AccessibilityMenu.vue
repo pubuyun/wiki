@@ -35,7 +35,7 @@ onUnmounted(() => {
             <!-- bottom-right -->
             <button
                 type="button"
-                class="flex size-12 items-center justify-center rounded-full border-[3px] bg-primary text-on-primary shadow-lg transition-[transform,border-color] hover:scale-105 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-outline"
+                class="flex size-12 items-center justify-center rounded-full border-[3px] bg-accent text-on-accent shadow-lg transition-[transform,border-color] hover:scale-105 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-outline"
                 style="grid-area: 2 / 2"
                 :class="isOpen ? 'border-secondary' : 'border-transparent'"
                 :aria-expanded="isOpen"

@@ -33,6 +33,9 @@
     --color-primary: var(--primary);
     --color-on-primary: var(--on-primary);
 
+    --color-accent: var(--accent);
+    --color-on-accent: var(--on-accent);
+
     --color-secondary: var(--secondary);
     --color-on-secondary: var(--on-secondary);
 
@@ -118,6 +121,9 @@ input[type="submit"],
     --primary: #e69f00;
     --on-primary: #000000;
 
+    --accent: #e69f00;
+    --on-accent: #000000;
+
     --secondary: #f8ffff;
     --on-secondary: #000000;
 
@@ -135,6 +141,9 @@ input[type="submit"],
     --primary: #e69f00;
     --on-primary: #153866;
 
+    --accent: #e69f00;
+    --on-accent: #153866;
+
     --secondary: #f8ffff;
     --on-secondary: #153866;
 
@@ -149,8 +158,11 @@ input[type="submit"],
 }
 
 .dark {
-    --primary: #ffb145;
+    --primary: #a8d9f9;
     --on-primary: #03316d;
+
+    --accent: #ffa300;
+    --on-accent: #03316d;
 
     --secondary: #0a4296;
     --on-secondary: #f8ffff;
@@ -168,6 +180,9 @@ input[type="submit"],
 :root {
     --primary: #2b6cbf;
     --on-primary: #ffffff;
+
+    --accent: #ffb84d;
+    --on-accent: #ffffff;
 
     --secondary: #f7fafc;
     --on-secondary: #3f3730;
