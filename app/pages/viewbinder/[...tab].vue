@@ -178,9 +178,9 @@
                         >
                             <TabsTrigger
                                 v-for="tab in tabs"
-                            :key="tab.value"
-                            :value="tab.value"
-                            class="flex min-w-0 flex-1 items-center justify-center gap-1.5 rounded-full px-4 py-2 text-sm leading-tight text-primary transition-colors outline-none hover:bg-primary/20 focus-visible:ring-2 focus-visible:ring-outline data-[state=active]:bg-primary data-[state=active]:text-on-primary xl:text-base"
+                                :key="tab.value"
+                                :value="tab.value"
+                                class="flex min-w-0 flex-1 items-center justify-center gap-1.5 rounded-full px-4 py-2 text-sm leading-tight text-primary transition-colors outline-none hover:bg-primary/20 focus-visible:ring-2 focus-visible:ring-outline data-[state=active]:bg-primary data-[state=active]:text-on-primary xl:text-base"
                             >
                                 <span>{{ tab.label }}</span>
                                 <Icon
@@ -289,12 +289,7 @@ import {
 
 definePageMeta({
     layout: "static",
-    key: (route) => {
-        const value = route.params.tab;
-        const segments = Array.isArray(value) ? value : value ? [value] : [];
-
-        return segments.slice(0, -1).join("/") || "viewbinder";
-    },
+    key: false,
 });
 
 type BinderValue = string | number | boolean | null | undefined;
@@ -423,9 +418,20 @@ const initialTab = catchallTab();
 const selectedTreeNode = ref<TreeNode | undefined>(
     findRouteNode() ?? firstFileNode,
 );
-const expandedKeys = ref(
-    allTreeNodes.filter((node) => node.children).map((node) => node.key),
-);
+
+function initialExpandedKeys(currentNode?: TreeNode) {
+    const currentParentKey = currentNode?.key.split("/").slice(0, -1).join("/");
+
+    return allTreeNodes
+        .filter(
+            (node) =>
+                node.children?.some((child) => child.children) ||
+                node.key === currentParentKey,
+        )
+        .map((node) => node.key);
+}
+
+const expandedKeys = ref(initialExpandedKeys(selectedTreeNode.value));
 const activeTab = ref<TabValue>(isTabValue(initialTab) ? initialTab : "info");
 
 const tabs = [
