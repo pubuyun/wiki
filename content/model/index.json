@@ -1,0 +1,94 @@
+{
+    "title": "Model overview",
+    "height": {
+        "horizontal": 760,
+        "vertical": 900
+    },
+    "nodes": [
+        {
+            "id": "model",
+            "type": "input",
+            "position": {
+                "horizontal": { "x": 20, "y": 450 },
+                "vertical": { "x": 115, "y": 20 }
+            },
+            "data": { "label": "Model" }
+        },
+        {
+            "id": "overview",
+            "type": "virtual",
+            "position": {
+                "horizontal": { "x": 260, "y": 20 },
+                "vertical": { "x": 50, "y": 180 }
+            },
+            "size": {
+                "horizontal": { "width": 300, "height": 130 },
+                "vertical": { "width": 260, "height": 130 }
+            },
+            "data": {
+                "label": "Overview",
+                "path": "/model/overview"
+            }
+        },
+        {
+            "id": "precursor-binder",
+            "type": "virtual",
+            "position": {
+                "horizontal": { "x": 260, "y": 200 },
+                "vertical": { "x": 0, "y": 370 }
+            },
+            "size": {
+                "horizontal": { "width": 1300, "height": 420 },
+                "vertical": { "width": 360, "height": 1120 }
+            },
+            "data": {
+                "label": "Precursor binder",
+                "path": "/model/precursor-binder",
+                "graph": "/content/model/precursor binder/index.json"
+            }
+        },
+        {
+            "id": "transporter-binder",
+            "type": "virtual",
+            "position": {
+                "horizontal": { "x": 260, "y": 680 },
+                "vertical": { "x": 0, "y": 1550 }
+            },
+            "size": {
+                "horizontal": { "width": 900, "height": 280 },
+                "vertical": { "width": 360, "height": 600 }
+            },
+            "data": {
+                "label": "Transporter binder",
+                "path": "/model/transporter-binder",
+                "graph": "/content/model/transporter binder/index.json"
+            }
+        }
+    ],
+    "edges": [
+        {
+            "id": "model-to-overview",
+            "source": "model",
+            "target": "overview"
+        },
+        {
+            "id": "model-to-precursor",
+            "source": "model",
+            "target": "precursor-binder"
+        },
+        {
+            "id": "model-to-transporter",
+            "source": "model",
+            "target": "transporter-binder"
+        }
+    ],
+    "crossEdges": [
+        {
+            "id": "precursor-code-to-transporter-process",
+            "source": ["precursor-binder", "code"],
+            "target": ["transporter-binder", "process"],
+            "label": "Feeds process",
+            "animated": true
+        }
+    ]
+}

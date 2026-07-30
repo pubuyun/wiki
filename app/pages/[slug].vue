@@ -13,9 +13,15 @@ const { data: page } = await useAsyncData(`content-${pagePath.value}`, () =>
     queryCollection("content").path(pagePath.value).first(),
 );
 
+const graphSrc = computed(() =>
+    page.value?.stem
+        ? `/content/${page.value.stem}.json`
+        : `/content/${slug.value}/index.json`,
+);
+
 const { data: allPages } = await useAsyncData("content-navigation", () =>
     queryCollection("content")
-        .select("path", "title", "description", "meta")
+        .select("path", "title", "description", "meta", "order")
         .all(),
 );
 
@@ -108,6 +114,10 @@ watchEffect(() => {
         v-if="displayPage"
         class="flex min-w-0 flex-1 flex-col px-4 pt-4 sm:px-6 lg:px-8 xl:px-12"
     >
+        <ClientOnly>
+            <ContentGraph :src="graphSrc" class="mb-8" />
+        </ClientOnly>
+
         <nav
             class="relative flex min-w-0 -translate-x-2 flex-col gap-10 pr-2 pb-4"
             aria-label="Category documents"

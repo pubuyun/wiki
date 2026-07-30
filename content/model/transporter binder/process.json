@@ -1,0 +1,47 @@
+{
+    "title": "Transporter binder process",
+    "height": {
+        "horizontal": 260,
+        "vertical": 480
+    },
+    "nodes": [
+        {
+            "id": "input",
+            "type": "input",
+            "position": {
+                "horizontal": { "x": 30, "y": 70 },
+                "vertical": { "x": 80, "y": 30 }
+            },
+            "data": { "label": "Transport target" }
+        },
+        {
+            "id": "binding",
+            "position": {
+                "horizontal": { "x": 260, "y": 70 },
+                "vertical": { "x": 80, "y": 180 }
+            },
+            "data": { "label": "Binder interaction" }
+        },
+        {
+            "id": "result",
+            "type": "output",
+            "position": {
+                "horizontal": { "x": 490, "y": 70 },
+                "vertical": { "x": 80, "y": 330 }
+            },
+            "data": { "label": "Transport blocked" }
+        }
+    ],
+    "edges": [
+        {
+            "id": "input-to-binding",
+            "source": "input",
+            "target": "binding"
+        },
+        {
+            "id": "binding-to-result",
+            "source": "binding",
+            "target": "result"
+        }
+    ]
+}

@@ -6,6 +6,9 @@ export default defineContentConfig({
         content: defineCollection({
             type: "page",
             source: "**/*.md",
+            schema: z.object({
+                order: z.number().default(999),
+            }),
         }),
         glossary: defineCollection({
             type: "data",

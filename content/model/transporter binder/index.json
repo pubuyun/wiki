@@ -1,0 +1,70 @@
+{
+    "title": "Transporter binder",
+    "height": {
+        "horizontal": 420,
+        "vertical": 700
+    },
+    "nodes": [
+        {
+            "id": "process",
+            "type": "virtual",
+            "position": {
+                "horizontal": { "x": 40, "y": 80 },
+                "vertical": { "x": 50, "y": 60 }
+            },
+            "size": {
+                "horizontal": { "width": 720, "height": 230 },
+                "vertical": { "width": 260, "height": 480 }
+            },
+            "data": {
+                "label": "Process",
+                "path": "/model/transporter-binder/process",
+                "graph": "/content/model/transporter binder/process.json"
+            }
+        },
+        {
+            "id": "idea",
+            "type": "virtual",
+            "position": {
+                "horizontal": { "x": 330, "y": 80 },
+                "vertical": { "x": 50, "y": 240 }
+            },
+            "size": {
+                "horizontal": { "width": 230, "height": 130 },
+                "vertical": { "width": 260, "height": 130 }
+            },
+            "data": {
+                "label": "Idea",
+                "path": "/model/transporter-binder/idea"
+            }
+        },
+        {
+            "id": "code",
+            "type": "virtual",
+            "position": {
+                "horizontal": { "x": 620, "y": 80 },
+                "vertical": { "x": 50, "y": 420 }
+            },
+            "size": {
+                "horizontal": { "width": 230, "height": 130 },
+                "vertical": { "width": 260, "height": 130 }
+            },
+            "data": {
+                "label": "Code",
+                "path": "/model/transporter-binder/code"
+            }
+        }
+    ],
+    "edges": [
+        {
+            "id": "process-to-idea",
+            "source": "process",
+            "target": "idea"
+        },
+        {
+            "id": "idea-to-code",
+            "source": "idea",
+            "target": "code"
+        }
+    ]
+}

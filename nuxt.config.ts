@@ -1,4 +1,5 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+import { fileURLToPath } from "node:url";
 import tailwindcss from "@tailwindcss/vite";
 
 const isDevServer = process.env.NODE_ENV === "development";
@@ -75,6 +76,16 @@ export default defineNuxtConfig({
                 },
             },
         },
+    },
+    nitro: {
+        publicAssets: [
+            {
+                dir: fileURLToPath(new URL("./content/model", import.meta.url)),
+                baseURL: "/content/model",
+                fallthrough: false,
+            },
+        ],
+        ignore: ["**/*.md", "**/*.yml", "**/*.yaml"],
     },
 
     experimental: {

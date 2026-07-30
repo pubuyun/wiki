@@ -1,0 +1,70 @@
+{
+    "title": "Precursor binder",
+    "height": {
+        "horizontal": 500,
+        "vertical": 760
+    },
+    "nodes": [
+        {
+            "id": "process",
+            "type": "virtual",
+            "position": {
+                "horizontal": { "x": 40, "y": 120 },
+                "vertical": { "x": 50, "y": 70 }
+            },
+            "size": {
+                "horizontal": { "width": 230, "height": 130 },
+                "vertical": { "width": 260, "height": 130 }
+            },
+            "data": {
+                "label": "Process",
+                "path": "/model/precursor-binder/process"
+            }
+        },
+        {
+            "id": "idea",
+            "type": "virtual",
+            "position": {
+                "horizontal": { "x": 320, "y": 120 },
+                "vertical": { "x": 50, "y": 250 }
+            },
+            "size": {
+                "horizontal": { "width": 230, "height": 130 },
+                "vertical": { "width": 260, "height": 130 }
+            },
+            "data": {
+                "label": "Idea",
+                "path": "/model/precursor-binder/idea"
+            }
+        },
+        {
+            "id": "code",
+            "type": "virtual",
+            "position": {
+                "horizontal": { "x": 600, "y": 50 },
+                "vertical": { "x": 20, "y": 430 }
+            },
+            "size": {
+                "horizontal": { "width": 650, "height": 300 },
+                "vertical": { "width": 320, "height": 650 }
+            },
+            "data": {
+                "label": "Code",
+                "path": "/model/precursor-binder/code",
+                "graph": "/content/model/precursor binder/code.json"
+            }
+        }
+    ],
+    "edges": [
+        {
+            "id": "process-to-idea",
+            "source": "process",
+            "target": "idea"
+        },
+        {
+            "id": "idea-to-code",
+            "source": "idea",
+            "target": "code"
+        }
+    ]
+}

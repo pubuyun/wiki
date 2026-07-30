@@ -11,6 +11,7 @@ interface ContentPageLike {
     path: string;
     title?: string;
     description?: string;
+    order?: number;
 }
 
 export function normalizeContentPath(path: string) {
@@ -32,7 +33,11 @@ export function categoryPages(pages: ContentPageLike[], categorySlug?: string) {
     const prefix = `/${categorySlug}/`;
     return pages
         .filter((item) => item.path?.startsWith(prefix))
-        .sort((a, b) => a.path.localeCompare(b.path));
+        .sort(compareContentPages);
+}
+
+export function compareContentPages(a: ContentPageLike, b: ContentPageLike) {
+    return (a.order ?? 999) - (b.order ?? 999) || a.path.localeCompare(b.path);
 }
 
 export function buildCategoryNavTree(
@@ -90,6 +95,8 @@ function markActiveFolders(nodes: ContentNavNode[]) {
         if (!node.children?.length) continue;
 
         markActiveFolders(node.children);
-        node.active = Boolean(node.active || node.children.some((child) => child.active));
+        node.active = Boolean(
+            node.active || node.children.some((child) => child.active),
+        );
     }
 }

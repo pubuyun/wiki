@@ -13,8 +13,16 @@ const { data: page } = await useAsyncData(`content-${activePath.value}`, () =>
     queryCollection("content").path(activePath.value).first(),
 );
 
+const graphSrc = computed(() =>
+    page.value?.stem
+        ? `/content/${page.value.stem}.json`
+        : `/content${activePath.value}.json`,
+);
+
 const { data: allPages } = await useAsyncData("content-navigation", () =>
-    queryCollection("content").select("path", "title", "description").all(),
+    queryCollection("content")
+        .select("path", "title", "description", "order")
+        .all(),
 );
 
 const pages = computed(() => allPages.value ?? []);
@@ -43,7 +51,7 @@ const currentFolderCards = computed(() => {
             const relativePath = item.path.slice(prefix.length);
             return Boolean(relativePath) && !relativePath.includes("/");
         })
-        .sort((a, b) => a.path.localeCompare(b.path));
+        .sort(compareContentPages);
 });
 const categoryRootPage = computed(() =>
     pages.value.find((item) => item.path === categoryPath.value),
@@ -156,6 +164,10 @@ function bodyWithChildren(body, children) {
         <h1 class="sr-only">
             {{ pageTitle(page) }}
         </h1>
+
+        <ClientOnly>
+            <ContentGraph :src="graphSrc" />
+        </ClientOnly>
 
         <ClientOnly>
             <MobileContentBar
