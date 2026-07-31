@@ -9,7 +9,7 @@
                 class="flex h-full w-full items-center justify-center gap-2 p-1 sm:justify-start"
             >
                 <span
-                    class="hidden h-full min-w-0 flex-1 items-center rounded-full bg-secondary px-3 text-sm text-on-surface/60 sm:flex"
+                    class="hidden h-full min-w-0 flex-1 items-center rounded-full bg-secondary px-3 text-sm text-on-surface/78 sm:flex"
                     aria-hidden="true"
                 >
                     Ctrl + K
