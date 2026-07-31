@@ -3,8 +3,8 @@
     "height": 730,
     "nodes": [
         {
-            "id": "target",
-            "label": "Target",
+            "id": "cg3m3sh",
+            "label": "Cys-Gly-3M3SH",
             "position": {
                 "x": 30,
                 "y": 280
@@ -12,7 +12,7 @@
         },
         {
             "id": "rfd",
-            "label": "RFD",
+            "label": "RFDiffusion",
             "type": "virtual",
             "position": {
                 "x": 220,
@@ -24,13 +24,13 @@
             },
             "data": {
                 "path": "/model/precursor-binder/rfd",
-                "graph": "/content/model/precursor binder/rfd.json",
+                "graph": "/content/model/precursor binder/rfdiffusion.json",
                 "direction": "left-right"
             }
         },
         {
             "id": "pc",
-            "label": "PC",
+            "label": "Proteina Complexa",
             "type": "virtual",
             "position": {
                 "x": 220,
@@ -42,19 +42,8 @@
             },
             "data": {
                 "path": "/model/precursor-binder/pc",
-                "graph": "/content/model/precursor binder/pc.json",
+                "graph": "/content/model/precursor binder/proteinacomplexa.json",
                 "direction": "left-right"
-            }
-        },
-        {
-            "id": "chirality-filter",
-            "label": "Chirality Filter",
-            "position": {
-                "x": 760,
-                "y": 310
-            },
-            "data": {
-                "path": "/model/precursor-binder/chirality-filter"
             }
         },
         {
@@ -132,28 +121,6 @@
             "id": "wet-lab-to-result",
             "source": "wet-lab-validation",
             "target": "result"
-        }
-    ],
-    "crossEdges": [
-        {
-            "id": "rfd-rf3-to-chirality-filter",
-            "source": ["rfd", "rf3-folding"],
-            "target": "chirality-filter"
-        },
-        {
-            "id": "pc-rf3-to-chirality-filter",
-            "source": ["pc", "rf3-folding"],
-            "target": "chirality-filter"
-        },
-        {
-            "id": "chirality-filter-to-rfd-top20",
-            "source": "chirality-filter",
-            "target": ["rfd", "top20"]
-        },
-        {
-            "id": "chirality-filter-to-pc-top20",
-            "source": "chirality-filter",
-            "target": ["pc", "top20"]
         }
     ]
 }

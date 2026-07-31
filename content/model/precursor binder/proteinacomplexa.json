@@ -1,5 +1,5 @@
 {
-    "title": "PC",
+    "title": "Proteina Complexa",
     "height": 330,
     "nodes": [
         {
@@ -35,10 +35,22 @@
             }
         },
         {
+            "id": "chirality-filter",
+            "label": "Chirality Filter",
+            "position": {
+                "x": 700,
+                "y": 125
+            },
+            "data": {
+                "path": "/model/precursor-binder/chirality-filter",
+                "scale": false
+            }
+        },
+        {
             "id": "top20",
             "label": "Top20",
             "position": {
-                "x": 700,
+                "x": 930,
                 "y": 125
             }
         }
@@ -65,8 +77,13 @@
             "target": "rf3-folding"
         },
         {
-            "id": "rf3-top20",
+            "id": "rf3-chirality-filter",
             "source": "rf3-folding",
+            "target": "chirality-filter"
+        },
+        {
+            "id": "chirality-filter-top20",
+            "source": "chirality-filter",
             "target": "top20"
         }
     ]
