@@ -5,7 +5,7 @@
                 <button
                     ref="triggerEl"
                     type="button"
-                    class="font-inherit hover:text-surface-bright inline cursor-help border-0 bg-transparent p-0 text-inherit not-italic underline decoration-primary decoration-2 underline-offset-4 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+                    class="font-inherit inline cursor-help border-0 bg-transparent p-0 text-inherit not-italic underline decoration-primary decoration-2 underline-offset-4 transition-colors hover:text-outline-variant focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary dark:hover:text-surface-bright"
                     @click="toggleTooltipForTouch"
                 >
                     <slot />
@@ -15,17 +15,30 @@
                 <TooltipContent
                     ref="contentEl"
                     :side-offset="6"
-                    class="z-50 max-w-xs rounded-md bg-surface-elevated px-3 py-2 text-sm leading-relaxed text-on-surface shadow-lg"
+                    class="z-50 max-w-xs overflow-visible bg-transparent p-0"
                 >
-                    <p>{{ matchedTerm.detail }}</p>
-                    <NuxtLink
-                        v-if="matchedTerm.link"
-                        :to="matchedTerm.link"
-                        class="mt-2 inline-block font-semibold text-primary underline decoration-primary/60 decoration-2 underline-offset-4"
-                        target="_blank"
-                    >
-                        Learn more
-                    </NuxtLink>
+                    <div class="relative isolate">
+                        <div
+                            aria-hidden="true"
+                            class="pointer-events-none absolute inset-0 z-0 translate-x-1 translate-y-1 rounded-xl bg-primary"
+                        ></div>
+
+                        <div
+                            class="relative z-10 rounded-xl bg-surface-elevated px-3 py-2 text-on-surface shadow-lg"
+                        >
+                            <p>{{ matchedTerm.detail }}</p>
+
+                            <NuxtLink
+                                v-if="matchedTerm.link"
+                                :to="matchedTerm.link"
+                                class="mt-2 inline-block font-semibold text-primary underline"
+                                target="_blank"
+                            >
+                                Learn more
+                            </NuxtLink>
+                        </div>
+                    </div>
+
                     <TooltipArrow class="fill-surface-elevated" />
                 </TooltipContent>
             </TooltipPortal>
