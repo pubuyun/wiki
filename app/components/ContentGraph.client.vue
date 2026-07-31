@@ -3,6 +3,7 @@ import { computed, onBeforeUnmount, onMounted } from "vue";
 import {
     Position,
     VueFlow,
+    type DefaultEdgeOptions,
     type Edge,
     type GraphNode,
     type Node,
@@ -85,6 +86,13 @@ const nodeTypes = {
     virtual: markRaw(ContentGraphVirtualNode),
     "virtual-label": markRaw(ContentGraphVirtualLabelNode),
 };
+const defaultEdgeOptions = {
+    style: {
+        stroke: "var(--outline)",
+        strokeOpacity: 0.8,
+        strokeWidth: 2,
+    },
+} satisfies DefaultEdgeOptions;
 const toolbarButtonClass =
     "grid size-8 cursor-pointer place-items-center rounded-lg text-xl leading-none font-[var(--font-main)] text-on-surface hover:bg-primary hover:text-on-primary focus-visible:bg-primary focus-visible:text-on-primary focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-outline";
 const defaultNodeFontClass =
@@ -778,7 +786,7 @@ async function toggleFullscreen() {
     <figure
         v-if="resolvedGraph && mediaReady && !isPortrait"
         ref="figureElement"
-        class="content-graph overflow-hidden rounded-2xl border-2 border-outline bg-surface-elevated text-on-surface shadow-sm [--content-graph-navigation-height:3rem] sm:rounded-3xl sm:[--content-graph-navigation-height:2.5rem] lg:rounded-4xl lg:[--content-graph-navigation-height:2.75rem] xl:[--content-graph-navigation-height:3.5rem] [&_.graph-node-default]:pointer-events-none [&_.graph-node-default]:!bg-secondary [&_.graph-node-default]:text-4xl [&_.graph-node-default]:leading-[1.15] [&_.graph-node-page]:!pointer-events-auto [&_.graph-node-page]:!border-0 [&_.graph-node-page]:!bg-transparent [&_.graph-node-page]:!p-0 [&_.graph-node-page]:!shadow-none [&_.graph-node-virtual]:!pointer-events-auto [&_.graph-node-virtual]:cursor-pointer [&_.graph-node-virtual]:!overflow-visible [&_.graph-node-virtual]:!bg-[color-mix(in_srgb,var(--surface-elevated)_88%,transparent)] [&_.graph-node-virtual]:!p-0 [&_.graph-node-virtual-label]:pointer-events-none [&_.graph-node-virtual-label]:!w-max [&_.graph-node-virtual-label]:!border-0 [&_.graph-node-virtual-label]:!bg-transparent [&_.graph-node-virtual-label]:!p-0 [&_.graph-node-virtual-label]:!shadow-none [&_.graph-node-virtual.mask-active]:!z-[2147483647] [&_.graph-node-virtual.mask-active_.virtual-node\_\_mask]:pointer-events-auto [&_.graph-node-virtual.mask-active_.virtual-node\_\_mask]:opacity-100 [&_.graph-node-virtual:has(.virtual-node\_\_mask:focus-visible)]:!z-[2147483647] [&_.vue-flow\_\_edge-path]:stroke-[var(--outline)] [&_.vue-flow\_\_edge-path]:stroke-2 [&_.vue-flow\_\_pane]:cursor-grab [&_.vue-flow\_\_pane.dragging]:cursor-grabbing [&_:is(.graph-node-default,.graph-node-virtual)]:!rounded-[0.875rem] [&_:is(.graph-node-default,.graph-node-virtual)]:!border-2 [&_:is(.graph-node-default,.graph-node-virtual)]:!border-outline [&_:is(.graph-node-default,.graph-node-virtual)]:font-[var(--font-main)] [&_:is(.graph-node-default,.graph-node-virtual)]:text-on-secondary [&_:is(.graph-node-default,.graph-node-virtual)]:!shadow-[0_4px_12px_rgb(0_0_0_/_15%)]"
+        class="content-graph overflow-hidden rounded-2xl border-2 border-outline bg-surface-elevated text-on-surface shadow-sm [--content-graph-navigation-height:3rem] sm:rounded-3xl sm:[--content-graph-navigation-height:2.5rem] lg:rounded-4xl lg:[--content-graph-navigation-height:2.75rem] xl:[--content-graph-navigation-height:3.5rem] [&_.graph-node-default]:pointer-events-none [&_.graph-node-default]:!bg-secondary [&_.graph-node-default]:text-4xl [&_.graph-node-default]:leading-[1.15] [&_.graph-node-page]:!pointer-events-auto [&_.graph-node-page]:!border-0 [&_.graph-node-page]:!bg-transparent [&_.graph-node-page]:!p-0 [&_.graph-node-page]:!shadow-none [&_.graph-node-virtual]:!pointer-events-auto [&_.graph-node-virtual]:cursor-pointer [&_.graph-node-virtual]:!overflow-visible [&_.graph-node-virtual]:!bg-[color-mix(in_srgb,var(--surface-elevated)_88%,transparent)] [&_.graph-node-virtual]:!p-0 [&_.graph-node-virtual-label]:pointer-events-none [&_.graph-node-virtual-label]:!w-max [&_.graph-node-virtual-label]:!border-0 [&_.graph-node-virtual-label]:!bg-transparent [&_.graph-node-virtual-label]:!p-0 [&_.graph-node-virtual-label]:!shadow-none [&_.graph-node-virtual.mask-active]:!z-10 [&_.graph-node-virtual.mask-active_.virtual-node\_\_mask]:pointer-events-auto [&_.graph-node-virtual.mask-active_.virtual-node\_\_mask]:opacity-100 [&_.graph-node-virtual:has(.virtual-node\_\_mask:focus-visible)]:!z-10 [&_.vue-flow\_\_pane]:cursor-grab [&_.vue-flow\_\_pane.dragging]:cursor-grabbing [&_:is(.graph-node-default,.graph-node-virtual)]:!rounded-[0.875rem] [&_:is(.graph-node-default,.graph-node-virtual)]:!border-2 [&_:is(.graph-node-default,.graph-node-virtual)]:!border-outline [&_:is(.graph-node-default,.graph-node-virtual)]:font-[var(--font-main)] [&_:is(.graph-node-default,.graph-node-virtual)]:text-on-secondary [&_:is(.graph-node-default,.graph-node-virtual)]:!shadow-[0_4px_12px_rgb(0_0_0_/_15%)]"
         :class="{
             'flex h-dvh w-dvw max-w-none flex-col rounded-none border-0 bg-surface-elevated':
                 isFullscreen,
@@ -803,6 +811,7 @@ async function toggleFullscreen() {
                 :nodes="flow.nodes"
                 :edges="flow.edges"
                 :node-types="nodeTypes"
+                :default-edge-options="defaultEdgeOptions"
                 :nodes-draggable="false"
                 :nodes-connectable="false"
                 :elements-selectable="false"

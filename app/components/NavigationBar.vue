@@ -84,8 +84,9 @@ onUnmounted(() => {
         :delay-duration="100"
     >
         <nav
-            class="flex h-12 items-center justify-between gap-3 overflow-visible bg-surface-navigation px-3 font-righteous transition-transform duration-300 ease-out will-change-transform sm:h-10 sm:gap-4 sm:px-4 lg:h-11 lg:gap-6 xl:h-14"
+            class="navigation-bar flex h-12 items-center justify-between gap-3 overflow-visible bg-surface-navigation px-3 font-righteous transition-transform duration-300 ease-out will-change-transform sm:h-10 sm:gap-4 sm:px-4 lg:h-11 lg:gap-6 xl:h-14"
             :class="navVisibilityClass"
+            :data-hidden="navHidden"
         >
             <MobileNavigationDialog />
             <NuxtLink
@@ -128,3 +129,9 @@ onUnmounted(() => {
     </NavigationMenuRoot>
     <ProgressBar :progress="progress" class="sr-only" />
 </template>
+
+<style scoped>
+:global(header:has(> .navigation-bar[data-hidden="true"])) {
+    pointer-events: none;
+}
+</style>

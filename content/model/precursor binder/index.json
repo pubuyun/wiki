@@ -3,7 +3,7 @@
     "height": 730,
     "nodes": [
         {
-            "id": "cg3m3sh",
+            "id": "target",
             "label": "Cys-Gly-3M3SH",
             "position": {
                 "x": 30,
@@ -23,7 +23,7 @@
                 "height": 220
             },
             "data": {
-                "path": "/model/precursor-binder/rfd",
+                "path": "/model/precursor-binder/rfdiffusion",
                 "graph": "/content/model/precursor binder/rfdiffusion.json",
                 "direction": "left-right"
             }
@@ -41,7 +41,7 @@
                 "height": 300
             },
             "data": {
-                "path": "/model/precursor-binder/pc",
+                "path": "/model/precursor-binder/proteinacomplexa",
                 "graph": "/content/model/precursor binder/proteinacomplexa.json",
                 "direction": "left-right"
             }

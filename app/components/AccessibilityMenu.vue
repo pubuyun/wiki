@@ -27,7 +27,7 @@ onUnmounted(() => {
 
 <template>
     <aside
-        class="fixed right-4 bottom-4 z-50"
+        class="pointer-events-none fixed right-4 bottom-4 z-50"
         :class="isBackToTopVisible ? 'hidden lg:block' : undefined"
         aria-label="Accessibility options"
     >
@@ -35,7 +35,7 @@ onUnmounted(() => {
             <!-- bottom-right -->
             <button
                 type="button"
-                class="flex size-12 items-center justify-center rounded-full border-[3px] bg-accent text-on-accent shadow-lg transition-[transform,border-color] hover:scale-105 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-outline"
+                class="pointer-events-auto flex size-12 items-center justify-center rounded-full border-[3px] bg-accent text-on-accent shadow-lg transition-[transform,border-color] hover:scale-105 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-outline"
                 style="grid-area: 2 / 2"
                 :class="isOpen ? 'border-secondary' : 'border-transparent'"
                 :aria-expanded="isOpen"
@@ -64,7 +64,7 @@ onUnmounted(() => {
                     enter-active-class="accessibility-option-top-right-enter-active"
                     leave-active-class="accessibility-option-top-right-leave-active"
                 >
-                    <div v-if="isOpen" class="size-12">
+                    <div v-if="isOpen" class="pointer-events-auto size-12">
                         <AccessibilityBackToTop />
                     </div>
                 </Transition>
@@ -76,7 +76,7 @@ onUnmounted(() => {
                     enter-active-class="accessibility-option-top-left-enter-active"
                     leave-active-class="accessibility-option-top-left-leave-active"
                 >
-                    <div v-if="isOpen" class="size-12">
+                    <div v-if="isOpen" class="pointer-events-auto size-12">
                         <ColorblindModeToggle />
                     </div>
                 </Transition>
@@ -88,7 +88,7 @@ onUnmounted(() => {
                     enter-active-class="accessibility-option-bottom-left-enter-active"
                     leave-active-class="accessibility-option-bottom-left-leave-active"
                 >
-                    <div v-if="isOpen" class="size-12">
+                    <div v-if="isOpen" class="pointer-events-auto size-12">
                         <DyslexiaModeToggle />
                     </div>
                 </Transition>

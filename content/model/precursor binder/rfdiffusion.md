@@ -1,5 +1,5 @@
 ---
-title: RFD
+title: RFDiffusion
 description: RFdiffusion generation, sequence redesign, folding, and candidate ranking.
 order: 210
 ---
