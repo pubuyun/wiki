@@ -1,70 +1,159 @@
 {
-    "title": "Precursor binder",
-    "height": {
-        "horizontal": 500,
-        "vertical": 760
-    },
+    "title": "Precursor Binder",
+    "height": 730,
     "nodes": [
         {
-            "id": "process",
-            "type": "virtual",
+            "id": "target",
+            "label": "Target",
             "position": {
-                "horizontal": { "x": 40, "y": 120 },
-                "vertical": { "x": 50, "y": 70 }
-            },
-            "size": {
-                "horizontal": { "width": 230, "height": 130 },
-                "vertical": { "width": 260, "height": 130 }
-            },
-            "data": {
-                "label": "Process",
-                "path": "/model/precursor-binder/process"
+                "x": 30,
+                "y": 280
             }
         },
         {
-            "id": "idea",
+            "id": "rfd",
+            "label": "RFD",
             "type": "virtual",
             "position": {
-                "horizontal": { "x": 320, "y": 120 },
-                "vertical": { "x": 50, "y": 250 }
+                "x": 220,
+                "y": 20
             },
             "size": {
-                "horizontal": { "width": 230, "height": 130 },
-                "vertical": { "width": 260, "height": 130 }
+                "width": 780,
+                "height": 220
             },
             "data": {
-                "label": "Idea",
-                "path": "/model/precursor-binder/idea"
+                "path": "/model/precursor-binder/rfd",
+                "graph": "/content/model/precursor binder/rfd.json",
+                "direction": "left-right"
             }
         },
         {
-            "id": "code",
+            "id": "pc",
+            "label": "PC",
             "type": "virtual",
             "position": {
-                "horizontal": { "x": 600, "y": 50 },
-                "vertical": { "x": 20, "y": 430 }
+                "x": 220,
+                "y": 400
             },
             "size": {
-                "horizontal": { "width": 650, "height": 300 },
-                "vertical": { "width": 320, "height": 650 }
+                "width": 900,
+                "height": 300
             },
             "data": {
-                "label": "Code",
-                "path": "/model/precursor-binder/code",
-                "graph": "/content/model/precursor binder/code.json"
+                "path": "/model/precursor-binder/pc",
+                "graph": "/content/model/precursor binder/pc.json",
+                "direction": "left-right"
+            }
+        },
+        {
+            "id": "chirality-filter",
+            "label": "Chirality Filter",
+            "position": {
+                "x": 760,
+                "y": 310
+            },
+            "data": {
+                "path": "/model/precursor-binder/chirality-filter"
+            }
+        },
+        {
+            "id": "md-simulation",
+            "label": "MD Simulation",
+            "type": "virtual",
+            "position": {
+                "x": 1380,
+                "y": 110
+            },
+            "size": {
+                "width": 330,
+                "height": 500
+            },
+            "data": {
+                "path": "/model/precursor-binder/md-simulation",
+                "graph": "/content/model/precursor binder/md simulation.json",
+                "direction": "top-bottom"
+            }
+        },
+        {
+            "id": "wet-lab-validation",
+            "label": "Wet Lab Validation",
+            "position": {
+                "x": 1750,
+                "y": 335
+            }
+        },
+        {
+            "id": "result",
+            "label": "Result",
+            "type": "virtual",
+            "position": {
+                "x": 1950,
+                "y": 275
+            },
+            "size": {
+                "width": 300,
+                "height": 180
+            },
+            "data": {
+                "path": "/model/precursor-binder/result",
+                "graph": "/content/model/precursor binder/result.json",
+                "direction": "top-bottom"
             }
         }
     ],
     "edges": [
         {
-            "id": "process-to-idea",
-            "source": "process",
-            "target": "idea"
+            "id": "target-to-rfd",
+            "source": "target",
+            "target": "rfd"
         },
         {
-            "id": "idea-to-code",
-            "source": "idea",
-            "target": "code"
+            "id": "target-to-pc",
+            "source": "target",
+            "target": "pc"
+        },
+        {
+            "id": "rfd-to-md",
+            "source": "rfd",
+            "target": "md-simulation"
+        },
+        {
+            "id": "pc-to-md",
+            "source": "pc",
+            "target": "md-simulation"
+        },
+        {
+            "id": "md-to-wet-lab",
+            "source": "md-simulation",
+            "target": "wet-lab-validation"
+        },
+        {
+            "id": "wet-lab-to-result",
+            "source": "wet-lab-validation",
+            "target": "result"
+        }
+    ],
+    "crossEdges": [
+        {
+            "id": "rfd-rf3-to-chirality-filter",
+            "source": ["rfd", "rf3-folding"],
+            "target": "chirality-filter"
+        },
+        {
+            "id": "pc-rf3-to-chirality-filter",
+            "source": ["pc", "rf3-folding"],
+            "target": "chirality-filter"
+        },
+        {
+            "id": "chirality-filter-to-rfd-top20",
+            "source": "chirality-filter",
+            "target": ["rfd", "top20"]
+        },
+        {
+            "id": "chirality-filter-to-pc-top20",
+            "source": "chirality-filter",
+            "target": ["pc", "top20"]
         }
     ]
 }

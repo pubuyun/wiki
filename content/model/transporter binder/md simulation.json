@@ -1,0 +1,73 @@
+{
+    "title": "MD Simulation",
+    "height": 330,
+    "nodes": [
+        {
+            "id": "system-preparation",
+            "label": "System Preparation",
+            "position": {
+                "x": 20,
+                "y": 125
+            }
+        },
+        {
+            "id": "md-simulation",
+            "label": "MD Simulation",
+            "position": {
+                "x": 220,
+                "y": 125
+            }
+        },
+        {
+            "id": "membrane-rmsd",
+            "label": "Membrane Fit RMSD",
+            "position": {
+                "x": 430,
+                "y": 45
+            }
+        },
+        {
+            "id": "mmpbsa",
+            "label": "MMPBSA deltaG",
+            "position": {
+                "x": 430,
+                "y": 205
+            }
+        },
+        {
+            "id": "best-6",
+            "label": "Best 6",
+            "position": {
+                "x": 680,
+                "y": 125
+            }
+        }
+    ],
+    "edges": [
+        {
+            "id": "preparation-md",
+            "source": "system-preparation",
+            "target": "md-simulation"
+        },
+        {
+            "id": "md-rmsd",
+            "source": "md-simulation",
+            "target": "membrane-rmsd"
+        },
+        {
+            "id": "md-mmpbsa",
+            "source": "md-simulation",
+            "target": "mmpbsa"
+        },
+        {
+            "id": "rmsd-best6",
+            "source": "membrane-rmsd",
+            "target": "best-6"
+        },
+        {
+            "id": "mmpbsa-best6",
+            "source": "mmpbsa",
+            "target": "best-6"
+        }
+    ]
+}

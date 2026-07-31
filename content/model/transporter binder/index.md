@@ -1,8 +1,5 @@
 ---
 title: Transporter Binder
+description: Mechanism analysis, design, simulation, and validation workflow for the transporter binder.
 order: 300
 ---
-
-## Overview
-
-Here we introduce a transporter binder that blocks the transporter from transporting Cys-Gly-3M3SH.

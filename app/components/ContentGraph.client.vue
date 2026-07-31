@@ -1,6 +1,15 @@
 <script setup lang="ts">
 import { computed, onBeforeUnmount, onMounted } from "vue";
-import { Position, VueFlow, type Edge, type Node } from "@vue-flow/core";
+import {
+    Position,
+    VueFlow,
+    type Edge,
+    type Node,
+    type ViewportTransform,
+    type VueFlowStore,
+} from "@vue-flow/core";
+import ContentGraphPageNode from "./ContentGraphPageNode.vue";
+import ContentGraphVirtualLabelNode from "./ContentGraphVirtualLabelNode.vue";
 import ContentGraphVirtualNode from "./ContentGraphVirtualNode.vue";
 import "@vue-flow/core/dist/style.css";
 import "@vue-flow/core/dist/theme-default.css";
@@ -15,25 +24,21 @@ interface Size {
     height: number;
 }
 
-interface ResponsiveValue<T> {
-    horizontal: T;
-    vertical: T;
-}
+type GraphDirection = "top-bottom" | "left-right";
 
 interface GraphNodeData {
-    label?: string;
     path?: string;
     graph?: string;
-    [key: string]: unknown;
+    direction?: GraphDirection;
 }
 
 interface GraphNodeDefinition {
     id: string;
-    type?: string;
-    position: Point | ResponsiveValue<Point>;
-    size?: Size | ResponsiveValue<Size>;
+    label: string;
+    type?: "virtual";
+    position: Point;
+    size?: Size;
     data?: GraphNodeData;
-    [key: string]: unknown;
 }
 
 interface CrossEdgeDefinition extends Omit<Edge, "source" | "target"> {
@@ -43,7 +48,7 @@ interface CrossEdgeDefinition extends Omit<Edge, "source" | "target"> {
 
 interface GraphDefinition {
     title?: string;
-    height?: number | ResponsiveValue<number>;
+    height?: number;
     nodes: GraphNodeDefinition[];
     edges: Edge[];
     crossEdges?: CrossEdgeDefinition[];
@@ -63,37 +68,88 @@ const props = defineProps<{
 }>();
 
 const resolvedGraph = shallowRef<ResolvedGraph | null>(null);
-const isVertical = ref(false);
+const flowInstance = shallowRef<VueFlowStore | null>(null);
+const figureElement = ref<HTMLElement | null>(null);
+const figureWidth = ref(0);
+const isPortrait = ref(false);
+const mediaReady = ref(false);
+const isFullscreen = ref(false);
+const viewportZoom = ref(1);
 const baseURL = useRuntimeConfig().app.baseURL;
-const layoutMode = computed(() =>
-    isVertical.value ? "vertical" : "horizontal",
-);
 const nodeTypes = {
+    page: markRaw(ContentGraphPageNode),
     virtual: markRaw(ContentGraphVirtualNode),
+    "virtual-label": markRaw(ContentGraphVirtualLabelNode),
 };
+const toolbarButtonClass =
+    "grid size-8 cursor-pointer place-items-center rounded-lg text-xl leading-none font-[var(--font-main)] text-on-surface hover:bg-primary hover:text-on-primary focus-visible:bg-primary focus-visible:text-on-primary focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-outline";
+const defaultNodeFontClass =
+    "!font-[var(--font-main)] !text-base !leading-[1.15] !text-on-surface";
+const maxLabelScale = 2.5;
+const defaultNodeSize: Size = { width: 150, height: 60 };
+const topBottomNodeGap = 30;
+const topBottomSubgraphPadding = 60;
 
 let mediaQuery: MediaQueryList | null = null;
+let resizeObserver: ResizeObserver | null = null;
 let activeMaskElement: HTMLElement | null = null;
 
 onMounted(() => {
-    mediaQuery = window.matchMedia("(max-width: 767px)");
-    updateLayout(mediaQuery);
-    mediaQuery.addEventListener("change", updateLayout);
+    mediaQuery = window.matchMedia("(orientation: portrait)");
+    updatePortraitState(mediaQuery);
+    mediaReady.value = true;
+    mediaQuery.addEventListener("change", updatePortraitState);
+    document.addEventListener("fullscreenchange", updateFullscreenState);
 });
 
 onBeforeUnmount(() => {
-    mediaQuery?.removeEventListener("change", updateLayout);
+    mediaQuery?.removeEventListener("change", updatePortraitState);
+    document.removeEventListener("fullscreenchange", updateFullscreenState);
+    resizeObserver?.disconnect();
     clearActiveMask();
 });
 
-function updateLayout(event: MediaQueryList | MediaQueryListEvent) {
-    isVertical.value = event.matches;
+watch(
+    figureElement,
+    (element) => {
+        resizeObserver?.disconnect();
+        resizeObserver = null;
+        if (!element) return;
+
+        resizeObserver = new ResizeObserver(([entry]) => {
+            if (entry) figureWidth.value = entry.contentRect.width;
+        });
+        resizeObserver.observe(element);
+    },
+    { flush: "post" },
+);
+
+function updatePortraitState(event: MediaQueryList | MediaQueryListEvent) {
+    isPortrait.value = event.matches;
 }
 
 function updateActiveMask(event: PointerEvent) {
     const root = event.currentTarget as HTMLElement;
+    const isInsidePageNode = Array.from(
+        root.querySelectorAll<HTMLElement>(
+            ".page-node__button, .content-graph__foreground-control",
+        ),
+    ).some((element) => {
+        const rect = element.getBoundingClientRect();
+        return (
+            event.clientX >= rect.left &&
+            event.clientX <= rect.right &&
+            event.clientY >= rect.top &&
+            event.clientY <= rect.bottom
+        );
+    });
+    if (isInsidePageNode) {
+        clearActiveMask();
+        return;
+    }
+
     const candidates = Array.from(
-        root.querySelectorAll<HTMLElement>(".vue-flow__node-virtual"),
+        root.querySelectorAll<HTMLElement>(".graph-node-virtual"),
     ).filter((element) => {
         const rect = element.getBoundingClientRect();
         return (
@@ -117,13 +173,13 @@ function updateActiveMask(event: PointerEvent) {
 
     if (next === activeMaskElement) return;
 
-    activeMaskElement?.classList.remove("content-graph__mask-active");
-    next?.classList.add("content-graph__mask-active");
+    activeMaskElement?.classList.remove("mask-active");
+    next?.classList.add("mask-active");
     activeMaskElement = next;
 }
 
 function clearActiveMask() {
-    activeMaskElement?.classList.remove("content-graph__mask-active");
+    activeMaskElement?.classList.remove("mask-active");
     activeMaskElement = null;
 }
 
@@ -189,26 +245,21 @@ watch(
     { immediate: true },
 );
 
-function layoutValue<T>(value: T | ResponsiveValue<T> | undefined) {
-    if (
-        value &&
-        typeof value === "object" &&
-        "horizontal" in value &&
-        "vertical" in value
-    ) {
-        return value[layoutMode.value];
-    }
-
-    return value as T | undefined;
-}
-
 const flow = computed(() => {
     const nodes: Node[] = [];
     const edges: Edge[] = [];
 
     if (!resolvedGraph.value) return { nodes, edges };
 
-    flattenGraph(resolvedGraph.value, "", undefined, 0, nodes, edges);
+    flattenGraph(
+        resolvedGraph.value,
+        "",
+        undefined,
+        0,
+        "left-right",
+        nodes,
+        edges,
+    );
     return { nodes, edges };
 });
 
@@ -217,10 +268,12 @@ function flattenGraph(
     prefix: string,
     parentNode: string | undefined,
     depth: number,
+    mode: GraphDirection,
     nodes: Node[],
     edges: Edge[],
+    containerSize?: Size,
 ) {
-    const horizontal = layoutMode.value === "horizontal";
+    const leftToRight = mode === "left-right";
     const visibleNodes = graph.nodes.filter(
         ({ definition, child }) =>
             definition.type !== "virtual" ||
@@ -229,54 +282,109 @@ function flattenGraph(
     const visibleNodeIds = new Set(
         visibleNodes.map(({ definition }) => definition.id),
     );
+    const topBottomWidth =
+        containerSize?.width ??
+        Math.max(
+            ...visibleNodes.map(
+                ({ definition }) =>
+                    definition.size?.width ?? defaultNodeSize.width,
+            ),
+            defaultNodeSize.width,
+        );
+    let topBottomY = topBottomSubgraphPadding;
 
     for (const { definition, child } of visibleNodes) {
         const {
             id: localId,
-            position: responsivePosition,
-            size: responsiveSize,
+            label,
+            position: horizontalPosition,
+            size,
             data,
-            style,
-            ...nodeOptions
         } = definition;
         const id = `${prefix}${localId}`;
-        const position = layoutValue(responsivePosition) ?? { x: 0, y: 0 };
-        const size = layoutValue(responsiveSize);
-        const nodeStyle =
-            size || (style && typeof style === "object")
-                ? {
-                      ...(style && typeof style === "object" ? style : {}),
-                      ...(size
-                          ? {
-                                width: `${size.width}px`,
-                                height: `${size.height}px`,
-                            }
-                          : {}),
-                  }
-                : style;
+        const renderedSize = size ?? defaultNodeSize;
+        const position = leftToRight
+            ? horizontalPosition
+            : {
+                  x: Math.max(0, (topBottomWidth - renderedSize.width) / 2),
+                  y: topBottomY,
+              };
+        if (!leftToRight) {
+            topBottomY += renderedSize.height + topBottomNodeGap;
+        }
+        const nodeStyle = size
+            ? {
+                  width: `${size.width}px`,
+                  height: `${size.height}px`,
+              }
+            : undefined;
+        const renderedType =
+            definition.type === "virtual"
+                ? "virtual"
+                : data?.path
+                  ? "page"
+                  : undefined;
+        const renderedClass =
+            renderedType === "virtual"
+                ? "graph-node-virtual"
+                : renderedType === "page"
+                  ? "graph-node-page"
+                  : ["graph-node-default", defaultNodeFontClass];
 
         nodes.push({
-            ...nodeOptions,
             id,
-            type: definition.type,
+            type: renderedType,
             position,
             data: {
                 ...data,
-                layout: layoutMode.value,
+                label,
+                layout: mode,
             },
             style: nodeStyle,
+            class: renderedClass,
             parentNode,
             extent: parentNode ? "parent" : undefined,
             draggable: false,
             selectable: false,
             connectable: false,
-            sourcePosition: horizontal ? Position.Right : Position.Bottom,
-            targetPosition: horizontal ? Position.Left : Position.Top,
-            zIndex: depth * 10 + (definition.type === "virtual" ? 1 : 2),
+            sourcePosition: leftToRight ? Position.Right : Position.Bottom,
+            targetPosition: leftToRight ? Position.Left : Position.Top,
+            zIndex:
+                renderedType === "page"
+                    ? 100_000 + depth
+                    : depth * 10 + (definition.type === "virtual" ? 1 : 2),
         } as Node);
 
+        if (definition.type === "virtual") {
+            nodes.push({
+                id: `${id}::__title`,
+                type: "virtual-label",
+                position: { ...position },
+                data: {
+                    label,
+                },
+                class: "graph-node-virtual-label",
+                parentNode,
+                extent: parentNode ? "parent" : undefined,
+                draggable: false,
+                selectable: false,
+                connectable: false,
+                zIndex: 100_000 + depth,
+            } as Node);
+        }
+
         if (child) {
-            flattenGraph(child, `${id}::`, id, depth + 1, nodes, edges);
+            const childMode = data?.direction ?? mode;
+            flattenGraph(
+                child,
+                `${id}::`,
+                id,
+                depth + 1,
+                childMode,
+                nodes,
+                edges,
+                size,
+            );
         }
     }
 
@@ -324,16 +432,113 @@ function resolveCrossEdgeEndpoint(prefix: string, endpoint: string | string[]) {
     return `${prefix}${path}`;
 }
 
-const graphHeight = computed(() => {
-    const height = layoutValue(resolvedGraph.value?.height) ?? 560;
-    return `${Math.max(360, Math.min(height, 1000))}px`;
+const graphAspectRatio = computed(() => {
+    const graph = resolvedGraph.value;
+    if (!graph) return 1;
+
+    const visibleNodes = graph.nodes.filter(
+        ({ definition, child }) =>
+            definition.type !== "virtual" ||
+            Boolean(definition.data?.graph && child),
+    );
+    let minX = Number.POSITIVE_INFINITY;
+    let minY = Number.POSITIVE_INFINITY;
+    let maxX = Number.NEGATIVE_INFINITY;
+    let maxY = Number.NEGATIVE_INFINITY;
+
+    for (const { definition } of visibleNodes) {
+        const position = definition.position;
+        const size = definition.size ?? defaultNodeSize;
+        minX = Math.min(minX, position.x);
+        minY = Math.min(minY, position.y);
+        maxX = Math.max(maxX, position.x + size.width);
+        maxY = Math.max(maxY, position.y + size.height);
+    }
+
+    const width = maxX - minX;
+    const height = maxY - minY;
+    return Number.isFinite(width) && Number.isFinite(height) && height > 0
+        ? Math.max(0.1, width / height)
+        : 1;
 });
+
+const graphHeight = computed(() => {
+    const configuredHeight = resolvedGraph.value?.height ?? 560;
+    const aspectHeight =
+        figureWidth.value > 0
+            ? figureWidth.value / graphAspectRatio.value + 80
+            : configuredHeight;
+    return `${Math.max(180, Math.min(configuredHeight, aspectHeight, 1000))}px`;
+});
+
+const canvasStyle = computed(() => ({
+    height: `min(${graphHeight.value}, calc(100dvh - var(--content-graph-navigation-height) - 2rem - ${
+        resolvedGraph.value?.title ? "3.5rem" : "0rem"
+    }))`,
+    "--content-graph-label-scale": Math.min(
+        maxLabelScale,
+        Math.max(1, 0.8 / viewportZoom.value),
+    ).toFixed(3),
+}));
+
+watch(graphHeight, async () => {
+    await nextTick();
+    await flowInstance.value?.fitView({ padding: 0.04 });
+});
+
+function updateViewport(viewport: ViewportTransform) {
+    viewportZoom.value = Math.max(0.05, viewport.zoom);
+}
+
+function setFlowInstance(instance: VueFlowStore) {
+    flowInstance.value = instance;
+    void nextTick(() => instance.fitView({ padding: 0.04 }));
+}
+
+function zoomGraphIn() {
+    void flowInstance.value?.zoomIn({ duration: 180 });
+}
+
+function zoomGraphOut() {
+    void flowInstance.value?.zoomOut({ duration: 180 });
+}
+
+function resetGraphView() {
+    void flowInstance.value?.fitView({ padding: 0.04, duration: 260 });
+}
+
+function updateFullscreenState() {
+    isFullscreen.value = document.fullscreenElement === figureElement.value;
+    void nextTick(() =>
+        flowInstance.value?.fitView({ padding: 0.04, duration: 180 }),
+    );
+}
+
+async function toggleFullscreen() {
+    const element = figureElement.value;
+    if (!element) return;
+
+    try {
+        if (document.fullscreenElement) {
+            await document.exitFullscreen();
+        } else {
+            await element.requestFullscreen();
+        }
+    } catch (error) {
+        console.error("Unable to toggle graph fullscreen mode", error);
+    }
+}
 </script>
 
 <template>
     <figure
-        v-if="resolvedGraph"
-        class="content-graph overflow-hidden rounded-2xl border-2 border-outline bg-surface-elevated shadow-sm sm:rounded-3xl lg:rounded-4xl"
+        v-if="resolvedGraph && mediaReady && !isPortrait"
+        ref="figureElement"
+        class="content-graph overflow-hidden rounded-2xl border-2 border-outline bg-surface-elevated text-on-surface shadow-sm [--content-graph-navigation-height:3rem] sm:rounded-3xl sm:[--content-graph-navigation-height:2.5rem] lg:rounded-4xl lg:[--content-graph-navigation-height:2.75rem] xl:[--content-graph-navigation-height:3.5rem] [&_.graph-node-default]:pointer-events-none [&_.graph-node-default]:!bg-secondary [&_.graph-node-default]:text-base [&_.graph-node-default]:leading-[1.15] [&_.graph-node-page]:!pointer-events-auto [&_.graph-node-page]:!border-0 [&_.graph-node-page]:!bg-transparent [&_.graph-node-page]:!p-0 [&_.graph-node-page]:!shadow-none [&_.graph-node-virtual]:!pointer-events-auto [&_.graph-node-virtual]:cursor-pointer [&_.graph-node-virtual]:!overflow-visible [&_.graph-node-virtual]:!bg-[color-mix(in_srgb,var(--surface-elevated)_88%,transparent)] [&_.graph-node-virtual]:!p-0 [&_.graph-node-virtual-label]:pointer-events-none [&_.graph-node-virtual-label]:!w-max [&_.graph-node-virtual-label]:!border-0 [&_.graph-node-virtual-label]:!bg-transparent [&_.graph-node-virtual-label]:!p-0 [&_.graph-node-virtual-label]:!shadow-none [&_.graph-node-virtual.mask-active]:!z-[2147483647] [&_.graph-node-virtual.mask-active_.virtual-node\_\_mask]:pointer-events-auto [&_.graph-node-virtual.mask-active_.virtual-node\_\_mask]:opacity-100 [&_.graph-node-virtual:has(.virtual-node\_\_mask:focus-visible)]:!z-[2147483647] [&_.vue-flow\_\_edge-path]:stroke-[var(--outline)] [&_.vue-flow\_\_edge-path]:stroke-2 [&_.vue-flow\_\_pane]:cursor-grab [&_.vue-flow\_\_pane.dragging]:cursor-grabbing [&_:is(.graph-node-default,.graph-node-virtual)]:!rounded-[0.875rem] [&_:is(.graph-node-default,.graph-node-virtual)]:!border-2 [&_:is(.graph-node-default,.graph-node-virtual)]:!border-outline [&_:is(.graph-node-default,.graph-node-virtual)]:font-[var(--font-main)] [&_:is(.graph-node-default,.graph-node-virtual)]:text-on-secondary [&_:is(.graph-node-default,.graph-node-virtual)]:!shadow-[0_4px_12px_rgb(0_0_0_/_15%)]"
+        :class="{
+            'flex h-dvh w-dvw max-w-none flex-col rounded-none border-0 bg-surface-elevated':
+                isFullscreen,
+        }"
         :aria-label="resolvedGraph.title || 'Interactive graph'"
         @pointermove.capture="updateActiveMask"
         @pointerleave="clearActiveMask"
@@ -345,9 +550,12 @@ const graphHeight = computed(() => {
             {{ resolvedGraph.title }}
         </figcaption>
 
-        <div class="content-graph__canvas" :style="{ height: graphHeight }">
+        <div
+            class="content-graph__canvas relative w-full"
+            :class="{ '!h-auto min-h-0 flex-1': isFullscreen }"
+            :style="canvasStyle"
+        >
             <VueFlow
-                :key="layoutMode"
                 :nodes="flow.nodes"
                 :edges="flow.edges"
                 :node-types="nodeTypes"
@@ -358,74 +566,82 @@ const graphHeight = computed(() => {
                 :connect-on-click="false"
                 :min-zoom="0.05"
                 :max-zoom="4"
-                fit-view-on-init
                 pan-on-drag
                 zoom-on-scroll
                 zoom-on-pinch
                 zoom-on-double-click
                 prevent-scrolling
+                @init="setFlowInstance"
+                @viewport-change="updateViewport"
             />
+
+            <div
+                class="content-graph__foreground-control absolute top-3 right-3 z-20 flex items-center gap-1 rounded-xl border-2 border-outline bg-[color-mix(in_srgb,var(--surface-elevated)_92%,transparent)] p-1 shadow-[0_4px_12px_rgb(0_0_0_/_15%)] backdrop-blur"
+                role="toolbar"
+                aria-label="Graph view controls"
+                @pointerdown.stop
+            >
+                <button
+                    type="button"
+                    :class="toolbarButtonClass"
+                    aria-label="Zoom in"
+                    title="Zoom in"
+                    @click="zoomGraphIn"
+                >
+                    +
+                </button>
+                <span
+                    class="min-w-13 text-center text-xs font-[var(--font-main)] text-on-surface"
+                >
+                    {{ Math.round(viewportZoom * 100) }}%
+                </span>
+                <button
+                    type="button"
+                    :class="toolbarButtonClass"
+                    aria-label="Zoom out"
+                    title="Zoom out"
+                    @click="zoomGraphOut"
+                >
+                    −
+                </button>
+                <button
+                    type="button"
+                    :class="toolbarButtonClass"
+                    aria-label="Reset view"
+                    title="Reset view"
+                    @click="resetGraphView"
+                >
+                    ↺
+                </button>
+            </div>
+
+            <button
+                type="button"
+                class="nodrag nopan content-graph__foreground-control absolute right-3 bottom-3 z-20 grid size-10 cursor-pointer place-items-center rounded-xl border-2 border-outline bg-[color-mix(in_srgb,var(--surface-elevated)_92%,transparent)] text-on-surface shadow-[0_4px_12px_rgb(0_0_0_/_15%)] backdrop-blur hover:bg-primary hover:text-on-primary focus-visible:bg-primary focus-visible:text-on-primary focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-outline"
+                :aria-label="
+                    isFullscreen ? 'Exit fullscreen' : 'Enter fullscreen'
+                "
+                :title="isFullscreen ? 'Exit fullscreen' : 'Enter fullscreen'"
+                @pointerdown.stop
+                @click.stop="toggleFullscreen"
+            >
+                <svg
+                    v-if="!isFullscreen"
+                    class="size-5 fill-none stroke-current stroke-2 [stroke-linecap:round] [stroke-linejoin:round]"
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                >
+                    <path d="M4 9V4h5M15 4h5v5M20 15v5h-5M9 20H4v-5" />
+                </svg>
+                <svg
+                    v-else
+                    class="size-5 fill-none stroke-current stroke-2 [stroke-linecap:round] [stroke-linejoin:round]"
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                >
+                    <path d="M9 4v5H4M20 9h-5V4M15 20v-5h5M4 15h5v5" />
+                </svg>
+            </button>
         </div>
     </figure>
 </template>
-
-<style scoped>
-.content-graph {
-    color: var(--on-surface);
-}
-
-.content-graph__canvas {
-    min-height: 22.5rem;
-    width: 100%;
-}
-
-.content-graph :deep(.vue-flow__pane) {
-    cursor: grab;
-}
-
-.content-graph :deep(.vue-flow__pane.dragging) {
-    cursor: grabbing;
-}
-
-.content-graph :deep(.vue-flow__node) {
-    border: 2px solid var(--outline);
-    border-radius: 0.875rem;
-    background: var(--secondary);
-    color: var(--on-secondary);
-    font-family: var(--font-main);
-    box-shadow: 0 4px 12px rgb(0 0 0 / 15%);
-}
-
-.content-graph :deep(.vue-flow__node-default),
-.content-graph :deep(.vue-flow__node-input),
-.content-graph :deep(.vue-flow__node-output) {
-    pointer-events: none;
-}
-
-.content-graph :deep(.vue-flow__node-virtual) {
-    padding: 0;
-    background: color-mix(in srgb, var(--surface-elevated) 88%, transparent);
-    overflow: visible;
-    pointer-events: auto !important;
-    cursor: pointer;
-}
-
-.content-graph :deep(.vue-flow__node-virtual.content-graph__mask-active),
-.content-graph
-    :deep(.vue-flow__node-virtual:has(.virtual-node__mask:focus-visible)) {
-    z-index: 2147483647 !important;
-}
-
-.content-graph
-    :deep(
-        .vue-flow__node-virtual.content-graph__mask-active .virtual-node__mask
-    ) {
-    opacity: 1;
-    pointer-events: auto;
-}
-
-.content-graph :deep(.vue-flow__edge-path) {
-    stroke: var(--outline);
-    stroke-width: 2;
-}
-</style>

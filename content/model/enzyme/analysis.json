@@ -1,0 +1,68 @@
+{
+    "title": "Analysis",
+    "height": 260,
+    "nodes": [
+        {
+            "id": "catalytic-mechanism",
+            "label": "Catalytic Mechanism",
+            "position": {
+                "x": 20,
+                "y": 100
+            }
+        },
+        {
+            "id": "docking",
+            "label": "Docking",
+            "position": {
+                "x": 190,
+                "y": 100
+            }
+        },
+        {
+            "id": "pose-clustering",
+            "label": "Pose Clustering",
+            "position": {
+                "x": 360,
+                "y": 100
+            }
+        },
+        {
+            "id": "md-simulation",
+            "label": "MD Simulation",
+            "position": {
+                "x": 530,
+                "y": 100
+            }
+        },
+        {
+            "id": "valid-pose",
+            "label": "Valid Pose",
+            "position": {
+                "x": 700,
+                "y": 100
+            }
+        }
+    ],
+    "edges": [
+        {
+            "id": "mechanism-docking",
+            "source": "catalytic-mechanism",
+            "target": "docking"
+        },
+        {
+            "id": "docking-clustering",
+            "source": "docking",
+            "target": "pose-clustering"
+        },
+        {
+            "id": "clustering-md",
+            "source": "pose-clustering",
+            "target": "md-simulation"
+        },
+        {
+            "id": "md-valid-pose",
+            "source": "md-simulation",
+            "target": "valid-pose"
+        }
+    ]
+}

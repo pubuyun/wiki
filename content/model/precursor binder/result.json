@@ -1,0 +1,15 @@
+{
+    "title": "Result",
+    "height": 190,
+    "nodes": [
+        {
+            "id": "experiment-result",
+            "label": "Experiment Result",
+            "position": {
+                "x": 85,
+                "y": 70
+            }
+        }
+    ],
+    "edges": []
+}

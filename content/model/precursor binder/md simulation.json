@@ -1,0 +1,73 @@
+{
+    "title": "MD Simulation",
+    "height": 330,
+    "nodes": [
+        {
+            "id": "system-construction",
+            "label": "System Construction",
+            "position": {
+                "x": 20,
+                "y": 125
+            }
+        },
+        {
+            "id": "md-50ns",
+            "label": "50ns MD Simulation",
+            "position": {
+                "x": 220,
+                "y": 125
+            }
+        },
+        {
+            "id": "mmpbsa",
+            "label": "MMPBSA deltaG",
+            "position": {
+                "x": 440,
+                "y": 45
+            }
+        },
+        {
+            "id": "rmsd",
+            "label": "RMSD",
+            "position": {
+                "x": 440,
+                "y": 205
+            }
+        },
+        {
+            "id": "each-top-6",
+            "label": "Each Top 6",
+            "position": {
+                "x": 690,
+                "y": 125
+            }
+        }
+    ],
+    "edges": [
+        {
+            "id": "construction-md",
+            "source": "system-construction",
+            "target": "md-50ns"
+        },
+        {
+            "id": "md-mmpbsa",
+            "source": "md-50ns",
+            "target": "mmpbsa"
+        },
+        {
+            "id": "md-rmsd",
+            "source": "md-50ns",
+            "target": "rmsd"
+        },
+        {
+            "id": "mmpbsa-top6",
+            "source": "mmpbsa",
+            "target": "each-top-6"
+        },
+        {
+            "id": "rmsd-top6",
+            "source": "rmsd",
+            "target": "each-top-6"
+        }
+    ]
+}

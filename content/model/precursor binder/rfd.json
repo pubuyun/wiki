@@ -1,0 +1,55 @@
+{
+    "title": "RFD",
+    "height": 240,
+    "nodes": [
+        {
+            "id": "rfd-generation",
+            "label": "RFDiffution Generation",
+            "position": {
+                "x": 20,
+                "y": 90
+            }
+        },
+        {
+            "id": "ligandmpnn-redesign",
+            "label": "LigandMPNN Redesign",
+            "position": {
+                "x": 210,
+                "y": 90
+            }
+        },
+        {
+            "id": "rf3-folding",
+            "label": "RF3 Folding",
+            "position": {
+                "x": 400,
+                "y": 90
+            }
+        },
+        {
+            "id": "top20",
+            "label": "Top20",
+            "position": {
+                "x": 590,
+                "y": 90
+            }
+        }
+    ],
+    "edges": [
+        {
+            "id": "rfd-generation-ligandmpnn",
+            "source": "rfd-generation",
+            "target": "ligandmpnn-redesign"
+        },
+        {
+            "id": "ligandmpnn-rf3",
+            "source": "ligandmpnn-redesign",
+            "target": "rf3-folding"
+        },
+        {
+            "id": "rf3-top20",
+            "source": "rf3-folding",
+            "target": "top20"
+        }
+    ]
+}

@@ -1,94 +1,111 @@
 {
-    "title": "Model overview",
-    "height": {
-        "horizontal": 760,
-        "vertical": 900
-    },
+    "title": "Model workflow",
+    "height": 2070,
     "nodes": [
         {
-            "id": "model",
-            "type": "input",
-            "position": {
-                "horizontal": { "x": 20, "y": 450 },
-                "vertical": { "x": 115, "y": 20 }
-            },
-            "data": { "label": "Model" }
-        },
-        {
             "id": "overview",
-            "type": "virtual",
+            "label": "Overview",
             "position": {
-                "horizontal": { "x": 260, "y": 20 },
-                "vertical": { "x": 50, "y": 180 }
-            },
-            "size": {
-                "horizontal": { "width": 300, "height": 130 },
-                "vertical": { "width": 260, "height": 130 }
+                "x": 20,
+                "y": 1000
             },
             "data": {
-                "label": "Overview",
                 "path": "/model/overview"
             }
         },
         {
             "id": "precursor-binder",
+            "label": "Precursor Binder",
             "type": "virtual",
             "position": {
-                "horizontal": { "x": 260, "y": 200 },
-                "vertical": { "x": 0, "y": 370 }
+                "x": 240,
+                "y": 20
             },
             "size": {
-                "horizontal": { "width": 1300, "height": 420 },
-                "vertical": { "width": 360, "height": 1120 }
+                "width": 2280,
+                "height": 730
             },
             "data": {
-                "label": "Precursor binder",
                 "path": "/model/precursor-binder",
                 "graph": "/content/model/precursor binder/index.json"
             }
         },
         {
             "id": "transporter-binder",
+            "label": "Transporter Binder",
             "type": "virtual",
             "position": {
-                "horizontal": { "x": 260, "y": 680 },
-                "vertical": { "x": 0, "y": 1550 }
+                "x": 240,
+                "y": 780
             },
             "size": {
-                "horizontal": { "width": 900, "height": 280 },
-                "vertical": { "width": 360, "height": 600 }
+                "width": 1860,
+                "height": 620
             },
             "data": {
-                "label": "Transporter binder",
                 "path": "/model/transporter-binder",
                 "graph": "/content/model/transporter binder/index.json"
+            }
+        },
+        {
+            "id": "enzyme",
+            "label": "Enzyme",
+            "type": "virtual",
+            "position": {
+                "x": 240,
+                "y": 1430
+            },
+            "size": {
+                "width": 1490,
+                "height": 620
+            },
+            "data": {
+                "path": "/model/enzyme",
+                "graph": "/content/model/enzyme/index.json"
+            }
+        },
+        {
+            "id": "discussion",
+            "label": "Discussion",
+            "position": {
+                "x": 2610,
+                "y": 1000
+            },
+            "data": {
+                "path": "/model/discussion"
             }
         }
     ],
     "edges": [
         {
-            "id": "model-to-overview",
-            "source": "model",
-            "target": "overview"
-        },
-        {
-            "id": "model-to-precursor",
-            "source": "model",
+            "id": "overview-to-precursor",
+            "source": "overview",
             "target": "precursor-binder"
         },
         {
-            "id": "model-to-transporter",
-            "source": "model",
+            "id": "overview-to-transporter",
+            "source": "overview",
             "target": "transporter-binder"
-        }
-    ],
-    "crossEdges": [
+        },
         {
-            "id": "precursor-code-to-transporter-process",
-            "source": ["precursor-binder", "code"],
-            "target": ["transporter-binder", "process"],
-            "label": "Feeds process",
-            "animated": true
+            "id": "overview-to-enzyme",
+            "source": "overview",
+            "target": "enzyme"
+        },
+        {
+            "id": "precursor-to-discussion",
+            "source": "precursor-binder",
+            "target": "discussion"
+        },
+        {
+            "id": "transporter-to-discussion",
+            "source": "transporter-binder",
+            "target": "discussion"
+        },
+        {
+            "id": "enzyme-to-discussion",
+            "source": "enzyme",
+            "target": "discussion"
         }
     ]
 }

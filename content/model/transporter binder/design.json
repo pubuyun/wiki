@@ -1,0 +1,68 @@
+{
+    "title": "Design",
+    "height": 260,
+    "nodes": [
+        {
+            "id": "write-config",
+            "label": "Write Config",
+            "position": {
+                "x": 20,
+                "y": 100
+            }
+        },
+        {
+            "id": "rfdiffusion",
+            "label": "RFDiffusion Generation",
+            "position": {
+                "x": 190,
+                "y": 100
+            }
+        },
+        {
+            "id": "proteinmpnn",
+            "label": "ProteinMPNN Redesign",
+            "position": {
+                "x": 360,
+                "y": 100
+            }
+        },
+        {
+            "id": "rf3-cofolding",
+            "label": "RF3 Co-folding",
+            "position": {
+                "x": 530,
+                "y": 100
+            }
+        },
+        {
+            "id": "top20",
+            "label": "Top20",
+            "position": {
+                "x": 700,
+                "y": 100
+            }
+        }
+    ],
+    "edges": [
+        {
+            "id": "config-rfdiffusion",
+            "source": "write-config",
+            "target": "rfdiffusion"
+        },
+        {
+            "id": "rfdiffusion-proteinmpnn",
+            "source": "rfdiffusion",
+            "target": "proteinmpnn"
+        },
+        {
+            "id": "proteinmpnn-rf3",
+            "source": "proteinmpnn",
+            "target": "rf3-cofolding"
+        },
+        {
+            "id": "rf3-top20",
+            "source": "rf3-cofolding",
+            "target": "top20"
+        }
+    ]
+}

@@ -1,0 +1,42 @@
+{
+    "title": "Analysis",
+    "height": 240,
+    "nodes": [
+        {
+            "id": "transport-mechanism",
+            "label": "Transport Mechanism",
+            "position": {
+                "x": 20,
+                "y": 90
+            }
+        },
+        {
+            "id": "compare-structures",
+            "label": "Compare OF and IF structure",
+            "position": {
+                "x": 230,
+                "y": 90
+            }
+        },
+        {
+            "id": "binding-interface",
+            "label": "Determine Binding Interface",
+            "position": {
+                "x": 460,
+                "y": 90
+            }
+        }
+    ],
+    "edges": [
+        {
+            "id": "mechanism-compare",
+            "source": "transport-mechanism",
+            "target": "compare-structures"
+        },
+        {
+            "id": "compare-interface",
+            "source": "compare-structures",
+            "target": "binding-interface"
+        }
+    ]
+}

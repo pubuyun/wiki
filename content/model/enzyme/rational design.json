@@ -1,0 +1,68 @@
+{
+    "title": "Rational Design",
+    "height": 260,
+    "nodes": [
+        {
+            "id": "wildtype-md",
+            "label": "Wildtype MD",
+            "position": {
+                "x": 20,
+                "y": 100
+            }
+        },
+        {
+            "id": "stablize-carboxyl",
+            "label": "Stablize carboxyl group",
+            "position": {
+                "x": 190,
+                "y": 100
+            }
+        },
+        {
+            "id": "stablize-tail",
+            "label": "Stablize hydrophobic tail",
+            "position": {
+                "x": 360,
+                "y": 100
+            }
+        },
+        {
+            "id": "md-simulation",
+            "label": "MD Simulation",
+            "position": {
+                "x": 530,
+                "y": 100
+            }
+        },
+        {
+            "id": "mutants-selected",
+            "label": "3 Mutants Selected",
+            "position": {
+                "x": 700,
+                "y": 100
+            }
+        }
+    ],
+    "edges": [
+        {
+            "id": "wildtype-carboxyl",
+            "source": "wildtype-md",
+            "target": "stablize-carboxyl"
+        },
+        {
+            "id": "carboxyl-tail",
+            "source": "stablize-carboxyl",
+            "target": "stablize-tail"
+        },
+        {
+            "id": "tail-md",
+            "source": "stablize-tail",
+            "target": "md-simulation"
+        },
+        {
+            "id": "md-mutants",
+            "source": "md-simulation",
+            "target": "mutants-selected"
+        }
+    ]
+}

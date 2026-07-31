@@ -1,0 +1,73 @@
+{
+    "title": "PC",
+    "height": 330,
+    "nodes": [
+        {
+            "id": "beam-search",
+            "label": "Beam Search Generation",
+            "position": {
+                "x": 20,
+                "y": 125
+            }
+        },
+        {
+            "id": "self-sequence",
+            "label": "Self Sequence",
+            "position": {
+                "x": 230,
+                "y": 45
+            }
+        },
+        {
+            "id": "ligandmpnn-redesign",
+            "label": "LigandMPNN Redesign",
+            "position": {
+                "x": 230,
+                "y": 205
+            }
+        },
+        {
+            "id": "rf3-folding",
+            "label": "RF3 Folding",
+            "position": {
+                "x": 470,
+                "y": 125
+            }
+        },
+        {
+            "id": "top20",
+            "label": "Top20",
+            "position": {
+                "x": 700,
+                "y": 125
+            }
+        }
+    ],
+    "edges": [
+        {
+            "id": "beam-self",
+            "source": "beam-search",
+            "target": "self-sequence"
+        },
+        {
+            "id": "beam-ligandmpnn",
+            "source": "beam-search",
+            "target": "ligandmpnn-redesign"
+        },
+        {
+            "id": "self-rf3",
+            "source": "self-sequence",
+            "target": "rf3-folding"
+        },
+        {
+            "id": "ligandmpnn-rf3",
+            "source": "ligandmpnn-redesign",
+            "target": "rf3-folding"
+        },
+        {
+            "id": "rf3-top20",
+            "source": "rf3-folding",
+            "target": "top20"
+        }
+    ]
+}
