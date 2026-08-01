@@ -24,14 +24,14 @@
                         ></div>
 
                         <div
-                            class="relative z-10 rounded-xl bg-surface-elevated px-3 py-2 text-on-surface shadow-lg"
+                            class="inline-annotation-content relative z-10 rounded-xl bg-surface-elevated px-3 py-2 text-on-surface shadow-lg"
                         >
                             <p>{{ matchedTerm.detail }}</p>
 
                             <NuxtLink
                                 v-if="matchedTerm.link"
                                 :to="matchedTerm.link"
-                                class="mt-2 inline-block font-semibold text-primary underline"
+                                class="inline-annotation-content mt-2 inline-block font-semibold text-primary underline"
                                 target="_blank"
                             >
                                 Learn more

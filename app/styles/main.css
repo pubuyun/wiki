@@ -227,6 +227,8 @@ input[type="submit"],
 }
 
 body.dyslexia main,
-body.dyslexia main * {
+body.dyslexia main *,
+body.dyslexia .inline-annotation-content,
+body.dyslexia .inline-annotation-content * {
     font-family: var(--font-opendyslexic);
 }
