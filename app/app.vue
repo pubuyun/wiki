@@ -24,10 +24,10 @@
 </template>
 
 <script setup lang="ts">
-import { wikiTheme } from "./styles/echarts";
+import { THEME_KEY } from "vue-echarts";
+import { createWikiTheme } from "./styles/echarts";
 import "./styles/opendyslexic.css";
 
-const THEME_KEY = "theme";
 const DARK_MODE_COOKIE = "wiki-dark-mode";
 const COLORBLIND_MODE_COOKIE = "wiki-colorblind-mode";
 
@@ -74,5 +74,12 @@ useHead({
     },
 });
 
-provide(THEME_KEY, wikiTheme);
+const chartTheme = computed(() =>
+    createWikiTheme({
+        dark: darkMode.value,
+        colorblind: colorblindMode.value,
+    }),
+);
+
+provide(THEME_KEY, chartTheme);
 </script>

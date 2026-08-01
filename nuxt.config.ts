@@ -1,8 +1,26 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+import { readdirSync } from "node:fs";
+import { join, relative, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 import tailwindcss from "@tailwindcss/vite";
 
 const isDevServer = process.env.NODE_ENV === "development";
+const contentGraphDirectory = fileURLToPath(
+    new URL("./content/model", import.meta.url),
+);
+const contentGraphPaths = readdirSync(contentGraphDirectory, {
+    recursive: true,
+    withFileTypes: true,
+})
+    .filter((entry) => entry.isFile() && entry.name.endsWith(".json"))
+    .map((entry) => {
+        const filePath = join(entry.parentPath, entry.name);
+        const relativePath = relative(contentGraphDirectory, filePath)
+            .split(sep)
+            .join("/");
+
+        return `/content/model/${relativePath}`;
+    });
 
 export default defineNuxtConfig({
     app: {
@@ -38,12 +56,13 @@ export default defineNuxtConfig({
     },
     echarts: {
         renderer: "svg",
-        charts: ["LineChart"],
+        charts: ["LineChart", "HeatmapChart"],
         components: [
             "TitleComponent",
             "TooltipComponent",
             "GridComponent",
             "LegendComponent",
+            "VisualMapComponent",
             // "ToolboxComponent",
             // "DataZoomComponent",
         ],
@@ -60,6 +79,7 @@ export default defineNuxtConfig({
         public: {
             molstarBaseUrl:
                 "https://static.igem.wiki/teams/6133/wiki/molstar/4-0-1",
+            contentGraphPaths,
         },
     },
     css: ["./app/styles/main.css"],
@@ -95,7 +115,7 @@ export default defineNuxtConfig({
     nitro: {
         publicAssets: [
             {
-                dir: fileURLToPath(new URL("./content/model", import.meta.url)),
+                dir: contentGraphDirectory,
                 baseURL: "/content/model",
                 fallthrough: false,
             },

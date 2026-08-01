@@ -6,6 +6,7 @@ definePageMeta({
 import { Icon } from "@iconify/vue";
 
 const route = useRoute();
+const runtimeConfig = useRuntimeConfig();
 const slug = computed(() => String(route.params.slug ?? ""));
 const pagePath = computed(() => `/${slug.value}`);
 
@@ -13,11 +14,14 @@ const { data: page } = await useAsyncData(`content-${pagePath.value}`, () =>
     queryCollection("content").path(pagePath.value).first(),
 );
 
-const graphSrc = computed(() =>
-    page.value?.stem
+const contentGraphPaths = new Set(runtimeConfig.public.contentGraphPaths);
+const graphSrc = computed(() => {
+    const candidate = page.value?.stem
         ? `/content/${page.value.stem}.json`
-        : `/content/${slug.value}/index.json`,
-);
+        : `/content/${slug.value}/index.json`;
+
+    return contentGraphPaths.has(candidate) ? candidate : null;
+});
 
 const { data: allPages } = await useAsyncData("content-navigation", () =>
     queryCollection("content")
@@ -115,7 +119,7 @@ watchEffect(() => {
         class="flex min-w-0 flex-1 flex-col px-4 pt-4 sm:px-6 lg:px-8 xl:px-12"
     >
         <ClientOnly>
-            <ContentGraph :src="graphSrc" class="mb-8" />
+            <ContentGraph v-if="graphSrc" :src="graphSrc" class="mb-8" />
         </ClientOnly>
 
         <nav

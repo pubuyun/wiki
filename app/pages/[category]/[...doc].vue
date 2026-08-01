@@ -5,6 +5,7 @@ definePageMeta({
 });
 
 const route = useRoute();
+const runtimeConfig = useRuntimeConfig();
 const category = computed(() => String(route.params.category ?? ""));
 const categoryPath = computed(() => `/${category.value}`);
 const activePath = computed(() => normalizeContentPath(route.path));
@@ -13,11 +14,14 @@ const { data: page } = await useAsyncData(`content-${activePath.value}`, () =>
     queryCollection("content").path(activePath.value).first(),
 );
 
-const graphSrc = computed(() =>
-    page.value?.stem
+const contentGraphPaths = new Set(runtimeConfig.public.contentGraphPaths);
+const graphSrc = computed(() => {
+    const candidate = page.value?.stem
         ? `/content/${page.value.stem}.json`
-        : `/content${activePath.value}.json`,
-);
+        : `/content${activePath.value}.json`;
+
+    return contentGraphPaths.has(candidate) ? candidate : null;
+});
 
 const { data: allPages } = await useAsyncData("content-navigation", () =>
     queryCollection("content")
@@ -166,7 +170,7 @@ function bodyWithChildren(body, children) {
         </h1>
 
         <ClientOnly>
-            <ContentGraph :src="graphSrc" />
+            <ContentGraph v-if="graphSrc" :src="graphSrc" />
         </ClientOnly>
 
         <ClientOnly>
