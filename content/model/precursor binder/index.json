@@ -65,29 +65,15 @@
             }
         },
         {
-            "id": "wet-lab-validation",
-            "label": "Wet Lab Validation",
-            "position": {
-                "x": 1750,
-                "y": 335
-            }
-        },
-        {
             "id": "result",
             "label": "Result",
-            "type": "virtual",
             "position": {
                 "x": 1950,
                 "y": 275
             },
-            "size": {
-                "width": 300,
-                "height": 180
-            },
             "data": {
                 "path": "/model/precursor-binder/result",
-                "graph": "/content/model/precursor binder/result.json",
-                "direction": "top-bottom"
+                "scale": false
             }
         }
     ],
@@ -113,13 +99,8 @@
             "target": "md-simulation"
         },
         {
-            "id": "md-to-wet-lab",
+            "id": "md-to-result",
             "source": "md-simulation",
-            "target": "wet-lab-validation"
-        },
-        {
-            "id": "wet-lab-to-result",
-            "source": "wet-lab-validation",
             "target": "result"
         }
     ]

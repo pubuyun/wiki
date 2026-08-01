@@ -47,29 +47,15 @@
             }
         },
         {
-            "id": "wet-lab-validation",
-            "label": "Wet Lab Validation",
-            "position": {
-                "x": 960,
-                "y": 280
-            }
-        },
-        {
             "id": "result",
             "label": "Result",
-            "type": "virtual",
             "position": {
                 "x": 1160,
                 "y": 220
             },
-            "size": {
-                "width": 300,
-                "height": 180
-            },
             "data": {
                 "path": "/model/enzyme/result",
-                "graph": "/content/model/enzyme/result.json",
-                "direction": "top-bottom"
+                "scale": false
             }
         }
     ],
@@ -85,13 +71,8 @@
             "target": "rational-design"
         },
         {
-            "id": "design-to-wet-lab",
+            "id": "design-to-result",
             "source": "rational-design",
-            "target": "wet-lab-validation"
-        },
-        {
-            "id": "wet-lab-to-result",
-            "source": "wet-lab-validation",
             "target": "result"
         }
     ]
