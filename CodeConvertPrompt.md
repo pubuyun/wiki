@@ -37,7 +37,7 @@ Return the converted source code and its matching workflow using the MDC structu
 
 ## Vue Flow JSON rules
 
-The flowchart is Vue Flow JSON consumed by the custom `ContentFlowchart` component. It is not Mermaid, Graphviz, or the format used by `ContentGraph.client.vue`.
+The flowchart is Vue Flow JSON consumed by the custom `CodeFlowchart` component. It is not Mermaid, Graphviz, or the format used by `ContentGraph.client.vue`.
 
 1. Put the definition inside a fenced code block whose language is exactly `graph`.
 2. The fence content must be strict, valid JSON with top-level `nodes` and `edges` arrays.
@@ -59,7 +59,7 @@ The flowchart is Vue Flow JSON consumed by the custom `ContentFlowchart` compone
 8. Edge labels are optional. Use them primarily for decision results such as `Yes` and `No`.
 9. Mark a backward or repeating edge with `"type": "loop"`.
 10. Do not set Vue Flow renderer types such as `smoothstep` in the source JSON. The flowchart component selects the rendered edge style automatically.
-11. The `graph` fence is automatically intercepted and rendered with `ContentFlowchart`; do not call `ContentFlowchart` or `ContentGraph` manually in the MDC document.
+11. The `graph` fence is automatically intercepted and rendered with `CodeFlowchart`; do not call `CodeFlowchart` or `ContentGraph` manually in the MDC document.
 
 ## MDC presentation rules
 

@@ -30,6 +30,8 @@ const slots = defineSlots<{
 }>();
 const selected = ref(props.defaultValue);
 const expanded = reactive<Record<string, boolean>>({});
+const scrolling = reactive<Record<string, boolean>>({});
+const scrollEndTimers = new Map<string, ReturnType<typeof setTimeout>>();
 const groupId = `code-group-${useId().replace(/:/g, "")}`;
 
 function flattenVNodes(value: unknown): VNode[] {
@@ -75,8 +77,54 @@ function isExpanded(value: string) {
     return expanded[value] ?? false;
 }
 
+function isScrolling(value: string) {
+    return scrolling[value] ?? false;
+}
+
+function hideScrollbar(value: string) {
+    scrolling[value] = false;
+    const timer = scrollEndTimers.get(value);
+    if (timer !== undefined) clearTimeout(timer);
+    scrollEndTimers.delete(value);
+}
+
+function showScrollbar(value: string) {
+    const timer = scrollEndTimers.get(value);
+    if (timer !== undefined) clearTimeout(timer);
+
+    scrolling[value] = true;
+    scrollEndTimers.set(
+        value,
+        setTimeout(() => {
+            scrolling[value] = false;
+            scrollEndTimers.delete(value);
+        }, 700),
+    );
+}
+
 function toggleExpanded(value: string) {
+    hideScrollbar(value);
     expanded[value] = !isExpanded(value);
+}
+
+function scrollCollapsedPane(
+    event: WheelEvent,
+    item: (typeof items.value)[number],
+) {
+    if (item.isGraph || isExpanded(item.value) || !event.ctrlKey) return;
+
+    const pane = event.currentTarget;
+    if (!(pane instanceof HTMLElement)) return;
+
+    event.preventDefault();
+    showScrollbar(item.value);
+    const multiplier =
+        event.deltaMode === WheelEvent.DOM_DELTA_LINE
+            ? 16
+            : event.deltaMode === WheelEvent.DOM_DELTA_PAGE
+              ? pane.clientHeight
+              : 1;
+    pane.scrollTop += event.deltaY * multiplier;
 }
 
 function paneStyle(item: (typeof items.value)[number]) {
@@ -96,6 +144,10 @@ onMounted(() => {
     }
 
     watch(selected, (value) => localStorage.setItem(key, value));
+});
+
+onBeforeUnmount(() => {
+    scrollEndTimers.forEach((timer) => clearTimeout(timer));
 });
 </script>
 
@@ -133,12 +185,27 @@ onMounted(() => {
         >
             <div
                 :id="`${groupId}-${item.value}`"
-                class="min-w-0 [&>figure]:my-0 [&>figure]:border-0 [&>pre]:my-0 [&>pre]:rounded-none [&>pre]:shadow-none"
+                class="relative min-w-0 [&>figure]:my-0 [&>figure]:border-0 [&>pre]:my-0 [&>pre]:rounded-none [&>pre]:shadow-none"
                 :class="{
-                    'min-h-0 flex-1 overflow-hidden':
-                        !item.isGraph && !isExpanded(item.value),
+                    'min-h-0 flex-1': !item.isGraph && !isExpanded(item.value),
+                    'overflow-y-scroll':
+                        !item.isGraph &&
+                        !isExpanded(item.value) &&
+                        isScrolling(item.value),
+                    'overflow-hidden':
+                        !item.isGraph &&
+                        !isExpanded(item.value) &&
+                        !isScrolling(item.value),
                 }"
+                @wheel="scrollCollapsedPane($event, item)"
             >
+                <span
+                    v-if="!item.isGraph && !isExpanded(item.value)"
+                    class="pointer-events-none absolute top-2 right-3 z-10 text-xs text-gray-400 select-none dark:text-gray-500"
+                    aria-hidden="true"
+                >
+                    Ctrl + scroll
+                </span>
                 <component :is="item.vnode" />
             </div>
 

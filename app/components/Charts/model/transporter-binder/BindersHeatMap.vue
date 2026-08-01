@@ -9,13 +9,17 @@
         >
             {{ errorMessage }}
         </div>
-        <TabsRoot v-else default-value="cycle1" class="w-full">
+        <TabsRoot
+            v-else
+            :default-value="availableCycles[0]?.value ?? 'cycle1'"
+            class="w-full"
+        >
             <TabsList
                 class="mx-auto mb-4 flex w-fit gap-1 rounded-full border border-surface-bright bg-surface-elevated p-1 font-momo-trust-display"
-                aria-label="Binder design cycles"
+                aria-label="Transporter binder design cycles"
             >
                 <TabsTrigger
-                    v-for="cycle in cycles"
+                    v-for="cycle in availableCycles"
                     :key="cycle.value"
                     :value="cycle.value"
                     class="group flex items-center gap-2 rounded-full px-5 py-2 text-sm text-primary transition-colors outline-none hover:bg-primary/20 focus-visible:ring-2 focus-visible:ring-outline data-[state=active]:bg-primary data-[state=active]:text-on-primary"
@@ -30,21 +34,12 @@
             </TabsList>
 
             <TabsContent
-                v-for="cycle in cycles"
+                v-for="cycle in availableCycles"
                 :key="cycle.value"
                 :value="cycle.value"
                 class="outline-none focus-visible:ring-2 focus-visible:ring-outline"
             >
-                <div
-                    v-if="rowsByCycle[cycle.value].length === 0"
-                    class="flex min-h-72 items-center justify-center px-6 text-center text-sm"
-                    role="status"
-                >
-                    No {{ cycle.label }} binder JSON files were found for
-                    {{ sourceLabel }}.
-                </div>
                 <VChart
-                    v-else
                     class="w-full"
                     :style="{ height: `${chartHeight(cycle.value)}px` }"
                     :option="optionsByCycle[cycle.value]"
@@ -53,9 +48,10 @@
             </TabsContent>
         </TabsRoot>
         <figcaption class="sr-only">
-            Cycle tabs containing heatmaps that compare {{ totalBinderCount }}
-            {{ sourceLabel }} binders across seven prediction and stability
-            metrics. Cell labels contain the original values.
+            Cycle tabs containing heatmaps that compare
+            {{ totalBinderCount }} transporter binders across six prediction,
+            contact, and energy metrics. Cell labels contain the original
+            values.
         </figcaption>
     </figure>
 </template>
@@ -69,14 +65,12 @@ type Cycle = "cycle1" | "cycle2";
 interface BinderRecord {
     name?: string;
     _id?: string;
-    selected?: boolean;
+    ranking_score?: number;
     "pLDDT(%)"?: number;
     i_pAE?: number;
-    ptm?: number;
-    iptm?: number;
-    conf_ranking_score?: number;
-    cg3m3sh_deltag?: number;
-    "Melting Temperature"?: number;
+    total_target_contact_residues?: number;
+    desired_contact_fraction?: number;
+    deltaG?: number | null;
 }
 
 interface BinderRow {
@@ -87,7 +81,6 @@ interface BinderRow {
 
 interface HeatmapDatum {
     name: string;
-    shortName: string;
     metric: string;
     rawValue: number | null;
     value: [number, number, number, number | null];
@@ -101,10 +94,6 @@ interface MetricDefinition {
     digits: number;
 }
 
-const props = defineProps<{
-    binders: string;
-}>();
-
 const cycles: { value: Cycle; label: string }[] = [
     { value: "cycle1", label: "Cycle 1" },
     { value: "cycle2", label: "Cycle 2" },
@@ -112,63 +101,46 @@ const cycles: { value: Cycle; label: string }[] = [
 
 const metrics: MetricDefinition[] = [
     {
+        key: "ranking_score",
+        label: "Ranking score",
+        higherIsBetter: true,
+        digits: 4,
+    },
+    {
         key: "pLDDT(%)",
         label: "pLDDT",
         higherIsBetter: true,
         digits: 2,
     },
-    { key: "i_pAE", label: "i_pAE", higherIsBetter: false, digits: 3 },
-    { key: "ptm", label: "pTM", higherIsBetter: true, digits: 3 },
-    { key: "iptm", label: "ipTM", higherIsBetter: true, digits: 3 },
+    { key: "i_pAE", label: "i_pAE", higherIsBetter: false, digits: 2 },
     {
-        key: "conf_ranking_score",
-        label: "Ranking score",
+        key: "total_target_contact_residues",
+        label: "Target contact residues",
+        higherIsBetter: true,
+        digits: 0,
+    },
+    {
+        key: "desired_contact_fraction",
+        label: "Desired contact fraction",
         higherIsBetter: true,
         digits: 3,
     },
-    {
-        key: "cg3m3sh_deltag",
-        label: "ΔG",
-        higherIsBetter: false,
-        digits: 2,
-    },
-    {
-        key: "Melting Temperature",
-        label: "Melting temp.",
-        higherIsBetter: true,
-        digits: 2,
-    },
+    { key: "deltaG", label: "ΔG", higherIsBetter: false, digits: 2 },
 ];
 
 const binderModules = import.meta.glob(
-    "../../../../data/model/precursor-binder/**/*.json",
+    "../../../../data/model/transporter-binder/**/*.json",
     {
         eager: true,
         import: "default",
     },
 ) as Record<string, BinderRecord>;
 
-function canonicalDataPath(path: string): string {
-    const normalised = path.trim().replaceAll("\\", "/").replace(/\/+$/, "");
-    const modelIndex = normalised.indexOf("data/model/");
-
-    if (modelIndex >= 0) {
-        return `app/${normalised.slice(modelIndex)}`;
-    }
-
-    return `app/data/model/${normalised.replace(/^\/+/, "")}`;
-}
-
 function shortBinderName(name: string): string {
-    const number = name.match(/(?:^|_)n_(\d+)/)?.[1];
-    const id = name.match(/(?:^|_)id_(\d+)/)?.[1];
-    const sequence = name.match(/_(mpnn|self)_seq(\d+)/i);
+    const match = name.match(/(?:^|_)if_(\d+)_model_(\d+)_b(\d+)_d(\d+)$/i);
 
-    if (number && id) {
-        const sequenceLabel = sequence
-            ? ` · ${sequence[1].toUpperCase()} ${sequence[2]}`
-            : "";
-        return `n${number} · id${id}${sequenceLabel}`;
+    if (match) {
+        return `IF ${match[1]} · M${match[2]} · B${match[3]} · D${match[4]}`;
     }
 
     return name.length > 34 ? `${name.slice(0, 31)}…` : name;
@@ -177,12 +149,6 @@ function shortBinderName(name: string): string {
 function isFiniteNumber(value: unknown): value is number {
     return typeof value === "number" && Number.isFinite(value);
 }
-
-const binderSource = computed(() => props.binders?.trim().toLowerCase() ?? "");
-
-const sourceLabel = computed(() =>
-    binderSource.value === "proteina" ? "Proteina Complexa" : "RFdiffusion",
-);
 
 function sortRows(records: BinderRow[]): BinderRow[] {
     return records.sort((a, b) =>
@@ -196,20 +162,16 @@ const rowsByCycle = computed<Record<Cycle, BinderRow[]>>(() => {
         cycle2: [],
     };
 
-    if (!(["proteina", "rosetta"] as string[]).includes(binderSource.value)) {
-        return records;
-    }
-
     for (const [modulePath, record] of Object.entries(binderModules)) {
-        const path = canonicalDataPath(modulePath);
+        const path = modulePath.replaceAll("\\", "/");
         const match = path.match(
-            /\/data\/model\/precursor-binder\/(cycle1|cycle2)\/(proteina|rosetta)\/(selected|rejected)\/([^/]+)\.json$/i,
+            /\/transporter-binder\/(cycle1|cycle2)\/(?:selected|rejected)\/([^/]+)\.json$/i,
         );
 
-        if (!match || match[2].toLowerCase() !== binderSource.value) continue;
+        if (!match) continue;
 
         const cycle = match[1].toLowerCase() as Cycle;
-        const name = record.name || record._id || match[4];
+        const name = record.name || record._id || match[2];
         records[cycle].push({
             name,
             shortName: shortBinderName(name),
@@ -223,21 +185,21 @@ const rowsByCycle = computed<Record<Cycle, BinderRow[]>>(() => {
     };
 });
 
-const errorMessage = computed(() => {
-    if (!(["proteina", "rosetta"] as string[]).includes(binderSource.value)) {
-        return 'The binders parameter must be either "proteina" or "rosetta".';
-    }
-    if (
-        rowsByCycle.value.cycle1.length === 0 &&
-        rowsByCycle.value.cycle2.length === 0
-    ) {
-        return `No binder JSON files were found for “${props.binders}”.`;
-    }
-    return "";
-});
+const availableCycles = computed(() =>
+    cycles.filter((cycle) => rowsByCycle.value[cycle.value].length > 0),
+);
 
-const totalBinderCount = computed(
-    () => rowsByCycle.value.cycle1.length + rowsByCycle.value.cycle2.length,
+const errorMessage = computed(() =>
+    availableCycles.value.length === 0
+        ? "No transporter binder JSON files were found."
+        : "",
+);
+
+const totalBinderCount = computed(() =>
+    availableCycles.value.reduce(
+        (total, cycle) => total + rowsByCycle.value[cycle.value].length,
+        0,
+    ),
 );
 
 function chartHeight(cycle: Cycle): number {
@@ -254,7 +216,7 @@ function metricValue(row: BinderRow, metric: MetricDefinition): number | null {
 
 function formatValue(value: number | null, digits: number): string {
     if (value === null) return "—";
-    return value.toFixed(digits).replace(/\.?0+$/, "");
+    return String(Number(value.toFixed(digits)));
 }
 
 function escapeHtml(value: string): string {
@@ -295,8 +257,7 @@ function buildHeatmapData(rows: BinderRow[]): HeatmapDatum[] {
             }
 
             return {
-                name: row.name,
-                shortName: row.shortName,
+                name: row.shortName,
                 metric: metric.label,
                 rawValue,
                 value: [metricIndex, rowIndex, score, rawValue],
@@ -313,7 +274,7 @@ function buildOption(cycle: Cycle, rows: BinderRow[]): EChartsOption {
 
     return {
         title: {
-            text: `${cycleLabel} binder performance`,
+            text: `${cycleLabel} transporter binder performance`,
             subtext: `${rows.length} binders`,
             left: "center",
         },
@@ -326,7 +287,7 @@ function buildOption(cycle: Cycle, rows: BinderRow[]): EChartsOption {
                 );
 
                 return [
-                    `<strong>${escapeHtml(binderSource.value === "proteina" ? datum.shortName : datum.name)}</strong>`,
+                    `<strong>${escapeHtml(datum.name)}</strong>`,
                     escapeHtml(datum.metric),
                     `Value: <strong>${formatValue(datum.rawValue, metric?.digits ?? 3)}</strong>`,
                 ].join("<br>");
@@ -352,7 +313,14 @@ function buildOption(cycle: Cycle, rows: BinderRow[]): EChartsOption {
                 formatter: (value: string) =>
                     value
                         .replace("Ranking score", "Ranking\nscore")
-                        .replace("Melting temp.", "Melting\ntemp."),
+                        .replace(
+                            "Target contact residues",
+                            "Target contact\nresidues",
+                        )
+                        .replace(
+                            "Desired contact fraction",
+                            "Desired contact\nfraction",
+                        ),
             },
         },
         yAxis: {

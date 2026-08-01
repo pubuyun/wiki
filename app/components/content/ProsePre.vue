@@ -1,5 +1,5 @@
 <template>
-    <ContentFlowchart
+    <CodeGroupCodeFlowchart
         v-if="parsedGraph.value"
         :graph="parsedGraph.value"
         :class="$props.class"

@@ -1,0 +1,68 @@
+{
+    "title": "MD Simulation",
+    "height": 260,
+    "nodes": [
+        {
+            "id": "restrict-covalent-ligand",
+            "label": "Restrict Covalent Ligand",
+            "position": {
+                "x": 20,
+                "y": 100
+            }
+        },
+        {
+            "id": "system-preparation",
+            "label": "System Preparation",
+            "position": {
+                "x": 220,
+                "y": 100
+            }
+        },
+        {
+            "id": "md-simulation",
+            "label": "100ns MD Simulation",
+            "position": {
+                "x": 420,
+                "y": 100
+            }
+        },
+        {
+            "id": "rmsd",
+            "label": "RMSD Calculation",
+            "position": {
+                "x": 620,
+                "y": 100
+            }
+        },
+        {
+            "id": "mutants-selected",
+            "label": "3 Mutants Selected",
+            "position": {
+                "x": 820,
+                "y": 100
+            }
+        }
+    ],
+    "edges": [
+        {
+            "id": "restrict-to-preparation",
+            "source": "restrict-covalent-ligand",
+            "target": "system-preparation"
+        },
+        {
+            "id": "preparation-to-md",
+            "source": "system-preparation",
+            "target": "md-simulation"
+        },
+        {
+            "id": "md-to-rmsd",
+            "source": "md-simulation",
+            "target": "rmsd"
+        },
+        {
+            "id": "rmsd-to-mutants",
+            "source": "rmsd",
+            "target": "mutants-selected"
+        }
+    ]
+}

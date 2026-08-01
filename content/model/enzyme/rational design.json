@@ -25,22 +25,6 @@
                 "x": 360,
                 "y": 100
             }
-        },
-        {
-            "id": "md-simulation",
-            "label": "MD Simulation",
-            "position": {
-                "x": 530,
-                "y": 100
-            }
-        },
-        {
-            "id": "mutants-selected",
-            "label": "3 Mutants Selected",
-            "position": {
-                "x": 700,
-                "y": 100
-            }
         }
     ],
     "edges": [
@@ -53,16 +37,6 @@
             "id": "carboxyl-tail",
             "source": "stablize-carboxyl",
             "target": "stablize-tail"
-        },
-        {
-            "id": "tail-md",
-            "source": "stablize-tail",
-            "target": "md-simulation"
-        },
-        {
-            "id": "md-mutants",
-            "source": "md-simulation",
-            "target": "mutants-selected"
         }
     ]
 }

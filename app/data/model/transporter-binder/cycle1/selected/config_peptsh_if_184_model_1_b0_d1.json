@@ -1,0 +1,21 @@
+{
+  "name": "config_peptsh_if_184_model_1_b0_d1",
+  "_id": "config_peptsh_if_184_model_1_b0_d1",
+  "_rank": 5,
+  "weighted_score": 0.911118,
+  "ranking_score": 0.8556,
+  "pLDDT(%)": 80.72,
+  "i_pAE": 9.07,
+  "_interface_target_residues": 23,
+  "_interface_binder_residues": 23,
+  "_interface_atom_contacts": 508,
+  "total_target_contact_residues": 23,
+  "desired_contact_fraction": 1,
+  "_rmsd": null,
+  "deltaG": -45.87,
+  "selected": true,
+  "expname": "PB1",
+  "_sequence": "SEAEEIEAKEEAGVERILALYKAGKSIEEIILEGAKLAEKEPDPAVQAAIYGAALGVAEAVKAGMSEEEIRSMAYKYRNRSRIQEVYEKAKKLVEEVKKK",
+  "_membrane_fit_rmsd_url": "https://static.igem.wiki/teams/6133/wiki/drylab/model/tpbinders/md/cycle1rmsd/binder-fit-cagromacs5.js",
+  "_pdb_url": "https://static.igem.wiki/teams/6133/wiki/drylab/model/tpbinders/pdb/config-peptsh-if-184-model-1-b0-d1.js"
+}

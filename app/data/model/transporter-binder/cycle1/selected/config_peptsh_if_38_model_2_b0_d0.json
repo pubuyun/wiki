@@ -1,0 +1,21 @@
+{
+  "name": "config_peptsh_if_38_model_2_b0_d0",
+  "_id": "config_peptsh_if_38_model_2_b0_d0",
+  "_rank": 9,
+  "weighted_score": 0.893555,
+  "ranking_score": 0.8549,
+  "pLDDT(%)": 80.48,
+  "i_pAE": 9.39,
+  "_interface_target_residues": 10,
+  "_interface_binder_residues": 12,
+  "_interface_atom_contacts": 198,
+  "total_target_contact_residues": 16,
+  "desired_contact_fraction": 0.625,
+  "_rmsd": null,
+  "deltaG": -15.16,
+  "selected": true,
+  "expname": "PB2",
+  "_sequence": "MKEEMKEVAREAARRLINGASVTEVRDEVAALGKEKGEFDTYVKLAGAVEALVRALLRANLESLPDVLYNVANIDSLLGEGAGKEIALELLDELIAKTTNEKEKENLKKIREAVA",
+  "_membrane_fit_rmsd_url": "https://static.igem.wiki/teams/6133/wiki/drylab/model/tpbinders/md/cycle1rmsd/binder-fit-cagromacs9.js",
+  "_pdb_url": "https://static.igem.wiki/teams/6133/wiki/drylab/model/tpbinders/pdb/config-peptsh-if-38-model-2-b0-d0.js"
+}

@@ -10,9 +10,9 @@ import {
     type ViewportTransform,
     type VueFlowStore,
 } from "@vue-flow/core";
-import ContentGraphPageNode from "./ContentGraphPageNode.vue";
-import ContentGraphVirtualLabelNode from "./ContentGraphVirtualLabelNode.vue";
-import ContentGraphVirtualNode from "./ContentGraphVirtualNode.vue";
+import ContentGraphPageNode from "./ContentGraph/ContentGraphPageNode.vue";
+import ContentGraphVirtualLabelNode from "./ContentGraph/ContentGraphVirtualLabelNode.vue";
+import ContentGraphVirtualNode from "./ContentGraph/ContentGraphVirtualNode.vue";
 import "@vue-flow/core/dist/style.css";
 import "@vue-flow/core/dist/theme-default.css";
 

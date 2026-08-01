@@ -28,7 +28,7 @@
         },
         {
             "id": "md-simulation",
-            "label": "MD Simulation",
+            "label": "50ns MD Simulation",
             "position": {
                 "x": 530,
                 "y": 100

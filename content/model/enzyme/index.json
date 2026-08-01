@@ -47,10 +47,28 @@
             }
         },
         {
+            "id": "md-simulation",
+            "label": "MD Simulation",
+            "type": "virtual",
+            "position": {
+                "x": 960,
+                "y": 30
+            },
+            "size": {
+                "width": 330,
+                "height": 540
+            },
+            "data": {
+                "path": "/model/enzyme/mdsimulation",
+                "graph": "/content/model/enzyme/mdsimulation.json",
+                "direction": "top-bottom"
+            }
+        },
+        {
             "id": "result",
             "label": "Result",
             "position": {
-                "x": 1160,
+                "x": 1530,
                 "y": 220
             },
             "data": {
@@ -71,8 +89,13 @@
             "target": "rational-design"
         },
         {
-            "id": "design-to-result",
+            "id": "design-to-md",
             "source": "rational-design",
+            "target": "md-simulation"
+        },
+        {
+            "id": "md-to-result",
+            "source": "md-simulation",
             "target": "result"
         }
     ]

@@ -238,15 +238,13 @@
                                 <LazyRmsdXvgChart
                                     v-if="
                                         activeTab === 'md-graph' &&
-                                        selectedBinder
+                                        selectedBinder &&
+                                        rmsdChartSources.length
                                     "
                                     :key="selectedBinder._id"
-                                    :src="[
-                                        selectedBinder._rmsd_lig_url,
-                                        selectedBinder._rmsd_prot_url,
-                                    ]"
+                                    :src="rmsdChartSources"
                                     title="RMSD"
-                                    :series-name="['Ligand', 'Protein']"
+                                    :series-name="rmsdChartSeriesNames"
                                     height-class="min-h-[32rem] lg:h-full"
                                 />
                                 <template #fallback>
@@ -297,8 +295,9 @@ type BinderRecord = Record<string, BinderValue> & {
     _id: string;
     name: string;
     _pdb_url: string;
-    _rmsd_lig_url: string;
-    _rmsd_prot_url: string;
+    _rmsd_lig_url?: string;
+    _rmsd_prot_url?: string;
+    _membrane_fit_rmsd_url?: string;
 };
 
 type TreeNode = {
@@ -437,7 +436,6 @@ const activeTab = ref<TabValue>(isTabValue(initialTab) ? initialTab : "info");
 const tabs = [
     { value: "info", label: "Info" },
     { value: "md-graph", label: "MD Graph" },
-    { value: "vmd-animation", label: "VMD Animation" },
     { value: "experiment-result", label: "Experiment Result" },
 ];
 
@@ -519,6 +517,21 @@ const visibleProperties = computed(() =>
     Object.entries(selectedBinder.value ?? {}).filter(
         ([key]) => !key.startsWith("_"),
     ),
+);
+const rmsdChartSources = computed(() => {
+    const record = selectedBinder.value;
+    if (!record) return [];
+    if (record._membrane_fit_rmsd_url) {
+        return [record._membrane_fit_rmsd_url];
+    }
+    return [record._rmsd_lig_url, record._rmsd_prot_url].filter(
+        (url): url is string => Boolean(url),
+    );
+});
+const rmsdChartSeriesNames = computed(() =>
+    selectedBinder.value?._membrane_fit_rmsd_url
+        ? ["Membrane-fit RMSD"]
+        : ["Ligand", "Protein"],
 );
 const viewerFileName = computed(
     () =>

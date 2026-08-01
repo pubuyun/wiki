@@ -12,7 +12,7 @@
         },
         {
             "id": "md-simulation",
-            "label": "MD Simulation",
+            "label": "100ns MD Simulation",
             "position": {
                 "x": 220,
                 "y": 125

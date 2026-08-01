@@ -1,5 +1,5 @@
 ---
 title: Rational Design
-description: Molecular-dynamics-guided rational design and mutant selection.
+description: Structure-guided design for stabilizing ligand interactions.
 order: 420
 ---
