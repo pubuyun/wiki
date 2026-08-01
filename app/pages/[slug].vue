@@ -10,9 +10,7 @@ const runtimeConfig = useRuntimeConfig();
 const slug = computed(() => String(route.params.slug ?? ""));
 const pagePath = computed(() => `/${slug.value}`);
 
-const { data: page } = await useAsyncData(`content-${pagePath.value}`, () =>
-    queryCollection("content").path(pagePath.value).first(),
-);
+const { data: page } = await useContentPageData(pagePath);
 
 const contentGraphPaths = new Set(runtimeConfig.public.contentGraphPaths);
 const graphSrc = computed(() => {
@@ -23,11 +21,7 @@ const graphSrc = computed(() => {
     return contentGraphPaths.has(candidate) ? candidate : null;
 });
 
-const { data: allPages } = await useAsyncData("content-navigation", () =>
-    queryCollection("content")
-        .select("path", "title", "description", "meta", "order")
-        .all(),
-);
+const { data: allPages } = await useContentNavigationData();
 
 const pages = computed(() => allPages.value ?? []);
 const children = computed(() => categoryPages(pages.value, slug.value));
@@ -97,20 +91,6 @@ function navIcon(path?: string) {
 function isIconUrl(icon: string) {
     return /^(?:https?:)?\/\//.test(icon) || icon.startsWith("/");
 }
-
-const contentLayout = useContentLayoutState();
-watchEffect(() => {
-    if (!displayPage.value) return;
-
-    contentLayout.value = {
-        page: displayPage.value,
-        categoryTitle: displayPage.value.title ?? titleizeSlug(slug.value),
-        categoryPath: pagePath.value,
-        categoryNavNodes: categoryNavNodes.value,
-        activePath: pagePath.value,
-        showRightSidebar: false,
-    };
-});
 </script>
 
 <template>

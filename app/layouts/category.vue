@@ -1,16 +1,48 @@
 <script setup>
-const contentLayout = useContentLayoutState();
+const route = useRoute();
+const category = computed(() => String(route.params.slug ?? ""));
+const categoryPath = computed(() => `/${category.value}`);
+const activePath = categoryPath;
 
-const page = computed(() => contentLayout.value.page);
-const categoryTitle = computed(() => contentLayout.value.categoryTitle);
-const categoryPath = computed(() => contentLayout.value.categoryPath);
-const categoryNavNodes = computed(() => contentLayout.value.categoryNavNodes);
-const activePath = computed(() => contentLayout.value.activePath);
+const { data: contentPage } = await useContentPageData(categoryPath);
+const { data: allPages } = await useContentNavigationData();
+
+const pages = computed(() => allPages.value ?? []);
+const children = computed(() => categoryPages(pages.value, category.value));
+const page = computed(() => {
+    if (contentPage.value) return contentPage.value;
+    if (!children.value.length) return null;
+
+    return {
+        path: categoryPath.value,
+        title: titleizeSlug(category.value),
+        meta: {},
+        body: { children: [], toc: { links: [] } },
+    };
+});
+const categoryTitle = computed(
+    () => page.value?.title ?? titleizeSlug(category.value),
+);
+const categoryNavNodes = computed(() =>
+    buildCategoryNavTree(children.value, category.value, activePath.value),
+);
+const contentLayout = useContentLayoutState();
 const hasRightSidebar = computed(
     () =>
         contentLayout.value.showRightSidebar &&
         page.value?.body?.toc?.links?.length > 0,
 );
+
+watchEffect(() => {
+    contentLayout.value = {
+        page: page.value,
+        categoryTitle: categoryTitle.value,
+        categoryPath: categoryPath.value,
+        categoryNavNodes: categoryNavNodes.value,
+        activePath: activePath.value,
+        showRightSidebar: false,
+    };
+});
 </script>
 
 <template>

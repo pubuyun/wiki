@@ -336,7 +336,7 @@ function buildOption(cycle: Cycle, rows: BinderRow[]): EChartsOption {
             top: 150,
             right: 34,
             bottom: 30,
-            left: 210,
+            left: 74,
             containLabel: false,
         },
         xAxis: {

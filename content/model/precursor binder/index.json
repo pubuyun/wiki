@@ -48,7 +48,7 @@
         },
         {
             "id": "md-simulation",
-            "label": "100ns MD Simulation",
+            "label": "MD Simulation",
             "type": "virtual",
             "position": {
                 "x": 1380,

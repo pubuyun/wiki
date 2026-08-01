@@ -10,9 +10,7 @@ const category = computed(() => String(route.params.category ?? ""));
 const categoryPath = computed(() => `/${category.value}`);
 const activePath = computed(() => normalizeContentPath(route.path));
 
-const { data: page } = await useAsyncData(`content-${activePath.value}`, () =>
-    queryCollection("content").path(activePath.value).first(),
-);
+const { data: page } = await useContentPageData(activePath);
 
 const contentGraphPaths = new Set(runtimeConfig.public.contentGraphPaths);
 const graphSrc = computed(() => {
@@ -23,11 +21,7 @@ const graphSrc = computed(() => {
     return contentGraphPaths.has(candidate) ? candidate : null;
 });
 
-const { data: allPages } = await useAsyncData("content-navigation", () =>
-    queryCollection("content")
-        .select("path", "title", "description", "order")
-        .all(),
-);
+const { data: allPages } = await useContentNavigationData();
 
 const pages = computed(() => allPages.value ?? []);
 const children = computed(() => categoryPages(pages.value, category.value));
@@ -108,20 +102,6 @@ if (!page.value || !children.value.length) {
 useSeoMeta({
     title: () => pageSeoTitle(page.value),
     description: () => pageDescription(page.value),
-});
-
-const contentLayout = useContentLayoutState();
-watchEffect(() => {
-    if (!page.value) return;
-
-    contentLayout.value = {
-        page: page.value,
-        categoryTitle: categoryTitle.value,
-        categoryPath: categoryPath.value,
-        categoryNavNodes: categoryNavNodes.value,
-        activePath: activePath.value,
-        showRightSidebar: true,
-    };
 });
 
 function bodyChildren(body) {
