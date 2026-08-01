@@ -28,7 +28,7 @@
         },
         {
             "id": "rf3-folding",
-            "label": "RF3 Folding",
+            "label": "RosettaFoldAA Folding",
             "position": {
                 "x": 470,
                 "y": 125

@@ -31,6 +31,7 @@ export default defineNuxtConfig({
                 "fuse.js",
                 "gsap",
                 "vue-easy-lightbox",
+                "@vue-flow/core",
             ],
         },
         plugins: [tailwindcss()],
@@ -71,6 +72,20 @@ export default defineNuxtConfig({
         build: {
             transformers: ["~~/app/utils/transformer"],
             markdown: {
+                highlight: {
+                    langs: [
+                        "python",
+                        "json",
+                        "javascript",
+                        "css",
+                        "markdown",
+                        "yaml",
+                    ],
+                    theme: {
+                        default: "github-light",
+                        dark: "github-dark",
+                    },
+                },
                 toc: {
                     depth: 3,
                 },

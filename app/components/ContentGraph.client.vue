@@ -820,10 +820,11 @@ async function toggleFullscreen() {
                 :min-zoom="0.05"
                 :max-zoom="4"
                 pan-on-drag
-                zoom-on-scroll
+                :zoom-on-scroll="false"
                 zoom-on-pinch
                 zoom-on-double-click
-                prevent-scrolling
+                zoom-activation-key-code="Control"
+                :prevent-scrolling="false"
                 @init="setFlowInstance"
                 @nodes-initialized="resizeSubgraphsToContent"
                 @viewport-change="updateViewport"

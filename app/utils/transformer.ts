@@ -45,7 +45,15 @@ export default defineTransformer({
     async parse(file, options = {}) {
         const parsed = await parseMarkdown(
             transformReferenceMarkdown(file.body),
-            options,
+            {
+                ...options,
+                remark: {
+                    plugins: options.remarkPlugins,
+                },
+                rehype: {
+                    plugins: options.rehypePlugins,
+                },
+            },
             {
                 fileOptions: file,
             },

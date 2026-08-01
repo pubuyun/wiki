@@ -28,7 +28,7 @@
         },
         {
             "id": "rf3-cofolding",
-            "label": "RF3 Co-folding",
+            "label": "RosettaFoldAA Co-folding",
             "position": {
                 "x": 530,
                 "y": 100
