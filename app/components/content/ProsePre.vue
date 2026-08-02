@@ -4,6 +4,11 @@
         :graph="parsedGraph.value"
         :class="$props.class"
     />
+    <CodeGroupCodeDictionary
+        v-else-if="isDictLanguage"
+        :source="props.code"
+        :class="$props.class"
+    />
     <div
         v-else-if="isGraphLanguage"
         :class="[
@@ -60,6 +65,8 @@ const isGraphLanguage = computed(() =>
         props.language?.toLowerCase() ?? "",
     ),
 );
+
+const isDictLanguage = computed(() => props.language?.toLowerCase() === "dict");
 
 const parsedGraph = computed(() => {
     if (!isGraphLanguage.value) return { value: null };

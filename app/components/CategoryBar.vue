@@ -80,112 +80,123 @@
 
         <div
             v-if="contentRendered"
-            :id="contentId"
-            ref="contentScroll"
-            class="category-sidebar-scroll mt-28 max-h-full min-h-0 w-full flex-1 overflow-y-auto px-3 pb-4 xl:mt-36"
+            class="relative mt-28 min-h-0 w-full flex-1 xl:mt-36"
             :class="contentClass"
-            :aria-hidden="!contentVisible"
-            @scroll="updateScrollGradients"
         >
-            <AccordionRoot
-                v-model="expandedItems"
-                type="multiple"
-                class="category-sidebar-scroll-content w-full"
+            <div
+                v-if="contentVisible && canScrollUp"
+                class="pointer-events-none absolute top-0 z-10 h-8 w-full bg-linear-to-b from-surface-elevated to-transparent"
+            />
+            <div
+                :id="contentId"
+                ref="contentScroll"
+                class="category-sidebar-scroll h-full max-h-full w-full overflow-y-auto px-3 pb-4"
+                :aria-hidden="!contentVisible"
+                @scroll="updateScrollGradients"
             >
-                <ul class="space-y-1">
-                    <li v-for="node in nodes" :key="node.id">
-                        <AccordionItem
-                            v-if="node.children?.length"
-                            :value="node.id"
-                            class="overflow-hidden text-on-surface"
-                        >
-                            <AccordionHeader class="flex h-min gap-0">
-                                <div :class="folderClass(node)">
-                                    <NuxtLink
-                                        v-if="node.path"
-                                        :to="node.path"
-                                        :class="folderTextClass(node)"
-                                    >
-                                        {{ node.label }}
-                                    </NuxtLink>
-                                    <span v-else :class="folderTextClass(node)">
-                                        {{ node.label }}
-                                    </span>
-                                    <AccordionTrigger
-                                        :class="folderToggleClass(node)"
-                                        :aria-label="`Expand or collapse ${node.label}`"
-                                    >
-                                        <span
-                                            class="transition-transform duration-300 group-data-[state=open]:rotate-90"
-                                            aria-hidden="true"
-                                        >
-                                            &#9656;
-                                        </span>
-                                    </AccordionTrigger>
-                                </div>
-                            </AccordionHeader>
-                            <AccordionContent
-                                class="category-sidebar-accordion-content overflow-hidden data-[state=closed]:animate-[category-sidebar-slide-up_200ms_ease-in] data-[state=open]:animate-[category-sidebar-slide-down_200ms_ease-out]"
+                <AccordionRoot
+                    v-model="expandedItems"
+                    type="multiple"
+                    class="category-sidebar-scroll-content w-full"
+                >
+                    <ul class="space-y-1">
+                        <li v-for="node in nodes" :key="node.id">
+                            <AccordionItem
+                                v-if="node.children?.length"
+                                :value="node.id"
+                                class="overflow-hidden text-on-surface"
                             >
-                                <div class="relative ml-4 pl-2">
-                                    <div
-                                        class="pointer-events-none absolute top-0 bottom-0 left-0 w-0.5 rounded-full bg-white/25"
-                                        aria-hidden="true"
-                                    />
-                                    <div
-                                        v-if="activeChildIndex(node) >= 0"
-                                        class="pointer-events-none absolute left-0 h-9 w-0.5 rounded-full bg-primary transition-transform duration-200 ease-out xl:h-10"
-                                        :style="activeChildIndicatorStyle(node)"
-                                        aria-hidden="true"
-                                    />
-                                    <ul
-                                        class="space-y-[var(--category-sidebar-child-item-gap)]"
-                                    >
-                                        <li
-                                            v-for="child in node.children"
-                                            :key="child.id"
-                                            class="relative"
+                                <AccordionHeader class="flex h-min gap-0">
+                                    <div :class="folderClass(node)">
+                                        <NuxtLink
+                                            v-if="node.path"
+                                            :to="node.path"
+                                            :class="folderTextClass(node)"
                                         >
-                                            <NuxtLink
-                                                v-if="child.path"
-                                                :to="child.path"
-                                                :class="linkClass(1)"
+                                            {{ node.label }}
+                                        </NuxtLink>
+                                        <span
+                                            v-else
+                                            :class="folderTextClass(node)"
+                                        >
+                                            {{ node.label }}
+                                        </span>
+                                        <AccordionTrigger
+                                            :class="folderToggleClass(node)"
+                                            :aria-label="`Expand or collapse ${node.label}`"
+                                        >
+                                            <span
+                                                class="transition-transform duration-300 group-data-[state=open]:rotate-90"
+                                                aria-hidden="true"
                                             >
-                                                <span
-                                                    :class="
-                                                        linkTextClass(child, 1)
-                                                    "
+                                                &#9656;
+                                            </span>
+                                        </AccordionTrigger>
+                                    </div>
+                                </AccordionHeader>
+                                <AccordionContent
+                                    class="category-sidebar-accordion-content overflow-hidden data-[state=closed]:animate-[category-sidebar-slide-up_200ms_ease-in] data-[state=open]:animate-[category-sidebar-slide-down_200ms_ease-out]"
+                                >
+                                    <div class="relative ml-4 pl-2">
+                                        <div
+                                            class="pointer-events-none absolute top-0 bottom-0 left-0 w-0.5 rounded-full bg-white/25"
+                                            aria-hidden="true"
+                                        />
+                                        <div
+                                            v-if="activeChildIndex(node) >= 0"
+                                            class="pointer-events-none absolute left-0 h-9 w-0.5 rounded-full bg-primary transition-transform duration-200 ease-out xl:h-10"
+                                            :style="
+                                                activeChildIndicatorStyle(node)
+                                            "
+                                            aria-hidden="true"
+                                        />
+                                        <ul
+                                            class="space-y-[var(--category-sidebar-child-item-gap)]"
+                                        >
+                                            <li
+                                                v-for="child in node.children"
+                                                :key="child.id"
+                                                class="relative"
+                                            >
+                                                <NuxtLink
+                                                    v-if="child.path"
+                                                    :to="child.path"
+                                                    :class="linkClass(1)"
                                                 >
-                                                    {{ child.label }}
-                                                </span>
-                                            </NuxtLink>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </AccordionContent>
-                        </AccordionItem>
-                        <NuxtLink
-                            v-else-if="node.path"
-                            :to="node.path"
-                            :class="linkClass(0)"
-                        >
-                            <span :class="linkTextClass(node, 0)">
-                                {{ node.label }}
-                            </span>
-                        </NuxtLink>
-                    </li>
-                </ul>
-            </AccordionRoot>
+                                                    <span
+                                                        :class="
+                                                            linkTextClass(
+                                                                child,
+                                                                1,
+                                                            )
+                                                        "
+                                                    >
+                                                        {{ child.label }}
+                                                    </span>
+                                                </NuxtLink>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </AccordionContent>
+                            </AccordionItem>
+                            <NuxtLink
+                                v-else-if="node.path"
+                                :to="node.path"
+                                :class="linkClass(0)"
+                            >
+                                <span :class="linkTextClass(node, 0)">
+                                    {{ node.label }}
+                                </span>
+                            </NuxtLink>
+                        </li>
+                    </ul>
+                </AccordionRoot>
+            </div>
+            <div
+                v-if="contentVisible && canScrollDown"
+                class="pointer-events-none absolute bottom-0 z-10 h-8 w-full bg-linear-to-t from-surface-elevated to-transparent"
+            />
         </div>
-
-        <div
-            v-if="contentVisible && canScrollUp"
-            class="pointer-events-none absolute top-[5.75rem] z-10 h-8 w-full bg-linear-to-b from-surface-bright to-transparent xl:top-[6.5rem]"
-        />
-        <div
-            v-if="contentVisible && canScrollDown"
-            class="pointer-events-none absolute bottom-0 z-10 h-8 w-full bg-linear-to-t from-surface-bright to-transparent"
-        />
     </nav>
 </template>
 

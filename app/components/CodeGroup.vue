@@ -30,8 +30,11 @@ const slots = defineSlots<{
 }>();
 const selected = ref(props.defaultValue);
 const expanded = reactive<Record<string, boolean>>({});
+const expandable = reactive<Record<string, boolean>>({});
 const scrolling = reactive<Record<string, boolean>>({});
 const scrollEndTimers = new Map<string, ReturnType<typeof setTimeout>>();
+const paneElements = new Map<string, HTMLElement>();
+let paneResizeObserver: ResizeObserver | undefined;
 const groupId = `code-group-${useId().replace(/:/g, "")}`;
 
 function flattenVNodes(value: unknown): VNode[] {
@@ -44,8 +47,11 @@ function flattenVNodes(value: unknown): VNode[] {
 const items = computed(() =>
     flattenVNodes(slots.default?.()).map((vnode, index) => {
         const language = String(vnode.props?.language ?? "").toLowerCase();
+        const isGraph = ["graph", "vueflow", "vue-flow"].includes(language);
+        const isDictionary = language === "dict";
         return {
-            isGraph: ["graph", "vueflow", "vue-flow"].includes(language),
+            isGraph,
+            isVisual: isGraph || isDictionary,
             label:
                 String(
                     vnode.props?.filename ?? vnode.props?.language ?? "",
@@ -77,6 +83,10 @@ function isExpanded(value: string) {
     return expanded[value] ?? false;
 }
 
+function canExpand(value: string) {
+    return expandable[value] ?? false;
+}
+
 function isScrolling(value: string) {
     return scrolling[value] ?? false;
 }
@@ -103,15 +113,53 @@ function showScrollbar(value: string) {
 }
 
 function toggleExpanded(value: string) {
+    if (!canExpand(value)) return;
     hideScrollbar(value);
     expanded[value] = !isExpanded(value);
+}
+
+function collapsedPaneHeight() {
+    return flowchartHeight.value ?? Math.max(120, props.collapsedHeight);
+}
+
+function updateExpandability(value: string) {
+    const pane = paneElements.get(value);
+    const item = items.value.find((candidate) => candidate.value === value);
+    if (!pane || !item || item.isVisual) return;
+
+    const shouldExpand = pane.scrollHeight > collapsedPaneHeight() * 1.5;
+    expandable[value] = shouldExpand;
+    if (!shouldExpand) {
+        expanded[value] = false;
+        hideScrollbar(value);
+    }
+}
+
+function setPaneElement(value: string, element: unknown) {
+    const previous = paneElements.get(value);
+    if (previous) paneResizeObserver?.unobserve(previous);
+
+    if (!(element instanceof HTMLElement)) {
+        paneElements.delete(value);
+        return;
+    }
+
+    paneElements.set(value, element);
+    paneResizeObserver?.observe(element);
+    nextTick(() => updateExpandability(value));
 }
 
 function scrollCollapsedPane(
     event: WheelEvent,
     item: (typeof items.value)[number],
 ) {
-    if (item.isGraph || isExpanded(item.value) || !event.ctrlKey) return;
+    if (
+        item.isVisual ||
+        !canExpand(item.value) ||
+        isExpanded(item.value) ||
+        !event.ctrlKey
+    )
+        return;
 
     const pane = event.currentTarget;
     if (!(pane instanceof HTMLElement)) return;
@@ -128,13 +176,25 @@ function scrollCollapsedPane(
 }
 
 function paneStyle(item: (typeof items.value)[number]) {
-    if (item.isGraph || isExpanded(item.value)) return undefined;
+    if (item.isVisual || !canExpand(item.value) || isExpanded(item.value))
+        return undefined;
     return {
-        height: `${flowchartHeight.value ?? Math.max(120, props.collapsedHeight)}px`,
+        height: `${collapsedPaneHeight()}px`,
     };
 }
 
 onMounted(() => {
+    paneResizeObserver = new ResizeObserver((entries) => {
+        for (const entry of entries) {
+            const value = entry.target.getAttribute("data-code-group-pane");
+            if (value !== null) updateExpandability(value);
+        }
+    });
+    paneElements.forEach((element) => paneResizeObserver?.observe(element));
+    nextTick(() =>
+        paneElements.forEach((_, value) => updateExpandability(value)),
+    );
+
     if (!props.sync) return;
 
     const key = `content-code-group-${props.sync}`;
@@ -147,6 +207,7 @@ onMounted(() => {
 });
 
 onBeforeUnmount(() => {
+    paneResizeObserver?.disconnect();
     scrollEndTimers.forEach((timer) => clearTimeout(timer));
 });
 </script>
@@ -177,30 +238,44 @@ onBeforeUnmount(() => {
             :value="item.value"
             class="min-w-0 outline-none"
             :class="{
-                'flex flex-col': !item.isGraph && !isExpanded(item.value),
+                'flex flex-col':
+                    !item.isVisual &&
+                    canExpand(item.value) &&
+                    !isExpanded(item.value),
             }"
             :style="paneStyle(item)"
             :force-mount="true"
             :hidden="selected !== item.value"
         >
             <div
+                :ref="(element) => setPaneElement(item.value, element)"
                 :id="`${groupId}-${item.value}`"
+                :data-code-group-pane="item.value"
                 class="relative min-w-0 [&>figure]:my-0 [&>figure]:border-0 [&>pre]:my-0 [&>pre]:rounded-none [&>pre]:shadow-none"
                 :class="{
-                    'min-h-0 flex-1': !item.isGraph && !isExpanded(item.value),
+                    'min-h-0 flex-1':
+                        !item.isVisual &&
+                        canExpand(item.value) &&
+                        !isExpanded(item.value),
                     'overflow-y-scroll':
-                        !item.isGraph &&
+                        !item.isVisual &&
+                        canExpand(item.value) &&
                         !isExpanded(item.value) &&
                         isScrolling(item.value),
                     'overflow-hidden':
-                        !item.isGraph &&
+                        !item.isVisual &&
+                        canExpand(item.value) &&
                         !isExpanded(item.value) &&
                         !isScrolling(item.value),
                 }"
                 @wheel="scrollCollapsedPane($event, item)"
             >
                 <span
-                    v-if="!item.isGraph && !isExpanded(item.value)"
+                    v-if="
+                        !item.isVisual &&
+                        canExpand(item.value) &&
+                        !isExpanded(item.value)
+                    "
                     class="pointer-events-none absolute top-2 right-3 z-10 text-xs text-gray-400 select-none dark:text-gray-500"
                     aria-hidden="true"
                 >
@@ -210,7 +285,7 @@ onBeforeUnmount(() => {
             </div>
 
             <button
-                v-if="!item.isGraph"
+                v-if="!item.isVisual && canExpand(item.value)"
                 type="button"
                 class="group flex w-full cursor-pointer items-center justify-center gap-2 border-t-2 border-outline bg-surface px-4 py-2.5 font-belanosima text-sm text-on-surface transition-colors hover:bg-surface-bright focus-visible:ring-2 focus-visible:ring-outline focus-visible:outline-none focus-visible:ring-inset"
                 :aria-controls="`${groupId}-${item.value}`"

@@ -6,19 +6,42 @@ order: 210
 
 ## Binder Performance
 
-::charts-model-precursor-binder-binders-heat-map{binders="rosetta"}
+:charts-model-precursor-binder-binders-heat-map{binders="rosetta"}
+
+## Ligand Binder Input
+
+::code-group
+---
+default-value: "0"
+label: Ligand binder input
+sync: rfdiffusion-ligand-input
+---
+```dict [Summary]
+{"Ligand": "Cys-Gly-3M3SH", "Length": "40 to 210 aa", "Buried": "all"}
+```
+
+```JSON [Configuration]
+{
+  "Cys-Gly-3M3SH": {
+    "input": "./lcg3m3sh.pdb",
+    "ligand": "LIG",             // Residue name
+    "length": "40-210",         // Length range of the generated protein binder
+    "select_buried": {
+      "LIG": "C0,C1,C2,C3,C4,C5,C6,C7,C8,C9,C10,C11,O0,O1,O2,O3,N0,N1,S0"        // Bury all ligand atoms
+    }
+  }
+}
+```
 ::
 
 ## Batch LigandMPNN
 
 ::code-group
 ---
-
 default-value: "0"
 label: LigandMPNN batch workflow
 sync: rfdiffusion-ligandmpnn
 ---
-
 ```graph [Workflow]
 {
   "nodes": [
@@ -131,19 +154,16 @@ def main():
 if __name__ == "__main__":
     main()
 ```
-
 ::
 
 ## Rank and Package Top RF3 Candidates
 
 ::code-group
 ---
-
 default-value: "0"
 label: Top RF3 candidate workflow
 sync: rfdiffusion-top-n
 ---
-
 ```graph [Workflow]
 {
   "nodes": [
@@ -447,19 +467,16 @@ def main():
 if __name__ == "__main__":
     main()
 ```
-
 ::
 
 ## Batch RF3 Input Preparation
 
 ::code-group
 ---
-
 default-value: "0"
 label: RF3 batch input workflow
 sync: rfdiffusion-rf3-batch-input
 ---
-
 ```graph [Workflow]
 {
   "nodes": [
@@ -572,5 +589,4 @@ def main():
 if __name__ == "__main__":
     main()
 ```
-
 ::
