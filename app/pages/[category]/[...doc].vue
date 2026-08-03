@@ -149,9 +149,7 @@ function bodyWithChildren(body, children) {
             {{ pageTitle(page) }}
         </h1>
 
-        <ClientOnly>
-            <ContentGraph v-if="graphSrc" :src="graphSrc" />
-        </ClientOnly>
+        <ContentGraph v-if="graphSrc" :src="graphSrc" />
 
         <ClientOnly>
             <MobileContentBar
