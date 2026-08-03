@@ -112,10 +112,28 @@ function showScrollbar(value: string) {
     );
 }
 
-function toggleExpanded(value: string) {
+function toggleExpanded(value: string, event: MouseEvent) {
     if (!canExpand(value)) return;
+
+    const trigger =
+        event.currentTarget instanceof HTMLElement
+            ? event.currentTarget
+            : undefined;
+    const triggerTop = trigger?.getBoundingClientRect().top;
+    const collapsing = isExpanded(value);
+
     hideScrollbar(value);
-    expanded[value] = !isExpanded(value);
+    expanded[value] = !collapsing;
+
+    if (!collapsing || !trigger || triggerTop === undefined) return;
+
+    nextTick(() => {
+        requestAnimationFrame(() => {
+            if (!trigger.isConnected || isExpanded(value)) return;
+            const offset = trigger.getBoundingClientRect().top - triggerTop;
+            if (Math.abs(offset) > 0.5) window.scrollBy(0, offset);
+        });
+    });
 }
 
 function collapsedPaneHeight() {
@@ -290,7 +308,7 @@ onBeforeUnmount(() => {
                 class="group flex w-full cursor-pointer items-center justify-center gap-2 border-t-2 border-outline bg-surface px-4 py-2.5 font-belanosima text-sm text-on-surface transition-colors hover:bg-surface-bright focus-visible:ring-2 focus-visible:ring-outline focus-visible:outline-none focus-visible:ring-inset"
                 :aria-controls="`${groupId}-${item.value}`"
                 :aria-expanded="isExpanded(item.value)"
-                @click="toggleExpanded(item.value)"
+                @click="toggleExpanded(item.value, $event)"
             >
                 <span>
                     {{

@@ -7,11 +7,17 @@ order: 100
 
 ### Philosophy
 
-*Markdown* is intended to be as easy-to-read and easy-to-write as is feasible. :reference{#1}
+*Markdown* is intended to be as easy-to-read and easy-to-write as is feasible. :fn-ref{#1}
 
-Readability, *however*, is emphasized above all else. A Markdown-formatted--- Unknown node: hardBreak ---document should be publishable as-is, as plain text, without looking--- Unknown node: hardBreak ---like it's been marked up with tags or formatting instructions. While--- Unknown node: hardBreak ---Markdown's syntax has been influenced by several existing text-to-HTML--- Unknown node: hardBreak ---filters -- including [Setext](http://docutils.sourceforge.net/mirror/setext.html), [atx](http://www.aaronsw.com/2002/atx/), [Textile](http://textism.com/tools/textile/), [reStructuredText](http://docutils.sourceforge.net/rst.html),--- Unknown node: hardBreak ---[Grutatext](http://www.triptico.com/software/grutatxt.html), and [EtText](http://ettext.taint.org/doc/) -- the single biggest source of--- Unknown node: hardBreak ---inspiration for Markdown's syntax is the format of plain text email. :reference{#2}
+Readability, *however*, is emphasized above all else. A Markdown-formatted--- Unknown node: hardBreak ---document should be publishable as-is, as plain text, without looking--- Unknown node: hardBreak ---like it's been marked up with tags or formatting instructions. While--- Unknown node: hardBreak ---Markdown's syntax has been influenced by several existing text-to-HTML--- Unknown node: hardBreak ---filters -- including [Setext](http://docutils.sourceforge.net/mirror/setext.html), [atx](http://www.aaronsw.com/2002/atx/), [Textile](http://textism.com/tools/textile/), [reStructuredText](http://docutils.sourceforge.net/rst.html),--- Unknown node: hardBreak ---[Grutatext](http://www.triptico.com/software/grutatxt.html), and [EtText](http://ettext.taint.org/doc/) -- the single biggest source of--- Unknown node: hardBreak ---inspiration for Markdown's syntax is the format of plain text email. :fn-ref{#2}
 
 This line is added by *NuxtStudio*
+
+Title reference test: ^[Title Reference Target]
+
+### Title Reference Target
+
+This heading is the destination of the title reference above.
 
 ![](https://static.igem.wiki/teams/6133/wiki/project/description/banner.avif)
 
@@ -35,7 +41,7 @@ This line is added by *NuxtStudio*
 >
 > > This is nested blockquote.
 >
-> Back to the first level. :reference{#3}
+> Back to the first level. :fn-ref{#3}
 
 ### Paragraphs and Line Breaks
 
@@ -94,7 +100,7 @@ and code blocks:
 
 ### Lists
 
-Markdown supports ordered (numbered) and unordered (bulleted) lists. :reference{#4}
+Markdown supports ordered (numbered) and unordered (bulleted) lists. :fn-ref{#4}
 
 Unordered lists use asterisks, pluses, and hyphens -- interchangably
 \-- as list markers:
@@ -181,7 +187,7 @@ lazy:
   sit amet, consectetuer adipiscing elit.
 - Another item in the same list.
 
-To put a blockquote within a list item, the blockquote's `>`--- Unknown node: hardBreak ---delimiters need to be indented: :reference{#5}
+To put a blockquote within a list item, the blockquote's `>`--- Unknown node: hardBreak ---delimiters need to be indented: :fn-ref{#5}
 
 - A list item with a blockquote:
   > This is a blockquote

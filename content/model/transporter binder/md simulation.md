@@ -4,6 +4,74 @@ description: Membrane simulation, structural analysis, and binding-energy evalua
 order: 330
 ---
 
+## Membrane System Preparation
+
+::code-group
+---
+default-value: "0"
+label: CHARMM-GUI membrane system configuration
+sync: transporter-binder-membrane-system
+---
+```dict [Summary]
+{
+  "System Type": "MP",
+  "Input Structure": "rank_04_config_peptsh_if_13_model_0_b0_d1.pdb",
+  "Membrane": "POPG in both leaflets",
+  "Ions": "NaCl",
+  "Force Field and Engine": "CHARMM36m with GROMACS",
+  "Temperature": "310 K"
+}
+```
+
+```JSON [Configuration]
+{
+  "system_type": {
+    "system_type": "MP"
+  },
+  "system_info": {
+    "headless": true,
+    "path_out": "./gmx/rank04/"
+  },
+  "details": {
+    "path": "C:\\Users\\wzh_z\\Documents\\CharmmGuiAuto\\structures",
+    "file_name": "rank_04_config_peptsh_if_13_model_0_b0_d1.pdb",
+    "protonations": [
+      {
+        "chain": "PROA",
+        "res_i": "GLU",
+        "rid": "418",
+        "res_p": "GLUP"
+      },
+      {
+        "chain": "PROA",
+        "res_i": "GLU",
+        "rid": "33",
+        "res_p": "GLUP"
+      }
+    ],
+    "orientation": {
+      "option": "Principal"
+    },
+    "lengthXY": {
+      "option": "ratio",
+      "value": 90
+    },
+    "lipids": [
+      {
+        "lipid": "popg",
+        "upper": 1,
+        "lower": 1
+      }
+    ],
+    "ions": "NaCl",
+    "ff": "c36m",
+    "engine": "gmx",
+    "temp": 310
+  }
+}
+```
+::
+
 ## Molecular Dynamics
 
 ::code-group{defaultValue="0" sync="transporter-binder-md-workflow" label="Workflow and source code"}

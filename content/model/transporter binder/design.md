@@ -4,6 +4,48 @@ description: Configuration, RFdiffusion generation, redesign, folding, and ranki
 order: 320
 ---
 
+## RFdiffusion generation
+
+::code-group
+---
+default-value: "0"
+label: PeptSH interface design
+sync: peptsh-interface-design
+---
+```dict [Summary]
+{
+  "Input": "./6EXS.pdb",
+  "Binder Length": "80–120 residues",
+  "Target Segments": "A45–72, A168–199, A313–347, A392–409",
+  "Hotspots": "A63, A64, A182, A184, A323, A337, A340, A401",
+  "Orientation Strategy": "Hotspots",
+  "Loop Geometry": "Non-loopy"
+}
+```
+
+```JSON [Configuration]
+{
+  "peptsh_if": {
+    "dialect": 2,
+    "infer_ori_strategy": "hotspots",
+    "input": "./6EXS.pdb",
+    "contig": "80-120,/0,A45-72,A168-199,A313-347,A392-409",
+    "select_hotspots": {
+      "A63": "CG,OD1,OD2",
+      "A64": "CE,NZ",
+      "A182": "CG,OD1,OD2",
+      "A184": "CZ,NH1,NH2",
+      "A323": "CD,OE1,OE2",
+      "A337": "CZ,NH1,NH2",
+      "A340": "CD,OE1,OE2",
+      "A401": "CD,OE1,NE2"
+    },
+    "is_non_loopy": true
+  }
+}
+```
+::
+
 ## Interface redesign
 
 ::code-group{defaultValue="0" sync="mpnn-interface-redesign" label="Workflow and source code"}
@@ -305,7 +347,6 @@ VALID_SEQUENCE = re.compile(r"^[ACDEFGHIKLMNPQRSTVWYX]+$")
 
 
 def read_fasta(path: Path):
-
     records = []
     header = None
     sequence_parts = []
@@ -344,25 +385,17 @@ def read_fasta(path: Path):
 
 
 def get_design_name(header: str):
-
-
-
-
-
     return header.split(",", maxsplit=1)[0].strip().replace(" ", "_")
 
 
 def load_structure(path: Path):
-
     try:
         return strucio.load_structure(str(path), model=1)
     except TypeError:
-
         return strucio.load_structure(str(path))
 
 
 def get_protein_chain_ids(structure_path: Path):
-
     atoms = load_structure(structure_path)
     protein_atoms = atoms[struc.filter_amino_acids(atoms)]
 
@@ -383,7 +416,6 @@ def get_protein_chain_ids(structure_path: Path):
 
 
 def get_chain_length(structure_path: Path, chain_id: str):
-
     atoms = load_structure(structure_path)
     protein_atoms = atoms[struc.filter_amino_acids(atoms)]
     chain_atoms = protein_atoms[
@@ -405,7 +437,6 @@ def get_chain_length(structure_path: Path, chain_id: str):
 
 
 def select_unused_chain_id(reference_chain_ids):
-
     candidates = list(
         "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
         "abcdefghijklmnopqrstuvwxyz"
@@ -422,7 +453,6 @@ def select_unused_chain_id(reference_chain_ids):
 
 
 def find_design_structure(fasta_path: Path, design_name: str):
-
     candidates = [
         fasta_path.parent / f"{design_name}.cif",
         fasta_path.parent / f"{design_name}.cif.gz",
@@ -443,12 +473,6 @@ def extract_binder_sequence(
     design_structure: Path,
     original_binder_chain: str,
 ):
-
-
-
-
-
-
     binder_length = get_chain_length(
         design_structure,
         original_binder_chain,
@@ -472,7 +496,6 @@ def build_rf3_inputs(
     original_binder_chain: str,
     rf3_binder_chain: str | None,
 ):
-
     reference_chain_ids = get_protein_chain_ids(reference_pdb)
 
     if rf3_binder_chain is None:
@@ -1404,11 +1427,6 @@ def score_candidates(
 
 
 def select_best_sample_per_prediction(candidates):
-
-
-
-
-
     best_by_prediction = {}
 
     for candidate in candidates:
@@ -1549,9 +1567,6 @@ def write_ranking_csv(path: Path, candidates):
 
 
 def copy_selected_cif_files(candidates, destination: Path):
-
-
-
     destination.mkdir(parents=True, exist_ok=True)
 
     for candidate in candidates:

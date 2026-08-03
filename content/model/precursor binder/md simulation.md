@@ -4,6 +4,163 @@ description: Molecular dynamics and binding-energy analysis for precursor binder
 order: 230
 ---
 
+## Molecular Dynamics Parameters
+
+### Energy Minimization (`em.mdp`)
+
+::code-group
+---
+default-value: "0"
+label: Energy minimization parameters
+sync: md-energy-minimization
+---
+```dict [Summary]
+{"Algorithm": "Steepest descent", "Convergence Threshold": "1,000 kJ mol⁻¹ nm⁻¹", "Maximum Steps": 50000, "Electrostatics": "PME with a 1.0 nm cutoff"}
+```
+
+```ini [Configuration]
+integrator  = steep
+emtol       = 1000.0
+emstep      = 0.01
+nsteps      = 50000
+nstlist     = 10
+cutoff-scheme = Verlet
+ns_type     = grid
+coulombtype = PME
+rcoulomb    = 1.0
+rvdw        = 1.0
+pbc         = xyz
+```
+::
+
+### Ion Addition (`ions.mdp`)
+
+::code-group
+---
+default-value: "0"
+label: Ion-addition preprocessing parameters
+sync: md-ion-addition
+---
+```dict [Summary]
+{"Algorithm": "Steepest descent", "Convergence Threshold": "1,000 kJ mol⁻¹ nm⁻¹", "Maximum Steps": 50000, "Nonbonded Cutoffs": "1.0 nm"}
+```
+
+```ini [Configuration]
+integrator  = steep
+emtol       = 1000.0
+nsteps      = 50000
+cutoff-scheme = Verlet
+coulombtype = cutoff
+rcoulomb    = 1.0
+rvdw        = 1.0
+pbc         = xyz
+```
+::
+
+### NVT Equilibration (`nvt.mdp`)
+
+::code-group
+---
+default-value: "0"
+label: NVT equilibration parameters
+sync: md-nvt-equilibration
+---
+```dict [Summary]
+{"Ensemble": "NVT", "Duration": "500 ps", "Temperature": "307 K", "Thermostat": "V-rescale (τ = 0.1 ps)", "Time Step": "2 fs"}
+```
+
+```ini [Configuration]
+integrator              = md
+dt                      = 0.002
+nsteps                  = 250000    ; 500 ps
+nstxout-compressed      = 5000
+continuation            = no
+constraint_algorithm    = lincs
+constraints             = h-bonds
+cutoff-scheme           = Verlet
+coulombtype             = PME
+tcoupl                  = V-rescale
+tc-grps                 = System
+tau_t                   = 0.1
+ref_t                   = 307       ; Target temperature: 307 K
+pbc                     = xyz
+gen_vel                 = yes
+gen_temp                = 307       ; Initial velocity temperature: 307 K
+```
+::
+
+### NPT Equilibration (`npt.mdp`)
+
+::code-group
+---
+default-value: "0"
+label: NPT equilibration parameters
+sync: md-npt-equilibration
+---
+```dict [Summary]
+{"Ensemble": "NPT", "Duration": "500 ps", "Temperature": "307 K", "Pressure": "1.0 bar", "Coupling": "V-rescale thermostat; isotropic C-rescale barostat"}
+```
+
+```ini [Configuration]
+integrator              = md
+dt                      = 0.002
+nsteps                  = 250000    ; 500 ps
+nstxout-compressed      = 5000
+continuation            = yes
+constraint_algorithm    = lincs
+constraints             = h-bonds
+cutoff-scheme           = Verlet
+coulombtype             = PME
+tcoupl                  = V-rescale
+tc-grps                 = System
+tau_t                   = 0.1
+ref_t                   = 307       ; Target temperature: 307 K
+pcoupl                  = C-rescale
+pcoupltype              = isotropic
+tau_p                   = 2.0
+ref_p                   = 1.0
+compressibility         = 4.5e-5
+pbc                     = xyz
+gen_vel                 = no
+```
+::
+
+### Production MD (`md.mdp`)
+
+::code-group
+---
+default-value: "0"
+label: Production MD parameters
+sync: md-production
+---
+```dict [Summary]
+{"Ensemble": "NPT", "Duration": "50 ns", "Temperature": "307 K", "Pressure": "1.0 bar", "Trajectory Sampling": "Every 500 ps (100 frames)"}
+```
+
+```ini [Configuration]
+integrator              = md
+dt                      = 0.002
+nsteps                  = 25000000  ; 50 ns
+nstxout-compressed      = 250000    ; One frame every 500 ps; 100 frames in total
+continuation            = yes
+constraint_algorithm    = lincs
+constraints             = h-bonds
+cutoff-scheme           = Verlet
+coulombtype             = PME
+tcoupl                  = V-rescale
+tc-grps                 = System
+tau_t                   = 0.1
+ref_t                   = 307       ; Target temperature: 307 K
+pcoupl                  = C-rescale
+pcoupltype              = isotropic
+tau_p                   = 2.0
+ref_p                   = 1.0
+compressibility         = 4.5e-5
+pbc                     = xyz
+gen_vel                 = no
+```
+::
+
 ::code-group{defaultValue="0" sync="md-mmpbsa-workflow" label="Workflow and source code"}
 
 ```graph [Workflow]

@@ -12,10 +12,12 @@ order: 210
 
 ::code-group
 ---
+
 default-value: "0"
 label: Ligand binder input
 sync: rfdiffusion-ligand-input
 ---
+
 ```dict [Summary]
 {"Ligand": "Cys-Gly-3M3SH", "Length": "40 to 210 aa", "Buried": "all"}
 ```
@@ -32,16 +34,19 @@ sync: rfdiffusion-ligand-input
   }
 }
 ```
+
 ::
 
 ## Batch LigandMPNN
 
 ::code-group
 ---
+
 default-value: "0"
 label: LigandMPNN batch workflow
 sync: rfdiffusion-ligandmpnn
 ---
+
 ```graph [Workflow]
 {
   "nodes": [
@@ -154,16 +159,19 @@ def main():
 if __name__ == "__main__":
     main()
 ```
+
 ::
 
 ## Rank and Package Top RF3 Candidates
 
 ::code-group
 ---
+
 default-value: "0"
 label: Top RF3 candidate workflow
 sync: rfdiffusion-top-n
 ---
+
 ```graph [Workflow]
 {
   "nodes": [
@@ -171,7 +179,7 @@ sync: rfdiffusion-top-n
     {
       "id": "prepare",
       "type": "input",
-      "label": "Set RF3 paths and output filenames"
+      "label": "Prepare output filenames"
     },
     {
       "id": "next-design",
@@ -467,16 +475,19 @@ def main():
 if __name__ == "__main__":
     main()
 ```
+
 ::
 
 ## Batch RF3 Input Preparation
 
 ::code-group
 ---
+
 default-value: "0"
 label: RF3 batch input workflow
 sync: rfdiffusion-rf3-batch-input
 ---
+
 ```graph [Workflow]
 {
   "nodes": [
@@ -589,4 +600,5 @@ def main():
 if __name__ == "__main__":
     main()
 ```
+
 ::

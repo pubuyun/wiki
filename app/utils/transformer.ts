@@ -1,13 +1,35 @@
 import { defineTransformer } from "@nuxt/content";
 import { parseMarkdown } from "@nuxtjs/mdc/runtime";
+import { slug } from "github-slugger";
 import { fromHast } from "minimark/hast";
 
 export function transformReferenceMarkdown(markdown: string) {
-    return transformFootNotes(markdown).replace(
-        /(\S?)\^(\d+)(\s)/g,
-        (_match, previous, id, trailingSpace) =>
-            `${previous}${previous ? " " : ""}:reference{#${id}}${trailingSpace}`,
-    );
+    let headingReferenceIndex = 0;
+
+    return transformFootNotes(markdown)
+        .replace(
+            /(\S?)\^\[([^\]\r\n]+)\](?=$|[\s.,!?;:，。！？；：])/gm,
+            (match, previous: string, text: string) => {
+                const label = text.trim();
+                const headingId = createHeadingId(label);
+                if (!headingId) return match;
+
+                headingReferenceIndex += 1;
+                return `${previous}${previous ? " " : ""}:reference{#heading-ref-${headingReferenceIndex} destination=${JSON.stringify(`#${headingId}`)} label=${JSON.stringify(label)}}`;
+            },
+        )
+        .replace(
+            /(\S?)\^(\d+)(\s)/g,
+            (_match, previous, id, trailingSpace) =>
+                `${previous}${previous ? " " : ""}:fn-ref{#${id}}${trailingSpace}`,
+        );
+}
+
+function createHeadingId(text: string) {
+    return slug(text)
+        .replace(/-+/g, "-")
+        .replace(/^-|-$/g, "")
+        .replace(/^(\d)/, "_$1");
 }
 
 function transformFootNotes(markdown: string) {

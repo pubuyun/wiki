@@ -20,7 +20,9 @@ const props = defineProps<{
 
 const figureElement = ref<HTMLElement | null>(null);
 const flowInstance = shallowRef<VueFlowStore | null>(null);
-const viewportZoom = ref(1);
+const initialZoom = 0.38;
+const viewportPadding = 24;
+const viewportZoom = ref(initialZoom);
 const isFullscreen = ref(false);
 const nodeTypes = {
     flowchart: markRaw(FlowchartNode),
@@ -51,8 +53,7 @@ const canvasHeight = computed(() => {
 watch(
     layout,
     async () => {
-        await nextTick();
-        await flowInstance.value?.fitView({ padding: 0.12 });
+        await resetInitialViewport();
     },
     { flush: "post" },
 );
@@ -67,7 +68,39 @@ onBeforeUnmount(() => {
 
 function setFlowInstance(instance: VueFlowStore) {
     flowInstance.value = instance;
-    void nextTick(() => instance.fitView({ padding: 0.12 }));
+    void resetInitialViewport();
+}
+
+async function resetInitialViewport() {
+    await nextTick();
+    await waitForAnimationFrame();
+    await waitForAnimationFrame();
+    await setInitialViewport();
+}
+
+function waitForAnimationFrame() {
+    return new Promise<void>((resolve) => {
+        requestAnimationFrame(() => resolve());
+    });
+}
+
+async function setInitialViewport() {
+    const instance = flowInstance.value;
+    const currentLayout = layout.value;
+    if (!instance || !currentLayout?.nodes.length) return;
+
+    const left = Math.min(
+        ...currentLayout.nodes.map((node) => node.position.x),
+    );
+    const viewportHeight =
+        instance.vueFlowRef.value?.clientHeight ??
+        instance.dimensions.value.height;
+    viewportZoom.value = initialZoom;
+    await instance.setViewport({
+        x: viewportPadding - left * initialZoom,
+        y: (viewportHeight - currentLayout.height * initialZoom) / 2,
+        zoom: initialZoom,
+    });
 }
 
 function updateViewport(viewport: ViewportTransform) {
@@ -88,7 +121,7 @@ function fitView() {
 
 function updateFullscreenState() {
     isFullscreen.value = document.fullscreenElement === figureElement.value;
-    void nextTick(() => fitView());
+    void resetInitialViewport();
 }
 
 async function toggleFullscreen() {

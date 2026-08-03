@@ -20,6 +20,7 @@
         "@vue-flow/core": "^1.48.2",
         "echarts": "^6.1.0",
         "fuse.js": "^7.4.2",
+        "github-slugger": "2.0.0",
         "gsap": "^3.15.0",
         "nuxt-echarts": "1.0.1",
         "nuxt-studio": "1.6.1",

@@ -185,10 +185,10 @@ function parsePythonDictionary(source: string): Dictionary {
     <figure
         class="my-6 overflow-hidden rounded-lg border-2 border-outline bg-surface-elevated shadow-sm"
     >
-        <div v-if="parsed.value" class="divide-y-2 divide-outline">
+        <div v-if="parsed.value" class="divide-y-2 divide-outline/40">
             <dl
                 v-if="flatEntries.length"
-                class="m-0 divide-y-2 divide-outline bg-surface"
+                class="m-0 divide-y-2 divide-outline/40 bg-surface"
             >
                 <div
                     v-for="[key, value] in flatEntries"
@@ -212,11 +212,11 @@ function parsePythonDictionary(source: string): Dictionary {
                 class="bg-surface"
             >
                 <h3
-                    class="m-0 border-b-2 border-outline bg-secondary px-4 py-2 font-belanosima text-base text-on-secondary"
+                    class="m-0 border-b-2 border-outline/40 bg-secondary px-4 py-2 font-belanosima text-base text-on-secondary"
                 >
                     {{ heading }}
                 </h3>
-                <dl class="m-0 divide-y-2 divide-outline">
+                <dl class="m-0 divide-y-2 divide-outline/40">
                     <div
                         v-for="(value, key) in values"
                         :key="key"

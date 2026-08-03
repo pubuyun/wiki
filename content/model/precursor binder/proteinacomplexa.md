@@ -6,7 +6,66 @@ order: 220
 
 ## Binder Performance
 
+::code-group
+---
+
+default-value: "0"
+label: Cys-Gly-3M3SH ligand target
+sync: cys-gly-3m3sh-ligand-target
+---
+
+```dict [Summary]
+{"Length": "40–210 aa", "Target": "Cys-Gly-3M3SH", "SMILES": "CCCC(C)(CCO)SC[C@@H](C(=O)NCC(=O)O)N"}
+```
+
+```JSON [Configuration]
+{
+  "length": [40, 210], // Binder length range
+  "Target": "Cys-Gly-3M3SH",
+  "SMILES": "CCCC(C)(CCO)SC[C@@H](C(=O)NCC(=O)O)N" // Cys-Gly SMILES string
+}
+```
+
+::
+
 ::charts-model-precursor-binder-binders-heat-map{binders="proteina"}
+::
+
+## Binder Generation Configuration
+
+::code-group
+---
+
+default-value: "0"
+label: Binder generation configuration
+sync: binder-generation-configuration
+---
+
+```dict [Summary]
+{"Config":{"Batch Size": 16, "Samples per Start": 6, "Repeats per Sample": 1}, "Search": {"Algorithm": "beam-search", "Branches per Step": 4, "Beam Width": 4}}
+```
+
+```JSON [Configuration]
+{
+  "dataloader": {
+    "batch_size": 16, // Affects GPU memory usage
+    "dataset": {
+      "nsamples": 6, // Number of condition, length, or other variants sampled for each starting sample
+      "nrepeat_per_sample": 1
+    }
+  },
+  "search": {
+    "algorithm": "beam-search", // Options: single-pass, best-of-n, beam-search, fk-steering, mcts
+    // Algorithm-specific settings
+    "beam_search": {
+      "n_branch": 4, // Number of candidate branches generated from each retained beam at every expansion step
+      "beam_width": 4, // Number of best candidate paths retained after each step for further expansion
+      "keep_lookahead_samples": true
+    }
+  }
+}
+```
+
 ::
 
 ## PDB Collection
