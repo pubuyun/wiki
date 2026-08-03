@@ -151,12 +151,10 @@ function bodyWithChildren(body, children) {
 
         <ContentGraph v-if="graphSrc" :src="graphSrc" />
 
-        <ClientOnly>
-            <MobileContentBar
-                v-if="page.body?.toc?.links?.length"
-                :toc="page.body.toc.links"
-            />
-        </ClientOnly>
+        <MobileContentBar
+            v-if="page.body?.toc?.links?.length"
+            :toc="page.body.toc.links"
+        />
         <section
             v-for="section in sections"
             :key="section.id"
