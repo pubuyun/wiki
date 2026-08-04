@@ -102,6 +102,9 @@ defineExpose({ close, getTimeline, open, playLoop });
             class="pept-anim__layer pept-anim__middle"
             src="https://static.igem.wiki/teams/6133/wiki/homepage/peptshm.avif"
             alt=""
+            loading="lazy"
+            fetchpriority="low"
+            decoding="async"
             draggable="false"
         />
         <img
@@ -109,6 +112,9 @@ defineExpose({ close, getTimeline, open, playLoop });
             class="pept-anim__layer pept-anim__shell pept-anim__shell--left"
             src="https://static.igem.wiki/teams/6133/wiki/homepage/peptshl.avif"
             alt=""
+            loading="lazy"
+            fetchpriority="low"
+            decoding="async"
             draggable="false"
         />
         <img
@@ -116,6 +122,9 @@ defineExpose({ close, getTimeline, open, playLoop });
             class="pept-anim__layer pept-anim__shell pept-anim__shell--right"
             src="https://static.igem.wiki/teams/6133/wiki/homepage/peptshr.avif"
             alt=""
+            loading="lazy"
+            fetchpriority="low"
+            decoding="async"
             draggable="false"
         />
     </div>

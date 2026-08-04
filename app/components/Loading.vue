@@ -1,7 +1,7 @@
 <template>
-    <Transition name="fade">
+    <Transition name="fade" @after-leave="handleLoadingAfterLeave">
         <div
-            v-if="showLoading && isLoadingImageLoaded"
+            v-if="showLoading"
             class="fixed inset-0 z-9999 flex items-center justify-center bg-surface backdrop-blur-sm"
             role="status"
             aria-live="polite"
@@ -13,7 +13,16 @@
                     Loading...
                 </p>
 
-                <img :src="loadingImageUrl" class="h-96" />
+                <img
+                    ref="loadingImage"
+                    :src="loadingImageUrl"
+                    class="h-96"
+                    alt=""
+                    decoding="async"
+                    fetchpriority="high"
+                    @load="handleLoadingImageLoad"
+                    @error="handleLoadingImageError"
+                />
             </div>
             <span class="sr-only">Loading...</span>
         </div>
@@ -21,10 +30,20 @@
 </template>
 
 <script setup>
-const showLoading = ref(false);
+const MIN_INITIAL_ANIMATION_MS = 600;
+
+const showLoading = ref(true);
 const canShowRouteLoading = ref(false);
 const isLoadingImageLoaded = ref(false);
+const isLoadingImageSettled = ref(false);
+const isInitialLoading = ref(true);
+const isInitialPageReady = ref(false);
 const shouldSkipRouteLoading = ref(false);
+const loadingImage = ref(null);
+const isInitialLoadingComplete = useState(
+    "initial-loading-complete",
+    () => false,
+);
 
 const nuxtApp = useNuxtApp();
 const router = useRouter();
@@ -32,21 +51,64 @@ const router = useRouter();
 const loadingImageUrl =
     "https://static.igem.wiki/teams/6133/wiki/general/loading.webp";
 
-const preloadLoadingImage = () => {
-    const image = new Image();
+useHead({
+    link: [
+        {
+            rel: "preload",
+            as: "image",
+            href: loadingImageUrl,
+            fetchpriority: "high",
+        },
+    ],
+});
 
-    image.decoding = "async";
-    image.onload = () => {
-        isLoadingImageLoaded.value = true;
-    };
-    image.src = loadingImageUrl;
+let initialAnimationStartedAt = 0;
+let initialLoadingTimer;
+
+const finishInitialLoading = () => {
+    if (
+        !isInitialLoading.value ||
+        !isInitialPageReady.value ||
+        !isLoadingImageSettled.value
+    ) {
+        return;
+    }
+
+    const remainingTime = Math.max(
+        0,
+        MIN_INITIAL_ANIMATION_MS -
+            (performance.now() - initialAnimationStartedAt),
+    );
+
+    window.clearTimeout(initialLoadingTimer);
+    initialLoadingTimer = window.setTimeout(() => {
+        isInitialLoading.value = false;
+        showLoading.value = false;
+    }, remainingTime);
 };
 
-const runWhenIdle = (callback) => {
-    if ("requestIdleCallback" in window) {
-        window.requestIdleCallback(callback, { timeout: 3000 });
-    } else {
-        window.setTimeout(callback, 1000);
+const handleLoadingImageLoad = () => {
+    if (initialAnimationStartedAt === 0) {
+        initialAnimationStartedAt = performance.now();
+    }
+
+    isLoadingImageLoaded.value = true;
+    isLoadingImageSettled.value = true;
+    finishInitialLoading();
+};
+
+const handleLoadingImageError = () => {
+    if (initialAnimationStartedAt === 0) {
+        initialAnimationStartedAt = performance.now();
+    }
+
+    isLoadingImageSettled.value = true;
+    finishInitialLoading();
+};
+
+const handleLoadingAfterLeave = () => {
+    if (!isInitialLoading.value) {
+        isInitialLoadingComplete.value = true;
     }
 };
 
@@ -72,13 +134,30 @@ const isSameCategoryContentNavigation = (to, from) => {
 };
 
 onMounted(async () => {
+    if (initialAnimationStartedAt === 0) {
+        initialAnimationStartedAt = performance.now();
+    }
+
+    if (loadingImage.value?.complete) {
+        if (loadingImage.value.naturalWidth > 0) {
+            handleLoadingImageLoad();
+        } else {
+            handleLoadingImageError();
+        }
+    }
+
     await router.isReady();
 
     canShowRouteLoading.value = true;
 
     onNuxtReady(() => {
-        runWhenIdle(preloadLoadingImage);
+        isInitialPageReady.value = true;
+        finishInitialLoading();
     });
+});
+
+onBeforeUnmount(() => {
+    window.clearTimeout(initialLoadingTimer);
 });
 
 router.beforeEach((to, from) => {
@@ -97,6 +176,12 @@ nuxtApp.hook("page:loading:start", () => {
 });
 
 nuxtApp.hook("page:loading:end", () => {
+    if (isInitialLoading.value) {
+        isInitialPageReady.value = true;
+        finishInitialLoading();
+        return;
+    }
+
     showLoading.value = false;
 });
 </script>

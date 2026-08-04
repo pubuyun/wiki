@@ -415,6 +415,9 @@ onUnmounted(() => {
                 class="mechanism-scene__background"
                 src="https://static.igem.wiki/teams/6133/wiki/homepage/memscene2.avif"
                 alt="Cell membrane mechanism scene"
+                loading="lazy"
+                fetchpriority="low"
+                decoding="async"
                 draggable="false"
             />
 
@@ -442,6 +445,9 @@ onUnmounted(() => {
                         class="mechanism-scene__molecule-layer"
                         src="https://static.igem.wiki/teams/6133/wiki/homepage/precursorcys3m3sh.avif"
                         alt=""
+                        loading="lazy"
+                        fetchpriority="low"
+                        decoding="async"
                         draggable="false"
                     />
                     <img
@@ -449,6 +455,9 @@ onUnmounted(() => {
                         class="mechanism-scene__molecule-layer"
                         src="https://static.igem.wiki/teams/6133/wiki/homepage/precursorgly.avif"
                         alt=""
+                        loading="lazy"
+                        fetchpriority="low"
+                        decoding="async"
                         draggable="false"
                     />
                 </div>
@@ -457,6 +466,9 @@ onUnmounted(() => {
                     class="mechanism-scene__molecule-layer"
                     src="https://static.igem.wiki/teams/6133/wiki/homepage/3m3sh.avif"
                     alt=""
+                    loading="lazy"
+                    fetchpriority="low"
+                    decoding="async"
                     draggable="false"
                 />
             </div>
@@ -470,27 +482,32 @@ onUnmounted(() => {
         <div class="mechanism-scene__copy">
             <p ref="copyOne" class="mechanism-scene__copy-panel">
                 This precursor is transported into <em>S. hominis</em> cells by
-                PepTsh, a member of the
-                <strong
-                    >POT (Proton-dependent Oligopeptide Transporter)
-                    family</strong
-                >.
+                <strong class="text-[#8ed0ff]">PepT<sub>sh</sub></strong> , a
+                member of the
+                <strong>POT</strong>
+                (Proton-dependent Oligopeptide Transporter) family.
             </p>
             <p ref="copyTwo" class="mechanism-scene__copy-panel">
-                Inside the bacterium, <strong>PepV</strong> uses water to
-                hydrolyze the peptide bond in <strong>Cys-Gly-3M3SH</strong>,
-                producing <strong>Cys-3M3SH</strong> and
+                Inside the bacterium,
+                <strong class="text-[#ffc56e]">PepV</strong> uses water to
+                hydrolyze the peptide bond in
+                <strong class="text-[#8ed0ff]">Cys-Gly-3M3SH</strong>, producing
+                <strong class="text-[#ffc56e]">Cys-3M3SH</strong> and
                 <strong>glycine</strong>.
             </p>
             <p ref="copyThree" class="mechanism-scene__copy-panel">
-                Subsequently, the <strong>C–S lyase PatB</strong> converts
-                <strong>Cys-3M3SH</strong> into the pungent volatile thiol
-                <strong>3M3SH</strong>, with <strong>ammonia</strong> and
-                <strong>pyruvic acid</strong> as coproducts.
+                Subsequently, the
                 <strong
-                    >3M3SH is one of the primary compounds responsible for
-                    axillary body odor</strong
-                >.
+                    >C–S lyase <span class="text-[#ff91b8]">PatB</span></strong
+                >
+                converts
+                <strong class="text-[#ffc56e]">Cys-3M3SH</strong> into the
+                pungent volatile thiol
+                <strong class="text-[#ff91b8]">3M3SH</strong>, with
+                <strong class="text-[#8ed0ff]">ammonia</strong> and
+                <strong>pyruvic acid</strong> as coproducts.
+                <strong class="text-[#ff91b8]">3M3SH</strong> is one of the
+                primary compounds responsible for axillary body odor.
             </p>
         </div>
     </section>
@@ -518,7 +535,7 @@ onUnmounted(() => {
     z-index: 0;
     inset: 0 0 0 var(--artwork-right);
     content: "";
-    background: var(--color-surface);
+    background: #03316d;
 }
 
 .mechanism-scene__artwork {
@@ -630,7 +647,7 @@ onUnmounted(() => {
     margin: 0;
     font-size: clamp(1.1rem, 1.8vw, 1.75rem);
     line-height: 1.55;
-    color: var(--color-on-surface);
+    color: #f7fbff;
     overflow-wrap: break-word;
     white-space: normal;
     will-change: transform, opacity;
@@ -657,7 +674,7 @@ onUnmounted(() => {
         padding: 1rem;
         font-size: clamp(1rem, 4vw, 1.25rem);
         border-radius: 1rem;
-        background: color-mix(in srgb, var(--color-surface) 88%, transparent);
+        background: color-mix(in srgb, #03316d 92%, transparent);
     }
 }
 </style>

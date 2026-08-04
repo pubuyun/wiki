@@ -111,7 +111,11 @@ defineExpose({ getAnimationTargets });
                     :aria-label="`${compounds.water.name} molecular formula: H2O`"
                 >
                     <span class="molecule__simple-formula" aria-hidden="true"
-                        >H<sub>2</sub>O</span
+                        >H<sub>2</sub
+                        ><span
+                            class="molecule__simple-formula-element molecule__simple-formula-element--oxygen"
+                            >O</span
+                        ></span
                     >
                 </div>
                 <h2>{{ compounds.water.name }}</h2>
@@ -204,7 +208,7 @@ defineExpose({ getAnimationTargets });
 
             <article
                 data-pathway-reveal="pepV"
-                class="molecule molecule--main pathway__main"
+                class="molecule molecule--main molecule--cys3m3sh pathway__main"
             >
                 <div
                     class="molecule__structure"
@@ -276,7 +280,10 @@ defineExpose({ getAnimationTargets });
                         <span
                             class="molecule__simple-formula"
                             aria-hidden="true"
-                            >NH<sub>3</sub></span
+                            ><span
+                                class="molecule__simple-formula-element molecule__simple-formula-element--nitrogen"
+                                >N</span
+                            >H<sub>3</sub></span
                         >
                     </div>
                     <h2>{{ compounds.ammonia.name }}</h2>
@@ -410,6 +417,10 @@ defineExpose({ getAnimationTargets });
     color: #124c96;
 }
 
+.molecule--cys3m3sh h2 {
+    color: #f18d0c;
+}
+
 .molecule--product h2 {
     color: #ff3e89;
 }
@@ -453,7 +464,7 @@ defineExpose({ getAnimationTargets });
 
 .molecule__simple-formula {
     font-family: var(--font-belanosima);
-    font-size: clamp(2rem, 5.5svh, 2rem);
+    font-size: 1.8rem;
     font-weight: 500;
     line-height: 1;
     color: #000;
@@ -462,6 +473,14 @@ defineExpose({ getAnimationTargets });
 
 .molecule__simple-formula sub {
     font-size: 0.58em;
+}
+
+.molecule__simple-formula-element--oxygen {
+    color: #e74c3c;
+}
+
+.molecule__simple-formula-element--nitrogen {
+    color: #3498db;
 }
 
 .reaction-arrow {
