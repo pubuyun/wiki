@@ -1,55 +1,72 @@
 <script setup lang="ts">
-import { Molecule } from "openchemlib";
-import { ref } from "vue";
+import SmilesDrawer from "smiles-drawer";
+import { onMounted, ref } from "vue";
 
-const DEPICTOR_OPTIONS = {
-    autoCrop: true,
-    suppressChiralText: true,
-    suppressCIPParity: true,
-    suppressESR: true,
-    noColorOnESRAndCIP: true,
-    noStereoProblem: true,
+const DRAWER_OPTIONS = {
+    width: 640,
+    height: 300,
+    bondThickness: 2.4,
+    bondLength: 48,
+    fontSizeLarge: 22,
+    fontSizeSmall: 8,
+    padding: 16,
+    // Draw carboxyl groups as C=O / C-O instead of compact labels such as COOH.
+    compactDrawing: false,
+    // Preserve stereochemistry without printing the alpha-carbon H explicitly.
+    explicitHydrogens: false,
+    isomeric: true,
 } as const;
 
 const definitions = {
     precursor: {
         name: "Cys-Gly-3M3SH",
-        smiles: "[C@@](C)(CCO)(CCC)SC[C@H](N)C(=O)NCC(=O)O",
+        smiles: "CCC[C@@](C)(CCO)SC[C@H](N)C(=O)NCC(=O)O",
     },
     water: { name: "Water", smiles: "O" },
     cys3m3sh: {
         name: "Cys-3M3SH",
-        smiles: "[C@@](C)(CCO)(CCC)SC[C@H](N)C(=O)O",
+        smiles: "CCC[C@@](C)(CCO)SC[C@H](N)C(=O)O",
     },
     glycine: { name: "Glycine", smiles: "NCC(=O)O" },
     product: {
         name: "3M3SH",
-        smiles: "[C@@](C)(CCO)(CCC)S",
+        smiles: "CCC[C@@](C)(CCO)S",
     },
     ammonia: { name: "Ammonia", smiles: "N" },
-    pyruvate: { name: "Pyruvate", smiles: "CC(=O)C(=O)[O-]" },
+    pyruvate: { name: "Pyruvic acid", smiles: "CC(=O)C(=O)O" },
 } as const;
 
-function depict(definition: (typeof definitions)[keyof typeof definitions]) {
-    return {
-        ...definition,
-        svg: Molecule.fromSmiles(definition.smiles).toSVG(
-            320,
-            150,
-            undefined,
-            DEPICTOR_OPTIONS,
-        ),
-    };
-}
-
-const compounds = Object.fromEntries(
-    Object.entries(definitions).map(([key, definition]) => [
-        key,
-        depict(definition),
-    ]),
-) as Record<keyof typeof definitions, ReturnType<typeof depict>>;
+const compounds = definitions;
 
 const pathway = ref<HTMLElement | null>(null);
+const precursorSvg = ref<SVGSVGElement | null>(null);
+const cys3m3shSvg = ref<SVGSVGElement | null>(null);
+const glycineSvg = ref<SVGSVGElement | null>(null);
+const productSvg = ref<SVGSVGElement | null>(null);
+const pyruvateSvg = ref<SVGSVGElement | null>(null);
+
+onMounted(() => {
+    const drawer = new SmilesDrawer.SvgDrawer(DRAWER_OPTIONS);
+    const drawings = [
+        [definitions.precursor, precursorSvg.value],
+        [definitions.cys3m3sh, cys3m3shSvg.value],
+        [definitions.glycine, glycineSvg.value],
+        [definitions.product, productSvg.value],
+        [definitions.pyruvate, pyruvateSvg.value],
+    ] as const;
+
+    drawings.forEach(([definition, target]) => {
+        if (!target) return;
+
+        SmilesDrawer.parse(
+            definition.smiles,
+            (tree) => drawer.draw(tree, target, "light"),
+            (error) => {
+                throw error;
+            },
+        );
+    });
+});
 
 function getAnimationTargets() {
     const root = pathway.value;
@@ -89,11 +106,14 @@ defineExpose({ getAnimationTargets });
                 class="molecule molecule--small pathway__side"
             >
                 <div
-                    class="molecule__structure molecule__structure--water"
+                    class="molecule__structure molecule__structure--simple-formula"
                     role="img"
-                    :aria-label="`${compounds.water.name} 2D structure`"
-                    v-html="compounds.water.svg"
-                />
+                    :aria-label="`${compounds.water.name} molecular formula: H2O`"
+                >
+                    <span class="molecule__simple-formula" aria-hidden="true"
+                        >H<sub>2</sub>O</span
+                    >
+                </div>
                 <h2>{{ compounds.water.name }}</h2>
             </article>
 
@@ -109,8 +129,13 @@ defineExpose({ getAnimationTargets });
                     class="molecule__structure"
                     role="img"
                     :aria-label="`${compounds.precursor.name} 2D structure`"
-                    v-html="compounds.precursor.svg"
-                />
+                >
+                    <svg
+                        ref="precursorSvg"
+                        class="molecule__svg"
+                        aria-hidden="true"
+                    />
+                </div>
                 <h2>{{ compounds.precursor.name }}</h2>
             </article>
         </div>
@@ -139,14 +164,15 @@ defineExpose({ getAnimationTargets });
                         />
                     </marker>
                 </defs>
-                <path data-pathway-arrow="pepV" d="M74 3 V30" />
                 <path
                     data-pathway-arrow="pepV"
-                    d="M74 30 V75"
+                    class="reaction-arrow__path reaction-arrow__path--main"
+                    d="M74 3 V75"
                     marker-end="url(#arrow-pepv)"
                 />
                 <path
                     data-pathway-arrow="pepV"
+                    class="reaction-arrow__path reaction-arrow__path--side"
                     d="M74 30 H25 V75"
                     marker-end="url(#arrow-pepv)"
                 />
@@ -162,8 +188,13 @@ defineExpose({ getAnimationTargets });
                     class="molecule__structure"
                     role="img"
                     :aria-label="`${compounds.glycine.name} 2D structure`"
-                    v-html="compounds.glycine.svg"
-                />
+                >
+                    <svg
+                        ref="glycineSvg"
+                        class="molecule__svg"
+                        aria-hidden="true"
+                    />
+                </div>
                 <h2>{{ compounds.glycine.name }}</h2>
             </article>
 
@@ -175,8 +206,13 @@ defineExpose({ getAnimationTargets });
                     class="molecule__structure"
                     role="img"
                     :aria-label="`${compounds.cys3m3sh.name} 2D structure`"
-                    v-html="compounds.cys3m3sh.svg"
-                />
+                >
+                    <svg
+                        ref="cys3m3shSvg"
+                        class="molecule__svg"
+                        aria-hidden="true"
+                    />
+                </div>
                 <h2>{{ compounds.cys3m3sh.name }}</h2>
             </article>
         </div>
@@ -205,14 +241,15 @@ defineExpose({ getAnimationTargets });
                         />
                     </marker>
                 </defs>
-                <path data-pathway-arrow="patB" d="M74 3 V30" />
                 <path
                     data-pathway-arrow="patB"
-                    d="M74 30 V75"
+                    class="reaction-arrow__path reaction-arrow__path--main"
+                    d="M74 3 V75"
                     marker-end="url(#arrow-patb)"
                 />
                 <path
                     data-pathway-arrow="patB"
+                    class="reaction-arrow__path reaction-arrow__path--side"
                     d="M74 30 H25 V75"
                     marker-end="url(#arrow-patb)"
                 />
@@ -224,13 +261,18 @@ defineExpose({ getAnimationTargets });
                 data-pathway-reveal="patB"
                 class="pathway__byproducts pathway__side"
             >
-                <article class="molecule molecule--tiny">
+                <article class="molecule molecule--tiny molecule--ammonia">
                     <div
-                        class="molecule__structure"
+                        class="molecule__structure molecule__structure--simple-formula"
                         role="img"
-                        :aria-label="`${compounds.ammonia.name} 2D structure`"
-                        v-html="compounds.ammonia.svg"
-                    />
+                        :aria-label="`${compounds.ammonia.name} molecular formula: NH3`"
+                    >
+                        <span
+                            class="molecule__simple-formula"
+                            aria-hidden="true"
+                            >NH<sub>3</sub></span
+                        >
+                    </div>
                     <h2>{{ compounds.ammonia.name }}</h2>
                 </article>
                 <span class="pathway__plus" aria-hidden="true">+</span>
@@ -239,8 +281,13 @@ defineExpose({ getAnimationTargets });
                         class="molecule__structure"
                         role="img"
                         :aria-label="`${compounds.pyruvate.name} 2D structure`"
-                        v-html="compounds.pyruvate.svg"
-                    />
+                    >
+                        <svg
+                            ref="pyruvateSvg"
+                            class="molecule__svg"
+                            aria-hidden="true"
+                        />
+                    </div>
                     <h2>{{ compounds.pyruvate.name }}</h2>
                 </article>
             </div>
@@ -253,8 +300,13 @@ defineExpose({ getAnimationTargets });
                     class="molecule__structure"
                     role="img"
                     :aria-label="`${compounds.product.name} 2D structure`"
-                    v-html="compounds.product.svg"
-                />
+                >
+                    <svg
+                        ref="productSvg"
+                        class="molecule__svg"
+                        aria-hidden="true"
+                    />
+                </div>
                 <h2>{{ compounds.product.name }}</h2>
             </article>
         </div>
@@ -270,6 +322,7 @@ defineExpose({ getAnimationTargets });
     padding: clamp(0.65rem, 1.5svh, 1.15rem);
     overflow: visible;
     color: #173e42;
+    translate: clamp(0.75rem, 1.5vw, 1.5rem) 0;
 }
 
 .pathway__row {
@@ -297,13 +350,16 @@ defineExpose({ getAnimationTargets });
 }
 
 .pathway__plus {
+    display: grid;
+    place-items: center;
     font-size: clamp(1rem, 2svh, 1.35rem);
     font-weight: 800;
+    line-height: 1;
 }
 
 .pathway__row--reactants > .pathway__plus {
     position: absolute;
-    left: 46%;
+    left: 42%;
     transform: translateX(-50%);
 }
 
@@ -321,21 +377,21 @@ defineExpose({ getAnimationTargets });
 
 .molecule h2 {
     margin: 0;
-    font-size: clamp(0.75rem, 1.45svh, 1.02rem);
+    font-size: clamp(0.9rem, 1.7svh, 1.2rem);
     line-height: 1.08;
 }
 
 .molecule__structure {
-    height: clamp(3.8rem, 9.8svh, 6.7rem);
+    height: clamp(7.6rem, 19.6svh, 13.4rem);
 }
 
 .molecule--small .molecule__structure,
 .molecule--tiny .molecule__structure {
-    height: clamp(2.8rem, 6.4svh, 4.5rem);
+    height: clamp(5.6rem, 12.8svh, 9rem);
 }
 
 .molecule--side-product .molecule__structure {
-    height: clamp(3.2rem, 7.4svh, 5.1rem);
+    height: clamp(6.4rem, 14.8svh, 10.2rem);
 }
 
 .molecule__structure :deep(svg) {
@@ -345,8 +401,22 @@ defineExpose({ getAnimationTargets });
     overflow: visible;
 }
 
-.molecule__structure--water :deep(text) {
-    fill: #000 !important;
+.molecule__structure--simple-formula {
+    display: grid;
+    place-items: center;
+}
+
+.molecule__simple-formula {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: clamp(2rem, 5.5svh, 2rem);
+    font-weight: 500;
+    line-height: 1;
+    color: #000;
+    transform: translateY(clamp(0.45rem, 1svh, 0.75rem));
+}
+
+.molecule__simple-formula sub {
+    font-size: 0.58em;
 }
 
 .reaction-arrow {
@@ -361,13 +431,28 @@ defineExpose({ getAnimationTargets });
     overflow: visible;
 }
 
-.reaction-arrow svg > path:not(.reaction-arrow__head) {
+.reaction-arrow__path {
     fill: none;
     stroke: currentColor;
-    stroke-width: 2.2;
     stroke-linecap: round;
     stroke-linejoin: round;
     vector-effect: non-scaling-stroke;
+}
+
+.reaction-arrow__path--main {
+    stroke-width: 2.2;
+}
+
+.reaction-arrow__path--side {
+    stroke-width: 2.2;
+    stroke-dasharray: 9 6;
+    animation: pathway-side-flow 0.75s linear infinite;
+}
+
+@keyframes pathway-side-flow {
+    to {
+        stroke-dashoffset: -15;
+    }
 }
 
 [data-pathway-arrow] {
@@ -393,9 +478,16 @@ defineExpose({ getAnimationTargets });
 
 .pathway__byproducts {
     display: grid;
-    grid-template-columns: minmax(0, 0.8fr) auto minmax(0, 1.35fr);
+    grid-template-columns: minmax(3.5rem, 0.7fr) auto minmax(6rem, 1.55fr);
     align-items: center;
-    gap: 0.05rem;
+    gap: clamp(0.6rem, 1.4vw, 1.1rem);
+    width: 112%;
+    margin-left: -12%;
     will-change: transform, opacity;
+}
+
+.pathway__byproducts > .pathway__plus {
+    align-self: center;
+    justify-self: center;
 }
 </style>

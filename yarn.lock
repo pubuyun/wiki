@@ -4644,6 +4644,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"chroma-js@npm:^2.4.2":
+  version: 2.6.0
+  resolution: "chroma-js@npm:2.6.0"
+  checksum: 10c0/6e17f43246f9b3eba8a9db67f5ee9a2d0ef1360077211887da09ec1f0934bb98a358eefaf021003c0bd47cbab540f573a373f362d6b2ba04d0e80ab7677e1640
+  languageName: node
+  linkType: hard
+
 "chrome-launcher@npm:^0.13.4":
   version: 0.13.4
   resolution: "chrome-launcher@npm:0.13.4"
@@ -9339,13 +9346,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"openchemlib@npm:^9.24.0":
-  version: 9.24.0
-  resolution: "openchemlib@npm:9.24.0"
-  checksum: 10c0/76d685b47a19838274df094174e2a72fff6b9355aba2cb1e34b9fe16cabd8160cd7b58fd9bdd026960d0222420232491ed527fb4855645f66c2b3bb36bbf7447
-  languageName: node
-  linkType: hard
-
 "os-tmpdir@npm:~1.0.2":
   version: 1.0.2
   resolution: "os-tmpdir@npm:1.0.2"
@@ -11509,6 +11509,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"smiles-drawer@npm:^2.4.1":
+  version: 2.4.1
+  resolution: "smiles-drawer@npm:2.4.1"
+  dependencies:
+    chroma-js: "npm:^2.4.2"
+  checksum: 10c0/a69f3dd334da2af3201d74be1f5703e54981e076f2c96e96f170ae76fec58722ce810d27b6261dc96b4451cb4956947d4f244dfc17a015407e5c1799d7e50e36
+  languageName: node
+  linkType: hard
+
 "smob@npm:^1.0.0":
   version: 1.6.2
   resolution: "smob@npm:1.6.2"
@@ -13167,10 +13176,10 @@ __metadata:
     nuxt: "npm:^4.4.2"
     nuxt-echarts: "npm:1.0.1"
     nuxt-studio: "npm:1.6.1"
-    openchemlib: "npm:^9.24.0"
     prettier: "npm:^3.8.3"
     prettier-plugin-tailwindcss: "npm:^0.8.0"
     reka-ui: "npm:^2.10.1"
+    smiles-drawer: "npm:^2.4.1"
     tailwindcss: "npm:^4.3.0"
     vite: "npm:^8.1.3"
     vue: "npm:^3.5.34"

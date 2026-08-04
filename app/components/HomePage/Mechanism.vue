@@ -41,10 +41,37 @@ const PATH_POINTS = {
     outsideEnd: { x: 1.16, y: 0.72 },
 } satisfies Record<string, Point>;
 
+/*
+ * 蛋白名称坐标调整区：x / y 与 PATH_POINTS 使用同一套旋转后场景坐标（0 到 1）。
+ * 修改这里即可分别移动 PepTsh、PepV 和 PatB 标签。
+ */
+const PROTEIN_LABELS = [
+    {
+        id: "pepTsh",
+        text: "PepTsh",
+        color: "#124C96",
+        position: { x: 0.5, y: 0.155 },
+    },
+    {
+        id: "pepV",
+        text: "PepV",
+        color: "#F18D0C",
+        position: { x: 0.15, y: 0.35 },
+    },
+    {
+        id: "patB",
+        text: "PatB",
+        color: "#BD2F63",
+        position: { x: 0.1, y: 0.75 },
+    },
+] as const;
+
 /* precursor 动画参数调整区。 */
 const PRECURSOR_ANIMATION = {
     transportScale: 0.7,
     initialRotation: 10,
+    pointARotation: 90,
+    pointBRotation: 90,
 } as const;
 
 const scene = ref<HTMLElement | null>(null);
@@ -126,6 +153,11 @@ onMounted(() => {
 
             gsap.set(pathwayProducts, { autoAlpha: 0, y: 12 });
             pathwayArrows.forEach((arrow) => {
+                if (arrow.classList.contains("reaction-arrow__path--side")) {
+                    gsap.set(arrow, { autoAlpha: 0 });
+                    return;
+                }
+
                 const length = arrow.getTotalLength();
                 gsap.set(arrow, {
                     autoAlpha: 0,
@@ -188,7 +220,7 @@ onMounted(() => {
             .to(
                 precursorVisual.value,
                 {
-                    rotation: 90,
+                    rotation: PRECURSOR_ANIMATION.pointARotation,
                     duration: 1.55,
                     ease: "power2.inOut",
                 },
@@ -263,6 +295,15 @@ onMounted(() => {
             .to(
                 molecule.value,
                 { ...pointVars(PATH_POINTS.pointB), duration: 1.15 },
+                "pepV+=0.7",
+            )
+            .to(
+                precursorVisual.value,
+                {
+                    rotation: PRECURSOR_ANIMATION.pointBRotation,
+                    duration: 1.15,
+                    ease: "power2.inOut",
+                },
                 "pepV+=0.7",
             )
             .addLabel("patB")
@@ -351,6 +392,19 @@ onUnmounted(() => {
                 <PeptAnim ref="peptAnim" :autoplay="false" />
             </div>
 
+            <span
+                v-for="label in PROTEIN_LABELS"
+                :key="label.id"
+                class="mechanism-scene__protein-label"
+                :style="{
+                    left: `${label.position.x * 100}%`,
+                    top: `${label.position.y * 100}%`,
+                    color: label.color,
+                }"
+            >
+                {{ label.text }}
+            </span>
+
             <div ref="molecule" class="mechanism-scene__molecule">
                 <div ref="precursorVisual" class="mechanism-scene__precursor">
                     <img
@@ -402,7 +456,7 @@ onUnmounted(() => {
                 Subsequently, the <strong>C–S lyase PatB</strong> converts
                 <strong>Cys-3M3SH</strong> into the pungent volatile thiol
                 <strong>3M3SH</strong>, with <strong>ammonia</strong> and
-                <strong>pyruvate</strong> as coproducts.
+                <strong>pyruvic acid</strong> as coproducts.
                 <strong
                     >3M3SH is one of the primary compounds responsible for
                     axillary body odor</strong
@@ -470,6 +524,21 @@ onUnmounted(() => {
     transform: translate(-50%, -50%) rotate(90deg);
 }
 
+.mechanism-scene__protein-label {
+    position: absolute;
+    z-index: 3;
+    display: block;
+    transform: translate(-50%, -50%);
+    font-size: clamp(0.9rem, 2svh, 1.3rem);
+    font-weight: 800;
+    line-height: 1;
+    white-space: nowrap;
+    pointer-events: none;
+    text-shadow:
+        0 1px 2px rgb(255 255 255 / 90%),
+        0 0 5px rgb(255 255 255 / 65%);
+}
+
 .mechanism-scene__molecule {
     position: absolute;
     z-index: 2;
@@ -508,7 +577,7 @@ onUnmounted(() => {
     left: var(--artwork-right);
     display: grid;
     place-items: center;
-    padding-inline: clamp(2rem, 7vw, 8rem);
+    box-sizing: border-box;
 }
 
 .mechanism-scene__chemistry {
@@ -522,11 +591,18 @@ onUnmounted(() => {
 
 .mechanism-scene__copy-panel {
     position: absolute;
-    width: min(100%, 44rem);
+    right: 3rem;
+    left: 3rem;
+    box-sizing: border-box;
+    width: auto;
+    max-width: none;
+    height: auto;
     margin: 0;
     font-size: clamp(1.1rem, 1.8vw, 1.75rem);
     line-height: 1.55;
     color: var(--color-on-surface);
+    overflow-wrap: break-word;
+    white-space: normal;
     will-change: transform, opacity;
 }
 
@@ -536,9 +612,9 @@ onUnmounted(() => {
     }
 
     .mechanism-scene__copy {
-        right: 1rem;
+        right: 0;
         bottom: 1.5rem;
-        left: 1rem;
+        left: 0;
         align-items: end;
         pointer-events: none;
     }
