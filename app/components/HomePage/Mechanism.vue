@@ -60,9 +60,9 @@ const PATH_POINTS = {
 const PROTEIN_LABELS = [
     {
         id: "pepTsh",
-        text: "PepTsh",
+        text: "PepT",
         color: "#124C96",
-        position: { x: 0.5, y: 0.155 },
+        position: { x: 0.57, y: 0.15 },
     },
     {
         id: "pepV",
