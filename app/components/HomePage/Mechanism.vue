@@ -30,12 +30,24 @@ type ChemicalPathwayExpose = {
  * 路径调整区：x / y 是旋转后 memscene 的百分比坐标（0 到 1）。
  * pointA 和 pointB 分别控制 PepV、PatB 的中心与流程位置。
  */
+// const PATH_POINTS = {
+//     outsideStart: { x: 1.3, y: 0.155 },
+//     transporter: { x: 0.85, y: 0.155 },
+//     insideMembrane: { x: 0.76, y: 0.17 },
+//     pointA: { x: 0.48, y: 0.35 },
+//     pointB: { x: 0.48, y: 0.75 },
+//     exitApproach: { x: 0.76, y: 0.72 },
+//     membraneExit: { x: 0.85, y: 0.72 },
+//     outsideEnd: { x: 1.16, y: 0.72 },
+// } satisfies Record<string, Point>;
+
+// scene2
 const PATH_POINTS = {
     outsideStart: { x: 1.3, y: 0.155 },
     transporter: { x: 0.85, y: 0.155 },
     insideMembrane: { x: 0.76, y: 0.17 },
-    pointA: { x: 0.48, y: 0.35 },
-    pointB: { x: 0.48, y: 0.75 },
+    pointA: { x: 0.41, y: 0.32 },
+    pointB: { x: 0.38, y: 0.68 },
     exitApproach: { x: 0.76, y: 0.72 },
     membraneExit: { x: 0.85, y: 0.72 },
     outsideEnd: { x: 1.16, y: 0.72 },
@@ -56,13 +68,13 @@ const PROTEIN_LABELS = [
         id: "pepV",
         text: "PepV",
         color: "#F18D0C",
-        position: { x: 0.15, y: 0.35 },
+        position: { x: 0.03, y: 0.35 },
     },
     {
         id: "patB",
         text: "PatB",
         color: "#BD2F63",
-        position: { x: 0.1, y: 0.75 },
+        position: { x: 0.08, y: 0.75 },
     },
 ] as const;
 
@@ -70,8 +82,8 @@ const PROTEIN_LABELS = [
 const PRECURSOR_ANIMATION = {
     transportScale: 0.7,
     initialRotation: 10,
-    pointARotation: 90,
-    pointBRotation: 90,
+    pointARotation: -10,
+    pointBRotation: -30,
 } as const;
 
 const scene = ref<HTMLElement | null>(null);
@@ -201,10 +213,10 @@ onMounted(() => {
             precursorVisual.value,
             {
                 scale: PRECURSOR_ANIMATION.transportScale,
-                duration: 0.45,
+                duration: 0.65,
                 ease: "power2.inOut",
             },
-            "transport+=0.15",
+            "transport+=0.05",
         );
 
         timeline
@@ -230,10 +242,10 @@ onMounted(() => {
                 precursorVisual.value,
                 {
                     scale: 1,
-                    duration: 0.55,
+                    duration: 0.75,
                     ease: "power2.inOut",
                 },
-                "throughTransporter",
+                "throughTransporter-=0.1",
             );
 
         if (peptTimeline) {
@@ -356,8 +368,8 @@ onMounted(() => {
             })
             .to(
                 molecule.value,
-                { ...pointVars(PATH_POINTS.membraneExit), duration: 0.45 },
-                "<",
+                { ...pointVars(PATH_POINTS.membraneExit), duration: 0.25 },
+                "<0.1",
             )
             .to(molecule.value, {
                 ...pointVars(PATH_POINTS.outsideEnd),
@@ -383,7 +395,7 @@ onUnmounted(() => {
         <div ref="artwork" class="mechanism-scene__artwork">
             <img
                 class="mechanism-scene__background"
-                src="https://static.igem.wiki/teams/6133/wiki/homepage/memscene.avif"
+                src="https://static.igem.wiki/teams/6133/wiki/homepage/memscene2.avif"
                 alt="Cell membrane mechanism scene"
                 draggable="false"
             />

@@ -124,7 +124,9 @@ defineExpose({ getAnimationTargets });
                 >+</span
             >
 
-            <article class="molecule molecule--main pathway__main">
+            <article
+                class="molecule molecule--main molecule--precursor pathway__main"
+            >
                 <div
                     class="molecule__structure"
                     role="img"
@@ -140,7 +142,7 @@ defineExpose({ getAnimationTargets });
             </article>
         </div>
 
-        <div class="reaction-arrow">
+        <div class="reaction-arrow reaction-arrow--pepv">
             <span data-pathway-reveal="pepV" class="reaction-arrow__enzyme"
                 >PepV</span
             >
@@ -179,7 +181,9 @@ defineExpose({ getAnimationTargets });
             </svg>
         </div>
 
-        <div class="pathway__row pathway__row--products">
+        <div
+            class="pathway__row pathway__row--products pathway__row--pepv-products"
+        >
             <article
                 data-pathway-reveal="pepV"
                 class="molecule molecule--side-product pathway__side"
@@ -217,7 +221,7 @@ defineExpose({ getAnimationTargets });
             </article>
         </div>
 
-        <div class="reaction-arrow">
+        <div class="reaction-arrow reaction-arrow--patb">
             <span data-pathway-reveal="patB" class="reaction-arrow__enzyme"
                 >PatB</span
             >
@@ -256,7 +260,9 @@ defineExpose({ getAnimationTargets });
             </svg>
         </div>
 
-        <div class="pathway__row pathway__row--products">
+        <div
+            class="pathway__row pathway__row--products pathway__row--patb-products"
+        >
             <div
                 data-pathway-reveal="patB"
                 class="pathway__byproducts pathway__side"
@@ -294,7 +300,7 @@ defineExpose({ getAnimationTargets });
 
             <article
                 data-pathway-reveal="patB"
-                class="molecule molecule--main pathway__main"
+                class="molecule molecule--main molecule--product pathway__main"
             >
                 <div
                     class="molecule__structure"
@@ -321,6 +327,7 @@ defineExpose({ getAnimationTargets });
     height: 100%;
     padding: clamp(0.65rem, 1.5svh, 1.15rem);
     overflow: visible;
+    font-family: var(--font-belanosima);
     color: #173e42;
     translate: clamp(0.75rem, 1.5vw, 1.5rem) 0;
 }
@@ -347,6 +354,24 @@ defineExpose({ getAnimationTargets });
 .pathway__row--reactants .pathway__side,
 .pathway__row--reactants .pathway__main {
     grid-row: 1;
+}
+
+.pathway__row--reactants .molecule {
+    position: relative;
+}
+
+.pathway__row--reactants .pathway__side h2,
+.pathway__row--reactants .pathway__main h2 {
+    position: absolute;
+    width: 100%;
+}
+
+.pathway__row--reactants .pathway__side h2 {
+    top: clamp(5.6rem, 12.8svh, 9.8rem);
+}
+
+.pathway__row--reactants .pathway__main h2 {
+    top: clamp(6.6rem, 16.2svh, 12rem);
 }
 
 .pathway__plus {
@@ -381,6 +406,14 @@ defineExpose({ getAnimationTargets });
     line-height: 1.08;
 }
 
+.molecule--precursor h2 {
+    color: #124c96;
+}
+
+.molecule--product h2 {
+    color: #ff3e89;
+}
+
 .molecule__structure {
     height: clamp(7.6rem, 19.6svh, 13.4rem);
 }
@@ -392,6 +425,18 @@ defineExpose({ getAnimationTargets });
 
 .molecule--side-product .molecule__structure {
     height: clamp(6.4rem, 14.8svh, 10.2rem);
+}
+
+.pathway__row--pepv-products .pathway__side h2 {
+    transform: translateY(clamp(0.3rem, 1.2svh, 0.8rem));
+}
+
+.pathway__row--pepv-products .pathway__main h2 {
+    transform: translateY(clamp(-0.8rem, -1.2svh, -0.3rem));
+}
+
+.pathway__row--patb-products > .pathway__main h2 {
+    transform: translateY(clamp(-2.2rem, -3.4svh, -1rem));
 }
 
 .molecule__structure :deep(svg) {
@@ -407,7 +452,7 @@ defineExpose({ getAnimationTargets });
 }
 
 .molecule__simple-formula {
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: var(--font-belanosima);
     font-size: clamp(2rem, 5.5svh, 2rem);
     font-weight: 500;
     line-height: 1;
@@ -422,6 +467,14 @@ defineExpose({ getAnimationTargets });
 .reaction-arrow {
     position: relative;
     height: clamp(4.2rem, 10svh, 6.5rem);
+}
+
+.reaction-arrow--pepv {
+    color: #f18d0c;
+}
+
+.reaction-arrow--patb {
+    color: #bd2f63;
 }
 
 .reaction-arrow svg {
