@@ -378,8 +378,8 @@ function buildOption(cycle: Cycle, rows: BinderRow[]): EChartsOption {
                     },
                 },
                 itemStyle: {
-                    borderColor: "rgba(255,255,255,0.45)",
-                    borderWidth: 1,
+                    borderColor: "rgba(255,255,255,0.7)",
+                    borderWidth: 2,
                 },
                 emphasis: {
                     itemStyle: {

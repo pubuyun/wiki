@@ -128,6 +128,14 @@ onMounted(() => {
         const peptTimeline = peptAnim.value?.getTimeline();
         const chemicalTargets = chemicalPanel.value?.getAnimationTargets();
         const copyPanels = [copyOne.value, copyTwo.value, copyThree.value];
+        const pepVMainArrows =
+            chemicalTargets?.pepVArrows.filter((arrow) =>
+                arrow.classList.contains("reaction-arrow__path--main"),
+            ) ?? [];
+        const patBMainArrows =
+            chemicalTargets?.patBArrows.filter((arrow) =>
+                arrow.classList.contains("reaction-arrow__path--main"),
+            ) ?? [];
 
         peptTimeline?.pause(0);
 
@@ -275,6 +283,11 @@ onMounted(() => {
                 },
                 "pepV",
             )
+            .set(
+                pepVMainArrows,
+                { strokeDasharray: "none", strokeDashoffset: 0 },
+                "pepV+=0.45",
+            )
             .to(
                 chemicalTargets?.pepVProducts ?? [],
                 {
@@ -327,6 +340,11 @@ onMounted(() => {
                     duration: 0.45,
                 },
                 "patB",
+            )
+            .set(
+                patBMainArrows,
+                { strokeDasharray: "none", strokeDashoffset: 0 },
+                "patB+=0.45",
             )
             .to(
                 chemicalTargets?.patBProducts ?? [],
