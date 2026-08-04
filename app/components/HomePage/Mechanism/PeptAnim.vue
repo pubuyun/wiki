@@ -2,6 +2,10 @@
 import { gsap } from "gsap";
 import { onMounted, onUnmounted, ref } from "vue";
 
+const props = withDefaults(defineProps<{ autoplay?: boolean }>(), {
+    autoplay: true,
+});
+
 const root = ref<HTMLElement | null>(null);
 const leftShell = ref<HTMLImageElement | null>(null);
 const rightShell = ref<HTMLImageElement | null>(null);
@@ -73,7 +77,7 @@ onMounted(() => {
 
         if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
             timeline.progress(1);
-        } else {
+        } else if (props.autoplay) {
             playLoop();
         }
     }, root.value);

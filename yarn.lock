@@ -9339,6 +9339,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"openchemlib@npm:^9.24.0":
+  version: 9.24.0
+  resolution: "openchemlib@npm:9.24.0"
+  checksum: 10c0/76d685b47a19838274df094174e2a72fff6b9355aba2cb1e34b9fe16cabd8160cd7b58fd9bdd026960d0222420232491ed527fb4855645f66c2b3bb36bbf7447
+  languageName: node
+  linkType: hard
+
 "os-tmpdir@npm:~1.0.2":
   version: 1.0.2
   resolution: "os-tmpdir@npm:1.0.2"
@@ -13160,6 +13167,7 @@ __metadata:
     nuxt: "npm:^4.4.2"
     nuxt-echarts: "npm:1.0.1"
     nuxt-studio: "npm:1.6.1"
+    openchemlib: "npm:^9.24.0"
     prettier: "npm:^3.8.3"
     prettier-plugin-tailwindcss: "npm:^0.8.0"
     reka-ui: "npm:^2.10.1"
