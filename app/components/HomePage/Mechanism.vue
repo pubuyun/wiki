@@ -342,7 +342,7 @@ onUnmounted(() => {
         <div ref="artwork" class="mechanism-scene__artwork">
             <img
                 class="mechanism-scene__background"
-                src="/memscene.png"
+                src="https://static.igem.wiki/teams/6133/wiki/homepage/memscene.avif"
                 alt="Cell membrane mechanism scene"
                 draggable="false"
             />
@@ -356,14 +356,14 @@ onUnmounted(() => {
                     <img
                         ref="cys3m3sh"
                         class="mechanism-scene__molecule-layer"
-                        src="/precursorcys3m3sh.png"
+                        src="https://static.igem.wiki/teams/6133/wiki/homepage/precursorcys3m3sh.avif"
                         alt=""
                         draggable="false"
                     />
                     <img
                         ref="gly"
                         class="mechanism-scene__molecule-layer"
-                        src="/precursorgly.png"
+                        src="https://static.igem.wiki/teams/6133/wiki/homepage/precursorgly.avif"
                         alt=""
                         draggable="false"
                     />
@@ -371,7 +371,7 @@ onUnmounted(() => {
                 <img
                     ref="product"
                     class="mechanism-scene__molecule-layer"
-                    src="/3m3sh.png"
+                    src="https://static.igem.wiki/teams/6133/wiki/homepage/3m3sh.avif"
                     alt=""
                     draggable="false"
                 />
