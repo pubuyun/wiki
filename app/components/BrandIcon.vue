@@ -1,5 +1,5 @@
 <template>
-    <div class="relative h-full">
+    <div class="relative h-full shrink-0">
         <img
             src="https://static.igem.wiki/teams/6133/wiki/general/logo.webp"
             alt="Logo"
