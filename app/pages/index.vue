@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import Mechanism from "../components/HomePage/Mechanism.vue";
+
 definePageMeta({
     layout: "static",
 });
@@ -8,10 +10,7 @@ useSeoMeta({
 </script>
 
 <template>
-    <article class="flex-1">
-        <div>this is the home page</div>
-        <NuxtLink to="/description" class="text-text-emphasized underline"
-            >Go to project description</NuxtLink
-        >
+    <article class="flex-1 bg-surface">
+        <Mechanism />
     </article>
 </template>
