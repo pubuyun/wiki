@@ -8,12 +8,12 @@
         <NuxtLink
             v-if="!collapsed"
             to="/"
-            class="icon-section absolute top-0 left-4 z-10 flex h-11 shrink-0 items-center gap-4 font-righteous xl:h-14"
+            class="icon-section absolute top-0 left-4 z-10 flex h-11 shrink-0 items-center gap-2 font-righteous! xl:h-14 xl:gap-3"
             aria-label="Go to homepage"
         >
-            <BrandIcon />
+            <BrandIcon class="h-9! xl:h-10!" />
             <span
-                class="text-on-surface lg:text-2xl xl:text-3xl"
+                class="text-lg whitespace-nowrap text-on-surface lg:text-xl xl:text-2xl"
                 aria-hidden="true"
             >
                 Expelliodor
