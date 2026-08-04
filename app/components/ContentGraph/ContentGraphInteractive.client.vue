@@ -80,6 +80,7 @@ const figureWidth = ref(0);
 const isPortrait = ref(false);
 const mediaReady = ref(false);
 const isFullscreen = ref(false);
+const isScrollSnapActive = ref(false);
 const viewportZoom = ref(1);
 const baseURL = useRuntimeConfig().app.baseURL;
 const nodeTypes = {
@@ -111,6 +112,7 @@ const subgraphPadding = 30;
 
 let mediaQuery: MediaQueryList | null = null;
 let resizeObserver: ResizeObserver | null = null;
+let intersectionObserver: IntersectionObserver | null = null;
 let activeMaskElement: HTMLElement | null = null;
 let subgraphResizeRun = 0;
 
@@ -126,6 +128,7 @@ onBeforeUnmount(() => {
     mediaQuery?.removeEventListener("change", updatePortraitState);
     document.removeEventListener("fullscreenchange", updateFullscreenState);
     resizeObserver?.disconnect();
+    intersectionObserver?.disconnect();
     clearActiveMask();
 });
 
@@ -133,13 +136,25 @@ watch(
     figureElement,
     (element) => {
         resizeObserver?.disconnect();
+        intersectionObserver?.disconnect();
         resizeObserver = null;
+        intersectionObserver = null;
+        isScrollSnapActive.value = false;
         if (!element) return;
 
         resizeObserver = new ResizeObserver(([entry]) => {
             if (entry) figureWidth.value = entry.contentRect.width;
         });
         resizeObserver.observe(element);
+
+        intersectionObserver = new IntersectionObserver(
+            ([entry]) => {
+                isScrollSnapActive.value =
+                    (entry?.intersectionRatio ?? 0) >= 0.7;
+            },
+            { threshold: [0.95] },
+        );
+        intersectionObserver.observe(element);
     },
     { flush: "post" },
 );
@@ -794,6 +809,7 @@ async function toggleFullscreen() {
         :class="{
             'flex h-dvh w-dvw max-w-none flex-col rounded-none border-0 bg-surface-elevated':
                 isFullscreen,
+            'content-graph--snap-active': isScrollSnapActive,
         }"
         :aria-label="resolvedGraph?.title || 'Interactive graph'"
         :aria-busy="isLoading"
@@ -916,3 +932,34 @@ async function toggleFullscreen() {
         </div>
     </figure>
 </template>
+
+<style scoped>
+:global(html:has(.content-graph)) {
+    --content-graph-page-navigation-height: 3rem;
+
+    scroll-padding-block-start: var(--content-graph-page-navigation-height);
+    scroll-snap-type: y proximity;
+}
+
+:global(.content-graph.content-graph--snap-active) {
+    scroll-snap-align: center;
+}
+
+@media (width >= 40rem) {
+    :global(html:has(.content-graph)) {
+        --content-graph-page-navigation-height: 2.5rem;
+    }
+}
+
+@media (width >= 64rem) {
+    :global(html:has(.content-graph)) {
+        --content-graph-page-navigation-height: 2.75rem;
+    }
+}
+
+@media (width >= 80rem) {
+    :global(html:has(.content-graph)) {
+        --content-graph-page-navigation-height: 3.5rem;
+    }
+}
+</style>

@@ -1,6 +1,6 @@
 <template>
     <nav
-        class="content-bar sticky mb-6 w-52 shrink-0 flex-col self-start pr-6 font-belanosima text-base text-on-surface xl:w-60"
+        class="sticky top-20 mb-6 w-52 shrink-0 flex-col self-start pr-6 font-belanosima text-base text-on-surface xl:w-60"
         aria-labelledby="toc-title"
     >
         <h2 id="toc-title" class="mb-4 font-momo-trust-display text-base">
@@ -8,8 +8,7 @@
         </h2>
 
         <div
-            ref="tocScroller"
-            class="toc-scroller relative scrollbar-thin scrollbar-thumb-surface-bright scrollbar-track-surface overflow-auto"
+            class="relative max-h-[calc(100vh-13rem)] scrollbar-thin scrollbar-thumb-surface-bright scrollbar-track-surface overflow-auto"
         >
             <div
                 class="pointer-events-none absolute top-0 left-0 w-3"
@@ -59,7 +58,6 @@ const props = defineProps<{
 }>();
 
 const { scrollToHash } = useHashScroll();
-const tocScroller = ref<HTMLElement>();
 const activeId = ref<string>();
 let hashScrollUntil = 0;
 let stopScrollSpy: (() => void) | undefined;
@@ -143,16 +141,6 @@ function indicatorX(link: ToCLink) {
     return link.depth === 3 ? h3IndicatorX : h2IndicatorX;
 }
 
-function revealActiveLink() {
-    if (!tocScroller.value || !activeId.value) return;
-
-    tocScroller.value
-        .querySelector<HTMLElement>(
-            `[data-content-bar-link-id="${CSS.escape(activeId.value)}"]`,
-        )
-        ?.scrollIntoView({ block: "nearest" });
-}
-
 function collectArticleHeadings() {
     return [
         ...document.querySelectorAll<HTMLElement>("main h2[id], main h3[id]"),
@@ -233,11 +221,6 @@ watch(
     { deep: true },
 );
 
-watch(activeId, async () => {
-    await nextTick();
-    revealActiveLink();
-});
-
 onMounted(async () => {
     await nextTick();
     setupScrollSpy();
@@ -247,31 +230,3 @@ onBeforeUnmount(() => {
     stopScrollSpy?.();
 });
 </script>
-
-<style scoped>
-.content-bar {
-    --content-bar-top: 5rem;
-
-    top: var(--content-bar-top);
-    transition: top 280ms ease-out;
-}
-
-.toc-scroller {
-    max-height: calc(100dvh - var(--content-bar-top) - 4rem);
-    scroll-behavior: smooth;
-    scroll-padding-block: 1.75rem;
-    transition: max-height 280ms ease-out;
-}
-
-:global(body:has(.navigation-bar[data-hidden="true"])) .content-bar {
-    --content-bar-top: 1rem;
-}
-
-@media (prefers-reduced-motion: reduce) {
-    .content-bar,
-    .toc-scroller {
-        scroll-behavior: auto;
-        transition: none;
-    }
-}
-</style>
