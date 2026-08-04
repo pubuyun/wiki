@@ -94,7 +94,7 @@ watchEffect(() => {
             </div>
         </main>
 
-        <Footer has-category-sidebar />
+        <LazyFooter hydrate-on-visible has-category-sidebar />
 
         <aside aria-label="Page utilities">
             <AccessibilityMenu />

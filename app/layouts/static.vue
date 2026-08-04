@@ -7,7 +7,7 @@
         <main class="flex-1">
             <slot />
         </main>
-        <Footer />
+        <LazyFooter hydrate-on-visible />
         <aside aria-label="Page utilities">
             <BackToTop />
         </aside>
