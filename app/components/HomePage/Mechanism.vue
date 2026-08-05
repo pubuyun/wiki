@@ -638,8 +638,8 @@ onUnmounted(() => {
 
 .mechanism-scene__copy-panel {
     position: absolute;
-    right: 3rem;
-    left: 3rem;
+    right: 5rem;
+    left: 5rem;
     box-sizing: border-box;
     width: auto;
     max-width: none;

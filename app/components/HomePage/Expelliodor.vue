@@ -344,8 +344,7 @@ onUnmounted(() => {
     isolation: isolate;
     display: grid;
     width: 100%;
-    min-height: 100vh;
-    min-height: 100svh;
+    height: 100svh;
     overflow: hidden;
     place-items: center;
     background: #03316d;

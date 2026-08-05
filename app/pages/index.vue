@@ -18,7 +18,7 @@ useSeoMeta({
 </script>
 
 <template>
-    <article class="flex-1 bg-[#03316d]">
+    <article class="w-full flex-1 overflow-hidden bg-[#03316d]">
         <Expelliodor />
         <SceneSequence :scenes="lazyScenes" />
     </article>
