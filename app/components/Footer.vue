@@ -1,5 +1,8 @@
 <script setup lang="ts">
 import { Icon } from "@iconify/vue";
+import { gsap } from "gsap";
+import { MorphSVGPlugin } from "gsap/MorphSVGPlugin";
+import { onMounted, onUnmounted, ref } from "vue";
 import {
     footerSocialChannels,
     footerSponsors,
@@ -37,6 +40,83 @@ const wavePaths = [
     },
 ];
 
+const FOOTER_WAVE_MORPH_PATH =
+    "M 0 0 L 0 -100 C 255 -150 432 -276 607 -262 C 752 -246 856 -85 1157 -219 C 1345 -311 1399 -400 1700 -253 L 1700 0 Z";
+const ACCENT_WAVE_INTERMEDIATE_PATH =
+    "M 0 -60 L 0 -350 C 209 -307 296 -220 451 -215 C 869 -168 956 -357 1142 -340 C 1308 -326 1391 -193 1698 -200 L 1700 -60 Z";
+const ACCENT_WAVE_MORPH_PATH =
+    "M 0 -60 L 0 -221 C 209 -300 318 -176 406 -147 C 718 -120 748 -215 933 -230 C 1123 -232 1238 -104 1698 -200 L 1700 -60 Z";
+
+const waveSvg = ref<SVGSVGElement | null>(null);
+let waveTimeline: gsap.core.Timeline | undefined;
+let removeMotionPreferenceListener: (() => void) | undefined;
+
+onMounted(() => {
+    const accentWave = waveSvg.value?.querySelector<SVGPathElement>(
+        '[data-wave="accent"]',
+    );
+    const footerWave = waveSvg.value?.querySelector<SVGPathElement>(
+        '[data-wave="footer"]',
+    );
+
+    if (!accentWave || !footerWave) return;
+
+    gsap.registerPlugin(MorphSVGPlugin);
+    const originalAccentPath = accentWave.getAttribute("d") ?? "";
+    const originalFooterPath = footerWave.getAttribute("d") ?? "";
+    const motionPreference = window.matchMedia(
+        "(prefers-reduced-motion: reduce)",
+    );
+
+    const updateWaveAnimation = () => {
+        waveTimeline?.kill();
+
+        if (motionPreference.matches) {
+            accentWave.setAttribute("d", originalAccentPath);
+            footerWave.setAttribute("d", originalFooterPath);
+            return;
+        }
+
+        waveTimeline = gsap
+            .timeline({ repeat: -1, yoyo: true })
+            .to(
+                accentWave,
+                {
+                    morphSVG: { shape: ACCENT_WAVE_INTERMEDIATE_PATH },
+                    duration: 3,
+                    ease: "sine.inOut",
+                },
+                0,
+            )
+            .to(accentWave, {
+                morphSVG: { shape: ACCENT_WAVE_MORPH_PATH },
+                duration: 3,
+                ease: "sine.inOut",
+            })
+            .to(
+                footerWave,
+                {
+                    morphSVG: { shape: FOOTER_WAVE_MORPH_PATH },
+                    duration: 6,
+                    ease: "sine.inOut",
+                },
+                0,
+            );
+    };
+
+    motionPreference.addEventListener("change", updateWaveAnimation);
+    removeMotionPreferenceListener = () =>
+        motionPreference.removeEventListener("change", updateWaveAnimation);
+    updateWaveAnimation();
+});
+
+onUnmounted(() => {
+    waveTimeline?.kill();
+    waveTimeline = undefined;
+    removeMotionPreferenceListener?.();
+    removeMotionPreferenceListener = undefined;
+});
+
 const sponsorTrackCopies = [false, true];
 
 const footerLinkClass =
@@ -57,6 +137,7 @@ const footerLinkClass =
                 :class="sidebarExtensionClass"
             />
             <svg
+                ref="waveSvg"
                 class="absolute inset-x-0 top-0 z-10 h-full w-full"
                 viewBox="0 -400 1700 400"
                 preserveAspectRatio="none"
@@ -66,6 +147,7 @@ const footerLinkClass =
                     :key="path.id"
                     :class="path.fill"
                     :d="path.d"
+                    :data-wave="path.id"
                 />
             </svg>
         </div>
