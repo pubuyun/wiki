@@ -540,7 +540,7 @@ defineExpose({ getAnimationTargets });
     position: absolute;
     z-index: 1;
     top: 24%;
-    left: 78%;
+    left: 83%;
     padding: 0.12rem 0.3rem;
     font-size: clamp(0.78rem, 1.5svh, 1.05rem);
     font-weight: 800;
@@ -655,10 +655,10 @@ defineExpose({ getAnimationTargets });
     }
 
     .reaction-arrow__enzyme {
-        top: 50%;
+        top: -12%;
         left: 50%;
         font-size: clamp(0.62rem, 2.2vw, 0.8rem);
-        transform: translate(-50%, -155%);
+        transform: translate(-50%, -50%);
     }
 
     .pathway__byproducts {
