@@ -329,7 +329,7 @@ onUnmounted(() => {
             <img
                 ref="product"
                 class="expelliodor-scene__product"
-                src="/product.png"
+                src="https://static.igem.wiki/teams/6133/wiki/homepage/product.avif"
                 alt=""
                 fetchpriority="high"
                 draggable="false"

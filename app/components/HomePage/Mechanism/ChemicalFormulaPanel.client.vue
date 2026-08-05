@@ -540,7 +540,7 @@ defineExpose({ getAnimationTargets });
     position: absolute;
     z-index: 1;
     top: 24%;
-    left: 83%;
+    left: 76%;
     padding: 0.12rem 0.3rem;
     font-size: clamp(0.78rem, 1.5svh, 1.05rem);
     font-weight: 800;

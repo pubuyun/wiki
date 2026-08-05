@@ -7,6 +7,11 @@ const lazyScenes = [
         id: "mechanism",
         loader: () => import("../components/HomePage/Mechanism.vue"),
     },
+    {
+        id: "solution",
+        loader: () => import("../components/HomePage/Solution.vue"),
+        minHeight: "100svh",
+    },
 ] as const;
 
 definePageMeta({

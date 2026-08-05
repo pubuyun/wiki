@@ -50,13 +50,15 @@ export default defineNuxtConfig({
                 "gsap",
                 "vue-easy-lightbox",
                 "@vue-flow/core",
+                "smiles-drawer",
+                "gsap/ScrollTrigger",
             ],
         },
         plugins: [tailwindcss()],
     },
     echarts: {
         renderer: "svg",
-        charts: ["LineChart", "HeatmapChart"],
+        charts: ["LineChart", "HeatmapChart", "CustomChart"],
         components: [
             "TitleComponent",
             "TooltipComponent",

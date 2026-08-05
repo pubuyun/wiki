@@ -61,7 +61,7 @@
 </template>
 
 <script setup lang="ts">
-import type { EChartsOption } from "echarts";
+import type { CustomSeriesRenderItem, EChartsOption } from "echarts";
 import { TabsContent, TabsList, TabsRoot, TabsTrigger } from "reka-ui";
 
 type Cycle = "cycle1" | "cycle2";
@@ -97,6 +97,7 @@ interface HeatmapDatum {
 interface MetricDefinition {
     key: keyof BinderRecord;
     label: string;
+    unit: string;
     higherIsBetter: boolean;
     digits: number;
 }
@@ -114,27 +115,49 @@ const metrics: MetricDefinition[] = [
     {
         key: "pLDDT(%)",
         label: "pLDDT",
+        unit: "%",
         higherIsBetter: true,
         digits: 2,
     },
-    { key: "i_pAE", label: "i_pAE", higherIsBetter: false, digits: 3 },
-    { key: "ptm", label: "pTM", higherIsBetter: true, digits: 3 },
-    { key: "iptm", label: "ipTM", higherIsBetter: true, digits: 3 },
+    {
+        key: "i_pAE",
+        label: "i_pAE",
+        unit: "Å",
+        higherIsBetter: false,
+        digits: 3,
+    },
+    {
+        key: "ptm",
+        label: "pTM",
+        higherIsBetter: true,
+        unit: "",
+        digits: 3,
+    },
+    {
+        key: "iptm",
+        label: "ipTM",
+        unit: "",
+        higherIsBetter: true,
+        digits: 3,
+    },
     {
         key: "conf_ranking_score",
         label: "Ranking score",
+        unit: "",
         higherIsBetter: true,
         digits: 3,
     },
     {
         key: "cg3m3sh_deltag",
         label: "ΔG",
+        unit: "kcal/mol",
         higherIsBetter: false,
         digits: 2,
     },
     {
         key: "Melting Temperature",
         label: "Melting temp.",
+        unit: "°C",
         higherIsBetter: true,
         digits: 2,
     },
@@ -163,12 +186,19 @@ function shortBinderName(name: string): string {
     const number = name.match(/(?:^|_)n_(\d+)/)?.[1];
     const id = name.match(/(?:^|_)id_(\d+)/)?.[1];
     const sequence = name.match(/_(mpnn|self)_seq(\d+)/i);
+    const rfdiffusion = name.match(
+        /_(l?cg3m3sh)_(\d+)_model_(\d+)\.cif_d(\d+)$/i,
+    );
 
     if (number && id) {
         const sequenceLabel = sequence
             ? ` · ${sequence[1].toUpperCase()} ${sequence[2]}`
             : "";
         return `n${number} · id${id}${sequenceLabel}`;
+    }
+
+    if (rfdiffusion) {
+        return `${rfdiffusion[1].toUpperCase()} ${rfdiffusion[2]} · M${rfdiffusion[3]} · D${rfdiffusion[4]}`;
     }
 
     return name.length > 34 ? `${name.slice(0, 31)}…` : name;
@@ -308,6 +338,31 @@ function buildHeatmapData(rows: BinderRow[]): HeatmapDatum[] {
     );
 }
 
+const renderRowSeparator: CustomSeriesRenderItem = (_, api) => {
+    const rowIndex = Number(api.value(0));
+    const start = api.coord([0, rowIndex]);
+    const end = api.coord([metrics.length - 1, rowIndex]);
+    const nextRow = api.coord([0, rowIndex + 1]);
+    const cellSize = api.size?.([1, 1]);
+    const cellWidth = Array.isArray(cellSize) ? cellSize[0] : 0;
+    const separatorY = (start[1] + nextRow[1]) / 2;
+
+    return {
+        type: "line",
+        shape: {
+            x1: start[0] - cellWidth / 2,
+            y1: separatorY,
+            x2: end[0] + cellWidth / 2,
+            y2: separatorY,
+        },
+        style: {
+            stroke: "rgba(255,255,255,0.9)",
+            lineWidth: 3,
+        },
+        silent: true,
+    };
+};
+
 function buildOption(cycle: Cycle, rows: BinderRow[]): EChartsOption {
     const cycleLabel = cycles.find((item) => item.value === cycle)?.label;
 
@@ -326,7 +381,7 @@ function buildOption(cycle: Cycle, rows: BinderRow[]): EChartsOption {
                 );
 
                 return [
-                    `<strong>${escapeHtml(binderSource.value === "proteina" ? datum.shortName : datum.name)}</strong>`,
+                    `<strong>${escapeHtml(datum.shortName)}</strong>`,
                     escapeHtml(datum.metric),
                     `Value: <strong>${formatValue(datum.rawValue, metric?.digits ?? 3)}</strong>`,
                 ].join("<br>");
@@ -336,12 +391,14 @@ function buildOption(cycle: Cycle, rows: BinderRow[]): EChartsOption {
             top: 150,
             right: 34,
             bottom: 30,
-            left: 74,
-            containLabel: false,
+            left: 34,
+            containLabel: true,
         },
         xAxis: {
             type: "category",
-            data: metrics.map((metric) => metric.label),
+            data: metrics.map((metric) =>
+                metric.unit ? `${metric.label} / ${metric.unit}` : metric.label,
+            ),
             position: "top",
             splitArea: { show: true },
             axisLabel: {
@@ -349,10 +406,6 @@ function buildOption(cycle: Cycle, rows: BinderRow[]): EChartsOption {
                 rotate: 0,
                 fontSize: 11,
                 lineHeight: 14,
-                formatter: (value: string) =>
-                    value
-                        .replace("Ranking score", "Ranking\nscore")
-                        .replace("Melting temp.", "Melting\ntemp."),
             },
         },
         yAxis: {
@@ -363,6 +416,7 @@ function buildOption(cycle: Cycle, rows: BinderRow[]): EChartsOption {
             axisLabel: {
                 width: 186,
                 overflow: "truncate",
+                margin: 8,
             },
         },
         visualMap: {
@@ -371,7 +425,7 @@ function buildOption(cycle: Cycle, rows: BinderRow[]): EChartsOption {
             dimension: 2,
             orient: "horizontal",
             left: "center",
-            top: 76,
+            top: 88,
             itemWidth: 12,
             itemHeight: 180,
             text: ["Stronger", "Weaker"],
@@ -410,8 +464,8 @@ function buildOption(cycle: Cycle, rows: BinderRow[]): EChartsOption {
                     },
                 },
                 itemStyle: {
-                    borderColor: "rgba(255,255,255,0.7)",
-                    borderWidth: 2,
+                    borderColor: "rgba(255,255,255,0.45)",
+                    borderWidth: 1,
                 },
                 emphasis: {
                     itemStyle: {
@@ -421,6 +475,18 @@ function buildOption(cycle: Cycle, rows: BinderRow[]): EChartsOption {
                         shadowColor: "rgba(16,42,67,0.28)",
                     },
                 },
+            },
+            {
+                name: "Row separators",
+                type: "custom",
+                coordinateSystem: "cartesian2d",
+                data: rows.slice(1).map((_, rowIndex) => [rowIndex]),
+                encode: { y: 0 },
+                renderItem: renderRowSeparator,
+                silent: true,
+                tooltip: { show: false },
+                animation: false,
+                z: 3,
             },
         ],
     };
