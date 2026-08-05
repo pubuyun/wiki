@@ -562,4 +562,110 @@ defineExpose({ getAnimationTargets });
     align-self: center;
     justify-self: center;
 }
+
+@media (orientation: portrait) {
+    .pathway {
+        display: grid;
+        grid-template-columns:
+            minmax(0, 1.15fr) minmax(2.5rem, 0.42fr) minmax(0, 1.15fr)
+            minmax(2.5rem, 0.42fr) minmax(0, 1.15fr);
+        align-items: stretch;
+        justify-content: initial;
+        gap: clamp(0.1rem, 0.6vw, 0.35rem);
+        padding: clamp(0.35rem, 1.5vw, 0.75rem);
+        translate: 0;
+    }
+
+    .pathway__row {
+        grid-template-columns: 1fr;
+        grid-template-rows: repeat(2, minmax(0, 1fr));
+        min-height: 0;
+    }
+
+    .pathway__side,
+    .pathway__main {
+        grid-column: 1;
+    }
+
+    .pathway__side {
+        grid-row: 1;
+    }
+
+    .pathway__main {
+        grid-row: 2;
+    }
+
+    .pathway__row--products .pathway__main {
+        grid-row: 1;
+    }
+
+    .pathway__row--products .pathway__side {
+        grid-row: 2;
+    }
+
+    .pathway__row--reactants .pathway__main {
+        grid-row: 1;
+    }
+
+    .pathway__row--reactants .pathway__side {
+        grid-row: 2;
+    }
+
+    .pathway__row--reactants .pathway__side h2,
+    .pathway__row--reactants .pathway__main h2 {
+        position: static;
+    }
+
+    .pathway__row--reactants > .pathway__plus {
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    .molecule h2 {
+        font-size: clamp(0.58rem, 2.1vw, 0.82rem);
+        line-height: 1;
+    }
+
+    .molecule__structure,
+    .molecule--small .molecule__structure,
+    .molecule--tiny .molecule__structure,
+    .molecule--side-product .molecule__structure {
+        height: clamp(3.25rem, 9svh, 5rem);
+    }
+
+    .molecule__simple-formula {
+        font-size: clamp(1rem, 4vw, 1.45rem);
+        transform: none;
+    }
+
+    .pathway__row--pepv-products .pathway__side h2,
+    .pathway__row--pepv-products .pathway__main h2,
+    .pathway__row--patb-products > .pathway__main h2 {
+        transform: none;
+    }
+
+    .reaction-arrow {
+        align-self: center;
+        height: clamp(2.5rem, 10vw, 4rem);
+    }
+
+    .reaction-arrow svg {
+        transform: rotate(-90deg);
+    }
+
+    .reaction-arrow__enzyme {
+        top: 50%;
+        left: 50%;
+        font-size: clamp(0.62rem, 2.2vw, 0.8rem);
+        transform: translate(-50%, -155%);
+    }
+
+    .pathway__byproducts {
+        grid-template-columns: minmax(0, 1fr) auto minmax(0, 1.35fr);
+        gap: clamp(0.1rem, 0.5vw, 0.3rem);
+        width: 100%;
+        margin-left: 0;
+    }
+}
 </style>

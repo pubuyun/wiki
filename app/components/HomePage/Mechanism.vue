@@ -88,6 +88,7 @@ const PRECURSOR_ANIMATION = {
 
 const scene = ref<HTMLElement | null>(null);
 const artwork = ref<HTMLElement | null>(null);
+const animationPlane = ref<HTMLElement | null>(null);
 const molecule = ref<HTMLElement | null>(null);
 const precursorVisual = ref<HTMLElement | null>(null);
 const gly = ref<HTMLImageElement | null>(null);
@@ -103,8 +104,8 @@ let context: gsap.Context | undefined;
 
 function pointVars(point: Point) {
     return {
-        x: () => (artwork.value?.clientWidth ?? 0) * point.x,
-        y: () => (artwork.value?.clientHeight ?? 0) * point.y,
+        x: () => (animationPlane.value?.clientWidth ?? 0) * point.x,
+        y: () => (animationPlane.value?.clientHeight ?? 0) * point.y,
     };
 }
 
@@ -112,6 +113,7 @@ onMounted(() => {
     if (
         !scene.value ||
         !artwork.value ||
+        !animationPlane.value ||
         !molecule.value ||
         !precursorVisual.value ||
         !gly.value ||
@@ -421,39 +423,54 @@ onUnmounted(() => {
                 draggable="false"
             />
 
-            <div class="mechanism-scene__pept">
-                <PeptAnim ref="peptAnim" :autoplay="false" />
-            </div>
+            <div ref="animationPlane" class="mechanism-scene__animation">
+                <div class="mechanism-scene__pept">
+                    <PeptAnim ref="peptAnim" :autoplay="false" />
+                </div>
 
-            <span
-                v-for="label in PROTEIN_LABELS"
-                :key="label.id"
-                class="mechanism-scene__protein-label"
-                :style="{
-                    left: `${label.position.x * 100}%`,
-                    top: `${label.position.y * 100}%`,
-                    color: label.color,
-                }"
-            >
-                {{ label.text }}
-            </span>
+                <span
+                    v-for="label in PROTEIN_LABELS"
+                    :key="label.id"
+                    class="mechanism-scene__protein-label"
+                    :style="{
+                        left: `${label.position.x * 100}%`,
+                        top: `${label.position.y * 100}%`,
+                        color: label.color,
+                    }"
+                >
+                    {{ label.text }}
+                </span>
 
-            <div ref="molecule" class="mechanism-scene__molecule">
-                <div ref="precursorVisual" class="mechanism-scene__precursor">
+                <div ref="molecule" class="mechanism-scene__molecule">
+                    <div
+                        ref="precursorVisual"
+                        class="mechanism-scene__precursor"
+                    >
+                        <img
+                            ref="cys3m3sh"
+                            class="mechanism-scene__molecule-layer"
+                            src="https://static.igem.wiki/teams/6133/wiki/homepage/precursorcys3m3sh.avif"
+                            alt=""
+                            loading="lazy"
+                            fetchpriority="low"
+                            decoding="async"
+                            draggable="false"
+                        />
+                        <img
+                            ref="gly"
+                            class="mechanism-scene__molecule-layer"
+                            src="https://static.igem.wiki/teams/6133/wiki/homepage/precursorgly.avif"
+                            alt=""
+                            loading="lazy"
+                            fetchpriority="low"
+                            decoding="async"
+                            draggable="false"
+                        />
+                    </div>
                     <img
-                        ref="cys3m3sh"
-                        class="mechanism-scene__molecule-layer"
-                        src="https://static.igem.wiki/teams/6133/wiki/homepage/precursorcys3m3sh.avif"
-                        alt=""
-                        loading="lazy"
-                        fetchpriority="low"
-                        decoding="async"
-                        draggable="false"
-                    />
-                    <img
-                        ref="gly"
-                        class="mechanism-scene__molecule-layer"
-                        src="https://static.igem.wiki/teams/6133/wiki/homepage/precursorgly.avif"
+                        ref="product"
+                        class="mechanism-scene__molecule-layer mechanism-scene__molecule-layer--product"
+                        src="https://static.igem.wiki/teams/6133/wiki/homepage/3m3sh.avif"
                         alt=""
                         loading="lazy"
                         fetchpriority="low"
@@ -461,16 +478,6 @@ onUnmounted(() => {
                         draggable="false"
                     />
                 </div>
-                <img
-                    ref="product"
-                    class="mechanism-scene__molecule-layer"
-                    src="https://static.igem.wiki/teams/6133/wiki/homepage/3m3sh.avif"
-                    alt=""
-                    loading="lazy"
-                    fetchpriority="low"
-                    decoding="async"
-                    draggable="false"
-                />
             </div>
         </div>
 
@@ -559,6 +566,14 @@ onUnmounted(() => {
     height: auto;
     transform: translate(-50%, -50%) rotate(90deg);
     user-select: none;
+}
+
+.mechanism-scene__animation {
+    position: absolute;
+    z-index: 1;
+    inset: 0;
+    overflow: visible;
+    transform-origin: 50% 50%;
 }
 
 .mechanism-scene__pept {
@@ -653,28 +668,83 @@ onUnmounted(() => {
     will-change: transform, opacity;
 }
 
-@media (max-width: 50rem) {
+@media (orientation: portrait) {
     .mechanism-scene {
-        --molecule-size: 14svh;
+        --artwork-height: 48.89vw;
+        --pept-size: 35vw;
+        --molecule-size: 17vw;
+
+        display: grid;
+        grid-template-rows: auto var(--artwork-height) minmax(0, 1fr);
+    }
+
+    .mechanism-scene::before {
+        display: none;
+    }
+
+    .mechanism-scene__artwork {
+        position: relative;
+        top: auto;
+        left: auto;
+        z-index: auto;
+        grid-row: 2;
+        width: 100vw;
+        height: var(--artwork-height);
+        transform: none;
+    }
+
+    .mechanism-scene__background {
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        transform: none;
+    }
+
+    .mechanism-scene__animation {
+        z-index: 4;
+        top: 50%;
+        left: 50%;
+        width: var(--artwork-height);
+        height: 100vw;
+        transform: translate(-50%, -50%) rotate(-90deg);
+    }
+
+    .mechanism-scene__protein-label {
+        transform: translate(-50%, -50%) rotate(90deg);
+    }
+
+    .mechanism-scene__molecule-layer--product {
+        rotate: 90deg;
     }
 
     .mechanism-scene__copy {
-        right: 0;
-        bottom: 1.5rem;
-        left: 0;
-        align-items: end;
+        position: relative;
+        inset: auto;
+        grid-row: 1;
+        grid-template: "copy" auto / minmax(0, 1fr);
+        padding: 5rem clamp(1rem, 5vw, 2rem);
+        background: #03316d;
         pointer-events: none;
     }
 
     .mechanism-scene__chemistry {
-        display: none;
+        position: relative;
+        inset: auto;
+        grid-row: 3;
+        width: 100%;
+        height: auto;
+        min-height: 0;
     }
 
     .mechanism-scene__copy-panel {
-        padding: 1rem;
-        font-size: clamp(1rem, 4vw, 1.25rem);
-        border-radius: 1rem;
-        background: color-mix(in srgb, #03316d 92%, transparent);
+        position: relative;
+        right: auto;
+        left: auto;
+        grid-area: copy;
+        width: 100%;
+        font-size: clamp(0.95rem, 3.8vw, 1.25rem);
+        line-height: 1.42;
     }
 }
 </style>
