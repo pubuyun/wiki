@@ -4,7 +4,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { onMounted, onUnmounted, ref } from "vue";
 
 import ChemicalFormulaPanel from "./Mechanism/ChemicalFormulaPanel.client.vue";
-import PeptAnim from "./Mechanism/PeptAnim.vue";
+import TransporterAnim from "./Mechanism/TransporterAnim.vue";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -13,7 +13,7 @@ type Point = {
     y: number;
 };
 
-type PeptAnimExpose = {
+type TransporterAnimExpose = {
     getTimeline: () => gsap.core.Timeline | undefined;
 };
 
@@ -97,7 +97,7 @@ const product = ref<HTMLImageElement | null>(null);
 const copyOne = ref<HTMLElement | null>(null);
 const copyTwo = ref<HTMLElement | null>(null);
 const copyThree = ref<HTMLElement | null>(null);
-const peptAnim = ref<PeptAnimExpose | null>(null);
+const peptAnim = ref<TransporterAnimExpose | null>(null);
 const chemicalPanel = ref<ChemicalPathwayExpose | null>(null);
 
 let context: gsap.Context | undefined;
@@ -425,7 +425,15 @@ onUnmounted(() => {
 
             <div ref="animationPlane" class="mechanism-scene__animation">
                 <div class="mechanism-scene__pept">
-                    <PeptAnim ref="peptAnim" :autoplay="false" />
+                    <TransporterAnim
+                        ref="peptAnim"
+                        left-src="https://static.igem.wiki/teams/6133/wiki/homepage/peptshl.avif"
+                        middle-src="https://static.igem.wiki/teams/6133/wiki/homepage/peptshm.avif"
+                        right-src="https://static.igem.wiki/teams/6133/wiki/homepage/peptshr.avif"
+                        :open-angle="-10"
+                        :closed-angle="10"
+                        :autoplay="false"
+                    />
                 </div>
 
                 <span

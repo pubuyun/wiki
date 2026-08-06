@@ -2,9 +2,19 @@
 import { gsap } from "gsap";
 import { onMounted, onUnmounted, ref } from "vue";
 
-const props = withDefaults(defineProps<{ autoplay?: boolean }>(), {
-    autoplay: true,
-});
+const props = withDefaults(
+    defineProps<{
+        leftSrc: string;
+        middleSrc: string;
+        rightSrc: string;
+        openAngle: number;
+        closedAngle: number;
+        autoplay?: boolean;
+    }>(),
+    {
+        autoplay: true,
+    },
+);
 
 const root = ref<HTMLElement | null>(null);
 const leftShell = ref<HTMLImageElement | null>(null);
@@ -63,14 +73,14 @@ onMounted(() => {
             .addLabel("closed", 0)
             .fromTo(
                 leftShell.value,
-                { rotation: 10 },
-                { rotation: -10, duration: 1, ease: "none" },
+                { rotation: props.closedAngle },
+                { rotation: props.openAngle, duration: 1, ease: "none" },
                 "closed",
             )
             .fromTo(
                 rightShell.value,
-                { rotation: -10 },
-                { rotation: 10, duration: 1, ease: "none" },
+                { rotation: -props.closedAngle },
+                { rotation: -props.openAngle, duration: 1, ease: "none" },
                 "closed",
             )
             .addLabel("open");
@@ -94,13 +104,13 @@ defineExpose({ close, getTimeline, open, playLoop });
 <template>
     <div
         ref="root"
-        class="pept-anim"
+        class="transporter-anim"
         role="img"
-        aria-label="Peptide transporter opening and closing"
+        aria-label="Transporter opening and closing"
     >
         <img
-            class="pept-anim__layer pept-anim__middle"
-            src="https://static.igem.wiki/teams/6133/wiki/homepage/peptshm.avif"
+            class="transporter-anim__layer transporter-anim__middle"
+            :src="middleSrc"
             alt=""
             loading="lazy"
             fetchpriority="low"
@@ -109,8 +119,8 @@ defineExpose({ close, getTimeline, open, playLoop });
         />
         <img
             ref="leftShell"
-            class="pept-anim__layer pept-anim__shell pept-anim__shell--left"
-            src="https://static.igem.wiki/teams/6133/wiki/homepage/peptshl.avif"
+            class="transporter-anim__layer transporter-anim__shell transporter-anim__shell--left"
+            :src="leftSrc"
             alt=""
             loading="lazy"
             fetchpriority="low"
@@ -119,8 +129,8 @@ defineExpose({ close, getTimeline, open, playLoop });
         />
         <img
             ref="rightShell"
-            class="pept-anim__layer pept-anim__shell pept-anim__shell--right"
-            src="https://static.igem.wiki/teams/6133/wiki/homepage/peptshr.avif"
+            class="transporter-anim__layer transporter-anim__shell transporter-anim__shell--right"
+            :src="rightSrc"
             alt=""
             loading="lazy"
             fetchpriority="low"
@@ -131,14 +141,14 @@ defineExpose({ close, getTimeline, open, playLoop });
 </template>
 
 <style scoped>
-.pept-anim {
+.transporter-anim {
     position: relative;
     width: min(100%, 60.25rem);
     aspect-ratio: 964 / 847;
     isolation: isolate;
 }
 
-.pept-anim__layer {
+.transporter-anim__layer {
     position: absolute;
     inset: 0;
     display: block;
@@ -148,20 +158,20 @@ defineExpose({ close, getTimeline, open, playLoop });
     user-select: none;
 }
 
-.pept-anim__middle {
+.transporter-anim__middle {
     z-index: 1;
 }
 
-.pept-anim__shell {
+.transporter-anim__shell {
     z-index: 2;
     will-change: transform;
 }
 
-.pept-anim__shell--left {
+.transporter-anim__shell--left {
     transform-origin: 40% 50%;
 }
 
-.pept-anim__shell--right {
+.transporter-anim__shell--right {
     transform-origin: 60% 50%;
 }
 </style>

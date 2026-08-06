@@ -52,6 +52,7 @@ export default defineNuxtConfig({
                 "@vue-flow/core",
                 "smiles-drawer",
                 "gsap/ScrollTrigger",
+                "gsap/MorphSVGPlugin",
             ],
         },
         plugins: [tailwindcss()],
