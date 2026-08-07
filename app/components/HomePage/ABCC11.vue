@@ -1,71 +1,1251 @@
 <script setup lang="ts">
+import { gsap } from "gsap";
+import { MotionPathPlugin } from "gsap/MotionPathPlugin";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { nextTick, onMounted, onUnmounted, ref } from "vue";
+
 import Chromosome from "./ABCC11/Chromosome.vue";
 import TransporterAnim from "./Mechanism/TransporterAnim.vue";
 
+gsap.registerPlugin(MotionPathPlugin, ScrollTrigger);
+
+type TransporterAnimExpose = {
+    getTimeline: () => gsap.core.Timeline | undefined;
+};
+
 const baseURL = useRuntimeConfig().app.baseURL.replace(/\/$/, "");
 const publicAsset = (fileName: string) => `${baseURL}/${fileName}`;
+
+// 汗腺右下角 ABCC11 转运蛋白的位置调节区。
+const GLAND_TRANSPORTER_POSITION = {
+    right: "-10%",
+    bottom: "-10%",
+    width: "77%",
+    rotation: -36,
+} as const;
+const glandTransporterStyle = {
+    right: GLAND_TRANSPORTER_POSITION.right,
+    bottom: GLAND_TRANSPORTER_POSITION.bottom,
+    width: GLAND_TRANSPORTER_POSITION.width,
+    transform: `rotate(${GLAND_TRANSPORTER_POSITION.rotation}deg)`,
+};
+
+// 汗腺 PNG 的旋转角度调节区。
+const GLAND_IMAGE_ROTATION = 20;
+const GLAND_IMAGE_SCALE = 1.25;
+const glandImageStyle = {
+    transform: `rotate(${GLAND_IMAGE_ROTATION}deg) scale(${GLAND_IMAGE_SCALE})`,
+};
+
+// “Axillary area” 位置调节区。
+const AXILLARY_LABEL_POSITION = {
+    right: "-24%",
+    bottom: "10%",
+} as const;
+const axillaryLabelStyle = {
+    right: AXILLARY_LABEL_POSITION.right,
+    bottom: AXILLARY_LABEL_POSITION.bottom,
+};
+
+// “Apocrine gland” 弧形标题的位置与旋转调节区。
+const APOCRINE_GLAND_LABEL_POSITION = {
+    top: "-9%",
+    left: "-13%",
+    rotation: -14,
+} as const;
+const apocrineGlandLabelStyle = {
+    top: APOCRINE_GLAND_LABEL_POSITION.top,
+    left: APOCRINE_GLAND_LABEL_POSITION.left,
+    transform: `rotate(${APOCRINE_GLAND_LABEL_POSITION.rotation}deg)`,
+};
+
+// “Staphylococcus hominis” 弧形标题的位置与旋转调节区。
+const STAPHYLOCOCCUS_LABEL_POSITION = {
+    right: "40%",
+    bottom: "-20%",
+    rotation: 0,
+} as const;
+const staphylococcusLabelStyle = {
+    right: STAPHYLOCOCCUS_LABEL_POSITION.right,
+    bottom: STAPHYLOCOCCUS_LABEL_POSITION.bottom,
+    transform: `rotate(${STAPHYLOCOCCUS_LABEL_POSITION.rotation}deg)`,
+};
+
+// 两个箭头的坐标、旋转与翻转缩放调节区。
+const STORY_ARROW_TRANSFORMS = {
+    first: { x: "18%", y: "0%", rotation: -22 },
+    second: { x: "0%", y: "0%", rotation: 62 },
+} as const;
+const storyArrowFirstStyle = {
+    "--arrow-x": STORY_ARROW_TRANSFORMS.first.x,
+    "--arrow-y": STORY_ARROW_TRANSFORMS.first.y,
+    "--arrow-rotation": `${STORY_ARROW_TRANSFORMS.first.rotation}deg`,
+};
+const storyArrowSecondStyle = {
+    "--arrow-x": STORY_ARROW_TRANSFORMS.second.x,
+    "--arrow-y": STORY_ARROW_TRANSFORMS.second.y,
+    "--arrow-rotation": `${STORY_ARROW_TRANSFORMS.second.rotation}deg`,
+};
+
+const scene = ref<HTMLElement | null>(null);
+const stage = ref<HTMLElement | null>(null);
+const odorGenotypes = ref<HTMLElement | null>(null);
+const ttGenotype = ref<HTMLElement | null>(null);
+const odorCopy = ref<HTMLElement | null>(null);
+const variantCopy = ref<HTMLElement | null>(null);
+const secondScene = ref<HTMLElement | null>(null);
+const glandTransporter = ref<TransporterAnimExpose | null>(null);
+const precursor = ref<HTMLElement | null>(null);
+const precursorVisual = ref<HTMLElement | null>(null);
+const precursorLabel = ref<HTMLElement | null>(null);
+
+type PrecursorPathPoint = {
+    x: number;
+    y: number;
+    rotation: number;
+    scale: number;
+    moveDuration: number;
+    visualDuration: number;
+    ease: string;
+};
+
+// Precursor 完整移动路径调节区：x / y 是相对整个 ABCC11 场景的百分比坐标。
+const PRECURSOR_PATH = {
+    start: {
+        x: 70,
+        y: 86,
+        rotation: 15,
+        scale: 1,
+        moveDuration: 0,
+        visualDuration: 0,
+        ease: "none",
+    },
+    glandEntry: {
+        x: 56,
+        y: 68,
+        rotation: 65,
+        scale: 0.66,
+        moveDuration: 0.72,
+        visualDuration: 0.55,
+        ease: "power2.inOut",
+    },
+    glandInside: {
+        x: 50,
+        y: 52,
+        rotation: 8,
+        scale: 0.88,
+        moveDuration: 0.72,
+        visualDuration: 0.55,
+        ease: "power2.inOut",
+    },
+    bacteria: {
+        x: 69,
+        y: 30,
+        rotation: 20,
+        scale: 1.05,
+        moveDuration: 0.65,
+        visualDuration: 0.65,
+        ease: "power2.inOut",
+    },
+    final: {
+        x: 95,
+        y: 42,
+        rotation: 20,
+        scale: 0.4,
+        moveDuration: 1,
+        visualDuration: 1,
+        ease: "power2.inOut",
+    },
+} as const satisfies Record<string, PrecursorPathPoint>;
+
+let media: gsap.MatchMedia | undefined;
+
+function precursorPointVars(point: PrecursorPathPoint) {
+    return {
+        x: () => scene.value!.clientWidth * (point.x / 100),
+        y: () => scene.value!.clientHeight * (point.y / 100),
+    };
+}
+
+function precursorCurvePath(points: readonly PrecursorPathPoint[]) {
+    return points.map((point) => ({
+        x: scene.value!.clientWidth * (point.x / 100),
+        y: scene.value!.clientHeight * (point.y / 100),
+    }));
+}
+
+onMounted(() => {
+    if (
+        !scene.value ||
+        !stage.value ||
+        !odorGenotypes.value ||
+        !ttGenotype.value ||
+        !odorCopy.value ||
+        !variantCopy.value ||
+        !secondScene.value ||
+        !precursor.value ||
+        !precursorVisual.value ||
+        !precursorLabel.value
+    ) {
+        return;
+    }
+
+    media = gsap.matchMedia();
+    media.add(
+        {
+            reduceMotion: "(prefers-reduced-motion: reduce)",
+            allowMotion: "(prefers-reduced-motion: no-preference)",
+        },
+        (context) => {
+            const { reduceMotion } = context.conditions as {
+                reduceMotion: boolean;
+            };
+            const phenotypeTransporters = gsap.utils.toArray<HTMLElement>(
+                ".genotype-result",
+                scene.value!,
+            );
+            const arrowPaths = gsap.utils.toArray<SVGPathElement>(
+                ".story-arrow__path",
+                scene.value!,
+            );
+            const arrowHeads = gsap.utils.toArray<SVGPathElement>(
+                ".story-arrow__head",
+                scene.value!,
+            );
+            const storyItems = gsap.utils.toArray<HTMLElement>(
+                ".abcc11-story__item, .abcc11-story__label, .abcc11-story__copy",
+                secondScene.value!,
+            );
+            const transporterTimeline = glandTransporter.value?.getTimeline();
+            const path = PRECURSOR_PATH;
+            const odorRouteDuration =
+                path.bacteria.moveDuration + path.final.moveDuration;
+
+            const topInset = () => {
+                const value = getComputedStyle(scene.value!).getPropertyValue(
+                    "--abcc11-top-space",
+                );
+                return Number.parseFloat(value) || 56;
+            };
+            const moveToTop = (element: HTMLElement) =>
+                topInset() - element.offsetTop;
+
+            transporterTimeline?.pause(0);
+            gsap.set(secondScene.value, { autoAlpha: 0 });
+            gsap.set(storyItems, { autoAlpha: 0, y: 24 });
+            gsap.set(phenotypeTransporters, { autoAlpha: 0, y: 18 });
+            gsap.set(precursor.value, {
+                ...precursorPointVars(path.start),
+                autoAlpha: 0,
+                xPercent: -50,
+                yPercent: -50,
+            });
+            gsap.set(precursorLabel.value, { autoAlpha: 1, y: 0 });
+            gsap.set(precursorVisual.value, {
+                rotation: path.start.rotation,
+                scale: path.start.scale,
+                transformOrigin: "50% 50%",
+            });
+            arrowPaths.forEach((path) => {
+                const length = path.getTotalLength();
+                gsap.set(path, {
+                    strokeDasharray: length,
+                    strokeDashoffset: length,
+                });
+            });
+            gsap.set(arrowHeads, { autoAlpha: 0 });
+
+            if (reduceMotion) {
+                gsap.set([odorCopy.value, variantCopy.value], {
+                    autoAlpha: 0,
+                });
+                gsap.set(odorGenotypes.value, {
+                    y: moveToTop(odorGenotypes.value!),
+                    scale: 0.78,
+                    transformOrigin: "left top",
+                });
+                gsap.set(ttGenotype.value, {
+                    y: moveToTop(ttGenotype.value!),
+                    scale: 0.78,
+                    transformOrigin: "right top",
+                });
+                gsap.set(
+                    [
+                        secondScene.value,
+                        precursor.value,
+                        ...storyItems,
+                        ...phenotypeTransporters,
+                    ],
+                    { autoAlpha: 1, y: 0 },
+                );
+                gsap.set(arrowPaths, { strokeDashoffset: 0 });
+                gsap.set(arrowHeads, { autoAlpha: 1 });
+                gsap.set(precursor.value, {
+                    ...precursorPointVars(path.final),
+                    autoAlpha: 1,
+                });
+                gsap.set(precursorVisual.value, {
+                    rotation: path.final.rotation,
+                    scale: path.final.scale,
+                });
+                gsap.set(precursorLabel.value, { autoAlpha: 0 });
+                return;
+            }
+
+            const timeline = gsap.timeline({
+                defaults: { ease: "none" },
+                scrollTrigger: {
+                    id: "abcc11-genotype-story",
+                    trigger: scene.value,
+                    start: "top top",
+                    end: () => `+=${window.innerHeight * 4.8}`,
+                    scrub: 0.65,
+                    pin: true,
+                    anticipatePin: 1,
+                    invalidateOnRefresh: true,
+                },
+            });
+
+            timeline
+                .addLabel("firstScene", 0)
+                .to(
+                    [odorCopy.value, variantCopy.value],
+                    {
+                        autoAlpha: 0,
+                        y: -24,
+                        duration: 0.42,
+                        stagger: 0.05,
+                    },
+                    "firstScene+=0.12",
+                )
+                .addLabel("moveGenotypes", 0.4)
+                .to(
+                    odorGenotypes.value,
+                    {
+                        y: () => moveToTop(odorGenotypes.value!),
+                        scale: 0.78,
+                        transformOrigin: "left top",
+                        duration: 0.65,
+                        ease: "power2.inOut",
+                    },
+                    "moveGenotypes",
+                )
+                .to(
+                    ttGenotype.value,
+                    {
+                        y: () => moveToTop(ttGenotype.value!),
+                        scale: 0.78,
+                        transformOrigin: "right top",
+                        duration: 0.65,
+                        ease: "power2.inOut",
+                    },
+                    "moveGenotypes",
+                )
+                .to(
+                    phenotypeTransporters,
+                    {
+                        autoAlpha: 1,
+                        y: 0,
+                        duration: 0.35,
+                        stagger: 0.08,
+                        ease: "power2.out",
+                    },
+                    "moveGenotypes+=0.38",
+                )
+                .addLabel("story", ">-0.06")
+                .to(secondScene.value, { autoAlpha: 1, duration: 0.2 }, "story")
+                .to(
+                    precursor.value,
+                    { autoAlpha: 1, duration: 0.35 },
+                    "story+=0.12",
+                )
+                .to(
+                    storyItems,
+                    {
+                        autoAlpha: 1,
+                        y: 0,
+                        duration: 0.45,
+                        stagger: 0.08,
+                        ease: "power2.out",
+                    },
+                    "story",
+                )
+                .to(
+                    arrowPaths,
+                    {
+                        strokeDashoffset: 0,
+                        duration: 0.62,
+                        stagger: 0.12,
+                        ease: "power1.inOut",
+                    },
+                    "story+=0.18",
+                )
+                .to(arrowHeads, { autoAlpha: 1, duration: 0.16 }, "story+=0.68")
+                .addLabel("transport", ">+0.12")
+                .to(
+                    precursorLabel.value,
+                    { autoAlpha: 0, y: -8, duration: 0.22 },
+                    "transport",
+                )
+                .to(
+                    precursor.value,
+                    {
+                        ...precursorPointVars(path.glandEntry),
+                        duration: path.glandEntry.moveDuration,
+                        ease: path.glandEntry.ease,
+                    },
+                    "transport",
+                )
+                .to(
+                    precursorVisual.value,
+                    {
+                        rotation: path.glandEntry.rotation,
+                        scale: path.glandEntry.scale,
+                        duration: path.glandEntry.visualDuration,
+                        ease: path.glandEntry.ease,
+                    },
+                    "transport",
+                );
+
+            timeline.addLabel("throughTransporter");
+
+            if (transporterTimeline) {
+                timeline.to(
+                    transporterTimeline,
+                    {
+                        progress: 1,
+                        duration: path.glandInside.moveDuration,
+                        ease: "power2.inOut",
+                    },
+                    "throughTransporter",
+                );
+            }
+
+            timeline
+                .to(
+                    precursor.value,
+                    {
+                        ...precursorPointVars(path.glandInside),
+                        duration: path.glandInside.moveDuration,
+                        ease: path.glandInside.ease,
+                    },
+                    "throughTransporter",
+                )
+                .to(
+                    precursorVisual.value,
+                    {
+                        rotation: path.glandInside.rotation,
+                        scale: path.glandInside.scale,
+                        duration: path.glandInside.visualDuration,
+                        ease: path.glandInside.ease,
+                    },
+                    "throughTransporter",
+                );
+
+            timeline
+                .addLabel(
+                    "odorRoute",
+                    `throughTransporter+=${path.glandInside.moveDuration}`,
+                )
+                .to(
+                    precursor.value,
+                    {
+                        motionPath: {
+                            path: () =>
+                                precursorCurvePath([
+                                    path.glandInside,
+                                    path.bacteria,
+                                    path.final,
+                                ]),
+                            curviness: 1.35,
+                        },
+                        duration: odorRouteDuration,
+                        ease: "power1.inOut",
+                    },
+                    "odorRoute",
+                )
+                .to(
+                    precursorVisual.value,
+                    {
+                        keyframes: [
+                            {
+                                rotation: path.bacteria.rotation,
+                                scale: path.bacteria.scale,
+                                duration: path.bacteria.moveDuration,
+                                ease: path.bacteria.ease,
+                            },
+                            {
+                                rotation: path.final.rotation,
+                                scale: path.final.scale,
+                                duration: path.final.moveDuration,
+                                ease: path.final.ease,
+                            },
+                        ],
+                    },
+                    "odorRoute",
+                );
+
+            if (transporterTimeline) {
+                timeline.to(
+                    transporterTimeline,
+                    {
+                        progress: 0,
+                        duration: path.bacteria.moveDuration,
+                        ease: "power2.inOut",
+                    },
+                    "odorRoute",
+                );
+            }
+        },
+        scene.value,
+    );
+
+    void nextTick(() => ScrollTrigger.refresh());
+});
+
+onUnmounted(() => {
+    media?.revert();
+});
 </script>
 
 <template>
-    <section id="abcc11" class="abcc11-scene" aria-labelledby="abcc11-title">
+    <section
+        id="abcc11"
+        ref="scene"
+        class="abcc11-scene"
+        aria-labelledby="abcc11-title"
+    >
         <h2 id="abcc11-title" class="sr-only">ABCC11 genotype</h2>
-        <div class="abcc11-scene__content">
-            <Chromosome :genome="1" />
-            <TransporterAnim
-                class="abcc11-scene__transporter"
-                :left-src="publicAsset('abcc11l.png')"
-                :middle-src="publicAsset('abcc11m.png')"
-                :right-src="publicAsset('abcc11r.png')"
-                :open-angle="-5"
-                :closed-angle="12"
-            />
+        <div ref="stage" class="abcc11-scene__stage">
+            <div
+                ref="odorGenotypes"
+                class="genotype-group genotype-group--odor"
+                aria-label="CC and TC genotypes express the ABCC11 transporter"
+            >
+                <div class="genotype-group__chromosomes">
+                    <Chromosome :genome="0" />
+                    <Chromosome :genome="1" />
+                </div>
+                <div class="genotype-result" aria-hidden="true">
+                    <div class="transporter-stack">
+                        <img :src="publicAsset('abcc11m.png')" alt="" />
+                        <img :src="publicAsset('abcc11l.png')" alt="" />
+                        <img :src="publicAsset('abcc11r.png')" alt="" />
+                    </div>
+                </div>
+            </div>
+
+            <p ref="odorCopy" class="scene-copy scene-copy--odor">
+                Axillary odor production is influenced by genetic variations in
+                the <strong>ABCC11 gene.</strong>
+            </p>
+
+            <p ref="variantCopy" class="scene-copy scene-copy--variant">
+                <strong>Specific variants</strong> of this gene strongly
+                correlate with the odor producing phenotype.
+            </p>
+
+            <div
+                ref="ttGenotype"
+                class="genotype-group genotype-group--tt"
+                aria-label="TT genotype does not express the ABCC11 transporter"
+            >
+                <div class="genotype-group__chromosomes">
+                    <Chromosome :genome="2" />
+                </div>
+                <div class="genotype-result" aria-hidden="true">
+                    <div class="transporter-stack">
+                        <img :src="publicAsset('abcc11m.png')" alt="" />
+                        <img :src="publicAsset('abcc11l.png')" alt="" />
+                        <img :src="publicAsset('abcc11r.png')" alt="" />
+                        <svg
+                            class="transporter-stack__cross"
+                            viewBox="0 0 100 100"
+                        >
+                            <path d="M16 16 84 84M84 16 16 84" />
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
+            <div ref="secondScene" class="abcc11-story">
+                <div class="abcc11-story__flow">
+                    <figure class="abcc11-story__item abcc11-story__person">
+                        <img
+                            :src="publicAsset('wavehand.png')"
+                            alt="A person raising an arm, showing the axillary area"
+                            draggable="false"
+                        />
+                        <figcaption
+                            class="abcc11-story__label abcc11-story__label--person"
+                            :style="axillaryLabelStyle"
+                        >
+                            Axillary area
+                        </figcaption>
+                    </figure>
+
+                    <svg
+                        class="story-arrow story-arrow--first"
+                        :style="storyArrowFirstStyle"
+                        viewBox="-8 -8 347 72"
+                        aria-hidden="true"
+                    >
+                        <defs>
+                            <mask
+                                id="abcc11-arrow-mask-one"
+                                maskUnits="userSpaceOnUse"
+                                x="-8"
+                                y="-8"
+                                width="346.62"
+                                height="71.251"
+                            >
+                                <path d="M-8-8H338.62V63.251H-8Z" fill="#fff" />
+                                <path
+                                    d="m306.518 5.054 18.739.662-5.883 17.803Z"
+                                    fill="#000"
+                                    stroke="#000"
+                                    stroke-linejoin="round"
+                                    stroke-width="7.5"
+                                />
+                            </mask>
+                        </defs>
+                        <g>
+                            <path
+                                class="story-arrow__path"
+                                mask="url(#abcc11-arrow-mask-one)"
+                                d="M5.424 5.383C128.762 66.396 235.309 66.54 325.067 5.816"
+                            />
+                            <path
+                                class="story-arrow__head"
+                                d="m305.064 5.152 19.988.707-6.275 18.99Z"
+                            />
+                        </g>
+                    </svg>
+
+                    <figure
+                        class="abcc11-story__item abcc11-story__gland"
+                        aria-label="Apocrine gland"
+                    >
+                        <img
+                            class="abcc11-story__gland-image"
+                            :src="publicAsset('gland.png')"
+                            :style="glandImageStyle"
+                            alt="Apocrine gland"
+                            draggable="false"
+                        />
+                        <TransporterAnim
+                            ref="glandTransporter"
+                            class="abcc11-scene__transporter"
+                            :style="glandTransporterStyle"
+                            :left-src="publicAsset('abcc11l.png')"
+                            :middle-src="publicAsset('abcc11m.png')"
+                            :right-src="publicAsset('abcc11r.png')"
+                            :open-angle="-5"
+                            :closed-angle="12"
+                            :autoplay="false"
+                        />
+                        <svg
+                            class="abcc11-story__curve-label abcc11-story__curve-label--gland"
+                            :style="apocrineGlandLabelStyle"
+                            viewBox="0 0 620 240"
+                            aria-hidden="true"
+                        >
+                            <path
+                                id="abcc11-gland-label-curve"
+                                d="M70 196Q310 6 550 196"
+                            />
+                            <text>
+                                <textPath
+                                    href="#abcc11-gland-label-curve"
+                                    startOffset="50%"
+                                    text-anchor="middle"
+                                >
+                                    Apocrine gland
+                                </textPath>
+                            </text>
+                        </svg>
+                    </figure>
+
+                    <svg
+                        class="story-arrow story-arrow--second"
+                        :style="storyArrowSecondStyle"
+                        viewBox="-8 -8 347 72"
+                        aria-hidden="true"
+                    >
+                        <defs>
+                            <mask
+                                id="abcc11-arrow-mask-two"
+                                maskUnits="userSpaceOnUse"
+                                x="-8"
+                                y="-8"
+                                width="346.62"
+                                height="71.251"
+                            >
+                                <path d="M-8-8H338.62V63.251H-8Z" fill="#fff" />
+                                <path
+                                    d="m306.518 5.054 18.739.662-5.883 17.803Z"
+                                    fill="#000"
+                                    stroke="#000"
+                                    stroke-linejoin="round"
+                                    stroke-width="7.5"
+                                />
+                            </mask>
+                        </defs>
+                        <g>
+                            <path
+                                class="story-arrow__path"
+                                mask="url(#abcc11-arrow-mask-two)"
+                                d="M5.424 5.383C128.762 66.396 235.309 66.54 325.067 5.816"
+                            />
+                            <path
+                                class="story-arrow__head"
+                                d="m305.064 5.152 19.988.707-6.275 18.99Z"
+                            />
+                        </g>
+                    </svg>
+
+                    <figure
+                        class="abcc11-story__item abcc11-story__bacteria"
+                        aria-label="Staphylococcus hominis"
+                    >
+                        <img
+                            :src="publicAsset('shominis.png')"
+                            alt="Staphylococcus hominis bacteria"
+                            class="translate-x-[-15%]"
+                            draggable="false"
+                        />
+                        <svg
+                            class="abcc11-story__curve-label abcc11-story__curve-label--bacteria"
+                            :style="staphylococcusLabelStyle"
+                            viewBox="0 0 540 160"
+                            aria-hidden="true"
+                        >
+                            <path
+                                id="abcc11-bacteria-label-curve"
+                                d="M20 55Q400 255 780 55"
+                            />
+                            <text>
+                                <textPath
+                                    href="#abcc11-bacteria-label-curve"
+                                    startOffset="50%"
+                                    text-anchor="middle"
+                                    textLength="700"
+                                    lengthAdjust="spacingAndGlyphs"
+                                >
+                                    Staphylococcus hominis
+                                </textPath>
+                            </text>
+                        </svg>
+                    </figure>
+                </div>
+
+                <div class="abcc11-story__footer">
+                    <p class="abcc11-story__copy">
+                        <strong>People with </strong>
+                        <span class="abcc11-story__gene">ABCC11 gene</span>
+                        express a transporter that transports odor precursor out
+                        to the apocrine gland in axilliary area.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div
+            ref="precursor"
+            class="abcc11-precursor"
+            aria-label="Odor precursor"
+        >
+            <div ref="precursorVisual" class="abcc11-precursor__visual">
+                <img
+                    class="abcc11-precursor__layer"
+                    src="https://static.igem.wiki/teams/6133/wiki/homepage/precursorcys3m3sh.avif"
+                    alt=""
+                    draggable="false"
+                />
+                <img
+                    class="abcc11-precursor__layer"
+                    src="https://static.igem.wiki/teams/6133/wiki/homepage/precursorgly.avif"
+                    alt=""
+                    draggable="false"
+                />
+            </div>
+            <span ref="precursorLabel" class="abcc11-precursor__label">
+                Cys-Gly-3M3SH
+            </span>
         </div>
     </section>
 </template>
 
 <style scoped>
 .abcc11-scene {
-    display: grid;
+    --abcc11-top-space: calc(var(--spacing, 0.25rem) * 14);
+
+    position: relative;
+    isolation: isolate;
     width: 100%;
     height: 100svh;
-    min-height: 30rem;
-    padding: clamp(1.5rem, 5vw, 5rem);
+    min-height: 36rem;
     overflow: hidden;
-    place-items: center;
-    background: #073772;
+    background: #073873;
 }
 
-.abcc11-scene__content {
-    display: grid;
-    grid-template-columns: minmax(0, 1.2fr) minmax(16rem, 0.8fr);
-    gap: clamp(1rem, 4vw, 4rem);
-    align-items: center;
-    width: min(92vw, 90rem);
-}
-
-.abcc11-scene :deep(.chromosome-illustration) {
+.abcc11-scene__stage {
+    position: relative;
     width: 100%;
-    max-height: min(82svh, 48rem);
+    max-width: 120rem;
+    height: 100%;
+    margin-inline: auto;
+}
+
+.abcc11-precursor {
+    position: absolute;
+    z-index: 30;
+    top: 0;
+    left: 0;
+    width: clamp(4rem, 6.5vw, 7.5rem);
+    aspect-ratio: 1;
+    visibility: hidden;
+    pointer-events: none;
+    will-change: transform, opacity;
+}
+
+.abcc11-precursor__visual,
+.abcc11-precursor__layer {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.abcc11-precursor__visual {
+    will-change: transform;
+}
+
+.abcc11-precursor__layer {
+    display: block;
+    object-fit: contain;
+    transform: scaleX(-1);
+    user-select: none;
+    will-change: transform, opacity;
+}
+
+.abcc11-precursor__label {
+    position: absolute;
+    top: calc(100% + 0.25rem);
+    left: 50%;
+    color: #fff;
+    font-family: var(--font-righteous), sans-serif;
+    font-size: clamp(0.72rem, 1.15vw, 1.2rem);
+    line-height: 1;
+    white-space: nowrap;
+    transform: translateX(-50%);
+    will-change: transform, opacity;
+}
+
+.genotype-group {
+    --chromosome-size: clamp(9rem, 14vw, 16rem);
+    --transporter-size: clamp(9rem, 14vw, 16rem);
+
+    position: absolute;
+    z-index: 6;
+    display: flex;
+    align-items: center;
+    will-change: transform;
+}
+
+.genotype-group__chromosomes {
+    display: flex;
+    flex: 0 0 auto;
+    align-items: flex-start;
+    min-width: 0;
+}
+
+.genotype-group--odor .genotype-group__chromosomes {
+    width: calc(var(--chromosome-size) * 2);
+}
+
+.genotype-group--tt .genotype-group__chromosomes {
+    width: var(--chromosome-size);
+}
+
+.genotype-group--odor {
+    top: var(--abcc11-top-space);
+    left: clamp(1.5rem, 5vw, 6rem);
+    width: calc(var(--chromosome-size) * 2 + var(--transporter-size) - 2rem);
+}
+
+.genotype-group--tt {
+    top: auto;
+    right: clamp(1.5rem, 5vw, 6rem);
+    bottom: clamp(3.5rem, 14svh, 9rem);
+    width: calc(var(--chromosome-size) + var(--transporter-size) - 2rem);
+}
+
+.genotype-group :deep(.chromosome-illustration) {
+    width: 100%;
+    min-width: 0;
+}
+
+.genotype-result {
+    flex: 0 0 var(--transporter-size);
+    margin-left: clamp(-3rem, -2vw, -1rem);
+    will-change: transform, opacity;
+}
+
+.transporter-stack {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 964 / 847;
+}
+
+.transporter-stack img,
+.transporter-stack__cross {
+    position: absolute;
+    inset: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.transporter-stack__cross {
+    z-index: 5;
+    inset: 14%;
+    width: 72%;
+    height: 72%;
+    overflow: visible;
+}
+
+.transporter-stack__cross path {
+    fill: none;
+    stroke: #fff;
+    stroke-linecap: round;
+    stroke-width: 10;
+    filter: drop-shadow(0 2px 2px rgb(1 32 72 / 40%));
+}
+
+.scene-copy {
+    position: absolute;
+    z-index: 2;
+    margin: 0;
+    color: #fff;
+    font-family: var(--font-righteous), sans-serif;
+    font-size: clamp(1.45rem, 3.15vw, 4rem);
+    line-height: 1.48;
+    text-align: center;
+    text-wrap: balance;
+    will-change: transform, opacity;
+}
+
+.scene-copy strong {
+    font-weight: inherit;
+}
+
+.scene-copy--odor {
+    top: clamp(5rem, 16svh, 10rem);
+    right: clamp(1.5rem, 5vw, 6rem);
+    width: min(45vw, 54rem);
+}
+
+.scene-copy--odor strong {
+    color: #ff594e;
+}
+
+.scene-copy--variant {
+    bottom: clamp(3.5rem, 14svh, 9rem);
+    left: clamp(1.5rem, 4vw, 5rem);
+    width: min(56vw, 64rem);
+}
+
+.scene-copy--variant strong {
+    color: #64dbbb;
+}
+
+.abcc11-story {
+    position: absolute;
+    z-index: 3;
+    inset: clamp(10.5rem, 24svh, 15rem) clamp(1rem, 4vw, 4rem) 0;
+    display: grid;
+    grid-template-rows: minmax(0, 1fr) minmax(5rem, auto);
+    visibility: hidden;
+    will-change: opacity;
+}
+
+.abcc11-story__flow {
+    display: grid;
+    grid-template-columns:
+        minmax(10rem, 1fr) minmax(5rem, 0.58fr) minmax(12rem, 1.25fr)
+        minmax(5rem, 0.58fr) minmax(11rem, 1fr);
+    align-items: center;
+    min-height: 0;
+}
+
+.abcc11-story__item {
+    position: relative;
+    align-self: center;
+    min-width: 0;
+    margin: 0;
+    will-change: transform, opacity;
+}
+
+.abcc11-story__item > img,
+.abcc11-story__item > :deep(svg) {
+    display: block;
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+}
+
+.abcc11-story__person {
+    align-self: center;
+    width: min(100%, 22rem);
+}
+
+.abcc11-story__gland {
+    width: min(75%, 20.25rem);
+    justify-self: center;
+}
+
+.abcc11-story__gland-image {
+    transform-origin: 50% 50%;
+}
+
+.abcc11-story__bacteria {
+    width: min(75%, 18rem);
+    justify-self: end;
+}
+
+.abcc11-story__label {
+    position: absolute;
+    z-index: 5;
+    color: #fff;
+    font-family: var(--font-righteous), sans-serif;
+    font-size: clamp(1rem, 1.8vw, 2rem);
+    line-height: 1;
+    white-space: nowrap;
+    text-shadow: 0 3px 2px rgb(0 30 67 / 45%);
+    will-change: transform, opacity;
+}
+
+.abcc11-story__label--person {
+    transform: none;
+}
+
+.abcc11-story__curve-label {
+    position: absolute;
+    z-index: 6;
+    display: block;
+    overflow: visible;
+    pointer-events: none;
+}
+
+.abcc11-story__curve-label path {
+    fill: none;
+    stroke: none;
+}
+
+.abcc11-story__curve-label text {
+    fill: #fff;
+    font-family: var(--font-righteous), sans-serif;
+    font-size: clamp(2.2rem, 4.2vw, 4.6rem);
+    text-shadow: 0 3px 2px rgb(0 30 67 / 45%);
+}
+
+.abcc11-story__curve-label--gland {
+    width: 114%;
+}
+
+.abcc11-story__curve-label--bacteria {
+    width: 116%;
+}
+
+.abcc11-story__curve-label--bacteria text {
+    font-style: italic;
+}
+
+.story-arrow {
+    --arrow-x: 0%;
+    --arrow-y: 0%;
+    --arrow-rotation: 0deg;
+
+    display: block;
+    width: 100%;
+    overflow: visible;
+    color: #fff;
+    transform: translate(var(--arrow-x), var(--arrow-y))
+        rotate(var(--arrow-rotation)) scale(1.5) scaleY(-1);
+    transform-origin: 50% 50%;
+}
+
+.story-arrow--first {
+    /* 将当前箭头上下镜像，使弧线向下弯。 */
+    transform: translate(var(--arrow-x), var(--arrow-y))
+        rotate(var(--arrow-rotation)) scale(1.5) scaleY(1);
+}
+
+.story-arrow__path {
+    fill: none;
+    stroke: currentcolor;
+    stroke-linecap: round;
+    stroke-width: 8;
+    will-change: stroke-dashoffset;
+}
+
+.story-arrow__head {
+    fill: currentcolor;
+    stroke: currentcolor;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 8;
 }
 
 .abcc11-scene__transporter {
-    width: 100%;
+    position: absolute;
+    z-index: 5;
+    transform-origin: 50% 50%;
 }
 
-@media (orientation: portrait) {
-    .abcc11-scene__content {
-        grid-template-columns: 1fr;
-        width: min(96vw, 45rem);
+.abcc11-story__footer {
+    display: block;
+    padding: 0 clamp(1rem, 3vw, 3rem) clamp(1rem, 2.5svh, 2.25rem);
+}
+
+.abcc11-story__copy {
+    z-index: 5;
+    width: min(100%, 72rem);
+    max-width: 50%;
+    margin: 0;
+    color: #fff;
+    font-family: var(--font-righteous), sans-serif;
+    font-size: clamp(1.05rem, 2.05vw, 2.35rem);
+    line-height: 1.42;
+    text-align: left;
+    will-change: transform, opacity;
+}
+
+.abcc11-story__copy strong {
+    font-weight: inherit;
+}
+
+.abcc11-story__gene {
+    color: #ff6257;
+}
+
+@media (max-width: 52rem) {
+    .genotype-group {
+        --chromosome-size: clamp(6.5rem, 22vw, 9rem);
+        --transporter-size: clamp(6.5rem, 22vw, 9rem);
     }
 
-    .abcc11-scene :deep(.chromosome-illustration) {
-        width: 100%;
-        max-height: 52svh;
+    .genotype-group--odor {
+        top: 8svh;
+        left: 3vw;
+        width: 67vw;
     }
 
-    .abcc11-scene__transporter {
-        justify-self: center;
-        width: min(70%, 22rem);
+    .genotype-group--tt {
+        top: auto;
+        right: 3vw;
+        bottom: 25svh;
+    }
+
+    .genotype-result {
+        flex-basis: var(--transporter-size);
+    }
+
+    .scene-copy {
+        font-size: clamp(1.1rem, 4.5vw, 2.25rem);
+        line-height: 1.32;
+    }
+
+    .scene-copy--odor {
+        top: 33svh;
+        right: 5vw;
+        width: 72vw;
+    }
+
+    .scene-copy--variant {
+        bottom: 25svh;
+        left: 5vw;
+        width: 50vw;
+    }
+
+    .abcc11-story {
+        inset: 20svh 2vw 0;
+    }
+
+    .abcc11-story__flow {
+        grid-template-columns: 0.86fr 0.3fr 1fr 0.3fr 0.86fr;
+    }
+
+    .abcc11-story__label {
+        font-size: clamp(0.65rem, 2.4vw, 1rem);
+    }
+
+    .abcc11-story__curve-label text {
+        font-size: clamp(2.25rem, 6vw, 3.4rem);
+    }
+
+    .story-arrow__path {
+        stroke-width: 10;
+    }
+
+    .abcc11-story__copy {
+        font-size: clamp(0.82rem, 2.8vw, 1.1rem);
+    }
+
+    .abcc11-story__footer {
+        grid-template-columns: minmax(0, 1fr) clamp(5.5rem, 18vw, 8rem);
+        gap: 0.75rem;
+    }
+}
+
+@media (orientation: portrait) and (max-width: 40rem) {
+    .abcc11-story {
+        top: 18svh;
+    }
+
+    .abcc11-story__flow {
+        grid-template-columns: minmax(0, 1fr) 2.75rem minmax(0, 1.1fr);
+        grid-template-rows: 1fr 1fr;
+    }
+
+    .abcc11-story__person {
+        grid-column: 1;
+        grid-row: 1;
+    }
+
+    .story-arrow--first {
+        grid-column: 2;
+        grid-row: 1;
+    }
+
+    .abcc11-story__gland {
+        grid-column: 3;
+        grid-row: 1;
+    }
+
+    .story-arrow--second {
+        grid-column: 2;
+        grid-row: 2;
+    }
+
+    .abcc11-story__bacteria {
+        grid-column: 3;
+        grid-row: 2;
+        width: 80%;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .genotype-group,
+    .genotype-result,
+    .scene-copy,
+    .abcc11-story__item,
+    .abcc11-story__label,
+    .abcc11-story__copy {
+        animation: none !important;
+        transition: none !important;
     }
 }
 </style>
