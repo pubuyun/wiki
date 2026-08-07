@@ -20,7 +20,7 @@ const lazyScenes = [
 ] as const;
 
 definePageMeta({
-    layout: "static",
+    layout: "home",
 });
 useSeoMeta({
     title: "Expelliodor",
