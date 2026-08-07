@@ -43,7 +43,7 @@ type ChemicalPathwayExpose = {
 
 // scene2
 const PATH_POINTS = {
-    outsideStart: { x: 1.3, y: 0.155 },
+    outsideStart: { x: 1.7, y: 0.155 },
     transporter: { x: 0.85, y: 0.155 },
     insideMembrane: { x: 0.76, y: 0.17 },
     pointA: { x: 0.41, y: 0.32 },
@@ -196,7 +196,9 @@ onMounted(() => {
                 trigger: scene.value,
                 start: "top top",
                 end: () => `+=${window.innerHeight * 5}`,
-                scrub: 0.6,
+                // Keep the local actor exactly aligned with the incoming
+                // cross-scene route during forward and reverse handoff.
+                scrub: true,
                 pin: true,
                 anticipatePin: 1,
                 invalidateOnRefresh: true,
@@ -434,6 +436,15 @@ onUnmounted(() => {
                 ref="animationPlane"
                 class="mechanism-scene__animation absolute inset-0 z-1 origin-center overflow-visible portrait:top-1/2 portrait:left-1/2 portrait:z-4 portrait:-translate-x-1/2 portrait:-translate-y-1/2 portrait:-rotate-90"
             >
+                <span
+                    class="precursor-transition-target pointer-events-none absolute size-0"
+                    :style="{
+                        left: `${PATH_POINTS.outsideStart.x * 100}%`,
+                        top: `${PATH_POINTS.outsideStart.y * 100}%`,
+                    }"
+                    aria-hidden="true"
+                />
+
                 <div
                     class="mechanism-scene__pept absolute z-1 -translate-x-1/2 -translate-y-1/2 rotate-90 overflow-visible"
                 >

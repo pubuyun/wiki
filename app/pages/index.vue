@@ -11,6 +11,9 @@ const lazyScenes = [
     {
         id: "mechanism",
         loader: () => import("../components/HomePage/Mechanism.vue"),
+        // The cross-scene precursor path needs Mechanism's anchor and
+        // ScrollTrigger before ABCC11 reaches glandInside for the first time.
+        loadImmediately: true,
     },
     {
         id: "solution",

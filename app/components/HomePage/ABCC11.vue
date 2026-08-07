@@ -162,10 +162,10 @@ const PRECURSOR_PATH = {
         ease: "power2.inOut",
     },
     final: {
-        x: 95,
-        y: 43,
+        x: 74,
+        y: 45,
         rotation: 20,
-        scale: 0.4,
+        scale: 1,
         moveDuration: 1,
         visualDuration: 1,
         ease: "power2.inOut",
@@ -173,6 +173,16 @@ const PRECURSOR_PATH = {
 } as const satisfies Record<string, PrecursorPathPoint>;
 
 let media: gsap.MatchMedia | undefined;
+const precursorTeleportDisabled = ref(true);
+let motionPreference: MediaQueryList | undefined;
+let precursorRouteTimeline: gsap.core.Timeline | undefined;
+let precursorRouteObserver: MutationObserver | undefined;
+let precursorRouteFrame = 0;
+let precursorRouteState: "before" | "moving" | "after" | undefined;
+
+function syncPrecursorTeleport() {
+    precursorTeleportDisabled.value = motionPreference?.matches ?? true;
+}
 
 function precursorPointVars(point: PrecursorPathPoint) {
     return {
@@ -188,7 +198,211 @@ function precursorCurvePath(points: readonly PrecursorPathPoint[]) {
     }));
 }
 
+function pointInPinnedScene(anchor: HTMLElement, pinnedScene: HTMLElement) {
+    const anchorRect = anchor.getBoundingClientRect();
+    const sceneRect = pinnedScene.getBoundingClientRect();
+
+    return {
+        x: anchorRect.left - sceneRect.left + anchorRect.width / 2,
+        y: anchorRect.top - sceneRect.top + anchorRect.height / 2,
+    };
+}
+
+function setActorVisibility(element: HTMLElement | null, visible: boolean) {
+    if (!element) return;
+    element.style.visibility = visible ? "inherit" : "hidden";
+}
+
+function destroyPrecursorRoute() {
+    cancelAnimationFrame(precursorRouteFrame);
+    precursorRouteObserver?.disconnect();
+    precursorRouteObserver = undefined;
+    precursorRouteTimeline?.scrollTrigger?.kill();
+    precursorRouteTimeline?.kill();
+    precursorRouteTimeline = undefined;
+    precursorRouteState = undefined;
+    precursor.value?.style.removeProperty("visibility");
+    document
+        .querySelector<HTMLElement>("#mechanism .mechanism-scene__molecule")
+        ?.style.removeProperty("visibility");
+}
+
+function setupPrecursorRoute(
+    storyTimeline: gsap.core.Timeline,
+    path: typeof PRECURSOR_PATH,
+) {
+    if (
+        precursorRouteTimeline ||
+        !scene.value ||
+        !precursor.value ||
+        !precursorVisual.value
+    ) {
+        return false;
+    }
+
+    const storyTrigger = storyTimeline.scrollTrigger;
+    const targetScene = document.querySelector<HTMLElement>("#mechanism");
+    const target = targetScene?.querySelector<HTMLElement>(
+        ".mechanism-scene__molecule",
+    );
+    const targetAnchor = targetScene?.querySelector<HTMLElement>(
+        ".precursor-transition-target",
+    );
+    const mechanismTrigger = ScrollTrigger.getById("mechanism-story");
+
+    if (
+        !storyTrigger ||
+        !targetScene ||
+        !target ||
+        !targetAnchor ||
+        !mechanismTrigger
+    ) {
+        return false;
+    }
+
+    const source = precursor.value;
+    const visual = precursorVisual.value;
+    const routeStart = () => {
+        const labelTime = storyTimeline.labels.odorRoute ?? 0;
+        const timelineDuration = Math.max(storyTimeline.duration(), 0.001);
+        return (
+            storyTrigger.start +
+            (labelTime / timelineDuration) *
+                (storyTrigger.end - storyTrigger.start)
+        );
+    };
+    const routePath = () => [
+        ...precursorCurvePath([path.glandInside, path.bacteria, path.final]),
+        pointInPinnedScene(targetAnchor, targetScene),
+    ];
+    const targetScale = () =>
+        target.offsetWidth / Math.max(source.offsetWidth, 1);
+
+    precursorRouteTimeline = gsap.timeline({
+        defaults: { duration: 1 },
+        scrollTrigger: {
+            id: "abcc11-mechanism-precursor-route",
+            trigger: scene.value,
+            start: routeStart,
+            end: () => mechanismTrigger.start,
+            // The route and Mechanism must meet at the exact same scroll
+            // position in both directions; eased scrub creates a reverse gap.
+            scrub: true,
+            invalidateOnRefresh: true,
+        },
+    });
+
+    precursorRouteTimeline
+        .to(
+            source,
+            {
+                motionPath: {
+                    path: routePath,
+                    fromCurrent: false,
+                    curviness: 1.35,
+                },
+                scale: targetScale,
+                ease: "none",
+            },
+            0,
+        )
+        .fromTo(
+            visual,
+            {
+                rotation: path.glandInside.rotation,
+                scale: path.glandInside.scale,
+                yPercent: 0,
+            },
+            {
+                rotation: path.bacteria.rotation,
+                scale: path.bacteria.scale,
+                yPercent: -6,
+                duration: 0.28,
+                ease: "power1.inOut",
+                immediateRender: false,
+            },
+            0,
+        )
+        .to(
+            visual,
+            {
+                rotation: path.final.rotation,
+                scale: path.final.scale,
+                yPercent: 3,
+                duration: 0.32,
+                ease: "power1.inOut",
+            },
+            0.28,
+        )
+        .to(
+            visual,
+            {
+                rotation: 10,
+                scale: 1,
+                yPercent: 0,
+                duration: 0.4,
+                ease: "power1.inOut",
+            },
+            0.6,
+        );
+
+    const syncActors = () => {
+        const progress = precursorRouteTimeline?.progress() ?? 0;
+        const nextState =
+            progress <= 0.001
+                ? "before"
+                : progress >= 0.999
+                  ? "after"
+                  : "moving";
+
+        if (precursorRouteState === nextState) return;
+        precursorRouteState = nextState;
+
+        if (nextState === "after") {
+            setActorVisibility(source, false);
+            setActorVisibility(target, true);
+            return;
+        }
+
+        setActorVisibility(source, true);
+        setActorVisibility(target, nextState === "before");
+    };
+
+    precursorRouteTimeline.eventCallback("onUpdate", syncActors);
+    syncActors();
+    precursorRouteObserver?.disconnect();
+    precursorRouteObserver = undefined;
+    void nextTick(() => ScrollTrigger.refresh());
+    return true;
+}
+
+function queuePrecursorRoute(
+    storyTimeline: gsap.core.Timeline,
+    path: typeof PRECURSOR_PATH,
+) {
+    cancelAnimationFrame(precursorRouteFrame);
+    precursorRouteFrame = requestAnimationFrame(() => {
+        precursorRouteFrame = requestAnimationFrame(() => {
+            if (setupPrecursorRoute(storyTimeline, path)) return;
+
+            if (!precursorRouteObserver) {
+                precursorRouteObserver = new MutationObserver(() =>
+                    queuePrecursorRoute(storyTimeline, path),
+                );
+                precursorRouteObserver.observe(document.body, {
+                    childList: true,
+                    subtree: true,
+                });
+            }
+        });
+    });
+}
+
 onMounted(() => {
+    motionPreference = window.matchMedia("(prefers-reduced-motion: reduce)");
+    syncPrecursorTeleport();
+    motionPreference.addEventListener("change", syncPrecursorTeleport);
+
     if (
         !scene.value ||
         !stage.value ||
@@ -232,8 +446,6 @@ onMounted(() => {
             );
             const transporterTimeline = glandTransporter.value?.getTimeline();
             const path = PRECURSOR_PATH;
-            const odorRouteDuration =
-                path.bacteria.moveDuration + path.final.moveDuration;
 
             const topInset = () => {
                 const value = getComputedStyle(scene.value!).getPropertyValue(
@@ -456,51 +668,10 @@ onMounted(() => {
                     "throughTransporter",
                 );
 
-            timeline
-                .addLabel(
-                    "odorRoute",
-                    `throughTransporter+=${path.glandInside.moveDuration}`,
-                )
-                .to(
-                    precursor.value,
-                    {
-                        motionPath: {
-                            path: () =>
-                                precursorCurvePath([
-                                    path.glandInside,
-                                    path.bacteria,
-                                    path.final,
-                                ]),
-                            // 起点已显式包含 glandInside，避免插件再次插入当前位置
-                            // 形成重复控制点，导致进入弧线前短暂回摆。
-                            fromCurrent: false,
-                            curviness: 1.35,
-                        },
-                        duration: odorRouteDuration,
-                        ease: "power1.inOut",
-                    },
-                    "odorRoute",
-                )
-                .to(
-                    precursorVisual.value,
-                    {
-                        keyframes: [
-                            {
-                                rotation: path.bacteria.rotation,
-                                scale: path.bacteria.scale,
-                                duration: path.bacteria.moveDuration,
-                                ease: path.bacteria.ease,
-                            },
-                            {
-                                rotation: path.final.rotation,
-                                scale: path.final.scale,
-                                duration: path.final.moveDuration,
-                                ease: path.final.ease,
-                            },
-                        ],
-                    },
-                    "odorRoute",
-                );
+            timeline.addLabel(
+                "odorRoute",
+                `throughTransporter+=${path.glandInside.moveDuration}`,
+            );
 
             if (transporterTimeline) {
                 timeline.to(
@@ -513,6 +684,9 @@ onMounted(() => {
                     "odorRoute",
                 );
             }
+
+            queuePrecursorRoute(timeline, path);
+            return destroyPrecursorRoute;
         },
         scene.value,
     );
@@ -521,6 +695,8 @@ onMounted(() => {
 });
 
 onUnmounted(() => {
+    motionPreference?.removeEventListener("change", syncPrecursorTeleport);
+    destroyPrecursorRoute();
     media?.revert();
 });
 </script>
@@ -824,35 +1000,42 @@ onUnmounted(() => {
             </div>
         </div>
 
-        <div
-            ref="precursor"
-            class="abcc11-precursor pointer-events-none invisible absolute top-0 left-0 z-30 aspect-square w-[clamp(4rem,6.5vw,7.5rem)] will-change-[transform,opacity]"
-            aria-label="Odor precursor"
-        >
+        <Teleport to="body" :disabled="precursorTeleportDisabled">
             <div
-                ref="precursorVisual"
-                class="abcc11-precursor__visual absolute inset-0 size-full will-change-transform"
+                ref="precursor"
+                class="abcc11-precursor pointer-events-none invisible top-0 left-0 aspect-square w-[clamp(4rem,6.5vw,7.5rem)] will-change-[transform,opacity]"
+                :class="
+                    precursorTeleportDisabled
+                        ? 'absolute z-30'
+                        : 'fixed z-[100]'
+                "
+                aria-label="Odor precursor"
             >
-                <img
-                    class="abcc11-precursor__layer absolute inset-0 block size-full scale-x-[-1] object-contain will-change-[transform,opacity] select-none"
-                    src="https://static.igem.wiki/teams/6133/wiki/homepage/precursorcys3m3sh.avif"
-                    alt=""
-                    draggable="false"
-                />
-                <img
-                    class="abcc11-precursor__layer absolute inset-0 block size-full scale-x-[-1] object-contain will-change-[transform,opacity] select-none"
-                    src="https://static.igem.wiki/teams/6133/wiki/homepage/precursorgly.avif"
-                    alt=""
-                    draggable="false"
-                />
+                <div
+                    ref="precursorVisual"
+                    class="abcc11-precursor__visual absolute inset-0 size-full will-change-transform"
+                >
+                    <img
+                        class="abcc11-precursor__layer absolute inset-0 block size-full scale-x-[-1] object-contain will-change-[transform,opacity] select-none"
+                        src="https://static.igem.wiki/teams/6133/wiki/homepage/precursorcys3m3sh.avif"
+                        alt=""
+                        draggable="false"
+                    />
+                    <img
+                        class="abcc11-precursor__layer absolute inset-0 block size-full scale-x-[-1] object-contain will-change-[transform,opacity] select-none"
+                        src="https://static.igem.wiki/teams/6133/wiki/homepage/precursorgly.avif"
+                        alt=""
+                        draggable="false"
+                    />
+                </div>
+                <span
+                    ref="precursorLabel"
+                    class="abcc11-precursor__label absolute top-[calc(100%+0.25rem)] left-1/2 -translate-x-1/2 text-[clamp(0.72rem,1.15vw,1.2rem)] leading-none whitespace-nowrap text-white will-change-[transform,opacity]"
+                >
+                    Cys-Gly-3M3SH
+                </span>
             </div>
-            <span
-                ref="precursorLabel"
-                class="abcc11-precursor__label absolute top-[calc(100%+0.25rem)] left-1/2 -translate-x-1/2 text-[clamp(0.72rem,1.15vw,1.2rem)] leading-none whitespace-nowrap text-white will-change-[transform,opacity]"
-            >
-                Cys-Gly-3M3SH
-            </span>
-        </div>
+        </Teleport>
     </section>
 </template>
 

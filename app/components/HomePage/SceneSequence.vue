@@ -8,6 +8,7 @@ type SceneDefinition = {
     loader: () => Promise<{ default: Component }>;
     rootMargin?: string;
     minHeight?: string;
+    loadImmediately?: boolean;
 };
 
 const props = defineProps<{
@@ -65,9 +66,10 @@ onBeforeUnmount(() => {
         :loader="scene.loader"
         :enabled="sceneIndex === nextSceneIndex"
         :load-immediately="
-            immediateThroughIndex >= 0 &&
-            sceneIndex <= immediateThroughIndex &&
-            sceneIndex === nextSceneIndex
+            sceneIndex === nextSceneIndex &&
+            (scene.loadImmediately ||
+                (immediateThroughIndex >= 0 &&
+                    sceneIndex <= immediateThroughIndex))
         "
         :root-margin="scene.rootMargin"
         :min-height="scene.minHeight"
