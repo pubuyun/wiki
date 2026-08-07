@@ -80,8 +80,10 @@ onMounted(() => {
             const timeline = gsap.timeline({
                 defaults: { ease: "power3.out" },
                 scrollTrigger: {
-                    trigger: root.value,
-                    start: "top 92%",
+                    trigger:
+                        root.value.closest<HTMLElement>(".abcc11-scene") ??
+                        root.value,
+                    start: "top top",
                     once: true,
                 },
             });

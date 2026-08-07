@@ -1041,11 +1041,11 @@ onUnmounted(() => {
 
 <style scoped>
 .abcc11-scene {
-    --abcc11-top-space: calc(var(--spacing, 0.25rem) * 14);
+    --abcc11-top-space: calc(var(--spacing, 0.25rem) * 30);
 }
 
 .genotype-group {
-    --chromosome-size: clamp(9rem, 14vw, 16rem);
+    --chromosome-size: clamp(13.5rem, 21vw, 24rem);
     --transporter-size: clamp(9rem, 14vw, 16rem);
 }
 
@@ -1278,7 +1278,7 @@ onUnmounted(() => {
 
 @media (max-width: 52rem) {
     .genotype-group {
-        --chromosome-size: clamp(6.5rem, 22vw, 9rem);
+        --chromosome-size: clamp(9.75rem, 33vw, 13.5rem);
         --transporter-size: clamp(6.5rem, 22vw, 9rem);
     }
 
