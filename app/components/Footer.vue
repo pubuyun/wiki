@@ -31,77 +31,104 @@ const wavePaths = [
     {
         id: "accent",
         fill: "fill-accent",
-        d: "M 0 -60 L 0 -350 C 209 -307 198 -136 513 -140 C 1089 -180 1146 -300 1311 -300 C 1422 -300 1592 -200 1698 -200 L 1700 -60 Z",
+        d: "M 0 0 L 0 -350 C 200 -350 247 -170 578 -170 C 895 -170 1146 -300 1311 -300 C 1422 -300 1548 -200 1698 -200 C 2035 -200 2110 -350 2300 -350 C 2500 -350 2547 -170 2878 -170 C 3195 -170 3446 -300 3611 -300 C 3722 -300 3848 -200 3998 -200 C 4335 -200 4410 -350 4600 -350 L 4600 0 Z",
     },
     {
         id: "footer",
         fill: "fill-surface-elevated",
-        d: "M 0 0 L 0 -300 C 140 -167 378 -166 593 -258 C 768 -314 799 -400 1171 -246 C 1432 -144 1399 -400 1700 -400 L 1700 0 Z",
+        d: "M 0 0 L 0 -300 C 138 -190 378 -166 593 -258 C 768 -333 799 -400 1171 -246 C 1432 -144 1655 -450 1985 -450 C 2089 -450 2162 -410 2300 -300 C 2438 -190 2678 -166 2893 -258 C 3068 -333 3099 -400 3471 -246 C 3732 -144 3945 -450 4282 -450 C 4372 -450 4462 -410 4600 -300 L 4600 0 Z",
     },
 ];
 
-const FOOTER_WAVE_MORPH_PATH =
-    "M 0 0 L 0 -100 C 255 -150 432 -276 607 -262 C 752 -246 856 -85 1157 -219 C 1345 -311 1399 -400 1700 -253 L 1700 0 Z";
-const ACCENT_WAVE_INTERMEDIATE_PATH =
-    "M 0 -60 L 0 -350 C 209 -307 296 -220 451 -215 C 869 -168 956 -357 1142 -340 C 1308 -326 1391 -193 1698 -200 L 1700 -60 Z";
+const WAVE_TILE_WIDTH = 2300;
+const WAVE_SCROLL_DURATION = 18;
+const WAVE_MORPH_DURATION = 6;
 const ACCENT_WAVE_MORPH_PATH =
-    "M 0 -60 L 0 -221 C 209 -300 318 -176 406 -147 C 718 -120 748 -215 933 -230 C 1123 -232 1238 -104 1698 -200 L 1700 -60 Z";
+    "M 0 0 L 0 -200 C 301 -200 464 -280 631 -280 C 860 -280 858 -100 1030 -100 C 1242 -100 1299 -380 1473 -380 C 1701 -380 1801 -200 2300 -200 C 2601 -200 2764 -280 2931 -280 C 3160 -280 3158 -100 3330 -100 C 3542 -100 3599 -380 3773 -380 C 4001 -380 4101 -200 4600 -200 L 4600 0 Z";
+const ACCENT_WAVE_SECOND_MORPH_PATH =
+    "M 0 0 L 0 -300 C 300 -300 410 -100 570 -80 C 730 -60 780 -340 1090 -339 C 1359 -340 1426 -70 1628 -70 C 1971 -70 2002 -300 2300 -300 C 2600 -300 2710 -100 2870 -80 C 3030 -60 3080 -340 3390 -339 C 3659 -340 3726 -70 3928 -70 C 4271 -70 4302 -300 4600 -300 L 4600 0 Z";
+const FOOTER_WAVE_MORPH_PATH =
+    "M 0 0 L 0 -300 C 199 -496 358 -360 466 -278 C 683 -113 813 -348 1202 -226 C 1520 -113 1579 -376 1809 -378 C 2072 -378 2101 -104 2300 -300 C 2499 -496 2658 -360 2766 -278 C 2983 -113 3113 -348 3502 -226 C 3820 -113 3879 -376 4109 -378 C 4372 -378 4401 -104 4600 -300 L 4600 0 Z";
+const FOOTER_WAVE_SECOND_MORPH_PATH =
+    "M 0 0 L 0 -200 C 336 -200 357 -366 549 -394 C 849 -416 1019 -37 1234 -70 C 1520 -113 1528 -287 1726 -339 C 1880 -365 1998 -200 2300 -200 C 2636 -200 2657 -366 2849 -394 C 3149 -416 3319 -37 3534 -70 C 3820 -113 3828 -287 4026 -339 C 4180 -365 4298 -200 4600 -200 L 4600 0 Z";
 
-const waveSvg = ref<SVGSVGElement | null>(null);
-let waveTimeline: gsap.core.Timeline | undefined;
+const waveTrack = ref<SVGGElement | null>(null);
+let waveAnimation: gsap.core.Tween | undefined;
+let accentWaveAnimation: gsap.core.Timeline | undefined;
+let footerWaveAnimation: gsap.core.Timeline | undefined;
 let removeMotionPreferenceListener: (() => void) | undefined;
 
 onMounted(() => {
-    const accentWave = waveSvg.value?.querySelector<SVGPathElement>(
+    if (!waveTrack.value) return;
+
+    const accentWave = waveTrack.value.querySelector<SVGPathElement>(
         '[data-wave="accent"]',
     );
-    const footerWave = waveSvg.value?.querySelector<SVGPathElement>(
+    const footerWave = waveTrack.value.querySelector<SVGPathElement>(
         '[data-wave="footer"]',
     );
-
     if (!accentWave || !footerWave) return;
 
     gsap.registerPlugin(MorphSVGPlugin);
     const originalAccentPath = accentWave.getAttribute("d") ?? "";
     const originalFooterPath = footerWave.getAttribute("d") ?? "";
+
     const motionPreference = window.matchMedia(
         "(prefers-reduced-motion: reduce)",
     );
 
     const updateWaveAnimation = () => {
-        waveTimeline?.kill();
+        waveAnimation?.kill();
+        accentWaveAnimation?.kill();
+        footerWaveAnimation?.kill();
+        gsap.set(waveTrack.value, { x: 0 });
+        accentWave.setAttribute("d", originalAccentPath);
+        footerWave.setAttribute("d", originalFooterPath);
 
-        if (motionPreference.matches) {
-            accentWave.setAttribute("d", originalAccentPath);
-            footerWave.setAttribute("d", originalFooterPath);
-            return;
-        }
+        if (motionPreference.matches) return;
 
-        waveTimeline = gsap
-            .timeline({ repeat: -1, yoyo: true })
-            .to(
-                accentWave,
-                {
-                    morphSVG: { shape: ACCENT_WAVE_INTERMEDIATE_PATH },
-                    duration: 3,
-                    ease: "sine.inOut",
-                },
-                0,
-            )
+        waveAnimation = gsap.to(waveTrack.value, {
+            x: -WAVE_TILE_WIDTH,
+            duration: WAVE_SCROLL_DURATION,
+            ease: "none",
+            repeat: -1,
+        });
+
+        accentWaveAnimation = gsap
+            .timeline({ repeat: -1 })
             .to(accentWave, {
                 morphSVG: { shape: ACCENT_WAVE_MORPH_PATH },
-                duration: 3,
-                ease: "sine.inOut",
+                duration: WAVE_MORPH_DURATION,
+                ease: "none",
             })
-            .to(
-                footerWave,
-                {
-                    morphSVG: { shape: FOOTER_WAVE_MORPH_PATH },
-                    duration: 6,
-                    ease: "sine.inOut",
-                },
-                0,
-            );
+            .to(accentWave, {
+                morphSVG: { shape: ACCENT_WAVE_SECOND_MORPH_PATH },
+                duration: WAVE_MORPH_DURATION,
+                ease: "none",
+            })
+            .to(accentWave, {
+                morphSVG: { shape: originalAccentPath },
+                duration: WAVE_MORPH_DURATION,
+                ease: "none",
+            });
+
+        footerWaveAnimation = gsap
+            .timeline({ repeat: -1 })
+            .to(footerWave, {
+                morphSVG: { shape: FOOTER_WAVE_MORPH_PATH },
+                duration: WAVE_MORPH_DURATION,
+                ease: "none",
+            })
+            .to(footerWave, {
+                morphSVG: { shape: FOOTER_WAVE_SECOND_MORPH_PATH },
+                duration: WAVE_MORPH_DURATION,
+                ease: "none",
+            })
+            .to(footerWave, {
+                morphSVG: { shape: originalFooterPath },
+                duration: WAVE_MORPH_DURATION,
+                ease: "none",
+            });
     };
 
     motionPreference.addEventListener("change", updateWaveAnimation);
@@ -111,8 +138,12 @@ onMounted(() => {
 });
 
 onUnmounted(() => {
-    waveTimeline?.kill();
-    waveTimeline = undefined;
+    waveAnimation?.kill();
+    waveAnimation = undefined;
+    accentWaveAnimation?.kill();
+    accentWaveAnimation = undefined;
+    footerWaveAnimation?.kill();
+    footerWaveAnimation = undefined;
     removeMotionPreferenceListener?.();
     removeMotionPreferenceListener = undefined;
 });
@@ -137,18 +168,19 @@ const footerLinkClass =
                 :class="sidebarExtensionClass"
             />
             <svg
-                ref="waveSvg"
                 class="absolute inset-x-0 top-0 z-10 h-full w-full"
-                viewBox="0 -400 1700 400"
+                viewBox="0 -500 1700 500"
                 preserveAspectRatio="none"
             >
-                <path
-                    v-for="path in wavePaths"
-                    :key="path.id"
-                    :class="path.fill"
-                    :d="path.d"
-                    :data-wave="path.id"
-                />
+                <g ref="waveTrack">
+                    <path
+                        v-for="path in wavePaths"
+                        :key="path.id"
+                        :class="path.fill"
+                        :d="path.d"
+                        :data-wave="path.id"
+                    />
+                </g>
             </svg>
         </div>
 
