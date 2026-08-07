@@ -76,11 +76,18 @@ onUnmounted(() => {
 </script>
 
 <template>
-    <section id="solution" ref="scene" class="binder-scene">
-        <div class="binder-stage" aria-label="Precursor binding animation">
+    <section
+        id="solution"
+        ref="scene"
+        class="binder-scene grid min-h-screen min-h-svh grid-cols-[1fr_2fr] place-items-center overflow-hidden bg-[#03316d] bg-[radial-gradient(circle_at_50%_46%,rgb(47_111_183_/_42%),transparent_38%)]"
+    >
+        <div
+            class="binder-stage relative col-start-1 grid aspect-square w-[min(30vw,25vh)] place-items-center"
+            aria-label="Precursor binding animation"
+        >
             <img
                 ref="binder"
-                class="binder-image"
+                class="binder-image pointer-events-none absolute z-1 block h-auto w-[82%] will-change-transform select-none [grid-area:1/1]"
                 src="https://static.igem.wiki/teams/6133/wiki/homepage/binder.avif"
                 alt="Binder"
                 width="1523"
@@ -88,7 +95,7 @@ onUnmounted(() => {
             />
             <img
                 ref="precursor"
-                class="precursor-image"
+                class="precursor-image pointer-events-none absolute z-2 block h-auto w-[38%] will-change-transform select-none [grid-area:1/1]"
                 src="https://static.igem.wiki/teams/6133/wiki/homepage/precursornew.avif"
                 alt="Precursor moving into the binder"
                 width="806"
@@ -97,51 +104,3 @@ onUnmounted(() => {
         </div>
     </section>
 </template>
-
-<style scoped>
-.binder-scene {
-    display: grid;
-    min-height: 100vh;
-    min-height: 100svh;
-    grid-template-columns: 1fr 2fr;
-    place-items: center;
-    overflow: hidden;
-    background:
-        radial-gradient(
-            circle at 50% 46%,
-            rgb(47 111 183 / 42%),
-            transparent 38%
-        ),
-        #03316d;
-}
-
-.binder-stage {
-    position: relative;
-    display: grid;
-    grid-column: 1;
-    width: min(30vw, 25vh);
-    aspect-ratio: 1;
-    place-items: center;
-}
-
-.binder-image,
-.precursor-image {
-    position: absolute;
-    grid-area: 1 / 1;
-    display: block;
-    height: auto;
-    pointer-events: none;
-    user-select: none;
-    will-change: transform;
-}
-
-.binder-image {
-    z-index: 1;
-    width: 82%;
-}
-
-.precursor-image {
-    z-index: 2;
-    width: 38%;
-}
-</style>

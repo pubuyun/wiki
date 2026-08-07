@@ -50,8 +50,8 @@ const axillaryLabelStyle = {
 // “Apocrine gland” 弧形标题的位置与旋转调节区。
 const APOCRINE_GLAND_LABEL_POSITION = {
     top: "-9%",
-    left: "-13%",
-    rotation: -14,
+    left: "-29%",
+    rotation: -19,
 } as const;
 const apocrineGlandLabelStyle = {
     top: APOCRINE_GLAND_LABEL_POSITION.top,
@@ -73,8 +73,8 @@ const staphylococcusLabelStyle = {
 
 // 两个箭头的坐标、旋转与翻转缩放调节区。
 const STORY_ARROW_TRANSFORMS = {
-    first: { x: "18%", y: "0%", rotation: -22 },
-    second: { x: "0%", y: "0%", rotation: 62 },
+    first: { x: "8%", y: "0%", rotation: -20 },
+    second: { x: "-10%", y: "-60%", rotation: 40 },
 } as const;
 const storyArrowFirstStyle = {
     "--arrow-x": STORY_ARROW_TRANSFORMS.first.x,
@@ -115,7 +115,7 @@ const PRECURSOR_PATH = {
         x: 70,
         y: 86,
         rotation: 15,
-        scale: 1,
+        scale: 2,
         moveDuration: 0,
         visualDuration: 0,
         ease: "none",
@@ -148,8 +148,8 @@ const PRECURSOR_PATH = {
         ease: "power2.inOut",
     },
     final: {
-        x: 95,
-        y: 42,
+        x: 92.5,
+        y: 40,
         rotation: 20,
         scale: 0.4,
         moveDuration: 1,
@@ -512,54 +512,101 @@ onUnmounted(() => {
     <section
         id="abcc11"
         ref="scene"
-        class="abcc11-scene"
+        class="abcc11-scene relative isolate h-svh min-h-144 w-full overflow-hidden bg-[#073873]"
         aria-labelledby="abcc11-title"
     >
         <h2 id="abcc11-title" class="sr-only">ABCC11 genotype</h2>
-        <div ref="stage" class="abcc11-scene__stage">
+        <div
+            ref="stage"
+            class="abcc11-scene__stage relative mx-auto h-full w-full max-w-[120rem]"
+        >
             <div
                 ref="odorGenotypes"
-                class="genotype-group genotype-group--odor"
+                class="genotype-group genotype-group--odor absolute z-6 flex items-center will-change-transform"
                 aria-label="CC and TC genotypes express the ABCC11 transporter"
             >
-                <div class="genotype-group__chromosomes">
+                <div
+                    class="genotype-group__chromosomes flex min-w-0 flex-[0_0_auto] items-start"
+                >
                     <Chromosome :genome="0" />
                     <Chromosome :genome="1" />
                 </div>
-                <div class="genotype-result" aria-hidden="true">
-                    <div class="transporter-stack">
-                        <img :src="publicAsset('abcc11m.png')" alt="" />
-                        <img :src="publicAsset('abcc11l.png')" alt="" />
-                        <img :src="publicAsset('abcc11r.png')" alt="" />
+                <div
+                    class="genotype-result ml-[clamp(-3rem,-2vw,-1rem)] will-change-[transform,opacity]"
+                    aria-hidden="true"
+                >
+                    <div
+                        class="transporter-stack relative aspect-964/847 w-full"
+                    >
+                        <img
+                            class="absolute inset-0 block size-full object-contain"
+                            :src="publicAsset('abcc11m.png')"
+                            alt=""
+                        />
+                        <img
+                            class="absolute inset-0 block size-full object-contain"
+                            :src="publicAsset('abcc11l.png')"
+                            alt=""
+                        />
+                        <img
+                            class="absolute inset-0 block size-full object-contain"
+                            :src="publicAsset('abcc11r.png')"
+                            alt=""
+                        />
                     </div>
                 </div>
             </div>
 
-            <p ref="odorCopy" class="scene-copy scene-copy--odor">
+            <p
+                ref="odorCopy"
+                class="scene-copy scene-copy--odor absolute top-[clamp(5rem,16svh,10rem)] right-[clamp(1.5rem,5vw,6rem)] z-2 m-0 w-[min(45vw,54rem)] text-center text-[clamp(1.45rem,3.15vw,4rem)] leading-[1.48] text-balance text-white will-change-[transform,opacity] max-[52rem]:top-[33svh] max-[52rem]:right-[5vw] max-[52rem]:w-[72vw] max-[52rem]:text-[clamp(1.1rem,4.5vw,2.25rem)] max-[52rem]:leading-[1.32] [&_strong]:font-[inherit] [&_strong]:text-[#ff594e]"
+            >
                 Axillary odor production is influenced by genetic variations in
                 the <strong>ABCC11 gene.</strong>
             </p>
 
-            <p ref="variantCopy" class="scene-copy scene-copy--variant">
+            <p
+                ref="variantCopy"
+                class="scene-copy scene-copy--variant absolute bottom-[clamp(3.5rem,14svh,9rem)] left-[clamp(1.5rem,4vw,5rem)] z-2 m-0 w-[min(56vw,64rem)] text-center text-[clamp(1.45rem,3.15vw,4rem)] leading-[1.48] text-balance text-white will-change-[transform,opacity] max-[52rem]:bottom-[25svh] max-[52rem]:left-[5vw] max-[52rem]:w-[50vw] max-[52rem]:text-[clamp(1.1rem,4.5vw,2.25rem)] max-[52rem]:leading-[1.32] [&_strong]:font-[inherit] [&_strong]:text-[#64dbbb]"
+            >
                 <strong>Specific variants</strong> of this gene strongly
                 correlate with the odor producing phenotype.
             </p>
 
             <div
                 ref="ttGenotype"
-                class="genotype-group genotype-group--tt"
+                class="genotype-group genotype-group--tt absolute z-6 flex items-center will-change-transform"
                 aria-label="TT genotype does not express the ABCC11 transporter"
             >
-                <div class="genotype-group__chromosomes">
+                <div
+                    class="genotype-group__chromosomes flex min-w-0 flex-[0_0_auto] items-start"
+                >
                     <Chromosome :genome="2" />
                 </div>
-                <div class="genotype-result" aria-hidden="true">
-                    <div class="transporter-stack">
-                        <img :src="publicAsset('abcc11m.png')" alt="" />
-                        <img :src="publicAsset('abcc11l.png')" alt="" />
-                        <img :src="publicAsset('abcc11r.png')" alt="" />
+                <div
+                    class="genotype-result ml-[clamp(-3rem,-2vw,-1rem)] will-change-[transform,opacity]"
+                    aria-hidden="true"
+                >
+                    <div
+                        class="transporter-stack relative aspect-[964/847] w-full"
+                    >
+                        <img
+                            class="absolute inset-0 block size-full object-contain"
+                            :src="publicAsset('abcc11m.png')"
+                            alt=""
+                        />
+                        <img
+                            class="absolute inset-0 block size-full object-contain"
+                            :src="publicAsset('abcc11l.png')"
+                            alt=""
+                        />
+                        <img
+                            class="absolute inset-0 block size-full object-contain"
+                            :src="publicAsset('abcc11r.png')"
+                            alt=""
+                        />
                         <svg
-                            class="transporter-stack__cross"
+                            class="transporter-stack__cross absolute inset-[14%] z-5 block size-[72%] overflow-visible [&_path]:fill-none [&_path]:stroke-white [&_path]:[stroke-width:10] [&_path]:[filter:drop-shadow(0_2px_2px_rgb(1_32_72_/_40%))] [&_path]:[stroke-linecap:round]"
                             viewBox="0 0 100 100"
                         >
                             <path d="M16 16 84 84M84 16 16 84" />
@@ -587,7 +634,7 @@ onUnmounted(() => {
                     <svg
                         class="story-arrow story-arrow--first"
                         :style="storyArrowFirstStyle"
-                        viewBox="-8 -8 347 72"
+                        viewBox="0 -80 400 120"
                         aria-hidden="true"
                     >
                         <defs>
@@ -647,7 +694,7 @@ onUnmounted(() => {
                         <svg
                             class="abcc11-story__curve-label abcc11-story__curve-label--gland"
                             :style="apocrineGlandLabelStyle"
-                            viewBox="0 0 620 240"
+                            viewBox="0 0 500 240"
                             aria-hidden="true"
                         >
                             <path
@@ -752,24 +799,30 @@ onUnmounted(() => {
 
         <div
             ref="precursor"
-            class="abcc11-precursor"
+            class="abcc11-precursor pointer-events-none invisible absolute top-0 left-0 z-30 aspect-square w-[clamp(4rem,6.5vw,7.5rem)] will-change-[transform,opacity]"
             aria-label="Odor precursor"
         >
-            <div ref="precursorVisual" class="abcc11-precursor__visual">
+            <div
+                ref="precursorVisual"
+                class="abcc11-precursor__visual absolute inset-0 size-full will-change-transform"
+            >
                 <img
-                    class="abcc11-precursor__layer"
+                    class="abcc11-precursor__layer absolute inset-0 block size-full scale-x-[-1] object-contain will-change-[transform,opacity] select-none"
                     src="https://static.igem.wiki/teams/6133/wiki/homepage/precursorcys3m3sh.avif"
                     alt=""
                     draggable="false"
                 />
                 <img
-                    class="abcc11-precursor__layer"
+                    class="abcc11-precursor__layer absolute inset-0 block size-full scale-x-[-1] object-contain will-change-[transform,opacity] select-none"
                     src="https://static.igem.wiki/teams/6133/wiki/homepage/precursorgly.avif"
                     alt=""
                     draggable="false"
                 />
             </div>
-            <span ref="precursorLabel" class="abcc11-precursor__label">
+            <span
+                ref="precursorLabel"
+                class="abcc11-precursor__label absolute top-[calc(100%+0.25rem)] left-1/2 -translate-x-1/2 text-[clamp(0.72rem,1.15vw,1.2rem)] leading-none whitespace-nowrap text-white will-change-[transform,opacity]"
+            >
                 Cys-Gly-3M3SH
             </span>
         </div>
@@ -779,85 +832,11 @@ onUnmounted(() => {
 <style scoped>
 .abcc11-scene {
     --abcc11-top-space: calc(var(--spacing, 0.25rem) * 14);
-
-    position: relative;
-    isolation: isolate;
-    width: 100%;
-    height: 100svh;
-    min-height: 36rem;
-    overflow: hidden;
-    background: #073873;
-}
-
-.abcc11-scene__stage {
-    position: relative;
-    width: 100%;
-    max-width: 120rem;
-    height: 100%;
-    margin-inline: auto;
-}
-
-.abcc11-precursor {
-    position: absolute;
-    z-index: 30;
-    top: 0;
-    left: 0;
-    width: clamp(4rem, 6.5vw, 7.5rem);
-    aspect-ratio: 1;
-    visibility: hidden;
-    pointer-events: none;
-    will-change: transform, opacity;
-}
-
-.abcc11-precursor__visual,
-.abcc11-precursor__layer {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-}
-
-.abcc11-precursor__visual {
-    will-change: transform;
-}
-
-.abcc11-precursor__layer {
-    display: block;
-    object-fit: contain;
-    transform: scaleX(-1);
-    user-select: none;
-    will-change: transform, opacity;
-}
-
-.abcc11-precursor__label {
-    position: absolute;
-    top: calc(100% + 0.25rem);
-    left: 50%;
-    color: #fff;
-    font-family: var(--font-righteous), sans-serif;
-    font-size: clamp(0.72rem, 1.15vw, 1.2rem);
-    line-height: 1;
-    white-space: nowrap;
-    transform: translateX(-50%);
-    will-change: transform, opacity;
 }
 
 .genotype-group {
     --chromosome-size: clamp(9rem, 14vw, 16rem);
     --transporter-size: clamp(9rem, 14vw, 16rem);
-
-    position: absolute;
-    z-index: 6;
-    display: flex;
-    align-items: center;
-    will-change: transform;
-}
-
-.genotype-group__chromosomes {
-    display: flex;
-    flex: 0 0 auto;
-    align-items: flex-start;
-    min-width: 0;
 }
 
 .genotype-group--odor .genotype-group__chromosomes {
@@ -888,77 +867,14 @@ onUnmounted(() => {
 
 .genotype-result {
     flex: 0 0 var(--transporter-size);
-    margin-left: clamp(-3rem, -2vw, -1rem);
-    will-change: transform, opacity;
 }
 
-.transporter-stack {
-    position: relative;
-    width: 100%;
-    aspect-ratio: 964 / 847;
-}
-
-.transporter-stack img,
-.transporter-stack__cross {
-    position: absolute;
-    inset: 0;
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-}
-
-.transporter-stack__cross {
-    z-index: 5;
-    inset: 14%;
-    width: 72%;
-    height: 72%;
-    overflow: visible;
-}
-
-.transporter-stack__cross path {
-    fill: none;
-    stroke: #fff;
-    stroke-linecap: round;
-    stroke-width: 10;
-    filter: drop-shadow(0 2px 2px rgb(1 32 72 / 40%));
-}
-
-.scene-copy {
-    position: absolute;
-    z-index: 2;
-    margin: 0;
-    color: #fff;
+.abcc11-precursor__label,
+.scene-copy,
+.abcc11-story__label,
+.abcc11-story__curve-label text,
+.abcc11-story__copy {
     font-family: var(--font-righteous), sans-serif;
-    font-size: clamp(1.45rem, 3.15vw, 4rem);
-    line-height: 1.48;
-    text-align: center;
-    text-wrap: balance;
-    will-change: transform, opacity;
-}
-
-.scene-copy strong {
-    font-weight: inherit;
-}
-
-.scene-copy--odor {
-    top: clamp(5rem, 16svh, 10rem);
-    right: clamp(1.5rem, 5vw, 6rem);
-    width: min(45vw, 54rem);
-}
-
-.scene-copy--odor strong {
-    color: #ff594e;
-}
-
-.scene-copy--variant {
-    bottom: clamp(3.5rem, 14svh, 9rem);
-    left: clamp(1.5rem, 4vw, 5rem);
-    width: min(56vw, 64rem);
-}
-
-.scene-copy--variant strong {
-    color: #64dbbb;
 }
 
 .abcc11-story {
@@ -1019,7 +935,6 @@ onUnmounted(() => {
     position: absolute;
     z-index: 5;
     color: #fff;
-    font-family: var(--font-righteous), sans-serif;
     font-size: clamp(1rem, 1.8vw, 2rem);
     line-height: 1;
     white-space: nowrap;
@@ -1046,7 +961,6 @@ onUnmounted(() => {
 
 .abcc11-story__curve-label text {
     fill: #fff;
-    font-family: var(--font-righteous), sans-serif;
     font-size: clamp(2.2rem, 4.2vw, 4.6rem);
     text-shadow: 0 3px 2px rgb(0 30 67 / 45%);
 }
@@ -1116,7 +1030,6 @@ onUnmounted(() => {
     max-width: 50%;
     margin: 0;
     color: #fff;
-    font-family: var(--font-righteous), sans-serif;
     font-size: clamp(1.05rem, 2.05vw, 2.35rem);
     line-height: 1.42;
     text-align: left;
@@ -1147,27 +1060,6 @@ onUnmounted(() => {
         top: auto;
         right: 3vw;
         bottom: 25svh;
-    }
-
-    .genotype-result {
-        flex-basis: var(--transporter-size);
-    }
-
-    .scene-copy {
-        font-size: clamp(1.1rem, 4.5vw, 2.25rem);
-        line-height: 1.32;
-    }
-
-    .scene-copy--odor {
-        top: 33svh;
-        right: 5vw;
-        width: 72vw;
-    }
-
-    .scene-copy--variant {
-        bottom: 25svh;
-        left: 5vw;
-        width: 50vw;
     }
 
     .abcc11-story {

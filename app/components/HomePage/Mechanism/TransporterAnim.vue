@@ -104,12 +104,12 @@ defineExpose({ close, getTimeline, open, playLoop });
 <template>
     <div
         ref="root"
-        class="transporter-anim"
+        class="transporter-anim relative isolate aspect-[964/847] w-[min(100%,60.25rem)]"
         role="img"
         aria-label="Transporter opening and closing"
     >
         <img
-            class="transporter-anim__layer transporter-anim__middle"
+            class="transporter-anim__layer transporter-anim__middle absolute inset-0 z-1 block size-full object-contain select-none"
             :src="middleSrc"
             alt=""
             loading="lazy"
@@ -119,7 +119,7 @@ defineExpose({ close, getTimeline, open, playLoop });
         />
         <img
             ref="leftShell"
-            class="transporter-anim__layer transporter-anim__shell transporter-anim__shell--left"
+            class="transporter-anim__layer transporter-anim__shell transporter-anim__shell--left absolute inset-0 z-2 block size-full origin-[40%_50%] object-contain will-change-transform select-none"
             :src="leftSrc"
             alt=""
             loading="lazy"
@@ -129,7 +129,7 @@ defineExpose({ close, getTimeline, open, playLoop });
         />
         <img
             ref="rightShell"
-            class="transporter-anim__layer transporter-anim__shell transporter-anim__shell--right"
+            class="transporter-anim__layer transporter-anim__shell transporter-anim__shell--right absolute inset-0 z-2 block size-full origin-[60%_50%] object-contain will-change-transform select-none"
             :src="rightSrc"
             alt=""
             loading="lazy"
@@ -139,39 +139,3 @@ defineExpose({ close, getTimeline, open, playLoop });
         />
     </div>
 </template>
-
-<style scoped>
-.transporter-anim {
-    position: relative;
-    width: min(100%, 60.25rem);
-    aspect-ratio: 964 / 847;
-    isolation: isolate;
-}
-
-.transporter-anim__layer {
-    position: absolute;
-    inset: 0;
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    user-select: none;
-}
-
-.transporter-anim__middle {
-    z-index: 1;
-}
-
-.transporter-anim__shell {
-    z-index: 2;
-    will-change: transform;
-}
-
-.transporter-anim__shell--left {
-    transform-origin: 40% 50%;
-}
-
-.transporter-anim__shell--right {
-    transform-origin: 60% 50%;
-}
-</style>

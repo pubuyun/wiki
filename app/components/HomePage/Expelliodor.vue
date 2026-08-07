@@ -234,14 +234,14 @@ onUnmounted(() => {
     <section
         id="expelliodor"
         ref="scene"
-        class="expelliodor-scene"
+        class="expelliodor-scene relative isolate grid h-svh w-full place-items-center overflow-hidden bg-[#03316d]"
         aria-labelledby="expelliodor-title"
     >
         <h1 id="expelliodor-title" class="sr-only">Expelliodor</h1>
 
         <svg
             ref="artwork"
-            class="expelliodor-scene__artwork"
+            class="expelliodor-scene__artwork block h-auto w-[min(92vw,120rem)] rotate-6 overflow-visible max-[40rem]:w-[115vw]"
             viewBox="0 0 1920 1080"
             aria-hidden="true"
         >
@@ -264,7 +264,7 @@ onUnmounted(() => {
                     width="1920"
                     height="1080"
                     maskUnits="userSpaceOnUse"
-                    style="mask-type: luminance"
+                    class="[mask-type:luminance]"
                 >
                     <rect width="1920" height="1080" fill="#000" />
                     <g :filter="`url(#${blurId})`">
@@ -298,7 +298,7 @@ onUnmounted(() => {
                     preserveAspectRatio="xMidYMid meet"
                 />
                 <text
-                    class="expelliodor-scene__title expelliodor-scene__title--shadow"
+                    class="expelliodor-scene__title expelliodor-scene__title--shadow fill-[#0a4297] text-[190px] font-normal tracking-[0.01em]"
                     x="1000"
                     y="645"
                     text-anchor="middle"
@@ -307,7 +307,7 @@ onUnmounted(() => {
                     Expelliodor
                 </text>
                 <text
-                    class="expelliodor-scene__title"
+                    class="expelliodor-scene__title fill-white text-[190px] font-normal tracking-[0.01em]"
                     x="988"
                     y="640"
                     text-anchor="middle"
@@ -318,8 +318,15 @@ onUnmounted(() => {
             </g>
         </svg>
 
-        <div ref="sprayHead" class="spray-head" aria-hidden="true">
-            <span ref="sprayMist" class="spray-head__mist" />
+        <div
+            ref="sprayHead"
+            class="spray-head pointer-events-none absolute top-1/2 left-0 z-2 aspect-[213/505] w-[clamp(7rem,12vw,11rem)] will-change-transform max-[40rem]:w-[clamp(6rem,23vw,8rem)]"
+            aria-hidden="true"
+        >
+            <span
+                ref="sprayMist"
+                class="spray-head__mist absolute top-[64%] left-[42%] z-0 aspect-[2.4] w-[230%] -translate-y-1/2 rotate-8 bg-[radial-gradient(ellipse_at_left,rgb(218_249_255_/_70%)_0%,rgb(137_220_247_/_35%)_34%,rgb(89_178_232_/_0%)_76%)] blur-[12px] max-[40rem]:w-[190%]"
+            />
             <span
                 v-for="particle in SPRAY_PARTICLES"
                 :key="particle.id"
@@ -328,7 +335,7 @@ onUnmounted(() => {
             />
             <img
                 ref="product"
-                class="expelliodor-scene__product"
+                class="expelliodor-scene__product relative z-2 block h-auto w-full origin-center will-change-transform select-none"
                 src="https://static.igem.wiki/teams/6133/wiki/homepage/product.avif"
                 alt=""
                 fetchpriority="high"
@@ -339,74 +346,8 @@ onUnmounted(() => {
 </template>
 
 <style scoped>
-.expelliodor-scene {
-    position: relative;
-    isolation: isolate;
-    display: grid;
-    width: 100%;
-    height: 100svh;
-    overflow: hidden;
-    place-items: center;
-    background: #03316d;
-}
-
-.expelliodor-scene__artwork {
-    display: block;
-    width: min(92vw, 120rem);
-    height: auto;
-    overflow: visible;
-    rotate: 6deg;
-}
-
 .expelliodor-scene__title {
     font-family: var(--font-righteous);
-    font-size: 190px;
-    font-weight: 400;
-    fill: #fff;
-    letter-spacing: 0.01em;
-}
-
-.expelliodor-scene__title--shadow {
-    fill: #0a4297;
-}
-
-.spray-head {
-    position: absolute;
-    z-index: 2;
-    top: 50%;
-    left: 0;
-    width: clamp(7rem, 12vw, 11rem);
-    aspect-ratio: 213 / 505;
-    pointer-events: none;
-    will-change: transform;
-}
-
-.expelliodor-scene__product {
-    position: relative;
-    z-index: 2;
-    display: block;
-    width: 100%;
-    height: auto;
-    transform-origin: 50% 50%;
-    user-select: none;
-    will-change: transform;
-}
-
-.spray-head__mist {
-    position: absolute;
-    z-index: 0;
-    top: 64%;
-    left: 42%;
-    width: 230%;
-    aspect-ratio: 2.4;
-    background: radial-gradient(
-        ellipse at left,
-        rgb(218 249 255 / 70%) 0%,
-        rgb(137 220 247 / 35%) 34%,
-        rgb(89 178 232 / 0%) 76%
-    );
-    filter: blur(12px);
-    transform: translateY(-50%) rotate(8deg);
 }
 
 .spray-head__particle {
@@ -419,19 +360,5 @@ onUnmounted(() => {
     border-radius: 50%;
     background: rgb(225 250 255 / 86%);
     box-shadow: 0 0 0.8rem rgb(107 213 247 / 70%);
-}
-
-@media (max-width: 40rem) {
-    .expelliodor-scene__artwork {
-        width: 115vw;
-    }
-
-    .spray-head {
-        width: clamp(6rem, 23vw, 8rem);
-    }
-
-    .spray-head__mist {
-        width: 190%;
-    }
 }
 </style>

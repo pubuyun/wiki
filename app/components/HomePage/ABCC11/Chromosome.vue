@@ -136,7 +136,7 @@ onUnmounted(() => {
 <template>
     <svg
         ref="root"
-        class="chromosome-illustration"
+        class="chromosome-illustration block h-auto w-full overflow-visible"
         viewBox="0 0 960 600"
         role="img"
         :aria-label="illustrationLabel"
@@ -146,7 +146,11 @@ onUnmounted(() => {
             {{ genomeStyle.alleles.join("") }} alleles
         </title>
 
-        <g ref="person" class="chromosome-person" aria-hidden="true">
+        <g
+            ref="person"
+            class="chromosome-person fill-[#9aa3ad] will-change-[fill]"
+            aria-hidden="true"
+        >
             <circle cx="180" cy="150" r="104" />
             <path
                 d="M48 541v-55c0-128 50-236 132-236s132 108 132 236v55c0 31-24 55-55 55H103c-31 0-55-24-55-55Z"
@@ -155,23 +159,23 @@ onUnmounted(() => {
 
         <g aria-hidden="true">
             <path
-                class="chromosome-branch"
+                class="chromosome-branch fill-none stroke-[#ffd05a] stroke-[58px] [stroke-linecap:round] [stroke-linejoin:round]"
                 d="M552 92c-4 105 1 169 36 220 18 27 48 38 66 61 35 45 55 98 66 151"
             />
             <path
-                class="chromosome-branch"
+                class="chromosome-branch fill-none stroke-[#ffd05a] stroke-[58px] [stroke-linecap:round] [stroke-linejoin:round]"
                 d="M754 92c4 105-1 169-36 220-18 27-48 38-66 61-35 45-55 98-66 151"
             />
             <circle cx="653" cy="356" r="17" fill="#FFF7F2" />
 
-            <g ref="alleleReveal" class="allele-reveal">
+            <g ref="alleleReveal" class="allele-reveal pointer-events-none">
                 <line
                     x1="520"
                     y1="155"
                     x2="579"
                     y2="151"
                     :stroke="alleleColor(genomeStyle.alleles[0])"
-                    class="allele-band"
+                    class="allele-band invisible [stroke-width:28] opacity-0 will-change-[transform,opacity] [stroke-linecap:round]"
                 />
                 <line
                     x1="727"
@@ -179,7 +183,7 @@ onUnmounted(() => {
                     x2="786"
                     y2="155"
                     :stroke="alleleColor(genomeStyle.alleles[1])"
-                    class="allele-band"
+                    class="allele-band invisible [stroke-width:28] opacity-0 will-change-[transform,opacity] [stroke-linecap:round]"
                 />
 
                 <text
@@ -187,7 +191,7 @@ onUnmounted(() => {
                     y="171"
                     text-anchor="middle"
                     :fill="alleleColor(genomeStyle.alleles[0])"
-                    class="allele-label"
+                    class="allele-label invisible text-[92px] leading-none font-bold opacity-0 will-change-[transform,opacity]"
                 >
                     {{ genomeStyle.alleles[0] }}
                 </text>
@@ -196,7 +200,7 @@ onUnmounted(() => {
                     y="171"
                     text-anchor="middle"
                     :fill="alleleColor(genomeStyle.alleles[1])"
-                    class="allele-label"
+                    class="allele-label invisible text-[92px] leading-none font-bold opacity-0 will-change-[transform,opacity]"
                 >
                     {{ genomeStyle.alleles[1] }}
                 </text>
@@ -206,45 +210,7 @@ onUnmounted(() => {
 </template>
 
 <style scoped>
-.chromosome-illustration {
-    display: block;
-    width: 100%;
-    height: auto;
-    overflow: visible;
-}
-
-.chromosome-person {
-    fill: #9aa3ad;
-    will-change: fill;
-}
-
-.allele-reveal {
-    pointer-events: none;
-}
-
-.chromosome-branch {
-    fill: none;
-    stroke: #ffd05a;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-    stroke-width: 58;
-}
-
-.allele-band {
-    visibility: hidden;
-    opacity: 0;
-    stroke-linecap: round;
-    stroke-width: 28;
-    will-change: transform, opacity;
-}
-
 .allele-label {
-    visibility: hidden;
-    opacity: 0;
     font-family: var(--font-righteous), sans-serif;
-    font-size: 92px;
-    font-weight: 700;
-    line-height: 1;
-    will-change: transform, opacity;
 }
 </style>

@@ -411,10 +411,17 @@ onUnmounted(() => {
 </script>
 
 <template>
-    <section id="mechanism" ref="scene" class="mechanism-scene">
-        <div ref="artwork" class="mechanism-scene__artwork">
+    <section
+        id="mechanism"
+        ref="scene"
+        class="mechanism-scene relative isolate h-svh w-full overflow-visible bg-[#b6fbf1] portrait:grid portrait:grid-rows-[auto_var(--artwork-height)_minmax(0,1fr)]"
+    >
+        <div
+            ref="artwork"
+            class="mechanism-scene__artwork absolute top-0 z-1 h-svh w-[48.89svh] -translate-x-full overflow-visible portrait:relative portrait:top-auto portrait:z-auto portrait:row-start-2 portrait:w-screen portrait:transform-none"
+        >
             <img
-                class="mechanism-scene__background"
+                class="mechanism-scene__background absolute top-1/2 left-1/2 block h-auto w-svh max-w-none -translate-x-1/2 -translate-y-1/2 rotate-90 select-none portrait:inset-0 portrait:size-full portrait:translate-none portrait:rotate-none portrait:object-contain"
                 src="https://static.igem.wiki/teams/6133/wiki/homepage/memscene2.avif"
                 alt="Cell membrane mechanism scene"
                 loading="lazy"
@@ -423,8 +430,13 @@ onUnmounted(() => {
                 draggable="false"
             />
 
-            <div ref="animationPlane" class="mechanism-scene__animation">
-                <div class="mechanism-scene__pept">
+            <div
+                ref="animationPlane"
+                class="mechanism-scene__animation absolute inset-0 z-1 origin-center overflow-visible portrait:top-1/2 portrait:left-1/2 portrait:z-4 portrait:-translate-x-1/2 portrait:-translate-y-1/2 portrait:-rotate-90"
+            >
+                <div
+                    class="mechanism-scene__pept absolute z-1 -translate-x-1/2 -translate-y-1/2 rotate-90 overflow-visible"
+                >
                     <TransporterAnim
                         ref="peptAnim"
                         left-src="https://static.igem.wiki/teams/6133/wiki/homepage/peptshl.avif"
@@ -439,7 +451,7 @@ onUnmounted(() => {
                 <span
                     v-for="label in PROTEIN_LABELS"
                     :key="label.id"
-                    class="mechanism-scene__protein-label"
+                    class="mechanism-scene__protein-label pointer-events-none absolute z-3 block -translate-x-1/2 -translate-y-1/2 text-[clamp(0.9rem,2svh,1.3rem)] leading-none font-extrabold whitespace-nowrap [text-shadow:0_1px_2px_rgb(255_255_255_/_90%),0_0_5px_rgb(255_255_255_/_65%)] portrait:rotate-90"
                     :style="{
                         left: `${label.position.x * 100}%`,
                         top: `${label.position.y * 100}%`,
@@ -449,14 +461,17 @@ onUnmounted(() => {
                     {{ label.text }}
                 </span>
 
-                <div ref="molecule" class="mechanism-scene__molecule">
+                <div
+                    ref="molecule"
+                    class="mechanism-scene__molecule pointer-events-none absolute top-0 left-0 z-2 aspect-square overflow-visible will-change-transform"
+                >
                     <div
                         ref="precursorVisual"
-                        class="mechanism-scene__precursor"
+                        class="mechanism-scene__precursor absolute inset-0 will-change-transform"
                     >
                         <img
                             ref="cys3m3sh"
-                            class="mechanism-scene__molecule-layer"
+                            class="mechanism-scene__molecule-layer absolute inset-0 block size-full object-contain will-change-[transform,opacity] select-none"
                             src="https://static.igem.wiki/teams/6133/wiki/homepage/precursorcys3m3sh.avif"
                             alt=""
                             loading="lazy"
@@ -466,7 +481,7 @@ onUnmounted(() => {
                         />
                         <img
                             ref="gly"
-                            class="mechanism-scene__molecule-layer"
+                            class="mechanism-scene__molecule-layer absolute inset-0 block size-full object-contain will-change-[transform,opacity] select-none"
                             src="https://static.igem.wiki/teams/6133/wiki/homepage/precursorgly.avif"
                             alt=""
                             loading="lazy"
@@ -477,7 +492,7 @@ onUnmounted(() => {
                     </div>
                     <img
                         ref="product"
-                        class="mechanism-scene__molecule-layer mechanism-scene__molecule-layer--product"
+                        class="mechanism-scene__molecule-layer mechanism-scene__molecule-layer--product absolute inset-0 block size-full object-contain will-change-[transform,opacity] select-none portrait:rotate-90"
                         src="https://static.igem.wiki/teams/6133/wiki/homepage/3m3sh.avif"
                         alt=""
                         loading="lazy"
@@ -491,18 +506,26 @@ onUnmounted(() => {
 
         <ChemicalFormulaPanel
             ref="chemicalPanel"
-            class="mechanism-scene__chemistry"
+            class="mechanism-scene__chemistry absolute inset-y-0 left-0 z-3 portrait:relative portrait:inset-auto portrait:row-start-3 portrait:h-auto portrait:min-h-0"
         />
 
-        <div class="mechanism-scene__copy">
-            <p ref="copyOne" class="mechanism-scene__copy-panel">
+        <div
+            class="mechanism-scene__copy absolute inset-y-0 right-0 z-3 box-border grid place-items-center portrait:pointer-events-none portrait:relative portrait:inset-auto portrait:row-start-1 portrait:bg-[#03316d] portrait:px-[clamp(1rem,5vw,2rem)] portrait:py-20 portrait:[grid-template:'copy'_auto/minmax(0,1fr)]"
+        >
+            <p
+                ref="copyOne"
+                class="mechanism-scene__copy-panel absolute right-20 left-20 m-0 box-border h-auto w-auto max-w-none text-[clamp(1.1rem,1.8vw,1.75rem)] leading-[1.55] [overflow-wrap:break-word] whitespace-normal text-[#f7fbff] will-change-[transform,opacity] portrait:relative portrait:right-auto portrait:left-auto portrait:w-full portrait:text-[clamp(0.95rem,3.8vw,1.25rem)] portrait:leading-[1.42] portrait:[grid-area:copy]"
+            >
                 This precursor is transported into <em>S. hominis</em> cells by
                 <strong class="text-[#8ed0ff]">PepT<sub>sh</sub></strong> , a
                 member of the
                 <strong>POT</strong>
                 (Proton-dependent Oligopeptide Transporter) family.
             </p>
-            <p ref="copyTwo" class="mechanism-scene__copy-panel">
+            <p
+                ref="copyTwo"
+                class="mechanism-scene__copy-panel absolute right-20 left-20 m-0 box-border h-auto w-auto max-w-none text-[clamp(1.1rem,1.8vw,1.75rem)] leading-[1.55] [overflow-wrap:break-word] whitespace-normal text-[#f7fbff] will-change-[transform,opacity] portrait:relative portrait:right-auto portrait:left-auto portrait:w-full portrait:text-[clamp(0.95rem,3.8vw,1.25rem)] portrait:leading-[1.42] portrait:[grid-area:copy]"
+            >
                 Inside the bacterium,
                 <strong class="text-[#ffc56e]">PepV</strong> uses water to
                 hydrolyze the peptide bond in
@@ -510,7 +533,10 @@ onUnmounted(() => {
                 <strong class="text-[#ffc56e]">Cys-3M3SH</strong> and
                 <strong>glycine</strong>.
             </p>
-            <p ref="copyThree" class="mechanism-scene__copy-panel">
+            <p
+                ref="copyThree"
+                class="mechanism-scene__copy-panel absolute right-20 left-20 m-0 box-border h-auto w-auto max-w-none text-[clamp(1.1rem,1.8vw,1.75rem)] leading-[1.55] [overflow-wrap:break-word] whitespace-normal text-[#f7fbff] will-change-[transform,opacity] portrait:relative portrait:right-auto portrait:left-auto portrait:w-full portrait:text-[clamp(0.95rem,3.8vw,1.25rem)] portrait:leading-[1.42] portrait:[grid-area:copy]"
+            >
                 Subsequently, the
                 <strong
                     >C–S lyase <span class="text-[#ff91b8]">PatB</span></strong
@@ -536,13 +562,6 @@ onUnmounted(() => {
     --pept-top: 15.5%;
     --pept-size: 35svh;
     --molecule-size: 17svh;
-
-    position: relative;
-    isolation: isolate;
-    width: 100%;
-    height: 100svh;
-    overflow: visible;
-    background: #b6fbf1;
 }
 
 .mechanism-scene::before {
@@ -554,126 +573,25 @@ onUnmounted(() => {
 }
 
 .mechanism-scene__artwork {
-    position: absolute;
-    z-index: 1;
-    top: 0;
     left: var(--artwork-right);
-    width: 48.89svh;
-    height: 100svh;
-    overflow: visible;
-    transform: translateX(-100%);
-}
-
-.mechanism-scene__background {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    display: block;
-    width: 100svh;
-    max-width: none;
-    height: auto;
-    transform: translate(-50%, -50%) rotate(90deg);
-    user-select: none;
-}
-
-.mechanism-scene__animation {
-    position: absolute;
-    z-index: 1;
-    inset: 0;
-    overflow: visible;
-    transform-origin: 50% 50%;
 }
 
 .mechanism-scene__pept {
-    position: absolute;
-    z-index: 1;
     top: var(--pept-top);
     left: var(--pept-left);
     width: var(--pept-size);
-    overflow: visible;
-    transform: translate(-50%, -50%) rotate(90deg);
-}
-
-.mechanism-scene__protein-label {
-    position: absolute;
-    z-index: 3;
-    display: block;
-    transform: translate(-50%, -50%);
-    font-size: clamp(0.9rem, 2svh, 1.3rem);
-    font-weight: 800;
-    line-height: 1;
-    white-space: nowrap;
-    pointer-events: none;
-    text-shadow:
-        0 1px 2px rgb(255 255 255 / 90%),
-        0 0 5px rgb(255 255 255 / 65%);
 }
 
 .mechanism-scene__molecule {
-    position: absolute;
-    z-index: 2;
-    top: 0;
-    left: 0;
     width: var(--molecule-size);
-    aspect-ratio: 1;
-    overflow: visible;
-    pointer-events: none;
-    will-change: transform;
-}
-
-.mechanism-scene__precursor {
-    position: absolute;
-    inset: 0;
-    will-change: transform;
-}
-
-.mechanism-scene__molecule-layer {
-    position: absolute;
-    inset: 0;
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    user-select: none;
-    will-change: transform, opacity;
 }
 
 .mechanism-scene__copy {
-    position: absolute;
-    z-index: 3;
-    top: 0;
-    right: 0;
-    bottom: 0;
     left: var(--artwork-right);
-    display: grid;
-    place-items: center;
-    box-sizing: border-box;
 }
 
 .mechanism-scene__chemistry {
-    position: absolute;
-    z-index: 3;
-    top: 0;
-    bottom: 0;
-    left: 0;
     width: max(0px, calc(var(--artwork-right) - 48.89svh));
-}
-
-.mechanism-scene__copy-panel {
-    position: absolute;
-    right: 5rem;
-    left: 5rem;
-    box-sizing: border-box;
-    width: auto;
-    max-width: none;
-    height: auto;
-    margin: 0;
-    font-size: clamp(1.1rem, 1.8vw, 1.75rem);
-    line-height: 1.55;
-    color: #f7fbff;
-    overflow-wrap: break-word;
-    white-space: normal;
-    will-change: transform, opacity;
 }
 
 @media (orientation: portrait) {
@@ -681,9 +599,6 @@ onUnmounted(() => {
         --artwork-height: 48.89vw;
         --pept-size: 35vw;
         --molecule-size: 17vw;
-
-        display: grid;
-        grid-template-rows: auto var(--artwork-height) minmax(0, 1fr);
     }
 
     .mechanism-scene::before {
@@ -691,68 +606,21 @@ onUnmounted(() => {
     }
 
     .mechanism-scene__artwork {
-        position: relative;
-        top: auto;
         left: auto;
-        z-index: auto;
-        grid-row: 2;
-        width: 100vw;
         height: var(--artwork-height);
-        transform: none;
-    }
-
-    .mechanism-scene__background {
-        inset: 0;
-        width: 100%;
-        height: 100%;
-        object-fit: contain;
-        transform: none;
     }
 
     .mechanism-scene__animation {
-        z-index: 4;
-        top: 50%;
-        left: 50%;
         width: var(--artwork-height);
         height: 100vw;
-        transform: translate(-50%, -50%) rotate(-90deg);
-    }
-
-    .mechanism-scene__protein-label {
-        transform: translate(-50%, -50%) rotate(90deg);
-    }
-
-    .mechanism-scene__molecule-layer--product {
-        rotate: 90deg;
     }
 
     .mechanism-scene__copy {
-        position: relative;
-        inset: auto;
-        grid-row: 1;
-        grid-template: "copy" auto / minmax(0, 1fr);
-        padding: 5rem clamp(1rem, 5vw, 2rem);
-        background: #03316d;
-        pointer-events: none;
+        left: auto;
     }
 
     .mechanism-scene__chemistry {
-        position: relative;
-        inset: auto;
-        grid-row: 3;
         width: 100%;
-        height: auto;
-        min-height: 0;
-    }
-
-    .mechanism-scene__copy-panel {
-        position: relative;
-        right: auto;
-        left: auto;
-        grid-area: copy;
-        width: 100%;
-        font-size: clamp(0.95rem, 3.8vw, 1.25rem);
-        line-height: 1.42;
     }
 }
 </style>
