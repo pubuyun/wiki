@@ -71,6 +71,20 @@ const staphylococcusLabelStyle = {
     transform: `rotate(${STAPHYLOCOCCUS_LABEL_POSITION.rotation}deg)`,
 };
 
+// 右上角补充菌的坐标和尺寸调节区（相对于整组菌图）。
+const SHOMINIS_EXTRA_BACTERIUM = {
+    x: "48%",
+    y: "10%",
+    size: "36%",
+    rotation: 8,
+} as const;
+const shominisExtraBacteriumStyle = {
+    left: SHOMINIS_EXTRA_BACTERIUM.x,
+    top: SHOMINIS_EXTRA_BACTERIUM.y,
+    width: SHOMINIS_EXTRA_BACTERIUM.size,
+    transform: `rotate(${SHOMINIS_EXTRA_BACTERIUM.rotation}deg)`,
+};
+
 // 两个箭头的坐标、旋转与翻转缩放调节区。
 const STORY_ARROW_TRANSFORMS = {
     first: { x: "8%", y: "0%", rotation: -20 },
@@ -148,8 +162,8 @@ const PRECURSOR_PATH = {
         ease: "power2.inOut",
     },
     final: {
-        x: 92.5,
-        y: 40,
+        x: 95,
+        y: 43,
         rotation: 20,
         scale: 0.4,
         moveDuration: 1,
@@ -457,6 +471,9 @@ onMounted(() => {
                                     path.bacteria,
                                     path.final,
                                 ]),
+                            // 起点已显式包含 glandInside，避免插件再次插入当前位置
+                            // 形成重复控制点，导致进入弧线前短暂回摆。
+                            fromCurrent: false,
                             curviness: 1.35,
                         },
                         duration: odorRouteDuration,
@@ -755,10 +772,20 @@ onUnmounted(() => {
                         class="abcc11-story__item abcc11-story__bacteria"
                         aria-label="Staphylococcus hominis"
                     >
+                        <svg
+                            class="abcc11-story__extra-bacterium"
+                            :style="shominisExtraBacteriumStyle"
+                            viewBox="0 0 200 190"
+                            aria-hidden="true"
+                        >
+                            <path
+                                d="M102 7C118 5 128 17 142 20C158 24 171 27 177 42C184 55 181 69 187 82C194 97 192 112 184 125C177 137 175 153 162 161C148 170 135 174 119 179C104 184 89 179 75 176C60 173 44 174 34 163C23 151 22 136 17 122C12 108 6 94 12 79C17 65 20 49 32 40C44 30 58 29 72 21C82 15 90 8 102 7Z"
+                            />
+                        </svg>
                         <img
-                            :src="publicAsset('shominis.png')"
+                            :src="publicAsset('shominis-1.png')"
                             alt="Staphylococcus hominis bacteria"
-                            class="translate-x-[-15%]"
+                            class="abcc11-story__bacteria-image translate-x-[-15%]"
                             draggable="false"
                         />
                         <svg
@@ -929,6 +956,28 @@ onUnmounted(() => {
 .abcc11-story__bacteria {
     width: min(75%, 18rem);
     justify-self: end;
+}
+
+.abcc11-story__bacteria-image {
+    position: relative;
+    z-index: 2;
+}
+
+.abcc11-story__extra-bacterium {
+    position: absolute;
+    z-index: 1;
+    display: block;
+    height: auto;
+    overflow: visible;
+    transform-origin: 50% 50%;
+    pointer-events: none;
+}
+
+.abcc11-story__extra-bacterium path {
+    fill: #ffe6a3;
+    stroke: #bd6b00;
+    stroke-width: 7;
+    stroke-linejoin: round;
 }
 
 .abcc11-story__label {
