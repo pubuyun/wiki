@@ -1,6 +1,6 @@
 <template>
     <div
-        class="flex min-h-dvh max-w-full flex-col overflow-hidden bg-surface p-4 text-on-surface lg:h-[calc(100dvh-4rem)] lg:min-h-0"
+        class="flex min-h-dvh max-w-full flex-col overflow-hidden bg-surface p-4 text-on-surface lg:h-[calc(100dvh-2.75rem)] lg:min-h-0 xl:h-[calc(100dvh-3.5rem)]"
     >
         <div
             v-if="isUnsupportedViewport"
