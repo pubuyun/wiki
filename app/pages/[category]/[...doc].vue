@@ -1,4 +1,5 @@
 <script setup>
+import { Icon } from "@iconify/vue";
 definePageMeta({
     layout: "doc",
     key: (route) => route.fullPath,
@@ -205,34 +206,61 @@ function bodyWithChildren(body, children) {
         </section>
         <nav
             v-if="previousPage || nextPage"
-            class="my-6 grid gap-3 sm:grid-cols-2"
+            class="my-6"
             aria-label="Docs pages"
         >
-            <NuxtLink
-                v-if="previousPage"
-                class="my-1 flex min-w-0 flex-col gap-1 rounded-2xl border-2 border-outline bg-secondary p-4 text-on-secondary no-underline transition hover:-translate-y-px hover:border-secondary hover:text-on-secondary focus-visible:-translate-y-px focus-visible:border-outline focus-visible:text-on-secondary focus-visible:outline-none"
-                :to="previousPage.path"
-            >
-                <div class="font-main text-sm opacity-70">Previous</div>
+            <div class="px-6">
                 <div
-                    class="font-belanosima text-lg leading-tight wrap-anywhere"
-                >
-                    {{ pageTitle(previousPage) }}
+                    class="w-full border-t-2 border-outline"
+                    aria-hidden="true"
+                />
+
+                <div class="mt-2 grid gap-3 sm:grid-cols-2">
+                    <NuxtLink
+                        v-if="previousPage"
+                        class="group flex min-w-0 flex-col items-start gap-1 text-left text-on-secondary no-underline transition hover:-translate-y-px hover:text-accent focus-visible:-translate-y-px focus-visible:text-accent"
+                        :to="previousPage.path"
+                    >
+                        <div class="relative font-main text-sm text-accent">
+                            <Icon
+                                icon="lucide:chevron-left"
+                                class="absolute top-1/2 right-full size-5 -translate-x-1 -translate-y-1/2"
+                                aria-hidden="true"
+                            />
+                            <span>Previous</span>
+                        </div>
+
+                        <div
+                            class="font-belanosima text-lg leading-tight wrap-anywhere"
+                        >
+                            {{ pageTitle(previousPage) }}
+                        </div>
+                    </NuxtLink>
+
+                    <span v-else aria-hidden="true" />
+
+                    <NuxtLink
+                        v-if="nextPage"
+                        class="group flex min-w-0 flex-col items-end gap-1 text-right text-on-secondary no-underline transition hover:-translate-y-px hover:text-accent focus-visible:-translate-y-px focus-visible:text-accent"
+                        :to="nextPage.path"
+                    >
+                        <div class="relative font-main text-sm text-accent">
+                            <span>Next</span>
+                            <Icon
+                                icon="lucide:chevron-right"
+                                class="absolute top-1/2 left-full size-5 translate-x-1 -translate-y-1/2"
+                                aria-hidden="true"
+                            />
+                        </div>
+
+                        <div
+                            class="font-belanosima text-lg leading-tight wrap-anywhere"
+                        >
+                            {{ pageTitle(nextPage) }}
+                        </div>
+                    </NuxtLink>
                 </div>
-            </NuxtLink>
-            <span v-else aria-hidden="true" />
-            <NuxtLink
-                v-if="nextPage"
-                class="my-1 flex min-w-0 flex-col items-end gap-1 rounded-2xl border-2 border-outline bg-secondary p-4 text-right text-on-secondary no-underline transition hover:-translate-y-px hover:border-secondary hover:text-on-secondary focus-visible:-translate-y-px focus-visible:border-outline focus-visible:text-on-secondary focus-visible:outline-none"
-                :to="nextPage.path"
-            >
-                <div class="font-main text-sm opacity-70">Next</div>
-                <div
-                    class="font-belanosima text-lg leading-tight wrap-anywhere"
-                >
-                    {{ pageTitle(nextPage) }}
-                </div>
-            </NuxtLink>
+            </div>
         </nav>
     </article>
 </template>
