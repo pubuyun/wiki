@@ -17,7 +17,7 @@
             >
                 <div class="absolute inset-0 bg-surface-bright" />
                 <div
-                    class="absolute inset-x-0 top-0 bg-primary transition-transform duration-200 ease-out"
+                    class="absolute inset-x-0 top-0 bg-accent transition-transform duration-200 ease-out"
                     :style="activeIndicatorStyle"
                 />
             </div>
@@ -131,9 +131,9 @@ const activeIndicatorStyle = computed(() => ({
 
 function linkClass(link: ToCLink) {
     return [
-        "block h-7 truncate py-1.5 pr-3 leading-4 transition-colors duration-200 ease-out hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-outline",
+        "block h-7 truncate py-1.5 pr-3 leading-4 transition-colors duration-200 ease-out hover:text-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-outline",
         link.depth === 3 ? "pl-9 text-sm" : "pl-4 text-base",
-        activeId.value === link.id ? "text-primary" : "text-on-surface ",
+        activeId.value === link.id ? "text-accent" : "text-on-surface ",
     ];
 }
 

@@ -1,6 +1,6 @@
 <template>
     <ul
-        class="leading-7marker:text-surface-bright my-5 list-disc space-y-1 pl-6 text-base"
+        class="my-5 list-disc space-y-1 pl-6 text-base leading-7 marker:text-accent"
     >
         <slot />
     </ul>

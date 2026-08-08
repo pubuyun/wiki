@@ -1,6 +1,6 @@
 <template>
     <nav
-        class="bg-surface-elevated w-full rounded-2xl font-belanosima text-on-surface shadow-lg lg:hidden"
+        class="w-full rounded-2xl bg-surface-elevated font-belanosima text-on-surface shadow-lg lg:hidden"
         aria-labelledby="mobile-toc-title"
     >
         <AccordionRoot
@@ -12,7 +12,7 @@
             <AccordionItem value="toc">
                 <AccordionHeader>
                     <AccordionTrigger
-                        class="group flex w-full items-center justify-between gap-4 rounded-2xl px-5 py-4 text-left text-xl text-secondary focus-visible:ring-2 focus-visible:ring-outline focus-visible:outline-none"
+                        class="group flex w-full items-center justify-between gap-4 rounded-2xl px-5 py-4 text-left text-xl text-accent focus-visible:ring-2 focus-visible:ring-outline focus-visible:outline-none"
                     >
                         <span id="mobile-toc-title">On this page</span>
                         <span

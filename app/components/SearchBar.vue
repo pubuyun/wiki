@@ -3,13 +3,13 @@
         <!-- Desktop / larger than lg -->
         <DialogTrigger
             aria-label="Open search dialog"
-            class="flex size-9 shrink-0 items-center justify-center rounded-md bg-primary text-on-primary transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-outline sm:mr-8 sm:ml-5 sm:h-3/4 sm:max-w-48 sm:flex-1 sm:justify-start sm:rounded-full sm:pr-3"
+            class="flex size-9 shrink-0 items-center justify-center rounded-md bg-accent text-on-accent transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-outline sm:mr-8 sm:ml-5 sm:h-3/4 sm:max-w-48 sm:flex-1 sm:justify-start sm:rounded-full sm:bg-primary sm:pr-3 sm:text-on-primary"
         >
             <div
                 class="flex h-full w-full items-center justify-center gap-2 p-1 sm:justify-start"
             >
                 <span
-                    class="hidden h-full min-w-0 flex-1 items-center rounded-full bg-secondary px-3 text-sm text-on-surface/78 sm:flex"
+                    class="hidden h-full min-w-0 flex-1 items-center rounded-full bg-surface-elevated px-3 text-sm text-on-surface/78 sm:flex"
                     aria-hidden="true"
                 >
                     Ctrl + K

@@ -2,7 +2,7 @@
     <a
         :href="destination"
         :id="id"
-        class="mx-0.5 scroll-mt-24 rounded-sm align-super text-xs font-bold text-primary no-underline hover:text-on-secondary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-outline"
+        class="mx-0.5 scroll-mt-24 rounded-sm align-super text-xs font-bold text-accent no-underline hover:text-on-secondary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-outline"
         :aria-label="`Go to reference ${label || id}`"
         @click="scrollToHash($event, destination)"
     >

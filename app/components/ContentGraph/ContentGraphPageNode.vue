@@ -34,7 +34,7 @@ function openPage() {
         <Handle type="target" :position="targetPosition" :connectable="false" />
         <button
             type="button"
-            class="page-node__button block w-max min-w-30 origin-center cursor-pointer touch-manipulation rounded-[0.875rem] border-2 border-outline bg-primary px-[0.9rem] py-[0.6rem] text-center font-belanosima leading-[1.15] text-on-primary shadow-[0_4px_12px_rgb(0_0_0_/_15%)] transition-[background-color,color,filter] duration-150 hover:bg-secondary hover:text-on-secondary hover:brightness-105 focus-visible:bg-secondary focus-visible:text-on-secondary focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-outline focus-visible:brightness-105"
+            class="page-node__button block w-max min-w-30 origin-center cursor-pointer touch-manipulation rounded-[0.875rem] border-2 border-outline bg-accent px-[0.9rem] py-[0.6rem] text-center font-belanosima leading-[1.15] text-on-accent shadow-[0_4px_12px_rgb(0_0_0_/_15%)] transition-[background-color,color,filter] duration-150 hover:bg-accent/20 hover:text-on-accent hover:brightness-105 focus-visible:bg-accent/20 focus-visible:text-on-accent focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-outline focus-visible:brightness-105"
             :class="{
                 '[transform:scale(var(--content-graph-label-scale,1))] text-xl will-change-transform':
                     data.scale !== false,

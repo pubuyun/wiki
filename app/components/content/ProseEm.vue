@@ -5,7 +5,7 @@
                 <button
                     ref="triggerEl"
                     type="button"
-                    class="font-inherit inline cursor-help border-0 bg-transparent p-0 text-inherit not-italic underline decoration-primary decoration-2 underline-offset-4 transition-colors hover:text-outline-variant focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary dark:hover:text-surface-bright"
+                    class="font-inherit inline cursor-help border-0 bg-transparent p-0 text-inherit not-italic underline decoration-accent decoration-2 underline-offset-4 transition-colors hover:text-outline-variant focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent dark:hover:text-surface-bright"
                     @click="toggleTooltipForTouch"
                 >
                     <slot />
@@ -31,7 +31,7 @@
                             <NuxtLink
                                 v-if="matchedTerm.link"
                                 :to="matchedTerm.link"
-                                class="inline-annotation-content mt-2 inline-block font-semibold text-primary underline"
+                                class="inline-annotation-content mt-2 inline-block font-semibold text-accent underline"
                                 target="_blank"
                             >
                                 Learn more

@@ -74,7 +74,7 @@ const PROTEIN_LABELS = [
         id: "patB",
         text: "PatB",
         color: "#BD2F63",
-        position: { x: 0.08, y: 0.75 },
+        position: { x: 0.08, y: 0.8 },
     },
 ] as const;
 
@@ -473,7 +473,7 @@ onUnmounted(() => {
     >
         <div
             ref="artwork"
-            class="mechanism-scene__artwork absolute top-0 z-1 h-svh w-[48.89svh] -translate-x-full overflow-visible portrait:relative portrait:top-auto portrait:z-auto portrait:row-start-2 portrait:w-screen portrait:transform-none"
+            class="mechanism-scene__artwork absolute top-0 z-1 h-svh w-[48.89svh] -translate-x-full overflow-visible portrait:relative portrait:top-auto portrait:z-10 portrait:row-start-2 portrait:w-screen portrait:transform-none"
         >
             <img
                 class="mechanism-scene__background absolute top-1/2 left-1/2 block h-auto w-svh max-w-none -translate-x-1/2 -translate-y-1/2 rotate-90 select-none portrait:inset-0 portrait:size-full portrait:translate-none portrait:rotate-none portrait:object-contain"
@@ -487,7 +487,7 @@ onUnmounted(() => {
 
             <div
                 ref="animationPlane"
-                class="mechanism-scene__animation absolute inset-0 z-1 origin-center overflow-visible portrait:top-1/2 portrait:left-1/2 portrait:z-4 portrait:-translate-x-1/2 portrait:-translate-y-1/2 portrait:-rotate-90"
+                class="mechanism-scene__animation absolute inset-0 z-10 origin-center overflow-visible portrait:top-1/2 portrait:left-1/2 portrait:z-4 portrait:-translate-x-1/2 portrait:-translate-y-1/2 portrait:-rotate-90"
             >
                 <span
                     class="precursor-transition-target pointer-events-none absolute size-0"
@@ -527,7 +527,7 @@ onUnmounted(() => {
 
                 <div
                     ref="molecule"
-                    class="mechanism-scene__molecule pointer-events-none absolute top-0 left-0 z-2 aspect-square overflow-visible will-change-transform"
+                    class="mechanism-scene__molecule pointer-events-none absolute top-0 left-0 z-10 aspect-square overflow-visible will-change-transform"
                 >
                     <div
                         ref="precursorVisual"
@@ -678,7 +678,9 @@ onUnmounted(() => {
     }
 
     .mechanism-scene__artwork {
-        left: auto;
+        position: relative;
+        left: 100%;
+        overflow: visible;
         height: var(--artwork-height);
     }
 

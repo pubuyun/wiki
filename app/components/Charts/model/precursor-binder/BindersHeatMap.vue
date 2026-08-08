@@ -18,11 +18,11 @@
                     v-for="cycle in cycles"
                     :key="cycle.value"
                     :value="cycle.value"
-                    class="group flex items-center gap-2 rounded-full px-5 py-2 text-sm text-primary transition-colors outline-none hover:bg-primary/20 focus-visible:ring-2 focus-visible:ring-outline data-[state=active]:bg-primary data-[state=active]:text-on-primary"
+                    class="group flex items-center gap-2 rounded-full px-5 py-2 text-sm text-accent transition-colors outline-none hover:bg-accent/20 focus-visible:ring-2 focus-visible:ring-outline data-[state=active]:bg-accent data-[state=active]:text-on-accent"
                 >
                     <span>{{ cycle.label }}</span>
                     <span
-                        class="rounded-full bg-surface px-2 py-0.5 text-xs text-on-surface group-data-[state=active]:bg-on-primary/15 group-data-[state=active]:text-on-primary"
+                        class="rounded-full bg-accent px-2 py-0.5 text-xs text-on-surface group-data-[state=active]:bg-primary group-data-[state=active]:text-on-accent"
                     >
                         {{ rowsByCycle[cycle.value].length }}
                     </span>

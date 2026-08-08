@@ -13,7 +13,7 @@ const darkMode = useState<boolean>("dark-mode", () => false);
         :title="`${darkMode ? 'Disable' : 'Enable'} dark mode`"
     >
         <SwitchThumb
-            class="flex size-5 items-center justify-center rounded-full bg-primary text-on-primary shadow-sm transition-transform duration-200 will-change-transform data-[state=checked]:translate-x-6"
+            class="flex size-5 items-center justify-center rounded-full bg-accent text-on-accent shadow-sm transition-transform duration-200 will-change-transform data-[state=checked]:translate-x-6"
         >
             <Icon
                 :icon="darkMode ? 'lucide:moon' : 'lucide:sun'"

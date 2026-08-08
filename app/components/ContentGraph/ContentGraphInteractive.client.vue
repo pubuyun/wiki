@@ -904,7 +904,7 @@ async function toggleFullscreen() {
             <button
                 v-if="resolvedGraph"
                 type="button"
-                class="nodrag nopan content-graph__foreground-control absolute right-3 bottom-3 z-20 grid size-10 cursor-pointer place-items-center rounded-xl border-2 border-outline bg-[color-mix(in_srgb,var(--surface-elevated)_92%,transparent)] text-on-surface shadow-[0_4px_12px_rgb(0_0_0_/_15%)] backdrop-blur hover:bg-primary hover:text-on-primary focus-visible:bg-primary focus-visible:text-on-primary focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-outline"
+                class="nodrag nopan content-graph__foreground-control absolute right-3 bottom-3 z-20 grid size-10 cursor-pointer place-items-center rounded-xl border-2 border-outline bg-accent text-on-accent shadow-[0_4px_12px_rgb(0_0_0/15%)] backdrop-blur hover:bg-primary hover:text-on-primary focus-visible:bg-primary focus-visible:text-on-primary focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-outline"
                 :aria-label="
                     isFullscreen ? 'Exit fullscreen' : 'Enter fullscreen'
                 "

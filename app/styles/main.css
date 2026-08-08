@@ -161,10 +161,10 @@ input[type="submit"],
     --primary: #a8d9f9;
     --on-primary: #03316d;
 
-    --accent: #a8d9f9;
-    --on-accent: #03316d;
-    /* --accent: #ffa300;
+    /* --accent: #a8d9f9;
     --on-accent: #03316d; */
+    --accent: #fabb5f;
+    --on-accent: #03316d;
 
     --secondary: #0a4296;
     --on-secondary: #f8ffff;
@@ -183,10 +183,10 @@ input[type="submit"],
     --primary: #2b6cbf;
     --on-primary: #ffffff;
 
-    --accent: #2b6cbf;
-    --on-accent: #ffffff;
-    /* --accent: #ffb84d;
+    /* --accent: #2b6cbf;
     --on-accent: #ffffff; */
+    --accent: #ffb84d;
+    --on-accent: #ffffff;
 
     --secondary: #f7fafc;
     --on-secondary: #3f3730;

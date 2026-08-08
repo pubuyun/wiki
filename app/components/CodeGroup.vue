@@ -244,7 +244,7 @@ onBeforeUnmount(() => {
                 v-for="item in items"
                 :key="item.value"
                 :value="item.value"
-                class="shrink-0 cursor-pointer rounded-lg px-3 py-1.5 text-sm text-on-secondary transition-colors outline-none hover:bg-primary/20 focus-visible:ring-2 focus-visible:ring-outline data-[state=active]:bg-primary data-[state=active]:text-on-primary"
+                class="shrink-0 cursor-pointer rounded-lg px-3 py-1.5 text-sm text-on-secondary transition-colors outline-none hover:bg-accent/20 focus-visible:ring-2 focus-visible:ring-outline data-[state=active]:bg-accent data-[state=active]:text-on-accent"
             >
                 {{ item.label }}
             </TabsTrigger>

@@ -117,12 +117,12 @@ function isIconUrl(icon: string) {
                     class="flex min-w-0 flex-col gap-8"
                 >
                     <h2
-                        class="w-fit max-w-full self-center rounded-3xl bg-primary px-4 py-2 text-center font-belanosima text-4xl leading-tight text-on-primary shadow-sm sm:px-6 sm:text-5xl"
+                        class="w-fit max-w-full self-center rounded-3xl border-4 bg-accent px-4 py-2 text-center font-belanosima text-4xl leading-tight text-on-accent shadow-sm transition-transform hover:-translate-0.5 sm:px-6 sm:text-5xl"
                     >
                         <NuxtLink
                             v-if="node.path"
                             :to="node.path"
-                            class="no-underline hover:text-on-primary hover:underline"
+                            class="underline decoration-4"
                         >
                             {{ node.label }}
                         </NuxtLink>
@@ -142,11 +142,11 @@ function isIconUrl(icon: string) {
                         >
                             <div
                                 aria-hidden="true"
-                                class="pointer-events-none absolute inset-0 z-0 translate-x-2 translate-y-2 rounded-2xl bg-primary"
+                                class="pointer-events-none absolute inset-0 -z-10 translate-x-2 translate-y-2 rounded-2xl bg-primary"
                             ></div>
                             <NuxtLink
                                 :to="child.path"
-                                class="group relative flex min-h-52 min-w-0 flex-col rounded-2xl bg-surface-elevated p-4 text-on-surface no-underline shadow-sm transition hover:-translate-y-1 hover:border-primary hover:text-on-surface hover:shadow-lg focus-visible:-translate-y-1 focus-visible:border-outline focus-visible:text-on-surface focus-visible:outline-none sm:min-h-60 sm:p-5 lg:p-6"
+                                class="group flex min-h-52 w-full min-w-0 flex-col rounded-2xl bg-surface-elevated p-4 text-on-surface no-underline shadow-sm transition hover:-translate-y-1 hover:border-primary hover:text-on-surface hover:shadow-lg focus-visible:-translate-y-1 focus-visible:border-outline focus-visible:text-on-surface focus-visible:outline-none sm:min-h-60 sm:p-5 lg:p-6"
                             >
                                 <img
                                     v-if="isIconUrl(navIcon(child.path))"
@@ -179,7 +179,7 @@ function isIconUrl(icon: string) {
 
                 <section
                     v-if="standaloneNavNodes.length"
-                    class="grid min-w-0 gap-8 sm:grid-cols-2 xl:grid-cols-3"
+                    class="my mb-6 grid min-w-0 gap-8 sm:grid-cols-2 xl:grid-cols-3"
                     aria-label="Other category pages"
                 >
                     <div
@@ -225,7 +225,7 @@ function isIconUrl(icon: string) {
                 <NuxtLink
                     v-if="overviewNode?.path"
                     :to="overviewNode.path"
-                    class="inline-flex w-fit items-center gap-3 rounded-full bg-primary px-6 py-3 font-belanosima text-xl text-on-primary no-underline shadow-md transition hover:-translate-y-0.5 hover:shadow-lg focus-visible:-translate-y-0.5 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-outline sm:px-8 sm:py-4 sm:text-2xl"
+                    class="inline-flex w-fit items-center gap-3 rounded-full bg-accent px-6 py-3 font-belanosima text-xl text-on-accent no-underline shadow-md transition hover:-translate-y-0.5 hover:shadow-lg focus-visible:-translate-y-0.5 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-outline sm:px-8 sm:py-4 sm:text-2xl"
                 >
                     Go to Overview
                     <Icon icon="line-md:arrow-right" class="h-6 w-6" />
