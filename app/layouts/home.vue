@@ -19,6 +19,14 @@ onMounted(async () => {
     media.add("(prefers-reduced-motion: no-preference)", () => {
         if (!wrapper.value || !content.value) return;
 
+        // GSAP only disables smoothing by default on touch-only devices
+        // (isTouch === 1). Hybrid devices report 2, so their native scroll and
+        // the transformed content can drift apart and make pinned scenes jitter.
+        if (ScrollTrigger.isTouch !== 0) {
+            ScrollTrigger.refresh();
+            return;
+        }
+
         smoother = ScrollSmoother.create({
             wrapper: wrapper.value,
             content: content.value,

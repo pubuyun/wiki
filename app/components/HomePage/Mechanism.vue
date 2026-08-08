@@ -86,6 +86,13 @@ const PRECURSOR_ANIMATION = {
     pointBRotation: -30,
 } as const;
 
+/* 3M3SH 穿膜后的终点参数：position 使用 animationPlane 的比例坐标。 */
+const PRODUCT_FINALE = {
+    position: { x: 2.0, y: 0.52 },
+    scale: 1.8,
+    copyEndY: -0.2,
+} as const;
+
 const scene = ref<HTMLElement | null>(null);
 const artwork = ref<HTMLElement | null>(null);
 const animationPlane = ref<HTMLElement | null>(null);
@@ -97,6 +104,7 @@ const product = ref<HTMLImageElement | null>(null);
 const copyOne = ref<HTMLElement | null>(null);
 const copyTwo = ref<HTMLElement | null>(null);
 const copyThree = ref<HTMLElement | null>(null);
+const copyFour = ref<HTMLElement | null>(null);
 const peptAnim = ref<TransporterAnimExpose | null>(null);
 const chemicalPanel = ref<ChemicalPathwayExpose | null>(null);
 
@@ -121,7 +129,8 @@ onMounted(() => {
         !product.value ||
         !copyOne.value ||
         !copyTwo.value ||
-        !copyThree.value
+        !copyThree.value ||
+        !copyFour.value
     ) {
         return;
     }
@@ -129,7 +138,12 @@ onMounted(() => {
     context = gsap.context(() => {
         const peptTimeline = peptAnim.value?.getTimeline();
         const chemicalTargets = chemicalPanel.value?.getAnimationTargets();
-        const copyPanels = [copyOne.value, copyTwo.value, copyThree.value];
+        const copyPanels = [
+            copyOne.value,
+            copyTwo.value,
+            copyThree.value,
+            copyFour.value,
+        ];
         const pepVMainArrows =
             chemicalTargets?.pepVArrows.filter((arrow) =>
                 arrow.classList.contains("reaction-arrow__path--main"),
@@ -162,6 +176,7 @@ onMounted(() => {
         });
         gsap.set(copyPanels, { autoAlpha: 0, y: 24 });
         gsap.set(copyOne.value, { autoAlpha: 1, y: 0 });
+        gsap.set(copyFour.value, { y: 0 });
 
         if (chemicalTargets) {
             const pathwayProducts = [
@@ -401,6 +416,44 @@ onMounted(() => {
                 product.value,
                 { scale: 1, duration: 0.6, ease: "power2.out" },
                 "<",
+            )
+            .addLabel("productFinale")
+            .to(
+                molecule.value,
+                {
+                    ...pointVars(PRODUCT_FINALE.position),
+                    duration: 1,
+                    ease: "power2.inOut",
+                },
+                "productFinale",
+            )
+            .to(
+                product.value,
+                {
+                    scale: PRODUCT_FINALE.scale,
+                    duration: 1,
+                    ease: "power2.inOut",
+                },
+                "productFinale",
+            )
+            .to(
+                copyThree.value,
+                { autoAlpha: 0, y: -24, duration: 0.25 },
+                "productFinale",
+            )
+            .to(
+                copyFour.value,
+                { autoAlpha: 1, duration: 0.15 },
+                "productFinale",
+            )
+            .to(
+                copyFour.value,
+                {
+                    y: () => window.innerHeight * PRODUCT_FINALE.copyEndY,
+                    duration: 0.75,
+                    ease: "power2.inOut",
+                },
+                "productFinale",
             );
     }, scene.value);
 
@@ -560,6 +613,14 @@ onUnmounted(() => {
                 <strong>pyruvic acid</strong> as coproducts.
                 <strong class="text-[#ff91b8]">3M3SH</strong> is one of the
                 primary compounds responsible for axillary body odor.
+            </p>
+            <p
+                ref="copyFour"
+                class="mechanism-scene__copy-panel absolute right-20 left-20 m-0 box-border h-auto w-auto max-w-none text-[clamp(1.1rem,1.8vw,1.75rem)] leading-[1.55] [overflow-wrap:break-word] whitespace-normal text-[#f7fbff] will-change-[transform,opacity] portrait:relative portrait:right-auto portrait:left-auto portrait:w-full portrait:text-[clamp(0.95rem,3.8vw,1.25rem)] portrait:leading-[1.42] portrait:[grid-area:copy]"
+            >
+                <strong class="text-[#ff91b8]">3M3SH</strong>
+                (3-methyl-3-sulfanylhexan-1-ol), a volatile thiol compound, is
+                one of the major contributors to axillary body odor.
             </p>
         </div>
     </section>

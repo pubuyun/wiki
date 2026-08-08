@@ -1,8 +1,14 @@
 <script setup lang="ts">
 import Expelliodor from "../components/HomePage/Expelliodor.vue";
+import ResizeMask from "../components/HomePage/ResizeMask.vue";
 import SceneSequence from "../components/HomePage/SceneSequence.vue";
 
 const lazyScenes = [
+    {
+        id: "world-stat",
+        loader: () => import("../components/HomePage/WorldStat.vue"),
+        minHeight: "100svh",
+    },
     {
         id: "abcc11",
         loader: () => import("../components/HomePage/ABCC11.vue"),
@@ -31,6 +37,7 @@ useSeoMeta({
 </script>
 
 <template>
+    <ResizeMask />
     <article class="w-full flex-1 overflow-hidden bg-[#03316d]">
         <Expelliodor />
         <SceneSequence :scenes="lazyScenes" />
