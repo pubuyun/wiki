@@ -2,6 +2,7 @@
 import Expelliodor from "../components/HomePage/Expelliodor.vue";
 import ResizeMask from "../components/HomePage/ResizeMask.vue";
 import SceneSequence from "../components/HomePage/SceneSequence.vue";
+import Solution from "../components/HomePage/Solution.vue";
 
 const lazyScenes = [
     {
@@ -39,7 +40,8 @@ useSeoMeta({
 <template>
     <ResizeMask />
     <article class="w-full flex-1 overflow-hidden bg-[#03316d]">
-        <Expelliodor />
+        <!-- <Expelliodor /> -->
         <SceneSequence :scenes="lazyScenes" />
+        <!-- <Solution /> -->
     </article>
 </template>

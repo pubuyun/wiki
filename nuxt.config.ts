@@ -53,6 +53,8 @@ export default defineNuxtConfig({
                 "smiles-drawer",
                 "gsap/ScrollTrigger",
                 "gsap/MorphSVGPlugin",
+                "gsap/MotionPathPlugin",
+                "gsap/Flip",
                 "lenis",
             ],
         },

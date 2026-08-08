@@ -39,7 +39,7 @@ function showMaskForChangedViewport() {
 }
 
 function refreshPage() {
-    window.scrollTo(0, 0);
+    // window.scrollTo(0, 0);
     window.location.reload();
 }
 
@@ -52,9 +52,9 @@ onMounted(() => {
     const navigation = window.performance.getEntriesByType("navigation")[0] as
         PerformanceNavigationTiming | undefined;
 
-    if (navigation?.type === "reload") {
-        window.scrollTo(0, 0);
-    }
+    // if (navigation?.type === "reload") {
+    //     window.scrollTo(0, 0);
+    // }
 
     window.addEventListener("resize", handleViewportResize, { passive: true });
 });

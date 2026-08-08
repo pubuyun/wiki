@@ -3,15 +3,26 @@ title: Overview
 order: 100
 ---
 
+## Full Workflow
+
+::ContentGraph
+---
+
+src: "/content/model/index.json"
+class: "mb-8"
+---
+
+::
+
 ## Overview
 
 ### Philosophy
 
-*Markdown* is intended to be as easy-to-read and easy-to-write as is feasible. :fn-ref{#1}
+_Markdown_ is intended to be as easy-to-read and easy-to-write as is feasible. :fn-ref{#1}
 
-Readability, *however*, is emphasized above all else. A Markdown-formatted--- Unknown node: hardBreak ---document should be publishable as-is, as plain text, without looking--- Unknown node: hardBreak ---like it's been marked up with tags or formatting instructions. While--- Unknown node: hardBreak ---Markdown's syntax has been influenced by several existing text-to-HTML--- Unknown node: hardBreak ---filters -- including [Setext](http://docutils.sourceforge.net/mirror/setext.html), [atx](http://www.aaronsw.com/2002/atx/), [Textile](http://textism.com/tools/textile/), [reStructuredText](http://docutils.sourceforge.net/rst.html),--- Unknown node: hardBreak ---[Grutatext](http://www.triptico.com/software/grutatxt.html), and [EtText](http://ettext.taint.org/doc/) -- the single biggest source of--- Unknown node: hardBreak ---inspiration for Markdown's syntax is the format of plain text email. :fn-ref{#2}
+Readability, _however_, is emphasized above all else. A Markdown-formatted--- Unknown node: hardBreak ---document should be publishable as-is, as plain text, without looking--- Unknown node: hardBreak ---like it's been marked up with tags or formatting instructions. While--- Unknown node: hardBreak ---Markdown's syntax has been influenced by several existing text-to-HTML--- Unknown node: hardBreak ---filters -- including [Setext](http://docutils.sourceforge.net/mirror/setext.html), [atx](http://www.aaronsw.com/2002/atx/), [Textile](http://textism.com/tools/textile/), [reStructuredText](http://docutils.sourceforge.net/rst.html),--- Unknown node: hardBreak ---[Grutatext](http://www.triptico.com/software/grutatxt.html), and [EtText](http://ettext.taint.org/doc/) -- the single biggest source of--- Unknown node: hardBreak ---inspiration for Markdown's syntax is the format of plain text email. :fn-ref{#2}
 
-This line is added by *NuxtStudio*
+This line is added by _NuxtStudio_
 
 Title reference test: ^[Title Reference Target]
 
@@ -56,7 +67,7 @@ significantly from most other text-to-HTML formatters (including Movable
 Type's "Convert Line Breaks" option) which translate every line break
 character in a paragraph into a `<br />` tag.
 
-When you *do* want to insert a `<br />` break tag using Markdown, you
+When you _do_ want to insert a `<br />` break tag using Markdown, you
 end a line with two or more spaces, then type return.
 
 ### Headers
@@ -180,26 +191,26 @@ paragraphs, but here again, Markdown will allow you to be
 lazy:
 
 - This is a list item with two paragraphs.
-  ```text
-    This is the second paragraph in the list item. You're
-  ```
-  : bronly required to indent the first line. Lorem ipsum dolor
-  sit amet, consectetuer adipiscing elit.
+    ```text
+      This is the second paragraph in the list item. You're
+    ```
+    : bronly required to indent the first line. Lorem ipsum dolor
+    sit amet, consectetuer adipiscing elit.
 - Another item in the same list.
 
 To put a blockquote within a list item, the blockquote's `>`--- Unknown node: hardBreak ---delimiters need to be indented: :fn-ref{#5}
 
 - A list item with a blockquote:
-  > This is a blockquote
-  > inside a list item.
+    > This is a blockquote
+    > inside a list item.
 
 To put a code block within a list item, the code block needs
-to be indented *twice* -- 8 spaces or two tabs:
+to be indented _twice_ -- 8 spaces or two tabs:
 
 - A list item with a code block:
-  ```text
-    <code goes here>
-  ```
+    ```text
+      <code goes here>
+    ```
 
 ### Code Blocks
 
@@ -254,13 +265,13 @@ end tell
 
 ### Links
 
-Markdown supports two style of links: *inline* and *reference*.
+Markdown supports two style of links: _inline_ and _reference_.
 
 In both styles, the link text is delimited by [square brackets].
 
 To create an inline link, use a set of regular parentheses immediately
 after the link text's closing square bracket. Inside the parentheses,
-put the URL where you want the link to point, along with an *optional*
+put the URL where you want the link to point, along with an _optional_
 title for the link, surrounded in quotes. For example:
 
 This is [an example](http://example.com/) inline link.
@@ -274,9 +285,9 @@ emphasis. Text wrapped with one `*` or `_` will be wrapped with an
 HTML `<em>` tag; double `*`'s or `_`'s will be wrapped with an HTML
 `<strong>` tag. E.g., this input:
 
-*single asterisks*
+_single asterisks_
 
-*single underscores*
+_single underscores_
 
 **double asterisks**
 
