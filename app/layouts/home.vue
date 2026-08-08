@@ -1,53 +1,55 @@
 <script setup lang="ts">
 import { gsap } from "gsap";
-import { ScrollSmoother } from "gsap/ScrollSmoother";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { nextTick, onBeforeUnmount, onMounted, ref } from "vue";
+import Lenis from "lenis";
+import "lenis/dist/lenis.css";
+import { nextTick, onBeforeUnmount, onMounted } from "vue";
 
-gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
-
-const wrapper = ref<HTMLElement | null>(null);
-const content = ref<HTMLElement | null>(null);
+gsap.registerPlugin(ScrollTrigger);
 
 let media: gsap.MatchMedia | undefined;
-let smoother: ScrollSmoother | undefined;
+let lenis: Lenis | undefined;
+let updateLenis: ((time: number) => void) | undefined;
+
+function destroyLenis() {
+    if (updateLenis) {
+        gsap.ticker.remove(updateLenis);
+        updateLenis = undefined;
+    }
+
+    lenis?.destroy();
+    lenis = undefined;
+}
 
 onMounted(async () => {
     await nextTick();
 
     media = gsap.matchMedia();
     media.add("(prefers-reduced-motion: no-preference)", () => {
-        if (!wrapper.value || !content.value) return;
-
-        // GSAP only disables smoothing by default on touch-only devices
-        // (isTouch === 1). Hybrid devices report 2, so their native scroll and
-        // the transformed content can drift apart and make pinned scenes jitter.
-        if (ScrollTrigger.isTouch !== 0) {
-            ScrollTrigger.refresh();
-            return;
-        }
-
-        smoother = ScrollSmoother.create({
-            wrapper: wrapper.value,
-            content: content.value,
-            smooth: 0.9,
-            effects: true,
+        lenis = new Lenis({
+            duration: 0.9,
+            smoothWheel: true,
+            syncTouch: false,
+            touchMultiplier: 1,
+            easing: (time) => Math.min(1, 1.001 - 2 ** (-10 * time)),
         });
+
+        lenis.on("scroll", () => ScrollTrigger.update());
+
+        updateLenis = (time) => lenis?.raf(time * 1000);
+        gsap.ticker.add(updateLenis);
+        gsap.ticker.lagSmoothing(0);
 
         ScrollTrigger.refresh();
 
-        return () => {
-            smoother?.kill();
-            smoother = undefined;
-        };
+        return destroyLenis;
     });
 });
 
 onBeforeUnmount(() => {
     media?.revert();
     media = undefined;
-    smoother?.kill();
-    smoother = undefined;
+    destroyLenis();
 });
 </script>
 
@@ -57,12 +59,8 @@ onBeforeUnmount(() => {
             <NavigationBar />
         </header>
 
-        <div id="home-smooth-wrapper" ref="wrapper">
-            <div
-                id="home-smooth-content"
-                ref="content"
-                class="flex min-h-screen flex-col"
-            >
+        <div id="home-smooth-wrapper">
+            <div id="home-smooth-content" class="flex min-h-screen flex-col">
                 <main class="flex-1">
                     <slot />
                 </main>

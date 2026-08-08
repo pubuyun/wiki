@@ -53,7 +53,7 @@ export default defineNuxtConfig({
                 "smiles-drawer",
                 "gsap/ScrollTrigger",
                 "gsap/MorphSVGPlugin",
-                "gsap/ScrollSmoother",
+                "lenis",
             ],
         },
         plugins: [tailwindcss()],

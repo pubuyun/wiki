@@ -5,8 +5,32 @@ const isVisible = ref(false);
 
 let previousBodyOverflow = "";
 let previousScrollRestoration: ScrollRestoration | undefined;
+let initialViewportWidth = 0;
+let initialViewportHeight = 0;
+let resizeTimer: ReturnType<typeof setTimeout> | undefined;
 
 function handleViewportResize() {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(showMaskForChangedViewport, 200);
+}
+
+function showMaskForChangedViewport() {
+    resizeTimer = undefined;
+
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    // Minimizing a browser hides the document and may temporarily report a
+    // zero-sized viewport. Restoring it to the same size is not a layout change.
+    if (
+        document.hidden ||
+        width <= 0 ||
+        height <= 0 ||
+        (width === initialViewportWidth && height === initialViewportHeight)
+    ) {
+        return;
+    }
+
     if (!isVisible.value) {
         isVisible.value = true;
         previousBodyOverflow = document.body.style.overflow;
@@ -20,6 +44,8 @@ function refreshPage() {
 }
 
 onMounted(() => {
+    initialViewportWidth = window.innerWidth;
+    initialViewportHeight = window.innerHeight;
     previousScrollRestoration = window.history.scrollRestoration;
     window.history.scrollRestoration = "manual";
 
@@ -35,6 +61,8 @@ onMounted(() => {
 
 onBeforeUnmount(() => {
     window.removeEventListener("resize", handleViewportResize);
+    clearTimeout(resizeTimer);
+    resizeTimer = undefined;
 
     if (previousScrollRestoration) {
         window.history.scrollRestoration = previousScrollRestoration;
