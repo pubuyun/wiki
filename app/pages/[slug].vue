@@ -133,78 +133,94 @@ function isIconUrl(icon: string) {
                     </h2>
 
                     <div
-                        class="grid min-w-0 gap-4 sm:grid-cols-2 xl:grid-cols-3"
+                        class="grid min-w-0 gap-8 sm:grid-cols-2 xl:grid-cols-3"
                     >
-                        <NuxtLink
+                        <div
                             v-for="child in node.children"
                             :key="child.id"
-                            :to="child.path"
-                            class="group flex min-h-52 min-w-0 flex-col rounded-2xl border-2 border-outline bg-surface-elevated p-4 text-on-surface no-underline shadow-sm transition hover:-translate-y-1 hover:border-primary hover:text-on-surface hover:shadow-lg focus-visible:-translate-y-1 focus-visible:border-outline focus-visible:text-on-surface focus-visible:outline-none sm:min-h-60 sm:p-5 lg:p-6"
+                            class="relative isolate flex min-w-0"
                         >
-                            <img
-                                v-if="isIconUrl(navIcon(child.path))"
-                                :src="navIcon(child.path)"
-                                alt=""
-                                class="mb-8 size-14 object-contain sm:size-16"
-                            />
-                            <Icon
-                                v-else
-                                :icon="navIcon(child.path)"
-                                class="mb-8 size-14 shrink-0 sm:size-16"
+                            <div
                                 aria-hidden="true"
-                            />
-                            <h3
-                                class="mt-auto font-belanosima text-2xl leading-tight wrap-anywhere"
+                                class="pointer-events-none absolute inset-0 z-0 translate-x-2 translate-y-2 rounded-2xl bg-primary"
+                            ></div>
+                            <NuxtLink
+                                :to="child.path"
+                                class="group relative flex min-h-52 min-w-0 flex-col rounded-2xl bg-surface-elevated p-4 text-on-surface no-underline shadow-sm transition hover:-translate-y-1 hover:border-primary hover:text-on-surface hover:shadow-lg focus-visible:-translate-y-1 focus-visible:border-outline focus-visible:text-on-surface focus-visible:outline-none sm:min-h-60 sm:p-5 lg:p-6"
                             >
-                                {{ child.label }}
-                            </h3>
+                                <img
+                                    v-if="isIconUrl(navIcon(child.path))"
+                                    :src="navIcon(child.path)"
+                                    alt=""
+                                    class="mb-8 size-14 object-contain sm:size-16"
+                                />
+                                <Icon
+                                    v-else
+                                    :icon="navIcon(child.path)"
+                                    class="mb-8 size-14 shrink-0 sm:size-16"
+                                    aria-hidden="true"
+                                />
+                                <h3
+                                    class="mt-auto font-belanosima text-2xl leading-tight wrap-anywhere"
+                                >
+                                    {{ child.label }}
+                                </h3>
 
-                            <p
-                                v-if="navDescription(child.path)"
-                                class="mt-2 font-main text-base leading-relaxed opacity-85"
-                            >
-                                {{ navDescription(child.path) }}
-                            </p>
-                        </NuxtLink>
+                                <p
+                                    v-if="navDescription(child.path)"
+                                    class="mt-2 font-main text-base leading-relaxed opacity-85"
+                                >
+                                    {{ navDescription(child.path) }}
+                                </p>
+                            </NuxtLink>
+                        </div>
                     </div>
                 </section>
 
                 <section
                     v-if="standaloneNavNodes.length"
-                    class="grid min-w-0 gap-4 sm:grid-cols-2 xl:grid-cols-3"
+                    class="grid min-w-0 gap-8 sm:grid-cols-2 xl:grid-cols-3"
                     aria-label="Other category pages"
                 >
-                    <NuxtLink
+                    <div
                         v-for="node in standaloneNavNodes"
                         :key="node.id"
-                        :to="node.path"
-                        class="group flex min-h-52 min-w-0 flex-col rounded-2xl border-2 border-outline bg-surface-elevated p-4 text-on-surface no-underline shadow-sm transition hover:-translate-y-1 hover:border-primary hover:text-on-surface hover:shadow-lg focus-visible:-translate-y-1 focus-visible:border-outline focus-visible:text-on-surface focus-visible:outline-none sm:min-h-60 sm:p-5 lg:p-6"
+                        class="relative isolate flex min-w-0"
                     >
-                        <img
-                            v-if="isIconUrl(navIcon(node.path))"
-                            :src="navIcon(node.path)"
-                            alt=""
-                            class="mb-8 size-14 object-contain sm:size-16"
-                        />
-                        <Icon
-                            v-else
-                            :icon="navIcon(node.path)"
-                            class="mb-8 size-14 shrink-0 sm:size-16"
+                        <div
                             aria-hidden="true"
-                        />
-                        <h2
-                            class="mt-auto font-belanosima text-2xl leading-tight wrap-anywhere"
+                            class="pointer-events-none absolute inset-0 z-0 translate-x-2 translate-y-2 rounded-2xl bg-primary"
+                        ></div>
+                        <NuxtLink
+                            :to="node.path"
+                            class="group relative z-10 flex min-h-52 min-w-0 flex-col rounded-2xl bg-surface-elevated p-4 text-on-surface no-underline shadow-sm transition hover:-translate-y-1 hover:border-primary hover:text-on-surface hover:shadow-lg focus-visible:-translate-y-1 focus-visible:border-outline focus-visible:text-on-surface focus-visible:outline-none sm:min-h-60 sm:p-5 lg:p-6"
                         >
-                            {{ node.label }}
-                        </h2>
+                            <img
+                                v-if="isIconUrl(navIcon(node.path))"
+                                :src="navIcon(node.path)"
+                                alt=""
+                                class="mb-8 size-14 object-contain sm:size-16"
+                            />
+                            <Icon
+                                v-else
+                                :icon="navIcon(node.path)"
+                                class="mb-8 size-14 shrink-0 sm:size-16"
+                                aria-hidden="true"
+                            />
+                            <h2
+                                class="mt-auto font-belanosima text-2xl leading-tight wrap-anywhere"
+                            >
+                                {{ node.label }}
+                            </h2>
 
-                        <p
-                            v-if="navDescription(node.path)"
-                            class="mt-2 font-main text-base leading-relaxed opacity-85"
-                        >
-                            {{ navDescription(node.path) }}
-                        </p>
-                    </NuxtLink>
+                            <p
+                                v-if="navDescription(node.path)"
+                                class="mt-2 font-main text-base leading-relaxed opacity-85"
+                            >
+                                {{ navDescription(node.path) }}
+                            </p>
+                        </NuxtLink>
+                    </div>
                 </section>
                 <NuxtLink
                     v-if="overviewNode?.path"
