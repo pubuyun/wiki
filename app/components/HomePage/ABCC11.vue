@@ -289,6 +289,9 @@ function setupPrecursorRoute(
             // position in both directions; eased scrub creates a reverse gap.
             scrub: true,
             invalidateOnRefresh: true,
+            onRefresh: () => {
+                if (precursorRouteTimeline) syncActors(true);
+            },
         },
     });
 
@@ -346,7 +349,7 @@ function setupPrecursorRoute(
             0.6,
         );
 
-    const syncActors = () => {
+    function syncActors(force = false) {
         const progress = precursorRouteTimeline?.progress() ?? 0;
         const nextState =
             progress <= 0.001
@@ -355,7 +358,7 @@ function setupPrecursorRoute(
                   ? "after"
                   : "moving";
 
-        if (precursorRouteState === nextState) return;
+        if (!force && precursorRouteState === nextState) return;
         precursorRouteState = nextState;
 
         if (nextState === "after") {
@@ -366,7 +369,7 @@ function setupPrecursorRoute(
 
         setActorVisibility(source, true);
         setActorVisibility(target, nextState === "before");
-    };
+    }
 
     precursorRouteTimeline.eventCallback("onUpdate", syncActors);
     syncActors();
