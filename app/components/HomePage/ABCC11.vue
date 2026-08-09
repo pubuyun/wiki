@@ -418,13 +418,14 @@ function rebuildPrecursorRoute() {
     }
 }
 
-onMounted(() => {
+onMounted(async () => {
     window.addEventListener(HOME_SCROLL_REFRESH_START, destroyPrecursorRoute);
     window.addEventListener(HOME_SCROLL_REFRESH_END, rebuildPrecursorRoute);
 
     motionPreference = window.matchMedia("(prefers-reduced-motion: reduce)");
     syncPrecursorTeleport();
     motionPreference.addEventListener("change", syncPrecursorTeleport);
+    await nextTick();
 
     if (
         !scene.value ||
