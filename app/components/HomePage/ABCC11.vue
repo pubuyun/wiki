@@ -6,6 +6,10 @@ import { nextTick, onMounted, onUnmounted, ref } from "vue";
 
 import Chromosome from "./ABCC11/Chromosome.vue";
 import TransporterAnim from "./Mechanism/TransporterAnim.vue";
+import {
+    HOME_SCROLL_REFRESH_END,
+    HOME_SCROLL_REFRESH_START,
+} from "~/utils/home-scroll";
 
 gsap.registerPlugin(MotionPathPlugin, ScrollTrigger);
 
@@ -176,6 +180,7 @@ let media: gsap.MatchMedia | undefined;
 const precursorTeleportDisabled = ref(true);
 let motionPreference: MediaQueryList | undefined;
 let precursorRouteTimeline: gsap.core.Timeline | undefined;
+let storyTimeline: gsap.core.Timeline | undefined;
 let precursorRouteObserver: MutationObserver | undefined;
 let precursorRouteFrame = 0;
 let precursorRouteState: "before" | "moving" | "after" | undefined;
@@ -230,6 +235,7 @@ function destroyPrecursorRoute() {
 function setupPrecursorRoute(
     storyTimeline: gsap.core.Timeline,
     path: typeof PRECURSOR_PATH,
+    refreshAfterSetup = true,
 ) {
     if (
         precursorRouteTimeline ||
@@ -272,7 +278,7 @@ function setupPrecursorRoute(
         );
     };
     const routePath = () => [
-        ...precursorCurvePath([path.glandInside, path.bacteria, path.final]),
+        ...precursorCurvePath([path.glandInside, path.bacteria]),
         pointInPinnedScene(targetAnchor, targetScene),
     ];
     const targetScale = () =>
@@ -375,7 +381,9 @@ function setupPrecursorRoute(
     syncActors();
     precursorRouteObserver?.disconnect();
     precursorRouteObserver = undefined;
-    void nextTick(() => ScrollTrigger.refresh());
+    if (refreshAfterSetup) {
+        void nextTick(() => ScrollTrigger.refresh());
+    }
     return true;
 }
 
@@ -401,7 +409,19 @@ function queuePrecursorRoute(
     });
 }
 
+function rebuildPrecursorRoute() {
+    destroyPrecursorRoute();
+    if (!storyTimeline) return;
+
+    if (!setupPrecursorRoute(storyTimeline, PRECURSOR_PATH, false)) {
+        queuePrecursorRoute(storyTimeline, PRECURSOR_PATH);
+    }
+}
+
 onMounted(() => {
+    window.addEventListener(HOME_SCROLL_REFRESH_START, destroyPrecursorRoute);
+    window.addEventListener(HOME_SCROLL_REFRESH_END, rebuildPrecursorRoute);
+
     motionPreference = window.matchMedia("(prefers-reduced-motion: reduce)");
     syncPrecursorTeleport();
     motionPreference.addEventListener("change", syncPrecursorTeleport);
@@ -534,6 +554,7 @@ onMounted(() => {
                     invalidateOnRefresh: true,
                 },
             });
+            storyTimeline = timeline;
 
             timeline
                 .addLabel("firstScene", 0)
@@ -689,7 +710,10 @@ onMounted(() => {
             }
 
             queuePrecursorRoute(timeline, path);
-            return destroyPrecursorRoute;
+            return () => {
+                storyTimeline = undefined;
+                destroyPrecursorRoute();
+            };
         },
         scene.value,
     );
@@ -698,6 +722,11 @@ onMounted(() => {
 });
 
 onUnmounted(() => {
+    window.removeEventListener(
+        HOME_SCROLL_REFRESH_START,
+        destroyPrecursorRoute,
+    );
+    window.removeEventListener(HOME_SCROLL_REFRESH_END, rebuildPrecursorRoute);
     motionPreference?.removeEventListener("change", syncPrecursorTeleport);
     destroyPrecursorRoute();
     media?.revert();

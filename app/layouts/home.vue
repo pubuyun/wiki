@@ -5,11 +5,58 @@ import Lenis from "lenis";
 import "lenis/dist/lenis.css";
 import { nextTick, onBeforeUnmount, onMounted } from "vue";
 
+import {
+    captureHomeScroll,
+    HOME_SCROLL_REFRESH_END,
+    HOME_SCROLL_REFRESH_START,
+    restoreHomeScroll,
+    type HomeScrollSnapshot,
+} from "~/utils/home-scroll";
+
 gsap.registerPlugin(ScrollTrigger);
 
 let media: gsap.MatchMedia | undefined;
 let lenis: Lenis | undefined;
 let updateLenis: ((time: number) => void) | undefined;
+let previousScrollRestoration: ScrollRestoration | undefined;
+let resizeSnapshot: HomeScrollSnapshot | undefined;
+let resizeTimer: ReturnType<typeof setTimeout> | undefined;
+
+const nextFrame = () =>
+    new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
+
+function scrollImmediately(position: number) {
+    if (lenis) {
+        lenis.scrollTo(position, { immediate: true });
+        return;
+    }
+
+    window.scrollTo(0, position);
+}
+
+function scheduleResizeRefresh() {
+    resizeSnapshot ??= captureHomeScroll();
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(refreshAfterResize, 180);
+}
+
+async function refreshAfterResize() {
+    resizeTimer = undefined;
+    if (document.hidden || !resizeSnapshot) {
+        resizeSnapshot = undefined;
+        return;
+    }
+
+    const snapshot = resizeSnapshot;
+    resizeSnapshot = undefined;
+
+    window.dispatchEvent(new Event(HOME_SCROLL_REFRESH_START));
+    window.dispatchEvent(new Event(HOME_SCROLL_REFRESH_END));
+
+    await nextFrame();
+    ScrollTrigger.refresh();
+    restoreHomeScroll(snapshot, scrollImmediately);
+}
 
 function destroyLenis() {
     if (updateLenis) {
@@ -22,6 +69,15 @@ function destroyLenis() {
 }
 
 onMounted(async () => {
+    previousScrollRestoration = window.history.scrollRestoration;
+    window.history.scrollRestoration = "manual";
+    ScrollTrigger.config({
+        autoRefreshEvents: "visibilitychange,DOMContentLoaded,load",
+    });
+    window.addEventListener("resize", scheduleResizeRefresh, {
+        passive: true,
+    });
+
     await nextTick();
 
     media = gsap.matchMedia();
@@ -47,6 +103,16 @@ onMounted(async () => {
 });
 
 onBeforeUnmount(() => {
+    window.removeEventListener("resize", scheduleResizeRefresh);
+    clearTimeout(resizeTimer);
+    ScrollTrigger.config({
+        autoRefreshEvents: "visibilitychange,DOMContentLoaded,load,resize",
+    });
+
+    if (previousScrollRestoration) {
+        window.history.scrollRestoration = previousScrollRestoration;
+    }
+
     media?.revert();
     media = undefined;
     destroyLenis();

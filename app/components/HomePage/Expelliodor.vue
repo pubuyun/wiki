@@ -2,6 +2,10 @@
 import { gsap } from "gsap";
 import { onMounted, onUnmounted, ref, useId, watch } from "vue";
 
+import Explosion from "./Explosion.vue";
+
+const showExplosionStudy = true;
+
 const scene = ref<HTMLElement | null>(null);
 const artwork = ref<SVGSVGElement | null>(null);
 const spraySweep = ref<SVGRectElement | null>(null);
@@ -239,7 +243,10 @@ onUnmounted(() => {
     >
         <h1 id="expelliodor-title" class="sr-only">Expelliodor</h1>
 
+        <Explosion v-if="showExplosionStudy" />
+
         <svg
+            v-if="!showExplosionStudy"
             ref="artwork"
             class="expelliodor-scene__artwork block h-auto w-[min(92vw,120rem)] rotate-6 overflow-visible max-[40rem]:w-[115vw]"
             viewBox="0 0 1920 1080"
@@ -319,6 +326,7 @@ onUnmounted(() => {
         </svg>
 
         <div
+            v-if="!showExplosionStudy"
             ref="sprayHead"
             class="spray-head pointer-events-none absolute top-1/2 left-0 z-2 aspect-[213/505] w-[clamp(7rem,12vw,11rem)] will-change-transform max-[40rem]:w-[clamp(6rem,23vw,8rem)]"
             aria-hidden="true"
