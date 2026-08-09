@@ -89,6 +89,7 @@ const PRECURSOR_ANIMATION = {
 /* 3M3SH 穿膜后的终点参数：position 使用 animationPlane 的比例坐标。 */
 const PRODUCT_FINALE = {
     position: { x: 2.0, y: 0.52 },
+    phonePortraitX: 1.5,
     scale: 1.8,
     copyEndY: -0.2,
 } as const;
@@ -428,9 +429,18 @@ onMounted(() => {
                 "productFinale",
             )
             .to(
-                product.value,
+                molecule.value,
                 {
-                    scale: PRODUCT_FINALE.scale,
+                    x: () =>
+                        (animationPlane.value?.clientWidth ?? 0) *
+                        (window.matchMedia(
+                            "(orientation: portrait) and (max-width: 40rem)",
+                        ).matches
+                            ? PRODUCT_FINALE.phonePortraitX
+                            : PRODUCT_FINALE.position.x),
+                    y: () =>
+                        (animationPlane.value?.clientHeight ?? 0) *
+                        PRODUCT_FINALE.position.y,
                     duration: 1,
                     ease: "power2.inOut",
                 },
@@ -449,7 +459,12 @@ onMounted(() => {
             .to(
                 copyFour.value,
                 {
-                    y: () => window.innerHeight * PRODUCT_FINALE.copyEndY,
+                    y: () =>
+                        window.matchMedia(
+                            "(orientation: portrait) and (max-width: 40rem)",
+                        ).matches
+                            ? 0
+                            : window.innerHeight * PRODUCT_FINALE.copyEndY,
                     duration: 0.75,
                     ease: "power2.inOut",
                 },
@@ -700,6 +715,11 @@ onUnmounted(() => {
     }
 
     .mechanism-scene__chemistry {
+        width: 100%;
+    }
+}
+@media (orientation: portrait) and (max-width: 40rem) {
+    .mechanism-scene__copy {
         width: 100%;
     }
 }
