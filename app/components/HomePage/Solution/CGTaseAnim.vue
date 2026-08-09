@@ -25,7 +25,7 @@ const LAYOUT = {
     chainStartScale: 1.18,
     chainCurvedScale: 0.82,
     precursorReaction: { x: 78, y: 29 } satisfies PercentPoint,
-    attachedGroupSlot: { x: 0, y: 80 } satisfies PercentPoint,
+    attachedGroupSlot: { x: 2, y: 82 } satisfies PercentPoint,
     remainingFlight: { x: 0, y: 0 } satisfies PercentPoint,
     collisionOffset: { x: 31, y: 6 } satisfies PercentPoint,
     collisionCompression: { x: 2, y: 0 } satisfies PercentPoint,

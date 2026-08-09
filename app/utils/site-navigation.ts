@@ -3,6 +3,7 @@ export interface SiteNavGroup {
     links: {
         to: string;
         label: string;
+        icon: string;
     }[];
 }
 
@@ -36,10 +37,18 @@ export const siteNavGroups: SiteNavGroup[] = [
     {
         title: "Drylab",
         links: [
-            { to: "/model", label: "Model" },
-            { to: "/software", label: "Software" },
+            { to: "/model", label: "Model", icon: "carbon:model-alt" },
+            {
+                to: "/software",
+                label: "Software",
+                icon: "material-symbols:computer-outline",
+            },
             { to: "/hardware", label: "Hardware" },
-            { to: "/viewbinder", label: "Binder Viewer" },
+            {
+                to: "/viewbinder",
+                label: "Binder Viewer",
+                icon: "tabler:files",
+            },
         ],
     },
     {

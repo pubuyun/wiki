@@ -1,15 +1,18 @@
 <script setup lang="ts">
+import { Icon } from "@iconify/vue";
+import { gsap } from "gsap";
+import { nextTick, onMounted, onUnmounted, ref } from "vue";
 import {
     NavigationMenuContent,
     NavigationMenuItem,
     NavigationMenuLink,
     NavigationMenuTrigger,
 } from "reka-ui";
-import { computed } from "vue";
 
 interface DropdownLink {
     to: string;
     label: string;
+    icon: string;
 }
 
 const props = withDefaults(
@@ -18,12 +21,136 @@ const props = withDefaults(
         to?: string;
         links?: DropdownLink[];
     }>(),
-    {
-        links: () => [],
-    },
+    { links: () => [] },
 );
 
-const hasDropdown = computed(() => props.links.length > 0);
+const menuContent = ref<InstanceType<typeof NavigationMenuContent>>();
+const menuInner = ref<HTMLElement | null>(null);
+
+let observer: MutationObserver | null = null;
+let tl: gsap.core.Timeline | null = null;
+
+function getContentElement(): HTMLElement | null {
+    return (menuContent.value?.$el as HTMLElement) ?? null;
+}
+
+function animateMenu(isOpen: boolean) {
+    const content = getContentElement();
+    const inner = menuInner.value;
+    if (!content || !inner) return;
+
+    tl?.kill();
+
+    if (isOpen) {
+        content.style.zIndex = String(++menuZIndex);
+        gsap.set(content, {
+            height: "auto",
+            overflow: "hidden",
+        });
+
+        const targetHeight = content.offsetHeight;
+
+        gsap.set(content, {
+            height: 0,
+            opacity: 0,
+        });
+
+        gsap.set(inner, {
+            opacity: 0,
+            y: -10,
+        });
+
+        tl = gsap.timeline();
+
+        tl.to(content, {
+            height: targetHeight,
+            opacity: 1,
+            duration: 0.4,
+            ease: "expo.out",
+        })
+            .to(
+                inner,
+                {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.3,
+                    ease: "power3.out",
+                },
+                0.05,
+            )
+            .set(content, {
+                height: "auto",
+            });
+    } else {
+        // 此时 content 仍然保持打开状态
+        // 所以能够真正看到关闭动画
+
+        gsap.set(content, {
+            height: content.offsetHeight,
+            overflow: "hidden",
+        });
+
+        tl = gsap.timeline();
+
+        tl.to(inner, {
+            opacity: 0,
+            y: -8,
+            duration: 0.2,
+            ease: "power2.in",
+        }).to(
+            content,
+            {
+                height: 0,
+                opacity: 0,
+                duration: 0.3,
+                ease: "expo.inOut",
+            },
+            "-=0.1",
+        );
+    }
+}
+
+onMounted(async () => {
+    await nextTick();
+    const content = getContentElement();
+    if (!content) return;
+
+    // 初始状态渲染
+    if (content.dataset.state === "open") {
+        animateMenu(true);
+    } else {
+        gsap.set(content, { height: 0, opacity: 0, overflow: "hidden" });
+        if (menuInner.value) {
+            gsap.set(menuInner.value, { opacity: 0, y: -10 });
+        }
+    }
+
+    // 监听 data-state 变化
+    observer = new MutationObserver((mutations) => {
+        for (const mutation of mutations) {
+            if (
+                mutation.type === "attributes" &&
+                mutation.attributeName === "data-state"
+            ) {
+                const isOpen = content.dataset.state === "open";
+                animateMenu(isOpen);
+            }
+        }
+    });
+    observer.observe(content, {
+        attributes: true,
+        attributeFilter: ["data-state"],
+    });
+});
+
+onUnmounted(() => {
+    observer?.disconnect();
+    tl?.kill();
+});
+</script>
+
+<script lang="ts">
+let menuZIndex = 50;
 </script>
 
 <template>
@@ -43,18 +170,30 @@ const hasDropdown = computed(() => props.links.length > 0);
         </NavigationMenuTrigger>
 
         <NavigationMenuContent
+            ref="menuContent"
             force-mount
-            class="absolute top-full -left-1/3 z-50 max-h-0 min-w-max overflow-hidden rounded-2xl bg-surface-bright text-on-surface shadow-sm transition-[max-height] duration-500 ease-out data-[state=closed]:pointer-events-none! data-[state=closed]:max-h-0 data-[state=open]:pointer-events-auto! data-[state=open]:max-h-96"
+            class="absolute top-full -left-1/3 w-62 overflow-hidden rounded-2xl bg-surface-bright text-on-surface shadow-sm data-[state=closed]:pointer-events-none! data-[state=open]:pointer-events-auto!"
         >
-            <NavigationMenuLink v-for="link in links" :key="link.to" as-child>
-                <NuxtLink
-                    :to="link.to"
-                    @pointerdown.stop
-                    class="block px-4 py-2 text-xl text-on-surface no-underline -outline-offset-2 first:rounded-t-2xl last:rounded-b-2xl hover:bg-accent hover:text-on-accent focus-visible:bg-accent focus-visible:text-on-accent focus-visible:outline-2 focus-visible:outline-outline"
+            <div ref="menuInner" class="mx-auto flex w-fit flex-col">
+                <NavigationMenuLink
+                    v-for="link in links"
+                    :key="link.to"
+                    as-child
                 >
-                    {{ link.label }}
-                </NuxtLink>
-            </NavigationMenuLink>
+                    <NuxtLink
+                        :to="link.to"
+                        @pointerdown.stop
+                        class="flex min-h-16 w-53 items-center gap-3 px-5 py-4 text-xl text-on-surface no-underline -outline-offset-2 first:rounded-t-2xl last:rounded-b-2xl focus-visible:outline-2 focus-visible:outline-outline"
+                    >
+                        <Icon :icon="link.icon" class="size-6 shrink-0" />
+                        <span
+                            class="transition-transform duration-150 ease-out hover:translate-x-2"
+                        >
+                            {{ link.label }}
+                        </span>
+                    </NuxtLink>
+                </NavigationMenuLink>
+            </div>
         </NavigationMenuContent>
     </NavigationMenuItem>
 </template>
