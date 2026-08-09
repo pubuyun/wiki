@@ -422,15 +422,6 @@ onMounted(() => {
             .to(
                 molecule.value,
                 {
-                    ...pointVars(PRODUCT_FINALE.position),
-                    duration: 1,
-                    ease: "power2.inOut",
-                },
-                "productFinale",
-            )
-            .to(
-                molecule.value,
-                {
                     x: () =>
                         (animationPlane.value?.clientWidth ?? 0) *
                         (window.matchMedia(
