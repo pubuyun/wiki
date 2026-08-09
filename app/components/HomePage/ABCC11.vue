@@ -75,20 +75,6 @@ const staphylococcusLabelStyle = {
     transform: `rotate(${STAPHYLOCOCCUS_LABEL_POSITION.rotation}deg)`,
 };
 
-// 右上角补充菌的坐标和尺寸调节区（相对于整组菌图）。
-const SHOMINIS_EXTRA_BACTERIUM = {
-    x: "48%",
-    y: "10%",
-    size: "36%",
-    rotation: 8,
-} as const;
-const shominisExtraBacteriumStyle = {
-    left: SHOMINIS_EXTRA_BACTERIUM.x,
-    top: SHOMINIS_EXTRA_BACTERIUM.y,
-    width: SHOMINIS_EXTRA_BACTERIUM.size,
-    transform: `rotate(${SHOMINIS_EXTRA_BACTERIUM.rotation}deg)`,
-};
-
 // 两个箭头的坐标、旋转与翻转缩放调节区。
 const STORY_ARROW_TRANSFORMS = {
     first: { x: "8%", y: "0%", rotation: -20 },
@@ -766,17 +752,17 @@ onUnmounted(() => {
                     >
                         <img
                             class="absolute inset-0 block size-full object-contain"
-                            :src="publicAsset('abcc11m.png')"
+                            src="https://static.igem.wiki/teams/6133/wiki/homepage/abcc11m.avif"
                             alt=""
                         />
                         <img
                             class="absolute inset-0 block size-full object-contain"
-                            :src="publicAsset('abcc11l.png')"
+                            src="https://static.igem.wiki/teams/6133/wiki/homepage/abcc11l.avif"
                             alt=""
                         />
                         <img
                             class="absolute inset-0 block size-full object-contain"
-                            :src="publicAsset('abcc11r.png')"
+                            src="https://static.igem.wiki/teams/6133/wiki/homepage/abcc11r.avif"
                             alt=""
                         />
                     </div>
@@ -818,17 +804,17 @@ onUnmounted(() => {
                     >
                         <img
                             class="absolute inset-0 block size-full object-contain"
-                            :src="publicAsset('abcc11m.png')"
+                            src="https://static.igem.wiki/teams/6133/wiki/homepage/abcc11m.avif"
                             alt=""
                         />
                         <img
                             class="absolute inset-0 block size-full object-contain"
-                            :src="publicAsset('abcc11l.png')"
+                            src="https://static.igem.wiki/teams/6133/wiki/homepage/abcc11l.avif"
                             alt=""
                         />
                         <img
                             class="absolute inset-0 block size-full object-contain"
-                            :src="publicAsset('abcc11r.png')"
+                            src="https://static.igem.wiki/teams/6133/wiki/homepage/abcc11r.avif"
                             alt=""
                         />
                         <svg
@@ -901,7 +887,7 @@ onUnmounted(() => {
                     >
                         <img
                             class="abcc11-story__gland-image"
-                            :src="publicAsset('gland.png')"
+                            src="https://static.igem.wiki/teams/6133/wiki/homepage/gland.avif"
                             :style="glandImageStyle"
                             alt="Apocrine gland"
                             draggable="false"
@@ -910,9 +896,9 @@ onUnmounted(() => {
                             ref="glandTransporter"
                             class="abcc11-scene__transporter"
                             :style="glandTransporterStyle"
-                            :left-src="publicAsset('abcc11l.png')"
-                            :middle-src="publicAsset('abcc11m.png')"
-                            :right-src="publicAsset('abcc11r.png')"
+                            left-src="https://static.igem.wiki/teams/6133/wiki/homepage/abcc11l.avif"
+                            middle-src="https://static.igem.wiki/teams/6133/wiki/homepage/abcc11m.avif"
+                            right-src="https://static.igem.wiki/teams/6133/wiki/homepage/abcc11r.avif"
                             :open-angle="-5"
                             :closed-angle="12"
                             :autoplay="false"
@@ -981,18 +967,8 @@ onUnmounted(() => {
                         class="abcc11-story__item abcc11-story__bacteria"
                         aria-label="Staphylococcus hominis"
                     >
-                        <svg
-                            class="abcc11-story__extra-bacterium"
-                            :style="shominisExtraBacteriumStyle"
-                            viewBox="0 0 200 190"
-                            aria-hidden="true"
-                        >
-                            <path
-                                d="M102 7C118 5 128 17 142 20C158 24 171 27 177 42C184 55 181 69 187 82C194 97 192 112 184 125C177 137 175 153 162 161C148 170 135 174 119 179C104 184 89 179 75 176C60 173 44 174 34 163C23 151 22 136 17 122C12 108 6 94 12 79C17 65 20 49 32 40C44 30 58 29 72 21C82 15 90 8 102 7Z"
-                            />
-                        </svg>
                         <img
-                            :src="publicAsset('shominis-1.png')"
+                            src="https://static.igem.wiki/teams/6133/wiki/homepage/shominis.avif"
                             alt="Staphylococcus hominis bacteria"
                             class="abcc11-story__bacteria-image translate-x-[-15%]"
                             draggable="false"

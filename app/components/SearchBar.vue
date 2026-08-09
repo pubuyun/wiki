@@ -3,7 +3,7 @@
         <!-- Desktop / larger than lg -->
         <DialogTrigger
             aria-label="Open search dialog"
-            class="flex size-9 shrink-0 items-center justify-center rounded-md bg-accent text-on-accent transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-outline sm:mr-8 sm:ml-5 sm:h-3/4 sm:max-w-48 sm:flex-1 sm:justify-start sm:rounded-full sm:bg-primary sm:pr-3 sm:text-on-primary"
+            class="flex size-9 shrink-0 items-center justify-center rounded-md bg-accent text-on-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-outline sm:mr-8 sm:ml-5 sm:h-3/4 sm:max-w-48 sm:flex-1 sm:justify-start sm:rounded-full sm:bg-primary sm:pr-3 sm:text-on-primary"
         >
             <div
                 class="flex h-full w-full items-center justify-center gap-2 p-1 sm:justify-start"
@@ -26,26 +26,14 @@
             <DialogOverlay
                 class="fixed top-0 left-0 z-30 h-full w-full bg-black opacity-50"
             />
-            <Transition
-                enter-active-class="transition-opacity duration-300 ease-out overflow-hidden"
-                enter-from-class="opacity-0"
-                enter-to-class="opacity-100"
-                leave-active-class="transition-[max-height,opacity] duration-400 ease-in overflow-hidden"
-                leave-from-class="max-h-[70vh] opacity-100"
-                leave-to-class="max-h-0 opacity-0"
-            >
+            <template v-if="isSearchOpen">
                 <DialogContent
-                    v-if="isSearchOpen"
                     class="fixed inset-x-0 top-0 z-100 h-fit max-h-[calc(100dvh-1rem)] w-dvw overflow-hidden rounded-b-2xl bg-surface-elevated p-4 text-on-surface shadow-lg sm:inset-auto sm:top-16 sm:left-1/2 sm:h-auto sm:max-h-[min(48rem,calc(100dvh-4rem))] sm:w-200 sm:max-w-[calc(100dvw-2rem)] sm:-translate-x-1/2 sm:rounded-2xl sm:p-6"
                 >
                     <DialogTitle class="sr-only">
                         Search site content
                     </DialogTitle>
                     <div
-                        v-auto-animate="{
-                            duration: 220,
-                            easing: 'ease-out',
-                        }"
                         class="flex h-auto max-h-[calc(100dvh-2rem)] w-full flex-col justify-start gap-2 sm:max-h-[min(45rem,calc(100dvh-7rem))]"
                     >
                         <div
@@ -69,7 +57,7 @@
                                 <button
                                     type="button"
                                     aria-label="Close search dialog"
-                                    class="absolute top-1/2 right-2 flex size-8 -translate-y-1/2 items-center justify-center rounded-md text-on-surface transition-colors hover:bg-primary hover:text-on-primary focus-visible:outline-2 focus-visible:outline-outline"
+                                    class="absolute top-1/2 right-2 flex size-8 -translate-y-1/2 items-center justify-center rounded-md text-on-surface hover:bg-primary hover:text-on-primary focus-visible:outline-2 focus-visible:outline-outline"
                                     @click="isSearchOpen = false"
                                 >
                                     <Icon
@@ -102,10 +90,6 @@
 
                             <ul
                                 ref="resultsList"
-                                v-auto-animate="{
-                                    duration: 180,
-                                    easing: 'ease-out',
-                                }"
                                 class="site-search-results-scroll max-h-[calc(100dvh-8rem)] w-full overflow-auto sm:max-h-[min(39rem,calc(100dvh-13rem))]"
                                 @scroll="updateScrollGradients"
                                 aria-label="Search results"
@@ -132,7 +116,7 @@
                                         >
                                             <NuxtLink
                                                 :to="documentGroup.key"
-                                                class="site-search-result group flex min-h-12 min-w-0 items-center gap-2 rounded border border-transparent bg-surface-bright px-3 py-2 text-on-surface transition-colors hover:bg-secondary hover:text-on-secondary"
+                                                class="site-search-result group flex min-h-12 min-w-0 items-center gap-2 rounded border border-transparent bg-surface-bright px-3 py-2 text-on-surface hover:bg-secondary hover:text-on-secondary"
                                                 @click="
                                                     handleDocumentClick(
                                                         $event,
@@ -142,7 +126,7 @@
                                             >
                                                 <Icon
                                                     icon="lucide:file-text"
-                                                    class="size-5 shrink-0 text-on-surface/70 transition-colors group-hover:text-on-secondary/80"
+                                                    class="size-5 shrink-0 text-on-surface/70 group-hover:text-on-secondary/80"
                                                     aria-hidden="true"
                                                 />
                                                 <span
@@ -152,7 +136,7 @@
                                                 </span>
                                                 <Icon
                                                     icon="lucide:corner-down-left"
-                                                    class="ml-auto size-4 shrink-0 text-on-surface/45 transition-colors group-hover:text-on-secondary/65"
+                                                    class="ml-auto size-4 shrink-0 text-on-surface/45 group-hover:text-on-secondary/65"
                                                     aria-hidden="true"
                                                 />
                                             </NuxtLink>
@@ -168,7 +152,7 @@
                                                 >
                                                     <NuxtLink
                                                         :to="link.id"
-                                                        class="site-search-result group flex min-w-0 items-center gap-2 rounded border border-transparent bg-surface-bright px-3 py-2 transition-colors hover:bg-secondary hover:text-on-secondary"
+                                                        class="site-search-result group flex min-w-0 items-center gap-2 rounded border border-transparent bg-surface-bright px-3 py-2 hover:bg-secondary hover:text-on-secondary"
                                                         @click="
                                                             handleResultClick(
                                                                 $event,
@@ -177,7 +161,7 @@
                                                         "
                                                     >
                                                         <svg
-                                                            class="ml-5 h-9 w-5 shrink-0 text-on-surface/45 transition-colors group-hover:text-on-secondary/65 sm:ml-7"
+                                                            class="ml-5 h-9 w-5 shrink-0 text-on-surface/45 group-hover:text-on-secondary/65 sm:ml-7"
                                                             viewBox="0 0 24 54"
                                                             aria-hidden="true"
                                                         >
@@ -199,14 +183,14 @@
                                                                     ? 'lucide:hash'
                                                                     : 'lucide:align-left'
                                                             "
-                                                            class="size-5 shrink-0 text-on-surface/65 transition-colors group-hover:text-on-secondary/80"
+                                                            class="size-5 shrink-0 text-on-surface/65 group-hover:text-on-secondary/80"
                                                             aria-hidden="true"
                                                         />
                                                         <span
                                                             class="flex min-w-0 flex-1 flex-col gap-0.5"
                                                         >
                                                             <span
-                                                                class="min-w-0 truncate text-xs font-normal text-on-surface/90 transition-colors group-hover:text-on-secondary/90"
+                                                                class="min-w-0 truncate text-xs font-normal text-on-surface/90 group-hover:text-on-secondary/90"
                                                             >
                                                                 <template
                                                                     v-for="(
@@ -231,7 +215,7 @@
                                                                 </template>
                                                             </span>
                                                             <span
-                                                                class="truncate text-[0.7rem] text-on-surface/60 transition-colors group-hover:text-on-secondary/70"
+                                                                class="truncate text-[0.7rem] text-on-surface/60 group-hover:text-on-secondary/70"
                                                             >
                                                                 <template
                                                                     v-for="(
@@ -259,7 +243,7 @@
                                                         </span>
                                                         <Icon
                                                             icon="lucide:corner-down-left"
-                                                            class="size-4 shrink-0 text-on-surface/45 transition-colors group-hover:text-on-secondary/65"
+                                                            class="size-4 shrink-0 text-on-surface/45 group-hover:text-on-secondary/65"
                                                             aria-hidden="true"
                                                         />
                                                     </NuxtLink>
@@ -291,7 +275,7 @@
                         </p>
                     </div>
                 </DialogContent>
-            </Transition>
+            </template>
         </DialogPortal>
     </DialogRoot>
 </template>
@@ -306,7 +290,6 @@ import {
     DialogTrigger,
 } from "reka-ui";
 import { Icon } from "@iconify/vue";
-import { vAutoAnimate } from "@formkit/auto-animate/vue";
 import { siteNavGroups } from "~/utils/site-navigation";
 
 const isSearchOpen = ref(false);

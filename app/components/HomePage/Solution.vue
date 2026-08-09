@@ -154,7 +154,7 @@ const SOLUTIONS = [
         description:
             'Design <span class="text-[#ffd55e]">protein binders</span> that capture the <span class="text-[#8ed0ff]">Cys-Gly-3M3SH</span> before it is taken up by <span class="text-[#de8949]">Staphylococcus hominis</span>.',
         color: "#ffd55e",
-        image: "/bindernoeyes.png",
+        image: "https://static.igem.wiki/teams/6133/wiki/homepage/bindernoeyes.avif",
         angle: -90,
         iconWidth: 88,
         flip: false,
@@ -165,7 +165,7 @@ const SOLUTIONS = [
         description:
             'Design <span class="text-[#8ed0ff]">PepTsh</span> plugs that bind to the <span class="text-[#8ed0ff]">PepTsh</span> transporters, reducing the uptake efficiency of <span class="text-[#8ed0ff]">Cys-Gly-3M3SH</span>.',
         color: "#ffae37",
-        image: "/plugoutlined.png",
+        image: "https://static.igem.wiki/teams/6133/wiki/homepage/plugoutlined.avif",
         angle: 30,
         iconWidth: 78,
         flip: false,
@@ -176,7 +176,7 @@ const SOLUTIONS = [
         description:
             'Engineer <span class="text-[#52dfc5]">CGTase</span> to transfer glucosyl groups to the hydroxyl of <span class="text-[#8ed0ff]">Cys-Gly-3M3SH</span>, reducing its affinity to the <span class="text-[#8ed0ff]">PepTsh</span> transporter.',
         color: "#52dfc5",
-        image: "/cgtasseoutlined.png",
+        image: "https://static.igem.wiki/teams/6133/wiki/homepage/cgtasseoutlined.avif",
         angle: 150,
         iconWidth: 88,
         flip: true,
@@ -958,7 +958,7 @@ onUnmounted(() => {
                         >
                             <img
                                 class="block size-full object-contain select-none"
-                                src="/plugoutlined.png"
+                                src="https://static.igem.wiki/teams/6133/wiki/homepage/plugoutlined.avif"
                                 alt=""
                                 loading="lazy"
                                 fetchpriority="low"
