@@ -215,7 +215,7 @@ function bodyWithChildren(body, children) {
                     aria-hidden="true"
                 />
 
-                <div class="mt-2 grid gap-3 sm:grid-cols-2">
+                <div class="mt-2 grid grid-cols-2 gap-3">
                     <NuxtLink
                         v-if="previousPage"
                         class="group flex min-w-0 flex-col items-start gap-1 text-left text-on-secondary no-underline transition hover:-translate-y-px hover:text-accent focus-visible:-translate-y-px focus-visible:text-accent"
