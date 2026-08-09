@@ -29,7 +29,7 @@ const LAYOUT = {
     remainingFlight: { x: 0, y: 0 } satisfies PercentPoint,
     collisionOffset: { x: 31, y: 6 } satisfies PercentPoint,
     collisionCompression: { x: 2, y: 0 } satisfies PercentPoint,
-    collisionRecoil: { x: 12, y: -8 } satisfies PercentPoint,
+    collisionRecoil: { x: 42, y: -30 } satisfies PercentPoint,
 } as const;
 
 const TIMING = {

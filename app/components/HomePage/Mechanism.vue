@@ -628,8 +628,9 @@ onUnmounted(() => {
 
 <style scoped>
 .mechanism-scene {
-    /* 整幅场景的右边缘位置；调大即可整体右移。 */
-    --artwork-right: 47vw;
+    /* 横屏右侧文字栏宽度 */
+    --copy-width: clamp(20rem, 46vw, 50rem);
+
     --pept-left: 85%;
     --pept-top: 15.5%;
     --pept-size: 35svh;
@@ -639,13 +640,16 @@ onUnmounted(() => {
 .mechanism-scene::before {
     position: absolute;
     z-index: 0;
-    inset: 0 0 0 var(--artwork-right);
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: var(--copy-width);
     content: "";
     background: #03316d;
 }
 
 .mechanism-scene__artwork {
-    left: var(--artwork-right);
+    left: calc(100vw - var(--copy-width));
 }
 
 .mechanism-scene__pept {
@@ -659,11 +663,13 @@ onUnmounted(() => {
 }
 
 .mechanism-scene__copy {
-    left: var(--artwork-right);
+    left: auto;
+    right: 0;
+    width: var(--copy-width);
 }
 
 .mechanism-scene__chemistry {
-    width: max(0px, calc(var(--artwork-right) - 48.89svh));
+    width: max(0px, calc(100vw - var(--copy-width) - 48.89svh));
 }
 
 @media (orientation: portrait) {
