@@ -11,6 +11,19 @@ import TransporterBinderAnim from "./Solution/TransporterBinderAnim.vue";
 
 gsap.registerPlugin(ScrollTrigger);
 
+const props = withDefaults(defineProps<{ embedded?: boolean }>(), {
+    embedded: false,
+});
+
+const emit = defineEmits<{
+    timelineReady: [
+        payload: {
+            timeline: gsap.core.Timeline;
+            scene: HTMLElement;
+        },
+    ];
+}>();
+
 type PercentPoint = { x: number; y: number };
 
 type ActorArc = {
@@ -546,24 +559,35 @@ onMounted(() => {
             const labelExitDuration = reduceMotion
                 ? 0.01
                 : TRANSITION_LAYOUT.labelExitDuration;
-            const master = gsap.timeline({
-                defaults: { ease: "none" },
-                scrollTrigger: {
-                    id: "solution-story",
-                    trigger: scene.value,
-                    start: "top top",
-                    end: () =>
-                        `+=${window.innerHeight * (reduceMotion ? 5 : SCENE_LAYOUT.scrollScreens)}`,
-                    scrub: reduceMotion ? true : 0.7,
-                    pin: true,
-                    anticipatePin: 1,
-                    invalidateOnRefresh: true,
-                },
-            });
+            const master = props.embedded
+                ? gsap.timeline({
+                      defaults: { ease: "none" },
+                      paused: true,
+                  })
+                : gsap.timeline({
+                      defaults: { ease: "none" },
+                      scrollTrigger: {
+                          id: "solution-story",
+                          trigger: scene.value,
+                          start: "top top",
+                          end: () =>
+                              `+=${window.innerHeight * (reduceMotion ? 5 : SCENE_LAYOUT.scrollScreens)}`,
+                          scrub: reduceMotion ? true : 0.7,
+                          pin: true,
+                          anticipatePin: 1,
+                          invalidateOnRefresh: true,
+                      },
+                  });
 
             master
                 .addLabel("overview", 0)
-                .to(scene.value, { duration: reduceMotion ? 0.35 : 0.9 })
+                .to(scene.value, {
+                    duration: props.embedded
+                        ? 0.01
+                        : reduceMotion
+                          ? 0.35
+                          : 0.9,
+                })
                 .addLabel("solution1Transition")
                 .to(
                     markerElements.slice(1),
@@ -876,6 +900,13 @@ onMounted(() => {
                 .addLabel("solution3");
 
             master.to(scene.value, { duration: reduceMotion ? 0.8 : 0.7 });
+
+            if (props.embedded) {
+                emit("timelineReady", {
+                    timeline: master,
+                    scene: scene.value,
+                });
+            }
 
             return () => {
                 master.scrollTrigger?.kill(true);

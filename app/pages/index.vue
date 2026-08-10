@@ -22,16 +22,11 @@ const lazyScenes = [
     },
     {
         id: "product",
-        loader: () => import("../components/HomePage/Product.vue"),
+        loader: () => import("../components/HomePage/ProductSolution.vue"),
         minHeight: "100svh",
-        // model-viewer is large; mount Product early so its ScrollTrigger pin
-        // already exists before the visitor reaches this scene.
+        // Product and Solution share one pinned master timeline so the bottle
+        // paints the real Solution overview without a duplicate scene.
         loadImmediately: true,
-    },
-    {
-        id: "solution",
-        loader: () => import("../components/HomePage/Solution.vue"),
-        minHeight: "100svh",
     },
 ] as const;
 

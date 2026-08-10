@@ -5,6 +5,23 @@ import { onBeforeUnmount, onMounted, ref } from "vue";
 
 gsap.registerPlugin(ScrollTrigger);
 
+const props = withDefaults(defineProps<{ embedded?: boolean }>(), {
+    embedded: false,
+});
+
+const emit = defineEmits<{
+    timelineReady: [
+        payload: {
+            timeline: gsap.core.Timeline;
+            scene: HTMLElement;
+            productRig: HTMLElement;
+            featureLayer: HTMLElement;
+            modelOrientation: typeof modelOrientation;
+            applyModelOrientation: () => void;
+        },
+    ];
+}>();
+
 type ProductModelElement = HTMLElement;
 
 type PointerOrientation = {
@@ -51,38 +68,19 @@ const FEATURES = [
     },
 ] as const;
 
-// Keep these in the same order and at the same angles as Solution.vue's
-// opening overview so the painted frame hands off naturally to that scene.
-const SOLUTION_PREVIEWS = [
-    {
-        id: "precursor-binder",
-        title: "Precursor Binder",
-        image: "https://static.igem.wiki/teams/6133/wiki/homepage/bindernoeyes.avif",
-        color: "#ffd55e",
-        angle: -90,
-    },
-    {
-        id: "transporter-binder",
-        title: "Transporter Binder",
-        image: "https://static.igem.wiki/teams/6133/wiki/homepage/plugoutlined.avif",
-        color: "#ffae37",
-        angle: 30,
-    },
-    {
-        id: "cgtase",
-        title: "CGTase",
-        image: "https://static.igem.wiki/teams/6133/wiki/homepage/cgtasseoutlined.avif",
-        color: "#52dfc5",
-        angle: 150,
-    },
-] as const;
-
 // Vertical alignment for the two interchangeable product states. These are
 // percentages of the shared product rig height; tune them until the bottle
 // silhouette stays still at the splitModel timeline label.
 const MODEL_LAYOUT = {
-    withLidYPercent: 0,
+    withLidYPercent: -20,
     withoutLidYPercent: 0,
+} as const;
+
+// Front product presentation: rotation around the bottle's vertical Y axis.
+// Positive values turn one side toward the viewer; negative values turn the
+// opposite side. This becomes the neutral angle used by mouse parallax too.
+const PRODUCT_DISPLAY_ORIENTATION = {
+    verticalYaw: 0,
 } as const;
 
 const withLidLayoutStyle = {
@@ -110,8 +108,6 @@ const combinedRig = ref<HTMLElement | null>(null);
 const separatedRig = ref<HTMLElement | null>(null);
 const lidRig = ref<HTMLElement | null>(null);
 const featureLayer = ref<HTMLElement | null>(null);
-const transitionLayer = ref<HTMLElement | null>(null);
-const paintCircle = ref<SVGCircleElement | null>(null);
 const scrollHint = ref<HTMLElement | null>(null);
 const combinedModel = ref<ProductModelElement | null>(null);
 const bottleModel = ref<ProductModelElement | null>(null);
@@ -130,8 +126,6 @@ const pointerOrientation: PointerOrientation = {
     pitch: 0,
     yaw: 0,
 };
-const orbitState = { angle: -90 };
-
 let media: gsap.MatchMedia | undefined;
 let pointerTween: gsap.core.Tween | undefined;
 
@@ -187,25 +181,6 @@ function handleModelLoad(model: string) {
     requestAnimationFrame(() => ScrollTrigger.refresh());
 }
 
-function getOrbitRadius() {
-    if (!scene.value) return 0;
-    return Math.min(
-        scene.value.clientWidth * 0.31,
-        scene.value.clientHeight * 0.34,
-    );
-}
-
-function renderOrbit() {
-    if (!productRig.value) return;
-
-    const radians = (orbitState.angle * Math.PI) / 180;
-    const radius = getOrbitRadius();
-    gsap.set(productRig.value, {
-        x: Math.cos(radians) * radius,
-        y: Math.sin(radians) * radius,
-    });
-}
-
 onMounted(() => {
     // Build the pinned ScrollTrigger immediately. Awaiting this relatively
     // large import lets the visitor reach Product before the pin exists.
@@ -223,8 +198,6 @@ onMounted(() => {
         !bottleModel.value ||
         !lidModel.value ||
         !featureLayer.value ||
-        !transitionLayer.value ||
-        !paintCircle.value ||
         !scrollHint.value
     ) {
         return;
@@ -245,12 +218,6 @@ onMounted(() => {
             ".product-feature__title",
         ),
     );
-    const solutionCards = Array.from(
-        transitionLayer.value.querySelectorAll<HTMLElement>(
-            ".product-solution-preview",
-        ),
-    );
-
     ScrollTrigger.getById("product-story")?.kill(true);
     media = gsap.matchMedia();
     media.add(
@@ -267,16 +234,13 @@ onMounted(() => {
             const spinDuration = reduceMotion ? 0.12 : 4;
             const edgeSpinDuration = spinDuration / 12;
             const middleSpinDuration = spinDuration - edgeSpinDuration * 2;
-            const orbitDuration = reduceMotion ? 0.35 : 3.6;
-
             Object.assign(modelOrientation, {
                 roll: 0,
                 pitch: 0,
-                yaw: 0,
+                yaw: PRODUCT_DISPLAY_ORIENTATION.verticalYaw,
                 parallaxStrength: 1,
             });
             Object.assign(pointerOrientation, { roll: 0, pitch: 0, yaw: 0 });
-            orbitState.angle = -90;
             applyModelOrientation();
 
             gsap.set(productRig.value, {
@@ -319,26 +283,28 @@ onMounted(() => {
                 autoAlpha: 0,
                 yPercent: 38,
             });
-            gsap.set(transitionLayer.value, { autoAlpha: 0 });
-            gsap.set(solutionCards, { autoAlpha: 0, scale: 0.55 });
-            gsap.set(paintCircle.value, { strokeDashoffset: 1 });
             gsap.set(scrollHint.value, { autoAlpha: 1, y: 0 });
 
-            const timeline = gsap.timeline({
-                defaults: { ease: "none" },
-                scrollTrigger: {
-                    id: "product-story",
-                    trigger: scene.value,
-                    start: "top top",
-                    end: () =>
-                        `+=${window.innerHeight * (reduceMotion ? 4 : isPortrait ? 8 : 9)}`,
-                    scrub: reduceMotion ? true : 0.7,
-                    pin: true,
-                    pinSpacing: true,
-                    anticipatePin: 1,
-                    invalidateOnRefresh: true,
-                },
-            });
+            const timeline = props.embedded
+                ? gsap.timeline({
+                      defaults: { ease: "none" },
+                      paused: true,
+                  })
+                : gsap.timeline({
+                      defaults: { ease: "none" },
+                      scrollTrigger: {
+                          id: "product-story",
+                          trigger: scene.value,
+                          start: "top top",
+                          end: () =>
+                              `+=${window.innerHeight * (reduceMotion ? 4 : isPortrait ? 8 : 9)}`,
+                          scrub: reduceMotion ? true : 0.7,
+                          pin: true,
+                          pinSpacing: true,
+                          anticipatePin: 1,
+                          invalidateOnRefresh: true,
+                      },
+                  });
 
             timeline
                 .to(scene.value, { duration: 0.45 })
@@ -352,7 +318,9 @@ onMounted(() => {
                     modelOrientation,
                     {
                         pitch: reduceMotion ? 0 : 30,
-                        yaw: reduceMotion ? 0 : 15,
+                        yaw: reduceMotion
+                            ? PRODUCT_DISPLAY_ORIENTATION.verticalYaw
+                            : PRODUCT_DISPLAY_ORIENTATION.verticalYaw + 15,
                         duration: edgeSpinDuration,
                         onUpdate: applyModelOrientation,
                     },
@@ -365,7 +333,7 @@ onMounted(() => {
                 })
                 .to(modelOrientation, {
                     pitch: reduceMotion ? 0 : 360,
-                    yaw: 0,
+                    yaw: PRODUCT_DISPLAY_ORIENTATION.verticalYaw,
                     duration: edgeSpinDuration,
                     onUpdate: applyModelOrientation,
                 })
@@ -417,94 +385,18 @@ onMounted(() => {
                     },
                     "features+=0.42",
                 )
-                .to(scene.value, { duration: reduceMotion ? 0.2 : 0.9 })
-                .addLabel("solutionTransition")
-                .to(
-                    featureLayer.value,
-                    {
-                        autoAlpha: 0,
-                        scale: 0.96,
-                        duration: reduceMotion ? 0.08 : 0.5,
-                    },
-                    "solutionTransition",
-                )
-                .to(
-                    transitionLayer.value,
-                    {
-                        autoAlpha: 1,
-                        duration: reduceMotion ? 0.08 : 0.45,
-                    },
-                    "solutionTransition+=0.12",
-                )
-                .to(
-                    modelOrientation,
-                    {
-                        pitch: reduceMotion ? 80 : 440,
-                        yaw: 0,
-                        parallaxStrength: 0,
-                        duration: reduceMotion ? 0.08 : 0.9,
-                        ease: "power3.inOut",
-                        onUpdate: applyModelOrientation,
-                    },
-                    "solutionTransition",
-                )
-                .to(
-                    productRig.value,
-                    {
-                        y: () => -getOrbitRadius(),
-                        scale: isPortrait ? 0.3 : 0.38,
-                        duration: reduceMotion ? 0.08 : 0.9,
-                        ease: "power3.inOut",
-                    },
-                    "solutionTransition",
-                )
-                .addLabel("paint")
-                .to(
-                    orbitState,
-                    {
-                        angle: 270,
-                        duration: orbitDuration,
-                        onUpdate: renderOrbit,
-                    },
-                    "paint",
-                )
-                .to(
-                    modelOrientation,
-                    {
-                        roll: reduceMotion ? 0 : 360,
-                        duration: orbitDuration,
-                        onUpdate: applyModelOrientation,
-                    },
-                    "paint",
-                )
-                .to(
-                    paintCircle.value,
-                    { strokeDashoffset: 0, duration: orbitDuration },
-                    "paint",
-                );
+                .to(scene.value, { duration: reduceMotion ? 0.2 : 0.9 });
 
-            const revealOffsets = [0.12, 0.38, 0.7];
-            solutionCards.forEach((card, index) => {
-                timeline.to(
-                    card,
-                    {
-                        autoAlpha: 1,
-                        scale: 1,
-                        duration: reduceMotion ? 0.05 : 0.34,
-                        ease: "back.out(1.8)",
-                    },
-                    `paint+=${orbitDuration * revealOffsets[index]!}`,
-                );
-            });
-
-            timeline
-                .to(productRig.value, {
-                    autoAlpha: 0,
-                    scale: isPortrait ? 0.24 : 0.31,
-                    duration: reduceMotion ? 0.08 : 0.4,
-                    ease: "power2.out",
-                })
-                .to(scene.value, { duration: reduceMotion ? 0.15 : 0.7 });
+            if (props.embedded) {
+                emit("timelineReady", {
+                    timeline,
+                    scene: scene.value,
+                    productRig: productRig.value,
+                    featureLayer: featureLayer.value,
+                    modelOrientation,
+                    applyModelOrientation,
+                });
+            }
 
             return () => {
                 timeline.scrollTrigger?.kill();
@@ -573,59 +465,6 @@ onBeforeUnmount(() => {
                     class="product-feature__title relative z-2 m-0 text-balance"
                 >
                     {{ feature.title }}
-                </h3>
-            </article>
-        </div>
-
-        <div
-            ref="transitionLayer"
-            class="product-transition pointer-events-none absolute inset-0 z-12"
-            aria-label="Three Expelliodor solutions"
-        >
-            <svg
-                class="product-paint-ring absolute overflow-visible"
-                viewBox="0 0 100 100"
-                aria-hidden="true"
-            >
-                <circle
-                    class="product-paint-ring__guide"
-                    cx="50"
-                    cy="50"
-                    r="46"
-                    pathLength="1"
-                />
-                <circle
-                    ref="paintCircle"
-                    class="product-paint-ring__stroke"
-                    cx="50"
-                    cy="50"
-                    r="46"
-                    pathLength="1"
-                />
-            </svg>
-
-            <article
-                v-for="solution in SOLUTION_PREVIEWS"
-                :key="solution.id"
-                class="product-solution-preview invisible absolute z-4 flex flex-col items-center opacity-0"
-                :style="{
-                    '--solution-angle': `${solution.angle}deg`,
-                    '--solution-angle-inverse': `${-solution.angle}deg`,
-                    '--solution-color': solution.color,
-                }"
-            >
-                <span class="product-solution-preview__image-wrap">
-                    <img
-                        class="block size-full object-contain select-none"
-                        :src="solution.image"
-                        alt=""
-                        loading="lazy"
-                        decoding="async"
-                        draggable="false"
-                    />
-                </span>
-                <h3 class="mt-3 mb-0 text-center font-extrabold">
-                    {{ solution.title }}
                 </h3>
             </article>
         </div>
@@ -737,11 +576,6 @@ onBeforeUnmount(() => {
 }
 
 .product-features {
-    visibility: hidden;
-    opacity: 0;
-}
-
-.product-transition {
     visibility: hidden;
     opacity: 0;
 }
@@ -871,65 +705,6 @@ onBeforeUnmount(() => {
     text-shadow: 0 2px 5px rgb(1 28 69 / 45%);
 }
 
-.product-paint-ring {
-    top: 56%;
-    left: 50%;
-    width: min(70vw, 72svh);
-    aspect-ratio: 1;
-    transform: translate(-50%, -50%) rotate(-90deg);
-}
-
-.product-paint-ring circle {
-    fill: none;
-    stroke-linecap: round;
-}
-
-.product-paint-ring__guide {
-    stroke: rgb(113 199 235 / 15%);
-    stroke-width: 3;
-}
-
-.product-paint-ring__stroke {
-    stroke: url("#product-paint-gradient");
-    stroke: #70dded;
-    stroke-width: 4;
-    stroke-dasharray: 1;
-    stroke-dashoffset: 1;
-    filter: drop-shadow(0 0 8px rgb(78 214 235 / 62%));
-}
-
-.product-solution-preview {
-    --solution-radius: min(31vw, 34svh);
-    top: 56%;
-    left: 50%;
-    width: clamp(7.5rem, 13vw, 11.5rem);
-    color: var(--solution-color);
-    transform: translate(-50%, -50%) rotate(var(--solution-angle))
-        translateX(var(--solution-radius)) rotate(var(--solution-angle-inverse));
-    transform-origin: 50% 50%;
-    will-change: transform, opacity;
-}
-
-.product-solution-preview__image-wrap {
-    display: grid;
-    width: 100%;
-    aspect-ratio: 1;
-    padding: 13%;
-    place-items: center;
-    border: 2px solid color-mix(in srgb, var(--solution-color) 75%, white);
-    border-radius: 999px;
-    background: rgb(4 45 98 / 86%);
-    box-shadow:
-        0 0 0 10px rgb(20 91 162 / 25%),
-        0 18px 34px rgb(1 23 57 / 42%);
-}
-
-.product-solution-preview h3 {
-    font-size: clamp(0.78rem, 1.4vw, 1.25rem);
-    line-height: 1.05;
-    text-shadow: 0 2px 5px rgb(2 25 57 / 85%);
-}
-
 .product-scroll-hint {
     color: rgb(232 249 255 / 88%);
     font-size: 0.74rem;
@@ -1013,17 +788,6 @@ onBeforeUnmount(() => {
     .product-feature__title {
         padding-inline: 0.7rem;
         font-size: clamp(1rem, 5vw, 1.65rem);
-    }
-
-    .product-paint-ring {
-        top: 57%;
-        width: min(88vw, 68svh);
-    }
-
-    .product-solution-preview {
-        --solution-radius: min(39vw, 31svh);
-        top: 57%;
-        width: clamp(6.25rem, 25vw, 8.5rem);
     }
 }
 
