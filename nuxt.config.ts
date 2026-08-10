@@ -36,7 +36,6 @@ export default defineNuxtConfig({
         ...(process.env.NUXT_STUDIO !== "false" ? ["nuxt-studio"] : []),
         "nuxt-echarts",
         ...(isDevServer ? ["@nuxt/a11y"] : []),
-        "@formkit/auto-animate/nuxt",
     ],
     vite: {
         optimizeDeps: {

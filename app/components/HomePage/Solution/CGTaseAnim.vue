@@ -704,7 +704,7 @@ defineExpose({ buildTimeline, getRoot });
                         class="block h-auto max-h-full object-contain select-none"
                         :class="{ 'scale-x-[-1]': props.handoff.flip }"
                         :style="{ width: `${props.handoff.iconWidth}%` }"
-                        src="/cgtasseoutlined.png"
+                        src="https://static.igem.wiki/teams/6133/wiki/homepage/cgtasseoutlined.avif"
                         alt=""
                         loading="lazy"
                         fetchpriority="low"

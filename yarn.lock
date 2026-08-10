@@ -861,13 +861,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@formkit/auto-animate@npm:^0.9.0":
-  version: 0.9.0
-  resolution: "@formkit/auto-animate@npm:0.9.0"
-  checksum: 10c0/5337bb905761d347cc07cf323b54fbd9967c1eac5469cb63f6ad67cf6705b08493c80ddafc470f317eee82fcc1c05f34391eb05896d41aa9f2f8a02738614ce4
-  languageName: node
-  linkType: hard
-
 "@iconify-json/lucide@npm:^1.2.102":
   version: 1.2.116
   resolution: "@iconify-json/lucide@npm:1.2.116"
@@ -13179,7 +13172,6 @@ __metadata:
     "@fontsource/momo-trust-display": "npm:^5.2.1"
     "@fontsource/opendyslexic": "npm:^5.2.5"
     "@fontsource/righteous": "npm:^5.2.7"
-    "@formkit/auto-animate": "npm:^0.9.0"
     "@iconify/vue": "npm:^5.0.1"
     "@lhci/cli": "npm:^0.15.1"
     "@nuxt/a11y": "npm:1.0.0-alpha.1"

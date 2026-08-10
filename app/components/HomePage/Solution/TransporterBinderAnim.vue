@@ -255,7 +255,7 @@ defineExpose({ buildTimeline, getRoot });
                         ref="plug"
                         class="block h-auto max-h-full object-contain will-change-[transform,opacity] select-none"
                         :style="{ width: `${props.handoff.iconWidth}%` }"
-                        src="/plugoutlined.png"
+                        src="https://static.igem.wiki/teams/6133/wiki/homepage/plugoutlined.avif"
                         alt=""
                         loading="lazy"
                         fetchpriority="low"
