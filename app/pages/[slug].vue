@@ -117,12 +117,12 @@ function isIconUrl(icon: string) {
                     class="flex min-w-0 flex-col gap-8"
                 >
                     <h2
-                        class="w-fit max-w-full self-center rounded-3xl border-4 bg-accent px-4 py-2 text-center font-belanosima text-4xl leading-tight text-on-accent shadow-sm transition-transform hover:-translate-0.5 sm:px-6 sm:text-5xl"
+                        class="w-fit max-w-full self-center rounded-3xl bg-accent px-4 py-2 text-center font-belanosima text-4xl leading-tight text-on-accent shadow-sm transition-transform hover:-translate-0.5 sm:px-6 sm:text-5xl"
                     >
                         <NuxtLink
                             v-if="node.path"
                             :to="node.path"
-                            class="underline decoration-4"
+                            class="decoration-4"
                         >
                             {{ node.label }}
                         </NuxtLink>
