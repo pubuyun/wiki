@@ -30,7 +30,7 @@ const sidebarExtensionClass = computed(() =>
 const wavePaths = [
     {
         id: "accent",
-        fill: "fill-accent",
+        fill: "fill-primary",
         d: "M 0 0 L 0 -350 C 200 -350 247 -170 578 -170 C 895 -170 1146 -300 1311 -300 C 1422 -300 1548 -200 1698 -200 C 2035 -200 2110 -350 2300 -350 C 2500 -350 2547 -170 2878 -170 C 3195 -170 3446 -300 3611 -300 C 3722 -300 3848 -200 3998 -200 C 4335 -200 4410 -350 4600 -350 L 4600 0 Z",
     },
     {
@@ -151,7 +151,7 @@ onUnmounted(() => {
 const sponsorTrackCopies = [false, true];
 
 const footerLinkClass =
-    "font-semibold underline decoration-1 underline-offset-2 hover:text-accent focus-visible:rounded-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent";
+    "font-semibold underline decoration-1 underline-offset-2 hover:text-primary focus-visible:rounded-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary";
 </script>
 
 <template>
@@ -239,7 +239,7 @@ const footerLinkClass =
                             <div class="flex items-start gap-3">
                                 <Icon
                                     icon="lucide:mail"
-                                    class="mt-0.5 size-6 shrink-0 text-accent"
+                                    class="mt-0.5 size-6 shrink-0 text-primary"
                                     aria-hidden="true"
                                 />
                                 <span>
@@ -253,7 +253,7 @@ const footerLinkClass =
                             <div class="flex items-start gap-3">
                                 <Icon
                                     icon="lucide:map-pin"
-                                    class="mt-0.5 size-6 shrink-0 text-accent"
+                                    class="mt-0.5 size-6 shrink-0 text-primary"
                                     aria-hidden="true"
                                 />
                                 <span>
@@ -301,7 +301,7 @@ const footerLinkClass =
                                 :title="channel.name"
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                class="flex size-11 items-center justify-center rounded-md text-white transition-transform hover:-translate-y-1 focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-accent motion-reduce:transition-none motion-reduce:hover:translate-y-0 xl:size-12 2xl:size-14"
+                                class="flex size-11 items-center justify-center rounded-md text-white transition-transform hover:-translate-y-1 focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-primary motion-reduce:transition-none motion-reduce:hover:translate-y-0 xl:size-12 2xl:size-14"
                                 :class="channel.color"
                             >
                                 <Icon
@@ -345,7 +345,7 @@ const footerLinkClass =
 
 <style scoped>
 .footer-team-name {
-    text-shadow: 0.07em 0.07em 0 var(--accent);
+    text-shadow: 0.07em 0.07em 0 var(--primary);
 }
 
 .sponsor-marquee {
