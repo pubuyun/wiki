@@ -920,7 +920,7 @@ onUnmounted(() => {
                 >
                     <img
                         class="pointer-events-none absolute inset-0 block size-full object-contain select-none"
-                        src="/ringmem.png"
+                        src="https://static.igem.wiki/teams/6133/wiki/homepage/ringmem.avif"
                         alt=""
                         loading="eager"
                         fetchpriority="high"
