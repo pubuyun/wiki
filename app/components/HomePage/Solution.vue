@@ -918,9 +918,14 @@ onUnmounted(() => {
                     ref="wheelRotor"
                     class="absolute inset-0 will-change-transform"
                 >
-                    <div
-                        class="solution-wheel__ring pointer-events-none absolute inset-[4%] rounded-full"
-                        aria-hidden="true"
+                    <img
+                        class="pointer-events-none absolute inset-0 block size-full object-contain select-none"
+                        src="https://static.igem.wiki/teams/6133/wiki/homepage/ringmem.avif"
+                        alt=""
+                        loading="eager"
+                        fetchpriority="high"
+                        decoding="async"
+                        draggable="false"
                     />
 
                     <div
