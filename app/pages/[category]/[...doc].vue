@@ -221,7 +221,9 @@ function bodyWithChildren(body, children) {
                         class="group flex min-w-0 flex-col items-start gap-1 text-left text-on-secondary no-underline transition hover:-translate-y-px hover:text-accent focus-visible:-translate-y-px focus-visible:text-accent"
                         :to="previousPage.path"
                     >
-                        <div class="relative font-main text-sm text-accent">
+                        <div
+                            class="relative font-momo-trust-display text-sm text-accent"
+                        >
                             <Icon
                                 icon="lucide:chevron-left"
                                 class="absolute top-1/2 right-full size-5 -translate-x-1 -translate-y-1/2"
@@ -244,7 +246,9 @@ function bodyWithChildren(body, children) {
                         class="group flex min-w-0 flex-col items-end gap-1 text-right text-on-secondary no-underline transition hover:-translate-y-px hover:text-accent focus-visible:-translate-y-px focus-visible:text-accent"
                         :to="nextPage.path"
                     >
-                        <div class="relative font-main text-sm text-accent">
+                        <div
+                            class="relative font-momo-trust-display text-sm text-accent"
+                        >
                             <span>Next</span>
                             <Icon
                                 icon="lucide:chevron-right"
