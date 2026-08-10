@@ -15,6 +15,7 @@
         "@fontsource/momo-trust-display": "^5.2.1",
         "@fontsource/opendyslexic": "^5.2.5",
         "@fontsource/righteous": "^5.2.7",
+        "@google/model-viewer": "4.1.0",
         "@nuxt/content": "^3.13.0",
         "@vue-flow/core": "^1.48.2",
         "echarts": "^6.1.0",
@@ -26,6 +27,7 @@
         "nuxt-studio": "1.6.1",
         "reka-ui": "^2.10.1",
         "smiles-drawer": "^2.4.1",
+        "three": "0.172.0",
         "vue-easy-lightbox": "^1.19.0",
         "vue-echarts": "^8.0.0",
         "zod": "^4.4.3"
@@ -36,6 +38,7 @@
         "@nuxt/a11y": "1.0.0-alpha.1",
         "@tailwindcss/vite": "^4.3.0",
         "@types/node": "^25.6.0",
+        "@types/three": "0.172.0",
         "nuxt": "^4.4.2",
         "prettier": "^3.8.3",
         "prettier-plugin-tailwindcss": "^0.8.0",

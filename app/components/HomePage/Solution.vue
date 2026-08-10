@@ -918,14 +918,9 @@ onUnmounted(() => {
                     ref="wheelRotor"
                     class="absolute inset-0 will-change-transform"
                 >
-                    <img
-                        class="pointer-events-none absolute inset-0 block size-full object-contain select-none"
-                        src="/ringmem.png"
-                        alt=""
-                        loading="eager"
-                        fetchpriority="high"
-                        decoding="async"
-                        draggable="false"
+                    <div
+                        class="solution-wheel__ring pointer-events-none absolute inset-[4%] rounded-full"
+                        aria-hidden="true"
                     />
 
                     <div
@@ -1112,6 +1107,28 @@ onUnmounted(() => {
             transparent 28%
         ),
         linear-gradient(180deg, #07366f 0%, #06326b 100%);
+}
+
+.solution-wheel__ring {
+    border: clamp(0.55rem, 1.1vw, 1.25rem) solid rgb(48 125 193 / 76%);
+    background:
+        radial-gradient(
+            circle,
+            transparent 0 55%,
+            rgb(24 96 164 / 88%) 55.5% 66%,
+            transparent 66.5%
+        ),
+        conic-gradient(
+            from -30deg,
+            rgb(80 191 218 / 42%),
+            rgb(27 99 170 / 16%) 30%,
+            rgb(80 191 218 / 42%) 60%,
+            rgb(27 99 170 / 16%) 88%,
+            rgb(80 191 218 / 42%)
+        );
+    box-shadow:
+        inset 0 0 0 clamp(0.25rem, 0.5vw, 0.65rem) rgb(4 45 99 / 68%),
+        0 0 2.2rem rgb(69 184 220 / 24%);
 }
 
 .solution-copy {

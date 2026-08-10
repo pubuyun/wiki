@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import Expelliodor from "../components/HomePage/Expelliodor.vue";
 import SceneSequence from "../components/HomePage/SceneSequence.vue";
-import Solution from "../components/HomePage/Solution.vue";
 
 const lazyScenes = [
     {
@@ -19,6 +18,14 @@ const lazyScenes = [
         loader: () => import("../components/HomePage/Mechanism.vue"),
         // The cross-scene precursor path needs Mechanism's anchor and
         // ScrollTrigger before ABCC11 reaches glandInside for the first time.
+        loadImmediately: true,
+    },
+    {
+        id: "product",
+        loader: () => import("../components/HomePage/Product.vue"),
+        minHeight: "100svh",
+        // model-viewer is large; mount Product early so its ScrollTrigger pin
+        // already exists before the visitor reaches this scene.
         loadImmediately: true,
     },
     {
