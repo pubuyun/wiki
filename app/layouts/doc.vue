@@ -42,6 +42,7 @@ watchEffect(() => {
         </header>
         <main
             class="flex h-full flex-1 flex-row gap-8 bg-surface text-on-surface"
+            :class="{ 'lg:pr-8': !hasRightSidebar }"
         >
             <aside
                 v-if="page"
