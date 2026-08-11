@@ -193,7 +193,7 @@ function isIconUrl(icon: string) {
                         ></div>
                         <NuxtLink
                             :to="node.path"
-                            class="group relative z-10 flex min-h-52 min-w-0 flex-col rounded-2xl bg-surface-elevated p-4 text-on-surface no-underline shadow-sm transition hover:-translate-y-1 hover:border-primary hover:text-on-surface hover:shadow-lg focus-visible:-translate-y-1 focus-visible:border-outline focus-visible:text-on-surface focus-visible:outline-none sm:min-h-60 sm:p-5 lg:p-6"
+                            class="group relative z-10 flex min-h-52 w-full min-w-0 flex-col rounded-2xl bg-surface-elevated p-4 text-on-surface no-underline shadow-sm transition hover:-translate-y-1 hover:border-primary hover:text-on-surface hover:shadow-lg focus-visible:-translate-y-1 focus-visible:border-outline focus-visible:text-on-surface focus-visible:outline-none sm:min-h-60 sm:p-5 lg:p-6"
                         >
                             <img
                                 v-if="isIconUrl(navIcon(node.path))"
