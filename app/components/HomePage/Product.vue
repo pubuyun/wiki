@@ -37,13 +37,19 @@ const FEATURES = [
         image: "/targeted.png",
         side: "left",
         tone: "strong",
+        imageSize: "85%",
+        imageOffsetX: "0%",
+        imageOffsetY: "-4%",
     },
     {
         id: "safe",
         title: "Safe",
         image: "/safe.png",
         side: "right",
-        tone: "strong",
+        tone: "soft",
+        imageSize: "100%",
+        imageOffsetX: "0%",
+        imageOffsetY: "1%",
     },
     {
         id: "clothes",
@@ -51,6 +57,9 @@ const FEATURES = [
         image: "/clothes.png",
         side: "left",
         tone: "soft",
+        imageSize: "85%",
+        imageOffsetX: "7%",
+        imageOffsetY: "0%",
     },
     {
         id: "sustainable",
@@ -58,13 +67,19 @@ const FEATURES = [
         image: "/sustainable.png",
         side: "right",
         tone: "soft",
+        imageSize: "100%",
+        imageOffsetX: "0%",
+        imageOffsetY: "0%",
     },
     {
         id: "fragrance",
         title: "Customised fragrance",
-        image: "/ostumised.png",
+        image: "/costumised.png",
         side: "left",
         tone: "strong",
+        imageSize: "85%",
+        imageOffsetX: "5%",
+        imageOffsetY: "0%",
     },
 ] as const;
 
@@ -76,12 +91,11 @@ const MODEL_LAYOUT = {
     withoutLidYPercent: 0,
 } as const;
 
-// Front product presentation: rotation around the bottle's vertical Y axis.
-// Positive values turn one side toward the viewer; negative values turn the
-// opposite side. This becomes the neutral angle used by mouse parallax too.
 const PRODUCT_DISPLAY_ORIENTATION = {
     verticalYaw: 0,
 } as const;
+
+const PRODUCT_CAMERA_ORBIT = "0deg 82deg 7m";
 
 const withLidLayoutStyle = {
     transform: `translateY(${MODEL_LAYOUT.withLidYPercent}%)`,
@@ -444,26 +458,49 @@ onBeforeUnmount(() => {
             <article
                 v-for="feature in FEATURES"
                 :key="feature.id"
-                class="product-feature absolute flex items-center"
+                class="product-feature absolute flex min-h-[36vh] items-center px-30"
                 :class="[
                     `product-feature--${feature.id}`,
                     `product-feature--${feature.side}`,
                     `product-feature--${feature.tone}`,
+                    {
+                        'pr-45': feature.side === 'right',
+                        'pl-45': feature.side === 'left',
+                    },
                 ]"
                 :data-side="feature.side"
             >
-                <div class="product-feature__bar absolute" />
-                <img
-                    class="product-feature__image relative z-2 aspect-square shrink-0 object-contain"
-                    :src="feature.image"
-                    alt=""
-                    loading="eager"
-                    decoding="async"
-                    draggable="false"
-                />
-                <h3
-                    class="product-feature__title relative z-2 m-0 text-balance"
+                <div class="product-feature__bar absolute rounded-4xl" />
+                <div
+                    class="product-feature__image absolute z-2 aspect-square h-[30vh] shrink-0"
+                    :class="{
+                        'right-0': feature.side === 'right',
+                        'left-0': feature.side === 'left',
+                    }"
+                    :style="{
+                        '--feature-image-size': feature.imageSize,
+                        '--feature-image-offset-x': feature.imageOffsetX,
+                        '--feature-image-offset-y': feature.imageOffsetY,
+                    }"
                 >
+                    <span
+                        class="product-feature__image-shadow absolute rounded-full"
+                        aria-hidden="true"
+                    />
+                    <span
+                        class="product-feature__image-circle absolute rounded-full bg-surface"
+                        aria-hidden="true"
+                    />
+                    <img
+                        class="product-feature__image-content absolute z-2 max-w-none object-contain"
+                        :src="feature.image"
+                        alt=""
+                        loading="eager"
+                        decoding="async"
+                        draggable="false"
+                    />
+                </div>
+                <h3 class="product-feature__title relative z-2 text-balance">
                     {{ feature.title }}
                 </h3>
             </article>
@@ -483,7 +520,7 @@ onBeforeUnmount(() => {
                         src="/product.glb"
                         alt="Expelliodor roll-on deodorant bottle"
                         camera-target="0m 0.13m 0m"
-                        camera-orbit="0deg 82deg 7m"
+                        :camera-orbit="PRODUCT_CAMERA_ORBIT"
                         field-of-view="26deg"
                         orientation="0deg 0deg 0deg"
                         environment-image="neutral"
@@ -508,7 +545,7 @@ onBeforeUnmount(() => {
                         src="/product_bottle.glb"
                         alt="Expelliodor roll-on deodorant bottle without its lid"
                         camera-target="0m 0.13m 0m"
-                        camera-orbit="0deg 82deg 7m"
+                        :camera-orbit="PRODUCT_CAMERA_ORBIT"
                         field-of-view="26deg"
                         orientation="0deg 0deg 0deg"
                         environment-image="neutral"
@@ -532,7 +569,7 @@ onBeforeUnmount(() => {
                             src="/product_lid.glb"
                             alt="Expelliodor bottle lid"
                             camera-target="0m 0.13m 0m"
-                            camera-orbit="0deg 82deg 7m"
+                            :camera-orbit="PRODUCT_CAMERA_ORBIT"
                             field-of-view="26deg"
                             orientation="0deg 0deg 0deg"
                             environment-image="neutral"
@@ -633,8 +670,7 @@ onBeforeUnmount(() => {
 }
 
 .product-feature {
-    width: min(48vw, 57rem);
-    min-height: clamp(7.5rem, 24vh, 15.5rem);
+    width: 48vw;
     will-change: transform, opacity;
 }
 
@@ -690,14 +726,46 @@ onBeforeUnmount(() => {
 }
 
 .product-feature__image {
-    width: clamp(6.2rem, 14vw, 11.5rem);
-    filter: drop-shadow(12px 14px 0 rgb(2 39 91 / 72%));
+    overflow: visible;
+}
+
+.product-feature__image-shadow {
+    background: rgb(3 42 95);
+    transform: translate(-50%, -50%) translateX(var(--feature-shadow-offset-x));
+}
+
+.product-feature--left .product-feature__image-shadow {
+    --feature-shadow-offset-x: clamp(0.5rem, 1.2vw, 0.9rem);
+}
+
+.product-feature--right .product-feature__image-shadow {
+    --feature-shadow-offset-x: clamp(-0.9rem, -1.2vw, -0.5rem);
+}
+
+.product-feature__image-shadow,
+.product-feature__image-circle {
+    top: 50%;
+    left: 50%;
+    width: var(--feature-image-size);
+    height: var(--feature-image-size);
+}
+
+.product-feature__image-circle {
+    transform: translate(-50%, -50%);
+}
+
+.product-feature__image-content {
+    top: calc(50% + var(--feature-image-offset-y));
+    left: calc(50% + var(--feature-image-offset-x));
+    width: var(--feature-image-size);
+    height: var(--feature-image-size);
+    transform: translate(-50%, -50%);
 }
 
 .product-feature__title {
     flex: 1;
     padding-inline: clamp(1rem, 2.4vw, 2.75rem);
-    font-size: clamp(1.4rem, 3vw, 3.6rem);
+    font-size: clamp(1.25rem, 2.7vw, 3.25rem);
     line-height: 0.98;
     font-weight: 800;
     letter-spacing: -0.03em;
@@ -782,12 +850,12 @@ onBeforeUnmount(() => {
 
     .product-feature__image {
         width: clamp(4.7rem, 22vw, 7rem);
-        filter: drop-shadow(7px 8px 0 rgb(2 39 91 / 72%));
+        height: clamp(4.7rem, 22vw, 7rem);
     }
 
     .product-feature__title {
         padding-inline: 0.7rem;
-        font-size: clamp(1rem, 5vw, 1.65rem);
+        font-size: clamp(0.9rem, 4.5vw, 1.5rem);
     }
 }
 
@@ -798,10 +866,11 @@ onBeforeUnmount(() => {
 
     .product-feature__image {
         width: 5.4rem;
+        height: 5.4rem;
     }
 
     .product-feature__title {
-        font-size: 1.3rem;
+        font-size: 1.15rem;
     }
 }
 

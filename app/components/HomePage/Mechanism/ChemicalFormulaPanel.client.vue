@@ -303,7 +303,7 @@ defineExpose({ getAnimationTargets });
         >
             <div
                 data-pathway-reveal="patB"
-                class="pathway__byproducts pathway__side invisible col-start-1 ml-[-12%] grid w-[112%] translate-y-3 grid-cols-[minmax(3.5rem,0.7fr)_auto_minmax(6rem,1.55fr)] items-center gap-[clamp(0.6rem,1.4vw,1.1rem)] opacity-0 will-change-[transform,opacity] portrait:row-start-2 portrait:ml-0 portrait:w-full portrait:grid-cols-[minmax(0,1fr)_auto_minmax(0,1.35fr)] portrait:gap-[clamp(0.1rem,0.5vw,0.3rem)]"
+                class="pathway__byproducts pathway__side invisible col-start-1 ml-6 grid w-[calc(100%-1.5rem)] translate-y-3 grid-cols-[minmax(3.5rem,0.7fr)_auto_minmax(6rem,1.55fr)] items-center gap-[clamp(0.6rem,1.4vw,1.1rem)] opacity-0 will-change-[transform,opacity] portrait:row-start-2 portrait:ml-0 portrait:w-full portrait:grid-cols-[minmax(0,1fr)_auto_minmax(0,1.35fr)] portrait:gap-[clamp(0.1rem,0.5vw,0.3rem)]"
             >
                 <article class="molecule molecule--tiny molecule--ammonia">
                     <div
