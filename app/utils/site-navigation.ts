@@ -39,7 +39,7 @@ export const siteNavGroups: SiteNavGroup[] = [
         ],
     },
     {
-        title: "Wetlab",
+        title: "Wet Lab",
         links: [
             {
                 to: "/engineering",
@@ -79,7 +79,7 @@ export const siteNavGroups: SiteNavGroup[] = [
         ],
     },
     {
-        title: "Drylab",
+        title: "Dry Lab",
         links: [
             { to: "/model", label: "Model", icon: "carbon:model-alt" },
             {
