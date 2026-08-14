@@ -7,7 +7,12 @@ stages:
 variables:
     NUXT_APP_BASE_URL: "/greatbay-scie/"
     NUXT_STUDIO: "false"
-    # NODE_OPTIONS: "--max-old-space-size=1400"
+    NODE_OPTIONS: >-
+        --max-old-space-size=1600
+        --diagnostic-dir=ci-debug
+        --report-on-fatalerror
+        --report-exclude-env
+        --report-exclude-network
 
 .install-cache: &install-cache
     key:
@@ -41,9 +46,94 @@ pages:
     cache:
         - <<: *install-cache
     script:
-        - NUXT_STUDIO=false NUXT_APP_BASE_URL="/greatbay-scie/" ./node_modules/.bin/nuxt generate
+        - |
+            mkdir -p ci-debug
+
+            {
+                echo "=== Runtime ==="
+                date -u +"%Y-%m-%dT%H:%M:%SZ"
+                node -e 'const os = require("node:os"); const v8 = require("node:v8"); const mib = (bytes) => Math.round(bytes / 1024 / 1024); console.log(JSON.stringify({ node: process.version, nodeOptions: process.env.NODE_OPTIONS, heapLimitMiB: mib(v8.getHeapStatistics().heap_size_limit), hostTotalMemoryMiB: mib(os.totalmem()), hostFreeMemoryMiB: mib(os.freemem()), cpuCount: os.cpus().length }, null, 2))'
+                echo "=== Nuxt dependencies ==="
+                node -e 'const fs = require("node:fs"); for (const name of ["nuxt", "@nuxt/content", "vite", "nitropack"]) { try { const pkg = JSON.parse(fs.readFileSync(`node_modules/${name}/package.json`, "utf8")); console.log(`${name}=${pkg.version}`); } catch { console.log(`${name}=unavailable`); } }'
+                echo "=== Initial cgroup memory ==="
+                for metric in \
+                    /sys/fs/cgroup/memory.max \
+                    /sys/fs/cgroup/memory.current \
+                    /sys/fs/cgroup/memory.peak \
+                    /sys/fs/cgroup/memory.events \
+                    /sys/fs/cgroup/memory/memory.limit_in_bytes \
+                    /sys/fs/cgroup/memory/memory.usage_in_bytes \
+                    /sys/fs/cgroup/memory/memory.max_usage_in_bytes \
+                    /sys/fs/cgroup/memory/memory.failcnt; do
+                    if [ -r "$metric" ]; then
+                        echo "--- $metric"
+                        cat "$metric"
+                    fi
+                done
+            } | tee ci-debug/runtime.log
+
+            record_memory() {
+                {
+                    echo
+                    date -u +"[%Y-%m-%dT%H:%M:%SZ]"
+                    for metric in \
+                        /sys/fs/cgroup/memory.current \
+                        /sys/fs/cgroup/memory.peak \
+                        /sys/fs/cgroup/memory.events \
+                        /sys/fs/cgroup/memory/memory.usage_in_bytes \
+                        /sys/fs/cgroup/memory/memory.max_usage_in_bytes \
+                        /sys/fs/cgroup/memory/memory.failcnt; do
+                        if [ -r "$metric" ]; then
+                            echo "--- $metric"
+                            cat "$metric"
+                        fi
+                    done
+                    echo "--- processes sorted by RSS (KiB)"
+                    awk '
+                        /^Name:/ { name = $2 }
+                        /^Pid:/ { pid = $2 }
+                        /^PPid:/ { ppid = $2 }
+                        /^VmSize:/ { vsize = $2 }
+                        /^VmRSS:/ { rss = $2 }
+                        /^Threads:/ {
+                            printf "%d\tpid=%s\tppid=%s\tvsz_kib=%s\tthreads=%s\tname=%s\n", rss + 0, pid, ppid, vsize, $2, name
+                            name = pid = ppid = vsize = rss = ""
+                        }
+                    ' /proc/[0-9]*/status 2>/dev/null | sort -nr
+                } >> ci-debug/resources.log
+            }
+
+            record_memory
+            (
+                while true; do
+                    sleep 10
+                    record_memory
+                done
+            ) &
+            monitor_pid=$!
+
+            set +e
+            NUXT_STUDIO=false NUXT_APP_BASE_URL="/greatbay-scie/" ./node_modules/.bin/nuxt generate 2>&1 | tee ci-debug/nuxt-generate.log
+            generate_status=${PIPESTATUS[0]}
+            set -e
+
+            kill "$monitor_pid" 2>/dev/null || true
+            wait "$monitor_pid" 2>/dev/null || true
+            record_memory
+            echo "nuxt_generate_exit_code=$generate_status" | tee ci-debug/generate-exit-code.log
+            exit "$generate_status"
         - mkdir -p public
         - cp -a .output/public/. public/
+    after_script:
+        - |
+            mkdir -p ci-debug
+            {
+                echo "ci_job_status=$CI_JOB_STATUS"
+                date -u +"finished_at=%Y-%m-%dT%H:%M:%SZ"
+            } > ci-debug/job-status.log
     artifacts:
+        when: always
+        expire_in: 7 days
         paths:
             - public/
+            - ci-debug/
