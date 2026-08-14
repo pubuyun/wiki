@@ -299,7 +299,7 @@ onUnmounted(() => {
 
             <g :mask="`url(#${maskId})`">
                 <image
-                    href="/expelliodorbg.png"
+                    href="https://static.igem.wiki/teams/6133/wiki/homepage/expelliodorbg.avif"
                     width="1920"
                     height="1080"
                     preserveAspectRatio="xMidYMid meet"

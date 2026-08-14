@@ -407,7 +407,7 @@ onUnmounted(() => {
                         <img
                             class="absolute top-[var(--skin-y)] left-1/2 h-auto w-[var(--skin-width)] -translate-x-1/2 -translate-y-1/2 select-none"
                             data-surgery-intro
-                            src="/skinmess.png"
+                            src="https://static.igem.wiki/teams/6133/wiki/homepage/skinmess.avif"
                             alt="Illustration of irritated skin and an unbalanced axillary microbiome"
                             draggable="false"
                         />
@@ -514,7 +514,7 @@ onUnmounted(() => {
                         <img
                             class="absolute top-[12%] right-[2.5%] h-auto w-[clamp(9rem,14vw,14rem)] rotate-14 select-none max-[52rem]:top-[31%] max-[52rem]:right-[1.5%] max-[52rem]:w-[clamp(4.5rem,17vw,7rem)] portrait:top-[31%] portrait:right-[1.5%] portrait:w-[clamp(4.5rem,17vw,7rem)]"
                             data-surgery-second
-                            src="/questioning.png"
+                            src="https://static.igem.wiki/teams/6133/wiki/homepage/questioning.avif"
                             alt="A character questioning the surgical option"
                             draggable="false"
                         />
@@ -553,7 +553,7 @@ onUnmounted(() => {
                             >
                                 <img
                                     class="block size-full min-h-0 object-contain select-none"
-                                    src="/minors.png"
+                                    src="https://static.igem.wiki/teams/6133/wiki/homepage/minors.avif"
                                     alt="A minor"
                                     draggable="false"
                                 />
@@ -569,7 +569,7 @@ onUnmounted(() => {
                             >
                                 <img
                                     class="block size-full min-h-0 object-contain select-none"
-                                    src="/gravida.png"
+                                    src="https://static.igem.wiki/teams/6133/wiki/homepage/gravida.avif"
                                     alt="A pregnant person"
                                     draggable="false"
                                 />
@@ -585,7 +585,7 @@ onUnmounted(() => {
                             >
                                 <img
                                     class="block size-full min-h-0 object-contain select-none"
-                                    src="/conservative.png"
+                                    src="https://static.igem.wiki/teams/6133/wiki/homepage/conservative.avif"
                                     alt="A person for whom conservative treatment is preferred"
                                     draggable="false"
                                 />
@@ -602,14 +602,14 @@ onUnmounted(() => {
                 <img
                     ref="knife"
                     class="pointer-events-none absolute top-[var(--knife-y)] left-[var(--knife-x)] z-[60] block h-auto w-[var(--knife-width)] origin-center will-change-[transform,opacity] select-none motion-reduce:will-change-auto"
-                    src="/knifecartoon.png"
+                    src="https://static.igem.wiki/teams/6133/wiki/homepage/knifecartoon.avif"
                     alt=""
                     draggable="false"
                 />
                 <img
                     ref="syringe"
                     class="pointer-events-none absolute top-[var(--syringe-y)] left-[var(--syringe-x)] z-[60] block h-auto w-[var(--syringe-width)] origin-center will-change-[transform,opacity] select-none motion-reduce:will-change-auto"
-                    src="/syringecartoon.png"
+                    src="https://static.igem.wiki/teams/6133/wiki/homepage/syringecartoon.avif"
                     alt=""
                     draggable="false"
                 />

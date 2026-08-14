@@ -544,7 +544,7 @@ onUnmounted(() => {
                 >
                     <img
                         class="absolute inset-0 block size-full select-none"
-                        src="/arm.png"
+                        src="https://static.igem.wiki/teams/6133/wiki/homepage/arm.avif"
                         alt=""
                         draggable="false"
                     />
@@ -552,7 +552,7 @@ onUnmounted(() => {
 
                 <img
                     class="current-solution__entrance current-solution__leave-up invisible absolute [top:calc(var(--thinking-y)*1%)] [left:calc(var(--thinking-x)*1%)] z-3 block h-auto w-[var(--thinking-size)] -translate-x-1/2 -translate-y-1/2 opacity-0 will-change-[transform,opacity] select-none motion-reduce:will-change-auto"
-                    src="/thinking.png"
+                    src="https://static.igem.wiki/teams/6133/wiki/homepage/thinking.avif"
                     alt="A character thinking"
                     draggable="false"
                 />
@@ -582,7 +582,7 @@ onUnmounted(() => {
                 </p>
                 <img
                     class="current-solution__entrance current-solution__leave-down invisible absolute [top:calc(var(--surprised-y)*1%)] [left:calc(var(--surprised-x)*1%)] z-3 block h-auto w-[var(--surprised-size)] -translate-x-1/2 -translate-y-1/2 opacity-0 will-change-[transform,opacity] select-none motion-reduce:will-change-auto"
-                    src="/surprised.png"
+                    src="https://static.igem.wiki/teams/6133/wiki/homepage/surprised.avif"
                     alt="A character looking surprised"
                     draggable="false"
                 />
@@ -590,7 +590,7 @@ onUnmounted(() => {
                 <img
                     ref="knife"
                     class="current-solution__entrance invisible absolute [top:calc(var(--knife-y)*1%)] [left:calc(var(--knife-x)*1%)] z-3 block h-auto w-[var(--knife-width)] origin-center -translate-x-1/2 -translate-y-1/2 rotate-[calc(var(--knife-rotation)*1deg)] opacity-0 will-change-[transform,opacity] select-none motion-reduce:will-change-auto"
-                    src="/knife.png"
+                    src="https://static.igem.wiki/teams/6133/wiki/homepage/knife.avif"
                     alt="Scalpel representing physical treatments"
                     draggable="false"
                 />
@@ -616,7 +616,7 @@ onUnmounted(() => {
                     <img
                         ref="deodorantImage"
                         class="block h-auto w-full origin-center will-change-transform motion-reduce:will-change-auto"
-                        src="/dedorant.png"
+                        src="https://static.igem.wiki/teams/6133/wiki/homepage/dedorant.avif"
                         alt=""
                         draggable="false"
                     />
@@ -643,7 +643,7 @@ onUnmounted(() => {
                     <img
                         ref="antiperspirantImage"
                         class="block h-auto w-full origin-center will-change-transform motion-reduce:will-change-auto"
-                        src="/antiperspirant.png"
+                        src="https://static.igem.wiki/teams/6133/wiki/homepage/antiperspirant.avif"
                         alt=""
                         draggable="false"
                     />

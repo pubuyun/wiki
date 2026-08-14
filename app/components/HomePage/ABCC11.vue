@@ -17,9 +17,6 @@ type TransporterAnimExpose = {
     getTimeline: () => gsap.core.Timeline | undefined;
 };
 
-const baseURL = useRuntimeConfig().app.baseURL.replace(/\/$/, "");
-const publicAsset = (fileName: string) => `${baseURL}/${fileName}`;
-
 // 汗腺右下角 ABCC11 转运蛋白的位置调节区。
 const GLAND_TRANSPORTER_POSITION = {
     right: "-10%",
@@ -831,7 +828,7 @@ onUnmounted(() => {
                 <div class="abcc11-story__flow">
                     <figure class="abcc11-story__item abcc11-story__person">
                         <img
-                            :src="publicAsset('wavehand.png')"
+                            src="https://static.igem.wiki/teams/6133/wiki/homepage/wavehand.avif"
                             alt="A person raising an arm, showing the axillary area"
                             draggable="false"
                         />

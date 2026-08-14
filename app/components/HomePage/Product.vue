@@ -51,7 +51,7 @@ const FEATURES = [
     {
         id: "targeted",
         title: "Targeted",
-        image: "/targeted.png",
+        image: "https://static.igem.wiki/teams/6133/wiki/homepage/targeted.avif",
         side: "left",
         tone: "strong",
         imageSize: "85%",
@@ -61,7 +61,7 @@ const FEATURES = [
     {
         id: "safe",
         title: "Safe",
-        image: "/safe.png",
+        image: "https://static.igem.wiki/teams/6133/wiki/homepage/safe.avif",
         side: "right",
         tone: "soft",
         imageSize: "100%",
@@ -71,7 +71,7 @@ const FEATURES = [
     {
         id: "clothes",
         title: "No damage to clothes",
-        image: "/clothes.png",
+        image: "https://static.igem.wiki/teams/6133/wiki/homepage/clothes.avif",
         side: "left",
         tone: "soft",
         imageSize: "85%",
@@ -81,7 +81,7 @@ const FEATURES = [
     {
         id: "sustainable",
         title: "Sustainable",
-        image: "/sustainable.png",
+        image: "https://static.igem.wiki/teams/6133/wiki/homepage/sustainable.avif",
         side: "right",
         tone: "soft",
         imageSize: "100%",
@@ -91,7 +91,7 @@ const FEATURES = [
     {
         id: "fragrance",
         title: "Customised fragrance",
-        image: "/costumised.png",
+        image: "https://static.igem.wiki/teams/6133/wiki/homepage/costumised.avif",
         side: "left",
         tone: "strong",
         imageSize: "85%",
