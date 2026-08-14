@@ -25,6 +25,11 @@ const lazyScenes = [
         minHeight: "100svh",
     },
     {
+        id: "surgery",
+        loader: () => import("./HomePage/Surgery.vue"),
+        minHeight: "100svh",
+    },
+    {
         id: "product",
         loader: () => import("./HomePage/ProductSolution.vue"),
         minHeight: "100svh",

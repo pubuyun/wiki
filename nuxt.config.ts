@@ -22,7 +22,46 @@ const contentGraphPaths = readdirSync(contentGraphDirectory, {
         return `/content/model/${relativePath}`;
     });
 
+let viteCompileCount = 0;
+
+function buildMemorySnapshot() {
+    return Object.fromEntries(
+        Object.entries(process.memoryUsage()).map(([key, bytes]) => [
+            key,
+            Math.round(bytes / 1024 / 1024),
+        ]),
+    );
+}
+
 export default defineNuxtConfig({
+    hooks: {
+        async "vite:compiled"() {
+            viteCompileCount += 1;
+            if (viteCompileCount !== 1) return;
+
+            const collectGarbage = (
+                globalThis as typeof globalThis & { gc?: () => void }
+            ).gc;
+            const before = buildMemorySnapshot();
+
+            if (!collectGarbage) {
+                console.warn(
+                    "[build-gc] GC is unavailable; start Nuxt with node --expose-gc",
+                    { before },
+                );
+                return;
+            }
+
+            collectGarbage();
+            await new Promise<void>((resolve) => setImmediate(resolve));
+            collectGarbage();
+
+            console.info("[build-gc] client build collection complete", {
+                before,
+                after: buildMemorySnapshot(),
+            });
+        },
+    },
     app: {
         head: {
             title: "Expelliodor",

@@ -124,24 +124,35 @@ pages:
                     "$oom_summary" | tee -a ci-debug/resources.log
             }
 
+            cleanup_monitor() {
+                if [ -n "${monitor_pid:-}" ]; then
+                    kill "$monitor_pid" 2>/dev/null || true
+                    wait "$monitor_pid" 2>/dev/null || true
+                    monitor_pid=""
+                fi
+            }
+
+            trap cleanup_monitor EXIT
+            trap 'exit 143' TERM INT
+
             record_memory
             memory_heartbeat
             (
                 while true; do
-                    sleep 30
+                    sleep 60
                     memory_heartbeat
-                    record_memory
                 done
             ) &
             monitor_pid=$!
 
             set +e
-            NUXT_STUDIO=false NUXT_APP_BASE_URL="/greatbay-scie/" ./node_modules/.bin/nuxt generate 2>&1 | tee ci-debug/nuxt-generate.log
+            NUXT_STUDIO=false NUXT_APP_BASE_URL="/greatbay-scie/" timeout --signal=TERM --kill-after=10s 450s \
+                node --expose-gc ./node_modules/nuxt/bin/nuxt.mjs generate \
+                2>&1 | tee ci-debug/nuxt-generate.log
             generate_status=${PIPESTATUS[0]}
             set -e
 
-            kill "$monitor_pid" 2>/dev/null || true
-            wait "$monitor_pid" 2>/dev/null || true
+            cleanup_monitor
             memory_heartbeat
             record_memory
             echo "nuxt_generate_exit_code=$generate_status" | tee ci-debug/generate-exit-code.log
