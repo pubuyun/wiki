@@ -7,7 +7,7 @@ stages:
 variables:
     NUXT_APP_BASE_URL: "/greatbay-scie/"
     NUXT_STUDIO: "false"
-    NODE_OPTIONS: "--max-old-space-size=1400"
+    # NODE_OPTIONS: "--max-old-space-size=1400"
 
 .install-cache: &install-cache
     key:
@@ -17,13 +17,12 @@ variables:
             - package.json
     paths:
         - node_modules/
-    policy: pull
+    policy: pull-push
 
 install:
     stage: install
     cache:
         - <<: *install-cache
-          policy: pull-push
     before_script:
         - corepack enable
     script:
