@@ -33,6 +33,16 @@ const activeDetail = ref<DetailKind | null>(null);
 let media: gsap.MatchMedia | undefined;
 let detailInteractionEnabled = false;
 
+function stageCssNumber(property: string) {
+    if (!stage.value) return 0;
+
+    return (
+        Number.parseFloat(
+            window.getComputedStyle(stage.value).getPropertyValue(property),
+        ) || 0
+    );
+}
+
 function detailElement(kind: DetailKind) {
     return kind === "irritation"
         ? irritationDetail.value
@@ -182,13 +192,13 @@ onMounted(async () => {
                 autoAlpha: 0,
                 x: () => refs.panel.clientWidth * SURGERY_MOTION.knifeStartX,
                 y: 12,
-                rotation: -5,
+                rotation: () => stageCssNumber("--knife-start-rotation"),
             });
             gsap.set(refs.syringe, {
                 autoAlpha: 0,
                 x: () => refs.panel.clientWidth * SURGERY_MOTION.syringeStartX,
                 y: -10,
-                rotation: 52,
+                rotation: () => stageCssNumber("--syringe-start-rotation"),
             });
 
             const entrance = gsap.timeline({
@@ -266,6 +276,7 @@ onMounted(async () => {
                         autoAlpha: 1,
                         x: 0,
                         y: 0,
+                        rotation: () => stageCssNumber("--knife-rotation"),
                         duration: 1.16,
                         ease: "power1.out",
                     },
@@ -277,6 +288,7 @@ onMounted(async () => {
                         autoAlpha: 1,
                         x: 0,
                         y: 0,
+                        rotation: () => stageCssNumber("--syringe-rotation"),
                         duration: 1.1,
                         ease: "power1.out",
                     },
@@ -402,7 +414,7 @@ onUnmounted(() => {
 
                         <button
                             type="button"
-                            class="absolute top-[40%] left-[5%] z-30 m-0 flex cursor-pointer items-center gap-[.7rem] border-0 bg-transparent p-0 text-left text-[clamp(1.3rem,2.35vw,2.45rem)] leading-[1.18] text-[#ffad2f] will-change-[transform,opacity] hover:text-[#ffd166] focus-visible:rounded-[.35rem] focus-visible:text-[#ffd166] focus-visible:outline-[.2rem] focus-visible:outline-offset-[.4rem] focus-visible:outline-[#61dfc7] aria-[expanded=true]:text-[#ffd166] max-[52rem]:top-[71%] max-[52rem]:gap-[.4rem] max-[52rem]:text-[clamp(1rem,4.1vw,1.4rem)] portrait:top-[71%] portrait:gap-[.4rem] portrait:text-[clamp(1rem,4.1vw,1.4rem)]"
+                            class="absolute top-[var(--skin-irritation-target-y)] left-[5%] z-30 m-0 flex w-[calc(var(--skin-irritation-target-x)-5%)] -translate-y-1/2 cursor-pointer items-center gap-[.7rem] border-0 bg-transparent p-0 text-left text-[clamp(1.3rem,2.35vw,2.45rem)] leading-[1.18] text-[#ffad2f] will-change-[transform,opacity] hover:text-[#ffd166] focus-visible:rounded-[.35rem] focus-visible:text-[#ffd166] focus-visible:outline-[.2rem] focus-visible:outline-offset-[.4rem] focus-visible:outline-[#61dfc7] aria-[expanded=true]:text-[#ffd166] max-[52rem]:gap-[.4rem] max-[52rem]:text-[clamp(1rem,4.1vw,1.4rem)] portrait:gap-[.4rem] portrait:text-[clamp(1rem,4.1vw,1.4rem)]"
                             data-surgery-intro
                             aria-controls="skin-irritation-detail"
                             :aria-expanded="activeDetail === 'irritation'"
@@ -418,14 +430,14 @@ onUnmounted(() => {
                         >
                             <span class="shrink-0">Skin irritation</span>
                             <i
-                                class="relative block h-[.35rem] w-[clamp(4.5rem,11vw,11rem)] rounded-full bg-white after:absolute after:top-1/2 after:right-[-.2rem] after:size-[1.12rem] after:-translate-y-1/2 after:rounded-full after:border-[.35rem] after:border-white after:bg-[#ff8e81] after:content-[''] max-[52rem]:h-1 max-[52rem]:w-[clamp(2.25rem,10vw,4.5rem)] max-[52rem]:after:size-[.9rem] max-[52rem]:after:border-[.25rem] portrait:h-1 portrait:w-[clamp(2.25rem,10vw,4.5rem)] portrait:after:size-[.9rem] portrait:after:border-[.25rem]"
+                                class="relative block h-[.35rem] min-w-0 flex-1 rounded-full bg-white after:absolute after:top-1/2 after:right-0 after:size-[1.12rem] after:translate-x-1/2 after:-translate-y-1/2 after:rounded-full after:border-[.35rem] after:border-white after:bg-[#ff8e81] after:content-[''] max-[52rem]:h-1 max-[52rem]:after:size-[.9rem] max-[52rem]:after:border-[.25rem] portrait:h-1 portrait:after:size-[.9rem] portrait:after:border-[.25rem]"
                                 aria-hidden="true"
                             />
                         </button>
 
                         <button
                             type="button"
-                            class="absolute right-[5%] bottom-[7%] z-30 m-0 flex cursor-pointer items-center gap-[.7rem] border-0 bg-transparent p-0 text-center text-[clamp(1.3rem,2.35vw,2.45rem)] leading-[1.18] text-[#ffad2f] will-change-[transform,opacity] hover:text-[#ffd166] focus-visible:rounded-[.35rem] focus-visible:text-[#ffd166] focus-visible:outline-[.2rem] focus-visible:outline-offset-[.4rem] focus-visible:outline-[#61dfc7] aria-[expanded=true]:text-[#ffd166] max-[52rem]:bottom-[5%] max-[52rem]:gap-[.4rem] max-[52rem]:text-[clamp(1rem,4.1vw,1.4rem)] portrait:bottom-[5%] portrait:gap-[.4rem] portrait:text-[clamp(1rem,4.1vw,1.4rem)]"
+                            class="absolute top-[var(--axillary-ecosystem-target-y)] right-[5%] left-[var(--axillary-ecosystem-target-x)] z-30 m-0 flex -translate-y-1/2 cursor-pointer items-center gap-[.7rem] border-0 bg-transparent p-0 text-center text-[clamp(1.3rem,2.35vw,2.45rem)] leading-[1.18] text-[#ffad2f] will-change-[transform,opacity] hover:text-[#ffd166] focus-visible:rounded-[.35rem] focus-visible:text-[#ffd166] focus-visible:outline-[.2rem] focus-visible:outline-offset-[.4rem] focus-visible:outline-[#61dfc7] aria-[expanded=true]:text-[#ffd166] max-[52rem]:gap-[.4rem] max-[52rem]:text-[clamp(1rem,4.1vw,1.4rem)] portrait:gap-[.4rem] portrait:text-[clamp(1rem,4.1vw,1.4rem)]"
                             data-surgery-intro
                             aria-controls="ecosystem-detail"
                             :aria-expanded="activeDetail === 'ecosystem'"
@@ -438,7 +450,7 @@ onUnmounted(() => {
                             @blur="handleDetailHover('ecosystem', false)"
                         >
                             <i
-                                class="relative block h-[.35rem] w-[clamp(4.5rem,11vw,11rem)] rounded-full bg-white after:absolute after:top-1/2 after:left-[-.2rem] after:size-[1.12rem] after:-translate-y-1/2 after:rounded-full after:border-[.35rem] after:border-white after:bg-[#61dfc7] after:content-[''] max-[52rem]:h-1 max-[52rem]:w-[clamp(2.25rem,10vw,4.5rem)] max-[52rem]:after:size-[.9rem] max-[52rem]:after:border-[.25rem] portrait:h-1 portrait:w-[clamp(2.25rem,10vw,4.5rem)] portrait:after:size-[.9rem] portrait:after:border-[.25rem]"
+                                class="relative block h-[.35rem] min-w-0 flex-1 rounded-full bg-white after:absolute after:top-1/2 after:left-0 after:size-[1.12rem] after:-translate-x-1/2 after:-translate-y-1/2 after:rounded-full after:border-[.35rem] after:border-white after:bg-[#61dfc7] after:content-[''] max-[52rem]:h-1 max-[52rem]:after:size-[.9rem] max-[52rem]:after:border-[.25rem] portrait:h-1 portrait:after:size-[.9rem] portrait:after:border-[.25rem]"
                                 aria-hidden="true"
                             />
                             <span class="shrink-0"
@@ -500,7 +512,7 @@ onUnmounted(() => {
                             a more permanent solution.
                         </p>
                         <img
-                            class="absolute top-[20%] right-[2.5%] h-auto w-[clamp(7rem,12vw,12rem)] select-none max-[52rem]:top-[31%] max-[52rem]:right-[1.5%] max-[52rem]:w-[clamp(4.5rem,17vw,7rem)] portrait:top-[31%] portrait:right-[1.5%] portrait:w-[clamp(4.5rem,17vw,7rem)]"
+                            class="absolute top-[12%] right-[2.5%] h-auto w-[clamp(9rem,14vw,14rem)] rotate-14 select-none max-[52rem]:top-[31%] max-[52rem]:right-[1.5%] max-[52rem]:w-[clamp(4.5rem,17vw,7rem)] portrait:top-[31%] portrait:right-[1.5%] portrait:w-[clamp(4.5rem,17vw,7rem)]"
                             data-surgery-second
                             src="/questioning.png"
                             alt="A character questioning the surgical option"
@@ -608,22 +620,30 @@ onUnmounted(() => {
 
 <style scoped>
 .surgery__stage {
-    --panel-x: 4%;
+    --panel-x: 7%;
     --panel-y: 13%;
-    --panel-width: 92%;
+    --panel-width: 86%;
     --panel-height: 76%;
     --panel-radius: 2.3rem;
     --shadow-x: 1.75rem;
     --shadow-y: 1.35rem;
-    --skin-y: 57%;
-    --skin-width: clamp(19rem, 33vw, 34rem);
-    --knife-width: clamp(5.5rem, 8vw, 8.5rem);
-    --knife-x: 20%;
-    --knife-y: 20%;
-    --syringe-width: clamp(16rem, 24vw, 25rem);
-    --syringe-x: -3%;
-    --syringe-y: 2%;
-    --wipe-feather: clamp(7rem, 12vw, 13rem);
+    --skin-y: 30%;
+    --skin-width: 35vw;
+    --skin-irritation-target-x: 50%;
+    --skin-irritation-target-y: 45%;
+    --axillary-ecosystem-target-x: 53%;
+    --axillary-ecosystem-target-y: 79%;
+    --knife-width: 5vw;
+    --knife-x: 27.5%;
+    --knife-y: 7%;
+    --knife-start-rotation: -50;
+    --knife-rotation: 16;
+    --syringe-width: 27vw;
+    --syringe-x: 0%;
+    --syringe-y: 17%;
+    --syringe-start-rotation: 0;
+    --syringe-rotation: 52;
+    --wipe-feather: 12vw;
     --wipe-filter-blur: 0.8rem;
 }
 
@@ -658,12 +678,20 @@ onUnmounted(() => {
         --shadow-y: 0.8rem;
         --skin-y: 49%;
         --skin-width: clamp(13rem, 56vw, 22rem);
-        --knife-width: clamp(4rem, 14vw, 6.5rem);
+        --skin-irritation-target-x: 50%;
+        --skin-irritation-target-y: 72%;
+        --axillary-ecosystem-target-x: 50%;
+        --axillary-ecosystem-target-y: 88%;
+        --knife-width: clamp(3rem, 10vw, 5.5rem);
         --knife-x: 18%;
-        --knife-y: 25%;
-        --syringe-width: clamp(9rem, 32vw, 13rem);
+        --knife-y: 26%;
+        --knife-start-rotation: 10;
+        --knife-rotation: 18;
+        --syringe-width: clamp(12rem, 42vw, 16rem);
         --syringe-x: -7%;
         --syringe-y: 13%;
+        --syringe-start-rotation: 0;
+        --syringe-rotation: 52;
         --wipe-feather: clamp(5rem, 22vw, 8rem);
         --wipe-filter-blur: 0.6rem;
     }
