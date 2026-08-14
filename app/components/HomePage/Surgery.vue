@@ -9,10 +9,14 @@ type DetailKind = "irritation" | "ecosystem";
 
 const SURGERY_MOTION = {
     scrollScreens: 5.2,
+    guideTransitionHoldScreens: 0.65,
     scrub: 0.65,
-    detailThreshold: 0.25,
     knifeStartX: 0.8,
     syringeStartX: 1.03,
+    labelDuration: 0.42,
+    labelStagger: 0.08,
+    guideLineDuration: 0.56,
+    guideLineStagger: 0.08,
 } as const;
 
 const scene = ref<HTMLElement | null>(null);
@@ -157,6 +161,18 @@ onMounted(async () => {
                 "[data-surgery-intro]",
                 refs.firstScene,
             );
+            const guideLabels = gsap.utils.toArray<HTMLElement>(
+                "[data-surgery-guide-label]",
+                refs.firstScene,
+            );
+            const guideLines = gsap.utils.toArray<HTMLElement>(
+                "[data-surgery-guide-line]",
+                refs.firstScene,
+            );
+            const guideTargets = gsap.utils.toArray<HTMLElement>(
+                "[data-surgery-guide-target]",
+                refs.firstScene,
+            );
             const secondItems = gsap.utils.toArray<HTMLElement>(
                 "[data-surgery-second]",
                 refs.secondScene,
@@ -173,10 +189,23 @@ onMounted(async () => {
             gsap.set([refs.secondScene, refs.finalScene], { autoAlpha: 0 });
             gsap.set(secondItems, { autoAlpha: 0, y: 24 });
             gsap.set(finalItems, { autoAlpha: 0, y: 28 });
+            gsap.set(guideLabels, { autoAlpha: 0, y: 12 });
+            guideLines.forEach((line) => {
+                gsap.set(line, {
+                    autoAlpha: 0,
+                    scaleX: 0,
+                    transformOrigin:
+                        line.dataset.surgeryLineOrigin ?? "left center",
+                });
+            });
+            gsap.set(guideTargets, { autoAlpha: 0, scale: 0.6 });
 
             if (reduceMotion) {
-                gsap.set(refs.panelShell, { autoAlpha: 1, y: 0, scale: 1 });
+                gsap.set(refs.panelShell, { autoAlpha: 1, scale: 1 });
                 gsap.set(introItems, { autoAlpha: 0 });
+                gsap.set(guideLabels, { autoAlpha: 1, y: 0 });
+                gsap.set(guideLines, { autoAlpha: 1, scaleX: 1 });
+                gsap.set(guideTargets, { autoAlpha: 1, scale: 1 });
                 gsap.set(instruments, { autoAlpha: 0 });
                 gsap.set(refs.wipe, {
                     x: () => -(refs.wipe.offsetWidth - refs.panel.clientWidth),
@@ -186,8 +215,6 @@ onMounted(async () => {
                 return;
             }
 
-            gsap.set(refs.panelShell, { autoAlpha: 0, y: 46, scale: 0.975 });
-            gsap.set(introItems, { autoAlpha: 0, y: 24 });
             gsap.set(refs.knife, {
                 autoAlpha: 0,
                 x: () => refs.panel.clientWidth * SURGERY_MOTION.knifeStartX,
@@ -215,10 +242,9 @@ onMounted(async () => {
             entrance
                 .fromTo(
                     refs.panelShell,
-                    { autoAlpha: 0, y: 46, scale: 0.975 },
+                    { autoAlpha: 0, scale: 0.975 },
                     {
                         autoAlpha: 1,
-                        y: 0,
                         scale: 1,
                         duration: 0.5,
                         immediateRender: false,
@@ -226,10 +252,9 @@ onMounted(async () => {
                 )
                 .fromTo(
                     introItems,
-                    { autoAlpha: 0, y: 24 },
+                    { autoAlpha: 0 },
                     {
                         autoAlpha: 1,
-                        y: 0,
                         duration: 0.58,
                         stagger: 0.07,
                         immediateRender: false,
@@ -239,6 +264,7 @@ onMounted(async () => {
 
             const hold = { value: 0 };
             let firstSceneInteractive = false;
+            let detailExitProgress = 1;
             const story = gsap.timeline({
                 defaults: { ease: "none" },
                 scrollTrigger: {
@@ -246,14 +272,17 @@ onMounted(async () => {
                     trigger: refs.scene,
                     start: "top top",
                     end: () =>
-                        `+=${window.innerHeight * SURGERY_MOTION.scrollScreens}`,
+                        `+=${
+                            window.innerHeight *
+                            (SURGERY_MOTION.scrollScreens +
+                                SURGERY_MOTION.guideTransitionHoldScreens)
+                        }`,
                     pin: true,
                     scrub: SURGERY_MOTION.scrub,
                     anticipatePin: 1,
                     invalidateOnRefresh: true,
                     onUpdate: (self) => {
-                        const shouldEnable =
-                            self.progress < SURGERY_MOTION.detailThreshold;
+                        const shouldEnable = self.progress < detailExitProgress;
                         if (shouldEnable === firstSceneInteractive) return;
 
                         firstSceneInteractive = shouldEnable;
@@ -265,7 +294,48 @@ onMounted(async () => {
 
             story
                 .addLabel("overview", 0)
-                .to(hold, { value: 1, duration: 0.72 }, "overview")
+                .to(
+                    guideLabels,
+                    {
+                        autoAlpha: 1,
+                        y: 0,
+                        duration: SURGERY_MOTION.labelDuration,
+                        stagger: SURGERY_MOTION.labelStagger,
+                        ease: "power2.out",
+                    },
+                    "overview",
+                )
+                .to(
+                    guideLines,
+                    {
+                        autoAlpha: 1,
+                        scaleX: 1,
+                        duration: SURGERY_MOTION.guideLineDuration,
+                        stagger: SURGERY_MOTION.guideLineStagger,
+                        ease: "power1.inOut",
+                    },
+                    ">+0.04",
+                )
+                .to(
+                    guideTargets,
+                    {
+                        autoAlpha: 1,
+                        scale: 1,
+                        duration: 0.16,
+                        stagger: SURGERY_MOTION.guideLineStagger,
+                        ease: "power2.out",
+                    },
+                    ">-0.12",
+                )
+                .addLabel("guideComplete")
+                .to(
+                    hold,
+                    {
+                        value: 1,
+                        duration: SURGERY_MOTION.guideTransitionHoldScreens,
+                    },
+                    "guideComplete",
+                )
                 .addLabel("erase")
                 .fromTo(
                     refs.wipe,
@@ -408,6 +478,9 @@ onMounted(async () => {
                 )
                 .to(hold, { value: 3, duration: 1 }, ">+0.05");
 
+            detailExitProgress =
+                story.labels.erase / Math.max(story.duration(), 0.001);
+
             detailInteractionEnabled = true;
             firstSceneInteractive = true;
 
@@ -459,25 +532,27 @@ onUnmounted(() => {
                         <h2
                             id="surgery-title"
                             class="absolute top-[5%] left-[7%] m-0 w-[86%] text-center text-[clamp(1.45rem,2.35vw,2.45rem)] leading-[1.28] font-normal [text-wrap:balance] max-[52rem]:top-[4%] max-[52rem]:left-[5%] max-[52rem]:w-[90%] max-[52rem]:text-[clamp(1rem,4.3vw,1.55rem)] max-[52rem]:leading-[1.22] portrait:top-[4%] portrait:left-[5%] portrait:w-[90%] portrait:text-[clamp(1rem,4.3vw,1.55rem)] portrait:leading-[1.22]"
-                            data-surgery-intro
                         >
                             Unfortunately, products that rely heavily on
                             aluminum salts or strong antimicrobials may irritate
                             skin and disrupt our natural axillary ecosystem.
                         </h2>
 
-                        <img
-                            class="absolute top-[var(--skin-y)] left-1/2 h-auto w-[var(--skin-width)] -translate-x-1/2 -translate-y-1/2 select-none"
-                            data-surgery-intro
-                            src="https://static.igem.wiki/teams/6133/wiki/homepage/skinmess.avif"
-                            alt="Illustration of irritated skin and an unbalanced axillary microbiome"
-                            draggable="false"
-                        />
+                        <div
+                            class="absolute top-[var(--skin-y)] left-1/2 w-[var(--skin-width)] -translate-x-1/2 -translate-y-1/2"
+                        >
+                            <img
+                                class="block h-auto w-full select-none"
+                                data-surgery-intro
+                                src="https://static.igem.wiki/teams/6133/wiki/homepage/skinmess.avif"
+                                alt="Illustration of irritated skin and an unbalanced axillary microbiome"
+                                draggable="false"
+                            />
+                        </div>
 
                         <button
                             type="button"
                             class="absolute top-[var(--skin-irritation-target-y)] left-[5%] z-30 m-0 flex w-[calc(var(--skin-irritation-target-x)-5%)] -translate-y-1/2 cursor-pointer items-center gap-[.7rem] border-0 bg-transparent p-0 text-left text-[clamp(1.3rem,2.35vw,2.45rem)] leading-[1.18] text-[#ffad2f] will-change-[transform,opacity] hover:text-[#ffd166] focus-visible:rounded-[.35rem] focus-visible:text-[#ffd166] focus-visible:outline-[.2rem] focus-visible:outline-offset-[.4rem] focus-visible:outline-[#61dfc7] aria-[expanded=true]:text-[#ffd166] max-[52rem]:gap-[.4rem] max-[52rem]:text-[clamp(1rem,4.1vw,1.4rem)] portrait:gap-[.4rem] portrait:text-[clamp(1rem,4.1vw,1.4rem)]"
-                            data-surgery-intro
                             aria-controls="skin-irritation-detail"
                             :aria-expanded="activeDetail === 'irritation'"
                             @click="showDetail('irritation')"
@@ -490,17 +565,30 @@ onUnmounted(() => {
                             @focus="handleDetailHover('irritation', true)"
                             @blur="handleDetailHover('irritation', false)"
                         >
-                            <span class="shrink-0">Skin irritation</span>
-                            <i
-                                class="relative block h-[.35rem] min-w-0 flex-1 rounded-full bg-white after:absolute after:top-1/2 after:right-0 after:size-[1.12rem] after:translate-x-1/2 after:-translate-y-1/2 after:rounded-full after:border-[.35rem] after:border-white after:bg-[#ff8e81] after:content-[''] max-[52rem]:h-1 max-[52rem]:after:size-[.9rem] max-[52rem]:after:border-[.25rem] portrait:h-1 portrait:after:size-[.9rem] portrait:after:border-[.25rem]"
+                            <span
+                                class="invisible shrink-0 opacity-0 will-change-[transform,opacity] motion-reduce:will-change-auto"
+                                data-surgery-guide-label
+                                >Skin irritation</span
+                            >
+                            <span
+                                class="invisible relative block h-[.35rem] min-w-0 flex-1 opacity-0 will-change-[transform,opacity] motion-reduce:will-change-auto max-[52rem]:h-1 portrait:h-1"
+                                data-surgery-guide-line
+                                data-surgery-line-origin="left center"
                                 aria-hidden="true"
-                            />
+                            >
+                                <i
+                                    class="absolute inset-0 rounded-full bg-white"
+                                />
+                                <i
+                                    class="invisible absolute top-1/2 right-0 size-[1.12rem] translate-x-1/2 -translate-y-1/2 rounded-full border-[.35rem] border-white bg-[#ff8e81] opacity-0 will-change-[transform,opacity] max-[52rem]:size-[.9rem] max-[52rem]:border-[.25rem] portrait:size-[.9rem] portrait:border-[.25rem]"
+                                    data-surgery-guide-target
+                                />
+                            </span>
                         </button>
 
                         <button
                             type="button"
                             class="absolute top-[var(--axillary-ecosystem-target-y)] right-[5%] left-[var(--axillary-ecosystem-target-x)] z-30 m-0 flex -translate-y-1/2 cursor-pointer items-center gap-[.7rem] border-0 bg-transparent p-0 text-center text-[clamp(1.3rem,2.35vw,2.45rem)] leading-[1.18] text-[#ffad2f] will-change-[transform,opacity] hover:text-[#ffd166] focus-visible:rounded-[.35rem] focus-visible:text-[#ffd166] focus-visible:outline-[.2rem] focus-visible:outline-offset-[.4rem] focus-visible:outline-[#61dfc7] aria-[expanded=true]:text-[#ffd166] max-[52rem]:gap-[.4rem] max-[52rem]:text-[clamp(1rem,4.1vw,1.4rem)] portrait:gap-[.4rem] portrait:text-[clamp(1rem,4.1vw,1.4rem)]"
-                            data-surgery-intro
                             aria-controls="ecosystem-detail"
                             :aria-expanded="activeDetail === 'ecosystem'"
                             @click="showDetail('ecosystem')"
@@ -511,11 +599,23 @@ onUnmounted(() => {
                             @focus="handleDetailHover('ecosystem', true)"
                             @blur="handleDetailHover('ecosystem', false)"
                         >
-                            <i
-                                class="relative block h-[.35rem] min-w-0 flex-1 rounded-full bg-white after:absolute after:top-1/2 after:left-0 after:size-[1.12rem] after:-translate-x-1/2 after:-translate-y-1/2 after:rounded-full after:border-[.35rem] after:border-white after:bg-[#61dfc7] after:content-[''] max-[52rem]:h-1 max-[52rem]:after:size-[.9rem] max-[52rem]:after:border-[.25rem] portrait:h-1 portrait:after:size-[.9rem] portrait:after:border-[.25rem]"
+                            <span
+                                class="invisible relative block h-[.35rem] min-w-0 flex-1 opacity-0 will-change-[transform,opacity] motion-reduce:will-change-auto max-[52rem]:h-1 portrait:h-1"
+                                data-surgery-guide-line
+                                data-surgery-line-origin="right center"
                                 aria-hidden="true"
-                            />
-                            <span class="shrink-0"
+                            >
+                                <i
+                                    class="absolute inset-0 rounded-full bg-white"
+                                />
+                                <i
+                                    class="invisible absolute top-1/2 left-0 size-[1.12rem] -translate-x-1/2 -translate-y-1/2 rounded-full border-[.35rem] border-white bg-[#61dfc7] opacity-0 will-change-[transform,opacity] max-[52rem]:size-[.9rem] max-[52rem]:border-[.25rem] portrait:size-[.9rem] portrait:border-[.25rem]"
+                                    data-surgery-guide-target
+                                />
+                            </span>
+                            <span
+                                class="invisible shrink-0 opacity-0 will-change-[transform,opacity] motion-reduce:will-change-auto"
+                                data-surgery-guide-label
                                 >Unbalanced<br />axillary ecosystem</span
                             >
                         </button>
@@ -689,12 +789,12 @@ onUnmounted(() => {
     --panel-radius: 2.3rem;
     --shadow-x: 1.75rem;
     --shadow-y: 1.35rem;
-    --skin-y: 30%;
+    --skin-y: 63%;
     --skin-width: 35vw;
-    --skin-irritation-target-x: 50%;
+    --skin-irritation-target-x: 53%;
     --skin-irritation-target-y: 45%;
     --axillary-ecosystem-target-x: 53%;
-    --axillary-ecosystem-target-y: 79%;
+    --axillary-ecosystem-target-y: 84%;
     --knife-width: 5vw;
     --knife-x: 27.5%;
     --knife-y: 7%;

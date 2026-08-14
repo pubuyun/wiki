@@ -5,6 +5,20 @@ import { nextTick, onMounted, onUnmounted, ref } from "vue";
 
 gsap.registerPlugin(ScrollTrigger);
 
+const CURRENT_SOLUTION_ENTRANCE = {
+    copyOffsetX: 72,
+    questionOffsetY: 30,
+    introTransitionDuration: 0.92,
+    questionDuration: 0.5,
+    questionStagger: 0.06,
+    firstSceneHoldDuration: 0.34,
+    actorStartXPercent: 112,
+    actorStartYPercent: 30,
+    actorArcProgress: 0.52,
+    actorArcLiftPercent: 12,
+    actorDuration: 0.92,
+} as const;
+
 const scene = ref<HTMLElement | null>(null);
 const stage = ref<HTMLElement | null>(null);
 const firstScene = ref<HTMLElement | null>(null);
@@ -47,6 +61,34 @@ function actorOffset(fromX: string, fromY: string, toX: string, toY: string) {
         y: () =>
             (stage.value?.clientHeight ?? 0) *
             ((cssNumber(toY) - cssNumber(fromY)) / 100),
+    };
+}
+
+function entrancePointOffset(
+    actorX: string,
+    actorY: string,
+    progress: number,
+    arcLiftPercent = 0,
+) {
+    const targetX = () => cssNumber(actorX);
+    const targetY = () => cssNumber(actorY);
+
+    return {
+        x: () =>
+            (stage.value?.clientWidth ?? 0) *
+            ((CURRENT_SOLUTION_ENTRANCE.actorStartXPercent +
+                (targetX() - CURRENT_SOLUTION_ENTRANCE.actorStartXPercent) *
+                    progress -
+                targetX()) /
+                100),
+        y: () =>
+            (stage.value?.clientHeight ?? 0) *
+            ((CURRENT_SOLUTION_ENTRANCE.actorStartYPercent +
+                (targetY() - CURRENT_SOLUTION_ENTRANCE.actorStartYPercent) *
+                    progress -
+                Math.sin(Math.PI * progress) * arcLiftPercent -
+                targetY()) /
+                100),
     };
 }
 
@@ -243,10 +285,26 @@ onMounted(async () => {
                 ".current-solution__leave-down",
                 refs.firstScene,
             );
-            const entranceItems = gsap.utils.toArray<HTMLElement>(
-                ".current-solution__entrance",
-                refs.scene,
-            );
+            const rightActors = [
+                {
+                    element: refs.knife,
+                    xVariable: "--knife-x",
+                    yVariable: "--knife-y",
+                    rotationVariable: "--knife-rotation",
+                },
+                {
+                    element: refs.deodorant,
+                    xVariable: "--deodorant-x",
+                    yVariable: "--deodorant-y",
+                    rotationVariable: "--deodorant-rotation",
+                },
+                {
+                    element: refs.antiperspirant,
+                    xVariable: "--antiperspirant-x",
+                    yVariable: "--antiperspirant-y",
+                    rotationVariable: "--antiperspirant-rotation",
+                },
+            ];
             const storyItems = [refs.secondCopy];
             const antiperspirantFinal = {
                 ...actorOffset(
@@ -271,7 +329,15 @@ onMounted(async () => {
 
             gsap.set(refs.secondScene, { autoAlpha: 0 });
             gsap.set(storyItems, { autoAlpha: 0, y: 24 });
-            gsap.set(entranceItems, { autoAlpha: 0, y: 30 });
+            gsap.set(leaveUp, { autoAlpha: 1, y: 0 });
+            gsap.set(leaveLeft, {
+                autoAlpha: 0,
+                x: -CURRENT_SOLUTION_ENTRANCE.copyOffsetX,
+            });
+            gsap.set(leaveDown, {
+                autoAlpha: 0,
+                y: CURRENT_SOLUTION_ENTRANCE.questionOffsetY,
+            });
             gsap.set([refs.deodorantPanel, refs.antiperspirantPanel], {
                 autoAlpha: 0,
                 scale: 0.86,
@@ -289,9 +355,30 @@ onMounted(async () => {
                 yPercent: -50,
                 rotation: () => cssNumber("--deodorant-rotation"),
             });
+            rightActors.forEach(
+                ({ element, xVariable, yVariable, rotationVariable }) => {
+                    gsap.set(element, {
+                        ...entrancePointOffset(xVariable, yVariable, 0),
+                        autoAlpha: 0,
+                        rotation: () => cssNumber(rotationVariable) - 24,
+                    });
+                },
+            );
 
             if (reduceMotion) {
-                gsap.set(entranceItems, { autoAlpha: 1, y: 0 });
+                gsap.set([...leaveUp, ...leaveLeft, ...leaveDown], {
+                    autoAlpha: 1,
+                    x: 0,
+                    y: 0,
+                });
+                rightActors.forEach(({ element, rotationVariable }) => {
+                    gsap.set(element, {
+                        autoAlpha: 1,
+                        x: 0,
+                        y: 0,
+                        rotation: () => cssNumber(rotationVariable),
+                    });
+                });
                 gsap.set(refs.firstScene, { autoAlpha: 0 });
                 gsap.set(refs.secondScene, { autoAlpha: 1 });
                 gsap.set(storyItems, { autoAlpha: 1, y: 0 });
@@ -306,20 +393,6 @@ onMounted(async () => {
                     hideIngredientPanels(true);
                 };
             }
-
-            gsap.timeline({
-                defaults: { duration: 0.72, ease: "power3.out" },
-                scrollTrigger: {
-                    id: "current-solution-entrance",
-                    trigger: refs.scene,
-                    start: "top 82%",
-                    once: true,
-                },
-            }).to(entranceItems, {
-                autoAlpha: 1,
-                y: 0,
-                stagger: 0.07,
-            });
 
             const floatTweens = [
                 gsap.to(refs.antiperspirantImage, {
@@ -363,8 +436,10 @@ onMounted(async () => {
                 antiperspirant: hintTweens[0],
                 deodorant: hintTweens[1],
             };
+            const firstSceneHold = { progress: 0 };
             const hold = { progress: 0 };
             let isSecondSceneActive = false;
+            let secondSceneActivationProgress = 1;
 
             const timeline = gsap.timeline({
                 defaults: { ease: "none" },
@@ -378,7 +453,8 @@ onMounted(async () => {
                     anticipatePin: 1,
                     invalidateOnRefresh: true,
                     onUpdate: (self) => {
-                        const shouldActivate = self.progress >= 0.58;
+                        const shouldActivate =
+                            self.progress >= secondSceneActivationProgress;
                         if (shouldActivate === isSecondSceneActive) return;
 
                         isSecondSceneActive = shouldActivate;
@@ -405,20 +481,83 @@ onMounted(async () => {
                 },
             });
 
+            timeline.addLabel("introTransition", 0).fromTo(
+                leaveLeft,
+                {
+                    autoAlpha: 0,
+                    x: -CURRENT_SOLUTION_ENTRANCE.copyOffsetX,
+                },
+                {
+                    autoAlpha: 1,
+                    x: 0,
+                    duration: CURRENT_SOLUTION_ENTRANCE.introTransitionDuration,
+                    ease: "power3.out",
+                    immediateRender: false,
+                },
+                "introTransition",
+            );
+
+            rightActors.forEach(
+                ({ element, xVariable, yVariable, rotationVariable }) => {
+                    const finalRotation = () => cssNumber(rotationVariable);
+                    timeline.to(
+                        element,
+                        {
+                            keyframes: [
+                                {
+                                    ...entrancePointOffset(
+                                        xVariable,
+                                        yVariable,
+                                        CURRENT_SOLUTION_ENTRANCE.actorArcProgress,
+                                        CURRENT_SOLUTION_ENTRANCE.actorArcLiftPercent,
+                                    ),
+                                    autoAlpha: 0.62,
+                                    rotation: () => finalRotation() - 10,
+                                    duration:
+                                        CURRENT_SOLUTION_ENTRANCE.actorDuration *
+                                        0.42,
+                                    ease: "power1.in",
+                                },
+                                {
+                                    x: 0,
+                                    y: 0,
+                                    autoAlpha: 1,
+                                    rotation: finalRotation,
+                                    duration:
+                                        CURRENT_SOLUTION_ENTRANCE.actorDuration *
+                                        0.58,
+                                    ease: "power3.out",
+                                },
+                            ],
+                        },
+                        "introTransition",
+                    );
+                },
+            );
+
             timeline
-                .addLabel("firstScene", 0)
+                .addLabel("questionReveal")
                 .fromTo(
-                    leaveUp,
-                    { autoAlpha: 1, y: 0 },
+                    leaveDown,
                     {
                         autoAlpha: 0,
-                        y: -28,
-                        duration: 0.42,
-                        stagger: 0.035,
+                        y: CURRENT_SOLUTION_ENTRANCE.questionOffsetY,
+                    },
+                    {
+                        autoAlpha: 1,
+                        y: 0,
+                        duration: CURRENT_SOLUTION_ENTRANCE.questionDuration,
+                        stagger: CURRENT_SOLUTION_ENTRANCE.questionStagger,
+                        ease: "power2.out",
                         immediateRender: false,
                     },
-                    "firstScene+=0.12",
+                    "questionReveal",
                 )
+                .to(firstSceneHold, {
+                    progress: 1,
+                    duration: CURRENT_SOLUTION_ENTRANCE.firstSceneHoldDuration,
+                })
+                .addLabel("firstSceneExit")
                 .fromTo(
                     leaveLeft,
                     { autoAlpha: 1, x: 0 },
@@ -428,7 +567,7 @@ onMounted(async () => {
                         duration: 0.42,
                         immediateRender: false,
                     },
-                    "firstScene+=0.14",
+                    "firstSceneExit",
                 )
                 .fromTo(
                     leaveDown,
@@ -440,7 +579,7 @@ onMounted(async () => {
                         stagger: 0.035,
                         immediateRender: false,
                     },
-                    "firstScene+=0.16",
+                    "firstSceneExit+=0.02",
                 )
                 .fromTo(
                     refs.corner,
@@ -451,7 +590,7 @@ onMounted(async () => {
                         duration: 0.48,
                         immediateRender: false,
                     },
-                    "firstScene+=0.12",
+                    "firstSceneExit",
                 )
                 .fromTo(
                     refs.knife,
@@ -469,7 +608,7 @@ onMounted(async () => {
                         ease: "power2.in",
                         immediateRender: false,
                     },
-                    "firstScene+=0.12",
+                    "firstSceneExit",
                 )
                 .fromTo(
                     refs.firstScene,
@@ -479,9 +618,9 @@ onMounted(async () => {
                         duration: 0.08,
                         immediateRender: false,
                     },
-                    "firstScene+=0.56",
+                    "firstSceneExit+=0.5",
                 )
-                .addLabel("moveProducts", 0.38)
+                .addLabel("moveProducts", "firstSceneExit+=0.28")
                 .fromTo(
                     refs.antiperspirant,
                     {
@@ -539,6 +678,10 @@ onMounted(async () => {
                 )
                 .to(hold, { progress: 1, duration: 0.78 }, ">+0.08");
 
+            secondSceneActivationProgress =
+                timeline.labels.secondScene /
+                Math.max(timeline.duration(), 0.001);
+
             return () => {
                 ingredientInteractionEnabled = false;
                 hideIngredientPanels(true);
@@ -584,7 +727,7 @@ onUnmounted(() => {
             <div ref="firstScene" class="absolute inset-0 z-2">
                 <div
                     ref="corner"
-                    class="current-solution__entrance invisible absolute right-0 bottom-0 z-1 size-[var(--arm-size)] opacity-0 will-change-[transform,opacity] motion-reduce:will-change-auto"
+                    class="absolute right-0 bottom-0 z-1 size-[var(--arm-size)]"
                     aria-hidden="true"
                 >
                     <img
@@ -595,21 +738,25 @@ onUnmounted(() => {
                     />
                 </div>
 
-                <img
-                    class="current-solution__entrance current-solution__leave-up invisible absolute [top:calc(var(--thinking-y)*1%)] [left:calc(var(--thinking-x)*1%)] z-3 block h-auto w-[var(--thinking-size)] -translate-x-1/2 -translate-y-1/2 opacity-0 will-change-[transform,opacity] select-none motion-reduce:will-change-auto"
-                    src="https://static.igem.wiki/teams/6133/wiki/homepage/thinking.avif"
-                    alt="A character thinking"
-                    draggable="false"
-                />
+                <div
+                    class="absolute [top:calc(var(--thinking-y)*1%)] [left:calc(var(--thinking-x)*1%)] z-3 w-[var(--thinking-size)] -translate-x-1/2 -translate-y-1/2"
+                >
+                    <img
+                        class="current-solution__leave-up block h-auto w-full will-change-[transform,opacity] select-none motion-reduce:will-change-auto"
+                        src="https://static.igem.wiki/teams/6133/wiki/homepage/thinking.avif"
+                        alt="A character thinking"
+                        draggable="false"
+                    />
+                </div>
                 <h2
                     id="current-solution-title"
-                    class="current-solution__entrance current-solution__leave-up invisible absolute top-[16.5%] left-[30.5%] z-4 m-0 w-[55%] text-[clamp(1.65rem,2.65vw,2.85rem)] leading-[1.08] font-normal tracking-[0.005em] [text-wrap:balance] opacity-0 max-[52rem]:top-[9%] max-[52rem]:left-[31%] max-[52rem]:w-[65%] max-[52rem]:text-[clamp(1.35rem,5.4vw,2.25rem)] max-[52rem]:leading-[1.12] portrait:top-[9%] portrait:left-[31%] portrait:w-[65%] portrait:text-[clamp(1.35rem,5.4vw,2.25rem)] portrait:leading-[1.12]"
+                    class="current-solution__leave-up absolute top-[16.5%] left-[30.5%] z-4 m-0 w-[55%] text-[clamp(1.65rem,2.65vw,2.85rem)] leading-[1.08] font-normal tracking-[0.005em] [text-wrap:balance] will-change-[transform,opacity] motion-reduce:will-change-auto max-[52rem]:top-[9%] max-[52rem]:left-[31%] max-[52rem]:w-[65%] max-[52rem]:text-[clamp(1.35rem,5.4vw,2.25rem)] max-[52rem]:leading-[1.12] portrait:top-[9%] portrait:left-[31%] portrait:w-[65%] portrait:text-[clamp(1.35rem,5.4vw,2.25rem)] portrait:leading-[1.12]"
                 >
                     So… is there a real solution to this problem?
                 </h2>
 
                 <p
-                    class="current-solution__entrance current-solution__leave-left invisible absolute top-[36.5%] left-[4.5%] z-4 m-0 w-[58%] text-[clamp(1.3rem,2.25vw,2.35rem)] leading-[1.48] tracking-[0.004em] [text-wrap:balance] opacity-0 max-[52rem]:top-[27%] max-[52rem]:left-[6%] max-[52rem]:w-[88%] max-[52rem]:text-[clamp(1rem,4.1vw,1.5rem)] max-[52rem]:leading-[1.38] portrait:top-[27%] portrait:left-[6%] portrait:w-[88%] portrait:text-[clamp(1rem,4.1vw,1.5rem)] portrait:leading-[1.38]"
+                    class="current-solution__leave-left invisible absolute top-[36.5%] left-[4.5%] z-4 m-0 w-[58%] text-[clamp(1.3rem,2.25vw,2.35rem)] leading-[1.48] tracking-[0.004em] [text-wrap:balance] opacity-0 will-change-[transform,opacity] motion-reduce:will-change-auto max-[52rem]:top-[27%] max-[52rem]:left-[6%] max-[52rem]:w-[88%] max-[52rem]:text-[clamp(1rem,4.1vw,1.5rem)] max-[52rem]:leading-[1.38] portrait:top-[27%] portrait:left-[6%] portrait:w-[88%] portrait:text-[clamp(1rem,4.1vw,1.5rem)] portrait:leading-[1.38]"
                 >
                     Despite its prevalence, current clinical and commercial
                     options only work to a certain extent, often at the cost of
@@ -620,31 +767,39 @@ onUnmounted(() => {
                 </p>
 
                 <p
-                    class="current-solution__entrance current-solution__leave-down invisible absolute top-[75%] left-[3.5%] z-4 m-0 w-[38%] text-center text-[clamp(1.35rem,2.35vw,2.45rem)] leading-[1.3] [text-wrap:balance] opacity-0 max-[52rem]:top-[72%] max-[52rem]:left-[4%] max-[52rem]:w-[58%] max-[52rem]:text-[clamp(1.05rem,4.4vw,1.6rem)] max-[52rem]:leading-[1.24] portrait:top-[72%] portrait:left-[4%] portrait:w-[58%] portrait:text-[clamp(1.05rem,4.4vw,1.6rem)] portrait:leading-[1.24]"
+                    class="current-solution__leave-down invisible absolute top-[75%] left-[3.5%] z-4 m-0 w-[38%] text-center text-[clamp(1.35rem,2.35vw,2.45rem)] leading-[1.3] [text-wrap:balance] opacity-0 will-change-[transform,opacity] motion-reduce:will-change-auto max-[52rem]:top-[72%] max-[52rem]:left-[4%] max-[52rem]:w-[58%] max-[52rem]:text-[clamp(1.05rem,4.4vw,1.6rem)] max-[52rem]:leading-[1.24] portrait:top-[72%] portrait:left-[4%] portrait:w-[58%] portrait:text-[clamp(1.05rem,4.4vw,1.6rem)] portrait:leading-[1.24]"
                 >
                     How are there so many complaints below every single product?
                     !
                 </p>
-                <img
-                    class="current-solution__entrance current-solution__leave-down invisible absolute [top:calc(var(--surprised-y)*1%)] [left:calc(var(--surprised-x)*1%)] z-3 block h-auto w-[var(--surprised-size)] -translate-x-1/2 -translate-y-1/2 opacity-0 will-change-[transform,opacity] select-none motion-reduce:will-change-auto"
-                    src="https://static.igem.wiki/teams/6133/wiki/homepage/surprised.avif"
-                    alt="A character looking surprised"
-                    draggable="false"
-                />
+                <div
+                    class="absolute [top:calc(var(--surprised-y)*1%)] [left:calc(var(--surprised-x)*1%)] z-3 w-[var(--surprised-size)] -translate-x-1/2 -translate-y-1/2"
+                >
+                    <img
+                        class="current-solution__leave-down invisible block h-auto w-full opacity-0 will-change-[transform,opacity] select-none motion-reduce:will-change-auto"
+                        src="https://static.igem.wiki/teams/6133/wiki/homepage/surprised.avif"
+                        alt="A character looking surprised"
+                        draggable="false"
+                    />
+                </div>
 
-                <img
-                    ref="knife"
-                    class="current-solution__entrance invisible absolute [top:calc(var(--knife-y)*1%)] [left:calc(var(--knife-x)*1%)] z-3 block h-auto w-[var(--knife-width)] origin-center -translate-x-1/2 -translate-y-1/2 rotate-[calc(var(--knife-rotation)*1deg)] opacity-0 will-change-[transform,opacity] select-none motion-reduce:will-change-auto"
-                    src="https://static.igem.wiki/teams/6133/wiki/homepage/knife.avif"
-                    alt="Scalpel representing physical treatments"
-                    draggable="false"
-                />
+                <div
+                    class="absolute [top:calc(var(--knife-y)*1%)] [left:calc(var(--knife-x)*1%)] z-3 w-[var(--knife-width)] -translate-x-1/2 -translate-y-1/2"
+                >
+                    <img
+                        ref="knife"
+                        class="invisible block h-auto w-full origin-center rotate-[calc(var(--knife-rotation)*1deg)] opacity-0 will-change-[transform,opacity] select-none motion-reduce:will-change-auto"
+                        src="https://static.igem.wiki/teams/6133/wiki/homepage/knife.avif"
+                        alt="Scalpel representing physical treatments"
+                        draggable="false"
+                    />
+                </div>
             </div>
 
             <button
                 ref="deodorant"
                 type="button"
-                class="current-solution__entrance pointer-events-none invisible absolute [top:calc(var(--deodorant-y)*1%)] [left:calc(var(--deodorant-x)*1%)] z-5 m-0 block w-[var(--deodorant-width)] origin-center cursor-pointer border-0 bg-transparent p-0 opacity-0 will-change-transform select-none focus-visible:outline-3 focus-visible:outline-offset-6 focus-visible:outline-[#65dbbf] motion-reduce:will-change-auto"
+                class="pointer-events-none invisible absolute [top:calc(var(--deodorant-y)*1%)] [left:calc(var(--deodorant-x)*1%)] z-5 m-0 block w-[var(--deodorant-width)] origin-center cursor-pointer border-0 bg-transparent p-0 opacity-0 will-change-[transform,opacity] select-none focus-visible:outline-3 focus-visible:outline-offset-6 focus-visible:outline-[#65dbbf] motion-reduce:will-change-auto"
                 aria-label="Deodorant"
                 aria-controls="deodorant-ingredients"
                 :aria-pressed="activeIngredient === 'deodorant'"
@@ -671,7 +826,7 @@ onUnmounted(() => {
             <button
                 ref="antiperspirant"
                 type="button"
-                class="current-solution__entrance pointer-events-none invisible absolute [top:calc(var(--antiperspirant-y)*1%)] [left:calc(var(--antiperspirant-x)*1%)] z-5 m-0 block w-[var(--antiperspirant-width)] origin-center cursor-pointer border-0 bg-transparent p-0 opacity-0 will-change-transform select-none focus-visible:outline-3 focus-visible:outline-offset-6 focus-visible:outline-[#65dbbf] motion-reduce:will-change-auto"
+                class="pointer-events-none invisible absolute [top:calc(var(--antiperspirant-y)*1%)] [left:calc(var(--antiperspirant-x)*1%)] z-5 m-0 block w-[var(--antiperspirant-width)] origin-center cursor-pointer border-0 bg-transparent p-0 opacity-0 will-change-[transform,opacity] select-none focus-visible:outline-3 focus-visible:outline-offset-6 focus-visible:outline-[#65dbbf] motion-reduce:will-change-auto"
                 aria-label="Antiperspirant"
                 aria-controls="antiperspirant-ingredients"
                 :aria-pressed="activeIngredient === 'antiperspirant'"
@@ -786,10 +941,10 @@ onUnmounted(() => {
 <style scoped>
 .current-solution__stage {
     --thinking-x: 21;
-    --thinking-y: 9;
+    --thinking-y: 19;
     --thinking-size: clamp(7.5rem, 12vw, 12rem);
     --surprised-x: 47;
-    --surprised-y: 71;
+    --surprised-y: 81;
     --surprised-size: clamp(7rem, 12vw, 12rem);
     --knife-x: 89;
     --knife-y: 31;
