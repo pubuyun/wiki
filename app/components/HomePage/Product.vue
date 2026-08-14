@@ -22,7 +22,24 @@ const emit = defineEmits<{
     ];
 }>();
 
-type ProductModelElement = HTMLElement;
+type ProductModelElement = HTMLElement & {
+    animationName: string;
+    currentTime: number;
+    duration: number;
+    model: {
+        getMaterialByName: (name: string) => ProductMaterial | null;
+    } | null;
+    pause: () => void;
+};
+
+type ProductMaterial = {
+    getAlphaMode: () => "OPAQUE" | "MASK" | "BLEND";
+    setAlphaMode: (mode: "OPAQUE" | "MASK" | "BLEND") => void;
+    pbrMetallicRoughness: {
+        baseColorFactor: readonly [number, number, number, number];
+        setBaseColorFactor: (rgba: [number, number, number, number]) => void;
+    };
+};
 
 type PointerOrientation = {
     roll: number;
@@ -83,51 +100,38 @@ const FEATURES = [
     },
 ] as const;
 
-// Vertical alignment for the two interchangeable product states. These are
-// percentages of the shared product rig height; tune them until the bottle
-// silhouette stays still at the splitModel timeline label.
 const MODEL_LAYOUT = {
-    withLidYPercent: -20,
-    withoutLidYPercent: 0,
+    yPercent: 0,
 } as const;
+
+const PRODUCT_ANIMATION_NAME = "CylinderAction";
+const PRODUCT_ANIMATION_END_EPSILON_SECONDS = 0.0001;
+const PRODUCT_LID_MATERIAL_NAME = "Material.004";
 
 const PRODUCT_DISPLAY_ORIENTATION = {
     verticalYaw: 0,
 } as const;
 
-const PRODUCT_CAMERA_ORBIT = "0deg 82deg 7m";
-
-const withLidLayoutStyle = {
-    transform: `translateY(${MODEL_LAYOUT.withLidYPercent}%)`,
-};
-const withoutLidLayoutStyle = {
-    transform: `translateY(${MODEL_LAYOUT.withoutLidYPercent}%)`,
-};
-
-// Lid-only alignment controls. Adjust these without changing either bottle or
-// the shared model-viewer camera.
-const LID_LAYOUT = {
-    scale: 0.6,
-    xPercent: 10,
-    yPercent: 10,
+const PRODUCT_CAMERA_ORBIT = {
+    landscape: "0deg 82deg 8.33m",
+    portrait: "0deg 82deg 10.15m",
 } as const;
 
-const lidLayoutStyle = {
-    transform: `translate(${LID_LAYOUT.xPercent}%, ${LID_LAYOUT.yPercent}%) scale(${LID_LAYOUT.scale})`,
+const modelLayoutStyle = {
+    transform: `translateY(${MODEL_LAYOUT.yPercent}%)`,
 };
 
 const scene = ref<HTMLElement | null>(null);
 const productRig = ref<HTMLElement | null>(null);
-const combinedRig = ref<HTMLElement | null>(null);
-const separatedRig = ref<HTMLElement | null>(null);
-const lidRig = ref<HTMLElement | null>(null);
 const featureLayer = ref<HTMLElement | null>(null);
 const scrollHint = ref<HTMLElement | null>(null);
-const combinedModel = ref<ProductModelElement | null>(null);
-const bottleModel = ref<ProductModelElement | null>(null);
-const lidModel = ref<ProductModelElement | null>(null);
+const productModel = ref<ProductModelElement | null>(null);
 const modelsReady = ref(false);
-const loadedModels = new Set<string>();
+const modelAnimation = { progress: 0 };
+let lidMaterial: ProductMaterial | null = null;
+let lidBaseColor: [number, number, number, number] | null = null;
+let lidAlphaMode: "OPAQUE" | "MASK" | "BLEND" = "OPAQUE";
+let isLidVisible = true;
 
 const modelOrientation = {
     roll: 0,
@@ -147,9 +151,45 @@ function applyModelOrientation() {
     const strength = modelOrientation.parallaxStrength;
     const orientation = `${modelOrientation.roll + pointerOrientation.roll * strength}deg ${modelOrientation.pitch + pointerOrientation.pitch * strength}deg ${modelOrientation.yaw + pointerOrientation.yaw * strength}deg`;
 
-    combinedModel.value?.setAttribute("orientation", orientation);
-    bottleModel.value?.setAttribute("orientation", orientation);
-    lidModel.value?.setAttribute("orientation", orientation);
+    productModel.value?.setAttribute("orientation", orientation);
+}
+
+function applyModelAnimation() {
+    const model = productModel.value;
+    if (!model || !Number.isFinite(model.duration) || model.duration <= 0)
+        return;
+
+    // Seeking to exactly `duration` lands on the animation's loop boundary,
+    // which displays its first frame. Stay imperceptibly before that boundary
+    // so the fully opened pose remains visible after the timeline completes.
+    model.currentTime =
+        modelAnimation.progress >= 1
+            ? Math.max(
+                  0,
+                  model.duration - PRODUCT_ANIMATION_END_EPSILON_SECONDS,
+              )
+            : modelAnimation.progress * model.duration;
+
+    setLidVisible(modelAnimation.progress < 1);
+}
+
+function setLidVisible(visible: boolean) {
+    if (!lidMaterial || !lidBaseColor || isLidVisible === visible) return;
+
+    isLidVisible = visible;
+    if (visible) {
+        lidMaterial.pbrMetallicRoughness.setBaseColorFactor(lidBaseColor);
+        lidMaterial.setAlphaMode(lidAlphaMode);
+        return;
+    }
+
+    lidMaterial.setAlphaMode("BLEND");
+    lidMaterial.pbrMetallicRoughness.setBaseColorFactor([
+        lidBaseColor[0],
+        lidBaseColor[1],
+        lidBaseColor[2],
+        0,
+    ]);
 }
 
 function tweenPointer(target: PointerOrientation) {
@@ -189,9 +229,23 @@ function resetPointer() {
     tweenPointer({ roll: 0, pitch: 0, yaw: 0 });
 }
 
-function handleModelLoad(model: string) {
-    loadedModels.add(model);
-    modelsReady.value = loadedModels.size === 3;
+function handleModelLoad() {
+    if (!productModel.value) return;
+
+    productModel.value.animationName = PRODUCT_ANIMATION_NAME;
+    productModel.value.pause();
+    lidMaterial = productModel.value.model?.getMaterialByName(
+        PRODUCT_LID_MATERIAL_NAME,
+    );
+    if (lidMaterial) {
+        const [red, green, blue, alpha] =
+            lidMaterial.pbrMetallicRoughness.baseColorFactor;
+        lidBaseColor = [red, green, blue, alpha];
+        lidAlphaMode = lidMaterial.getAlphaMode();
+        isLidVisible = true;
+    }
+    applyModelAnimation();
+    modelsReady.value = true;
     requestAnimationFrame(() => ScrollTrigger.refresh());
 }
 
@@ -205,12 +259,7 @@ onMounted(() => {
     if (
         !scene.value ||
         !productRig.value ||
-        !combinedRig.value ||
-        !separatedRig.value ||
-        !lidRig.value ||
-        !combinedModel.value ||
-        !bottleModel.value ||
-        !lidModel.value ||
+        !productModel.value ||
         !featureLayer.value ||
         !scrollHint.value
     ) {
@@ -245,6 +294,12 @@ onMounted(() => {
                 isPortrait: boolean;
                 reduceMotion: boolean;
             };
+            productModel.value?.setAttribute(
+                "camera-orbit",
+                isPortrait
+                    ? PRODUCT_CAMERA_ORBIT.portrait
+                    : PRODUCT_CAMERA_ORBIT.landscape,
+            );
             const spinDuration = reduceMotion ? 0.12 : 4;
             const edgeSpinDuration = spinDuration / 12;
             const middleSpinDuration = spinDuration - edgeSpinDuration * 2;
@@ -255,22 +310,15 @@ onMounted(() => {
                 parallaxStrength: 1,
             });
             Object.assign(pointerOrientation, { roll: 0, pitch: 0, yaw: 0 });
+            modelAnimation.progress = 0;
             applyModelOrientation();
+            applyModelAnimation();
 
             gsap.set(productRig.value, {
                 autoAlpha: 1,
                 x: 0,
                 y: 0,
                 scale: 1,
-                transformOrigin: "50% 50%",
-            });
-            gsap.set(combinedRig.value, { autoAlpha: 1 });
-            gsap.set(separatedRig.value, { autoAlpha: 0 });
-            gsap.set(lidRig.value, {
-                autoAlpha: 1,
-                xPercent: 0,
-                yPercent: 0,
-                rotation: 0,
                 transformOrigin: "50% 50%",
             });
             gsap.set(featureLayer.value, { autoAlpha: 0, scale: 1 });
@@ -351,17 +399,12 @@ onMounted(() => {
                     duration: edgeSpinDuration,
                     onUpdate: applyModelOrientation,
                 })
-                .addLabel("splitModel")
-                .set(separatedRig.value, { autoAlpha: 1 }, "splitModel")
-                .set(combinedRig.value, { autoAlpha: 0 }, "splitModel")
-                .addLabel("lidExit")
-                .to(lidRig.value, {
-                    yPercent: -170,
-                    xPercent: 15,
-                    rotation: reduceMotion ? 18 : 378,
-                    autoAlpha: 0,
+                .addLabel("openLid")
+                .to(modelAnimation, {
+                    progress: 1,
                     duration: reduceMotion ? 0.08 : 0.85,
                     ease: "power2.in",
+                    onUpdate: applyModelAnimation,
                 })
                 .addLabel("features")
                 .set(featureLayer.value, { autoAlpha: 1 })
@@ -508,82 +551,31 @@ onBeforeUnmount(() => {
 
         <div
             ref="productRig"
-            class="product-rig pointer-events-none absolute top-1/2 left-1/2 z-20 -translate-x-1/2 -translate-y-1/2"
+            class="product-rig pointer-events-none absolute inset-0 z-20"
             :class="{ 'product-rig--ready': modelsReady }"
         >
-            <div ref="combinedRig" class="absolute inset-0">
-                <div class="absolute inset-0" :style="withLidLayoutStyle">
-                    <component
-                        :is="'model-viewer'"
-                        ref="combinedModel"
-                        class="product-model absolute inset-0 block size-full"
-                        src="/product.glb"
-                        alt="Expelliodor roll-on deodorant bottle"
-                        camera-target="0m 0.13m 0m"
-                        :camera-orbit="PRODUCT_CAMERA_ORBIT"
-                        field-of-view="26deg"
-                        orientation="0deg 0deg 0deg"
-                        environment-image="neutral"
-                        tone-mapping="commerce"
-                        exposure="1.15"
-                        interaction-prompt="none"
-                        interpolation-decay="1"
-                        loading="eager"
-                        reveal="auto"
-                        disable-tap
-                        @load="handleModelLoad('combined')"
-                    />
-                </div>
-            </div>
-
-            <div ref="separatedRig" class="absolute inset-0">
-                <div class="absolute inset-0" :style="withoutLidLayoutStyle">
-                    <component
-                        :is="'model-viewer'"
-                        ref="bottleModel"
-                        class="product-model absolute inset-0 block size-full"
-                        src="/product_bottle.glb"
-                        alt="Expelliodor roll-on deodorant bottle without its lid"
-                        camera-target="0m 0.13m 0m"
-                        :camera-orbit="PRODUCT_CAMERA_ORBIT"
-                        field-of-view="26deg"
-                        orientation="0deg 0deg 0deg"
-                        environment-image="neutral"
-                        tone-mapping="commerce"
-                        exposure="1.15"
-                        interaction-prompt="none"
-                        interpolation-decay="1"
-                        loading="eager"
-                        reveal="auto"
-                        disable-tap
-                        @load="handleModelLoad('bottle')"
-                    />
-                </div>
-
-                <div ref="lidRig" class="absolute inset-0">
-                    <div class="absolute inset-0" :style="lidLayoutStyle">
-                        <component
-                            :is="'model-viewer'"
-                            ref="lidModel"
-                            class="product-model absolute inset-0 block size-full"
-                            src="/product_lid.glb"
-                            alt="Expelliodor bottle lid"
-                            camera-target="0m 0.13m 0m"
-                            :camera-orbit="PRODUCT_CAMERA_ORBIT"
-                            field-of-view="26deg"
-                            orientation="0deg 0deg 0deg"
-                            environment-image="neutral"
-                            tone-mapping="commerce"
-                            exposure="1.15"
-                            interaction-prompt="none"
-                            interpolation-decay="1"
-                            loading="eager"
-                            reveal="auto"
-                            disable-tap
-                            @load="handleModelLoad('lid')"
-                        />
-                    </div>
-                </div>
+            <div class="absolute inset-0" :style="modelLayoutStyle">
+                <component
+                    :is="'model-viewer'"
+                    ref="productModel"
+                    class="product-model absolute inset-0 block size-full"
+                    src="/product.glb"
+                    alt="Expelliodor roll-on deodorant bottle"
+                    camera-target="0m 0.13m 0m"
+                    :camera-orbit="PRODUCT_CAMERA_ORBIT.landscape"
+                    field-of-view="26deg"
+                    orientation="0deg 0deg 0deg"
+                    environment-image="neutral"
+                    tone-mapping="commerce"
+                    exposure="1.15"
+                    interaction-prompt="none"
+                    interpolation-decay="1"
+                    :animation-name="PRODUCT_ANIMATION_NAME"
+                    loading="eager"
+                    reveal="auto"
+                    disable-tap
+                    @load="handleModelLoad"
+                />
             </div>
 
             <div
@@ -598,11 +590,10 @@ onBeforeUnmount(() => {
 
         <div
             ref="scrollHint"
-            class="product-scroll-hint pointer-events-none absolute bottom-[4.5svh] left-1/2 z-30 flex -translate-x-1/2 flex-col items-center gap-2"
+            class="product-scroll-hint pointer-events-none absolute bottom-[2svh] left-1/2 z-30 flex -translate-x-1/2 flex-col items-center gap-2"
             aria-hidden="true"
         >
             <span>Scroll to turn</span>
-            <span class="product-scroll-hint__line" />
         </div>
     </section>
 </template>
@@ -633,8 +624,8 @@ onBeforeUnmount(() => {
 }
 
 .product-rig {
-    width: clamp(20rem, 38vw, 36rem);
-    height: min(84svh, 58rem);
+    width: 100vw;
+    height: 100svh;
     transform-origin: 50% 50%;
     will-change: transform, opacity;
 }
@@ -781,14 +772,6 @@ onBeforeUnmount(() => {
     text-transform: uppercase;
 }
 
-.product-scroll-hint__line {
-    width: 1px;
-    height: 2.5rem;
-    background: linear-gradient(180deg, #dffaff, transparent);
-    animation: product-scroll-pulse 1.7s ease-in-out infinite;
-    transform-origin: 50% 0;
-}
-
 @keyframes product-loader-spin {
     to {
         transform: rotate(360deg);
@@ -809,11 +792,6 @@ onBeforeUnmount(() => {
 }
 
 @media (orientation: portrait) {
-    .product-rig {
-        width: min(86vw, 32rem);
-        height: min(69svh, 46rem);
-    }
-
     .product-feature {
         width: min(66vw, 31rem);
         min-height: clamp(4.5rem, 11.5svh, 7rem);
