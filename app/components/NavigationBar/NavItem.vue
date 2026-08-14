@@ -183,11 +183,11 @@ let menuZIndex = 50;
                     <NuxtLink
                         :to="link.to"
                         @pointerdown.stop
-                        class="flex min-h-16 w-53 items-center gap-3 px-5 py-4 text-xl text-on-surface no-underline -outline-offset-2 first:rounded-t-2xl last:rounded-b-2xl focus-visible:outline-2 focus-visible:outline-outline"
+                        class="group flex min-h-16 w-53 items-center gap-3 px-5 py-4 text-xl text-on-surface no-underline -outline-offset-2 first:rounded-t-2xl last:rounded-b-2xl focus-visible:outline-2 focus-visible:outline-outline"
                     >
                         <Icon :icon="link.icon" class="size-6 shrink-0" />
                         <span
-                            class="transition-transform duration-150 ease-out hover:translate-x-2"
+                            class="transition-transform duration-150 ease-out group-hover:translate-x-2"
                         >
                             {{ link.label }}
                         </span>
