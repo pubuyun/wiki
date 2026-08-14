@@ -213,19 +213,26 @@ onMounted(async () => {
                 },
             });
             entrance
-                .to(refs.panelShell, {
-                    autoAlpha: 1,
-                    y: 0,
-                    scale: 1,
-                    duration: 0.5,
-                })
-                .to(
+                .fromTo(
+                    refs.panelShell,
+                    { autoAlpha: 0, y: 46, scale: 0.975 },
+                    {
+                        autoAlpha: 1,
+                        y: 0,
+                        scale: 1,
+                        duration: 0.5,
+                        immediateRender: false,
+                    },
+                )
+                .fromTo(
                     introItems,
+                    { autoAlpha: 0, y: 24 },
                     {
                         autoAlpha: 1,
                         y: 0,
                         duration: 0.58,
                         stagger: 0.07,
+                        immediateRender: false,
                     },
                     "-=0.28",
                 );
@@ -260,18 +267,28 @@ onMounted(async () => {
                 .addLabel("overview", 0)
                 .to(hold, { value: 1, duration: 0.72 }, "overview")
                 .addLabel("erase")
-                .to(
+                .fromTo(
                     refs.wipe,
+                    { x: () => refs.panel.clientWidth },
                     {
                         x: () =>
                             -(refs.wipe.offsetWidth - refs.panel.clientWidth),
                         duration: 1.22,
                         ease: "power1.out",
+                        immediateRender: false,
                     },
                     "erase",
                 )
-                .to(
+                .fromTo(
                     refs.knife,
+                    {
+                        autoAlpha: 0,
+                        x: () =>
+                            refs.panel.clientWidth * SURGERY_MOTION.knifeStartX,
+                        y: 12,
+                        rotation: () =>
+                            stageCssNumber("--knife-start-rotation"),
+                    },
                     {
                         autoAlpha: 1,
                         x: 0,
@@ -279,11 +296,21 @@ onMounted(async () => {
                         rotation: () => stageCssNumber("--knife-rotation"),
                         duration: 1.16,
                         ease: "power1.out",
+                        immediateRender: false,
                     },
                     "erase",
                 )
-                .to(
+                .fromTo(
                     refs.syringe,
+                    {
+                        autoAlpha: 0,
+                        x: () =>
+                            refs.panel.clientWidth *
+                            SURGERY_MOTION.syringeStartX,
+                        y: -10,
+                        rotation: () =>
+                            stageCssNumber("--syringe-start-rotation"),
+                    },
                     {
                         autoAlpha: 1,
                         x: 0,
@@ -291,56 +318,91 @@ onMounted(async () => {
                         rotation: () => stageCssNumber("--syringe-rotation"),
                         duration: 1.1,
                         ease: "power1.out",
+                        immediateRender: false,
                     },
                     "erase+=0.08",
                 )
-                .to(
+                .fromTo(
                     refs.firstScene,
-                    { autoAlpha: 0, duration: 0.12 },
+                    { autoAlpha: 1 },
+                    {
+                        autoAlpha: 0,
+                        duration: 0.12,
+                        immediateRender: false,
+                    },
                     "erase+=1.1",
                 )
                 .addLabel("clinical")
-                .to(
+                .fromTo(
                     refs.secondScene,
-                    { autoAlpha: 1, duration: 0.16 },
+                    { autoAlpha: 0, x: 0 },
+                    {
+                        autoAlpha: 1,
+                        x: 0,
+                        duration: 0.16,
+                        immediateRender: false,
+                    },
                     "clinical",
                 )
-                .to(
+                .fromTo(
                     secondItems,
+                    { autoAlpha: 0, y: 24 },
                     {
                         autoAlpha: 1,
                         y: 0,
                         duration: 0.48,
                         stagger: 0.08,
                         ease: "power2.out",
+                        immediateRender: false,
                     },
                     "clinical+=0.05",
                 )
                 .to(hold, { value: 2, duration: 0.86 }, ">+0.06")
                 .addLabel("restrictions")
-                .to(
-                    [refs.secondScene, refs.knife, refs.syringe],
+                .fromTo(
+                    refs.secondScene,
+                    { autoAlpha: 1, x: 0 },
                     {
                         autoAlpha: 0,
-                        x: (index) => (index === 0 ? 0 : -36),
+                        x: 0,
                         duration: 0.34,
                         ease: "power2.in",
+                        immediateRender: false,
                     },
                     "restrictions",
                 )
-                .to(
+                .fromTo(
+                    instruments,
+                    { autoAlpha: 1, x: 0 },
+                    {
+                        autoAlpha: 0,
+                        x: -36,
+                        duration: 0.34,
+                        ease: "power2.in",
+                        immediateRender: false,
+                    },
+                    "restrictions",
+                )
+                .fromTo(
                     refs.finalScene,
-                    { autoAlpha: 1, duration: 0.22 },
+                    { autoAlpha: 0 },
+                    {
+                        autoAlpha: 1,
+                        duration: 0.22,
+                        immediateRender: false,
+                    },
                     "restrictions+=0.2",
                 )
-                .to(
+                .fromTo(
                     finalItems,
+                    { autoAlpha: 0, y: 28 },
                     {
                         autoAlpha: 1,
                         y: 0,
                         duration: 0.56,
                         stagger: 0.1,
                         ease: "power3.out",
+                        immediateRender: false,
                     },
                     "restrictions+=0.24",
                 )

@@ -407,88 +407,133 @@ onMounted(async () => {
 
             timeline
                 .addLabel("firstScene", 0)
-                .to(
+                .fromTo(
                     leaveUp,
+                    { autoAlpha: 1, y: 0 },
                     {
                         autoAlpha: 0,
                         y: -28,
                         duration: 0.42,
                         stagger: 0.035,
+                        immediateRender: false,
                     },
                     "firstScene+=0.12",
                 )
-                .to(
+                .fromTo(
                     leaveLeft,
+                    { autoAlpha: 1, x: 0 },
                     {
                         autoAlpha: 0,
                         x: -48,
                         duration: 0.42,
+                        immediateRender: false,
                     },
                     "firstScene+=0.14",
                 )
-                .to(
+                .fromTo(
                     leaveDown,
+                    { autoAlpha: 1, y: 0 },
                     {
                         autoAlpha: 0,
                         y: 34,
                         duration: 0.42,
                         stagger: 0.035,
+                        immediateRender: false,
                     },
                     "firstScene+=0.16",
                 )
-                .to(
+                .fromTo(
                     refs.corner,
-                    { autoAlpha: 0, xPercent: 24, duration: 0.48 },
+                    { autoAlpha: 1, xPercent: 0 },
+                    {
+                        autoAlpha: 0,
+                        xPercent: 24,
+                        duration: 0.48,
+                        immediateRender: false,
+                    },
                     "firstScene+=0.12",
                 )
-                .to(
+                .fromTo(
                     refs.knife,
+                    {
+                        autoAlpha: 1,
+                        x: 0,
+                        y: 0,
+                        rotation: () => cssNumber("--knife-rotation"),
+                    },
                     {
                         autoAlpha: 0,
                         x: 120,
                         rotation: 24,
                         duration: 0.48,
                         ease: "power2.in",
+                        immediateRender: false,
                     },
                     "firstScene+=0.12",
                 )
-                .to(
+                .fromTo(
                     refs.firstScene,
-                    { autoAlpha: 0, duration: 0.08 },
+                    { autoAlpha: 1 },
+                    {
+                        autoAlpha: 0,
+                        duration: 0.08,
+                        immediateRender: false,
+                    },
                     "firstScene+=0.56",
                 )
                 .addLabel("moveProducts", 0.38)
-                .to(
+                .fromTo(
                     refs.antiperspirant,
+                    {
+                        x: 0,
+                        y: 0,
+                        rotation: () => cssNumber("--antiperspirant-rotation"),
+                        scale: 1,
+                    },
                     {
                         ...antiperspirantFinal,
                         duration: 0.84,
                         ease: "power2.inOut",
+                        immediateRender: false,
                     },
                     "moveProducts",
                 )
-                .to(
+                .fromTo(
                     refs.deodorant,
+                    {
+                        x: 0,
+                        y: 0,
+                        rotation: () => cssNumber("--deodorant-rotation"),
+                        scale: 1,
+                    },
                     {
                         ...deodorantFinal,
                         duration: 0.76,
                         ease: "power2.inOut",
+                        immediateRender: false,
                     },
                     "moveProducts+=0.06",
                 )
                 .addLabel("secondScene", "moveProducts+=0.48")
-                .to(
+                .fromTo(
                     refs.secondScene,
-                    { autoAlpha: 1, duration: 0.2 },
+                    { autoAlpha: 0 },
+                    {
+                        autoAlpha: 1,
+                        duration: 0.2,
+                        immediateRender: false,
+                    },
                     "secondScene",
                 )
-                .to(
+                .fromTo(
                     storyItems,
+                    { autoAlpha: 0, y: 24 },
                     {
                         autoAlpha: 1,
                         y: 0,
                         duration: 0.46,
                         ease: "power2.out",
+                        immediateRender: false,
                     },
                     "secondScene+=0.08",
                 )
