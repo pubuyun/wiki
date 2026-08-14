@@ -7,12 +7,7 @@ stages:
 variables:
     NUXT_APP_BASE_URL: "/greatbay-scie/"
     NUXT_STUDIO: "false"
-    NODE_OPTIONS: >-
-        --max-old-space-size=1400
-        --diagnostic-dir=ci-debug
-        --report-on-fatalerror
-        --report-exclude-env
-        --report-exclude-network
+    NODE_OPTIONS: "--max-old-space-size=1400"
 
 .install-cache: &install-cache
     key:
@@ -42,133 +37,19 @@ install:
 pages:
     stage: build
     timeout: 10m
-    variables:
-        RUNNER_SCRIPT_TIMEOUT: 8m
-        RUNNER_AFTER_SCRIPT_TIMEOUT: 1m
     needs:
         - job: install
     cache:
         - <<: *install-cache
+          policy: pull
     script:
-        - |
-            mkdir -p ci-debug
-
-            {
-                echo "=== Runtime ==="
-                date -u +"%Y-%m-%dT%H:%M:%SZ"
-                node -e 'const os = require("node:os"); const v8 = require("node:v8"); const mib = (bytes) => Math.round(bytes / 1024 / 1024); console.log(JSON.stringify({ node: process.version, nodeOptions: process.env.NODE_OPTIONS, heapLimitMiB: mib(v8.getHeapStatistics().heap_size_limit), hostTotalMemoryMiB: mib(os.totalmem()), hostFreeMemoryMiB: mib(os.freemem()), cpuCount: os.cpus().length }, null, 2))'
-                echo "=== Nuxt dependencies ==="
-                node -e 'const fs = require("node:fs"); for (const name of ["nuxt", "@nuxt/content", "vite", "nitropack"]) { try { const pkg = JSON.parse(fs.readFileSync(`node_modules/${name}/package.json`, "utf8")); console.log(`${name}=${pkg.version}`); } catch { console.log(`${name}=unavailable`); } }'
-                echo "=== Initial cgroup memory ==="
-                for metric in \
-                    /sys/fs/cgroup/memory.max \
-                    /sys/fs/cgroup/memory.current \
-                    /sys/fs/cgroup/memory.peak \
-                    /sys/fs/cgroup/memory.events \
-                    /sys/fs/cgroup/memory/memory.limit_in_bytes \
-                    /sys/fs/cgroup/memory/memory.usage_in_bytes \
-                    /sys/fs/cgroup/memory/memory.max_usage_in_bytes \
-                    /sys/fs/cgroup/memory/memory.failcnt; do
-                    if [ -r "$metric" ]; then
-                        echo "--- $metric"
-                        cat "$metric"
-                    fi
-                done
-            } | tee ci-debug/runtime.log
-
-            record_memory() {
-                {
-                    echo
-                    date -u +"[%Y-%m-%dT%H:%M:%SZ]"
-                    for metric in \
-                        /sys/fs/cgroup/memory.current \
-                        /sys/fs/cgroup/memory.peak \
-                        /sys/fs/cgroup/memory.events \
-                        /sys/fs/cgroup/memory/memory.usage_in_bytes \
-                        /sys/fs/cgroup/memory/memory.max_usage_in_bytes \
-                        /sys/fs/cgroup/memory/memory.failcnt; do
-                        if [ -r "$metric" ]; then
-                            echo "--- $metric"
-                            cat "$metric"
-                        fi
-                    done
-                    echo "--- processes sorted by RSS (KiB)"
-                    awk '
-                        /^Name:/ { name = $2 }
-                        /^Pid:/ { pid = $2 }
-                        /^PPid:/ { ppid = $2 }
-                        /^VmSize:/ { vsize = $2 }
-                        /^VmRSS:/ { rss = $2 }
-                        /^Threads:/ {
-                            printf "%d\tpid=%s\tppid=%s\tvsz_kib=%s\tthreads=%s\tname=%s\n", rss + 0, pid, ppid, vsize, $2, name
-                            name = pid = ppid = vsize = rss = ""
-                        }
-                    ' /proc/[0-9]*/status 2>/dev/null | sort -nr
-                } >> ci-debug/resources.log
-            }
-
-            memory_heartbeat() {
-                current_bytes=$(cat /sys/fs/cgroup/memory.current 2>/dev/null || cat /sys/fs/cgroup/memory/memory.usage_in_bytes 2>/dev/null || echo unavailable)
-                peak_bytes=$(cat /sys/fs/cgroup/memory.peak 2>/dev/null || cat /sys/fs/cgroup/memory/memory.max_usage_in_bytes 2>/dev/null || echo unavailable)
-
-                if [ -r /sys/fs/cgroup/memory.events ]; then
-                    oom_summary=$(awk '/^(oom|oom_kill|oom_group_kill) / { printf "%s=%s ", $1, $2 }' /sys/fs/cgroup/memory.events)
-                else
-                    oom_summary="failcnt=$(cat /sys/fs/cgroup/memory/memory.failcnt 2>/dev/null || echo unavailable)"
-                fi
-
-                printf '[memory-heartbeat] time=%s current_bytes=%s peak_bytes=%s %s\n' \
-                    "$(date -u +"%Y-%m-%dT%H:%M:%SZ")" \
-                    "$current_bytes" \
-                    "$peak_bytes" \
-                    "$oom_summary" | tee -a ci-debug/resources.log
-            }
-
-            cleanup_monitor() {
-                if [ -n "${monitor_pid:-}" ]; then
-                    kill "$monitor_pid" 2>/dev/null || true
-                    wait "$monitor_pid" 2>/dev/null || true
-                    monitor_pid=""
-                fi
-            }
-
-            trap cleanup_monitor EXIT
-            trap 'exit 143' TERM INT
-
-            record_memory
-            memory_heartbeat
-            (
-                while true; do
-                    sleep 60
-                    memory_heartbeat
-                done
-            ) &
-            monitor_pid=$!
-
-            set +e
-            NUXT_STUDIO=false NUXT_APP_BASE_URL="/greatbay-scie/" timeout --signal=TERM --kill-after=10s 450s \
-                node --expose-gc ./node_modules/nuxt/bin/nuxt.mjs generate \
-                2>&1 | tee ci-debug/nuxt-generate.log
-            generate_status=${PIPESTATUS[0]}
-            set -e
-
-            cleanup_monitor
-            memory_heartbeat
-            record_memory
-            echo "nuxt_generate_exit_code=$generate_status" | tee ci-debug/generate-exit-code.log
-            exit "$generate_status"
+        - yarn generate
         - mkdir -p public
         - cp -a .output/public/. public/
-    after_script:
-        - |
-            mkdir -p ci-debug
-            {
-                echo "ci_job_status=$CI_JOB_STATUS"
-                date -u +"finished_at=%Y-%m-%dT%H:%M:%SZ"
-            } > ci-debug/job-status.log
+    pages:
+        publish: public
     artifacts:
-        when: always
-        expire_in: 7 days
         paths:
             - public/
-            - ci-debug/
+    rules:
+        - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
