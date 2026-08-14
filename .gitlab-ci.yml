@@ -8,7 +8,7 @@ variables:
     NUXT_APP_BASE_URL: "/greatbay-scie/"
     NUXT_STUDIO: "false"
     NODE_OPTIONS: >-
-        --max-old-space-size=1600
+        --max-old-space-size=1400
         --diagnostic-dir=ci-debug
         --report-on-fatalerror
         --report-exclude-env
@@ -41,6 +41,10 @@ install:
 # Job name has to be `pages`.
 pages:
     stage: build
+    timeout: 10m
+    variables:
+        RUNNER_SCRIPT_TIMEOUT: 8m
+        RUNNER_AFTER_SCRIPT_TIMEOUT: 1m
     needs:
         - job: install
     cache:
@@ -103,10 +107,29 @@ pages:
                 } >> ci-debug/resources.log
             }
 
+            memory_heartbeat() {
+                current_bytes=$(cat /sys/fs/cgroup/memory.current 2>/dev/null || cat /sys/fs/cgroup/memory/memory.usage_in_bytes 2>/dev/null || echo unavailable)
+                peak_bytes=$(cat /sys/fs/cgroup/memory.peak 2>/dev/null || cat /sys/fs/cgroup/memory/memory.max_usage_in_bytes 2>/dev/null || echo unavailable)
+
+                if [ -r /sys/fs/cgroup/memory.events ]; then
+                    oom_summary=$(awk '/^(oom|oom_kill|oom_group_kill) / { printf "%s=%s ", $1, $2 }' /sys/fs/cgroup/memory.events)
+                else
+                    oom_summary="failcnt=$(cat /sys/fs/cgroup/memory/memory.failcnt 2>/dev/null || echo unavailable)"
+                fi
+
+                printf '[memory-heartbeat] time=%s current_bytes=%s peak_bytes=%s %s\n' \
+                    "$(date -u +"%Y-%m-%dT%H:%M:%SZ")" \
+                    "$current_bytes" \
+                    "$peak_bytes" \
+                    "$oom_summary" | tee -a ci-debug/resources.log
+            }
+
             record_memory
+            memory_heartbeat
             (
                 while true; do
-                    sleep 10
+                    sleep 30
+                    memory_heartbeat
                     record_memory
                 done
             ) &
@@ -119,6 +142,7 @@ pages:
 
             kill "$monitor_pid" 2>/dev/null || true
             wait "$monitor_pid" 2>/dev/null || true
+            memory_heartbeat
             record_memory
             echo "nuxt_generate_exit_code=$generate_status" | tee ci-debug/generate-exit-code.log
             exit "$generate_status"

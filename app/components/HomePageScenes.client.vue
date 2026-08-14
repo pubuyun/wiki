@@ -20,6 +20,11 @@ const lazyScenes = [
         loadImmediately: true,
     },
     {
+        id: "current-solution",
+        loader: () => import("./HomePage/CurrentSolution.vue"),
+        minHeight: "100svh",
+    },
+    {
         id: "product",
         loader: () => import("./HomePage/ProductSolution.vue"),
         minHeight: "100svh",
