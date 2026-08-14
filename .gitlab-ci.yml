@@ -1,7 +1,6 @@
 image: node:22-bookworm-slim
 
 stages:
-    - install
     - build
 
 variables:
@@ -19,8 +18,10 @@ variables:
         - node_modules/
     policy: pull-push
 
-install:
-    stage: install
+# Job name has to be `pages`.
+pages:
+    stage: build
+    timeout: 10m
     cache:
         - <<: *install-cache
     before_script:
@@ -32,17 +33,6 @@ install:
             else
                 yarn install --immutable
             fi
-
-# Job name has to be `pages`.
-pages:
-    stage: build
-    timeout: 10m
-    needs:
-        - job: install
-    cache:
-        - <<: *install-cache
-          policy: pull
-    script:
         - yarn generate
         - mkdir -p public
         - cp -a .output/public/. public/
