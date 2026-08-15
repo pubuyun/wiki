@@ -90,8 +90,8 @@ const SCENE_LAYOUT = {
     copyExitYOffset: -10,
     portraitWheelSize: 74,
     attachedPlug: {
-        x: 52,
-        y: 5,
+        x: 48,
+        y: 20,
         width: 31,
         rotation: 0,
     },

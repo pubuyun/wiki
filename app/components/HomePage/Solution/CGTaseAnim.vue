@@ -27,7 +27,7 @@ const LAYOUT = {
     precursorReaction: { x: 78, y: 29 } satisfies PercentPoint,
     attachedGroupSlot: { x: 2, y: 82 } satisfies PercentPoint,
     remainingFlight: { x: 0, y: 0 } satisfies PercentPoint,
-    collisionOffset: { x: 6, y: -6 } satisfies PercentPoint,
+    collisionOffset: { x: 4, y: -10 } satisfies PercentPoint,
     collisionCompression: { x: 2, y: 0 } satisfies PercentPoint,
     collisionRecoil: { x: 42, y: -30 } satisfies PercentPoint,
 } as const;
