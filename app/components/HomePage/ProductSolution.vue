@@ -4,6 +4,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { onBeforeUnmount, ref } from "vue";
 
 import Product from "./Product.vue";
+import ProductIntro from "./ProductIntro.vue";
 import Solution from "./Solution.vue";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -353,6 +354,8 @@ onBeforeUnmount(() => {
     >
         <Solution embedded @timeline-ready="handleSolutionReady" />
         <Product embedded @timeline-ready="handleProductReady" />
+        <!-- Kept as a separate layer so the master ScrollTrigger can own the handoff. -->
+        <ProductIntro class="product-intro-layer" />
     </section>
 </template>
 
@@ -376,5 +379,13 @@ onBeforeUnmount(() => {
 .product-solution-sequence :deep(.product-scene) {
     z-index: 2;
     background: transparent !important;
+}
+
+.product-intro-layer {
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    width: 100%;
+    min-height: 100%;
 }
 </style>

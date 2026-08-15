@@ -674,7 +674,7 @@ onUnmounted(() => {
                             a more permanent solution.
                         </p>
                         <img
-                            class="absolute top-[12%] right-[2.5%] h-auto w-[clamp(9rem,14vw,14rem)] rotate-14 select-none max-[52rem]:top-[31%] max-[52rem]:right-[1.5%] max-[52rem]:w-[clamp(4.5rem,17vw,7rem)] portrait:top-[31%] portrait:right-[1.5%] portrait:w-[clamp(4.5rem,17vw,7rem)]"
+                            class="absolute top-[12%] right-[2.5%] h-auto w-[clamp(9rem,12vw,14rem)] rotate-14 select-none max-[52rem]:top-[31%] max-[52rem]:right-[1.5%] max-[52rem]:w-[clamp(4.5rem,17vw,7rem)] portrait:top-[31%] portrait:right-[1.5%] portrait:w-[clamp(4.5rem,17vw,7rem)]"
                             data-surgery-second
                             src="https://static.igem.wiki/teams/6133/wiki/homepage/questioning.avif"
                             alt="A character questioning the surgical option"
@@ -719,11 +719,6 @@ onUnmounted(() => {
                                     alt="A minor"
                                     draggable="false"
                                 />
-                                <figcaption
-                                    class="min-h-[1.25em] text-[clamp(.8rem,1.2vw,1.15rem)] text-[#ffd166] max-[52rem]:text-[clamp(.65rem,2.8vw,.9rem)] portrait:text-[clamp(.65rem,2.8vw,.9rem)]"
-                                >
-                                    Minors
-                                </figcaption>
                             </figure>
                             <figure
                                 class="m-0 grid h-full grid-rows-[minmax(0,1fr)_auto] text-center"
@@ -735,11 +730,6 @@ onUnmounted(() => {
                                     alt="A pregnant person"
                                     draggable="false"
                                 />
-                                <figcaption
-                                    class="min-h-[1.25em] text-[clamp(.8rem,1.2vw,1.15rem)] text-[#ffd166] max-[52rem]:text-[clamp(.65rem,2.8vw,.9rem)] portrait:text-[clamp(.65rem,2.8vw,.9rem)]"
-                                >
-                                    Gravida
-                                </figcaption>
                             </figure>
                             <figure
                                 class="m-0 grid h-full grid-rows-[minmax(0,1fr)_auto] text-center"
@@ -751,11 +741,6 @@ onUnmounted(() => {
                                     alt="A person for whom conservative treatment is preferred"
                                     draggable="false"
                                 />
-                                <figcaption
-                                    class="min-h-[1.25em] text-[clamp(.8rem,1.2vw,1.15rem)] text-[#ffd166] max-[52rem]:text-[clamp(.65rem,2.8vw,.9rem)] portrait:text-[clamp(.65rem,2.8vw,.9rem)]"
-                                >
-                                    Conservative groups
-                                </figcaption>
                             </figure>
                         </div>
                     </div>
