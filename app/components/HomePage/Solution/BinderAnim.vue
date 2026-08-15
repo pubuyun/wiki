@@ -130,13 +130,9 @@ function buildTimeline(target: HTMLElement) {
             })
             .to(collisionGroup.value, {
                 x: () =>
-                    Number(gsap.getProperty(collisionGroup.value!, "x")) +
-                    root.value!.clientWidth *
-                        (LAYOUT.collisionCompressionOffset.x / 100),
+                    `+=${root.value!.clientWidth * (LAYOUT.collisionCompressionOffset.x / 100)}`,
                 y: () =>
-                    Number(gsap.getProperty(collisionGroup.value!, "y")) +
-                    root.value!.clientHeight *
-                        (LAYOUT.collisionCompressionOffset.y / 100),
+                    `+=${root.value!.clientHeight * (LAYOUT.collisionCompressionOffset.y / 100)}`,
                 scaleX: 0.68,
                 scaleY: 0.9,
                 duration: 0.14,
@@ -144,13 +140,9 @@ function buildTimeline(target: HTMLElement) {
             })
             .to(collisionGroup.value, {
                 x: () =>
-                    Number(gsap.getProperty(collisionGroup.value!, "x")) +
-                    root.value!.clientWidth *
-                        (LAYOUT.reboundDestination.x / 100),
+                    `+=${root.value!.clientWidth * (LAYOUT.reboundDestination.x / 100)}`,
                 y: () =>
-                    Number(gsap.getProperty(collisionGroup.value!, "y")) +
-                    root.value!.clientHeight *
-                        (LAYOUT.reboundDestination.y / 100),
+                    `+=${root.value!.clientHeight * (LAYOUT.reboundDestination.y / 100)}`,
                 rotation: 78,
                 scaleX: 0.9,
                 scaleY: 0.9,

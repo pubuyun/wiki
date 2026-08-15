@@ -27,7 +27,7 @@ const LAYOUT = {
     precursorReaction: { x: 78, y: 29 } satisfies PercentPoint,
     attachedGroupSlot: { x: 2, y: 82 } satisfies PercentPoint,
     remainingFlight: { x: 0, y: 0 } satisfies PercentPoint,
-    collisionOffset: { x: 31, y: 6 } satisfies PercentPoint,
+    collisionOffset: { x: 6, y: -6 } satisfies PercentPoint,
     collisionCompression: { x: 2, y: 0 } satisfies PercentPoint,
     collisionRecoil: { x: 42, y: -30 } satisfies PercentPoint,
 } as const;
@@ -200,9 +200,8 @@ function buildTimeline(
     context = gsap.context(() => {
         const firstFiveSugars = sugarNodes.value.slice(0, 5);
         const lastThreeSugars = sugarNodes.value.slice(5);
-        let productTravel: PercentPoint | undefined;
         const getProductTravel = () =>
-            (productTravel ??= deltaTo(target, modifiedPrecursor.value!));
+            deltaTo(target, modifiedPrecursor.value!);
 
         gsap.set(root.value, { autoAlpha: 0 });
         gsap.set(handoffGroup.value, {
@@ -471,13 +470,9 @@ function buildTimeline(
                 productGroup.value,
                 {
                     x: () =>
-                        Number(gsap.getProperty(productGroup.value!, "x")) +
-                        root.value!.clientWidth *
-                            (LAYOUT.collisionCompression.x / 100),
+                        `+=${root.value!.clientWidth * (LAYOUT.collisionCompression.x / 100)}`,
                     y: () =>
-                        Number(gsap.getProperty(productGroup.value!, "y")) +
-                        root.value!.clientHeight *
-                            (LAYOUT.collisionCompression.y / 100),
+                        `+=${root.value!.clientHeight * (LAYOUT.collisionCompression.y / 100)}`,
                     duration: TIMING.compression,
                     ease: "power2.out",
                 },
@@ -498,13 +493,9 @@ function buildTimeline(
                 productGroup.value,
                 {
                     x: () =>
-                        Number(gsap.getProperty(productGroup.value!, "x")) +
-                        root.value!.clientWidth *
-                            (LAYOUT.collisionRecoil.x / 100),
+                        `+=${root.value!.clientWidth * (LAYOUT.collisionRecoil.x / 100)}`,
                     y: () =>
-                        Number(gsap.getProperty(productGroup.value!, "y")) +
-                        root.value!.clientHeight *
-                            (LAYOUT.collisionRecoil.y / 100),
+                        `+=${root.value!.clientHeight * (LAYOUT.collisionRecoil.y / 100)}`,
                     duration: TIMING.recoil,
                     ease: "back.out(1.7)",
                 },

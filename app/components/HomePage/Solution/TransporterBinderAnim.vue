@@ -21,6 +21,7 @@ type PlugFitVars = {
     x: number;
     y: number;
     rotation: number;
+    skewX?: number;
     scaleX?: number;
     scaleY?: number;
 };
@@ -67,11 +68,66 @@ function buildTimeline(
 
     context?.revert();
     context = gsap.context(() => {
-        const getPlugFit = () =>
-            Flip.fit(plug.value!, attachedPlug, {
-                scale: true,
-                getVars: true,
-            }) as PlugFitVars;
+        let plugFitCache: { signature: string; vars: PlugFitVars } | undefined;
+        const getPlugFit = () => {
+            const targetRect = attachedPlug.getBoundingClientRect();
+            const source = plug.value!;
+            const sourceParent = source.parentElement!;
+            const sourceParentRect = sourceParent.getBoundingClientRect();
+            const signature = [
+                root.value!.clientWidth,
+                root.value!.clientHeight,
+                source.offsetLeft,
+                source.offsetTop,
+                source.offsetWidth,
+                source.offsetHeight,
+                sourceParentRect.left,
+                sourceParentRect.top,
+                targetRect.left,
+                targetRect.top,
+                targetRect.width,
+                targetRect.height,
+            ]
+                .map((value) => value.toFixed(3))
+                .join(":");
+
+            if (plugFitCache?.signature === signature) {
+                return plugFitCache.vars;
+            }
+
+            // Measure with an untransformed probe. During ScrollTrigger refresh
+            // the real plug may be halfway through its tween, so using its
+            // current bounding box would make the next fit depend on the old
+            // viewport and progressively corrupt its starting size.
+            const probe = source.cloneNode(false) as HTMLImageElement;
+            Object.assign(probe.style, {
+                position: "absolute",
+                left: `${source.offsetLeft}px`,
+                top: `${source.offsetTop}px`,
+                width: `${source.offsetWidth}px`,
+                height: `${source.offsetHeight}px`,
+                maxHeight: "none",
+                margin: "0",
+                opacity: "0",
+                visibility: "hidden",
+                pointerEvents: "none",
+                transform: "none",
+            });
+            sourceParent.appendChild(probe);
+
+            let vars: PlugFitVars;
+            try {
+                vars = Flip.fit(probe, attachedPlug, {
+                    absolute: true,
+                    getVars: true,
+                    scale: true,
+                }) as PlugFitVars;
+            } finally {
+                probe.remove();
+            }
+            plugFitCache = { signature, vars };
+            return vars;
+        };
 
         gsap.set(root.value, { autoAlpha: 0 });
         gsap.set(handoffGroup.value, {
@@ -119,6 +175,7 @@ function buildTimeline(
                     x: () => getPlugFit().x,
                     y: () => getPlugFit().y,
                     rotation: () => getPlugFit().rotation,
+                    skewX: () => getPlugFit().skewX ?? 0,
                     scaleX: () => getPlugFit().scaleX ?? 1,
                     scaleY: () => getPlugFit().scaleY ?? 1,
                     duration: 0.9,
@@ -187,13 +244,9 @@ function buildTimeline(
             )
             .to(precursor.value, {
                 x: () =>
-                    Number(gsap.getProperty(precursor.value!, "x")) +
-                    root.value!.clientWidth *
-                        (LAYOUT.collisionCompressionOffset.x / 100),
+                    `+=${root.value!.clientWidth * (LAYOUT.collisionCompressionOffset.x / 100)}`,
                 y: () =>
-                    Number(gsap.getProperty(precursor.value!, "y")) +
-                    root.value!.clientHeight *
-                        (LAYOUT.collisionCompressionOffset.y / 100),
+                    `+=${root.value!.clientHeight * (LAYOUT.collisionCompressionOffset.y / 100)}`,
                 scaleX: 0.68,
                 scaleY: 1.08,
                 duration: 0.13,
@@ -201,13 +254,9 @@ function buildTimeline(
             })
             .to(precursor.value, {
                 x: () =>
-                    Number(gsap.getProperty(precursor.value!, "x")) +
-                    root.value!.clientWidth *
-                        (LAYOUT.reboundDestination.x / 100),
+                    `+=${root.value!.clientWidth * (LAYOUT.reboundDestination.x / 100)}`,
                 y: () =>
-                    Number(gsap.getProperty(precursor.value!, "y")) +
-                    root.value!.clientHeight *
-                        (LAYOUT.reboundDestination.y / 100),
+                    `+=${root.value!.clientHeight * (LAYOUT.reboundDestination.y / 100)}`,
                 scaleX: 1,
                 scaleY: 1,
                 rotation: 82,
@@ -250,15 +299,15 @@ defineExpose({ buildTimeline, getRoot });
                 ref="handoffGroup"
                 class="grid w-full grid-cols-[1.45fr_0.72fr] items-center gap-[3%] will-change-transform"
             >
-                <div class="grid place-items-center">
+                <div class="relative grid place-items-center">
                     <img
                         ref="plug"
-                        class="block h-auto max-h-full object-contain will-change-[transform,opacity] select-none"
+                        class="block aspect-[645/723] h-auto max-h-full object-contain will-change-[transform,opacity] select-none"
                         :style="{ width: `${props.handoff.iconWidth}%` }"
                         src="https://static.igem.wiki/teams/6133/wiki/homepage/plugoutlined.avif"
                         alt=""
-                        loading="lazy"
-                        fetchpriority="low"
+                        loading="eager"
+                        fetchpriority="high"
                         decoding="async"
                         draggable="false"
                     />

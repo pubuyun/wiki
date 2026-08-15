@@ -90,8 +90,8 @@ const SCENE_LAYOUT = {
     copyExitYOffset: -10,
     portraitWheelSize: 74,
     attachedPlug: {
-        x: 48,
-        y: 0,
+        x: 52,
+        y: 5,
         width: 31,
         rotation: 0,
     },
@@ -236,8 +236,8 @@ function setAttachedPlugRef(element: unknown) {
 
 function pointVars(point: PercentPoint) {
     return {
-        x: () => (scene.value?.clientWidth ?? 0) * (point.x / 100),
-        y: () => (scene.value?.clientHeight ?? 0) * (point.y / 100),
+        left: `${point.x}%`,
+        top: `${point.y}%`,
     };
 }
 
@@ -582,11 +582,7 @@ onMounted(() => {
             master
                 .addLabel("overview", 0)
                 .to(scene.value, {
-                    duration: props.embedded
-                        ? 0.01
-                        : reduceMotion
-                          ? 0.35
-                          : 0.9,
+                    duration: props.embedded ? 0.01 : reduceMotion ? 0.35 : 0.9,
                 })
                 .addLabel("solution1Transition")
                 .to(
@@ -979,7 +975,7 @@ onUnmounted(() => {
                         <span
                             v-if="index === 1"
                             :ref="setAttachedPlugRef"
-                            class="pointer-events-none invisible absolute z-5 block opacity-0 will-change-[transform,opacity]"
+                            class="pointer-events-none invisible absolute z-5 block aspect-[645/723] opacity-0 will-change-[transform,opacity]"
                             :style="{
                                 left: `${SCENE_LAYOUT.attachedPlug.x}%`,
                                 top: `${SCENE_LAYOUT.attachedPlug.y}%`,
@@ -991,8 +987,8 @@ onUnmounted(() => {
                                 class="block size-full object-contain select-none"
                                 src="https://static.igem.wiki/teams/6133/wiki/homepage/plugoutlined.avif"
                                 alt=""
-                                loading="lazy"
-                                fetchpriority="low"
+                                loading="eager"
+                                fetchpriority="high"
                                 decoding="async"
                                 draggable="false"
                             />

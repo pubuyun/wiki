@@ -51,10 +51,13 @@ async function refreshAfterResize() {
     resizeSnapshot = undefined;
 
     window.dispatchEvent(new Event(HOME_SCROLL_REFRESH_START));
-    window.dispatchEvent(new Event(HOME_SCROLL_REFRESH_END));
-
     await nextFrame();
     ScrollTrigger.refresh();
+
+    // Cross-scene routes depend on the refreshed bounds of their neighbouring
+    // base triggers, so rebuild those only after the refresh pass.
+    window.dispatchEvent(new Event(HOME_SCROLL_REFRESH_END));
+    await nextFrame();
     restoreHomeScroll(snapshot, scrollImmediately);
 }
 

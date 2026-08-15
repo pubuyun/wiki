@@ -3,6 +3,8 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { onMounted, onUnmounted, ref } from "vue";
 
+import { HOME_SCROLL_REFRESH_END } from "~/utils/home-scroll";
+
 import ChemicalFormulaPanel from "./Mechanism/ChemicalFormulaPanel.client.vue";
 import TransporterAnim from "./Mechanism/TransporterAnim.vue";
 
@@ -112,12 +114,32 @@ const peptAnim = ref<TransporterAnimExpose | null>(null);
 const chemicalPanel = ref<ChemicalPathwayExpose | null>(null);
 
 let context: gsap.Context | undefined;
+let storyTimeline: gsap.core.Timeline | undefined;
 
 function pointVars(point: Point) {
     return {
         x: () => (animationPlane.value?.clientWidth ?? 0) * point.x,
         y: () => (animationPlane.value?.clientHeight ?? 0) * point.y,
     };
+}
+
+function setMoleculeStartState() {
+    if (!molecule.value) return;
+
+    gsap.set(molecule.value, {
+        ...pointVars(PATH_POINTS.outsideStart),
+        xPercent: -50,
+        yPercent: -50,
+    });
+}
+
+function refreshStoryGeometry() {
+    if (!storyTimeline) return;
+
+    const progress = storyTimeline.progress();
+    storyTimeline.revert({ kill: false });
+    setMoleculeStartState();
+    storyTimeline.invalidate().progress(progress, true);
 }
 
 function isPortraitLayout() {
@@ -167,6 +189,8 @@ function productFinalePoint(): Point {
 }
 
 onMounted(() => {
+    window.addEventListener(HOME_SCROLL_REFRESH_END, refreshStoryGeometry);
+
     if (
         !scene.value ||
         !artwork.value ||
@@ -204,11 +228,7 @@ onMounted(() => {
 
         peptTimeline?.pause(0);
 
-        gsap.set(molecule.value, {
-            ...pointVars(PATH_POINTS.outsideStart),
-            xPercent: -50,
-            yPercent: -50,
-        });
+        setMoleculeStartState();
         gsap.set(precursorVisual.value, {
             rotation: PRECURSOR_ANIMATION.initialRotation,
             scale: 1,
@@ -268,6 +288,7 @@ onMounted(() => {
                 invalidateOnRefresh: true,
             },
         });
+        storyTimeline = timeline;
 
         timeline
             .addLabel("transport", 0)
@@ -517,6 +538,8 @@ onMounted(() => {
 });
 
 onUnmounted(() => {
+    window.removeEventListener(HOME_SCROLL_REFRESH_END, refreshStoryGeometry);
+    storyTimeline = undefined;
     context?.revert();
 });
 </script>

@@ -167,6 +167,7 @@ let storyTimeline: gsap.core.Timeline | undefined;
 let precursorRouteObserver: MutationObserver | undefined;
 let precursorRouteFrame = 0;
 let precursorRouteState: "before" | "moving" | "after" | undefined;
+let homeRefreshInProgress = false;
 
 function syncPrecursorTeleport() {
     precursorTeleportDisabled.value = motionPreference?.matches ?? true;
@@ -177,6 +178,41 @@ function precursorPointVars(point: PrecursorPathPoint) {
         x: () => scene.value!.clientWidth * (point.x / 100),
         y: () => scene.value!.clientHeight * (point.y / 100),
     };
+}
+
+function setPrecursorStartState() {
+    if (!precursor.value || !precursorVisual.value || !precursorLabel.value) {
+        return;
+    }
+
+    gsap.set(precursor.value, {
+        ...precursorPointVars(PRECURSOR_PATH.start),
+        autoAlpha: 0,
+        xPercent: -50,
+        yPercent: -50,
+    });
+    gsap.set(precursorLabel.value, { autoAlpha: 1, y: 0 });
+    gsap.set(precursorVisual.value, {
+        rotation: PRECURSOR_PATH.start.rotation,
+        scale: PRECURSOR_PATH.start.scale,
+        transformOrigin: "50% 50%",
+    });
+}
+
+function refreshStoryGeometry() {
+    if (!storyTimeline) {
+        if (motionPreference?.matches && precursor.value) {
+            gsap.set(precursor.value, {
+                ...precursorPointVars(PRECURSOR_PATH.final),
+            });
+        }
+        return;
+    }
+
+    const progress = storyTimeline.progress();
+    storyTimeline.revert({ kill: false });
+    setPrecursorStartState();
+    storyTimeline.invalidate().progress(progress, true);
 }
 
 function precursorCurvePath(points: readonly PrecursorPathPoint[]) {
@@ -264,8 +300,11 @@ function setupPrecursorRoute(
         ...precursorCurvePath([path.glandInside, path.bacteria]),
         pointInPinnedScene(targetAnchor, targetScene),
     ];
-    const targetScale = () =>
-        target.offsetWidth / Math.max(source.offsetWidth, 1);
+    const targetScale = () => {
+        const sourceWidth = Number.parseFloat(getComputedStyle(source).width);
+        const targetWidth = Number.parseFloat(getComputedStyle(target).width);
+        return targetWidth / Math.max(sourceWidth, 1);
+    };
 
     precursorRouteTimeline = gsap.timeline({
         defaults: { duration: 1 },
@@ -401,9 +440,20 @@ function rebuildPrecursorRoute() {
     }
 }
 
+function handleHomeRefreshStart() {
+    homeRefreshInProgress = true;
+    destroyPrecursorRoute();
+}
+
+function handleHomeRefreshEnd() {
+    refreshStoryGeometry();
+    rebuildPrecursorRoute();
+    homeRefreshInProgress = false;
+}
+
 onMounted(async () => {
-    window.addEventListener(HOME_SCROLL_REFRESH_START, destroyPrecursorRoute);
-    window.addEventListener(HOME_SCROLL_REFRESH_END, rebuildPrecursorRoute);
+    window.addEventListener(HOME_SCROLL_REFRESH_START, handleHomeRefreshStart);
+    window.addEventListener(HOME_SCROLL_REFRESH_END, handleHomeRefreshEnd);
 
     motionPreference = window.matchMedia("(prefers-reduced-motion: reduce)");
     syncPrecursorTeleport();
@@ -467,18 +517,7 @@ onMounted(async () => {
             gsap.set(secondScene.value, { autoAlpha: 0 });
             gsap.set(storyItems, { autoAlpha: 0, y: 24 });
             gsap.set(phenotypeTransporters, { autoAlpha: 0, y: 18 });
-            gsap.set(precursor.value, {
-                ...precursorPointVars(path.start),
-                autoAlpha: 0,
-                xPercent: -50,
-                yPercent: -50,
-            });
-            gsap.set(precursorLabel.value, { autoAlpha: 1, y: 0 });
-            gsap.set(precursorVisual.value, {
-                rotation: path.start.rotation,
-                scale: path.start.scale,
-                transformOrigin: "50% 50%",
-            });
+            setPrecursorStartState();
             arrowPaths.forEach((path) => {
                 const length = path.getTotalLength();
                 gsap.set(path, {
@@ -693,7 +732,9 @@ onMounted(async () => {
                 );
             }
 
-            queuePrecursorRoute(timeline, path);
+            if (!homeRefreshInProgress) {
+                queuePrecursorRoute(timeline, path);
+            }
             return () => {
                 storyTimeline = undefined;
                 destroyPrecursorRoute();
@@ -708,9 +749,9 @@ onMounted(async () => {
 onUnmounted(() => {
     window.removeEventListener(
         HOME_SCROLL_REFRESH_START,
-        destroyPrecursorRoute,
+        handleHomeRefreshStart,
     );
-    window.removeEventListener(HOME_SCROLL_REFRESH_END, rebuildPrecursorRoute);
+    window.removeEventListener(HOME_SCROLL_REFRESH_END, handleHomeRefreshEnd);
     motionPreference?.removeEventListener("change", syncPrecursorTeleport);
     destroyPrecursorRoute();
     media?.revert();
