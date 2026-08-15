@@ -86,11 +86,13 @@ const PRECURSOR_ANIMATION = {
     pointBRotation: -30,
 } as const;
 
-/* 3M3SH 穿膜后的终点参数：position 使用 animationPlane 的比例坐标。 */
+/* 3M3SH 终点与最终文案的间距，以分子自身尺寸为单位。 */
 const PRODUCT_FINALE = {
-    position: { x: 2.0, y: 0.52 },
-    phonePortraitX: 1.5,
-    scale: 1.8,
+    gap: {
+        landscape: 0.75,
+        portrait: 1.15,
+    },
+    landscapeScale: 1.5,
     copyEndY: -0.2,
 } as const;
 
@@ -115,6 +117,52 @@ function pointVars(point: Point) {
     return {
         x: () => (animationPlane.value?.clientWidth ?? 0) * point.x,
         y: () => (animationPlane.value?.clientHeight ?? 0) * point.y,
+    };
+}
+
+function isPortraitLayout() {
+    return window.matchMedia("(orientation: portrait)").matches;
+}
+
+function productFinalePoint(): Point {
+    const plane = animationPlane.value;
+    const finalCopy = copyFour.value;
+    const productMolecule = molecule.value;
+
+    if (!plane || !finalCopy || !productMolecule) {
+        return { x: 0, y: 0 };
+    }
+
+    const portrait = isPortraitLayout();
+    const planeRect = plane.getBoundingClientRect();
+    const copyRect = finalCopy.getBoundingClientRect();
+    const currentCopyY = Number(gsap.getProperty(finalCopy, "y")) || 0;
+    const finalCopyY = portrait
+        ? 0
+        : window.innerHeight * PRODUCT_FINALE.copyEndY;
+    const moleculeSize = productMolecule.offsetWidth;
+    const targetViewportX = copyRect.left + copyRect.width / 2;
+    const targetViewportY =
+        copyRect.bottom -
+        currentCopyY +
+        finalCopyY +
+        moleculeSize *
+            (portrait
+                ? PRODUCT_FINALE.gap.portrait
+                : PRODUCT_FINALE.gap.landscape);
+
+    // In portrait the animation plane is rotated 90 degrees counter-clockwise:
+    // local +x points up the viewport and local +y points right.
+    if (portrait) {
+        return {
+            x: planeRect.bottom - targetViewportY,
+            y: targetViewportX - planeRect.left,
+        };
+    }
+
+    return {
+        x: targetViewportX - planeRect.left,
+        y: targetViewportY - planeRect.top,
     };
 }
 
@@ -422,20 +470,22 @@ onMounted(() => {
             .to(
                 molecule.value,
                 {
-                    x: () =>
-                        (animationPlane.value?.clientWidth ?? 0) *
-                        (window.matchMedia(
-                            "(orientation: portrait) and (max-width: 40rem)",
-                        ).matches
-                            ? PRODUCT_FINALE.phonePortraitX
-                            : PRODUCT_FINALE.position.x),
-                    y: () =>
-                        (animationPlane.value?.clientHeight ?? 0) *
-                        PRODUCT_FINALE.position.y,
+                    x: () => productFinalePoint().x,
+                    y: () => productFinalePoint().y,
                     duration: 1,
                     ease: "power2.inOut",
                 },
                 "productFinale",
+            )
+            .to(
+                product.value,
+                {
+                    scale: () =>
+                        isPortraitLayout() ? 1 : PRODUCT_FINALE.landscapeScale,
+                    duration: 0.35,
+                    ease: "power2.out",
+                },
+                "productFinale+=1",
             )
             .to(
                 copyThree.value,
@@ -541,7 +591,7 @@ onUnmounted(() => {
                     >
                         <img
                             ref="cys3m3sh"
-                            class="mechanism-scene__molecule-layer absolute inset-0 block size-full object-contain will-change-[transform,opacity] select-none"
+                            class="mechanism-scene__molecule-layer absolute inset-0 block size-full object-contain will-change-[transform,opacity] select-none portrait:rotate-90"
                             src="https://static.igem.wiki/teams/6133/wiki/homepage/precursorcys3m3sh.avif"
                             alt=""
                             loading="lazy"
@@ -551,7 +601,7 @@ onUnmounted(() => {
                         />
                         <img
                             ref="gly"
-                            class="mechanism-scene__molecule-layer absolute inset-0 block size-full object-contain will-change-[transform,opacity] select-none"
+                            class="mechanism-scene__molecule-layer absolute inset-0 block size-full object-contain will-change-[transform,opacity] select-none portrait:rotate-90"
                             src="https://static.igem.wiki/teams/6133/wiki/homepage/precursorgly.avif"
                             alt=""
                             loading="lazy"
