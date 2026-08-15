@@ -3,6 +3,8 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { onMounted, onUnmounted, ref } from "vue";
 
+import { HOME_SCROLL_REFRESH_END } from "~/utils/home-scroll";
+
 import TransporterAnim from "./Mechanism/TransporterAnim.vue";
 import BinderAnim from "./Solution/BinderAnim.vue";
 import CGTaseAnim from "./Solution/CGTaseAnim.vue";
@@ -54,6 +56,7 @@ type TransporterBinderAnimExpose = {
         transporterTimeline?: gsap.core.Timeline,
     ) => gsap.core.Timeline | undefined;
     getRoot: () => HTMLElement | null;
+    invalidateLayout: () => void;
 };
 
 type CGTaseAnimExpose = {
@@ -220,6 +223,16 @@ const sceneCssVariables = {
 } as Record<string, string>;
 
 let matchMedia: gsap.MatchMedia | undefined;
+let storyTimeline: gsap.core.Timeline | undefined;
+
+function refreshStoryGeometry() {
+    if (!storyTimeline) return;
+
+    const progress = storyTimeline.progress();
+    storyTimeline.revert({ kill: false });
+    transporterBinderAnim.value?.invalidateLayout();
+    storyTimeline.invalidate().progress(progress, true);
+}
 
 function setTransporterRef(index: number, instance: unknown) {
     transporterRefs.value[index] = instance as TransporterAnimExpose | null;
@@ -362,6 +375,8 @@ function addChildTimeline(
 }
 
 onMounted(() => {
+    window.addEventListener(HOME_SCROLL_REFRESH_END, refreshStoryGeometry);
+
     if (
         !scene.value ||
         !wheelAnchor.value ||
@@ -578,6 +593,7 @@ onMounted(() => {
                           invalidateOnRefresh: true,
                       },
                   });
+            storyTimeline = master;
 
             master
                 .addLabel("overview", 0)
@@ -905,6 +921,7 @@ onMounted(() => {
             }
 
             return () => {
+                if (storyTimeline === master) storyTimeline = undefined;
                 master.scrollTrigger?.kill(true);
                 master.kill();
             };
@@ -916,6 +933,8 @@ onMounted(() => {
 });
 
 onUnmounted(() => {
+    window.removeEventListener(HOME_SCROLL_REFRESH_END, refreshStoryGeometry);
+    storyTimeline = undefined;
     matchMedia?.revert();
     ScrollTrigger.getById("solution-story")?.kill(true);
 });
@@ -980,7 +999,6 @@ onUnmounted(() => {
                                 left: `${SCENE_LAYOUT.attachedPlug.x}%`,
                                 top: `${SCENE_LAYOUT.attachedPlug.y}%`,
                                 width: `${SCENE_LAYOUT.attachedPlug.width}%`,
-                                transform: `translate(-50%, -50%) rotate(${SCENE_LAYOUT.attachedPlug.rotation}deg)`,
                             }"
                         >
                             <img

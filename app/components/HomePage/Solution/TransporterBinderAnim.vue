@@ -41,6 +41,49 @@ const precursor = ref<HTMLElement | null>(null);
 
 let context: gsap.Context | undefined;
 let timeline: gsap.core.Timeline | undefined;
+let plugFitCache: { signature: string; vars: PlugFitVars } | undefined;
+
+function createLayoutProbe(
+    element: HTMLElement,
+    transform: {
+        xPercent: number;
+        yPercent: number;
+        rotation: number;
+    },
+) {
+    const parent = element.parentElement;
+    if (!parent) return undefined;
+
+    const probe = element.cloneNode(false) as HTMLElement;
+    Object.assign(probe.style, {
+        position: "absolute",
+        left: `${element.offsetLeft}px`,
+        top: `${element.offsetTop}px`,
+        width: `${element.offsetWidth}px`,
+        height: `${element.offsetHeight}px`,
+        maxWidth: "none",
+        maxHeight: "none",
+        margin: "0",
+        opacity: "0",
+        visibility: "hidden",
+        pointerEvents: "none",
+        transform: "none",
+    });
+    parent.appendChild(probe);
+    gsap.set(probe, {
+        x: 0,
+        y: 0,
+        xPercent: transform.xPercent,
+        yPercent: transform.yPercent,
+        rotation: transform.rotation,
+        skewX: 0,
+        scaleX: 1,
+        scaleY: 1,
+        transformOrigin: "50% 50%",
+    });
+
+    return probe;
+}
 
 function deltaTo(target: HTMLElement, actor: HTMLElement) {
     const targetRect = target.getBoundingClientRect();
@@ -68,65 +111,62 @@ function buildTimeline(
 
     context?.revert();
     context = gsap.context(() => {
-        let plugFitCache: { signature: string; vars: PlugFitVars } | undefined;
+        plugFitCache = undefined;
         const getPlugFit = () => {
-            const targetRect = attachedPlug.getBoundingClientRect();
             const source = plug.value!;
-            const sourceParent = source.parentElement!;
-            const sourceParentRect = sourceParent.getBoundingClientRect();
-            const signature = [
-                root.value!.clientWidth,
-                root.value!.clientHeight,
-                source.offsetLeft,
-                source.offsetTop,
-                source.offsetWidth,
-                source.offsetHeight,
-                sourceParentRect.left,
-                sourceParentRect.top,
-                targetRect.left,
-                targetRect.top,
-                targetRect.width,
-                targetRect.height,
-            ]
-                .map((value) => value.toFixed(3))
-                .join(":");
-
-            if (plugFitCache?.signature === signature) {
-                return plugFitCache.vars;
-            }
-
-            // Measure with an untransformed probe. During ScrollTrigger refresh
-            // the real plug may be halfway through its tween, so using its
-            // current bounding box would make the next fit depend on the old
-            // viewport and progressively corrupt its starting size.
-            const probe = source.cloneNode(false) as HTMLImageElement;
-            Object.assign(probe.style, {
-                position: "absolute",
-                left: `${source.offsetLeft}px`,
-                top: `${source.offsetTop}px`,
-                width: `${source.offsetWidth}px`,
-                height: `${source.offsetHeight}px`,
-                maxHeight: "none",
-                margin: "0",
-                opacity: "0",
-                visibility: "hidden",
-                pointerEvents: "none",
-                transform: "none",
+            // Both actors can be mid-tween when ScrollTrigger refreshes. Measure
+            // base-layout probes so neither the old source transform nor the
+            // target's shake transform contaminates the new fit.
+            const sourceProbe = createLayoutProbe(source, {
+                xPercent: 0,
+                yPercent: 0,
+                rotation: 0,
             });
-            sourceParent.appendChild(probe);
+            const targetProbe = createLayoutProbe(attachedPlug, {
+                xPercent: -50,
+                yPercent: -50,
+                rotation: 0,
+            });
+
+            if (!sourceProbe || !targetProbe) {
+                sourceProbe?.remove();
+                targetProbe?.remove();
+                return { x: 0, y: 0, rotation: 0, scaleX: 1, scaleY: 1 };
+            }
 
             let vars: PlugFitVars;
             try {
-                vars = Flip.fit(probe, attachedPlug, {
-                    absolute: true,
+                const sourceRect = sourceProbe.getBoundingClientRect();
+                const targetRect = targetProbe.getBoundingClientRect();
+                const signature = [
+                    root.value!.clientWidth,
+                    root.value!.clientHeight,
+                    sourceRect.left,
+                    sourceRect.top,
+                    sourceRect.width,
+                    sourceRect.height,
+                    targetRect.left,
+                    targetRect.top,
+                    targetRect.width,
+                    targetRect.height,
+                ]
+                    .map((value) => value.toFixed(3))
+                    .join(":");
+
+                if (plugFitCache?.signature === signature) {
+                    return plugFitCache.vars;
+                }
+
+                vars = Flip.fit(sourceProbe, targetProbe, {
                     getVars: true,
                     scale: true,
                 }) as PlugFitVars;
+                plugFitCache = { signature, vars };
+                return vars;
             } finally {
-                probe.remove();
+                sourceProbe.remove();
+                targetProbe.remove();
             }
-            plugFitCache = { signature, vars };
-            return vars;
         };
 
         gsap.set(root.value, { autoAlpha: 0 });
@@ -154,8 +194,14 @@ function buildTimeline(
         });
         gsap.set(attachedPlug, {
             autoAlpha: 0,
-            scale: 1,
-            yPercent: 0,
+            x: 0,
+            y: 0,
+            xPercent: -50,
+            yPercent: -50,
+            rotation: 0,
+            skewX: 0,
+            scaleX: 1,
+            scaleY: 1,
             transformOrigin: "50% 65%",
         });
         transporterTimeline?.pause(0);
@@ -273,11 +319,16 @@ function getRoot() {
     return root.value;
 }
 
+function invalidateLayout() {
+    plugFitCache = undefined;
+    timeline?.invalidate();
+}
+
 onUnmounted(() => {
     context?.revert();
 });
 
-defineExpose({ buildTimeline, getRoot });
+defineExpose({ buildTimeline, getRoot, invalidateLayout });
 </script>
 
 <template>

@@ -185,7 +185,7 @@ onMounted(async () => {
             const instruments = [refs.knife, refs.syringe];
 
             gsap.set(details, { autoAlpha: 0, scale: 0.9, y: 10 });
-            gsap.set(refs.wipe, { x: () => refs.panel.clientWidth });
+            gsap.set(refs.wipe, { xPercent: 0 });
             gsap.set([refs.secondScene, refs.finalScene], { autoAlpha: 0 });
             gsap.set(secondItems, { autoAlpha: 0, y: 24 });
             gsap.set(finalItems, { autoAlpha: 0, y: 28 });
@@ -208,7 +208,7 @@ onMounted(async () => {
                 gsap.set(guideTargets, { autoAlpha: 1, scale: 1 });
                 gsap.set(instruments, { autoAlpha: 0 });
                 gsap.set(refs.wipe, {
-                    x: () => -(refs.wipe.offsetWidth - refs.panel.clientWidth),
+                    xPercent: -100,
                 });
                 gsap.set(refs.finalScene, { autoAlpha: 1 });
                 gsap.set(finalItems, { autoAlpha: 1, y: 0 });
@@ -339,10 +339,9 @@ onMounted(async () => {
                 .addLabel("erase")
                 .fromTo(
                     refs.wipe,
-                    { x: () => refs.panel.clientWidth },
+                    { xPercent: 0 },
                     {
-                        x: () =>
-                            -(refs.wipe.offsetWidth - refs.panel.clientWidth),
+                        xPercent: -100,
                         duration: 1.22,
                         ease: "power1.out",
                         immediateRender: false,
@@ -661,7 +660,7 @@ onUnmounted(() => {
 
                     <div
                         ref="wipe"
-                        class="surgery__wipe pointer-events-none absolute left-0 z-30 bg-[#0a4297] will-change-transform"
+                        class="surgery__wipe pointer-events-none absolute left-full z-30 bg-[#0a4297] will-change-transform"
                         aria-hidden="true"
                     />
 
