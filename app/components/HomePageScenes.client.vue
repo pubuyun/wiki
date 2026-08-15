@@ -3,6 +3,11 @@ import SceneSequence from "./HomePage/SceneSequence.vue";
 
 const lazyScenes = [
     {
+        id: "smell",
+        loader: () => import("./HomePage/Smell.vue"),
+        minHeight: "100svh",
+    },
+    {
         id: "world-stat",
         loader: () => import("./HomePage/WorldStat.vue"),
         minHeight: "100svh",

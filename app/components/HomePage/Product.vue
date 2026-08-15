@@ -756,7 +756,7 @@ onBeforeUnmount(() => {
 .product-feature__title {
     flex: 1;
     padding-inline: clamp(1rem, 2.4vw, 2.75rem);
-    font-size: clamp(1.25rem, 2.7vw, 3.25rem);
+    font-size: clamp(1.25rem, 2vw, 3rem);
     line-height: 0.98;
     font-weight: 800;
     letter-spacing: -0.03em;
