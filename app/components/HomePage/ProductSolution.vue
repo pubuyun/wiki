@@ -5,6 +5,7 @@ import { onBeforeUnmount, ref } from "vue";
 
 import Product from "./Product.vue";
 import ProductIntro from "./ProductIntro.vue";
+import ProductWaveTransition from "./ProductWaveTransition.vue";
 import Solution from "./Solution.vue";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -41,6 +42,65 @@ const PAINT_REVEAL = {
     duration: 0.68,
 } as const;
 
+const PRODUCT_ENTRANCE = {
+    introHoldDuration: 0.38,
+    maskStartX: -220,
+    maskEndX: 1990,
+    maskEndWidth: 2210,
+    maskEdgeWidth: 150,
+    modelRevealDuration: 0.72,
+    landscapeStartScale: 0.16,
+    portraitStartScale: 0.1,
+} as const;
+
+const WAVE_REVEAL_LAYERS = [
+    {
+        id: "background",
+        delay: 0,
+        duration: 1.16,
+        ease: "power3.inOut",
+    },
+    { id: "warm", delay: 0.02, duration: 0.96, ease: "power4.inOut" },
+    { id: "blue", delay: 0.07, duration: 1.08, ease: "power3.inOut" },
+    { id: "lower", delay: 0.14, duration: 1.14, ease: "power3.inOut" },
+    { id: "right", delay: 0.22, duration: 1.2, ease: "power3.inOut" },
+] as const;
+
+const WAVE_EXIT = {
+    // 1 is the old rate. Larger values move the artwork upward faster.
+    upwardMoveSpeed: 1.1,
+    // The layer is one viewport tall, so -100% is equivalent to -100vh.
+    upwardExitYPercent: -90,
+} as const;
+
+const WAVE_EXIT_LAYERS = [
+    {
+        id: "background",
+        durationRatio: 1,
+        ease: "power2.inOut",
+    },
+    {
+        id: "warm",
+        durationRatio: 0.78,
+        ease: "power2.out",
+    },
+    {
+        id: "blue",
+        durationRatio: 0.94,
+        ease: "power2.inOut",
+    },
+    {
+        id: "lower",
+        durationRatio: 0.86,
+        ease: "power2.out",
+    },
+    {
+        id: "right",
+        durationRatio: 1,
+        ease: "power2.inOut",
+    },
+] as const;
+
 type ProductTimelinePayload = {
     timeline: gsap.core.Timeline;
     scene: HTMLElement;
@@ -61,6 +121,8 @@ type SolutionTimelinePayload = {
 };
 
 const sequence = ref<HTMLElement | null>(null);
+const productIntroLayer = ref<HTMLElement | null>(null);
+const waveTransition = ref<HTMLElement | null>(null);
 
 let productPayload: ProductTimelinePayload | undefined;
 let solutionPayload: SolutionTimelinePayload | undefined;
@@ -88,10 +150,35 @@ function detachTimeline(timeline: gsap.core.Timeline) {
 }
 
 function buildSequence() {
-    if (!sequence.value || !productPayload || !solutionPayload) return;
+    if (
+        !sequence.value ||
+        !productIntroLayer.value ||
+        !waveTransition.value ||
+        !productPayload ||
+        !solutionPayload
+    ) {
+        return;
+    }
 
     const product = productPayload;
     const solution = solutionPayload;
+    const waveMasks = WAVE_REVEAL_LAYERS.map((layer) => {
+        const exitLayer = WAVE_EXIT_LAYERS.find(({ id }) => id === layer.id)!;
+
+        return {
+            ...layer,
+            ...exitLayer,
+            solid: waveTransition.value!.querySelector<SVGRectElement>(
+                `[data-product-wave-mask-solid="${layer.id}"]`,
+            ),
+            edge: waveTransition.value!.querySelector<SVGRectElement>(
+                `[data-product-wave-mask-edge="${layer.id}"]`,
+            ),
+            exitEdge: waveTransition.value!.querySelector<SVGRectElement>(
+                `[data-product-wave-mask-exit-edge="${layer.id}"]`,
+            ),
+        };
+    });
     const productBackground = product.scene.querySelector<HTMLElement>(
         ".product-scene__background",
     );
@@ -110,6 +197,9 @@ function buildSequence() {
     );
 
     if (
+        waveMasks.some(({ solid, edge, exitEdge }) =>
+            [solid, edge, exitEdge].some((element) => !element),
+        ) ||
         !productBackground ||
         solutionMarkers.length !== 3 ||
         solutionLabels.length !== 3 ||
@@ -130,6 +220,14 @@ function buildSequence() {
     const isPortrait = window.matchMedia("(orientation: portrait)").matches;
     const orbitDuration = reduceMotion ? 0.25 : 3.8;
     const orbitState = { angle: PAINT_PATH.startAngle };
+    const modelStartScale = isPortrait
+        ? PRODUCT_ENTRANCE.portraitStartScale
+        : PRODUCT_ENTRANCE.landscapeStartScale;
+    const productSpinEnd =
+        product.timeline.labels.openLid ?? product.timeline.duration();
+    const upwardExitDuration = reduceMotion
+        ? 0.08
+        : productSpinEnd / WAVE_EXIT.upwardMoveSpeed;
 
     const orbitRadius = () =>
         Math.min(
@@ -171,8 +269,36 @@ function buildSequence() {
         end: `radial-gradient(circle at ${origin.x}% ${origin.y}%, #000 0%, #000 ${PAINT_REVEAL.radiusPercent - PAINT_REVEAL.edgeSoftnessPercent}%, transparent ${PAINT_REVEAL.radiusPercent}%)`,
     }));
 
-    gsap.set(product.scene, { autoAlpha: 1 });
+    gsap.set(product.scene, { autoAlpha: 1, zIndex: 2 });
     gsap.set(productBackground, { autoAlpha: 1 });
+    gsap.set(productIntroLayer.value, { autoAlpha: 1 });
+    gsap.set(waveTransition.value, {
+        autoAlpha: 1,
+        xPercent: 0,
+        yPercent: 0,
+        zIndex: 4,
+        force3D: true,
+    });
+    waveMasks.forEach(({ solid, edge, exitEdge }) => {
+        gsap.set(solid!, {
+            attr: { x: PRODUCT_ENTRANCE.maskStartX, width: 0 },
+        });
+        gsap.set(edge!, {
+            attr: { x: PRODUCT_ENTRANCE.maskStartX },
+        });
+        gsap.set(exitEdge!, {
+            attr: {
+                x: PRODUCT_ENTRANCE.maskStartX - PRODUCT_ENTRANCE.maskEdgeWidth,
+            },
+        });
+    });
+    gsap.set(product.productRig, {
+        autoAlpha: 0,
+        x: 0,
+        y: 0,
+        scale: reduceMotion ? 1 : modelStartScale,
+        transformOrigin: "50% 50%",
+    });
     gsap.set(solution.scene, { autoAlpha: 0 });
     gsap.set(solutionMarkers, { autoAlpha: 1 });
     solutionPaintTargets.forEach((targets, index) => {
@@ -198,7 +324,7 @@ function buildSequence() {
             trigger: sequence.value,
             start: "top top",
             end: () =>
-                `+=${window.innerHeight * (reduceMotion ? 9 : isPortrait ? 18 : 20)}`,
+                `+=${window.innerHeight * (reduceMotion ? 10 : isPortrait ? 20 : 22)}`,
             scrub: reduceMotion ? true : 0.7,
             pin: true,
             pinSpacing: true,
@@ -208,17 +334,112 @@ function buildSequence() {
     });
 
     master
-        .add(product.timeline, 0)
+        .to(product.scene, {
+            duration: reduceMotion ? 0.08 : PRODUCT_ENTRANCE.introHoldDuration,
+        })
+        .addLabel("waveRush");
+
+    waveMasks.forEach(({ solid, edge, delay, duration, ease }) => {
+        const revealAt = reduceMotion ? "waveRush" : `waveRush+=${delay}`;
+        const revealDuration = reduceMotion ? 0.08 : duration;
+        const revealEase = reduceMotion ? "none" : ease;
+
+        master!
+            .to(
+                solid!,
+                {
+                    attr: { width: PRODUCT_ENTRANCE.maskEndWidth },
+                    duration: revealDuration,
+                    ease: revealEase,
+                },
+                revealAt,
+            )
+            .to(
+                edge!,
+                {
+                    attr: { x: PRODUCT_ENTRANCE.maskEndX },
+                    duration: revealDuration,
+                    ease: revealEase,
+                },
+                revealAt,
+            );
+    });
+
+    const waveRevealDuration = reduceMotion
+        ? 0.08
+        : Math.max(
+              ...WAVE_REVEAL_LAYERS.map(
+                  ({ delay, duration }) => delay + duration,
+              ),
+          );
+
+    master
+        .addLabel("waveRevealComplete", `waveRush+=${waveRevealDuration}`)
+        .set(productIntroLayer.value, { autoAlpha: 0 }, "waveRevealComplete")
+        .set(product.scene, { zIndex: 5 }, "waveRevealComplete")
+        .set(productBackground, { autoAlpha: 0 }, "waveRevealComplete")
+        .addLabel("productReveal", "waveRevealComplete")
+        .to(
+            product.productRig,
+            {
+                duration: reduceMotion
+                    ? 0.08
+                    : PRODUCT_ENTRANCE.modelRevealDuration,
+                autoAlpha: 1,
+                scale: 1,
+                ease: reduceMotion ? "none" : "back.out(1.35)",
+            },
+            `productReveal+=${reduceMotion ? 0 : 0.08}`,
+        )
+        .addLabel("productStory", ">-0.04")
+        .add(product.timeline, "productStory");
+
+    master.to(
+        waveTransition.value,
+        {
+            yPercent: WAVE_EXIT.upwardExitYPercent,
+            duration: upwardExitDuration,
+            ease: "none",
+        },
+        "productStory",
+    );
+
+    waveMasks.forEach(({ solid, exitEdge, durationRatio, ease }) => {
+        const exitDuration = reduceMotion
+            ? 0.08
+            : upwardExitDuration * durationRatio;
+
+        master!
+            .to(
+                solid!,
+                {
+                    attr: {
+                        x: PRODUCT_ENTRANCE.maskEndX,
+                        width: 0,
+                    },
+                    duration: exitDuration,
+                    ease,
+                },
+                "productStory",
+            )
+            .to(
+                exitEdge!,
+                {
+                    attr: {
+                        x:
+                            PRODUCT_ENTRANCE.maskEndX -
+                            PRODUCT_ENTRANCE.maskEdgeWidth,
+                    },
+                    duration: exitDuration,
+                    ease,
+                },
+                "productStory",
+            );
+    });
+
+    master
         .addLabel("solutionHandoff")
         .set(solution.scene, { autoAlpha: 1 }, "solutionHandoff")
-        .to(
-            productBackground,
-            {
-                autoAlpha: 0,
-                duration: reduceMotion ? 0.05 : 0.45,
-            },
-            "solutionHandoff",
-        )
         .to(
             product.featureLayer,
             {
@@ -354,8 +575,15 @@ onBeforeUnmount(() => {
     >
         <Solution embedded @timeline-ready="handleSolutionReady" />
         <Product embedded @timeline-ready="handleProductReady" />
-        <!-- Kept as a separate layer so the master ScrollTrigger can own the handoff. -->
-        <ProductIntro class="product-intro-layer" />
+        <div ref="productIntroLayer" class="product-intro-layer">
+            <ProductIntro />
+        </div>
+        <div
+            ref="waveTransition"
+            class="product-wave-layer pointer-events-none absolute inset-0"
+        >
+            <ProductWaveTransition />
+        </div>
     </section>
 </template>
 
@@ -387,5 +615,17 @@ onBeforeUnmount(() => {
     z-index: 3;
     width: 100%;
     min-height: 100%;
+}
+
+.product-intro-layer :deep(.product-intro) {
+    width: 100%;
+    min-height: 100%;
+}
+
+.product-wave-layer {
+    z-index: 4;
+    width: 100%;
+    height: 100%;
+    will-change: transform;
 }
 </style>

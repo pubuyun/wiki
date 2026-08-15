@@ -1,16 +1,27 @@
 <script setup lang="ts">
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { onMounted, onUnmounted, ref } from "vue";
+
+gsap.registerPlugin(ScrollTrigger);
+
+const scene = ref<HTMLElement | null>(null);
+const answer = ref<HTMLElement | null>(null);
+
+let media: gsap.MatchMedia | undefined;
+
 const THINKING_IMAGE =
     "https://static.igem.wiki/teams/6133/wiki/homepage/thinking.avif";
 
 const THINKING_IMAGE_LAYOUT = {
     landscape: {
-        left: "clamp(2.5rem, 14vw, 16rem)",
-        bottom: "clamp(2.5rem, 8svh, 7rem)",
+        left: "8vw",
+        bottom: "8svh",
         width: "clamp(11rem, 20vw, 23rem)",
     },
     portrait: {
-        left: "clamp(1rem, 8vw, 4rem)",
-        bottom: "clamp(2rem, 7svh, 5rem)",
+        left: "8vw",
+        bottom: "7svh",
         width: "clamp(8.5rem, 38vw, 15rem)",
     },
 } as const;
@@ -23,10 +34,62 @@ const thinkingImageStyle = {
     "--thinking-image-bottom-portrait": THINKING_IMAGE_LAYOUT.portrait.bottom,
     "--thinking-image-width-portrait": THINKING_IMAGE_LAYOUT.portrait.width,
 };
+
+onMounted(() => {
+    if (!scene.value || !answer.value) return;
+
+    media = gsap.matchMedia();
+    media.add(
+        {
+            reduceMotion: "(prefers-reduced-motion: reduce)",
+            allowMotion: "(prefers-reduced-motion: no-preference)",
+        },
+        (context) => {
+            if (!scene.value || !answer.value) return;
+
+            const { reduceMotion } = context.conditions as {
+                reduceMotion: boolean;
+            };
+
+            if (reduceMotion) {
+                gsap.set(answer.value, {
+                    autoAlpha: 1,
+                    clearProps: "transform",
+                });
+                return;
+            }
+
+            gsap.fromTo(
+                answer.value,
+                { autoAlpha: 0, y: 48, scale: 0.9 },
+                {
+                    autoAlpha: 1,
+                    y: 0,
+                    scale: 1,
+                    ease: "power3.out",
+                    scrollTrigger: {
+                        id: "product-intro-answer-entrance",
+                        trigger: scene.value,
+                        start: "top top",
+                        end: "+=35%",
+                        scrub: 0.45,
+                        invalidateOnRefresh: true,
+                    },
+                },
+            );
+        },
+    );
+});
+
+onUnmounted(() => {
+    media?.revert();
+    media = undefined;
+});
 </script>
 
 <template>
     <section
+        ref="scene"
         class="product-intro relative h-svh min-h-screen overflow-hidden bg-[#07366f] text-white"
         :style="thinkingImageStyle"
         aria-labelledby="product-intro-question"
@@ -36,13 +99,13 @@ const thinkingImageStyle = {
             inclusive way to prevent underarm odor?
         </p>
 
-        <p class="product-intro__answer">
+        <p ref="answer" class="product-intro__answer">
             <span aria-hidden="true">—</span>
             Absolutely
         </p>
 
         <img
-            class="product-intro__character"
+            class="product-intro__character -rotate-15"
             :src="THINKING_IMAGE"
             alt="A character thinking about the question"
             loading="eager"
@@ -64,7 +127,7 @@ const thinkingImageStyle = {
     width: min(82vw, 90rem);
     margin: 0;
     transform: translateX(-50%);
-    font-size: clamp(1.75rem, 3.35vw, 4rem);
+    font-size: clamp(1.5rem, 3.1vw, 3.75rem);
     line-height: 1.22;
     letter-spacing: 0.005em;
     text-align: center;
@@ -77,7 +140,7 @@ const thinkingImageStyle = {
     left: 50%;
     margin: 0;
     transform: translateX(-50%);
-    font-size: clamp(2rem, 3.5vw, 4.25rem);
+    font-size: clamp(1.75rem, 3.25vw, 4rem);
     line-height: 1;
     white-space: nowrap;
 }
@@ -96,13 +159,13 @@ const thinkingImageStyle = {
     .product-intro__question {
         top: clamp(6rem, 16svh, 11rem);
         width: min(88vw, 42rem);
-        font-size: clamp(1.65rem, 6.2vw, 3.25rem);
+        font-size: clamp(1.4rem, 5.95vw, 3rem);
         line-height: 1.2;
     }
 
     .product-intro__answer {
         top: clamp(22rem, 52svh, 35rem);
-        font-size: clamp(1.8rem, 7vw, 3.5rem);
+        font-size: clamp(1.55rem, 6.75vw, 3.25rem);
     }
 
     .product-intro__character {
