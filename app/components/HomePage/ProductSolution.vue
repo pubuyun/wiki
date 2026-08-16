@@ -43,7 +43,6 @@ const PAINT_REVEAL = {
 } as const;
 
 const PRODUCT_ENTRANCE = {
-    introHoldDuration: 0.38,
     maskStartX: -220,
     maskEndX: 1990,
     maskEndWidth: 2210,
@@ -120,17 +119,25 @@ type SolutionTimelinePayload = {
     scene: HTMLElement;
 };
 
+type ProductIntroTimelinePayload = SolutionTimelinePayload;
+
 const sequence = ref<HTMLElement | null>(null);
 const productIntroLayer = ref<HTMLElement | null>(null);
 const waveTransition = ref<HTMLElement | null>(null);
 
 let productPayload: ProductTimelinePayload | undefined;
+let productIntroPayload: ProductIntroTimelinePayload | undefined;
 let solutionPayload: SolutionTimelinePayload | undefined;
 let master: gsap.core.Timeline | undefined;
 let buildFrame = 0;
 
 function handleProductReady(payload: ProductTimelinePayload) {
     productPayload = payload;
+    scheduleBuild();
+}
+
+function handleProductIntroReady(payload: ProductIntroTimelinePayload) {
+    productIntroPayload = payload;
     scheduleBuild();
 }
 
@@ -149,18 +156,35 @@ function detachTimeline(timeline: gsap.core.Timeline) {
     timeline.parent?.remove(timeline);
 }
 
+function promoteChapterLabels(
+    parent: gsap.core.Timeline,
+    child: gsap.core.Timeline,
+    startLabel: string,
+) {
+    const startTime = parent.labels[startLabel];
+    if (typeof startTime !== "number") return;
+
+    Object.entries(child.labels).forEach(([label, time]) => {
+        if (label.startsWith("pause:") || label.startsWith("active:")) {
+            parent.addLabel(label, startTime + time);
+        }
+    });
+}
+
 function buildSequence() {
     if (
         !sequence.value ||
         !productIntroLayer.value ||
         !waveTransition.value ||
         !productPayload ||
+        !productIntroPayload ||
         !solutionPayload
     ) {
         return;
     }
 
     const product = productPayload;
+    const productIntro = productIntroPayload;
     const solution = solutionPayload;
     const waveMasks = WAVE_REVEAL_LAYERS.map((layer) => {
         const exitLayer = WAVE_EXIT_LAYERS.find(({ id }) => id === layer.id)!;
@@ -211,6 +235,7 @@ function buildSequence() {
 
     ScrollTrigger.getById("product-solution-story")?.kill(true);
     master?.kill();
+    detachTimeline(productIntro.timeline);
     detachTimeline(product.timeline);
     detachTimeline(solution.timeline);
 
@@ -314,6 +339,7 @@ function buildSequence() {
     });
     gsap.set(solutionLabels, { yPercent: 0 });
 
+    productIntro.timeline.paused(false);
     product.timeline.paused(false);
     solution.timeline.paused(false);
 
@@ -334,10 +360,11 @@ function buildSequence() {
     });
 
     master
-        .to(product.scene, {
-            duration: reduceMotion ? 0.08 : PRODUCT_ENTRANCE.introHoldDuration,
-        })
+        .addLabel("productIntroStory", 0)
+        .add(productIntro.timeline, "productIntroStory")
         .addLabel("waveRush");
+
+    promoteChapterLabels(master, productIntro.timeline, "productIntroStory");
 
     waveMasks.forEach(({ solid, edge, delay, duration, ease }) => {
         const revealAt = reduceMotion ? "waveRush" : `waveRush+=${delay}`;
@@ -393,6 +420,8 @@ function buildSequence() {
         )
         .addLabel("productStory", ">-0.04")
         .add(product.timeline, "productStory");
+
+    promoteChapterLabels(master, product.timeline, "productStory");
 
     master.to(
         waveTransition.value,
@@ -555,6 +584,8 @@ function buildSequence() {
         .addLabel("solutionStory")
         .add(solution.timeline, "solutionStory");
 
+    promoteChapterLabels(master, solution.timeline, "solutionStory");
+
     ScrollTrigger.refresh();
     requestAnimationFrame(() => ScrollTrigger.refresh());
 }
@@ -576,7 +607,7 @@ onBeforeUnmount(() => {
         <Solution embedded @timeline-ready="handleSolutionReady" />
         <Product embedded @timeline-ready="handleProductReady" />
         <div ref="productIntroLayer" class="product-intro-layer">
-            <ProductIntro />
+            <ProductIntro @timeline-ready="handleProductIntroReady" />
         </div>
         <div
             ref="waveTransition"

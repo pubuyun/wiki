@@ -22,6 +22,10 @@ const props = defineProps<{
     scenes: readonly SceneDefinition[];
 }>();
 
+const emit = defineEmits<{
+    sceneLoaded: [sceneIndex: number];
+}>();
+
 const navigation = import.meta.client
     ? (window.performance.getEntriesByType("navigation")[0] as
           PerformanceNavigationTiming | undefined)
@@ -40,6 +44,9 @@ const restoreThroughIndex =
 
 const nextSceneIndex = ref(0);
 const immediateThroughIndex = ref(restoreThroughIndex);
+const forcedThroughIndex = ref(-1);
+const sceneLoadWaiters = new Map<number, Array<(loaded: boolean) => void>>();
+const failedSceneIndexes = new Set<number>();
 let isRestoring = false;
 
 function findHashSceneIndex() {
@@ -58,6 +65,7 @@ function scrollToHashScene(sceneIndex: number) {
 }
 
 function handleSceneLoaded(sceneIndex: number) {
+    failedSceneIndexes.delete(sceneIndex);
     if (sceneIndex === nextSceneIndex.value) {
         nextSceneIndex.value += 1;
     }
@@ -66,6 +74,36 @@ function handleSceneLoaded(sceneIndex: number) {
     if (sceneIndex === restoreThroughIndex && savedScroll) {
         void restoreSavedScroll(savedScroll);
     }
+
+    sceneLoadWaiters
+        .get(sceneIndex)
+        ?.splice(0)
+        .forEach((resolve) => resolve(true));
+    sceneLoadWaiters.delete(sceneIndex);
+    emit("sceneLoaded", sceneIndex);
+}
+
+function handleSceneError(sceneIndex: number) {
+    failedSceneIndexes.add(sceneIndex);
+    sceneLoadWaiters
+        .get(sceneIndex)
+        ?.splice(0)
+        .forEach((resolve) => resolve(false));
+    sceneLoadWaiters.delete(sceneIndex);
+}
+
+function ensureNextSceneLoaded() {
+    const sceneIndex = nextSceneIndex.value;
+    if (sceneIndex >= props.scenes.length) return Promise.resolve(false);
+    if (failedSceneIndexes.has(sceneIndex)) return Promise.resolve(false);
+
+    forcedThroughIndex.value = Math.max(forcedThroughIndex.value, sceneIndex);
+
+    return new Promise<boolean>((resolve) => {
+        const waiters = sceneLoadWaiters.get(sceneIndex) ?? [];
+        waiters.push(resolve);
+        sceneLoadWaiters.set(sceneIndex, waiters);
+    });
 }
 
 const nextFrame = () =>
@@ -122,7 +160,14 @@ onBeforeUnmount(() => {
     window.removeEventListener("hashchange", handleHashChange);
     window.removeEventListener("pagehide", saveHomeScroll);
     window.removeEventListener("beforeunload", saveHomeScroll);
+    sceneLoadWaiters.forEach((waiters) =>
+        waiters.forEach((resolve) => resolve(false)),
+    );
+    sceneLoadWaiters.clear();
+    failedSceneIndexes.clear();
 });
+
+defineExpose({ ensureNextSceneLoaded });
 </script>
 
 <template>
@@ -134,11 +179,13 @@ onBeforeUnmount(() => {
         :load-immediately="
             sceneIndex === nextSceneIndex &&
             (scene.loadImmediately ||
+                sceneIndex <= forcedThroughIndex ||
                 (immediateThroughIndex >= 0 &&
                     sceneIndex <= immediateThroughIndex))
         "
         :root-margin="scene.rootMargin"
         :min-height="scene.minHeight"
         @loaded="handleSceneLoaded(sceneIndex)"
+        @error="handleSceneError(sceneIndex)"
     />
 </template>

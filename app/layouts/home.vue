@@ -3,7 +3,7 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Lenis from "lenis";
 import "lenis/dist/lenis.css";
-import { nextTick, onBeforeUnmount, onMounted } from "vue";
+import { nextTick, onBeforeUnmount, onMounted, provide } from "vue";
 
 import {
     captureHomeScroll,
@@ -12,6 +12,7 @@ import {
     restoreHomeScroll,
     type HomeScrollSnapshot,
 } from "~/utils/home-scroll";
+import { HOME_SCROLL_CONTROLLER } from "~/utils/home-scroll-controller";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -33,6 +34,42 @@ function scrollImmediately(position: number) {
 
     window.scrollTo(0, position);
 }
+
+function scrollToChapter(
+    position: number,
+    options: { duration?: number; onComplete?: () => void } = {},
+) {
+    if (lenis) {
+        lenis.scrollTo(position, {
+            duration: options.duration,
+            onComplete: () => options.onComplete?.(),
+        });
+        return;
+    }
+
+    window.scrollTo({
+        top: position,
+        behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
+            ? "auto"
+            : "smooth",
+    });
+    window.requestAnimationFrame(() => options.onComplete?.());
+}
+
+function cancelChapterScroll() {
+    if (lenis) {
+        lenis.stop();
+        lenis.start();
+        return;
+    }
+
+    window.scrollTo({ top: window.scrollY, behavior: "auto" });
+}
+
+provide(HOME_SCROLL_CONTROLLER, {
+    scrollTo: scrollToChapter,
+    cancel: cancelChapterScroll,
+});
 
 function scheduleResizeRefresh() {
     resizeSnapshot ??= captureHomeScroll();

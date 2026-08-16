@@ -3,6 +3,11 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { onBeforeUnmount, onMounted, ref } from "vue";
 
+import {
+    HOME_CHAPTERS,
+    homeChapterActivationLabel,
+} from "~/utils/home-chapters";
+
 gsap.registerPlugin(ScrollTrigger);
 
 const props = withDefaults(defineProps<{ embedded?: boolean }>(), {
@@ -369,6 +374,7 @@ onMounted(() => {
                   });
 
             timeline
+                .addLabel(homeChapterActivationLabel(HOME_CHAPTERS.product), 0)
                 .to(scene.value, { duration: 0.45 })
                 .addLabel("spin")
                 .to(
@@ -442,7 +448,8 @@ onMounted(() => {
                     },
                     "features+=0.42",
                 )
-                .to(scene.value, { duration: reduceMotion ? 0.2 : 0.9 });
+                .to(scene.value, { duration: reduceMotion ? 0.2 : 0.9 })
+                .addLabel(HOME_CHAPTERS.product);
 
             if (props.embedded) {
                 emit("timelineReady", {

@@ -3,6 +3,10 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { onMounted, onUnmounted, ref } from "vue";
 
+import {
+    HOME_CHAPTERS,
+    homeChapterActivationLabel,
+} from "~/utils/home-chapters";
 import { HOME_SCROLL_REFRESH_END } from "~/utils/home-scroll";
 
 import TransporterAnim from "./Mechanism/TransporterAnim.vue";
@@ -597,9 +601,14 @@ onMounted(() => {
 
             master
                 .addLabel("overview", 0)
+                .addLabel(
+                    homeChapterActivationLabel(HOME_CHAPTERS.solutionOverview),
+                    0,
+                )
                 .to(scene.value, {
                     duration: props.embedded ? 0.01 : reduceMotion ? 0.35 : 0.9,
                 })
+                .addLabel(HOME_CHAPTERS.solutionOverview)
                 .addLabel("solution1Transition")
                 .to(
                     markerElements.slice(1),
@@ -703,11 +712,17 @@ onMounted(() => {
                     "solution1Handoff",
                 );
 
-            if (reduceMotion) {
-                master.to(scene.value, { duration: 0.8 });
-            }
+            master
+                .addLabel(
+                    homeChapterActivationLabel(HOME_CHAPTERS.precursorBinder),
+                    "solution1Handoff",
+                )
+                .addLabel("solution1", "solution1Handoff+=0.35")
+                .addLabel(HOME_CHAPTERS.precursorBinder, "solution1");
 
-            master.addLabel("solution1");
+            if (reduceMotion) {
+                master.to(scene.value, { duration: 0.8 }, "solution1");
+            }
 
             master
                 .addLabel("solution2Transition")
@@ -807,11 +822,17 @@ onMounted(() => {
                     "solution2Handoff",
                 );
 
-            if (reduceMotion) {
-                master.to(scene.value, { duration: 0.8 });
-            }
+            master
+                .addLabel(
+                    homeChapterActivationLabel(HOME_CHAPTERS.transporterBinder),
+                    "solution2Handoff",
+                )
+                .addLabel("solution2", "solution2Handoff+=0.35")
+                .addLabel(HOME_CHAPTERS.transporterBinder, "solution2");
 
-            master.addLabel("solution2");
+            if (reduceMotion) {
+                master.to(scene.value, { duration: 0.8 }, "solution2");
+            }
 
             master
                 .addLabel("solution3Transition")
@@ -909,7 +930,12 @@ onMounted(() => {
                     },
                     "solution3Handoff",
                 )
-                .addLabel("solution3");
+                .addLabel(
+                    homeChapterActivationLabel(HOME_CHAPTERS.cgtase),
+                    "solution3Handoff",
+                )
+                .addLabel("solution3", "solution3Handoff+=0.35")
+                .addLabel(HOME_CHAPTERS.cgtase, "solution3");
 
             master.to(scene.value, { duration: reduceMotion ? 0.8 : 0.7 });
 

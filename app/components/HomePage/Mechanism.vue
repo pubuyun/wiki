@@ -4,6 +4,10 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { onMounted, onUnmounted, ref } from "vue";
 
 import { HOME_SCROLL_REFRESH_END } from "~/utils/home-scroll";
+import {
+    HOME_CHAPTERS,
+    homeChapterActivationLabel,
+} from "~/utils/home-chapters";
 
 import ChemicalFormulaPanel from "./Mechanism/ChemicalFormulaPanel.client.vue";
 import TransporterAnim from "./Mechanism/TransporterAnim.vue";
@@ -292,6 +296,8 @@ onMounted(() => {
 
         timeline
             .addLabel("transport", 0)
+            .addLabel(homeChapterActivationLabel(HOME_CHAPTERS.peptsh), 0)
+            .addLabel(HOME_CHAPTERS.peptsh, 0)
             .to(
                 molecule.value,
                 { ...pointVars(PATH_POINTS.transporter), duration: 1 },
@@ -363,6 +369,7 @@ onMounted(() => {
                 "throughTransporter+=0.55",
             )
             .addLabel("pepV")
+            .addLabel(homeChapterActivationLabel(HOME_CHAPTERS.pepv), "pepV")
             .to(
                 chemicalTargets?.pepVArrows ?? [],
                 {
@@ -394,6 +401,8 @@ onMounted(() => {
                 { autoAlpha: 1, y: 0, duration: 0.25 },
                 "pepV+=0.15",
             )
+            .addLabel("pepVReadable", "pepV+=0.6")
+            .addLabel(HOME_CHAPTERS.pepv, "pepVReadable")
             .to(
                 gly.value,
                 {
@@ -421,6 +430,7 @@ onMounted(() => {
                 "pepV+=0.7",
             )
             .addLabel("patB")
+            .addLabel(homeChapterActivationLabel(HOME_CHAPTERS.patb), "patB")
             .to(
                 chemicalTargets?.patBArrows ?? [],
                 {
@@ -452,6 +462,8 @@ onMounted(() => {
                 { autoAlpha: 1, y: 0, duration: 0.25 },
                 "patB+=0.15",
             )
+            .addLabel("patBReadable", "patB+=0.6")
+            .addLabel(HOME_CHAPTERS.patb, "patBReadable")
             .to(
                 cys3m3sh.value,
                 { scale: 0.04, duration: 0.45, ease: "power2.in" },
@@ -488,6 +500,10 @@ onMounted(() => {
                 "<",
             )
             .addLabel("productFinale")
+            .addLabel(
+                homeChapterActivationLabel(HOME_CHAPTERS.odorMolecule),
+                "productFinale",
+            )
             .to(
                 molecule.value,
                 {
@@ -531,7 +547,8 @@ onMounted(() => {
                     ease: "power2.inOut",
                 },
                 "productFinale",
-            );
+            )
+            .addLabel(HOME_CHAPTERS.odorMolecule);
     }, scene.value);
 
     ScrollTrigger.refresh();

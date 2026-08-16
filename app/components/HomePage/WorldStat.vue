@@ -4,6 +4,11 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { onMounted, onUnmounted, ref } from "vue";
 
+import {
+    HOME_CHAPTERS,
+    homeChapterActivationLabel,
+} from "~/utils/home-chapters";
+
 gsap.registerPlugin(ScrollTrigger);
 
 const scene = ref<HTMLElement | null>(null);
@@ -83,18 +88,11 @@ onMounted(() => {
                 });
             };
 
-            if (reduceMotion) {
-                renderFinalValues();
-                gsap.set([...cards, footer], { clearProps: "all" });
-                return;
-            }
-
-            gsap.set(footer, { autoAlpha: 0, y: 20 });
-
             const timeline = gsap.timeline({
                 defaults: { ease: "power3.out" },
                 onComplete: renderFinalValues,
                 scrollTrigger: {
+                    id: "world-stat-story",
                     trigger: scene.value,
                     start: "top top",
                     end: "+=260%",
@@ -106,6 +104,21 @@ onMounted(() => {
                     },
                 },
             });
+
+            timeline.addLabel(
+                homeChapterActivationLabel(HOME_CHAPTERS.worldStat),
+                0,
+            );
+
+            if (reduceMotion) {
+                renderFinalValues();
+                gsap.set([...cards, footer], { clearProps: "all" });
+                timeline.addLabel(HOME_CHAPTERS.worldStat, 0);
+                timeline.to(scene.value, { duration: 0.01 });
+                return;
+            }
+
+            gsap.set(footer, { autoAlpha: 0, y: 20 });
 
             regions.forEach((region, index) => {
                 const card = cards[index];
@@ -153,7 +166,9 @@ onMounted(() => {
                     );
             });
 
-            timeline.to(footer, { autoAlpha: 1, y: 0, duration: 0.6 }, 1.25);
+            timeline
+                .to(footer, { autoAlpha: 1, y: 0, duration: 0.6 }, 1.25)
+                .addLabel(HOME_CHAPTERS.worldStat);
         },
         scene.value,
     );

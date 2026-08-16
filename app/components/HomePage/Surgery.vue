@@ -3,6 +3,11 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { nextTick, onMounted, onUnmounted, ref } from "vue";
 
+import {
+    HOME_CHAPTERS,
+    homeChapterActivationLabel,
+} from "~/utils/home-chapters";
+
 gsap.registerPlugin(ScrollTrigger);
 
 type DetailKind = "irritation" | "ecosystem";
@@ -294,6 +299,12 @@ onMounted(async () => {
 
             story
                 .addLabel("overview", 0)
+                .addLabel(
+                    homeChapterActivationLabel(
+                        HOME_CHAPTERS.productSideEffects,
+                    ),
+                    0,
+                )
                 .to(
                     guideLabels,
                     {
@@ -336,6 +347,7 @@ onMounted(async () => {
                     },
                     "guideComplete",
                 )
+                .addLabel(HOME_CHAPTERS.productSideEffects)
                 .addLabel("erase")
                 .fromTo(
                     refs.wipe,
@@ -402,6 +414,10 @@ onMounted(async () => {
                     "erase+=1.1",
                 )
                 .addLabel("clinical")
+                .addLabel(
+                    homeChapterActivationLabel(HOME_CHAPTERS.surgery),
+                    "clinical",
+                )
                 .fromTo(
                     refs.secondScene,
                     { autoAlpha: 0, x: 0 },
@@ -427,7 +443,12 @@ onMounted(async () => {
                     "clinical+=0.05",
                 )
                 .to(hold, { value: 2, duration: 0.86 }, ">+0.06")
+                .addLabel(HOME_CHAPTERS.surgery)
                 .addLabel("restrictions")
+                .addLabel(
+                    homeChapterActivationLabel(HOME_CHAPTERS.surgeryRisks),
+                    "restrictions+=0.2",
+                )
                 .fromTo(
                     refs.secondScene,
                     { autoAlpha: 1, x: 0 },
@@ -475,7 +496,8 @@ onMounted(async () => {
                     },
                     "restrictions+=0.24",
                 )
-                .to(hold, { value: 3, duration: 1 }, ">+0.05");
+                .to(hold, { value: 3, duration: 1 }, ">+0.05")
+                .addLabel(HOME_CHAPTERS.surgeryRisks);
 
             detailExitProgress =
                 story.labels.erase / Math.max(story.duration(), 0.001);

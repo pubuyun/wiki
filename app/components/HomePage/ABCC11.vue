@@ -10,6 +10,10 @@ import {
     HOME_SCROLL_REFRESH_END,
     HOME_SCROLL_REFRESH_START,
 } from "~/utils/home-scroll";
+import {
+    HOME_CHAPTERS,
+    homeChapterActivationLabel,
+} from "~/utils/home-chapters";
 
 gsap.registerPlugin(MotionPathPlugin, ScrollTrigger);
 
@@ -581,6 +585,11 @@ onMounted(async () => {
 
             timeline
                 .addLabel("firstScene", 0)
+                .addLabel(
+                    homeChapterActivationLabel(HOME_CHAPTERS.abcc11Gene),
+                    0,
+                )
+                .addLabel(HOME_CHAPTERS.abcc11Gene, 0)
                 .to(
                     [odorCopy.value, variantCopy.value],
                     {
@@ -626,6 +635,10 @@ onMounted(async () => {
                     "moveGenotypes+=0.38",
                 )
                 .addLabel("story", ">-0.06")
+                .addLabel(
+                    homeChapterActivationLabel(HOME_CHAPTERS.abcc11Pathway),
+                    "story",
+                )
                 .to(secondScene.value, { autoAlpha: 1, duration: 0.2 }, "story")
                 .to(
                     precursor.value,
@@ -655,6 +668,7 @@ onMounted(async () => {
                 )
                 .to(arrowHeads, { autoAlpha: 1, duration: 0.16 }, "story+=0.68")
                 .addLabel("transport", ">+0.12")
+                .addLabel(HOME_CHAPTERS.abcc11Pathway, "transport")
                 .to(
                     precursorLabel.value,
                     { autoAlpha: 0, y: -8, duration: 0.22 },

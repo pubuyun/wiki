@@ -1,14 +1,27 @@
 <script setup lang="ts">
 import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { onMounted, onUnmounted, ref } from "vue";
-
-gsap.registerPlugin(ScrollTrigger);
+import {
+    HOME_CHAPTERS,
+    homeChapterActivationLabel,
+} from "~/utils/home-chapters";
 
 const scene = ref<HTMLElement | null>(null);
 const answer = ref<HTMLElement | null>(null);
 
 let media: gsap.MatchMedia | undefined;
+
+const emit = defineEmits<{
+    timelineReady: [
+        payload: {
+            timeline: gsap.core.Timeline;
+            scene: HTMLElement;
+        },
+    ];
+}>();
+
+const ANSWER_REVEAL_DURATION = 0.55;
+const ANSWER_HOLD_DURATION = 0.38;
 
 const THINKING_IMAGE =
     "https://static.igem.wiki/teams/6133/wiki/homepage/thinking.avif";
@@ -51,33 +64,41 @@ onMounted(() => {
                 reduceMotion: boolean;
             };
 
-            if (reduceMotion) {
-                gsap.set(answer.value, {
-                    autoAlpha: 1,
-                    clearProps: "transform",
-                });
-                return;
-            }
+            const timeline = gsap.timeline({
+                paused: true,
+                defaults: { ease: "none" },
+            });
 
-            gsap.fromTo(
-                answer.value,
-                { autoAlpha: 0, y: 48, scale: 0.9 },
-                {
-                    autoAlpha: 1,
-                    y: 0,
-                    scale: 1,
-                    ease: "power3.out",
-                    scrollTrigger: {
-                        id: "product-intro-answer-entrance",
-                        trigger: scene.value,
-                        start: "top top",
-                        end: "+=35%",
-                        scrub: 0.45,
-                        invalidateOnRefresh: true,
+            timeline
+                .addLabel(
+                    homeChapterActivationLabel(HOME_CHAPTERS.productIntro),
+                    0,
+                )
+                .fromTo(
+                    answer.value,
+                    { autoAlpha: 0, y: 48, scale: 0.9 },
+                    {
+                        autoAlpha: 1,
+                        y: 0,
+                        scale: 1,
+                        duration: reduceMotion ? 0.01 : ANSWER_REVEAL_DURATION,
+                        ease: reduceMotion ? "none" : "power3.out",
                     },
-                },
-            );
+                )
+                // Pause once the answer is readable, before the wave arrives.
+                .addLabel(HOME_CHAPTERS.productIntro)
+                .to(scene.value, {
+                    duration: reduceMotion ? 0.08 : ANSWER_HOLD_DURATION,
+                });
+
+            emit("timelineReady", {
+                timeline,
+                scene: scene.value,
+            });
+
+            return () => timeline.kill();
         },
+        scene.value,
     );
 });
 

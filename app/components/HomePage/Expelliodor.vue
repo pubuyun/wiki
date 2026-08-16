@@ -2,8 +2,6 @@
 import { gsap } from "gsap";
 import { onMounted, onUnmounted, ref, useId, watch } from "vue";
 
-import Explosion from "./Explosion.vue";
-
 const showExplosionStudy = true;
 
 const scene = ref<HTMLElement | null>(null);

@@ -3,6 +3,11 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { nextTick, onMounted, onUnmounted, ref } from "vue";
 
+import {
+    HOME_CHAPTERS,
+    homeChapterActivationLabel,
+} from "~/utils/home-chapters";
+
 gsap.registerPlugin(ScrollTrigger);
 
 const CURRENT_SOLUTION_ENTRANCE = {
@@ -481,21 +486,28 @@ onMounted(async () => {
                 },
             });
 
-            timeline.addLabel("introTransition", 0).fromTo(
-                leaveLeft,
-                {
-                    autoAlpha: 0,
-                    x: -CURRENT_SOLUTION_ENTRANCE.copyOffsetX,
-                },
-                {
-                    autoAlpha: 1,
-                    x: 0,
-                    duration: CURRENT_SOLUTION_ENTRANCE.introTransitionDuration,
-                    ease: "power3.out",
-                    immediateRender: false,
-                },
-                "introTransition",
-            );
+            timeline
+                .addLabel(
+                    homeChapterActivationLabel(HOME_CHAPTERS.currentLimits),
+                    0,
+                )
+                .addLabel("introTransition", 0)
+                .fromTo(
+                    leaveLeft,
+                    {
+                        autoAlpha: 0,
+                        x: -CURRENT_SOLUTION_ENTRANCE.copyOffsetX,
+                    },
+                    {
+                        autoAlpha: 1,
+                        x: 0,
+                        duration:
+                            CURRENT_SOLUTION_ENTRANCE.introTransitionDuration,
+                        ease: "power3.out",
+                        immediateRender: false,
+                    },
+                    "introTransition",
+                );
 
             rightActors.forEach(
                 ({ element, xVariable, yVariable, rotationVariable }) => {
@@ -557,6 +569,7 @@ onMounted(async () => {
                     progress: 1,
                     duration: CURRENT_SOLUTION_ENTRANCE.firstSceneHoldDuration,
                 })
+                .addLabel(HOME_CHAPTERS.currentLimits)
                 .addLabel("firstSceneExit")
                 .fromTo(
                     leaveLeft,
@@ -654,6 +667,10 @@ onMounted(async () => {
                     "moveProducts+=0.06",
                 )
                 .addLabel("secondScene", "moveProducts+=0.48")
+                .addLabel(
+                    homeChapterActivationLabel(HOME_CHAPTERS.currentMechanism),
+                    "secondScene",
+                )
                 .fromTo(
                     refs.secondScene,
                     { autoAlpha: 0 },
@@ -676,7 +693,8 @@ onMounted(async () => {
                     },
                     "secondScene+=0.08",
                 )
-                .to(hold, { progress: 1, duration: 0.78 }, ">+0.08");
+                .to(hold, { progress: 1, duration: 0.78 }, ">+0.08")
+                .addLabel(HOME_CHAPTERS.currentMechanism);
 
             secondSceneActivationProgress =
                 timeline.labels.secondScene /

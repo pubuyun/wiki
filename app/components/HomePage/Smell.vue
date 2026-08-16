@@ -4,6 +4,11 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import type { CSSProperties } from "vue";
 import { nextTick, onBeforeUnmount, onMounted, ref } from "vue";
 
+import {
+    HOME_CHAPTERS,
+    homeChapterActivationLabel,
+} from "~/utils/home-chapters";
+
 gsap.registerPlugin(ScrollTrigger);
 
 const scene = ref<HTMLElement | null>(null);
@@ -307,6 +312,7 @@ onMounted(() => {
             });
 
             story
+                .addLabel(homeChapterActivationLabel(HOME_CHAPTERS.smell), 0)
                 .to(guidePath.value, {
                     attr: { "stroke-dashoffset": 0 },
                     duration: 0.38,
@@ -400,6 +406,8 @@ onMounted(() => {
                     },
                     "content+=0.68",
                 );
+
+            story.addLabel(HOME_CHAPTERS.smell);
 
             return () => {
                 ambientAnimations.forEach((animation) => animation.kill());
