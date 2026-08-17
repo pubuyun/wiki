@@ -10,6 +10,20 @@ import {
 
 gsap.registerPlugin(ScrollTrigger);
 
+const props = withDefaults(defineProps<{ embedded?: boolean }>(), {
+    embedded: false,
+});
+
+const emit = defineEmits<{
+    timelineReady: [
+        payload: {
+            timeline: gsap.core.Timeline;
+            scene: HTMLElement;
+            showCurrentLimitsActiveFrame: () => void;
+        },
+    ];
+}>();
+
 const CURRENT_SOLUTION_ENTRANCE = {
     copyOffsetX: 72,
     questionOffsetY: 30,
@@ -27,6 +41,8 @@ const CURRENT_SOLUTION_ENTRANCE = {
 const scene = ref<HTMLElement | null>(null);
 const stage = ref<HTMLElement | null>(null);
 const firstScene = ref<HTMLElement | null>(null);
+const currentSolutionTitle = ref<HTMLElement | null>(null);
+const thinking = ref<HTMLImageElement | null>(null);
 const secondScene = ref<HTMLElement | null>(null);
 const secondCopy = ref<HTMLElement | null>(null);
 const knife = ref<HTMLImageElement | null>(null);
@@ -233,6 +249,8 @@ onMounted(async () => {
         !scene.value ||
         !stage.value ||
         !firstScene.value ||
+        !currentSolutionTitle.value ||
+        !thinking.value ||
         !secondScene.value ||
         !secondCopy.value ||
         !knife.value ||
@@ -252,6 +270,8 @@ onMounted(async () => {
     const refs = {
         scene: scene.value,
         firstScene: firstScene.value,
+        currentSolutionTitle: currentSolutionTitle.value,
+        thinking: thinking.value,
         secondScene: secondScene.value,
         secondCopy: secondCopy.value,
         knife: knife.value,
@@ -289,6 +309,10 @@ onMounted(async () => {
             const leaveDown = gsap.utils.toArray<HTMLElement>(
                 ".current-solution__leave-down",
                 refs.firstScene,
+            );
+            const activeLeaveUp = [refs.currentSolutionTitle, refs.thinking];
+            const supportingLeaveUp = leaveUp.filter(
+                (element) => !activeLeaveUp.includes(element),
             );
             const rightActors = [
                 {
@@ -332,9 +356,53 @@ onMounted(async () => {
                 scale: () => cssNumber("--deodorant-second-scale"),
             };
 
+            const showCurrentLimitsActiveFrame = () => {
+                ingredientInteractionEnabled = false;
+                gsap.set(refs.scene, { autoAlpha: 1 });
+                gsap.set(refs.firstScene, { autoAlpha: 1 });
+                gsap.set(refs.secondScene, { autoAlpha: 0 });
+                gsap.set(activeLeaveUp, {
+                    autoAlpha: 1,
+                    x: 0,
+                    y: 0,
+                });
+                gsap.set(supportingLeaveUp, {
+                    autoAlpha: 0,
+                    x: 0,
+                    y: -18,
+                });
+                gsap.set(leaveLeft, {
+                    autoAlpha: 0,
+                    x: -CURRENT_SOLUTION_ENTRANCE.copyOffsetX,
+                });
+                gsap.set(leaveDown, {
+                    autoAlpha: 0,
+                    y: CURRENT_SOLUTION_ENTRANCE.questionOffsetY,
+                });
+                gsap.set(refs.corner, { autoAlpha: 1, xPercent: 0 });
+                rightActors.forEach(
+                    ({ element, xVariable, yVariable, rotationVariable }) => {
+                        gsap.set(element, {
+                            ...entrancePointOffset(xVariable, yVariable, 0),
+                            autoAlpha: 0,
+                            rotation: () => cssNumber(rotationVariable) - 24,
+                            scale: 1,
+                        });
+                    },
+                );
+                gsap.set(storyItems, { autoAlpha: 0, y: 24 });
+                gsap.set([refs.antiperspirant, refs.deodorant], {
+                    pointerEvents: "none",
+                });
+                hideIngredientPanels(true);
+            };
+
             gsap.set(refs.secondScene, { autoAlpha: 0 });
             gsap.set(storyItems, { autoAlpha: 0, y: 24 });
             gsap.set(leaveUp, { autoAlpha: 1, y: 0 });
+            if (props.embedded) {
+                gsap.set(supportingLeaveUp, { autoAlpha: 0, y: -18 });
+            }
             gsap.set(leaveLeft, {
                 autoAlpha: 0,
                 x: -CURRENT_SOLUTION_ENTRANCE.copyOffsetX,
@@ -370,7 +438,7 @@ onMounted(async () => {
                 },
             );
 
-            if (reduceMotion) {
+            if (reduceMotion && !props.embedded) {
                 gsap.set([...leaveUp, ...leaveLeft, ...leaveDown], {
                     autoAlpha: 1,
                     x: 0,
@@ -446,45 +514,54 @@ onMounted(async () => {
             let isSecondSceneActive = false;
             let secondSceneActivationProgress = 1;
 
-            const timeline = gsap.timeline({
-                defaults: { ease: "none" },
-                scrollTrigger: {
-                    id: "current-solution-story",
-                    trigger: refs.scene,
-                    start: "top top",
-                    end: () => `+=${window.innerHeight * 3.2}`,
-                    scrub: 0.65,
-                    pin: true,
-                    anticipatePin: 1,
-                    invalidateOnRefresh: true,
-                    onUpdate: (self) => {
-                        const shouldActivate =
-                            self.progress >= secondSceneActivationProgress;
-                        if (shouldActivate === isSecondSceneActive) return;
+            const setSecondSceneActive = (shouldActivate: boolean) => {
+                if (shouldActivate === isSecondSceneActive) return;
 
-                        isSecondSceneActive = shouldActivate;
-                        ingredientInteractionEnabled = shouldActivate;
-                        gsap.set([refs.antiperspirant, refs.deodorant], {
-                            pointerEvents: shouldActivate ? "auto" : "none",
-                        });
-                        [...floatTweens, ...hintTweens].forEach((tween) => {
-                            if (shouldActivate) tween.play();
-                            else tween.pause(0);
-                        });
-                        if (!shouldActivate) {
-                            Object.values(productHoverTweens).forEach((tween) =>
-                                tween?.kill(),
-                            );
-                            productHoverTweens = {};
-                            gsap.set(
-                                [refs.antiperspirantPulse, refs.deodorantPulse],
-                                { scale: 1 },
-                            );
-                            hideIngredientPanels(true);
-                        }
-                    },
-                },
-            });
+                isSecondSceneActive = shouldActivate;
+                ingredientInteractionEnabled = shouldActivate;
+                gsap.set([refs.antiperspirant, refs.deodorant], {
+                    pointerEvents: shouldActivate ? "auto" : "none",
+                });
+                [...floatTweens, ...hintTweens].forEach((tween) => {
+                    if (shouldActivate) tween.play();
+                    else tween.pause(0);
+                });
+                if (!shouldActivate) {
+                    Object.values(productHoverTweens).forEach((tween) =>
+                        tween?.kill(),
+                    );
+                    productHoverTweens = {};
+                    gsap.set([refs.antiperspirantPulse, refs.deodorantPulse], {
+                        scale: 1,
+                    });
+                    hideIngredientPanels(true);
+                }
+            };
+
+            const timeline = props.embedded
+                ? gsap.timeline({
+                      defaults: { ease: "none" },
+                      paused: true,
+                  })
+                : gsap.timeline({
+                      defaults: { ease: "none" },
+                      scrollTrigger: {
+                          id: "current-solution-story",
+                          trigger: refs.scene,
+                          start: "top top",
+                          end: () => `+=${window.innerHeight * 3.2}`,
+                          scrub: 0.65,
+                          pin: true,
+                          anticipatePin: 1,
+                          invalidateOnRefresh: true,
+                          onUpdate: (self) => {
+                              setSecondSceneActive(
+                                  self.progress >=
+                                      secondSceneActivationProgress,
+                              );
+                          },
+                      },
+                  });
 
             timeline
                 .addLabel(
@@ -508,6 +585,21 @@ onMounted(async () => {
                     },
                     "introTransition",
                 );
+
+            if (props.embedded) {
+                timeline.fromTo(
+                    supportingLeaveUp,
+                    { autoAlpha: 0, y: -18 },
+                    {
+                        autoAlpha: 1,
+                        y: 0,
+                        duration: 0.45,
+                        ease: "power2.out",
+                        immediateRender: false,
+                    },
+                    "introTransition+=0.08",
+                );
+            }
 
             rightActors.forEach(
                 ({ element, xVariable, yVariable, rotationVariable }) => {
@@ -700,9 +792,21 @@ onMounted(async () => {
                 timeline.labels.secondScene /
                 Math.max(timeline.duration(), 0.001);
 
+            if (props.embedded) {
+                timeline.eventCallback("onUpdate", () => {
+                    setSecondSceneActive(
+                        timeline.progress() >= secondSceneActivationProgress,
+                    );
+                });
+                emit("timelineReady", {
+                    timeline,
+                    scene: refs.scene,
+                    showCurrentLimitsActiveFrame,
+                });
+            }
+
             return () => {
-                ingredientInteractionEnabled = false;
-                hideIngredientPanels(true);
+                setSecondSceneActive(false);
                 Object.values(productHoverTweens).forEach((tween) =>
                     tween?.kill(),
                 );
@@ -711,6 +815,8 @@ onMounted(async () => {
                 [...floatTweens, ...hintTweens].forEach((tween) =>
                     tween.kill(),
                 );
+                timeline.scrollTrigger?.kill(true);
+                timeline.kill();
             };
         },
         scene.value,
@@ -735,7 +841,7 @@ onUnmounted(() => {
     <section
         id="current-solution"
         ref="scene"
-        class="relative h-svh min-h-152 w-full overflow-hidden bg-[#073873] font-righteous text-white"
+        class="current-solution-scene relative h-svh min-h-152 w-full overflow-hidden bg-[#073873] font-righteous text-white"
         aria-labelledby="current-solution-title"
     >
         <div
@@ -760,6 +866,7 @@ onUnmounted(() => {
                     class="absolute [top:calc(var(--thinking-y)*1%)] [left:calc(var(--thinking-x)*1%)] z-3 w-[var(--thinking-size)] -translate-x-1/2 -translate-y-1/2"
                 >
                     <img
+                        ref="thinking"
                         class="current-solution__leave-up block h-auto w-full will-change-[transform,opacity] select-none motion-reduce:will-change-auto"
                         src="https://static.igem.wiki/teams/6133/wiki/homepage/thinking.avif"
                         alt="A character thinking"
@@ -768,6 +875,7 @@ onUnmounted(() => {
                 </div>
                 <h2
                     id="current-solution-title"
+                    ref="currentSolutionTitle"
                     class="current-solution__leave-up absolute top-[16.5%] left-[30.5%] z-4 m-0 w-[55%] text-[clamp(1.65rem,2.65vw,2.85rem)] leading-[1.08] font-normal tracking-[0.005em] [text-wrap:balance] will-change-[transform,opacity] motion-reduce:will-change-auto max-[52rem]:top-[9%] max-[52rem]:left-[31%] max-[52rem]:w-[65%] max-[52rem]:text-[clamp(1.35rem,5.4vw,2.25rem)] max-[52rem]:leading-[1.12] portrait:top-[9%] portrait:left-[31%] portrait:w-[65%] portrait:text-[clamp(1.35rem,5.4vw,2.25rem)] portrait:leading-[1.12]"
                 >
                     So… is there a real solution to this problem?

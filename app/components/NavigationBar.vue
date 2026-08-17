@@ -3,6 +3,10 @@ import { NavigationMenuList, NavigationMenuRoot } from "reka-ui";
 import NavItem from "./NavigationBar/NavItem.vue";
 import DarkModeToggle from "./AccessibilityMenu/DarkModeToggle.vue";
 import { siteNavGroups } from "~/utils/site-navigation";
+import {
+    HOME_SCROLL_LOCK_CHANGE,
+    type HomeScrollLockChange,
+} from "~/utils/home-scroll";
 
 const navHidden = ref(false);
 const lastScrollY = ref(0);
@@ -10,10 +14,16 @@ const scrollDirectionThreshold = 6;
 const hideAfterScrollY = 80;
 const ignoreHashScrollDuration = 2400;
 let ignoreVisibilityUntil = 0;
+let visibilityLocked = false;
 
 function updateNavVisibility() {
     const scrollY = Math.max(window.scrollY, 0);
     const scrollDelta = scrollY - lastScrollY.value;
+
+    if (visibilityLocked) {
+        lastScrollY.value = scrollY;
+        return;
+    }
 
     if (scrollY <= hideAfterScrollY) {
         navHidden.value = false;
@@ -58,6 +68,17 @@ function ignoreHashScrollVisibilityChange() {
     lastScrollY.value = Math.max(window.scrollY, 0);
 }
 
+function handleScrollLockChange(event: Event) {
+    const { locked, direction } = (event as CustomEvent<HomeScrollLockChange>)
+        .detail;
+
+    visibilityLocked = locked;
+    lastScrollY.value = Math.max(window.scrollY, 0);
+    if (locked && direction) {
+        navHidden.value = direction === "down";
+    }
+}
+
 onMounted(() => {
     lastScrollY.value = Math.max(window.scrollY, 0);
     updateScrollState();
@@ -66,6 +87,7 @@ onMounted(() => {
         "wiki:hash-scroll",
         ignoreHashScrollVisibilityChange,
     );
+    window.addEventListener(HOME_SCROLL_LOCK_CHANGE, handleScrollLockChange);
 });
 
 onUnmounted(() => {
@@ -74,6 +96,7 @@ onUnmounted(() => {
         "wiki:hash-scroll",
         ignoreHashScrollVisibilityChange,
     );
+    window.removeEventListener(HOME_SCROLL_LOCK_CHANGE, handleScrollLockChange);
 });
 </script>
 

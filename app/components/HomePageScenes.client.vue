@@ -63,15 +63,10 @@ const lazyScenes = [
     },
     {
         id: "mechanism",
-        loader: () => import("./HomePage/Mechanism.vue"),
+        loader: () => import("./HomePage/MechanismCurrentSolution.vue"),
         // The cross-scene precursor path needs Mechanism's anchor and
         // ScrollTrigger before ABCC11 reaches glandInside for the first time.
         loadImmediately: true,
-    },
-    {
-        id: "current-solution",
-        loader: () => import("./HomePage/CurrentSolution.vue"),
-        minHeight: "100svh",
     },
     {
         id: "surgery",

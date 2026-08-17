@@ -2,6 +2,12 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 export const HOME_SCROLL_REFRESH_START = "home-scroll-refresh-start";
 export const HOME_SCROLL_REFRESH_END = "home-scroll-refresh-end";
+export const HOME_SCROLL_LOCK_CHANGE = "home-scroll-lock-change";
+
+export type HomeScrollLockChange = {
+    locked: boolean;
+    direction?: "up" | "down";
+};
 
 const HOME_SCROLL_STORAGE_KEY = "greatbay-scie:home-scroll:v1";
 

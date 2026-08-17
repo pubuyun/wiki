@@ -14,6 +14,21 @@ import TransporterAnim from "./Mechanism/TransporterAnim.vue";
 
 gsap.registerPlugin(ScrollTrigger);
 
+const props = withDefaults(defineProps<{ embedded?: boolean }>(), {
+    embedded: false,
+});
+
+const emit = defineEmits<{
+    timelineReady: [
+        payload: {
+            timeline: gsap.core.Timeline;
+            scene: HTMLElement;
+            molecule: HTMLElement;
+            product: HTMLImageElement;
+        },
+    ];
+}>();
+
 type Point = {
     x: number;
     y: number;
@@ -277,21 +292,26 @@ onMounted(() => {
             });
         }
 
-        const timeline = gsap.timeline({
-            defaults: { ease: "none" },
-            scrollTrigger: {
-                id: "mechanism-story",
-                trigger: scene.value,
-                start: "top top",
-                end: () => `+=${window.innerHeight * 5}`,
-                // Keep the local actor exactly aligned with the incoming
-                // cross-scene route during forward and reverse handoff.
-                scrub: true,
-                pin: true,
-                anticipatePin: 1,
-                invalidateOnRefresh: true,
-            },
-        });
+        const timeline = props.embedded
+            ? gsap.timeline({
+                  defaults: { ease: "none" },
+                  paused: true,
+              })
+            : gsap.timeline({
+                  defaults: { ease: "none" },
+                  scrollTrigger: {
+                      id: "mechanism-story",
+                      trigger: scene.value,
+                      start: "top top",
+                      end: () => `+=${window.innerHeight * 5}`,
+                      // Keep the local actor exactly aligned with the incoming
+                      // cross-scene route during forward and reverse handoff.
+                      scrub: true,
+                      pin: true,
+                      anticipatePin: 1,
+                      invalidateOnRefresh: true,
+                  },
+              });
         storyTimeline = timeline;
 
         timeline
@@ -549,6 +569,15 @@ onMounted(() => {
                 "productFinale",
             )
             .addLabel(HOME_CHAPTERS.odorMolecule);
+
+        if (props.embedded) {
+            emit("timelineReady", {
+                timeline,
+                scene: scene.value,
+                molecule: molecule.value,
+                product: product.value,
+            });
+        }
     }, scene.value);
 
     ScrollTrigger.refresh();
