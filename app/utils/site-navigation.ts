@@ -90,7 +90,7 @@ export const siteNavGroups: SiteNavGroup[] = [
             {
                 to: "/hardware",
                 label: "Hardware",
-                icon: "material-symbols:package-outline-rounded",
+                icon: "mingcute:bottle-line",
             },
             {
                 to: "/viewbinder",
