@@ -14,6 +14,18 @@ export const footerSponsors = [
         name: "Twist Bioscience",
         src: "https://static.igem.wiki/teams/6133/wiki/sponsor-logos/twist.svg",
     },
+    {
+        name: "LinkSpider Laboratory",
+        src: "https://static.igem.wiki/teams/6133/wiki/sponsor-logos/linkspider-lab.avif",
+    },
+    {
+        name: "LinkSpider Technology",
+        src: "https://static.igem.wiki/teams/6133/wiki/sponsor-logos/linkspider-tech.avif",
+    },
+    {
+        name: "SnapGene",
+        src: "https://static.igem.wiki/teams/6133/wiki/sponsor-logos/snapgene.svg",
+    },
 ];
 
 export const footerSocialChannels = [
