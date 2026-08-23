@@ -851,7 +851,7 @@ onUnmounted(() => {
             <div ref="firstScene" class="absolute inset-0 z-2">
                 <div
                     ref="corner"
-                    class="absolute right-0 bottom-0 z-1 size-[var(--arm-size)]"
+                    class="current-solution__arm absolute right-0 bottom-0 z-1 size-[var(--arm-size)]"
                     aria-hidden="true"
                 >
                     <img
@@ -893,13 +893,13 @@ onUnmounted(() => {
                 </p>
 
                 <p
-                    class="current-solution__leave-down invisible absolute top-[75%] left-[3.5%] z-4 m-0 w-[38%] text-center text-[clamp(1.35rem,2.35vw,2.45rem)] leading-[1.3] [text-wrap:balance] opacity-0 will-change-[transform,opacity] motion-reduce:will-change-auto max-[52rem]:top-[72%] max-[52rem]:left-[4%] max-[52rem]:w-[58%] max-[52rem]:text-[clamp(1.05rem,4.4vw,1.6rem)] max-[52rem]:leading-[1.24] portrait:top-[72%] portrait:left-[4%] portrait:w-[58%] portrait:text-[clamp(1.05rem,4.4vw,1.6rem)] portrait:leading-[1.24]"
+                    class="current-solution__question current-solution__leave-down invisible absolute top-[75%] left-[3.5%] z-4 m-0 w-[38%] text-center text-[clamp(1.35rem,2.35vw,2.45rem)] leading-[1.3] [text-wrap:balance] opacity-0 will-change-[transform,opacity] motion-reduce:will-change-auto max-[52rem]:top-[72%] max-[52rem]:left-[4%] max-[52rem]:w-[58%] max-[52rem]:text-[clamp(1.05rem,4.4vw,1.6rem)] max-[52rem]:leading-[1.24] portrait:top-[72%] portrait:left-[4%] portrait:w-[58%] portrait:text-[clamp(1.05rem,4.4vw,1.6rem)] portrait:leading-[1.24]"
                 >
                     How are there so many complaints below every single product?
                     !
                 </p>
                 <div
-                    class="absolute [top:calc(var(--surprised-y)*1%)] [left:calc(var(--surprised-x)*1%)] z-3 w-[var(--surprised-size)] -translate-x-1/2 -translate-y-1/2"
+                    class="current-solution__surprised absolute [top:calc(var(--surprised-y)*1%)] [left:calc(var(--surprised-x)*1%)] z-3 w-[var(--surprised-size)] -translate-x-1/2 -translate-y-1/2"
                 >
                     <img
                         class="current-solution__leave-down invisible block h-auto w-full opacity-0 will-change-[transform,opacity] select-none motion-reduce:will-change-auto"
@@ -1144,6 +1144,27 @@ onUnmounted(() => {
         --antiperspirant-panel-x: 60;
         --antiperspirant-panel-y: 73;
         --ingredient-panel-padding: clamp(0.65rem, 3vw, 1rem);
+    }
+}
+
+@media (orientation: portrait) and (max-width: 52rem) {
+    .current-solution__stage {
+        --surprised-x: 78;
+        --surprised-y: 64;
+        --surprised-size: clamp(5.75rem, 24vw, 8rem);
+        --deodorant-x: 62;
+        --deodorant-y: 84;
+        --deodorant-width: clamp(3.9rem, 16vw, 5.75rem);
+        --antiperspirant-x: 33;
+        --antiperspirant-y: 86;
+        --antiperspirant-width: clamp(4.4rem, 18vw, 6.5rem);
+        --arm-size: clamp(17rem, 70vw, 25rem);
+    }
+
+    .current-solution__question {
+        top: 57%;
+        left: 6%;
+        width: 68%;
     }
 }
 </style>

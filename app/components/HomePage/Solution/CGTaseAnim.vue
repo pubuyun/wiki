@@ -17,7 +17,20 @@ type HandoffLayout = {
     flip?: boolean;
 };
 
-const props = defineProps<{ handoff: HandoffLayout }>();
+const props = defineProps<{
+    handoff: HandoffLayout;
+    mobilePortraitHandoff?: HandoffLayout;
+}>();
+
+const portraitHandoff = props.mobilePortraitHandoff ?? props.handoff;
+const handoffStyle = {
+    "--handoff-left": `${props.handoff.point.x}%`,
+    "--handoff-top": `${props.handoff.point.y}%`,
+    "--handoff-width": `${props.handoff.width}%`,
+    "--portrait-handoff-left": `${portraitHandoff.point.x}%`,
+    "--portrait-handoff-top": `${portraitHandoff.point.y}%`,
+    "--portrait-handoff-width": `${portraitHandoff.width}%`,
+};
 
 const LAYOUT = {
     chain: { x: 67, y: 20 } satisfies PercentPoint,
@@ -196,6 +209,13 @@ function buildTimeline(
         return undefined;
     }
 
+    const handoff =
+        props.mobilePortraitHandoff &&
+        window.matchMedia("(orientation: portrait) and (max-width: 52rem)")
+            .matches
+            ? props.mobilePortraitHandoff
+            : props.handoff;
+
     context?.revert();
     context = gsap.context(() => {
         const firstFiveSugars = sugarNodes.value.slice(0, 5);
@@ -207,13 +227,13 @@ function buildTimeline(
         gsap.set(handoffGroup.value, {
             x: 0,
             y: 0,
-            rotation: props.handoff.rotation,
-            scale: props.handoff.scale,
+            rotation: handoff.rotation,
+            scale: handoff.scale,
             transformOrigin: "50% 50%",
         });
         gsap.set(precursorHandoff.value, {
-            rotation: props.handoff.rotation,
-            scale: props.handoff.scale,
+            rotation: handoff.rotation,
+            scale: handoff.scale,
             transformOrigin: "50% 50%",
         });
         gsap.set(productGroup.value, {
@@ -262,7 +282,7 @@ function buildTimeline(
             x: 0,
             y: 0,
             rotation: 0,
-            scale: props.handoff.precursorScale,
+            scale: handoff.precursorScale,
             transformOrigin: "50% 50%",
         });
         transporterTimeline?.pause(0);
@@ -647,15 +667,7 @@ defineExpose({ buildTimeline, getRoot });
                 </g>
             </svg>
 
-            <div
-                class="absolute"
-                :style="{
-                    left: `${props.handoff.point.x}%`,
-                    top: `${props.handoff.point.y}%`,
-                    width: `${props.handoff.width}%`,
-                    transform: 'translate(-50%, -50%)',
-                }"
-            >
+            <div class="solution-handoff absolute" :style="handoffStyle">
                 <div
                     ref="precursorHandoff"
                     class="grid w-full grid-cols-[1.45fr_0.72fr] items-center gap-[3%] will-change-transform"
@@ -674,15 +686,7 @@ defineExpose({ buildTimeline, getRoot });
             </div>
         </div>
 
-        <div
-            class="absolute"
-            :style="{
-                left: `${props.handoff.point.x}%`,
-                top: `${props.handoff.point.y}%`,
-                width: `${props.handoff.width}%`,
-                transform: 'translate(-50%, -50%)',
-            }"
-        >
+        <div class="solution-handoff absolute" :style="handoffStyle">
             <div
                 ref="handoffGroup"
                 class="grid w-full grid-cols-[1.45fr_0.72fr] items-center gap-[3%] will-change-transform"
@@ -708,3 +712,20 @@ defineExpose({ buildTimeline, getRoot });
         </div>
     </div>
 </template>
+
+<style scoped>
+.solution-handoff {
+    top: var(--handoff-top);
+    left: var(--handoff-left);
+    width: var(--handoff-width);
+    transform: translate(-50%, -50%);
+}
+
+@media (orientation: portrait) and (max-width: 52rem) {
+    .solution-handoff {
+        top: var(--portrait-handoff-top);
+        left: var(--portrait-handoff-left);
+        width: var(--portrait-handoff-width);
+    }
+}
+</style>

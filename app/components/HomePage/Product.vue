@@ -292,13 +292,16 @@ onMounted(() => {
         {
             isLandscape: "(orientation: landscape)",
             isPortrait: "(orientation: portrait)",
+            isMobilePortrait: "(orientation: portrait) and (max-width: 52rem)",
             reduceMotion: "(prefers-reduced-motion: reduce)",
         },
         (mediaContext) => {
-            const { isPortrait, reduceMotion } = mediaContext.conditions as {
-                isPortrait: boolean;
-                reduceMotion: boolean;
-            };
+            const { isPortrait, isMobilePortrait, reduceMotion } =
+                mediaContext.conditions as {
+                    isPortrait: boolean;
+                    isMobilePortrait: boolean;
+                    reduceMotion: boolean;
+                };
             productModel.value?.setAttribute(
                 "camera-orbit",
                 isPortrait
@@ -414,6 +417,17 @@ onMounted(() => {
                 })
                 .addLabel("features")
                 .set(featureLayer.value, { autoAlpha: 1 })
+                .to(
+                    productRig.value,
+                    {
+                        y: () =>
+                            isMobilePortrait ? -window.innerHeight * 0.22 : 0,
+                        scale: isMobilePortrait ? 0.58 : 1,
+                        duration: reduceMotion ? 0.08 : 0.68,
+                        ease: reduceMotion ? "none" : "power3.inOut",
+                    },
+                    "features",
+                )
                 .to(
                     featureBars,
                     {
@@ -841,6 +855,54 @@ onBeforeUnmount(() => {
     .product-feature__title {
         padding-inline: 0.7rem;
         font-size: clamp(0.9rem, 4.5vw, 1.5rem);
+    }
+}
+
+@media (orientation: portrait) and (max-width: 52rem) {
+    .product-features {
+        inset: 48% 5% 4%;
+        display: grid;
+        grid-template-rows: repeat(5, minmax(0, 1fr));
+        gap: clamp(0.2rem, 0.7svh, 0.45rem);
+    }
+
+    .product-feature {
+        position: relative;
+        top: auto;
+        right: auto;
+        left: auto;
+        width: 100%;
+        min-height: 0;
+        padding: 0 !important;
+        flex-direction: row;
+    }
+
+    .product-feature__bar,
+    .product-feature--left .product-feature__bar,
+    .product-feature--right .product-feature__bar {
+        top: 8%;
+        right: 0;
+        bottom: 8%;
+        left: clamp(2.3rem, 9vw, 3.25rem);
+        border-radius: 1.1rem;
+        box-shadow: 0 0.35rem 0 rgb(2 39 91 / 68%);
+    }
+
+    .product-feature__image,
+    .product-feature--left .product-feature__image,
+    .product-feature--right .product-feature__image {
+        right: auto;
+        left: 0;
+        width: clamp(3.5rem, 14vw, 5rem);
+        height: clamp(3.5rem, 14vw, 5rem);
+    }
+
+    .product-feature__title {
+        margin-left: clamp(3.6rem, 16vw, 5.5rem);
+        padding: 0.35rem 0.75rem;
+        font-size: clamp(0.82rem, 3.8vw, 1.2rem);
+        line-height: 1.05;
+        text-align: left;
     }
 }
 

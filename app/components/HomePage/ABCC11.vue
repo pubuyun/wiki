@@ -114,8 +114,13 @@ type PrecursorPathPoint = {
     ease: string;
 };
 
+type PrecursorPath = Record<
+    "start" | "glandEntry" | "glandInside" | "bacteria" | "final",
+    PrecursorPathPoint
+>;
+
 // Precursor 完整移动路径调节区：x / y 是相对整个 ABCC11 场景的百分比坐标。
-const PRECURSOR_PATH = {
+const LANDSCAPE_PRECURSOR_PATH = {
     start: {
         x: 70,
         y: 86,
@@ -161,7 +166,55 @@ const PRECURSOR_PATH = {
         visualDuration: 1,
         ease: "power2.inOut",
     },
-} as const satisfies Record<string, PrecursorPathPoint>;
+} as const satisfies PrecursorPath;
+
+const PORTRAIT_PRECURSOR_PATH = {
+    start: {
+        x: 50,
+        y: 88,
+        rotation: 15,
+        scale: 1.45,
+        moveDuration: 0,
+        visualDuration: 0,
+        ease: "none",
+    },
+    glandEntry: {
+        x: 54,
+        y: 50,
+        rotation: 65,
+        scale: 0.58,
+        moveDuration: 0.72,
+        visualDuration: 0.55,
+        ease: "power2.inOut",
+    },
+    glandInside: {
+        x: 50,
+        y: 47,
+        rotation: 8,
+        scale: 0.72,
+        moveDuration: 0.72,
+        visualDuration: 0.55,
+        ease: "power2.inOut",
+    },
+    bacteria: {
+        x: 50,
+        y: 69,
+        rotation: 20,
+        scale: 0.86,
+        moveDuration: 0.65,
+        visualDuration: 0.65,
+        ease: "power2.inOut",
+    },
+    final: {
+        x: 50,
+        y: 76,
+        rotation: 20,
+        scale: 0.88,
+        moveDuration: 1,
+        visualDuration: 1,
+        ease: "power2.inOut",
+    },
+} as const satisfies PrecursorPath;
 
 let media: gsap.MatchMedia | undefined;
 const precursorTeleportDisabled = ref(true);
@@ -172,6 +225,7 @@ let precursorRouteObserver: MutationObserver | undefined;
 let precursorRouteFrame = 0;
 let precursorRouteState: "before" | "moving" | "after" | undefined;
 let homeRefreshInProgress = false;
+let activePrecursorPath: PrecursorPath = LANDSCAPE_PRECURSOR_PATH;
 
 function syncPrecursorTeleport() {
     precursorTeleportDisabled.value = motionPreference?.matches ?? true;
@@ -184,21 +238,21 @@ function precursorPointVars(point: PrecursorPathPoint) {
     };
 }
 
-function setPrecursorStartState() {
+function setPrecursorStartState(path = activePrecursorPath) {
     if (!precursor.value || !precursorVisual.value || !precursorLabel.value) {
         return;
     }
 
     gsap.set(precursor.value, {
-        ...precursorPointVars(PRECURSOR_PATH.start),
+        ...precursorPointVars(path.start),
         autoAlpha: 0,
         xPercent: -50,
         yPercent: -50,
     });
     gsap.set(precursorLabel.value, { autoAlpha: 1, y: 0 });
     gsap.set(precursorVisual.value, {
-        rotation: PRECURSOR_PATH.start.rotation,
-        scale: PRECURSOR_PATH.start.scale,
+        rotation: path.start.rotation,
+        scale: path.start.scale,
         transformOrigin: "50% 50%",
     });
 }
@@ -207,7 +261,7 @@ function refreshStoryGeometry() {
     if (!storyTimeline) {
         if (motionPreference?.matches && precursor.value) {
             gsap.set(precursor.value, {
-                ...precursorPointVars(PRECURSOR_PATH.final),
+                ...precursorPointVars(activePrecursorPath.final),
             });
         }
         return;
@@ -257,7 +311,7 @@ function destroyPrecursorRoute() {
 
 function setupPrecursorRoute(
     storyTimeline: gsap.core.Timeline,
-    path: typeof PRECURSOR_PATH,
+    path: PrecursorPath,
     refreshAfterSetup = true,
 ) {
     if (
@@ -415,7 +469,7 @@ function setupPrecursorRoute(
 
 function queuePrecursorRoute(
     storyTimeline: gsap.core.Timeline,
-    path: typeof PRECURSOR_PATH,
+    path: PrecursorPath,
 ) {
     cancelAnimationFrame(precursorRouteFrame);
     precursorRouteFrame = requestAnimationFrame(() => {
@@ -439,8 +493,8 @@ function rebuildPrecursorRoute() {
     destroyPrecursorRoute();
     if (!storyTimeline) return;
 
-    if (!setupPrecursorRoute(storyTimeline, PRECURSOR_PATH, false)) {
-        queuePrecursorRoute(storyTimeline, PRECURSOR_PATH);
+    if (!setupPrecursorRoute(storyTimeline, activePrecursorPath, false)) {
+        queuePrecursorRoute(storyTimeline, activePrecursorPath);
     }
 }
 
@@ -482,11 +536,13 @@ onMounted(async () => {
     media = gsap.matchMedia();
     media.add(
         {
+            isMobilePortrait: "(orientation: portrait) and (max-width: 52rem)",
             reduceMotion: "(prefers-reduced-motion: reduce)",
             allowMotion: "(prefers-reduced-motion: no-preference)",
         },
         (context) => {
-            const { reduceMotion } = context.conditions as {
+            const { isMobilePortrait, reduceMotion } = context.conditions as {
+                isMobilePortrait: boolean;
                 reduceMotion: boolean;
             };
             const phenotypeTransporters = gsap.utils.toArray<HTMLElement>(
@@ -506,7 +562,11 @@ onMounted(async () => {
                 secondScene.value!,
             );
             const transporterTimeline = glandTransporter.value?.getTimeline();
-            const path = PRECURSOR_PATH;
+            const path = isMobilePortrait
+                ? PORTRAIT_PRECURSOR_PATH
+                : LANDSCAPE_PRECURSOR_PATH;
+            const genotypeStoryScale = isMobilePortrait ? 0.56 : 0.78;
+            activePrecursorPath = path;
 
             const topInset = () => {
                 const value = getComputedStyle(scene.value!).getPropertyValue(
@@ -521,7 +581,7 @@ onMounted(async () => {
             gsap.set(secondScene.value, { autoAlpha: 0 });
             gsap.set(storyItems, { autoAlpha: 0, y: 24 });
             gsap.set(phenotypeTransporters, { autoAlpha: 0, y: 18 });
-            setPrecursorStartState();
+            setPrecursorStartState(path);
             arrowPaths.forEach((path) => {
                 const length = path.getTotalLength();
                 gsap.set(path, {
@@ -537,12 +597,12 @@ onMounted(async () => {
                 });
                 gsap.set(odorGenotypes.value, {
                     y: moveToTop(odorGenotypes.value!),
-                    scale: 0.78,
+                    scale: genotypeStoryScale,
                     transformOrigin: "left top",
                 });
                 gsap.set(ttGenotype.value, {
                     y: moveToTop(ttGenotype.value!),
-                    scale: 0.78,
+                    scale: genotypeStoryScale,
                     transformOrigin: "right top",
                 });
                 gsap.set(
@@ -605,7 +665,7 @@ onMounted(async () => {
                     odorGenotypes.value,
                     {
                         y: () => moveToTop(odorGenotypes.value!),
-                        scale: 0.78,
+                        scale: genotypeStoryScale,
                         transformOrigin: "left top",
                         duration: 0.65,
                         ease: "power2.inOut",
@@ -616,7 +676,7 @@ onMounted(async () => {
                     ttGenotype.value,
                     {
                         y: () => moveToTop(ttGenotype.value!),
-                        scale: 0.78,
+                        scale: genotypeStoryScale,
                         transformOrigin: "right top",
                         duration: 0.65,
                         ease: "power2.inOut",
@@ -1385,40 +1445,119 @@ onUnmounted(() => {
     }
 }
 
-@media (orientation: portrait) and (max-width: 40rem) {
+@media (orientation: portrait) and (max-width: 52rem) {
+    .abcc11-scene {
+        --abcc11-top-space: clamp(4.75rem, 10svh, 6.5rem);
+    }
+
+    .genotype-group--odor {
+        top: var(--abcc11-top-space);
+        left: 4vw;
+        width: 92vw;
+    }
+
+    .genotype-group--tt {
+        right: 12vw;
+        bottom: 7svh;
+        width: 64vw;
+    }
+
+    .scene-copy--odor {
+        top: 31svh;
+        right: 8vw;
+        width: 84vw;
+    }
+
+    .scene-copy--variant {
+        bottom: 28svh;
+        left: 8vw;
+        width: 84vw;
+    }
+
     .abcc11-story {
-        top: 18svh;
+        inset: 20svh 5vw 4.75rem;
+        grid-template-rows: minmax(0, 1fr) auto;
     }
 
     .abcc11-story__flow {
-        grid-template-columns: minmax(0, 1fr) 2.75rem minmax(0, 1.1fr);
-        grid-template-rows: 1fr 1fr;
+        grid-template-columns: minmax(0, 1fr);
+        grid-template-rows:
+            minmax(0, 1fr) minmax(1.75rem, 0.3fr) minmax(0, 1.08fr)
+            minmax(1.75rem, 0.3fr) minmax(0, 0.92fr);
+        justify-items: center;
     }
 
     .abcc11-story__person {
         grid-column: 1;
         grid-row: 1;
+        width: min(34%, 8.5rem);
     }
 
     .story-arrow--first {
-        grid-column: 2;
-        grid-row: 1;
+        grid-column: 1;
+        grid-row: 2;
     }
 
     .abcc11-story__gland {
-        grid-column: 3;
-        grid-row: 1;
+        grid-column: 1;
+        grid-row: 3;
+        width: min(34%, 8rem);
     }
 
     .story-arrow--second {
-        grid-column: 2;
-        grid-row: 2;
+        grid-column: 1;
+        grid-row: 4;
     }
 
     .abcc11-story__bacteria {
-        grid-column: 3;
-        grid-row: 2;
-        width: 80%;
+        grid-column: 1;
+        grid-row: 5;
+        justify-self: center;
+        width: min(32%, 7.5rem);
+    }
+
+    .story-arrow {
+        align-self: center;
+        width: clamp(2.75rem, 12vw, 4rem);
+        transform: translate(var(--arrow-x), var(--arrow-y)) rotate(90deg)
+            scale(0.85);
+    }
+
+    .story-arrow--first {
+        transform: translate(var(--arrow-x), var(--arrow-y)) rotate(90deg)
+            scale(0.85) scaleY(-1);
+    }
+
+    .abcc11-story__label--person {
+        right: auto !important;
+        bottom: -10% !important;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    .abcc11-story__curve-label--gland {
+        top: -30% !important;
+        left: -3% !important;
+        width: 108%;
+        transform: none !important;
+    }
+
+    .abcc11-story__curve-label--bacteria {
+        right: auto !important;
+        bottom: -28% !important;
+        left: -8%;
+        width: 118%;
+        transform: none !important;
+    }
+
+    .abcc11-story__footer {
+        padding: 0 0 0.5rem;
+    }
+
+    .abcc11-story__copy {
+        max-width: 100%;
+        font-size: clamp(0.78rem, 3.45vw, 1.05rem);
+        line-height: 1.3;
     }
 }
 

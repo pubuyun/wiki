@@ -15,7 +15,20 @@ type HandoffLayout = {
     flip?: boolean;
 };
 
-const props = defineProps<{ handoff: HandoffLayout }>();
+const props = defineProps<{
+    handoff: HandoffLayout;
+    mobilePortraitHandoff?: HandoffLayout;
+}>();
+
+const portraitHandoff = props.mobilePortraitHandoff ?? props.handoff;
+const handoffStyle = {
+    "--handoff-left": `${props.handoff.point.x}%`,
+    "--handoff-top": `${props.handoff.point.y}%`,
+    "--handoff-width": `${props.handoff.width}%`,
+    "--portrait-handoff-left": `${portraitHandoff.point.x}%`,
+    "--portrait-handoff-top": `${portraitHandoff.point.y}%`,
+    "--portrait-handoff-width": `${portraitHandoff.width}%`,
+};
 
 const LAYOUT = {
     precursorBoundOffset: { x: -55, y: -2 } satisfies PercentPoint,
@@ -58,14 +71,21 @@ function buildTimeline(target: HTMLElement) {
         return undefined;
     }
 
+    const handoff =
+        props.mobilePortraitHandoff &&
+        window.matchMedia("(orientation: portrait) and (max-width: 52rem)")
+            .matches
+            ? props.mobilePortraitHandoff
+            : props.handoff;
+
     context?.revert();
     context = gsap.context(() => {
         gsap.set(root.value, { autoAlpha: 0 });
         gsap.set(collisionGroup.value, {
             x: 0,
             y: 0,
-            rotation: props.handoff.rotation,
-            scale: props.handoff.scale,
+            rotation: handoff.rotation,
+            scale: handoff.scale,
             transformOrigin: "50% 50%",
         });
         gsap.set(binder.value, {
@@ -76,7 +96,7 @@ function buildTimeline(target: HTMLElement) {
         gsap.set(precursor.value, {
             x: 0,
             y: 0,
-            scale: props.handoff.precursorScale,
+            scale: handoff.precursorScale,
             rotation: 0,
             transformOrigin: "50% 50%",
         });
@@ -172,15 +192,7 @@ defineExpose({ buildTimeline, getRoot });
         class="solution-animation pointer-events-none invisible absolute inset-0 z-20 opacity-0"
         aria-hidden="true"
     >
-        <div
-            class="absolute"
-            :style="{
-                left: `${props.handoff.point.x}%`,
-                top: `${props.handoff.point.y}%`,
-                width: `${props.handoff.width}%`,
-                transform: 'translate(-50%, -50%)',
-            }"
-        >
+        <div class="solution-handoff absolute" :style="handoffStyle">
             <div
                 ref="collisionGroup"
                 class="grid w-full grid-cols-[1.45fr_0.72fr] items-center gap-[3%] will-change-transform"
@@ -205,3 +217,20 @@ defineExpose({ buildTimeline, getRoot });
         </div>
     </div>
 </template>
+
+<style scoped>
+.solution-handoff {
+    top: var(--handoff-top);
+    left: var(--handoff-left);
+    width: var(--handoff-width);
+    transform: translate(-50%, -50%);
+}
+
+@media (orientation: portrait) and (max-width: 52rem) {
+    .solution-handoff {
+        top: var(--portrait-handoff-top);
+        left: var(--portrait-handoff-left);
+        width: var(--portrait-handoff-width);
+    }
+}
+</style>

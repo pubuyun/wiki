@@ -26,7 +26,20 @@ type PlugFitVars = {
     scaleY?: number;
 };
 
-const props = defineProps<{ handoff: HandoffLayout }>();
+const props = defineProps<{
+    handoff: HandoffLayout;
+    mobilePortraitHandoff?: HandoffLayout;
+}>();
+
+const portraitHandoff = props.mobilePortraitHandoff ?? props.handoff;
+const handoffStyle = {
+    "--handoff-left": `${props.handoff.point.x}%`,
+    "--handoff-top": `${props.handoff.point.y}%`,
+    "--handoff-width": `${props.handoff.width}%`,
+    "--portrait-handoff-left": `${portraitHandoff.point.x}%`,
+    "--portrait-handoff-top": `${portraitHandoff.point.y}%`,
+    "--portrait-handoff-width": `${portraitHandoff.width}%`,
+};
 
 const LAYOUT = {
     collisionOffset: { x: 10, y: -24 } satisfies PercentPoint,
@@ -109,6 +122,13 @@ function buildTimeline(
     if (!root.value || !handoffGroup.value || !plug.value || !precursor.value)
         return undefined;
 
+    const handoff =
+        props.mobilePortraitHandoff &&
+        window.matchMedia("(orientation: portrait) and (max-width: 52rem)")
+            .matches
+            ? props.mobilePortraitHandoff
+            : props.handoff;
+
     context?.revert();
     context = gsap.context(() => {
         plugFitCache = undefined;
@@ -173,8 +193,8 @@ function buildTimeline(
         gsap.set(handoffGroup.value, {
             x: 0,
             y: 0,
-            rotation: props.handoff.rotation,
-            scale: props.handoff.scale,
+            rotation: handoff.rotation,
+            scale: handoff.scale,
             transformOrigin: "50% 50%",
         });
         gsap.set(plug.value, {
@@ -189,7 +209,7 @@ function buildTimeline(
             x: 0,
             y: 0,
             rotation: 0,
-            scale: props.handoff.precursorScale,
+            scale: handoff.precursorScale,
             transformOrigin: "50% 50%",
         });
         gsap.set(attachedPlug, {
@@ -337,15 +357,7 @@ defineExpose({ buildTimeline, getRoot, invalidateLayout });
         class="solution-animation pointer-events-none invisible absolute inset-0 z-20 opacity-0"
         aria-hidden="true"
     >
-        <div
-            class="absolute"
-            :style="{
-                left: `${props.handoff.point.x}%`,
-                top: `${props.handoff.point.y}%`,
-                width: `${props.handoff.width}%`,
-                transform: 'translate(-50%, -50%)',
-            }"
-        >
+        <div class="solution-handoff absolute" :style="handoffStyle">
             <div
                 ref="handoffGroup"
                 class="grid w-full grid-cols-[1.45fr_0.72fr] items-center gap-[3%] will-change-transform"
@@ -370,3 +382,20 @@ defineExpose({ buildTimeline, getRoot, invalidateLayout });
         </div>
     </div>
 </template>
+
+<style scoped>
+.solution-handoff {
+    top: var(--handoff-top);
+    left: var(--handoff-left);
+    width: var(--handoff-width);
+    transform: translate(-50%, -50%);
+}
+
+@media (orientation: portrait) and (max-width: 52rem) {
+    .solution-handoff {
+        top: var(--portrait-handoff-top);
+        left: var(--portrait-handoff-left);
+        width: var(--portrait-handoff-width);
+    }
+}
+</style>

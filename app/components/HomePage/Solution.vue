@@ -156,6 +156,24 @@ const TRANSITION_LAYOUT = {
     labelHoldDuration: 0.32,
 } as const;
 
+const MOBILE_PORTRAIT_TARGETS = [
+    {
+        ...TRANSITION_LAYOUT.targets[0],
+        point: { x: 50, y: 35 } satisfies PercentPoint,
+        width: TRANSITION_LAYOUT.targets[0].width * 1.2,
+    },
+    {
+        ...TRANSITION_LAYOUT.targets[1],
+        point: { x: 50, y: 35 } satisfies PercentPoint,
+        width: TRANSITION_LAYOUT.targets[1].width * 1.2,
+    },
+    {
+        ...TRANSITION_LAYOUT.targets[2],
+        point: { x: 50, y: 35 } satisfies PercentPoint,
+        width: TRANSITION_LAYOUT.targets[2].width * 1.2,
+    },
+] as const;
+
 const ROTATION_STOPS = {
     overview: 0,
     solution1: -330,
@@ -441,14 +459,17 @@ onMounted(() => {
         {
             isLandscape: "(orientation: landscape)",
             isPortrait: "(orientation: portrait)",
+            isMobilePortrait: "(orientation: portrait) and (max-width: 52rem)",
             reduceMotion: "(prefers-reduced-motion: reduce)",
         },
         (mediaContext) => {
-            const { isPortrait, reduceMotion } = mediaContext.conditions as {
-                isLandscape: boolean;
-                isPortrait: boolean;
-                reduceMotion: boolean;
-            };
+            const { isPortrait, isMobilePortrait, reduceMotion } =
+                mediaContext.conditions as {
+                    isLandscape: boolean;
+                    isPortrait: boolean;
+                    isMobilePortrait: boolean;
+                    reduceMotion: boolean;
+                };
             const activeCenter = isPortrait
                 ? SCENE_LAYOUT.portraitActiveCenter
                 : SCENE_LAYOUT.activeCenter;
@@ -459,7 +480,10 @@ onMounted(() => {
             const overviewActorLayouts = SOLUTIONS.map((solution) =>
                 overviewMarkerLayout(solution.angle, overviewWheelSize),
             );
-            const firstTarget = TRANSITION_LAYOUT.targets[0];
+            const transitionTargets = isMobilePortrait
+                ? MOBILE_PORTRAIT_TARGETS
+                : TRANSITION_LAYOUT.targets;
+            const firstTarget = transitionTargets[0];
             const firstArc: ActorArc = {
                 start: overviewActorLayouts[0]!.point,
                 control: TRANSITION_LAYOUT.firstArcControl,
@@ -473,8 +497,8 @@ onMounted(() => {
             };
             const secondEntry = TRANSITION_LAYOUT.entryArcs[1]!;
             const thirdEntry = TRANSITION_LAYOUT.entryArcs[2]!;
-            const secondTarget = TRANSITION_LAYOUT.targets[1];
-            const thirdTarget = TRANSITION_LAYOUT.targets[2];
+            const secondTarget = transitionTargets[1];
+            const thirdTarget = transitionTargets[2];
             const secondArc: ActorArc = {
                 start: secondEntry.start,
                 control: secondEntry.control,
@@ -1147,6 +1171,11 @@ onUnmounted(() => {
                 iconWidth: SOLUTIONS[0].iconWidth,
                 flip: SOLUTIONS[0].flip,
             }"
+            :mobile-portrait-handoff="{
+                ...MOBILE_PORTRAIT_TARGETS[0],
+                iconWidth: SOLUTIONS[0].iconWidth,
+                flip: SOLUTIONS[0].flip,
+            }"
         />
         <TransporterBinderAnim
             ref="transporterBinderAnim"
@@ -1155,11 +1184,21 @@ onUnmounted(() => {
                 iconWidth: SOLUTIONS[1].iconWidth,
                 flip: SOLUTIONS[1].flip,
             }"
+            :mobile-portrait-handoff="{
+                ...MOBILE_PORTRAIT_TARGETS[1],
+                iconWidth: SOLUTIONS[1].iconWidth,
+                flip: SOLUTIONS[1].flip,
+            }"
         />
         <CGTaseAnim
             ref="cgtaseAnim"
             :handoff="{
                 ...TRANSITION_LAYOUT.targets[2],
+                iconWidth: SOLUTIONS[2].iconWidth,
+                flip: SOLUTIONS[2].flip,
+            }"
+            :mobile-portrait-handoff="{
+                ...MOBILE_PORTRAIT_TARGETS[2],
                 iconWidth: SOLUTIONS[2].iconWidth,
                 flip: SOLUTIONS[2].flip,
             }"

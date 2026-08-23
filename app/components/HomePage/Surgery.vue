@@ -38,6 +38,7 @@ const irritationDetail = ref<HTMLElement | null>(null);
 const ecosystemDetail = ref<HTMLElement | null>(null);
 
 const activeDetail = ref<DetailKind | null>(null);
+const mobilePortrait = ref(false);
 
 let media: gsap.MatchMedia | undefined;
 let detailInteractionEnabled = false;
@@ -80,7 +81,7 @@ function hideDetails(immediate = false) {
 }
 
 function showDetail(kind: DetailKind) {
-    if (!detailInteractionEnabled) return;
+    if (!detailInteractionEnabled || mobilePortrait.value) return;
 
     const selected = detailElement(kind);
     const other = detailElement(
@@ -113,6 +114,7 @@ function showDetail(kind: DetailKind) {
 }
 
 function handleDetailHover(kind: DetailKind, hovering: boolean) {
+    if (mobilePortrait.value) return;
     if (hovering) showDetail(kind);
     else if (activeDetail.value === kind) hideDetails();
 }
@@ -155,13 +157,16 @@ onMounted(async () => {
     media = gsap.matchMedia();
     media.add(
         {
+            isMobilePortrait: "(orientation: portrait) and (max-width: 52rem)",
             reduceMotion: "(prefers-reduced-motion: reduce)",
             allowMotion: "(prefers-reduced-motion: no-preference)",
         },
         (context) => {
-            const { reduceMotion } = context.conditions as {
+            const { isMobilePortrait, reduceMotion } = context.conditions as {
+                isMobilePortrait: boolean;
                 reduceMotion: boolean;
             };
+            mobilePortrait.value = isMobilePortrait;
             const introItems = gsap.utils.toArray<HTMLElement>(
                 "[data-surgery-intro]",
                 refs.firstScene,
@@ -190,17 +195,28 @@ onMounted(async () => {
             const instruments = [refs.knife, refs.syringe];
 
             gsap.set(details, { autoAlpha: 0, scale: 0.9, y: 10 });
-            gsap.set(refs.wipe, { xPercent: 0 });
+            gsap.set(refs.wipe, { xPercent: 0, yPercent: 0 });
             gsap.set([refs.secondScene, refs.finalScene], { autoAlpha: 0 });
-            gsap.set(secondItems, { autoAlpha: 0, y: 24 });
+            gsap.set(secondItems, {
+                autoAlpha: 0,
+                y: (_index, element) =>
+                    isMobilePortrait &&
+                    (element as HTMLElement).dataset.surgerySecondRole ===
+                        "copy"
+                        ? -24
+                        : 24,
+            });
             gsap.set(finalItems, { autoAlpha: 0, y: 28 });
             gsap.set(guideLabels, { autoAlpha: 0, y: 12 });
             guideLines.forEach((line) => {
                 gsap.set(line, {
                     autoAlpha: 0,
-                    scaleX: 0,
+                    scaleX: isMobilePortrait ? 1 : 0,
+                    scaleY: isMobilePortrait ? 0 : 1,
                     transformOrigin:
-                        line.dataset.surgeryLineOrigin ?? "left center",
+                        (isMobilePortrait
+                            ? line.dataset.surgeryLineOriginPortrait
+                            : line.dataset.surgeryLineOrigin) ?? "left center",
                 });
             });
             gsap.set(guideTargets, { autoAlpha: 0, scale: 0.6 });
@@ -209,11 +225,16 @@ onMounted(async () => {
                 gsap.set(refs.panelShell, { autoAlpha: 1, scale: 1 });
                 gsap.set(introItems, { autoAlpha: 0 });
                 gsap.set(guideLabels, { autoAlpha: 1, y: 0 });
-                gsap.set(guideLines, { autoAlpha: 1, scaleX: 1 });
+                gsap.set(guideLines, {
+                    autoAlpha: 1,
+                    scaleX: 1,
+                    scaleY: 1,
+                });
                 gsap.set(guideTargets, { autoAlpha: 1, scale: 1 });
                 gsap.set(instruments, { autoAlpha: 0 });
                 gsap.set(refs.wipe, {
-                    xPercent: -100,
+                    xPercent: isMobilePortrait ? 0 : -100,
+                    yPercent: isMobilePortrait ? -100 : 0,
                 });
                 gsap.set(refs.finalScene, { autoAlpha: 1 });
                 gsap.set(finalItems, { autoAlpha: 1, y: 0 });
@@ -222,14 +243,22 @@ onMounted(async () => {
 
             gsap.set(refs.knife, {
                 autoAlpha: 0,
-                x: () => refs.panel.clientWidth * SURGERY_MOTION.knifeStartX,
-                y: 12,
+                x: () =>
+                    isMobilePortrait
+                        ? 0
+                        : refs.panel.clientWidth * SURGERY_MOTION.knifeStartX,
+                y: () =>
+                    isMobilePortrait ? refs.panel.clientHeight * 0.36 : 12,
                 rotation: () => stageCssNumber("--knife-start-rotation"),
             });
             gsap.set(refs.syringe, {
                 autoAlpha: 0,
-                x: () => refs.panel.clientWidth * SURGERY_MOTION.syringeStartX,
-                y: -10,
+                x: () =>
+                    isMobilePortrait
+                        ? 0
+                        : refs.panel.clientWidth * SURGERY_MOTION.syringeStartX,
+                y: () =>
+                    isMobilePortrait ? refs.panel.clientHeight * 0.44 : -10,
                 rotation: () => stageCssNumber("--syringe-start-rotation"),
             });
 
@@ -291,7 +320,8 @@ onMounted(async () => {
                         if (shouldEnable === firstSceneInteractive) return;
 
                         firstSceneInteractive = shouldEnable;
-                        detailInteractionEnabled = shouldEnable;
+                        detailInteractionEnabled =
+                            shouldEnable && !isMobilePortrait;
                         if (!shouldEnable) hideDetails(true);
                     },
                 },
@@ -321,6 +351,7 @@ onMounted(async () => {
                     {
                         autoAlpha: 1,
                         scaleX: 1,
+                        scaleY: 1,
                         duration: SURGERY_MOTION.guideLineDuration,
                         stagger: SURGERY_MOTION.guideLineStagger,
                         ease: "power1.inOut",
@@ -351,9 +382,10 @@ onMounted(async () => {
                 .addLabel("erase")
                 .fromTo(
                     refs.wipe,
-                    { xPercent: 0 },
+                    { xPercent: 0, yPercent: 0 },
                     {
-                        xPercent: -100,
+                        xPercent: isMobilePortrait ? 0 : -100,
+                        yPercent: isMobilePortrait ? -100 : 0,
                         duration: 1.22,
                         ease: "power1.out",
                         immediateRender: false,
@@ -365,8 +397,14 @@ onMounted(async () => {
                     {
                         autoAlpha: 0,
                         x: () =>
-                            refs.panel.clientWidth * SURGERY_MOTION.knifeStartX,
-                        y: 12,
+                            isMobilePortrait
+                                ? 0
+                                : refs.panel.clientWidth *
+                                  SURGERY_MOTION.knifeStartX,
+                        y: () =>
+                            isMobilePortrait
+                                ? refs.panel.clientHeight * 0.36
+                                : 12,
                         rotation: () =>
                             stageCssNumber("--knife-start-rotation"),
                     },
@@ -386,9 +424,14 @@ onMounted(async () => {
                     {
                         autoAlpha: 0,
                         x: () =>
-                            refs.panel.clientWidth *
-                            SURGERY_MOTION.syringeStartX,
-                        y: -10,
+                            isMobilePortrait
+                                ? 0
+                                : refs.panel.clientWidth *
+                                  SURGERY_MOTION.syringeStartX,
+                        y: () =>
+                            isMobilePortrait
+                                ? refs.panel.clientHeight * 0.44
+                                : -10,
                         rotation: () =>
                             stageCssNumber("--syringe-start-rotation"),
                     },
@@ -431,7 +474,15 @@ onMounted(async () => {
                 )
                 .fromTo(
                     secondItems,
-                    { autoAlpha: 0, y: 24 },
+                    {
+                        autoAlpha: 0,
+                        y: (_index, element) =>
+                            isMobilePortrait &&
+                            (element as HTMLElement).dataset
+                                .surgerySecondRole === "copy"
+                                ? -24
+                                : 24,
+                    },
                     {
                         autoAlpha: 1,
                         y: 0,
@@ -463,10 +514,11 @@ onMounted(async () => {
                 )
                 .fromTo(
                     instruments,
-                    { autoAlpha: 1, x: 0 },
+                    { autoAlpha: 1, x: 0, y: 0 },
                     {
                         autoAlpha: 0,
-                        x: -36,
+                        x: isMobilePortrait ? 0 : -36,
+                        y: isMobilePortrait ? 36 : 0,
                         duration: 0.34,
                         ease: "power2.in",
                         immediateRender: false,
@@ -502,10 +554,11 @@ onMounted(async () => {
             detailExitProgress =
                 story.labels.erase / Math.max(story.duration(), 0.001);
 
-            detailInteractionEnabled = true;
+            detailInteractionEnabled = !isMobilePortrait;
             firstSceneInteractive = true;
 
             return () => {
+                mobilePortrait.value = false;
                 detailInteractionEnabled = false;
                 hideDetails(true);
                 entrance.kill();
@@ -573,8 +626,13 @@ onUnmounted(() => {
 
                         <button
                             type="button"
-                            class="absolute top-[var(--skin-irritation-target-y)] left-[5%] z-30 m-0 flex w-[calc(var(--skin-irritation-target-x)-5%)] -translate-y-1/2 cursor-pointer items-center gap-[.7rem] border-0 bg-transparent p-0 text-left text-[clamp(1.3rem,2.35vw,2.45rem)] leading-[1.18] text-[#ffad2f] will-change-[transform,opacity] hover:text-[#ffd166] focus-visible:rounded-[.35rem] focus-visible:text-[#ffd166] focus-visible:outline-[.2rem] focus-visible:outline-offset-[.4rem] focus-visible:outline-[#61dfc7] aria-[expanded=true]:text-[#ffd166] max-[52rem]:gap-[.4rem] max-[52rem]:text-[clamp(1rem,4.1vw,1.4rem)] portrait:gap-[.4rem] portrait:text-[clamp(1rem,4.1vw,1.4rem)]"
-                            aria-controls="skin-irritation-detail"
+                            class="surgery-guide surgery-guide--irritation absolute top-[var(--skin-irritation-target-y)] left-[5%] z-30 m-0 flex w-[calc(var(--skin-irritation-target-x)-5%)] -translate-y-1/2 cursor-pointer items-center gap-[.7rem] border-0 bg-transparent p-0 text-left text-[clamp(1.3rem,2.35vw,2.45rem)] leading-[1.18] text-[#ffad2f] will-change-[transform,opacity] hover:text-[#ffd166] focus-visible:rounded-[.35rem] focus-visible:text-[#ffd166] focus-visible:outline-[.2rem] focus-visible:outline-offset-[.4rem] focus-visible:outline-[#61dfc7] aria-[expanded=true]:text-[#ffd166] max-[52rem]:gap-[.4rem] max-[52rem]:text-[clamp(1rem,4.1vw,1.4rem)] portrait:gap-[.4rem] portrait:text-[clamp(1rem,4.1vw,1.4rem)]"
+                            :disabled="mobilePortrait"
+                            :aria-controls="
+                                mobilePortrait
+                                    ? undefined
+                                    : 'skin-irritation-detail'
+                            "
                             :aria-expanded="activeDetail === 'irritation'"
                             @click="showDetail('irritation')"
                             @pointerenter="
@@ -592,16 +650,17 @@ onUnmounted(() => {
                                 >Skin irritation</span
                             >
                             <span
-                                class="invisible relative block h-[.35rem] min-w-0 flex-1 opacity-0 will-change-[transform,opacity] motion-reduce:will-change-auto max-[52rem]:h-1 portrait:h-1"
+                                class="surgery-guide__line invisible relative block h-[.35rem] min-w-0 flex-1 opacity-0 will-change-[transform,opacity] motion-reduce:will-change-auto max-[52rem]:h-1 portrait:h-1"
                                 data-surgery-guide-line
                                 data-surgery-line-origin="left center"
+                                data-surgery-line-origin-portrait="center top"
                                 aria-hidden="true"
                             >
                                 <i
                                     class="absolute inset-0 rounded-full bg-white"
                                 />
                                 <i
-                                    class="invisible absolute top-1/2 right-0 size-[1.12rem] translate-x-1/2 -translate-y-1/2 rounded-full border-[.35rem] border-white bg-[#ff8e81] opacity-0 will-change-[transform,opacity] max-[52rem]:size-[.9rem] max-[52rem]:border-[.25rem] portrait:size-[.9rem] portrait:border-[.25rem]"
+                                    class="surgery-guide__target invisible absolute top-1/2 right-0 size-[1.12rem] translate-x-1/2 -translate-y-1/2 rounded-full border-[.35rem] border-white bg-[#ff8e81] opacity-0 will-change-[transform,opacity] max-[52rem]:size-[.9rem] max-[52rem]:border-[.25rem] portrait:size-[.9rem] portrait:border-[.25rem]"
                                     data-surgery-guide-target
                                 />
                             </span>
@@ -609,8 +668,11 @@ onUnmounted(() => {
 
                         <button
                             type="button"
-                            class="absolute top-[var(--axillary-ecosystem-target-y)] right-[5%] left-[var(--axillary-ecosystem-target-x)] z-30 m-0 flex -translate-y-1/2 cursor-pointer items-center gap-[.7rem] border-0 bg-transparent p-0 text-center text-[clamp(1.3rem,2.35vw,2.45rem)] leading-[1.18] text-[#ffad2f] will-change-[transform,opacity] hover:text-[#ffd166] focus-visible:rounded-[.35rem] focus-visible:text-[#ffd166] focus-visible:outline-[.2rem] focus-visible:outline-offset-[.4rem] focus-visible:outline-[#61dfc7] aria-[expanded=true]:text-[#ffd166] max-[52rem]:gap-[.4rem] max-[52rem]:text-[clamp(1rem,4.1vw,1.4rem)] portrait:gap-[.4rem] portrait:text-[clamp(1rem,4.1vw,1.4rem)]"
-                            aria-controls="ecosystem-detail"
+                            class="surgery-guide surgery-guide--ecosystem absolute top-[var(--axillary-ecosystem-target-y)] right-[5%] left-[var(--axillary-ecosystem-target-x)] z-30 m-0 flex -translate-y-1/2 cursor-pointer items-center gap-[.7rem] border-0 bg-transparent p-0 text-center text-[clamp(1.3rem,2.35vw,2.45rem)] leading-[1.18] text-[#ffad2f] will-change-[transform,opacity] hover:text-[#ffd166] focus-visible:rounded-[.35rem] focus-visible:text-[#ffd166] focus-visible:outline-[.2rem] focus-visible:outline-offset-[.4rem] focus-visible:outline-[#61dfc7] aria-[expanded=true]:text-[#ffd166] max-[52rem]:gap-[.4rem] max-[52rem]:text-[clamp(1rem,4.1vw,1.4rem)] portrait:gap-[.4rem] portrait:text-[clamp(1rem,4.1vw,1.4rem)]"
+                            :disabled="mobilePortrait"
+                            :aria-controls="
+                                mobilePortrait ? undefined : 'ecosystem-detail'
+                            "
                             :aria-expanded="activeDetail === 'ecosystem'"
                             @click="showDetail('ecosystem')"
                             @pointerenter="handleDetailHover('ecosystem', true)"
@@ -621,16 +683,17 @@ onUnmounted(() => {
                             @blur="handleDetailHover('ecosystem', false)"
                         >
                             <span
-                                class="invisible relative block h-[.35rem] min-w-0 flex-1 opacity-0 will-change-[transform,opacity] motion-reduce:will-change-auto max-[52rem]:h-1 portrait:h-1"
+                                class="surgery-guide__line invisible relative block h-[.35rem] min-w-0 flex-1 opacity-0 will-change-[transform,opacity] motion-reduce:will-change-auto max-[52rem]:h-1 portrait:h-1"
                                 data-surgery-guide-line
                                 data-surgery-line-origin="right center"
+                                data-surgery-line-origin-portrait="center bottom"
                                 aria-hidden="true"
                             >
                                 <i
                                     class="absolute inset-0 rounded-full bg-white"
                                 />
                                 <i
-                                    class="invisible absolute top-1/2 left-0 size-[1.12rem] -translate-x-1/2 -translate-y-1/2 rounded-full border-[.35rem] border-white bg-[#61dfc7] opacity-0 will-change-[transform,opacity] max-[52rem]:size-[.9rem] max-[52rem]:border-[.25rem] portrait:size-[.9rem] portrait:border-[.25rem]"
+                                    class="surgery-guide__target invisible absolute top-1/2 left-0 size-[1.12rem] -translate-x-1/2 -translate-y-1/2 rounded-full border-[.35rem] border-white bg-[#61dfc7] opacity-0 will-change-[transform,opacity] max-[52rem]:size-[.9rem] max-[52rem]:border-[.25rem] portrait:size-[.9rem] portrait:border-[.25rem]"
                                     data-surgery-guide-target
                                 />
                             </span>
@@ -645,7 +708,9 @@ onUnmounted(() => {
                             id="skin-irritation-detail"
                             ref="irritationDetail"
                             class="pointer-events-none absolute top-[52%] left-[1.8%] z-50 w-[min(31%,27rem)] origin-center rounded-[2rem] bg-[#347ad5] p-[clamp(1rem,1.8vw,1.65rem)] text-[clamp(.85rem,1.35vw,1.35rem)] leading-[1.46] text-white shadow-[0_1.15rem_2.5rem_rgb(1_24_58_/_28%)] after:absolute after:top-[-.95rem] after:left-[48%] after:size-0 after:border-x-[1rem] after:border-b-[1rem] after:border-x-transparent after:border-b-[#347ad5] after:content-[''] max-[52rem]:top-[33%] max-[52rem]:left-[10%] max-[52rem]:w-[80%] max-[52rem]:rounded-[1.35rem] max-[52rem]:p-4 max-[52rem]:text-[clamp(.78rem,3.4vw,1rem)] max-[52rem]:leading-[1.34] max-[52rem]:after:hidden portrait:top-[33%] portrait:left-[10%] portrait:w-[80%] portrait:rounded-[1.35rem] portrait:p-4 portrait:text-[clamp(.78rem,3.4vw,1rem)] portrait:leading-[1.34] portrait:after:hidden"
-                            :aria-hidden="activeDetail !== 'irritation'"
+                            :aria-hidden="
+                                mobilePortrait || activeDetail !== 'irritation'
+                            "
                         >
                             <ul class="m-0 grid gap-[1.1rem] pl-[1.2em]">
                                 <li>
@@ -665,7 +730,9 @@ onUnmounted(() => {
                             id="ecosystem-detail"
                             ref="ecosystemDetail"
                             class="pointer-events-none absolute top-[29%] right-[2.5%] z-50 w-[min(31%,27rem)] origin-center rounded-[2rem] bg-[#347ad5] p-[clamp(1rem,1.8vw,1.65rem)] text-[clamp(.85rem,1.35vw,1.35rem)] leading-[1.46] text-white shadow-[0_1.15rem_2.5rem_rgb(1_24_58_/_28%)] after:absolute after:bottom-[-.95rem] after:left-[46%] after:size-0 after:border-x-[1rem] after:border-t-[1rem] after:border-x-transparent after:border-t-[#347ad5] after:content-[''] max-[52rem]:top-[33%] max-[52rem]:right-auto max-[52rem]:left-[10%] max-[52rem]:w-[80%] max-[52rem]:rounded-[1.35rem] max-[52rem]:p-4 max-[52rem]:text-[clamp(.78rem,3.4vw,1rem)] max-[52rem]:leading-[1.34] max-[52rem]:after:hidden portrait:top-[33%] portrait:right-auto portrait:left-[10%] portrait:w-[80%] portrait:rounded-[1.35rem] portrait:p-4 portrait:text-[clamp(.78rem,3.4vw,1rem)] portrait:leading-[1.34] portrait:after:hidden"
-                            :aria-hidden="activeDetail !== 'ecosystem'"
+                            :aria-hidden="
+                                mobilePortrait || activeDetail !== 'ecosystem'
+                            "
                         >
                             <ul class="m-0 grid gap-[1.1rem] pl-[1.2em]">
                                 <li>
@@ -688,22 +755,25 @@ onUnmounted(() => {
 
                     <div ref="secondScene" class="absolute inset-0 z-50">
                         <p
-                            class="absolute top-[14%] left-[40%] m-0 w-[43%] text-center text-[clamp(1.5rem,2.7vw,2.8rem)] leading-[1.3] [text-wrap:balance] max-[52rem]:top-[12%] max-[52rem]:left-[38%] max-[52rem]:w-[43%] max-[52rem]:text-[clamp(1.05rem,4.2vw,1.55rem)] portrait:top-[12%] portrait:left-[38%] portrait:w-[43%] portrait:text-[clamp(1.05rem,4.2vw,1.55rem)]"
+                            class="surgery-clinical__copy surgery-clinical__copy--lead absolute top-[14%] left-[40%] m-0 w-[43%] text-center text-[clamp(1.5rem,2.7vw,2.8rem)] leading-[1.3] [text-wrap:balance] max-[52rem]:top-[12%] max-[52rem]:left-[38%] max-[52rem]:w-[43%] max-[52rem]:text-[clamp(1.05rem,4.2vw,1.55rem)] portrait:top-[12%] portrait:left-[38%] portrait:w-[43%] portrait:text-[clamp(1.05rem,4.2vw,1.55rem)]"
                             data-surgery-second
+                            data-surgery-second-role="copy"
                         >
                             Hmm, surgical removal of sweat glands seems to offer
                             a more permanent solution.
                         </p>
                         <img
-                            class="absolute top-[12%] right-[2.5%] h-auto w-[clamp(9rem,12vw,14rem)] rotate-14 select-none max-[52rem]:top-[31%] max-[52rem]:right-[1.5%] max-[52rem]:w-[clamp(4.5rem,17vw,7rem)] portrait:top-[31%] portrait:right-[1.5%] portrait:w-[clamp(4.5rem,17vw,7rem)]"
+                            class="surgery-clinical__questioning absolute top-[12%] right-[2.5%] h-auto w-[clamp(9rem,12vw,14rem)] rotate-14 select-none max-[52rem]:top-[31%] max-[52rem]:right-[1.5%] max-[52rem]:w-[clamp(4.5rem,17vw,7rem)] portrait:top-[31%] portrait:right-[1.5%] portrait:w-[clamp(4.5rem,17vw,7rem)]"
                             data-surgery-second
+                            data-surgery-second-role="visual"
                             src="https://static.igem.wiki/teams/6133/wiki/homepage/questioning.avif"
                             alt="A character questioning the surgical option"
                             draggable="false"
                         />
                         <p
-                            class="absolute top-[58%] left-[40%] m-0 w-[55%] text-center text-[clamp(1.25rem,2.25vw,2.35rem)] leading-[1.45] [text-wrap:balance] max-[52rem]:top-[55%] max-[52rem]:left-[36%] max-[52rem]:w-[60%] max-[52rem]:text-[clamp(.85rem,3.55vw,1.2rem)] max-[52rem]:leading-[1.35] portrait:top-[55%] portrait:left-[36%] portrait:w-[60%] portrait:text-[clamp(.85rem,3.55vw,1.2rem)] portrait:leading-[1.35]"
+                            class="surgery-clinical__copy surgery-clinical__copy--support absolute top-[58%] left-[40%] m-0 w-[55%] text-center text-[clamp(1.25rem,2.25vw,2.35rem)] leading-[1.45] [text-wrap:balance] max-[52rem]:top-[55%] max-[52rem]:left-[36%] max-[52rem]:w-[60%] max-[52rem]:text-[clamp(.85rem,3.55vw,1.2rem)] max-[52rem]:leading-[1.35] portrait:top-[55%] portrait:left-[36%] portrait:w-[60%] portrait:text-[clamp(.85rem,3.55vw,1.2rem)] portrait:leading-[1.35]"
                             data-surgery-second
+                            data-surgery-second-role="copy"
                         >
                             In clinical practice, it is sometimes considered as
                             the last-resort intervention when other methods fail
@@ -728,7 +798,7 @@ onUnmounted(() => {
                         </p>
 
                         <div
-                            class="absolute right-[7%] bottom-[2%] left-[7%] grid h-[53%] grid-cols-3 items-end gap-[7%] max-[52rem]:right-[4%] max-[52rem]:bottom-[3%] max-[52rem]:left-[4%] max-[52rem]:h-1/2 max-[52rem]:gap-[2%] portrait:right-[4%] portrait:bottom-[3%] portrait:left-[4%] portrait:h-1/2 portrait:gap-[2%]"
+                            class="surgery-final__people absolute right-[7%] bottom-[2%] left-[7%] grid h-[53%] grid-cols-3 items-end gap-[7%] max-[52rem]:right-[4%] max-[52rem]:bottom-[3%] max-[52rem]:left-[4%] max-[52rem]:h-1/2 max-[52rem]:gap-[2%] portrait:right-[4%] portrait:bottom-[3%] portrait:left-[4%] portrait:h-1/2 portrait:gap-[2%]"
                         >
                             <figure
                                 class="m-0 grid h-full grid-rows-[minmax(0,1fr)_auto] text-center"
@@ -862,6 +932,121 @@ onUnmounted(() => {
         --syringe-rotation: 52;
         --wipe-feather: clamp(5rem, 22vw, 8rem);
         --wipe-filter-blur: 0.6rem;
+    }
+}
+
+@media (orientation: portrait) and (max-width: 52rem) {
+    .surgery__stage {
+        --skin-y: 50%;
+        --skin-width: clamp(11.5rem, 48vw, 18rem);
+        --skin-irritation-target-y: 25%;
+        --axillary-ecosystem-target-y: 75%;
+        --knife-width: clamp(3.5rem, 15vw, 5.5rem);
+        --knife-x: 67%;
+        --knife-y: 65%;
+        --knife-rotation: 18;
+        --syringe-width: clamp(13rem, 52vw, 19rem);
+        --syringe-x: 10%;
+        --syringe-y: 53%;
+        --syringe-rotation: 52;
+    }
+
+    .surgery-guide {
+        right: auto;
+        left: 50%;
+        width: min(82%, 24rem);
+        height: 15%;
+        transform: translate(-50%, -50%);
+        cursor: default;
+        flex-direction: column;
+        justify-content: flex-start;
+        gap: 0.3rem;
+        color: #ffad2f;
+        text-align: center;
+        pointer-events: none;
+    }
+
+    .surgery-guide--ecosystem {
+        flex-direction: column;
+        justify-content: flex-end;
+    }
+
+    .surgery-guide:hover,
+    .surgery-guide:focus,
+    .surgery-guide[aria-expanded="true"] {
+        color: #ffad2f;
+    }
+
+    .surgery-guide__line {
+        width: 0.28rem;
+        height: auto;
+        min-height: 1.6rem;
+        flex: 1 1 auto;
+    }
+
+    .surgery-guide--irritation .surgery-guide__target {
+        top: auto;
+        right: auto;
+        bottom: 0;
+        left: 50%;
+        transform: translate(-50%, 50%);
+    }
+
+    .surgery-guide--ecosystem .surgery-guide__target {
+        top: 0;
+        right: auto;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    #skin-irritation-detail,
+    #ecosystem-detail {
+        display: none;
+    }
+
+    .surgery__wipe {
+        top: 100%;
+        right: -2rem;
+        bottom: auto;
+        left: -2rem;
+        width: auto;
+        height: calc(100% + var(--wipe-feather));
+        mask-image: linear-gradient(
+            to bottom,
+            transparent 0,
+            #000 var(--wipe-feather)
+        );
+        -webkit-mask-image: linear-gradient(
+            to bottom,
+            transparent 0,
+            #000 var(--wipe-feather)
+        );
+    }
+
+    .surgery-clinical__copy--lead {
+        top: 8%;
+        left: 7%;
+        width: 86%;
+    }
+
+    .surgery-clinical__copy--support {
+        top: 29%;
+        left: 8%;
+        width: 84%;
+    }
+
+    .surgery-clinical__questioning {
+        top: 51%;
+        right: 7%;
+        width: clamp(4.75rem, 20vw, 7rem);
+    }
+
+    .surgery-final__people {
+        right: 2%;
+        bottom: 1%;
+        left: 2%;
+        height: 58%;
+        gap: 1%;
     }
 }
 </style>
