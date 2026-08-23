@@ -74,6 +74,8 @@ const PATH_POINTS = {
     outsideEnd: { x: 1.16, y: 0.72 },
 } satisfies Record<string, Point>;
 
+const PORTRAIT_OUTSIDE_START = { x: 1.42, y: 0.155 } satisfies Point;
+
 /*
  * 蛋白名称坐标调整区：x / y 与 PATH_POINTS 使用同一套旋转后场景坐标（0 到 1）。
  * 修改这里即可分别移动 PepTsh、PepV 和 PatB 标签。
@@ -146,7 +148,11 @@ function setMoleculeStartState() {
     if (!molecule.value) return;
 
     gsap.set(molecule.value, {
-        ...pointVars(PATH_POINTS.outsideStart),
+        ...pointVars(
+            isPortraitLayout()
+                ? PORTRAIT_OUTSIDE_START
+                : PATH_POINTS.outsideStart,
+        ),
         xPercent: -50,
         yPercent: -50,
     });
@@ -615,11 +621,7 @@ onUnmounted(() => {
                 class="mechanism-scene__animation absolute inset-0 z-10 origin-center overflow-visible portrait:top-1/2 portrait:left-1/2 portrait:z-4 portrait:-translate-x-1/2 portrait:-translate-y-1/2 portrait:-rotate-90"
             >
                 <span
-                    class="precursor-transition-target pointer-events-none absolute size-0"
-                    :style="{
-                        left: `${PATH_POINTS.outsideStart.x * 100}%`,
-                        top: `${PATH_POINTS.outsideStart.y * 100}%`,
-                    }"
+                    class="precursor-transition-target mechanism-scene__precursor-target pointer-events-none absolute size-0"
                     aria-hidden="true"
                 />
 
@@ -787,6 +789,11 @@ onUnmounted(() => {
     width: var(--molecule-size);
 }
 
+.mechanism-scene__precursor-target {
+    top: 15.5%;
+    left: 170%;
+}
+
 .mechanism-scene__copy {
     left: auto;
     right: 0;
@@ -818,6 +825,10 @@ onUnmounted(() => {
     .mechanism-scene__animation {
         width: var(--artwork-height);
         height: 100vw;
+    }
+
+    .mechanism-scene__precursor-target {
+        left: 142%;
     }
 
     .mechanism-scene__copy {

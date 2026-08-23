@@ -159,18 +159,18 @@ const TRANSITION_LAYOUT = {
 const MOBILE_PORTRAIT_TARGETS = [
     {
         ...TRANSITION_LAYOUT.targets[0],
-        point: { x: 50, y: 35 } satisfies PercentPoint,
-        width: TRANSITION_LAYOUT.targets[0].width * 1.2,
+        point: { x: 50, y: 40 } satisfies PercentPoint,
+        width: TRANSITION_LAYOUT.targets[0].width * 1.35,
     },
     {
         ...TRANSITION_LAYOUT.targets[1],
-        point: { x: 50, y: 35 } satisfies PercentPoint,
-        width: TRANSITION_LAYOUT.targets[1].width * 1.2,
+        point: { x: 50, y: 40 } satisfies PercentPoint,
+        width: TRANSITION_LAYOUT.targets[1].width * 1.35,
     },
     {
         ...TRANSITION_LAYOUT.targets[2],
-        point: { x: 50, y: 35 } satisfies PercentPoint,
-        width: TRANSITION_LAYOUT.targets[2].width * 1.2,
+        point: { x: 50, y: 40 } satisfies PercentPoint,
+        width: TRANSITION_LAYOUT.targets[2].width * 1.35,
     },
 ] as const;
 

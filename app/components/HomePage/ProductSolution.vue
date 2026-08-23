@@ -52,6 +52,11 @@ const PRODUCT_ENTRANCE = {
     portraitStartScale: 0.1,
 } as const;
 
+const PRODUCT_HANDOFF = {
+    moveDuration: 0.58,
+    scaleDuration: 0.34,
+} as const;
+
 const WAVE_REVEAL_LAYERS = [
     {
         id: "background",
@@ -468,6 +473,7 @@ function buildSequence() {
 
     master
         .addLabel("solutionHandoff")
+        .set(product.scene, { overflow: "visible" }, "solutionHandoff")
         .set(solution.scene, { autoAlpha: 1 }, "solutionHandoff")
         .to(
             product.featureLayer,
@@ -496,11 +502,19 @@ function buildSequence() {
             {
                 x: () => orbitPosition(PAINT_PATH.startAngle).x,
                 y: () => orbitPosition(PAINT_PATH.startAngle).y,
+                duration: reduceMotion ? 0.08 : PRODUCT_HANDOFF.moveDuration,
+                ease: reduceMotion ? "none" : "power4.out",
+            },
+            "solutionHandoff",
+        )
+        .to(
+            product.productRig,
+            {
                 scale: isPortrait
                     ? PAINT_PATH.portraitScale
                     : PAINT_PATH.landscapeScale,
-                duration: reduceMotion ? 0.08 : 0.9,
-                ease: "power3.inOut",
+                duration: reduceMotion ? 0.08 : PRODUCT_HANDOFF.scaleDuration,
+                ease: reduceMotion ? "none" : "power3.out",
             },
             "solutionHandoff",
         )

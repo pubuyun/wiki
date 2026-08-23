@@ -109,6 +109,9 @@ const MODEL_LAYOUT = {
     yPercent: 0,
 } as const;
 
+// One place to tune the bottle size while its centre sits on the right edge.
+const MOBILE_PRODUCT_RIGHT_SCALE = 0.9;
+
 const PRODUCT_ANIMATION_NAME = "CylinderAction";
 const PRODUCT_ANIMATION_END_EPSILON_SECONDS = 0.0001;
 const PRODUCT_LID_MATERIAL_NAME = "Material.004";
@@ -420,9 +423,13 @@ onMounted(() => {
                 .to(
                     productRig.value,
                     {
+                        x: () =>
+                            isMobilePortrait ? window.innerWidth * 0.5 : 0,
                         y: () =>
-                            isMobilePortrait ? -window.innerHeight * 0.22 : 0,
-                        scale: isMobilePortrait ? 0.58 : 1,
+                            isMobilePortrait ? window.innerHeight * 0.02 : 0,
+                        scale: isMobilePortrait
+                            ? MOBILE_PRODUCT_RIGHT_SCALE
+                            : 1,
                         duration: reduceMotion ? 0.08 : 0.68,
                         ease: reduceMotion ? "none" : "power3.inOut",
                     },
@@ -860,10 +867,10 @@ onBeforeUnmount(() => {
 
 @media (orientation: portrait) and (max-width: 52rem) {
     .product-features {
-        inset: 48% 5% 4%;
+        inset: 14% 4% 8%;
         display: grid;
         grid-template-rows: repeat(5, minmax(0, 1fr));
-        gap: clamp(0.2rem, 0.7svh, 0.45rem);
+        gap: clamp(0.25rem, 0.8svh, 0.55rem);
     }
 
     .product-feature {
@@ -883,7 +890,7 @@ onBeforeUnmount(() => {
         top: 8%;
         right: 0;
         bottom: 8%;
-        left: clamp(2.3rem, 9vw, 3.25rem);
+        left: clamp(2.1rem, 9vw, 3rem);
         border-radius: 1.1rem;
         box-shadow: 0 0.35rem 0 rgb(2 39 91 / 68%);
     }
@@ -893,15 +900,17 @@ onBeforeUnmount(() => {
     .product-feature--right .product-feature__image {
         right: auto;
         left: 0;
-        width: clamp(3.5rem, 14vw, 5rem);
-        height: clamp(3.5rem, 14vw, 5rem);
+        width: clamp(3.75rem, 16vw, 5rem);
+        height: clamp(3.75rem, 16vw, 5rem);
     }
 
     .product-feature__title {
-        margin-left: clamp(3.6rem, 16vw, 5.5rem);
-        padding: 0.35rem 0.75rem;
-        font-size: clamp(0.82rem, 3.8vw, 1.2rem);
-        line-height: 1.05;
+        flex: 0 0 auto;
+        width: clamp(6rem, 29vw, 8.5rem);
+        margin-left: clamp(3.8rem, 17vw, 5.3rem);
+        padding: 0.3rem 0.45rem;
+        font-size: clamp(0.84rem, 3.7vw, 1.15rem);
+        line-height: 1.08;
         text-align: left;
     }
 }

@@ -32,14 +32,14 @@ const glandTransporterStyle = {
     right: GLAND_TRANSPORTER_POSITION.right,
     bottom: GLAND_TRANSPORTER_POSITION.bottom,
     width: GLAND_TRANSPORTER_POSITION.width,
-    transform: `rotate(${GLAND_TRANSPORTER_POSITION.rotation}deg)`,
+    transform: `rotate(${GLAND_TRANSPORTER_POSITION.rotation}deg) scaleX(var(--gland-mirror, 1))`,
 };
 
 // 汗腺 PNG 的旋转角度调节区。
 const GLAND_IMAGE_ROTATION = 20;
 const GLAND_IMAGE_SCALE = 1.25;
 const glandImageStyle = {
-    transform: `rotate(${GLAND_IMAGE_ROTATION}deg) scale(${GLAND_IMAGE_SCALE})`,
+    transform: `rotate(${GLAND_IMAGE_ROTATION}deg) scale(${GLAND_IMAGE_SCALE}) scaleX(var(--gland-mirror, 1))`,
 };
 
 // “Axillary area” 位置调节区。
@@ -170,8 +170,8 @@ const LANDSCAPE_PRECURSOR_PATH = {
 
 const PORTRAIT_PRECURSOR_PATH = {
     start: {
-        x: 50,
-        y: 88,
+        x: 18,
+        y: 58,
         rotation: 15,
         scale: 1.45,
         moveDuration: 0,
@@ -179,8 +179,8 @@ const PORTRAIT_PRECURSOR_PATH = {
         ease: "none",
     },
     glandEntry: {
-        x: 54,
-        y: 50,
+        x: 67,
+        y: 42,
         rotation: 65,
         scale: 0.58,
         moveDuration: 0.72,
@@ -188,8 +188,8 @@ const PORTRAIT_PRECURSOR_PATH = {
         ease: "power2.inOut",
     },
     glandInside: {
-        x: 50,
-        y: 47,
+        x: 64,
+        y: 43,
         rotation: 8,
         scale: 0.72,
         moveDuration: 0.72,
@@ -197,8 +197,8 @@ const PORTRAIT_PRECURSOR_PATH = {
         ease: "power2.inOut",
     },
     bacteria: {
-        x: 50,
-        y: 69,
+        x: 66,
+        y: 68,
         rotation: 20,
         scale: 0.86,
         moveDuration: 0.65,
@@ -206,8 +206,8 @@ const PORTRAIT_PRECURSOR_PATH = {
         ease: "power2.inOut",
     },
     final: {
-        x: 50,
-        y: 76,
+        x: 68,
+        y: 72,
         rotation: 20,
         scale: 0.88,
         moveDuration: 1,
@@ -558,14 +558,49 @@ onMounted(async () => {
                 scene.value!,
             );
             const storyItems = gsap.utils.toArray<HTMLElement>(
-                ".abcc11-story__item, .abcc11-story__label, .abcc11-story__copy",
+                ".abcc11-story__item, .abcc11-story__label, .abcc11-story__straight-arrow, .abcc11-story__copy",
                 secondScene.value!,
             );
+            const storyGenotypes =
+                secondScene.value!.querySelector<HTMLElement>(
+                    ".abcc11-story__genotypes",
+                )!;
+            const portraitGenotypeSources = gsap.utils.toArray<HTMLElement>(
+                "[data-genotype-source]",
+                stage.value!,
+            );
+            const portraitGenotypeTarget = (source: HTMLElement) =>
+                secondScene.value!.querySelector<HTMLElement>(
+                    `[data-genotype-target="${source.dataset.genotypeSource}"]`,
+                );
+            const portraitGenotypeTransform = (
+                source: HTMLElement,
+                axis: "x" | "y" | "scale",
+            ) => {
+                const target = portraitGenotypeTarget(source);
+                if (!target) return axis === "scale" ? 1 : 0;
+
+                const sourceRect = source.getBoundingClientRect();
+                const targetRect = target.getBoundingClientRect();
+                if (axis === "scale") {
+                    return targetRect.width / Math.max(sourceRect.width, 1);
+                }
+
+                const sourceCenter =
+                    axis === "x"
+                        ? sourceRect.left + sourceRect.width / 2
+                        : sourceRect.top + sourceRect.height / 2;
+                const targetCenter =
+                    axis === "x"
+                        ? targetRect.left + targetRect.width / 2
+                        : targetRect.top + targetRect.height / 2;
+                return targetCenter - sourceCenter;
+            };
             const transporterTimeline = glandTransporter.value?.getTimeline();
             const path = isMobilePortrait
                 ? PORTRAIT_PRECURSOR_PATH
                 : LANDSCAPE_PRECURSOR_PATH;
-            const genotypeStoryScale = isMobilePortrait ? 0.56 : 0.78;
+            const genotypeStoryScale = isMobilePortrait ? 0.48 : 0.78;
             activePrecursorPath = path;
 
             const topInset = () => {
@@ -580,7 +615,11 @@ onMounted(async () => {
             transporterTimeline?.pause(0);
             gsap.set(secondScene.value, { autoAlpha: 0 });
             gsap.set(storyItems, { autoAlpha: 0, y: 24 });
-            gsap.set(phenotypeTransporters, { autoAlpha: 0, y: 18 });
+            gsap.set(storyGenotypes, { autoAlpha: 0 });
+            gsap.set(phenotypeTransporters, {
+                autoAlpha: 0,
+                y: isMobilePortrait ? 0 : 18,
+            });
             setPrecursorStartState(path);
             arrowPaths.forEach((path) => {
                 const length = path.getTotalLength();
@@ -595,19 +634,26 @@ onMounted(async () => {
                 gsap.set([odorCopy.value, variantCopy.value], {
                     autoAlpha: 0,
                 });
-                gsap.set(odorGenotypes.value, {
-                    y: moveToTop(odorGenotypes.value!),
-                    scale: genotypeStoryScale,
-                    transformOrigin: "left top",
-                });
-                gsap.set(ttGenotype.value, {
-                    y: moveToTop(ttGenotype.value!),
-                    scale: genotypeStoryScale,
-                    transformOrigin: "right top",
-                });
+                if (isMobilePortrait) {
+                    gsap.set([odorGenotypes.value, ttGenotype.value], {
+                        autoAlpha: 0,
+                    });
+                } else {
+                    gsap.set(odorGenotypes.value, {
+                        y: moveToTop(odorGenotypes.value!),
+                        scale: genotypeStoryScale,
+                        transformOrigin: "left top",
+                    });
+                    gsap.set(ttGenotype.value, {
+                        y: moveToTop(ttGenotype.value!),
+                        scale: genotypeStoryScale,
+                        transformOrigin: "right top",
+                    });
+                }
                 gsap.set(
                     [
                         secondScene.value,
+                        storyGenotypes,
                         precursor.value,
                         ...storyItems,
                         ...phenotypeTransporters,
@@ -662,18 +708,41 @@ onMounted(async () => {
                 )
                 .addLabel("moveGenotypes", 0.4)
                 .to(
-                    odorGenotypes.value,
+                    isMobilePortrait
+                        ? portraitGenotypeSources
+                        : odorGenotypes.value,
                     {
-                        y: () => moveToTop(odorGenotypes.value!),
-                        scale: genotypeStoryScale,
-                        transformOrigin: "left top",
+                        x: (_index, element) =>
+                            isMobilePortrait
+                                ? portraitGenotypeTransform(
+                                      element as HTMLElement,
+                                      "x",
+                                  )
+                                : 0,
+                        y: (_index, element) =>
+                            isMobilePortrait
+                                ? portraitGenotypeTransform(
+                                      element as HTMLElement,
+                                      "y",
+                                  )
+                                : moveToTop(odorGenotypes.value!),
+                        scale: (_index, element) =>
+                            isMobilePortrait
+                                ? portraitGenotypeTransform(
+                                      element as HTMLElement,
+                                      "scale",
+                                  )
+                                : genotypeStoryScale,
+                        transformOrigin: isMobilePortrait
+                            ? "center center"
+                            : "left top",
                         duration: 0.65,
                         ease: "power2.inOut",
                     },
                     "moveGenotypes",
                 )
                 .to(
-                    ttGenotype.value,
+                    isMobilePortrait ? [] : ttGenotype.value,
                     {
                         y: () => moveToTop(ttGenotype.value!),
                         scale: genotypeStoryScale,
@@ -684,22 +753,41 @@ onMounted(async () => {
                     "moveGenotypes",
                 )
                 .to(
-                    phenotypeTransporters,
+                    isMobilePortrait
+                        ? portraitGenotypeSources.filter((element) =>
+                              element.dataset.genotypeSource?.startsWith(
+                                  "transporter",
+                              ),
+                          )
+                        : phenotypeTransporters,
                     {
                         autoAlpha: 1,
                         y: 0,
-                        duration: 0.35,
+                        duration: isMobilePortrait ? 0.3 : 0.35,
                         stagger: 0.08,
                         ease: "power2.out",
                     },
-                    "moveGenotypes+=0.38",
+                    isMobilePortrait
+                        ? "moveGenotypes+=0.1"
+                        : "moveGenotypes+=0.38",
                 )
-                .addLabel("story", ">-0.06")
+                .addLabel(
+                    "story",
+                    isMobilePortrait ? "moveGenotypes+=0.65" : ">-0.06",
+                )
                 .addLabel(
                     homeChapterActivationLabel(HOME_CHAPTERS.abcc11Pathway),
                     "story",
                 )
                 .to(secondScene.value, { autoAlpha: 1, duration: 0.2 }, "story")
+                .to(storyGenotypes, { autoAlpha: 1, duration: 0.2 }, "story")
+                .to(
+                    isMobilePortrait
+                        ? [odorGenotypes.value, ttGenotype.value]
+                        : [],
+                    { autoAlpha: 0, duration: 0.2 },
+                    "story",
+                )
                 .to(
                     precursor.value,
                     { autoAlpha: 1, duration: 0.35 },
@@ -852,10 +940,11 @@ onUnmounted(() => {
                 <div
                     class="genotype-group__chromosomes flex min-w-0 flex-[0_0_auto] items-start"
                 >
-                    <Chromosome :genome="0" />
-                    <Chromosome :genome="1" />
+                    <Chromosome :genome="0" data-genotype-source="cc" />
+                    <Chromosome :genome="1" data-genotype-source="tc" />
                 </div>
                 <div
+                    data-genotype-source="transporter"
                     class="genotype-result ml-[clamp(-3rem,-2vw,-1rem)] will-change-[transform,opacity]"
                     aria-hidden="true"
                 >
@@ -905,9 +994,10 @@ onUnmounted(() => {
                 <div
                     class="genotype-group__chromosomes flex min-w-0 flex-[0_0_auto] items-start"
                 >
-                    <Chromosome :genome="2" />
+                    <Chromosome :genome="2" data-genotype-source="tt" />
                 </div>
                 <div
+                    data-genotype-source="transporter-disabled"
                     class="genotype-result ml-[clamp(-3rem,-2vw,-1rem)] will-change-[transform,opacity]"
                     aria-hidden="true"
                 >
@@ -940,6 +1030,68 @@ onUnmounted(() => {
             </div>
 
             <div ref="secondScene" class="abcc11-story">
+                <div
+                    class="abcc11-story__genotypes"
+                    aria-label="CC, TC, and TT ABCC11 genotypes"
+                >
+                    <Chromosome :genome="0" data-genotype-target="cc" />
+                    <Chromosome :genome="1" data-genotype-target="tc" />
+                    <div
+                        data-genotype-target="transporter"
+                        class="abcc11-story__transporter"
+                        aria-label="ABCC11 transporter"
+                    >
+                        <div class="transporter-stack relative aspect-964/847">
+                            <img
+                                class="absolute inset-0 block size-full object-contain"
+                                src="https://static.igem.wiki/teams/6133/wiki/homepage/abcc11m.avif"
+                                alt=""
+                            />
+                            <img
+                                class="absolute inset-0 block size-full object-contain"
+                                src="https://static.igem.wiki/teams/6133/wiki/homepage/abcc11l.avif"
+                                alt=""
+                            />
+                            <img
+                                class="absolute inset-0 block size-full object-contain"
+                                src="https://static.igem.wiki/teams/6133/wiki/homepage/abcc11r.avif"
+                                alt=""
+                            />
+                        </div>
+                    </div>
+                    <Chromosome :genome="2" data-genotype-target="tt" />
+                    <div
+                        data-genotype-target="transporter-disabled"
+                        class="abcc11-story__transporter"
+                        aria-label="Inactive ABCC11 transporter"
+                    >
+                        <div class="transporter-stack relative aspect-964/847">
+                            <img
+                                class="absolute inset-0 block size-full object-contain"
+                                src="https://static.igem.wiki/teams/6133/wiki/homepage/abcc11m.avif"
+                                alt=""
+                            />
+                            <img
+                                class="absolute inset-0 block size-full object-contain"
+                                src="https://static.igem.wiki/teams/6133/wiki/homepage/abcc11l.avif"
+                                alt=""
+                            />
+                            <img
+                                class="absolute inset-0 block size-full object-contain"
+                                src="https://static.igem.wiki/teams/6133/wiki/homepage/abcc11r.avif"
+                                alt=""
+                            />
+                            <svg
+                                class="transporter-stack__cross absolute inset-[14%] z-5 block size-[72%] overflow-visible [&_path]:fill-none [&_path]:stroke-white [&_path]:[stroke-width:10] [&_path]:[filter:drop-shadow(0_2px_2px_rgb(1_32_72_/_40%))] [&_path]:[stroke-linecap:round]"
+                                viewBox="0 0 100 100"
+                                aria-hidden="true"
+                            >
+                                <path d="M16 16 84 84M84 16 16 84" />
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="abcc11-story__flow">
                     <figure class="abcc11-story__item abcc11-story__person">
                         <img
@@ -954,6 +1106,11 @@ onUnmounted(() => {
                             Axillary area
                         </figcaption>
                     </figure>
+
+                    <span
+                        class="abcc11-story__straight-arrow abcc11-story__straight-arrow--first"
+                        aria-hidden="true"
+                    />
 
                     <svg
                         class="story-arrow story-arrow--first"
@@ -1036,6 +1193,11 @@ onUnmounted(() => {
                             </text>
                         </svg>
                     </figure>
+
+                    <span
+                        class="abcc11-story__straight-arrow abcc11-story__straight-arrow--second"
+                        aria-hidden="true"
+                    />
 
                     <svg
                         class="story-arrow story-arrow--second"
@@ -1225,6 +1387,14 @@ onUnmounted(() => {
         minmax(5rem, 0.58fr) minmax(11rem, 1fr);
     align-items: center;
     min-height: 0;
+}
+
+.abcc11-story__genotypes {
+    display: none;
+}
+
+.abcc11-story__straight-arrow {
+    display: none;
 }
 
 .abcc11-story__item {
@@ -1457,8 +1627,9 @@ onUnmounted(() => {
     }
 
     .genotype-group--tt {
-        right: 12vw;
-        bottom: 7svh;
+        right: auto;
+        bottom: 11svh;
+        left: 18vw;
         width: 64vw;
     }
 
@@ -1469,42 +1640,98 @@ onUnmounted(() => {
     }
 
     .scene-copy--variant {
-        bottom: 28svh;
+        top: 48svh;
+        bottom: auto;
         left: 8vw;
         width: 84vw;
     }
 
     .abcc11-story {
-        inset: 20svh 5vw 4.75rem;
+        inset: clamp(3.5rem, 8.5svh, 4.75rem) 5vw 4.75rem;
+        grid-template-columns: minmax(0, 0.34fr) minmax(0, 0.66fr);
         grid-template-rows: minmax(0, 1fr) auto;
     }
 
+    .abcc11-story__genotypes {
+        grid-column: 1;
+        grid-row: 1;
+        display: grid;
+        width: min(100%, 8rem);
+        min-height: 0;
+        align-self: start;
+        align-items: center;
+        justify-items: center;
+        gap: clamp(0.15rem, 0.55svh, 0.35rem);
+        will-change: transform, opacity;
+    }
+
+    .abcc11-story__genotypes :deep(.chromosome-illustration) {
+        display: block;
+        width: 100%;
+        height: auto;
+    }
+
+    .abcc11-story__transporter {
+        width: 62%;
+    }
+
     .abcc11-story__flow {
+        grid-column: 2;
+        grid-row: 1;
         grid-template-columns: minmax(0, 1fr);
         grid-template-rows:
-            minmax(0, 1fr) minmax(1.75rem, 0.3fr) minmax(0, 1.08fr)
-            minmax(1.75rem, 0.3fr) minmax(0, 0.92fr);
+            minmax(0, 0.9fr) auto minmax(0, 1fr) auto
+            minmax(0, 0.92fr);
+        width: 100%;
+        height: 80%;
+        align-self: start;
+        gap: clamp(0.2rem, 0.55svh, 0.4rem);
         justify-items: center;
     }
 
     .abcc11-story__person {
         grid-column: 1;
         grid-row: 1;
-        width: min(34%, 8.5rem);
+        width: min(50%, 7.25rem);
     }
 
-    .story-arrow--first {
+    .abcc11-story__straight-arrow {
+        position: relative;
+        display: block;
+        width: 0.18rem;
+        height: clamp(0.85rem, 2svh, 1.35rem);
+        align-self: center;
+        border-radius: 999px;
+        background: #fff;
+        filter: drop-shadow(0 2px 1px rgb(0 30 67 / 45%));
+        will-change: transform, opacity;
+    }
+
+    .abcc11-story__straight-arrow::after {
+        position: absolute;
+        bottom: -0.12rem;
+        left: 50%;
+        width: 0.62rem;
+        height: 0.62rem;
+        content: "";
+        border-right: 0.18rem solid #fff;
+        border-bottom: 0.18rem solid #fff;
+        transform: translateX(-50%) rotate(45deg);
+    }
+
+    .abcc11-story__straight-arrow--first {
         grid-column: 1;
         grid-row: 2;
     }
 
     .abcc11-story__gland {
+        --gland-mirror: -1;
         grid-column: 1;
         grid-row: 3;
-        width: min(34%, 8rem);
+        width: min(58%, 8rem);
     }
 
-    .story-arrow--second {
+    .abcc11-story__straight-arrow--second {
         grid-column: 1;
         grid-row: 4;
     }
@@ -1513,19 +1740,11 @@ onUnmounted(() => {
         grid-column: 1;
         grid-row: 5;
         justify-self: center;
-        width: min(32%, 7.5rem);
+        width: min(54%, 7.5rem);
     }
 
     .story-arrow {
-        align-self: center;
-        width: clamp(2.75rem, 12vw, 4rem);
-        transform: translate(var(--arrow-x), var(--arrow-y)) rotate(90deg)
-            scale(0.85);
-    }
-
-    .story-arrow--first {
-        transform: translate(var(--arrow-x), var(--arrow-y)) rotate(90deg)
-            scale(0.85) scaleY(-1);
+        display: none;
     }
 
     .abcc11-story__label--person {
@@ -1536,9 +1755,9 @@ onUnmounted(() => {
     }
 
     .abcc11-story__curve-label--gland {
-        top: -30% !important;
+        top: -24% !important;
         left: -3% !important;
-        width: 108%;
+        width: 102%;
         transform: none !important;
     }
 
@@ -1551,6 +1770,8 @@ onUnmounted(() => {
     }
 
     .abcc11-story__footer {
+        grid-column: 1 / -1;
+        grid-row: 2;
         padding: 0 0 0.5rem;
     }
 

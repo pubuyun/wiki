@@ -34,6 +34,7 @@ type CurrentSolutionPayload = {
 };
 
 const SMOKE_TRANSITION_DURATION = 2.5;
+const MOBILE_PORTRAIT_QUERY = "(orientation: portrait) and (max-width: 52rem)";
 const TRANSITION_SCROLL_KEYS = new Set([
     "ArrowDown",
     "ArrowUp",
@@ -56,6 +57,7 @@ let buildFrame = 0;
 let scrollLocked = false;
 let lockedScrollY = 0;
 let sweptMoleculeExitX = 0;
+let sweptMoleculeExitY = 0;
 let settleAtCurrentLimitsPause = false;
 let transitionRevealed = false;
 let isLayoutRefreshing = false;
@@ -195,6 +197,8 @@ function prepareSweptMolecule(product: HTMLImageElement) {
     const left = productRect.left - sequenceRect.left;
 
     sweptMoleculeExitX = -(left + productRect.width + 32);
+    sweptMoleculeExitY =
+        sequenceRect.height - (productRect.top - sequenceRect.top) + 32;
     gsap.set(sweptMolecule.value, {
         autoAlpha: 0,
         left,
@@ -207,6 +211,10 @@ function prepareSweptMolecule(product: HTMLImageElement) {
     });
 }
 
+function isMobilePortraitViewport() {
+    return window.matchMedia(MOBILE_PORTRAIT_QUERY).matches;
+}
+
 function resetSmokeCloudsForViewport() {
     if (!smokeLayer.value) return;
 
@@ -215,7 +223,8 @@ function resetSmokeCloudsForViewport() {
         smokeLayer.value,
     );
     gsap.set(smokeClouds, {
-        x: window.innerWidth * 1.3,
+        x: () => (isMobilePortraitViewport() ? 0 : window.innerWidth * 1.3),
+        y: () => (isMobilePortraitViewport() ? -window.innerHeight * 1.3 : 0),
         rotation: (index) => (index % 2 === 0 ? -5 : 5),
         transformOrigin: "50% 50%",
     });
@@ -278,6 +287,10 @@ function handleLayoutRefreshEnd() {
             }
 
             const threshold = master?.labels.smokeThreshold;
+            resetSmokeCloudsForViewport();
+            if (mechanismPayload) {
+                prepareSweptMolecule(mechanismPayload.product);
+            }
             transitionRevealed =
                 typeof threshold === "number" &&
                 (master?.time() ?? 0) >= threshold;
@@ -315,7 +328,8 @@ function buildSequence() {
     gsap.set(smokeLayer.value, { autoAlpha: 0 });
     gsap.set(sweptMolecule.value, { autoAlpha: 0 });
     gsap.set(smokeClouds, {
-        x: () => window.innerWidth * 1.3,
+        x: () => (isMobilePortraitViewport() ? 0 : window.innerWidth * 1.3),
+        y: () => (isMobilePortraitViewport() ? -window.innerHeight * 1.3 : 0),
         rotation: (index) => (index % 2 === 0 ? -5 : 5),
         transformOrigin: "50% 50%",
     });
@@ -348,8 +362,9 @@ function buildSequence() {
         .to(
             sweptMolecule.value,
             {
-                x: () => sweptMoleculeExitX,
-                rotation: -18,
+                x: () => (isMobilePortraitViewport() ? 0 : sweptMoleculeExitX),
+                y: () => (isMobilePortraitViewport() ? sweptMoleculeExitY : 0),
+                rotation: () => (isMobilePortraitViewport() ? 18 : -18),
                 duration: 1.14,
                 ease: "power2.in",
             },
@@ -359,6 +374,7 @@ function buildSequence() {
             smokeClouds,
             {
                 x: 0,
+                y: 0,
                 rotation: 0,
                 duration: 0.92,
                 stagger: { each: 0.025, from: "end" },
@@ -382,7 +398,10 @@ function buildSequence() {
         .to(
             smokeClouds,
             {
-                x: () => -window.innerWidth * 1.3,
+                x: () =>
+                    isMobilePortraitViewport() ? 0 : -window.innerWidth * 1.3,
+                y: () =>
+                    isMobilePortraitViewport() ? window.innerHeight * 1.3 : 0,
                 rotation: (index) => (index % 2 === 0 ? 6 : -6),
                 duration: 0.88,
                 stagger: { each: 0.025, from: "end" },
@@ -434,6 +453,7 @@ function buildSequence() {
                         shouldReveal ? "down" : "up",
                     );
                     if (shouldReveal) {
+                        resetSmokeCloudsForViewport();
                         prepareSweptMolecule(mechanism.product);
                         automaticSmoke?.invalidate().play();
                     } else {

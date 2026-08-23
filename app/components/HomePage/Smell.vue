@@ -817,6 +817,10 @@ onBeforeUnmount(() => {
         padding: clamp(0.7rem, 2.2vw, 1.2rem) clamp(0.9rem, 2.8vw, 1.5rem);
         font-size: min(var(--thought-size), 3.8vw);
     }
+
+    .smell-scene__thought-position {
+        width: min(52%, 22rem);
+    }
 }
 
 @media (prefers-reduced-motion: reduce) {

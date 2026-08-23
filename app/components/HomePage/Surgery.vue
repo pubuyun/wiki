@@ -786,7 +786,7 @@ onUnmounted(() => {
                         class="absolute inset-0 z-[70] bg-[#0a4297]"
                     >
                         <p
-                            class="absolute top-[8%] left-[5%] m-0 w-[90%] text-[clamp(1.25rem,2.15vw,2.25rem)] leading-[1.48] [text-wrap:balance] max-[52rem]:top-[4%] max-[52rem]:left-[4%] max-[52rem]:w-[92%] max-[52rem]:text-[clamp(.78rem,3.2vw,1.05rem)] max-[52rem]:leading-[1.3] portrait:top-[4%] portrait:left-[4%] portrait:w-[92%] portrait:text-[clamp(.78rem,3.2vw,1.05rem)] portrait:leading-[1.3]"
+                            class="surgery-final__copy absolute top-[8%] left-[5%] m-0 w-[90%] text-[clamp(1.25rem,2.15vw,2.25rem)] leading-[1.48] [text-wrap:balance] max-[52rem]:top-[4%] max-[52rem]:left-[4%] max-[52rem]:w-[92%] max-[52rem]:text-[clamp(.78rem,3.2vw,1.05rem)] max-[52rem]:leading-[1.3] portrait:top-[4%] portrait:left-[4%] portrait:w-[92%] portrait:text-[clamp(.78rem,3.2vw,1.05rem)] portrait:leading-[1.3]"
                             data-surgery-final
                         >
                             However, this option is generally restricted to
@@ -799,9 +799,12 @@ onUnmounted(() => {
 
                         <div
                             class="surgery-final__people absolute right-[7%] bottom-[2%] left-[7%] grid h-[53%] grid-cols-3 items-end gap-[7%] max-[52rem]:right-[4%] max-[52rem]:bottom-[3%] max-[52rem]:left-[4%] max-[52rem]:h-1/2 max-[52rem]:gap-[2%] portrait:right-[4%] portrait:bottom-[3%] portrait:left-[4%] portrait:h-1/2 portrait:gap-[2%]"
+                            role="region"
+                            aria-label="Swipe horizontally to view people for whom surgery may not be suitable"
+                            :tabindex="mobilePortrait ? 0 : -1"
                         >
                             <figure
-                                class="m-0 grid h-full grid-rows-[minmax(0,1fr)_auto] text-center"
+                                class="surgery-final__person-card m-0 grid h-full grid-rows-[minmax(0,1fr)_auto] text-center"
                                 data-surgery-final
                             >
                                 <img
@@ -812,7 +815,7 @@ onUnmounted(() => {
                                 />
                             </figure>
                             <figure
-                                class="m-0 grid h-full grid-rows-[minmax(0,1fr)_auto] text-center"
+                                class="surgery-final__person-card m-0 grid h-full grid-rows-[minmax(0,1fr)_auto] text-center"
                                 data-surgery-final
                             >
                                 <img
@@ -823,7 +826,7 @@ onUnmounted(() => {
                                 />
                             </figure>
                             <figure
-                                class="m-0 grid h-full grid-rows-[minmax(0,1fr)_auto] text-center"
+                                class="surgery-final__person-card m-0 grid h-full grid-rows-[minmax(0,1fr)_auto] text-center"
                                 data-surgery-final
                             >
                                 <img
@@ -938,16 +941,18 @@ onUnmounted(() => {
 @media (orientation: portrait) and (max-width: 52rem) {
     .surgery__stage {
         --skin-y: 50%;
-        --skin-width: clamp(11.5rem, 48vw, 18rem);
-        --skin-irritation-target-y: 25%;
-        --axillary-ecosystem-target-y: 75%;
+        --skin-width: 100%;
+        --skin-irritation-target-y: 30%;
+        --axillary-ecosystem-target-y: 72%;
         --knife-width: clamp(3.5rem, 15vw, 5.5rem);
-        --knife-x: 67%;
-        --knife-y: 65%;
+        --knife-x: 68%;
+        --knife-y: 39%;
+        --knife-start-rotation: 10;
         --knife-rotation: 18;
         --syringe-width: clamp(13rem, 52vw, 19rem);
-        --syringe-x: 10%;
-        --syringe-y: 53%;
+        --syringe-x: 4%;
+        --syringe-y: 32%;
+        --syringe-start-rotation: 0;
         --syringe-rotation: 52;
     }
 
@@ -1024,29 +1029,72 @@ onUnmounted(() => {
     }
 
     .surgery-clinical__copy--lead {
-        top: 8%;
+        top: 7%;
         left: 7%;
         width: 86%;
     }
 
     .surgery-clinical__copy--support {
-        top: 29%;
-        left: 8%;
-        width: 84%;
+        top: 71%;
+        left: 6%;
+        width: 68%;
     }
 
     .surgery-clinical__questioning {
-        top: 51%;
-        right: 7%;
-        width: clamp(4.75rem, 20vw, 7rem);
+        top: 73%;
+        right: 2.5%;
+        width: clamp(4.75rem, 21vw, 7rem);
+    }
+
+    .surgery-final__copy {
+        font-size: clamp(0.95rem, 3.75vw, 1.2rem);
+        line-height: 1.32;
     }
 
     .surgery-final__people {
-        right: 2%;
-        bottom: 1%;
-        left: 2%;
-        height: 58%;
-        gap: 1%;
+        right: 0;
+        bottom: 2%;
+        left: 0;
+        display: flex;
+        height: 60%;
+        gap: 0;
+        overflow-x: auto;
+        overflow-y: hidden;
+        scroll-snap-type: x mandatory;
+        scrollbar-width: none;
+        overscroll-behavior-x: contain;
+        touch-action: pan-x pan-y;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .surgery-final__people::-webkit-scrollbar {
+        display: none;
+    }
+
+    .surgery-final__people:focus-visible {
+        outline: 0.18rem solid #61dfc7;
+        outline-offset: -0.35rem;
+    }
+
+    .surgery-final__person-card {
+        box-sizing: border-box;
+        flex: 0 0 100%;
+        width: 100%;
+        min-width: 100%;
+        padding-inline: 5%;
+        scroll-snap-align: center;
+        scroll-snap-stop: always;
+        cursor: grab;
+        user-select: none;
+    }
+
+    .surgery-final__people:active .surgery-final__person-card {
+        cursor: grabbing;
+    }
+
+    .surgery-final__person-card img {
+        pointer-events: none;
+        user-select: none;
     }
 }
 </style>

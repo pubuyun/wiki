@@ -121,4 +121,11 @@
 .mechanism-smoke-transition {
     filter: drop-shadow(0 0.9rem 0 rgb(218 103 25 / 16%));
 }
+
+@media (orientation: portrait) and (max-width: 52rem) {
+    .mechanism-smoke-transition {
+        transform: scale(1.08);
+        transform-origin: 50% 50%;
+    }
+}
 </style>

@@ -910,7 +910,7 @@ onUnmounted(() => {
                 </div>
 
                 <div
-                    class="absolute [top:calc(var(--knife-y)*1%)] [left:calc(var(--knife-x)*1%)] z-3 w-[var(--knife-width)] -translate-x-1/2 -translate-y-1/2"
+                    class="current-solution__knife absolute [top:calc(var(--knife-y)*1%)] [left:calc(var(--knife-x)*1%)] z-3 w-[var(--knife-width)] -translate-x-1/2 -translate-y-1/2"
                 >
                     <img
                         ref="knife"
@@ -1148,6 +1148,10 @@ onUnmounted(() => {
 }
 
 @media (orientation: portrait) and (max-width: 52rem) {
+    .current-solution__knife {
+        display: none;
+    }
+
     .current-solution__stage {
         --surprised-x: 78;
         --surprised-y: 64;
