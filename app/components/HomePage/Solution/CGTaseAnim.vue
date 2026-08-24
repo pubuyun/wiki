@@ -38,12 +38,30 @@ const LAYOUT = {
     chainStartScale: 1.18,
     chainCurvedScale: 0.82,
     precursorReaction: { x: 78, y: 29 } satisfies PercentPoint,
+    mobilePortraitPrecursorReaction: {
+        x: 64,
+        y: 36.5,
+    } satisfies PercentPoint,
     attachedGroupSlot: { x: 2, y: 82 } satisfies PercentPoint,
     remainingFlight: { x: 0, y: 0 } satisfies PercentPoint,
     collisionOffset: { x: 4, y: -10 } satisfies PercentPoint,
     collisionCompression: { x: 2, y: 0 } satisfies PercentPoint,
-    collisionRecoil: { x: 42, y: -30 } satisfies PercentPoint,
+    collisionRecoil: { x: 62, y: -30 } satisfies PercentPoint,
 } as const;
+
+const portraitChainScale = portraitHandoff.width / props.handoff.width;
+const portraitChainWidth = LAYOUT.chainSize * portraitChainScale;
+const chainStyle = {
+    "--chain-left": `${LAYOUT.chain.x}%`,
+    "--chain-top": `${LAYOUT.chain.y}%`,
+    "--chain-width": `${LAYOUT.chainSize}%`,
+    "--portrait-chain-left": `calc(${portraitHandoff.point.x}% + ${(LAYOUT.chain.x - props.handoff.point.x) * portraitChainScale}vw)`,
+    // Keep the desktop chain-to-actor spacing while the portrait actor group
+    // grows. The offset is expressed in chain widths so it stays proportional
+    // across narrow portrait viewports instead of drifting with viewport height.
+    "--portrait-chain-top": `calc(${portraitHandoff.point.y}% - ${portraitChainWidth * 0.65}vw)`,
+    "--portrait-chain-width": `${portraitChainWidth}%`,
+};
 
 const TIMING = {
     chainRevealDelay: 0.2,
@@ -209,12 +227,16 @@ function buildTimeline(
         return undefined;
     }
 
+    const isMobilePortrait = window.matchMedia(
+        "(orientation: portrait) and (max-width: 52rem)",
+    ).matches;
     const handoff =
-        props.mobilePortraitHandoff &&
-        window.matchMedia("(orientation: portrait) and (max-width: 52rem)")
-            .matches
+        props.mobilePortraitHandoff && isMobilePortrait
             ? props.mobilePortraitHandoff
             : props.handoff;
+    const precursorReaction = isMobilePortrait
+        ? LAYOUT.mobilePortraitPrecursorReaction
+        : LAYOUT.precursorReaction;
 
     context?.revert();
     context = gsap.context(() => {
@@ -334,15 +356,9 @@ function buildTimeline(
             .addLabel("precursorApproach")
             .to(modifiedPrecursor.value, {
                 x: () =>
-                    deltaToPoint(
-                        modifiedPrecursor.value!,
-                        LAYOUT.precursorReaction,
-                    ).x,
+                    deltaToPoint(modifiedPrecursor.value!, precursorReaction).x,
                 y: () =>
-                    deltaToPoint(
-                        modifiedPrecursor.value!,
-                        LAYOUT.precursorReaction,
-                    ).y,
+                    deltaToPoint(modifiedPrecursor.value!, precursorReaction).y,
                 rotation: -4,
                 duration: TIMING.precursorApproach,
                 ease: "power3.inOut",
@@ -556,13 +572,8 @@ defineExpose({ buildTimeline, getRoot });
     >
         <svg
             ref="chain"
-            class="absolute overflow-visible will-change-[transform,opacity]"
-            :style="{
-                left: `${LAYOUT.chain.x}%`,
-                top: `${LAYOUT.chain.y}%`,
-                width: `${LAYOUT.chainSize}%`,
-                transform: 'translate(-50%, -50%)',
-            }"
+            class="solution-sugar-chain absolute overflow-visible will-change-[transform,opacity]"
+            :style="chainStyle"
             viewBox="0 0 100 100"
             aria-hidden="true"
         >
@@ -622,13 +633,8 @@ defineExpose({ buildTimeline, getRoot });
         <div ref="productGroup" class="absolute inset-0 will-change-transform">
             <svg
                 ref="productSugarLayer"
-                class="absolute overflow-visible will-change-[transform,opacity]"
-                :style="{
-                    left: `${LAYOUT.chain.x}%`,
-                    top: `${LAYOUT.chain.y}%`,
-                    width: `${LAYOUT.chainSize}%`,
-                    transform: 'translate(-50%, -50%)',
-                }"
+                class="solution-sugar-chain absolute overflow-visible will-change-[transform,opacity]"
+                :style="chainStyle"
                 viewBox="0 0 100 100"
                 aria-hidden="true"
             >
@@ -714,6 +720,13 @@ defineExpose({ buildTimeline, getRoot });
 </template>
 
 <style scoped>
+.solution-sugar-chain {
+    top: var(--chain-top);
+    left: var(--chain-left);
+    width: var(--chain-width);
+    transform: translate(-50%, -50%);
+}
+
 .solution-handoff {
     top: var(--handoff-top);
     left: var(--handoff-left);
@@ -722,6 +735,12 @@ defineExpose({ buildTimeline, getRoot });
 }
 
 @media (orientation: portrait) and (max-width: 52rem) {
+    .solution-sugar-chain {
+        top: var(--portrait-chain-top);
+        left: var(--portrait-chain-left);
+        width: var(--portrait-chain-width);
+    }
+
     .solution-handoff {
         top: var(--portrait-handoff-top);
         left: var(--portrait-handoff-left);

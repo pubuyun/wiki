@@ -982,7 +982,7 @@ onUnmounted(() => {
             >
                 <p
                     ref="secondCopy"
-                    class="absolute top-1/2 left-[43%] z-4 m-0 w-[52%] -translate-y-1/2 text-center text-[clamp(1.75rem,2.75vw,3rem)] leading-[1.36] [text-wrap:balance] max-[52rem]:left-[48%] max-[52rem]:w-[48%] max-[52rem]:text-[clamp(1.3rem,5vw,2rem)] max-[52rem]:leading-[1.3] portrait:left-[48%] portrait:w-[48%] portrait:text-[clamp(1.3rem,5vw,2rem)] portrait:leading-[1.3]"
+                    class="current-solution__second-copy absolute top-1/2 left-[43%] z-4 m-0 w-[52%] -translate-y-1/2 text-center text-[clamp(1.75rem,2.75vw,3rem)] leading-[1.36] [text-wrap:balance] max-[52rem]:text-[clamp(1.3rem,5vw,2rem)] max-[52rem]:leading-[1.3] portrait:text-[clamp(1.3rem,5vw,2rem)] portrait:leading-[1.3]"
                 >
                     Existing antiperspirants, deodorants and physical treatments
                     primarily block sweat or cover up smell after it is
@@ -1125,25 +1125,32 @@ onUnmounted(() => {
         --deodorant-x: 82;
         --deodorant-y: 47;
         --deodorant-width: clamp(4.4rem, 18vw, 7rem);
-        --deodorant-second-x: 28;
-        --deodorant-second-y: 31;
-        --deodorant-second-scale: 0.9;
+        --deodorant-second-x: 66;
+        --deodorant-second-y: 68;
+        --deodorant-second-scale: 1.15;
         --antiperspirant-x: 78;
         --antiperspirant-y: 62;
         --antiperspirant-width: clamp(5rem, 21vw, 8rem);
-        --antiperspirant-second-x: 23;
-        --antiperspirant-second-y: 64;
-        --antiperspirant-second-scale: 1.36;
+        --antiperspirant-second-x: 34;
+        --antiperspirant-second-y: 69;
+        --antiperspirant-second-scale: 1.55;
         --arm-size: clamp(18rem, 88vw, 32rem);
         --product-hint-scale: 1.06;
         --product-hover-scale: 1.1;
         --deodorant-panel-width: clamp(15rem, 72vw, 20rem);
-        --deodorant-panel-x: 60;
-        --deodorant-panel-y: 28;
+        --deodorant-panel-x: 50;
+        --deodorant-panel-y: 40;
         --antiperspirant-panel-width: clamp(17rem, 76vw, 22rem);
-        --antiperspirant-panel-x: 60;
-        --antiperspirant-panel-y: 73;
+        --antiperspirant-panel-x: 50;
+        --antiperspirant-panel-y: 44;
         --ingredient-panel-padding: clamp(0.65rem, 3vw, 1rem);
+    }
+
+    .current-solution__second-copy {
+        top: calc(12% + clamp(2.75rem, 6svh, 4rem));
+        left: 7%;
+        width: 86%;
+        transform: none;
     }
 }
 

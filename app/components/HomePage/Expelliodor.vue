@@ -241,8 +241,6 @@ onUnmounted(() => {
     >
         <h1 id="expelliodor-title" class="sr-only">Expelliodor</h1>
 
-        <Explosion v-if="showExplosionStudy" />
-
         <svg
             v-if="!showExplosionStudy"
             ref="artwork"

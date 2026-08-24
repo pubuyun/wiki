@@ -118,6 +118,9 @@ export default defineNuxtConfig({
         },
     },
     nitro: {
+        prerender: {
+            routes: ["/api/search-index.json"],
+        },
         publicAssets: [
             {
                 dir: contentGraphDirectory,

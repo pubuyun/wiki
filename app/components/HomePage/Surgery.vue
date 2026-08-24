@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { Icon } from "@iconify/vue";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { nextTick, onMounted, onUnmounted, ref } from "vue";
@@ -34,11 +35,15 @@ const knife = ref<HTMLImageElement | null>(null);
 const syringe = ref<HTMLImageElement | null>(null);
 const secondScene = ref<HTMLElement | null>(null);
 const finalScene = ref<HTMLElement | null>(null);
+const peopleScroller = ref<HTMLElement | null>(null);
 const irritationDetail = ref<HTMLElement | null>(null);
 const ecosystemDetail = ref<HTMLElement | null>(null);
 
 const activeDetail = ref<DetailKind | null>(null);
 const mobilePortrait = ref(false);
+const activePersonIndex = ref(0);
+
+const PERSON_COUNT = 3;
 
 let media: gsap.MatchMedia | undefined;
 let detailInteractionEnabled = false;
@@ -117,6 +122,33 @@ function handleDetailHover(kind: DetailKind, hovering: boolean) {
     if (mobilePortrait.value) return;
     if (hovering) showDetail(kind);
     else if (activeDetail.value === kind) hideDetails();
+}
+
+function updateActivePerson() {
+    if (!peopleScroller.value) return;
+
+    const pageWidth = peopleScroller.value.clientWidth;
+    if (!pageWidth) return;
+
+    activePersonIndex.value = Math.min(
+        PERSON_COUNT - 1,
+        Math.max(0, Math.round(peopleScroller.value.scrollLeft / pageWidth)),
+    );
+}
+
+function scrollPeople(direction: -1 | 1) {
+    if (!peopleScroller.value) return;
+
+    const nextIndex = Math.min(
+        PERSON_COUNT - 1,
+        Math.max(0, activePersonIndex.value + direction),
+    );
+
+    activePersonIndex.value = nextIndex;
+    peopleScroller.value.scrollTo({
+        left: peopleScroller.value.clientWidth * nextIndex,
+        behavior: "smooth",
+    });
 }
 
 onMounted(async () => {
@@ -786,7 +818,7 @@ onUnmounted(() => {
                         class="absolute inset-0 z-[70] bg-[#0a4297]"
                     >
                         <p
-                            class="surgery-final__copy absolute top-[8%] left-[5%] m-0 w-[90%] text-[clamp(1.25rem,2.15vw,2.25rem)] leading-[1.48] [text-wrap:balance] max-[52rem]:top-[4%] max-[52rem]:left-[4%] max-[52rem]:w-[92%] max-[52rem]:text-[clamp(.78rem,3.2vw,1.05rem)] max-[52rem]:leading-[1.3] portrait:top-[4%] portrait:left-[4%] portrait:w-[92%] portrait:text-[clamp(.78rem,3.2vw,1.05rem)] portrait:leading-[1.3]"
+                            class="surgery-final__copy surgery-final__copy--desktop absolute top-[8%] left-[5%] m-0 w-[90%] text-[clamp(1.25rem,2.15vw,2.25rem)] leading-[1.48] [text-wrap:balance] max-[52rem]:top-[4%] max-[52rem]:left-[4%] max-[52rem]:w-[92%] max-[52rem]:text-[clamp(.78rem,3.2vw,1.05rem)] max-[52rem]:leading-[1.3] portrait:top-[4%] portrait:left-[4%] portrait:w-[92%] portrait:text-[clamp(.78rem,3.2vw,1.05rem)] portrait:leading-[1.3]"
                             data-surgery-final
                         >
                             However, this option is generally restricted to
@@ -797,11 +829,42 @@ onUnmounted(() => {
                             of thermoregulatory function.
                         </p>
 
+                        <p
+                            class="surgery-final__copy surgery-final__copy--mobile surgery-final__copy--intro"
+                            data-surgery-final
+                        >
+                            However, this option is generally restricted to
+                            certain groups of people and is not suitable for
+                            minors, gravida, or conservative groups.
+                        </p>
+
+                        <p
+                            class="surgery-final__copy surgery-final__copy--mobile surgery-final__copy--risks"
+                            data-surgery-final
+                        >
+                            It also carries significant medical risks, including
+                            <span class="surgery-final__risk--scarring"
+                                >scarring</span
+                            >,
+                            <span class="surgery-final__risk--nerve"
+                                >nerve damage</span
+                            >, and
+                            <span class="surgery-final__risk--temperature"
+                                >irreversible alteration of thermoregulatory
+                                function</span
+                            >.
+                        </p>
+
                         <div
+                            id="surgery-people-carousel"
+                            ref="peopleScroller"
                             class="surgery-final__people absolute right-[7%] bottom-[2%] left-[7%] grid h-[53%] grid-cols-3 items-end gap-[7%] max-[52rem]:right-[4%] max-[52rem]:bottom-[3%] max-[52rem]:left-[4%] max-[52rem]:h-1/2 max-[52rem]:gap-[2%] portrait:right-[4%] portrait:bottom-[3%] portrait:left-[4%] portrait:h-1/2 portrait:gap-[2%]"
                             role="region"
                             aria-label="Swipe horizontally to view people for whom surgery may not be suitable"
                             :tabindex="mobilePortrait ? 0 : -1"
+                            @scroll.passive="updateActivePerson"
+                            @keydown.left.prevent="scrollPeople(-1)"
+                            @keydown.right.prevent="scrollPeople(1)"
                         >
                             <figure
                                 class="surgery-final__person-card m-0 grid h-full grid-rows-[minmax(0,1fr)_auto] text-center"
@@ -837,6 +900,41 @@ onUnmounted(() => {
                                 />
                             </figure>
                         </div>
+
+                        <nav
+                            class="surgery-final__nav"
+                            aria-label="People carousel controls"
+                            data-surgery-final
+                        >
+                            <button
+                                type="button"
+                                aria-label="Show previous person"
+                                aria-controls="surgery-people-carousel"
+                                :disabled="activePersonIndex === 0"
+                                @click="scrollPeople(-1)"
+                            >
+                                <Icon
+                                    icon="lucide:arrow-left"
+                                    class="surgery-final__nav-icon"
+                                    aria-hidden="true"
+                                />
+                            </button>
+                            <button
+                                type="button"
+                                aria-label="Show next person"
+                                aria-controls="surgery-people-carousel"
+                                :disabled="
+                                    activePersonIndex === PERSON_COUNT - 1
+                                "
+                                @click="scrollPeople(1)"
+                            >
+                                <Icon
+                                    icon="lucide:arrow-right"
+                                    class="surgery-final__nav-icon"
+                                    aria-hidden="true"
+                                />
+                            </button>
+                        </nav>
                     </div>
                 </article>
 
@@ -908,6 +1006,14 @@ onUnmounted(() => {
     -webkit-mask-repeat: no-repeat;
 }
 
+.surgery-final__nav {
+    display: none;
+}
+
+.surgery-final__copy--mobile {
+    display: none;
+}
+
 @media (max-width: 52rem), (orientation: portrait) {
     .surgery__stage {
         --panel-x: 5%;
@@ -941,19 +1047,19 @@ onUnmounted(() => {
 @media (orientation: portrait) and (max-width: 52rem) {
     .surgery__stage {
         --skin-y: 50%;
-        --skin-width: 100%;
-        --skin-irritation-target-y: 30%;
-        --axillary-ecosystem-target-y: 72%;
-        --knife-width: clamp(3.5rem, 15vw, 5.5rem);
-        --knife-x: 68%;
-        --knife-y: 39%;
-        --knife-start-rotation: 10;
-        --knife-rotation: 18;
-        --syringe-width: clamp(13rem, 52vw, 19rem);
-        --syringe-x: 4%;
-        --syringe-y: 32%;
-        --syringe-start-rotation: 0;
-        --syringe-rotation: 52;
+        --skin-width: 125%;
+        --skin-irritation-target-y: 37.5%;
+        --axillary-ecosystem-target-y: 78.5%;
+        --knife-width: clamp(3rem, 11.5vw, 4.5rem);
+        --knife-x: 62%;
+        --knife-y: 26%;
+        --knife-start-rotation: -8;
+        --knife-rotation: 12;
+        --syringe-width: clamp(11rem, 46vw, 16rem);
+        --syringe-x: 7%;
+        --syringe-y: 30%;
+        --syringe-start-rotation: 32;
+        --syringe-rotation: 58;
     }
 
     .surgery-guide {
@@ -1030,33 +1136,65 @@ onUnmounted(() => {
 
     .surgery-clinical__copy--lead {
         top: 7%;
-        left: 7%;
-        width: 86%;
+        left: 4%;
+        width: 68%;
     }
 
     .surgery-clinical__copy--support {
         top: 71%;
-        left: 6%;
-        width: 68%;
+        left: 4%;
+        width: 92%;
     }
 
     .surgery-clinical__questioning {
-        top: 73%;
+        top: 6%;
         right: 2.5%;
-        width: clamp(4.75rem, 21vw, 7rem);
+        width: clamp(4.75rem, 20vw, 6.5rem);
     }
 
-    .surgery-final__copy {
+    .surgery-final__copy--desktop {
+        display: none;
+    }
+
+    .surgery-final__copy--mobile {
+        position: absolute;
+        left: 4%;
+        display: block;
+        width: 92%;
+        margin: 0;
         font-size: clamp(0.95rem, 3.75vw, 1.2rem);
         line-height: 1.32;
+        text-wrap: balance;
+    }
+
+    .surgery-final__copy--intro {
+        top: 5%;
+    }
+
+    .surgery-final__copy--risks {
+        bottom: 5%;
+        text-wrap: wrap;
+    }
+
+    .surgery-final__risk--scarring {
+        color: #ff8e81;
+    }
+
+    .surgery-final__risk--nerve {
+        color: #ffd166;
+    }
+
+    .surgery-final__risk--temperature {
+        color: #61dfc7;
     }
 
     .surgery-final__people {
+        top: 24%;
         right: 0;
-        bottom: 2%;
+        bottom: 24%;
         left: 0;
         display: flex;
-        height: 60%;
+        height: auto;
         gap: 0;
         overflow-x: auto;
         overflow-y: hidden;
@@ -1074,6 +1212,56 @@ onUnmounted(() => {
     .surgery-final__people:focus-visible {
         outline: 0.18rem solid #61dfc7;
         outline-offset: -0.35rem;
+    }
+
+    .surgery-final__nav {
+        pointer-events: none;
+        position: absolute;
+        top: 50%;
+        right: 4%;
+        left: 4%;
+        z-index: 80;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .surgery-final__nav button {
+        pointer-events: auto;
+        display: grid;
+        width: clamp(2.55rem, 11vw, 3.25rem);
+        aspect-ratio: 1;
+        cursor: pointer;
+        place-items: center;
+        border: 0;
+        border-radius: 999px;
+        background: var(--primary);
+        color: var(--surface);
+        box-shadow: 0 0.45rem 1rem rgb(1 24 58 / 28%);
+        transition:
+            opacity 160ms ease,
+            transform 160ms ease,
+            filter 160ms ease;
+    }
+
+    .surgery-final__nav button:not(:disabled):hover,
+    .surgery-final__nav button:not(:disabled):focus-visible {
+        transform: scale(1.08);
+        filter: brightness(1.08);
+    }
+
+    .surgery-final__nav button:focus-visible {
+        outline: 0.2rem solid var(--outline);
+        outline-offset: 0.18rem;
+    }
+
+    .surgery-final__nav-icon {
+        width: clamp(1.35rem, 5.5vw, 1.8rem);
+        height: clamp(1.35rem, 5.5vw, 1.8rem);
+    }
+
+    .surgery-final__nav button:disabled {
+        cursor: default;
+        opacity: 0.35;
     }
 
     .surgery-final__person-card {

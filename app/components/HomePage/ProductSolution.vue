@@ -654,6 +654,19 @@ onBeforeUnmount(() => {
     background: transparent !important;
 }
 
+/*
+ * The rig moves around the solution markers during the handoff. Keep the
+ * model-viewer canvas wider than the viewport so a rotated bottle cannot run
+ * into the WebGL canvas edge while the rig is translated. Its height stays
+ * unchanged, so the model's framing and apparent size are unaffected.
+ */
+.product-solution-sequence :deep(.product-model) {
+    right: auto;
+    left: -50%;
+    width: 200%;
+    max-width: none;
+}
+
 .product-intro-layer {
     position: absolute;
     inset: 0;

@@ -31,10 +31,29 @@ type ResolvedChapter = {
 
 type ChapterDirection = -1 | 1;
 
+type MobileNavigatorPosition = {
+    x: number;
+    y: number;
+};
+
+type MobileNavigatorDrag = {
+    pointerId: number;
+    startPointerX: number;
+    startPointerY: number;
+    startX: number;
+    startY: number;
+    didDrag: boolean;
+};
+
 // Chapter navigation tuning.
 const CHAPTER_PROXIMITY_THRESHOLD_PX = 64;
 const NEXT_SCROLL_DURATION_SECONDS = 1.1;
 const PREVIOUS_SCROLL_DURATION_SECONDS = 1.1;
+const MOBILE_NAVIGATOR_SIZE_PX = 56;
+const MOBILE_NAVIGATOR_EDGE_GAP_PX = 12;
+const MOBILE_NAVIGATOR_DRAG_THRESHOLD_PX = 6;
+const MOBILE_PROGRESS_RADIUS = 24;
+const MOBILE_PROGRESS_CIRCUMFERENCE = 2 * Math.PI * MOBILE_PROGRESS_RADIUS;
 const SCROLL_KEYS = new Set([
     "ArrowDown",
     "ArrowUp",
@@ -89,10 +108,15 @@ const currentChapterIndex = ref(0);
 const previousChapterIndex = ref<number>();
 const nextChapterIndex = ref<number>();
 const isMoving = ref(false);
+const isMobileNavigatorDragging = ref(false);
+const mobileNavigatorPosition = ref<MobileNavigatorPosition>();
 const scrollController = inject(HOME_SCROLL_CONTROLLER);
 
 let scrollFrame = 0;
 let moveToken = 0;
+let mobileNavigatorSide: "left" | "right" = "right";
+let mobileNavigatorDrag: MobileNavigatorDrag | undefined;
+let mobileNavigatorDidDrag = false;
 
 const chapterCount = HOME_CHAPTER_LABELS.length;
 const chapterTitle = computed(() =>
@@ -107,6 +131,32 @@ const hasPreviousChapter = computed(
     () => previousChapterIndex.value !== undefined,
 );
 const hasNextChapter = computed(() => nextChapterIndex.value !== undefined);
+const mobileProgressDashOffset = computed(
+    () =>
+        MOBILE_PROGRESS_CIRCUMFERENCE *
+        (1 - (currentChapterIndex.value + 1) / chapterCount),
+);
+const mobileNavigatorLabel = computed(() => {
+    const position = `Chapter ${currentChapterIndex.value + 1} of ${chapterCount}: ${chapterTitle.value}`;
+    return hasNextChapter.value
+        ? `Go to next chapter. ${position}`
+        : `Final chapter. ${position}`;
+});
+const mobileNavigatorStyle = computed(() => {
+    const position = mobileNavigatorPosition.value;
+
+    if (!position) {
+        return {
+            bottom: "max(1rem, env(safe-area-inset-bottom))",
+            right: "1rem",
+        };
+    }
+
+    return {
+        left: `${position.x}px`,
+        top: `${position.y}px`,
+    };
+});
 
 const nextFrame = () =>
     new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
@@ -330,6 +380,123 @@ function scrollToNextChapter() {
     return scrollToChapter(1);
 }
 
+function mobileNavigatorBounds() {
+    return {
+        maxX: Math.max(
+            MOBILE_NAVIGATOR_EDGE_GAP_PX,
+            window.innerWidth -
+                MOBILE_NAVIGATOR_SIZE_PX -
+                MOBILE_NAVIGATOR_EDGE_GAP_PX,
+        ),
+        maxY: Math.max(
+            MOBILE_NAVIGATOR_EDGE_GAP_PX,
+            window.innerHeight -
+                MOBILE_NAVIGATOR_SIZE_PX -
+                MOBILE_NAVIGATOR_EDGE_GAP_PX,
+        ),
+    };
+}
+
+function clampMobileNavigatorPosition(x: number, y: number) {
+    const { maxX, maxY } = mobileNavigatorBounds();
+
+    return {
+        x: Math.min(Math.max(x, MOBILE_NAVIGATOR_EDGE_GAP_PX), maxX),
+        y: Math.min(Math.max(y, MOBILE_NAVIGATOR_EDGE_GAP_PX), maxY),
+    };
+}
+
+function initializeMobileNavigatorPosition() {
+    const { maxX, maxY } = mobileNavigatorBounds();
+    const currentPosition = mobileNavigatorPosition.value;
+
+    mobileNavigatorPosition.value = clampMobileNavigatorPosition(
+        mobileNavigatorSide === "left" ? MOBILE_NAVIGATOR_EDGE_GAP_PX : maxX,
+        currentPosition?.y ?? maxY,
+    );
+}
+
+function snapMobileNavigatorToEdge() {
+    const position = mobileNavigatorPosition.value;
+    if (!position) return;
+
+    const { maxX } = mobileNavigatorBounds();
+    mobileNavigatorSide =
+        position.x + MOBILE_NAVIGATOR_SIZE_PX / 2 < window.innerWidth / 2
+            ? "left"
+            : "right";
+    mobileNavigatorPosition.value = clampMobileNavigatorPosition(
+        mobileNavigatorSide === "left" ? MOBILE_NAVIGATOR_EDGE_GAP_PX : maxX,
+        position.y,
+    );
+}
+
+function handleMobileNavigatorPointerDown(event: PointerEvent) {
+    if (event.button !== 0) return;
+
+    if (!mobileNavigatorPosition.value) initializeMobileNavigatorPosition();
+    const position = mobileNavigatorPosition.value;
+    if (!position) return;
+
+    mobileNavigatorDidDrag = false;
+    isMobileNavigatorDragging.value = true;
+    mobileNavigatorDrag = {
+        pointerId: event.pointerId,
+        startPointerX: event.clientX,
+        startPointerY: event.clientY,
+        startX: position.x,
+        startY: position.y,
+        didDrag: false,
+    };
+    (event.currentTarget as HTMLElement).setPointerCapture(event.pointerId);
+}
+
+function handleMobileNavigatorPointerMove(event: PointerEvent) {
+    const drag = mobileNavigatorDrag;
+    if (!drag || drag.pointerId !== event.pointerId) return;
+
+    const deltaX = event.clientX - drag.startPointerX;
+    const deltaY = event.clientY - drag.startPointerY;
+
+    if (
+        !drag.didDrag &&
+        Math.hypot(deltaX, deltaY) < MOBILE_NAVIGATOR_DRAG_THRESHOLD_PX
+    ) {
+        return;
+    }
+
+    drag.didDrag = true;
+    mobileNavigatorPosition.value = clampMobileNavigatorPosition(
+        drag.startX + deltaX,
+        drag.startY + deltaY,
+    );
+}
+
+function finishMobileNavigatorDrag(event: PointerEvent, cancelled = false) {
+    const drag = mobileNavigatorDrag;
+    if (!drag || drag.pointerId !== event.pointerId) return;
+
+    const target = event.currentTarget as HTMLElement;
+    if (target.hasPointerCapture(event.pointerId)) {
+        target.releasePointerCapture(event.pointerId);
+    }
+
+    if (drag.didDrag) snapMobileNavigatorToEdge();
+    mobileNavigatorDidDrag = !cancelled && drag.didDrag;
+    isMobileNavigatorDragging.value = false;
+    mobileNavigatorDrag = undefined;
+}
+
+function handleMobileNavigatorClick(event: MouseEvent) {
+    if (mobileNavigatorDidDrag) {
+        mobileNavigatorDidDrag = false;
+        event.preventDefault();
+        return;
+    }
+
+    scrollToNextChapter();
+}
+
 function returnControlToUser() {
     if (!isMoving.value) return;
 
@@ -361,7 +528,11 @@ async function handleSceneLoaded() {
 
 onMounted(() => {
     resolveChapterPositions();
+    initializeMobileNavigatorPosition();
     window.addEventListener("scroll", handleScroll, { passive: true });
+    window.addEventListener("resize", initializeMobileNavigatorPosition, {
+        passive: true,
+    });
     window.addEventListener("wheel", returnControlToUser, {
         passive: true,
         capture: true,
@@ -383,6 +554,7 @@ onBeforeUnmount(() => {
     if (isMoving.value) scrollController?.cancel();
     cancelAnimationFrame(scrollFrame);
     window.removeEventListener("scroll", handleScroll);
+    window.removeEventListener("resize", initializeMobileNavigatorPosition);
     window.removeEventListener("wheel", returnControlToUser, true);
     window.removeEventListener("touchstart", returnControlToUser, true);
     window.removeEventListener("pointerdown", returnControlToUser, true);
@@ -400,7 +572,7 @@ onBeforeUnmount(() => {
 
     <nav
         v-if="isNavigatorVisible"
-        class="fixed bottom-[clamp(1rem,3svh,2rem)] left-1/2 z-90 flex max-w-[calc(100vw-2rem)] -translate-x-1/2 items-center overflow-hidden rounded-full border border-white/25 bg-[#032d65]/92 text-white shadow-[0_1rem_3rem_rgb(0_14_45_/_35%)] backdrop-blur-md"
+        class="fixed bottom-[clamp(1rem,3svh,2rem)] left-1/2 z-90 hidden max-w-[calc(100vw-2rem)] -translate-x-1/2 items-center overflow-hidden rounded-full border border-white/25 bg-[#032d65]/92 text-white shadow-[0_1rem_3rem_rgb(0_14_45_/_35%)] backdrop-blur-md sm:flex"
         aria-label="Homepage chapter navigation"
     >
         <button
@@ -442,6 +614,79 @@ onBeforeUnmount(() => {
                 class="transition-transform group-hover:translate-x-1 motion-reduce:transition-none"
                 >→</span
             >
+        </button>
+    </nav>
+
+    <nav
+        v-if="isNavigatorVisible"
+        class="fixed z-90 sm:hidden"
+        :class="
+            isMobileNavigatorDragging
+                ? 'transition-none'
+                : 'transition-[left,top] duration-300 ease-out motion-reduce:transition-none'
+        "
+        :style="mobileNavigatorStyle"
+        aria-label="Homepage chapter navigation"
+    >
+        <button
+            type="button"
+            class="relative grid size-14 touch-none place-items-center overflow-visible rounded-full border-0 bg-[#032d65]/94 text-white shadow-[0_.75rem_2rem_rgb(0_14_45_/_38%)] backdrop-blur-md transition-[transform,background-color] duration-200 select-none hover:bg-[#06427f] focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-[#61dfc7] disabled:cursor-default disabled:opacity-60 motion-reduce:transition-none"
+            :class="[
+                isMobileNavigatorDragging
+                    ? 'scale-105 cursor-grabbing'
+                    : 'cursor-grab active:scale-95',
+                !hasNextChapter && 'opacity-60',
+            ]"
+            :aria-disabled="!hasNextChapter || undefined"
+            :aria-label="mobileNavigatorLabel"
+            :aria-busy="isMoving || undefined"
+            @click="handleMobileNavigatorClick"
+            @pointerdown="handleMobileNavigatorPointerDown"
+            @pointermove.prevent="handleMobileNavigatorPointerMove"
+            @pointerup="finishMobileNavigatorDrag"
+            @pointercancel="finishMobileNavigatorDrag($event, true)"
+        >
+            <svg
+                class="pointer-events-none absolute inset-0 size-full -rotate-90"
+                viewBox="0 0 56 56"
+                aria-hidden="true"
+            >
+                <circle
+                    cx="28"
+                    cy="28"
+                    :r="MOBILE_PROGRESS_RADIUS"
+                    fill="none"
+                    stroke="rgb(255 255 255 / 22%)"
+                    stroke-width="3"
+                />
+                <circle
+                    cx="28"
+                    cy="28"
+                    :r="MOBILE_PROGRESS_RADIUS"
+                    fill="none"
+                    stroke="#61dfc7"
+                    stroke-linecap="round"
+                    stroke-width="3"
+                    :stroke-dasharray="MOBILE_PROGRESS_CIRCUMFERENCE"
+                    :stroke-dashoffset="mobileProgressDashOffset"
+                    class="transition-[stroke-dashoffset] duration-500 motion-reduce:transition-none"
+                />
+            </svg>
+
+            <svg
+                class="pointer-events-none size-6"
+                viewBox="0 0 24 24"
+                fill="none"
+                aria-hidden="true"
+            >
+                <path
+                    d="M12 4.75v13.5m0 0 5-5m-5 5-5-5"
+                    stroke="currentColor"
+                    stroke-width="2.25"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                />
+            </svg>
         </button>
     </nav>
 </template>

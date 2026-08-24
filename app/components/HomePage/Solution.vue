@@ -91,6 +91,8 @@ const SCENE_LAYOUT = {
     transporterSize: 28,
     markerRadius: 77,
     markerSize: 45,
+    mobilePortraitMarkerRadius: 68,
+    mobilePortraitMarkerSize: 38,
     copy: { x: 4, y: 10, width: 52 },
     portraitCopy: { x: 7, y: 8, width: 86 },
     copyEnterYOffset: 12,
@@ -160,17 +162,17 @@ const MOBILE_PORTRAIT_TARGETS = [
     {
         ...TRANSITION_LAYOUT.targets[0],
         point: { x: 50, y: 40 } satisfies PercentPoint,
-        width: TRANSITION_LAYOUT.targets[0].width * 1.35,
+        width: TRANSITION_LAYOUT.targets[0].width * 2.35,
     },
     {
         ...TRANSITION_LAYOUT.targets[1],
         point: { x: 50, y: 40 } satisfies PercentPoint,
-        width: TRANSITION_LAYOUT.targets[1].width * 1.35,
+        width: TRANSITION_LAYOUT.targets[1].width * 2.35,
     },
     {
         ...TRANSITION_LAYOUT.targets[2],
         point: { x: 50, y: 40 } satisfies PercentPoint,
-        width: TRANSITION_LAYOUT.targets[2].width * 1.35,
+        width: TRANSITION_LAYOUT.targets[2].width * 2.35,
     },
 ] as const;
 
@@ -181,8 +183,13 @@ const ROTATION_STOPS = {
     solution3: -570,
 } as const;
 
-// Each transporter lands at 300 degrees with a 30-degree local orientation
-// after its counter-clockwise rotation stop.
+// Portrait phones place the active transporter on the top-center axis. Its
+// attached plug and the three live collision targets then follow that same
+// rotated transporter geometry instead of needing separate mobile offsets.
+const MOBILE_PORTRAIT_ROTATION_OFFSET = -30;
+
+// On larger layouts each transporter lands at 300 degrees; mobile portrait
+// adds the offset above so the active transporter lands at 270 degrees.
 const TRANSPORTER_ANGLES = [270, 30, 150] as const;
 
 const SOLUTIONS = [
@@ -297,7 +304,12 @@ function transporterStyle(angle: number) {
     };
 }
 
-function overviewMarkerLayout(angle: number, wheelSize: number) {
+function overviewMarkerLayout(
+    angle: number,
+    wheelSize: number,
+    markerRadius = SCENE_LAYOUT.markerRadius,
+    markerSize = SCENE_LAYOUT.markerSize,
+) {
     if (!scene.value) {
         return {
             point: SCENE_LAYOUT.overviewCenter,
@@ -310,7 +322,7 @@ function overviewMarkerLayout(angle: number, wheelSize: number) {
         scene.value.clientWidth *
         (wheelSize / 100) *
         SCENE_LAYOUT.overviewScale *
-        (SCENE_LAYOUT.markerRadius / 100);
+        (markerRadius / 100);
 
     return {
         point: {
@@ -321,10 +333,7 @@ function overviewMarkerLayout(angle: number, wheelSize: number) {
                 SCENE_LAYOUT.overviewCenter.y +
                 (Math.sin(radians) * radius * 100) / scene.value.clientHeight,
         },
-        width:
-            wheelSize *
-            SCENE_LAYOUT.overviewScale *
-            (SCENE_LAYOUT.markerSize / 100),
+        width: wheelSize * SCENE_LAYOUT.overviewScale * (markerSize / 100),
     };
 }
 
@@ -478,11 +487,23 @@ onMounted(() => {
                 ? SCENE_LAYOUT.portraitWheelSize
                 : SCENE_LAYOUT.wheelSize;
             const overviewActorLayouts = SOLUTIONS.map((solution) =>
-                overviewMarkerLayout(solution.angle, overviewWheelSize),
+                overviewMarkerLayout(
+                    solution.angle,
+                    overviewWheelSize,
+                    isMobilePortrait
+                        ? SCENE_LAYOUT.mobilePortraitMarkerRadius
+                        : SCENE_LAYOUT.markerRadius,
+                    isMobilePortrait
+                        ? SCENE_LAYOUT.mobilePortraitMarkerSize
+                        : SCENE_LAYOUT.markerSize,
+                ),
             );
             const transitionTargets = isMobilePortrait
                 ? MOBILE_PORTRAIT_TARGETS
                 : TRANSITION_LAYOUT.targets;
+            const solutionRotationOffset = isMobilePortrait
+                ? MOBILE_PORTRAIT_ROTATION_OFFSET
+                : 0;
             const firstTarget = transitionTargets[0];
             const firstArc: ActorArc = {
                 start: overviewActorLayouts[0]!.point,
@@ -663,7 +684,8 @@ onMounted(() => {
                 .to(
                     wheelRotor.value,
                     {
-                        rotation: ROTATION_STOPS.solution1,
+                        rotation:
+                            ROTATION_STOPS.solution1 + solutionRotationOffset,
                         duration: firstArcDuration,
                         ease: reduceMotion ? "none" : "power3.inOut",
                     },
@@ -768,7 +790,8 @@ onMounted(() => {
                 .to(
                     wheelRotor.value,
                     {
-                        rotation: ROTATION_STOPS.solution2,
+                        rotation:
+                            ROTATION_STOPS.solution2 + solutionRotationOffset,
                         duration: entryArcDuration,
                         ease: reduceMotion ? "none" : "power3.inOut",
                     },
@@ -878,7 +901,8 @@ onMounted(() => {
                 .to(
                     wheelRotor.value,
                     {
-                        rotation: ROTATION_STOPS.solution3,
+                        rotation:
+                            ROTATION_STOPS.solution3 + solutionRotationOffset,
                         duration: entryArcDuration,
                         ease: reduceMotion ? "none" : "power3.inOut",
                     },
@@ -1053,7 +1077,7 @@ onUnmounted(() => {
                         >
                             <img
                                 class="block size-full object-contain select-none"
-                                src="https://static.igem.wiki/teams/6133/wiki/homepage/plugoutlined.avif"
+                                src="https://static.igem.wiki/teams/6133/wiki/homepage/plugoutlined1.avif"
                                 alt=""
                                 loading="eager"
                                 fetchpriority="high"

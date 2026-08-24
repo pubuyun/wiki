@@ -110,7 +110,7 @@ const MODEL_LAYOUT = {
 } as const;
 
 // One place to tune the bottle size while its centre sits on the right edge.
-const MOBILE_PRODUCT_RIGHT_SCALE = 0.9;
+const MOBILE_PRODUCT_RIGHT_SCALE = 1.12;
 
 const PRODUCT_ANIMATION_NAME = "CylinderAction";
 const PRODUCT_ANIMATION_END_EPSILON_SECONDS = 0.0001;

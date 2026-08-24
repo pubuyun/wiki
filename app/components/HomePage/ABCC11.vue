@@ -762,7 +762,7 @@ onMounted(async () => {
                         : phenotypeTransporters,
                     {
                         autoAlpha: 1,
-                        y: 0,
+                        ...(isMobilePortrait ? {} : { y: 0 }),
                         duration: isMobilePortrait ? 0.3 : 0.35,
                         stagger: 0.08,
                         ease: "power2.out",
@@ -779,13 +779,13 @@ onMounted(async () => {
                     homeChapterActivationLabel(HOME_CHAPTERS.abcc11Pathway),
                     "story",
                 )
-                .to(secondScene.value, { autoAlpha: 1, duration: 0.2 }, "story")
-                .to(storyGenotypes, { autoAlpha: 1, duration: 0.2 }, "story")
-                .to(
+                .set(secondScene.value, { autoAlpha: 1 }, "story")
+                .set(storyGenotypes, { autoAlpha: 1 }, "story")
+                .set(
                     isMobilePortrait
                         ? [odorGenotypes.value, ttGenotype.value]
                         : [],
-                    { autoAlpha: 0, duration: 0.2 },
+                    { autoAlpha: 0 },
                     "story",
                 )
                 .to(
@@ -1581,7 +1581,7 @@ onUnmounted(() => {
 
     .genotype-group--tt {
         top: auto;
-        right: 3vw;
+        right: 30vw;
         bottom: 25svh;
     }
 
@@ -1622,14 +1622,14 @@ onUnmounted(() => {
 
     .genotype-group--odor {
         top: var(--abcc11-top-space);
-        left: 4vw;
+        left: calc(50% - clamp(9.75rem, 33vw, 13.5rem));
         width: 92vw;
     }
 
     .genotype-group--tt {
         right: auto;
         bottom: 11svh;
-        left: 18vw;
+        left: calc(50% - clamp(4.875rem, 16.5vw, 6.75rem));
         width: 64vw;
     }
 
@@ -1725,7 +1725,6 @@ onUnmounted(() => {
     }
 
     .abcc11-story__gland {
-        --gland-mirror: -1;
         grid-column: 1;
         grid-row: 3;
         width: min(58%, 8rem);

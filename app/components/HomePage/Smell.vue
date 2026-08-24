@@ -110,6 +110,7 @@ const SCENT_WAVE_LENGTH = 760;
 const SCENT_WAVE_DURATION = 8;
 const SCENT_WAVE_AMPLITUDE = 0.6;
 const SCENT_WAVE_FREQUENCY = (Math.PI * 2) / SCENT_WAVE_LENGTH;
+const PAUSE_ANCHOR_HOLD_DURATION = 0.2;
 
 function formatCoordinate(value: number) {
     return Math.round(value * 10) / 10;
@@ -407,7 +408,11 @@ onMounted(() => {
                     "content+=0.68",
                 );
 
-            story.addLabel(HOME_CHAPTERS.smell);
+            story
+                .addLabel(HOME_CHAPTERS.smell)
+                // Keep the chapter anchor inside the active pinned range so
+                // the ambient wave continues flowing while resting here.
+                .to({}, { duration: PAUSE_ANCHOR_HOLD_DURATION });
 
             return () => {
                 ambientAnimations.forEach((animation) => animation.kill());

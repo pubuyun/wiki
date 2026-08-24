@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import Expelliodor from "../components/HomePage/Expelliodor.vue";
+import PortraitOrientationAlert from "../components/HomePage/PortraitOrientationAlert.client.vue";
 
 definePageMeta({
     layout: "home",
@@ -11,6 +12,7 @@ useSeoMeta({
 
 <template>
     <article class="w-full flex-1 overflow-hidden bg-[#03316d]">
+        <PortraitOrientationAlert />
         <Expelliodor />
         <ClientOnly>
             <HomePageScenes />

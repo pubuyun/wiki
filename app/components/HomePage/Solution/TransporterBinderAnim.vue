@@ -367,7 +367,7 @@ defineExpose({ buildTimeline, getRoot, invalidateLayout });
                         ref="plug"
                         class="block aspect-[645/723] h-auto max-h-full object-contain will-change-[transform,opacity] select-none"
                         :style="{ width: `${props.handoff.iconWidth}%` }"
-                        src="https://static.igem.wiki/teams/6133/wiki/homepage/plugoutlined.avif"
+                        src="https://static.igem.wiki/teams/6133/wiki/homepage/plugoutlined1.avif"
                         alt=""
                         loading="eager"
                         fetchpriority="high"
