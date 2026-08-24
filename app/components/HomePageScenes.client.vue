@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { Icon } from "@iconify/vue";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import {
@@ -8,6 +9,7 @@ import {
     onBeforeUnmount,
     onMounted,
     ref,
+    watch,
 } from "vue";
 
 import SceneSequence from "./HomePage/SceneSequence.vue";
@@ -31,12 +33,12 @@ type ResolvedChapter = {
 
 type ChapterDirection = -1 | 1;
 
-type MobileNavigatorPosition = {
+type NavigatorPosition = {
     x: number;
     y: number;
 };
 
-type MobileNavigatorDrag = {
+type NavigatorDrag = {
     pointerId: number;
     startPointerX: number;
     startPointerY: number;
@@ -45,10 +47,15 @@ type MobileNavigatorDrag = {
     didDrag: boolean;
 };
 
+type DesktopNavigatorEdge = "top" | "right" | "bottom" | "left";
+
 // Chapter navigation tuning.
 const CHAPTER_PROXIMITY_THRESHOLD_PX = 64;
 const NEXT_SCROLL_DURATION_SECONDS = 1.1;
 const PREVIOUS_SCROLL_DURATION_SECONDS = 1.1;
+const DESKTOP_NAVIGATOR_EDGE_GAP_PX = 16;
+const DESKTOP_NAVIGATOR_DRAG_THRESHOLD_PX = 6;
+const DESKTOP_NAVIGATOR_HORIZONTAL_EDGE_ZONE_PX = 72;
 const MOBILE_NAVIGATOR_SIZE_PX = 56;
 const MOBILE_NAVIGATOR_EDGE_GAP_PX = 12;
 const MOBILE_NAVIGATOR_DRAG_THRESHOLD_PX = 6;
@@ -82,6 +89,9 @@ const lazyScenes = [
     },
     {
         id: "mechanism",
+        // CurrentSolution is rendered inside the combined pinned scene, so a
+        // reload captured from its nested section must preload this scene too.
+        restoreIds: ["current-solution"],
         loader: () => import("./HomePage/MechanismCurrentSolution.vue"),
         // The cross-scene precursor path needs Mechanism's anchor and
         // ScrollTrigger before ABCC11 reaches glandInside for the first time.
@@ -108,14 +118,20 @@ const currentChapterIndex = ref(0);
 const previousChapterIndex = ref<number>();
 const nextChapterIndex = ref<number>();
 const isMoving = ref(false);
+const desktopNavigator = ref<HTMLElement>();
+const desktopNavigatorEdge = ref<DesktopNavigatorEdge>("right");
+const isDesktopNavigatorDragging = ref(false);
+const desktopNavigatorPosition = ref<NavigatorPosition>();
 const isMobileNavigatorDragging = ref(false);
-const mobileNavigatorPosition = ref<MobileNavigatorPosition>();
+const mobileNavigatorPosition = ref<NavigatorPosition>();
 const scrollController = inject(HOME_SCROLL_CONTROLLER);
 
 let scrollFrame = 0;
 let moveToken = 0;
+let desktopNavigatorDrag: NavigatorDrag | undefined;
+let desktopNavigatorDidDrag = false;
 let mobileNavigatorSide: "left" | "right" = "right";
-let mobileNavigatorDrag: MobileNavigatorDrag | undefined;
+let mobileNavigatorDrag: NavigatorDrag | undefined;
 let mobileNavigatorDidDrag = false;
 
 const chapterCount = HOME_CHAPTER_LABELS.length;
@@ -131,6 +147,34 @@ const hasPreviousChapter = computed(
     () => previousChapterIndex.value !== undefined,
 );
 const hasNextChapter = computed(() => nextChapterIndex.value !== undefined);
+const isDesktopNavigatorVertical = computed(
+    () =>
+        desktopNavigatorEdge.value === "left" ||
+        desktopNavigatorEdge.value === "right",
+);
+const desktopVerticalProgress = computed(
+    () => `${((currentChapterIndex.value + 1) / chapterCount) * 100}%`,
+);
+const remainingChapterCount = computed(
+    () => chapterCount - currentChapterIndex.value - 1,
+);
+const desktopNavigatorStyle = computed(() => {
+    const position = desktopNavigatorPosition.value;
+
+    if (!position) {
+        return {
+            right: "1rem",
+            top: "50%",
+            transform: "translateY(-50%)",
+        };
+    }
+
+    return {
+        left: `${position.x}px`,
+        top: `${position.y}px`,
+        transform: "none",
+    };
+});
 const mobileProgressDashOffset = computed(
     () =>
         MOBILE_PROGRESS_CIRCUMFERENCE *
@@ -156,6 +200,13 @@ const mobileNavigatorStyle = computed(() => {
         left: `${position.x}px`,
         top: `${position.y}px`,
     };
+});
+
+watch(isNavigatorVisible, async (isVisible) => {
+    if (!isVisible) return;
+
+    await nextTick();
+    await positionDesktopNavigatorAtEdge();
 });
 
 const nextFrame = () =>
@@ -380,6 +431,240 @@ function scrollToNextChapter() {
     return scrollToChapter(1);
 }
 
+function desktopNavigatorSize() {
+    const element = desktopNavigator.value;
+
+    return {
+        width: element?.offsetWidth ?? 0,
+        height: element?.offsetHeight ?? 0,
+    };
+}
+
+function clampDesktopNavigatorPosition(
+    x: number,
+    y: number,
+    width = desktopNavigatorSize().width,
+    height = desktopNavigatorSize().height,
+) {
+    const maxX = Math.max(
+        DESKTOP_NAVIGATOR_EDGE_GAP_PX,
+        window.innerWidth - width - DESKTOP_NAVIGATOR_EDGE_GAP_PX,
+    );
+    const maxY = Math.max(
+        DESKTOP_NAVIGATOR_EDGE_GAP_PX,
+        window.innerHeight - height - DESKTOP_NAVIGATOR_EDGE_GAP_PX,
+    );
+
+    return {
+        x: Math.min(Math.max(x, DESKTOP_NAVIGATOR_EDGE_GAP_PX), maxX),
+        y: Math.min(Math.max(y, DESKTOP_NAVIGATOR_EDGE_GAP_PX), maxY),
+    };
+}
+
+async function positionDesktopNavigatorAtEdge(
+    edge = desktopNavigatorEdge.value,
+    position = desktopNavigatorPosition.value,
+) {
+    const element = desktopNavigator.value;
+    if (!element || element.offsetParent === null) return;
+
+    const oldSize = desktopNavigatorSize();
+    const oldCenter = position
+        ? {
+              x: position.x + oldSize.width / 2,
+              y: position.y + oldSize.height / 2,
+          }
+        : {
+              x:
+                  edge === "left"
+                      ? DESKTOP_NAVIGATOR_EDGE_GAP_PX
+                      : edge === "right"
+                        ? window.innerWidth - DESKTOP_NAVIGATOR_EDGE_GAP_PX
+                        : window.innerWidth / 2,
+              y:
+                  edge === "top"
+                      ? DESKTOP_NAVIGATOR_EDGE_GAP_PX
+                      : edge === "bottom"
+                        ? window.innerHeight - DESKTOP_NAVIGATOR_EDGE_GAP_PX
+                        : window.innerHeight / 2,
+          };
+
+    desktopNavigatorEdge.value = edge;
+    await nextTick();
+
+    const { width, height } = desktopNavigatorSize();
+    let x = oldCenter.x - width / 2;
+    let y = oldCenter.y - height / 2;
+
+    if (edge === "left") x = DESKTOP_NAVIGATOR_EDGE_GAP_PX;
+    if (edge === "right") {
+        x = window.innerWidth - width - DESKTOP_NAVIGATOR_EDGE_GAP_PX;
+    }
+    if (edge === "top") y = DESKTOP_NAVIGATOR_EDGE_GAP_PX;
+    if (edge === "bottom") {
+        y = window.innerHeight - height - DESKTOP_NAVIGATOR_EDGE_GAP_PX;
+    }
+
+    desktopNavigatorPosition.value = clampDesktopNavigatorPosition(
+        x,
+        y,
+        width,
+        height,
+    );
+}
+
+function desktopNavigatorEdgeAtPointer(pointerX: number, pointerY: number) {
+    if (pointerY <= DESKTOP_NAVIGATOR_HORIZONTAL_EDGE_ZONE_PX) {
+        return "top" as const;
+    }
+    if (
+        pointerY >=
+        window.innerHeight - DESKTOP_NAVIGATOR_HORIZONTAL_EDGE_ZONE_PX
+    ) {
+        return "bottom" as const;
+    }
+    if (pointerX <= DESKTOP_NAVIGATOR_HORIZONTAL_EDGE_ZONE_PX) {
+        return "left" as const;
+    }
+    if (
+        pointerX >=
+        window.innerWidth - DESKTOP_NAVIGATOR_HORIZONTAL_EDGE_ZONE_PX
+    ) {
+        return "right" as const;
+    }
+}
+
+function nearestDesktopNavigatorEdge(pointerX?: number, pointerY?: number) {
+    const position = desktopNavigatorPosition.value;
+    if (!position) return desktopNavigatorEdge.value;
+
+    if (pointerX !== undefined && pointerY !== undefined) {
+        const pointerEdge = desktopNavigatorEdgeAtPointer(pointerX, pointerY);
+        if (pointerEdge) return pointerEdge;
+    }
+
+    const { width, height } = desktopNavigatorSize();
+    const edgeTolerance = 1;
+
+    if (position.y <= DESKTOP_NAVIGATOR_EDGE_GAP_PX + edgeTolerance) {
+        return "top";
+    }
+    if (
+        position.y + height >=
+        window.innerHeight - DESKTOP_NAVIGATOR_EDGE_GAP_PX - edgeTolerance
+    ) {
+        return "bottom";
+    }
+
+    const centerX = position.x + width / 2;
+    const centerY = position.y + height / 2;
+    const distances: Array<[DesktopNavigatorEdge, number]> = [
+        ["top", centerY],
+        [
+            "right",
+            pointerX === undefined
+                ? window.innerWidth - centerX
+                : window.innerWidth - pointerX,
+        ],
+        ["bottom", window.innerHeight - centerY],
+        ["left", pointerX ?? centerX],
+    ];
+
+    return distances.reduce((nearest, candidate) =>
+        candidate[1] < nearest[1] ? candidate : nearest,
+    )[0];
+}
+
+function handleDesktopNavigatorPointerDown(event: PointerEvent) {
+    if (event.button !== 0) return;
+    if ((event.target as Element | null)?.closest("button")) return;
+
+    const element = desktopNavigator.value;
+    if (!element) return;
+
+    if (!desktopNavigatorPosition.value) {
+        const rect = element.getBoundingClientRect();
+        desktopNavigatorPosition.value = { x: rect.left, y: rect.top };
+    }
+    const position = desktopNavigatorPosition.value;
+    if (!position) return;
+
+    desktopNavigatorDidDrag = false;
+    isDesktopNavigatorDragging.value = true;
+    desktopNavigatorDrag = {
+        pointerId: event.pointerId,
+        startPointerX: event.clientX,
+        startPointerY: event.clientY,
+        startX: position.x,
+        startY: position.y,
+        didDrag: false,
+    };
+    element.setPointerCapture(event.pointerId);
+}
+
+function handleDesktopNavigatorPointerMove(event: PointerEvent) {
+    const drag = desktopNavigatorDrag;
+    if (!drag || drag.pointerId !== event.pointerId) return;
+    event.preventDefault();
+
+    const deltaX = event.clientX - drag.startPointerX;
+    const deltaY = event.clientY - drag.startPointerY;
+
+    if (
+        !drag.didDrag &&
+        Math.hypot(deltaX, deltaY) < DESKTOP_NAVIGATOR_DRAG_THRESHOLD_PX
+    ) {
+        return;
+    }
+
+    drag.didDrag = true;
+    desktopNavigatorPosition.value = clampDesktopNavigatorPosition(
+        drag.startX + deltaX,
+        drag.startY + deltaY,
+    );
+
+    const previewEdge = desktopNavigatorEdgeAtPointer(
+        event.clientX,
+        event.clientY,
+    );
+    if (previewEdge) desktopNavigatorEdge.value = previewEdge;
+}
+
+function finishDesktopNavigatorDrag(event: PointerEvent, cancelled = false) {
+    const drag = desktopNavigatorDrag;
+    if (!drag || drag.pointerId !== event.pointerId) return;
+
+    const element = desktopNavigator.value;
+    if (element?.hasPointerCapture(event.pointerId)) {
+        element.releasePointerCapture(event.pointerId);
+    }
+
+    if (drag.didDrag) {
+        void positionDesktopNavigatorAtEdge(
+            nearestDesktopNavigatorEdge(event.clientX, event.clientY),
+        );
+    }
+    desktopNavigatorDidDrag = !cancelled && drag.didDrag;
+    isDesktopNavigatorDragging.value = false;
+    desktopNavigatorDrag = undefined;
+}
+
+function cancelDesktopNavigatorDrag(event: PointerEvent) {
+    finishDesktopNavigatorDrag(event, true);
+}
+
+function handleDesktopNavigatorClick(event: MouseEvent) {
+    if ((event.target as Element | null)?.closest("button")) {
+        desktopNavigatorDidDrag = false;
+        return;
+    }
+    if (!desktopNavigatorDidDrag) return;
+
+    desktopNavigatorDidDrag = false;
+    event.preventDefault();
+    event.stopPropagation();
+}
+
 function mobileNavigatorBounds() {
     return {
         maxX: Math.max(
@@ -497,6 +782,11 @@ function handleMobileNavigatorClick(event: MouseEvent) {
     scrollToNextChapter();
 }
 
+function handleViewportResize() {
+    void positionDesktopNavigatorAtEdge();
+    initializeMobileNavigatorPosition();
+}
+
 function returnControlToUser() {
     if (!isMoving.value) return;
 
@@ -530,7 +820,7 @@ onMounted(() => {
     resolveChapterPositions();
     initializeMobileNavigatorPosition();
     window.addEventListener("scroll", handleScroll, { passive: true });
-    window.addEventListener("resize", initializeMobileNavigatorPosition, {
+    window.addEventListener("resize", handleViewportResize, {
         passive: true,
     });
     window.addEventListener("wheel", returnControlToUser, {
@@ -545,6 +835,11 @@ onMounted(() => {
         passive: true,
         capture: true,
     });
+    window.addEventListener("pointermove", handleDesktopNavigatorPointerMove, {
+        passive: false,
+    });
+    window.addEventListener("pointerup", finishDesktopNavigatorDrag);
+    window.addEventListener("pointercancel", cancelDesktopNavigatorDrag);
     window.addEventListener("keydown", handleKeyIntent, { capture: true });
     ScrollTrigger.addEventListener("refresh", resolveChapterPositions);
 });
@@ -554,10 +849,16 @@ onBeforeUnmount(() => {
     if (isMoving.value) scrollController?.cancel();
     cancelAnimationFrame(scrollFrame);
     window.removeEventListener("scroll", handleScroll);
-    window.removeEventListener("resize", initializeMobileNavigatorPosition);
+    window.removeEventListener("resize", handleViewportResize);
     window.removeEventListener("wheel", returnControlToUser, true);
     window.removeEventListener("touchstart", returnControlToUser, true);
     window.removeEventListener("pointerdown", returnControlToUser, true);
+    window.removeEventListener(
+        "pointermove",
+        handleDesktopNavigatorPointerMove,
+    );
+    window.removeEventListener("pointerup", finishDesktopNavigatorDrag);
+    window.removeEventListener("pointercancel", cancelDesktopNavigatorDrag);
     window.removeEventListener("keydown", handleKeyIntent, true);
     ScrollTrigger.removeEventListener("refresh", resolveChapterPositions);
 });
@@ -572,48 +873,132 @@ onBeforeUnmount(() => {
 
     <nav
         v-if="isNavigatorVisible"
-        class="fixed bottom-[clamp(1rem,3svh,2rem)] left-1/2 z-90 hidden max-w-[calc(100vw-2rem)] -translate-x-1/2 items-center overflow-hidden rounded-full border border-white/25 bg-[#032d65]/92 text-white shadow-[0_1rem_3rem_rgb(0_14_45_/_35%)] backdrop-blur-md sm:flex"
+        ref="desktopNavigator"
+        class="fixed z-90 hidden touch-none overflow-hidden rounded-full border border-white/25 bg-[#032d65]/92 text-white shadow-[0_1rem_3rem_rgb(0_14_45_/_35%)] backdrop-blur-md select-none sm:flex"
+        :class="[
+            isDesktopNavigatorVertical
+                ? 'flex-col'
+                : 'max-w-[calc(100vw-2rem)] items-center',
+            isDesktopNavigatorDragging
+                ? 'scale-[1.02] cursor-grabbing transition-none'
+                : 'cursor-grab transition-[left,top,transform] duration-300 ease-out motion-reduce:transition-none',
+        ]"
+        :style="desktopNavigatorStyle"
         aria-label="Homepage chapter navigation"
+        @click.capture="handleDesktopNavigatorClick"
+        @pointerdown="handleDesktopNavigatorPointerDown"
     >
         <button
             type="button"
-            class="group flex shrink-0 items-center gap-2 self-stretch border-0 border-r border-white/20 bg-white/10 px-5 text-sm font-bold tracking-wide text-white transition-colors hover:bg-white/20 focus-visible:outline-3 focus-visible:outline-offset-[-3px] focus-visible:outline-[#61dfc7] disabled:cursor-default disabled:opacity-40"
+            class="group flex shrink-0 items-center justify-center gap-2 border-0 bg-white/10 text-sm font-bold tracking-wide text-white transition-colors hover:bg-white/20 focus-visible:outline-3 focus-visible:outline-offset-[-3px] focus-visible:outline-[#61dfc7] disabled:cursor-default disabled:opacity-40"
+            :class="
+                isDesktopNavigatorVertical
+                    ? 'h-12 w-full min-w-10 border-b border-white/20'
+                    : 'self-stretch border-r border-white/20 px-5'
+            "
             :disabled="isMoving || !hasPreviousChapter"
+            aria-label="Previous chapter"
             :aria-busy="isMoving || undefined"
+            @pointerdown.stop
             @click="scrollToPreviousChapter"
+        >
+            <Icon
+                :icon="
+                    isDesktopNavigatorVertical
+                        ? 'lucide:arrow-up'
+                        : 'lucide:arrow-left'
+                "
+                class="size-5 transition-transform motion-reduce:transition-none"
+                :class="
+                    isDesktopNavigatorVertical
+                        ? 'group-hover:-translate-y-1'
+                        : 'group-hover:-translate-x-1'
+                "
+                aria-hidden="true"
+            />
+            <span v-if="!isDesktopNavigatorVertical">Prev</span>
+        </button>
+
+        <div
+            v-if="isDesktopNavigatorVertical"
+            class="relative h-32 w-10 shrink-0"
+            role="progressbar"
+            aria-label="Current chapter"
+            :aria-valuemin="1"
+            :aria-valuemax="chapterCount"
+            :aria-valuenow="currentChapterIndex + 1"
+            :aria-valuetext="`Chapter ${currentChapterIndex + 1} of ${chapterCount}: ${chapterTitle}`"
+            aria-live="polite"
         >
             <span
                 aria-hidden="true"
-                class="transition-transform group-hover:-translate-x-1 motion-reduce:transition-none"
-                >←</span
+                class="absolute inset-y-4 left-1/2 w-0.5 -translate-x-1/2"
             >
-            Prev
-        </button>
+                <span
+                    class="absolute inset-x-0 top-0 rounded-full bg-[#61dfc7]"
+                    :style="{ height: desktopVerticalProgress }"
+                />
+                <span
+                    v-if="remainingChapterCount > 0"
+                    class="absolute inset-x-0 bottom-0 flex flex-col justify-around"
+                    :style="{ top: desktopVerticalProgress }"
+                >
+                    <span
+                        v-for="dash in remainingChapterCount"
+                        :key="dash"
+                        class="h-0.5 w-full shrink-0 rounded-full bg-white/48"
+                    />
+                </span>
+                <span
+                    class="absolute left-1/2 size-2.5 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-[#032d65] bg-[#61dfc7] shadow-[0_0_0_2px_rgb(97_223_199_/_35%)] transition-[top] duration-500 motion-reduce:transition-none"
+                    :style="{ top: desktopVerticalProgress }"
+                />
+            </span>
+        </div>
 
         <p
+            v-else
             class="m-0 flex min-w-0 items-center gap-2 px-5 py-3 text-[clamp(.82rem,1.25vw,1rem)] leading-none whitespace-nowrap"
             aria-live="polite"
         >
             <span class="font-mono tracking-[.08em] tabular-nums">
                 {{ chapterNumber }} / {{ totalChapters }}
             </span>
-            <span aria-hidden="true" class="text-white/55">·</span>
-            <span class="truncate font-semibold">{{ chapterTitle }}</span>
+            <template>
+                <span aria-hidden="true" class="text-white/55">·</span>
+                <span class="truncate font-semibold">{{ chapterTitle }}</span>
+            </template>
         </p>
 
         <button
             type="button"
-            class="group flex shrink-0 items-center gap-2 self-stretch border-0 border-l border-white/20 bg-white/10 px-5 text-sm font-bold tracking-wide text-white transition-colors hover:bg-white/20 focus-visible:outline-3 focus-visible:outline-offset-[-3px] focus-visible:outline-[#61dfc7] disabled:cursor-default disabled:opacity-40"
+            class="group flex shrink-0 items-center justify-center gap-2 border-0 bg-white/10 text-sm font-bold tracking-wide text-white transition-colors hover:bg-white/20 focus-visible:bg-white/20 focus-visible:outline-none disabled:cursor-default disabled:opacity-40"
+            :class="
+                isDesktopNavigatorVertical
+                    ? 'h-12 w-full min-w-10 border-t border-white/20'
+                    : 'self-stretch border-l border-white/20 px-5'
+            "
             :disabled="isMoving || !hasNextChapter"
+            aria-label="Next chapter"
             :aria-busy="isMoving || undefined"
+            @pointerdown.stop
             @click="scrollToNextChapter"
         >
-            Next
-            <span
+            <span v-if="!isDesktopNavigatorVertical">Next</span>
+            <Icon
+                :icon="
+                    isDesktopNavigatorVertical
+                        ? 'lucide:arrow-down'
+                        : 'lucide:arrow-right'
+                "
+                class="size-5 transition-transform motion-reduce:transition-none"
+                :class="
+                    isDesktopNavigatorVertical
+                        ? 'group-hover:translate-y-1'
+                        : 'group-hover:translate-x-1'
+                "
                 aria-hidden="true"
-                class="transition-transform group-hover:translate-x-1 motion-reduce:transition-none"
-                >→</span
-            >
+            />
         </button>
     </nav>
 

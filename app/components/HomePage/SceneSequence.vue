@@ -12,6 +12,7 @@ import {
 
 type SceneDefinition = {
     id: string;
+    restoreIds?: readonly string[];
     loader: () => Promise<{ default: Component }>;
     rootMargin?: string;
     minHeight?: string;
@@ -34,8 +35,13 @@ const savedScroll =
     import.meta.client && navigation?.type === "reload" && !window.location.hash
         ? readHomeScroll()
         : undefined;
-const savedSceneIndex = savedScroll?.sceneId
-    ? props.scenes.findIndex((scene) => scene.id === savedScroll.sceneId)
+const savedSceneId = savedScroll?.sceneId;
+const savedSceneIndex = savedSceneId
+    ? props.scenes.findIndex(
+          (scene) =>
+              scene.id === savedSceneId ||
+              scene.restoreIds?.includes(savedSceneId),
+      )
     : -1;
 const restoreThroughIndex =
     savedSceneIndex >= 0 && savedScroll?.sceneId === "abcc11"

@@ -106,7 +106,9 @@ function navigateFolder(node: { path?: string }) {
                             v-else
                             class="font-righteous text-lg text-on-surface"
                         >
-                            Menu
+                            <NuxtLink to="/" @click="closeDialog">
+                                Expelliodor
+                            </NuxtLink>
                         </DialogTitle>
 
                         <DialogClose

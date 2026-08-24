@@ -23,6 +23,13 @@ let previousScrollRestoration: ScrollRestoration | undefined;
 let resizeSnapshot: HomeScrollSnapshot | undefined;
 let resizeTimer: ReturnType<typeof setTimeout> | undefined;
 
+if (import.meta.client) {
+    // Set this during setup so native reload restoration cannot race the
+    // ScrollTrigger scenes before the custom restoration pass is ready.
+    previousScrollRestoration = window.history.scrollRestoration;
+    window.history.scrollRestoration = "manual";
+}
+
 const nextFrame = () =>
     new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
 
@@ -109,8 +116,6 @@ function destroyLenis() {
 }
 
 onMounted(async () => {
-    previousScrollRestoration = window.history.scrollRestoration;
-    window.history.scrollRestoration = "manual";
     ScrollTrigger.config({
         autoRefreshEvents: "visibilitychange,DOMContentLoaded,load",
     });

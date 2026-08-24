@@ -972,7 +972,7 @@ onUnmounted(() => {
 
             <p
                 ref="odorCopy"
-                class="scene-copy scene-copy--odor absolute top-[clamp(5rem,16svh,10rem)] right-[clamp(1.5rem,5vw,6rem)] z-2 m-0 w-[min(45vw,54rem)] text-center text-[clamp(1.45rem,3.15vw,4rem)] leading-[1.48] text-balance text-white will-change-[transform,opacity] max-[52rem]:top-[33svh] max-[52rem]:right-[5vw] max-[52rem]:w-[72vw] max-[52rem]:text-[clamp(1.1rem,4.5vw,2.25rem)] max-[52rem]:leading-[1.32] [&_strong]:font-[inherit] [&_strong]:text-[#ff594e]"
+                class="scene-copy scene-copy--odor absolute top-[var(--scene-one-odor-copy-top)] right-[clamp(1.5rem,5vw,6rem)] z-2 m-0 w-[min(45vw,54rem)] text-center text-[length:var(--scene-one-odor-copy-size)] leading-[var(--scene-one-odor-copy-leading)] text-balance text-white will-change-[transform,opacity] max-[52rem]:right-[5vw] max-[52rem]:w-[72vw] [&_strong]:font-[inherit] [&_strong]:text-[#ff594e]"
             >
                 Axillary odor production is influenced by genetic variations in
                 the <strong>ABCC11 gene.</strong>
@@ -1325,10 +1325,14 @@ onUnmounted(() => {
 <style scoped>
 .abcc11-scene {
     --abcc11-top-space: calc(var(--spacing, 0.25rem) * 30);
+    --scene-one-odor-copy-top: clamp(5rem, 16svh, 10rem);
+    --scene-one-odor-copy-size: clamp(1.45rem, 3.15vw, 4rem);
+    --scene-one-odor-copy-leading: 1.48;
 }
 
 .genotype-group {
     --chromosome-size: clamp(13.5rem, 21vw, 24rem);
+    --chromosome-half-height: clamp(4.21875rem, 6.5625vw, 7.5rem);
     --transporter-size: clamp(9rem, 14vw, 16rem);
 }
 
@@ -1341,9 +1345,13 @@ onUnmounted(() => {
 }
 
 .genotype-group--odor {
-    top: var(--abcc11-top-space);
+    top: calc(
+        var(--scene-one-odor-copy-top) + 1.5lh - var(--chromosome-half-height)
+    );
     left: clamp(1.5rem, 5vw, 6rem);
     width: calc(var(--chromosome-size) * 2 + var(--transporter-size) - 2rem);
+    font-size: var(--scene-one-odor-copy-size);
+    line-height: var(--scene-one-odor-copy-leading);
 }
 
 .genotype-group--tt {
@@ -1568,13 +1576,19 @@ onUnmounted(() => {
 }
 
 @media (max-width: 52rem) {
+    .abcc11-scene {
+        --scene-one-odor-copy-top: 33svh;
+        --scene-one-odor-copy-size: clamp(1.1rem, 4.5vw, 2.25rem);
+        --scene-one-odor-copy-leading: 1.32;
+    }
+
     .genotype-group {
         --chromosome-size: clamp(9.75rem, 33vw, 13.5rem);
+        --chromosome-half-height: clamp(3.046875rem, 10.3125vw, 4.21875rem);
         --transporter-size: clamp(6.5rem, 22vw, 9rem);
     }
 
     .genotype-group--odor {
-        top: 8svh;
         left: 3vw;
         width: 67vw;
     }

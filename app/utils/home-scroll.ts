@@ -2,6 +2,8 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 export const HOME_SCROLL_REFRESH_START = "home-scroll-refresh-start";
 export const HOME_SCROLL_REFRESH_END = "home-scroll-refresh-end";
+export const HOME_SCROLL_RESTORE_START = "home-scroll-restore-start";
+export const HOME_SCROLL_RESTORE_END = "home-scroll-restore-end";
 export const HOME_SCROLL_LOCK_CHANGE = "home-scroll-lock-change";
 
 export type HomeScrollLockChange = {
@@ -10,6 +12,8 @@ export type HomeScrollLockChange = {
 };
 
 const HOME_SCROLL_STORAGE_KEY = "greatbay-scie:home-scroll:v1";
+let restoreGeneration = 0;
+let restoringHomeScroll = false;
 
 export type HomeScrollSnapshot = {
     path: string;
@@ -81,23 +85,42 @@ export function readHomeScroll() {
     }
 }
 
+export function isHomeScrollRestoring() {
+    return restoringHomeScroll;
+}
+
 export function restoreHomeScroll(
     snapshot: HomeScrollSnapshot,
     scrollTo: (position: number) => void,
 ) {
-    const trigger = snapshot.triggerId
-        ? ScrollTrigger.getById(snapshot.triggerId)
-        : undefined;
-    const hasTriggerProgress = trigger && typeof snapshot.progress === "number";
-    const position = hasTriggerProgress
-        ? trigger.start + snapshot.progress! * (trigger.end - trigger.start)
-        : snapshot.scrollY;
+    const generation = ++restoreGeneration;
+    restoringHomeScroll = true;
+    window.dispatchEvent(new Event(HOME_SCROLL_RESTORE_START));
 
-    scrollTo(position);
+    try {
+        const trigger = snapshot.triggerId
+            ? ScrollTrigger.getById(snapshot.triggerId)
+            : undefined;
+        const hasTriggerProgress =
+            trigger && typeof snapshot.progress === "number";
+        const position = hasTriggerProgress
+            ? trigger.start + snapshot.progress! * (trigger.end - trigger.start)
+            : snapshot.scrollY;
 
-    if (hasTriggerProgress) {
-        trigger.animation?.progress(snapshot.progress!);
+        scrollTo(position);
+
+        if (hasTriggerProgress) {
+            trigger.animation?.progress(snapshot.progress!);
+        }
+
+        ScrollTrigger.update();
+    } finally {
+        // Keep programmatic restoration distinguishable from user scrolling
+        // until ScrollTrigger has rendered the restored frame.
+        window.requestAnimationFrame(() => {
+            if (generation !== restoreGeneration) return;
+            restoringHomeScroll = false;
+            window.dispatchEvent(new Event(HOME_SCROLL_RESTORE_END));
+        });
     }
-
-    ScrollTrigger.update();
 }

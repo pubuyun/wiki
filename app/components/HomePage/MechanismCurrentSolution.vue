@@ -11,6 +11,8 @@ import {
     HOME_SCROLL_LOCK_CHANGE,
     HOME_SCROLL_REFRESH_END,
     HOME_SCROLL_REFRESH_START,
+    HOME_SCROLL_RESTORE_END,
+    isHomeScrollRestoring,
     type HomeScrollLockChange,
 } from "~/utils/home-scroll";
 
@@ -62,6 +64,7 @@ let settleAtCurrentLimitsPause = false;
 let transitionRevealed = false;
 let isLayoutRefreshing = false;
 let resizeResumeFrame = 0;
+let restoreResumeFrame = 0;
 let interruptedTransition:
     { progress: number; reversed: boolean; revealed: boolean } | undefined;
 
@@ -227,6 +230,53 @@ function resetSmokeCloudsForViewport() {
         y: () => (isMobilePortraitViewport() ? -window.innerHeight * 1.3 : 0),
         rotation: (index) => (index % 2 === 0 ? -5 : 5),
         transformOrigin: "50% 50%",
+    });
+}
+
+function syncTransitionToRestoredScroll() {
+    if (
+        !master ||
+        !automaticSmoke ||
+        !mechanismPayload ||
+        !currentSolutionPayload ||
+        !smokeLayer.value ||
+        !sweptMolecule.value
+    ) {
+        return;
+    }
+
+    const threshold = master.labels.smokeThreshold;
+    const revealed =
+        typeof threshold === "number" && master.time() >= threshold;
+
+    // Restoration may cross the threshold in one synchronous jump. Snap the
+    // non-scrubbed smoke timeline to the matching side without running its
+    // callbacks, which intentionally move the document to chapter labels.
+    automaticSmoke
+        .pause()
+        .progress(revealed ? 1 : 0, true)
+        .pause();
+    gsap.set(mechanismPayload.scene, {
+        autoAlpha: revealed ? 0 : 1,
+        zIndex: revealed ? 1 : 2,
+    });
+    gsap.set(currentSolutionPayload.scene, {
+        autoAlpha: revealed ? 1 : 0,
+        zIndex: revealed ? 2 : 1,
+    });
+    gsap.set(mechanismPayload.molecule, { autoAlpha: revealed ? 0 : 1 });
+    gsap.set([smokeLayer.value, sweptMolecule.value], { autoAlpha: 0 });
+
+    settleAtCurrentLimitsPause = false;
+    transitionRevealed = revealed;
+    unlockTransitionScroll();
+}
+
+function handleScrollRestoreEnd() {
+    cancelAnimationFrame(restoreResumeFrame);
+    restoreResumeFrame = requestAnimationFrame(() => {
+        if (isHomeScrollRestoring() || interruptedTransition) return;
+        syncTransitionToRestoredScroll();
     });
 }
 
@@ -439,7 +489,7 @@ function buildSequence() {
             anticipatePin: 1,
             invalidateOnRefresh: true,
             onUpdate: (self) => {
-                if (isLayoutRefreshing) return;
+                if (isLayoutRefreshing || isHomeScrollRestoring()) return;
 
                 const threshold = timeline.labels.smokeThreshold;
                 const currentTime = timeline.time();
@@ -501,17 +551,20 @@ onMounted(() => {
         handleLayoutRefreshStart,
     );
     window.addEventListener(HOME_SCROLL_REFRESH_END, handleLayoutRefreshEnd);
+    window.addEventListener(HOME_SCROLL_RESTORE_END, handleScrollRestoreEnd);
 });
 
 onBeforeUnmount(() => {
     cancelAnimationFrame(buildFrame);
     cancelAnimationFrame(resizeResumeFrame);
+    cancelAnimationFrame(restoreResumeFrame);
     window.removeEventListener("click", captureChapterNavigation, true);
     window.removeEventListener(
         HOME_SCROLL_REFRESH_START,
         handleLayoutRefreshStart,
     );
     window.removeEventListener(HOME_SCROLL_REFRESH_END, handleLayoutRefreshEnd);
+    window.removeEventListener(HOME_SCROLL_RESTORE_END, handleScrollRestoreEnd);
     unlockTransitionScroll();
     automaticSmoke?.kill();
     master?.scrollTrigger?.kill(true);
