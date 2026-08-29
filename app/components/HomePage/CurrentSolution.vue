@@ -20,6 +20,7 @@ const emit = defineEmits<{
             timeline: gsap.core.Timeline;
             scene: HTMLElement;
             showCurrentLimitsActiveFrame: () => void;
+            syncToTime: (time: number) => void;
         },
     ];
 }>();
@@ -798,10 +799,31 @@ onMounted(async () => {
                         timeline.progress() >= secondSceneActivationProgress,
                     );
                 });
+                const syncToTime = (time: number) => {
+                    const restoredTime = gsap.utils.clamp(
+                        0,
+                        timeline.duration(),
+                        time,
+                    );
+
+                    // Embedded timelines normally reach this state through the
+                    // smoke completion callback. A reload jumps straight to a
+                    // non-zero time, so rebuild the same baseline before GSAP
+                    // renders the saved frame.
+                    showCurrentLimitsActiveFrame();
+                    timeline
+                        .invalidate()
+                        .time(0, true)
+                        .time(restoredTime, true);
+                    setSecondSceneActive(
+                        timeline.progress() >= secondSceneActivationProgress,
+                    );
+                };
                 emit("timelineReady", {
                     timeline,
                     scene: refs.scene,
                     showCurrentLimitsActiveFrame,
+                    syncToTime,
                 });
             }
 

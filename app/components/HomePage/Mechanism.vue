@@ -833,14 +833,10 @@ onUnmounted(() => {
 
     .mechanism-scene__copy {
         left: auto;
+        width: 100%;
     }
 
     .mechanism-scene__chemistry {
-        width: 100%;
-    }
-}
-@media (orientation: portrait) and (max-width: 40rem) {
-    .mechanism-scene__copy {
         width: 100%;
     }
 }

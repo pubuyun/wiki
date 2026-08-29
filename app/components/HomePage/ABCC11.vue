@@ -29,10 +29,11 @@ const GLAND_TRANSPORTER_POSITION = {
     rotation: -36,
 } as const;
 const glandTransporterStyle = {
-    right: GLAND_TRANSPORTER_POSITION.right,
-    bottom: GLAND_TRANSPORTER_POSITION.bottom,
-    width: GLAND_TRANSPORTER_POSITION.width,
-    transform: `rotate(${GLAND_TRANSPORTER_POSITION.rotation}deg) scaleX(var(--gland-mirror, 1))`,
+    left: "var(--gland-transporter-left, auto)",
+    right: `var(--gland-transporter-right, ${GLAND_TRANSPORTER_POSITION.right})`,
+    bottom: `var(--gland-transporter-bottom, ${GLAND_TRANSPORTER_POSITION.bottom})`,
+    width: `var(--gland-transporter-width, ${GLAND_TRANSPORTER_POSITION.width})`,
+    transform: `rotate(var(--gland-transporter-rotation, ${GLAND_TRANSPORTER_POSITION.rotation}deg)) scaleX(var(--gland-transporter-mirror, 1))`,
 };
 
 // 汗腺 PNG 的旋转角度调节区。
@@ -74,6 +75,78 @@ const staphylococcusLabelStyle = {
     right: STAPHYLOCOCCUS_LABEL_POSITION.right,
     bottom: STAPHYLOCOCCUS_LABEL_POSITION.bottom,
     transform: `rotate(${STAPHYLOCOCCUS_LABEL_POSITION.rotation}deg)`,
+};
+
+// 竖屏故事场景的位置与尺寸调节区。
+const PORTRAIT_STORY_LAYOUT = {
+    personImage: { top: "0%", left: "3%", width: "min(50%, 7.25rem)" },
+    glandImage: { top: "0%", left: "3%", width: "min(58%, 8rem)" },
+    glandTransporter: {
+        left: "-10%",
+        right: "auto",
+        bottom: "-10%",
+        width: "77%",
+        rotation: 36,
+        mirror: -1,
+    },
+    bacteriaImage: { top: "0%", left: "13%", width: "min(54%, 7.5rem)" },
+    axillaryLabel: { bottom: "-10%", left: "50%" },
+    apocrineGlandLabel: {
+        top: "-16%",
+        left: " -17%",
+        width: "162%",
+        fontSize: "clamp(3.25rem, 8vw, 4.4rem)",
+        rotation: -8,
+    },
+    staphylococcusLabel: {
+        bottom: "-18%",
+        left: "-40%",
+        width: "108%",
+        fontSize: "clamp(4.25rem, 10vw, 6.4rem)",
+        rotation: 2,
+    },
+} as const;
+const portraitStoryStyle = {
+    "--portrait-person-top": PORTRAIT_STORY_LAYOUT.personImage.top,
+    "--portrait-person-left": PORTRAIT_STORY_LAYOUT.personImage.left,
+    "--portrait-person-width": PORTRAIT_STORY_LAYOUT.personImage.width,
+    "--portrait-gland-top": PORTRAIT_STORY_LAYOUT.glandImage.top,
+    "--portrait-gland-left": PORTRAIT_STORY_LAYOUT.glandImage.left,
+    "--portrait-gland-width": PORTRAIT_STORY_LAYOUT.glandImage.width,
+    "--portrait-gland-transporter-left":
+        PORTRAIT_STORY_LAYOUT.glandTransporter.left,
+    "--portrait-gland-transporter-right":
+        PORTRAIT_STORY_LAYOUT.glandTransporter.right,
+    "--portrait-gland-transporter-bottom":
+        PORTRAIT_STORY_LAYOUT.glandTransporter.bottom,
+    "--portrait-gland-transporter-width":
+        PORTRAIT_STORY_LAYOUT.glandTransporter.width,
+    "--portrait-gland-transporter-rotation": `${PORTRAIT_STORY_LAYOUT.glandTransporter.rotation}deg`,
+    "--portrait-gland-transporter-mirror":
+        PORTRAIT_STORY_LAYOUT.glandTransporter.mirror,
+    "--portrait-bacteria-top": PORTRAIT_STORY_LAYOUT.bacteriaImage.top,
+    "--portrait-bacteria-left": PORTRAIT_STORY_LAYOUT.bacteriaImage.left,
+    "--portrait-bacteria-width": PORTRAIT_STORY_LAYOUT.bacteriaImage.width,
+    "--portrait-axillary-label-bottom":
+        PORTRAIT_STORY_LAYOUT.axillaryLabel.bottom,
+    "--portrait-axillary-label-left": PORTRAIT_STORY_LAYOUT.axillaryLabel.left,
+    "--portrait-gland-label-top": PORTRAIT_STORY_LAYOUT.apocrineGlandLabel.top,
+    "--portrait-gland-label-left":
+        PORTRAIT_STORY_LAYOUT.apocrineGlandLabel.left,
+    "--portrait-gland-label-width":
+        PORTRAIT_STORY_LAYOUT.apocrineGlandLabel.width,
+    "--portrait-gland-label-font-size":
+        PORTRAIT_STORY_LAYOUT.apocrineGlandLabel.fontSize,
+    "--portrait-gland-label-rotation": `${PORTRAIT_STORY_LAYOUT.apocrineGlandLabel.rotation}deg`,
+    "--portrait-bacteria-label-bottom":
+        PORTRAIT_STORY_LAYOUT.staphylococcusLabel.bottom,
+    "--portrait-bacteria-label-left":
+        PORTRAIT_STORY_LAYOUT.staphylococcusLabel.left,
+    "--portrait-bacteria-label-width":
+        PORTRAIT_STORY_LAYOUT.staphylococcusLabel.width,
+    "--portrait-bacteria-label-font-size":
+        PORTRAIT_STORY_LAYOUT.staphylococcusLabel.fontSize,
+    "--portrait-bacteria-label-rotation": `${PORTRAIT_STORY_LAYOUT.staphylococcusLabel.rotation}deg`,
 };
 
 // 两个箭头的坐标、旋转与翻转缩放调节区。
@@ -179,25 +252,25 @@ const PORTRAIT_PRECURSOR_PATH = {
         ease: "none",
     },
     glandEntry: {
-        x: 67,
-        y: 42,
-        rotation: 65,
+        x: 56,
+        y: 46,
+        rotation: -45,
         scale: 0.58,
         moveDuration: 0.72,
         visualDuration: 0.55,
         ease: "power2.inOut",
     },
     glandInside: {
-        x: 64,
-        y: 43,
-        rotation: 8,
+        x: 67,
+        y: 37.7,
+        rotation: -8,
         scale: 0.72,
         moveDuration: 0.72,
         visualDuration: 0.55,
         ease: "power2.inOut",
     },
     bacteria: {
-        x: 66,
+        x: 74,
         y: 68,
         rotation: 20,
         scale: 0.86,
@@ -206,7 +279,7 @@ const PORTRAIT_PRECURSOR_PATH = {
         ease: "power2.inOut",
     },
     final: {
-        x: 68,
+        x: 76,
         y: 72,
         rotation: 20,
         scale: 0.88,
@@ -1029,7 +1102,11 @@ onUnmounted(() => {
                 </div>
             </div>
 
-            <div ref="secondScene" class="abcc11-story">
+            <div
+                ref="secondScene"
+                class="abcc11-story"
+                :style="portraitStoryStyle"
+            >
                 <div
                     class="abcc11-story__genotypes"
                     aria-label="CC, TC, and TT ABCC11 genotypes"
@@ -1642,7 +1719,7 @@ onUnmounted(() => {
 
     .genotype-group--tt {
         right: auto;
-        bottom: 11svh;
+        bottom: 23svh;
         left: calc(50% - clamp(4.875rem, 16.5vw, 6.75rem));
         width: 64vw;
     }
@@ -1661,6 +1738,15 @@ onUnmounted(() => {
     }
 
     .abcc11-story {
+        --gland-transporter-left: var(--portrait-gland-transporter-left);
+        --gland-transporter-right: var(--portrait-gland-transporter-right);
+        --gland-transporter-bottom: var(--portrait-gland-transporter-bottom);
+        --gland-transporter-width: var(--portrait-gland-transporter-width);
+        --gland-transporter-rotation: var(
+            --portrait-gland-transporter-rotation
+        );
+        --gland-transporter-mirror: var(--portrait-gland-transporter-mirror);
+
         inset: clamp(3.5rem, 8.5svh, 4.75rem) 5vw 4.75rem;
         grid-template-columns: minmax(0, 0.34fr) minmax(0, 0.66fr);
         grid-template-rows: minmax(0, 1fr) auto;
@@ -1706,7 +1792,9 @@ onUnmounted(() => {
     .abcc11-story__person {
         grid-column: 1;
         grid-row: 1;
-        width: min(50%, 7.25rem);
+        top: var(--portrait-person-top);
+        left: var(--portrait-person-left);
+        width: var(--portrait-person-width);
     }
 
     .abcc11-story__straight-arrow {
@@ -1741,7 +1829,9 @@ onUnmounted(() => {
     .abcc11-story__gland {
         grid-column: 1;
         grid-row: 3;
-        width: min(58%, 8rem);
+        top: var(--portrait-gland-top);
+        left: var(--portrait-gland-left);
+        width: var(--portrait-gland-width);
     }
 
     .abcc11-story__straight-arrow--second {
@@ -1752,8 +1842,10 @@ onUnmounted(() => {
     .abcc11-story__bacteria {
         grid-column: 1;
         grid-row: 5;
+        top: var(--portrait-bacteria-top);
+        left: var(--portrait-bacteria-left);
         justify-self: center;
-        width: min(54%, 7.5rem);
+        width: var(--portrait-bacteria-width);
     }
 
     .story-arrow {
@@ -1762,24 +1854,32 @@ onUnmounted(() => {
 
     .abcc11-story__label--person {
         right: auto !important;
-        bottom: -10% !important;
-        left: 50%;
+        bottom: var(--portrait-axillary-label-bottom) !important;
+        left: var(--portrait-axillary-label-left);
         transform: translateX(-50%);
     }
 
     .abcc11-story__curve-label--gland {
-        top: -24% !important;
-        left: -3% !important;
-        width: 102%;
-        transform: none !important;
+        top: var(--portrait-gland-label-top) !important;
+        left: var(--portrait-gland-label-left) !important;
+        width: var(--portrait-gland-label-width);
+        transform: rotate(var(--portrait-gland-label-rotation)) !important;
+    }
+
+    .abcc11-story__curve-label--gland text {
+        font-size: var(--portrait-gland-label-font-size);
     }
 
     .abcc11-story__curve-label--bacteria {
         right: auto !important;
-        bottom: -28% !important;
-        left: -8%;
-        width: 118%;
-        transform: none !important;
+        bottom: var(--portrait-bacteria-label-bottom) !important;
+        left: var(--portrait-bacteria-label-left);
+        width: var(--portrait-bacteria-label-width);
+        transform: rotate(var(--portrait-bacteria-label-rotation)) !important;
+    }
+
+    .abcc11-story__curve-label--bacteria text {
+        font-size: var(--portrait-bacteria-label-font-size);
     }
 
     .abcc11-story__footer {

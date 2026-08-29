@@ -33,6 +33,7 @@ type CurrentSolutionPayload = {
     timeline: gsap.core.Timeline;
     scene: HTMLElement;
     showCurrentLimitsActiveFrame: () => void;
+    syncToTime: (time: number) => void;
 };
 
 const SMOKE_TRANSITION_DURATION = 2.5;
@@ -246,8 +247,22 @@ function syncTransitionToRestoredScroll() {
     }
 
     const threshold = master.labels.smokeThreshold;
-    const revealed =
-        typeof threshold === "number" && master.time() >= threshold;
+    const currentSolutionStart = master.labels.currentSolutionStory;
+    const restoredTime = master.time();
+    const revealed = typeof threshold === "number" && restoredTime >= threshold;
+
+    // Re-render the scrubbed parent and rebuild the embedded child's entrance
+    // baseline before seeking it. A reload skips the smoke callback that
+    // normally establishes that baseline.
+    master.time(restoredTime, true);
+    if (revealed && typeof currentSolutionStart === "number") {
+        const currentSolutionTime = gsap.utils.clamp(
+            0,
+            currentSolutionPayload.timeline.duration(),
+            restoredTime - currentSolutionStart,
+        );
+        currentSolutionPayload.syncToTime(currentSolutionTime);
+    }
 
     // Restoration may cross the threshold in one synchronous jump. Snap the
     // non-scrubbed smoke timeline to the matching side without running its

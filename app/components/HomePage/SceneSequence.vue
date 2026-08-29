@@ -4,6 +4,9 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 import LazyScene from "./LazyScene.vue";
 import {
+    beginHomeScrollRestore,
+    cancelHomeScrollRestore,
+    isHomeScrollRestoring,
     readHomeScroll,
     restoreHomeScroll,
     saveHomeScroll,
@@ -17,6 +20,15 @@ type SceneDefinition = {
     rootMargin?: string;
     minHeight?: string;
     loadImmediately?: boolean;
+};
+
+type SceneModule = { default: Component };
+
+type NavigatorWithConnection = Navigator & {
+    connection?: {
+        effectiveType?: string;
+        saveData?: boolean;
+    };
 };
 
 const props = defineProps<{
@@ -47,13 +59,63 @@ const restoreThroughIndex =
     savedSceneIndex >= 0 && savedScroll?.sceneId === "abcc11"
         ? Math.min(savedSceneIndex + 1, props.scenes.length - 1)
         : savedSceneIndex;
+let restoreGeneration = savedScroll ? beginHomeScrollRestore() : undefined;
 
 const nextSceneIndex = ref(0);
 const immediateThroughIndex = ref(restoreThroughIndex);
 const forcedThroughIndex = ref(-1);
 const sceneLoadWaiters = new Map<number, Array<(loaded: boolean) => void>>();
 const failedSceneIndexes = new Set<number>();
+const sceneModulePromises = new Map<number, Promise<SceneModule>>();
 let isRestoring = false;
+
+const RESTORE_GEOMETRY_ATTEMPTS = 12;
+const RESTORE_GEOMETRY_EPSILON = 0.5;
+
+function loadSceneModule(sceneIndex: number) {
+    const existing = sceneModulePromises.get(sceneIndex);
+    if (existing) return existing;
+
+    const scene = props.scenes[sceneIndex];
+    if (!scene) return Promise.reject(new Error("Unknown homepage scene"));
+
+    const promise: Promise<SceneModule> = scene
+        .loader()
+        .catch((error: unknown) => {
+            if (sceneModulePromises.get(sceneIndex) === promise) {
+                sceneModulePromises.delete(sceneIndex);
+            }
+            throw error;
+        });
+    sceneModulePromises.set(sceneIndex, promise);
+    return promise;
+}
+
+const sceneLoaders = props.scenes.map(
+    (_, sceneIndex) => () => loadSceneModule(sceneIndex),
+);
+
+function canPredictivelyPreload() {
+    const connection = (navigator as NavigatorWithConnection).connection;
+    return (
+        !connection?.saveData &&
+        connection?.effectiveType !== "slow-2g" &&
+        connection?.effectiveType !== "2g"
+    );
+}
+
+function preloadScene(sceneIndex: number) {
+    if (sceneIndex < 0 || sceneIndex >= props.scenes.length) return;
+    void loadSceneModule(sceneIndex).catch(() => {
+        // LazyScene owns the visible retry state if mounting later also fails.
+    });
+}
+
+function preloadThrough(sceneIndex: number) {
+    for (let index = 0; index <= sceneIndex; index += 1) {
+        preloadScene(index);
+    }
+}
 
 function findHashSceneIndex() {
     const hash = decodeURIComponent(window.location.hash.slice(1));
@@ -75,9 +137,13 @@ function handleSceneLoaded(sceneIndex: number) {
     if (sceneIndex === nextSceneIndex.value) {
         nextSceneIndex.value += 1;
     }
+    if (canPredictivelyPreload()) preloadScene(nextSceneIndex.value);
     scrollToHashScene(sceneIndex);
 
     if (sceneIndex === restoreThroughIndex && savedScroll) {
+        if (!isHomeScrollRestoring()) {
+            restoreGeneration = beginHomeScrollRestore();
+        }
         void restoreSavedScroll(savedScroll);
     }
 
@@ -91,6 +157,13 @@ function handleSceneLoaded(sceneIndex: number) {
 
 function handleSceneError(sceneIndex: number) {
     failedSceneIndexes.add(sceneIndex);
+    if (sceneIndex === nextSceneIndex.value) {
+        nextSceneIndex.value += 1;
+        if (canPredictivelyPreload()) preloadScene(nextSceneIndex.value);
+    }
+    if (sceneIndex === restoreThroughIndex) {
+        cancelHomeScrollRestore(restoreGeneration);
+    }
     sceneLoadWaiters
         .get(sceneIndex)
         ?.splice(0)
@@ -115,25 +188,56 @@ function ensureNextSceneLoaded() {
 const nextFrame = () =>
     new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
 
+function sameTriggerGeometry(
+    first: { start: number; end: number },
+    second: { start: number; end: number },
+) {
+    return (
+        Math.abs(first.start - second.start) <= RESTORE_GEOMETRY_EPSILON &&
+        Math.abs(first.end - second.end) <= RESTORE_GEOMETRY_EPSILON
+    );
+}
+
+async function settleScrollTriggerGeometry(triggerId?: string) {
+    let previousGeometry: { start: number; end: number } | undefined;
+
+    for (let attempt = 0; attempt < RESTORE_GEOMETRY_ATTEMPTS; attempt += 1) {
+        await nextFrame();
+
+        // Lazy scenes can finish mounting out of document order. Sorting first
+        // makes earlier pin spacers participate before later scenes refresh.
+        ScrollTrigger.sort();
+        ScrollTrigger.refresh();
+
+        const trigger = triggerId
+            ? ScrollTrigger.getById(triggerId)
+            : undefined;
+        if (triggerId && !trigger) continue;
+
+        const geometry = trigger
+            ? { start: trigger.start, end: trigger.end }
+            : { start: 0, end: document.documentElement.scrollHeight };
+        if (
+            previousGeometry &&
+            sameTriggerGeometry(previousGeometry, geometry)
+        ) {
+            return;
+        }
+        previousGeometry = geometry;
+    }
+}
+
 async function restoreSavedScroll(snapshot: HomeScrollSnapshot) {
     if (isRestoring) return;
     isRestoring = true;
 
     await nextTick();
-    await nextFrame();
-    await nextFrame();
-    ScrollTrigger.refresh();
-
-    // The cross-scene route is created after both scenes have mounted.
-    for (let attempt = 0; attempt < 6; attempt += 1) {
-        if (!snapshot.triggerId || ScrollTrigger.getById(snapshot.triggerId)) {
-            break;
-        }
-        await nextFrame();
-    }
-
-    ScrollTrigger.refresh();
-    restoreHomeScroll(snapshot, (position) => window.scrollTo(0, position));
+    await settleScrollTriggerGeometry(snapshot.triggerId);
+    restoreHomeScroll(
+        snapshot,
+        (position) => window.scrollTo(0, position),
+        restoreGeneration,
+    );
 }
 
 function handleHashChange() {
@@ -144,6 +248,7 @@ function handleHashChange() {
     }
 
     immediateThroughIndex.value = targetIndex;
+    preloadThrough(targetIndex);
 
     if (targetIndex < nextSceneIndex.value) {
         scrollToHashScene(targetIndex);
@@ -151,6 +256,9 @@ function handleHashChange() {
 }
 
 onMounted(() => {
+    if (restoreThroughIndex >= 0) preloadThrough(restoreThroughIndex);
+    else if (canPredictivelyPreload()) preloadScene(0);
+
     handleHashChange();
     window.addEventListener("hashchange", handleHashChange);
     window.addEventListener("pagehide", saveHomeScroll);
@@ -171,6 +279,9 @@ onBeforeUnmount(() => {
     );
     sceneLoadWaiters.clear();
     failedSceneIndexes.clear();
+    if (restoreGeneration !== undefined && isHomeScrollRestoring()) {
+        cancelHomeScrollRestore(restoreGeneration);
+    }
 });
 
 defineExpose({ ensureNextSceneLoaded });
@@ -180,7 +291,7 @@ defineExpose({ ensureNextSceneLoaded });
     <LazyScene
         v-for="(scene, sceneIndex) in scenes"
         :key="scene.id"
-        :loader="scene.loader"
+        :loader="sceneLoaders[sceneIndex]!"
         :enabled="sceneIndex === nextSceneIndex"
         :load-immediately="
             sceneIndex === nextSceneIndex &&

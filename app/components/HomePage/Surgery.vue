@@ -1100,14 +1100,16 @@ onUnmounted(() => {
         right: auto;
         bottom: 0;
         left: 50%;
-        transform: translate(-50%, 50%);
+        transform: none;
+        translate: -50% 50%;
     }
 
     .surgery-guide--ecosystem .surgery-guide__target {
         top: 0;
         right: auto;
         left: 50%;
-        transform: translate(-50%, -50%);
+        transform: none;
+        translate: -50% -50%;
     }
 
     #skin-irritation-detail,
@@ -1283,6 +1285,18 @@ onUnmounted(() => {
     .surgery-final__person-card img {
         pointer-events: none;
         user-select: none;
+    }
+}
+
+@media (orientation: portrait) and (min-width: 36rem) and (max-width: 52rem) {
+    .surgery-guide--irritation [data-surgery-guide-label] {
+        position: relative;
+        top: -1rem;
+    }
+
+    .surgery-guide--ecosystem [data-surgery-guide-label] {
+        position: relative;
+        top: 1rem;
     }
 }
 </style>

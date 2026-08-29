@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" fill="none">
+    <path
+        data-draw=""
+        data-fill=""
+        d="M25 10h45l25 25v70a5 5 0 0 1-5 5H25a5 5 0 0 1-5-5V15a5 5 0 0 1 5-5Z"
+        fill="#FFD45E"
+        stroke="#FFD45E"
+        stroke-linejoin="round"
+        stroke-width="5"
+    />
+    <path
+        data-draw=""
+        data-fill=""
+        d="M70 10v21a4 4 0 0 0 4 4h21Z"
+        fill="#58B8E9"
+        stroke="#58B8E9"
+        stroke-linejoin="round"
+        stroke-width="5"
+    />
+    <path data-draw="" d="M40 63h35M40 82h35" stroke="#58B8E9" stroke-linecap="round" stroke-width="8" />
+</svg>

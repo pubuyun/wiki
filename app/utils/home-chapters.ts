@@ -1,6 +1,7 @@
 export const HOME_CHAPTERS = {
     expelliodor: "pause:Expelliodor",
     smell: "pause:?!Odor!?",
+    isThisCommon: "pause:Is this common?",
     worldStat: "pause:Odor around the world",
     abcc11Gene: "pause:The ABCC11 gene",
     abcc11Pathway: "pause:From sweat gland to bacteria",
@@ -19,6 +20,7 @@ export const HOME_CHAPTERS = {
     precursorBinder: "pause:Precursor Binder",
     transporterBinder: "pause:Transporter Binder",
     cgtase: "pause:CGTase",
+    moreAboutUs: "pause:More About Us",
 } as const;
 
 export type HomeChapterLabel =

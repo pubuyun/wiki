@@ -1,6 +1,7 @@
 <template>
     <figure
-        class="w-full overflow-hidden rounded border border-surface-bright bg-secondary p-4 text-on-secondary"
+        class="w-full rounded border border-surface-bright bg-secondary p-4 text-on-secondary"
+        style="min-width: 0; max-width: 100%"
     >
         <div
             v-if="errorMessage"
@@ -43,13 +44,34 @@
                     No {{ cycle.label }} binder JSON files were found for
                     {{ sourceLabel }}.
                 </div>
-                <VChart
+                <div
                     v-else
                     class="w-full"
-                    :style="{ height: `${chartHeight(cycle.value)}px` }"
-                    :option="optionsByCycle[cycle.value]"
-                    autoresize
-                />
+                    style="
+                        min-width: 0;
+                        max-width: 100%;
+                        overflow-x: auto;
+                        overscroll-behavior-inline: contain;
+                        -webkit-overflow-scrolling: touch;
+                    "
+                    role="region"
+                    :aria-label="`${cycle.label} heatmap; scroll horizontally to see all metrics`"
+                    tabindex="0"
+                >
+                    <div
+                        :style="{
+                            width: '100%',
+                            minWidth: '48rem',
+                            height: `${chartHeight(cycle.value)}px`,
+                        }"
+                    >
+                        <VChart
+                            class="h-full w-full"
+                            :option="optionsByCycle[cycle.value]"
+                            autoresize
+                        />
+                    </div>
+                </div>
             </TabsContent>
         </TabsRoot>
         <figcaption class="sr-only">

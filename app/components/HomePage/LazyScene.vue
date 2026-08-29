@@ -22,7 +22,7 @@ const props = withDefaults(
     {
         enabled: false,
         loadImmediately: false,
-        rootMargin: "200% 0px",
+        rootMargin: "100% 0px",
         minHeight: "100svh",
     },
 );
