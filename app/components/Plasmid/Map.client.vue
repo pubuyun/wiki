@@ -1,14 +1,14 @@
 <template>
     <div
         v-if="viewer.status === 'loading'"
-        class="grid h-full min-h-64 place-items-center p-6 text-sm text-on-secondary/70"
+        class="grid h-full min-h-64 place-items-center bg-secondary p-6 text-lg text-on-secondary/70 dark:bg-zinc-900 dark:text-zinc-300"
         role="status"
     >
         Loading plasmid map...
     </div>
     <div
         v-else-if="viewer.errorMessage"
-        class="grid h-full min-h-64 place-items-center p-6 text-center text-sm text-red-600 dark:text-red-400"
+        class="grid h-full min-h-64 place-items-center bg-secondary p-6 text-center text-lg text-red-600 dark:bg-zinc-900 dark:text-red-400"
         role="alert"
     >
         {{ viewer.errorMessage }}
@@ -23,7 +23,7 @@
     />
     <div
         v-else
-        class="grid h-full min-h-64 place-items-center p-6 text-sm text-on-secondary/70"
+        class="grid h-full min-h-64 place-items-center bg-secondary p-6 text-lg text-on-secondary/70 dark:bg-zinc-900 dark:text-zinc-300"
     >
         No plasmid data available.
     </div>
@@ -108,6 +108,8 @@ watch(
     display: block;
     width: 100%;
     height: 100%;
+    transform: scale(1.07);
+    transform-origin: center;
 }
 
 .plasmid-map :deep(svg > rect:first-of-type) {
@@ -127,10 +129,33 @@ watch(
 }
 
 .plasmid-map :deep(svg > text) {
+    pointer-events: none;
     paint-order: stroke fill;
     stroke: var(--plasmid-background);
-    stroke-width: 2px;
+    stroke-width: 1px;
     stroke-linejoin: round;
+}
+
+.plasmid-map :deep(svg > text[font-size="10"]) {
+    font-size: 14px;
+}
+
+.plasmid-map :deep(svg > text[font-size="11"]) {
+    font-size: 16px;
+}
+
+.plasmid-map :deep(svg > text[font-size="14.00"]) {
+    font-size: 18px;
+}
+
+.plasmid-map :deep(svg > text[font-size="20.00"]) {
+    font-size: 28px;
+}
+
+/* Curved feature names already sit on solid feature arcs; a halo obscures them. */
+.plasmid-map :deep(svg > text:has(textPath)) {
+    paint-order: normal;
+    stroke: none;
 }
 
 .plasmid-map :deep(svg > text[fill="#202124"]) {
@@ -144,7 +169,6 @@ watch(
 }
 
 .plasmid-map :deep(path.feature) {
-    cursor: pointer;
     transition:
         filter 150ms ease,
         opacity 150ms ease,
@@ -160,5 +184,14 @@ watch(
     opacity: 1;
     stroke-width: 4;
     outline: none;
+}
+</style>
+
+<style>
+body.dark .plasmid-map {
+    --plasmid-background: #18181b;
+    --plasmid-ink: #f4f4f5;
+    --plasmid-muted: #a1a1aa;
+    --plasmid-soft: #52525b;
 }
 </style>

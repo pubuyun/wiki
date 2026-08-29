@@ -1,32 +1,38 @@
 <template>
-    <div class="h-full min-h-0 overflow-y-auto p-3 text-on-secondary">
+    <div
+        class="h-full min-h-0 overflow-y-auto bg-secondary p-4 text-lg text-on-secondary dark:bg-zinc-900 dark:text-zinc-100"
+    >
         <div
             v-if="viewer.status === 'loading'"
-            class="grid h-full min-h-48 place-items-center text-sm text-on-secondary/70"
+            class="grid h-full min-h-48 place-items-center text-lg text-on-secondary/70 dark:text-zinc-300"
             role="status"
         >
             Loading plasmid information...
         </div>
         <div
             v-else-if="viewer.errorMessage"
-            class="grid h-full min-h-48 place-items-center p-4 text-center text-sm text-red-600 dark:text-red-400"
+            class="grid h-full min-h-48 place-items-center p-4 text-center text-lg text-red-600 dark:text-red-400"
             role="alert"
         >
             {{ viewer.errorMessage }}
         </div>
         <div v-else-if="viewer.displayRecord" class="flex flex-col gap-3">
             <dl
-                class="grid grid-cols-[auto_minmax(0,1fr)] gap-x-4 gap-y-2 rounded-lg border border-surface-bright/60 p-3 text-sm"
+                class="grid grid-cols-[auto_minmax(0,1fr)] gap-x-4 gap-y-2 rounded-lg border border-surface-bright/60 p-3 text-lg dark:border-zinc-700"
             >
-                <dt class="text-on-secondary/65">Length</dt>
+                <dt class="text-on-secondary/65 dark:text-zinc-400">Length</dt>
                 <dd class="text-right font-semibold">
                     {{ formatBasePairs(viewer.displayRecord.sequence.length) }}
                 </dd>
-                <dt class="text-on-secondary/65">Topology</dt>
+                <dt class="text-on-secondary/65 dark:text-zinc-400">
+                    Topology
+                </dt>
                 <dd class="text-right font-semibold">
                     {{ viewer.displayRecord.circular ? "Circular" : "Linear" }}
                 </dd>
-                <dt class="text-on-secondary/65">Features</dt>
+                <dt class="text-on-secondary/65 dark:text-zinc-400">
+                    Features
+                </dt>
                 <dd class="text-right font-semibold">
                     {{ viewer.features.length }}
                 </dd>
@@ -34,7 +40,7 @@
 
             <section
                 v-if="viewer.selectedFeature"
-                class="rounded-lg border-2 border-primary bg-primary/10 p-3"
+                class="rounded-lg border-2 border-primary bg-primary/10 p-3 dark:bg-zinc-800"
                 aria-live="polite"
             >
                 <div class="mb-3 flex items-start gap-2">
@@ -47,23 +53,31 @@
                         <h2 class="font-semibold break-words">
                             {{ viewer.selectedFeature.name }}
                         </h2>
-                        <p class="text-xs text-on-secondary/65">
+                        <p
+                            class="text-base text-on-secondary/65 dark:text-zinc-400"
+                        >
                             {{ viewer.selectedFeature.type || "Feature" }}
                         </p>
                     </div>
                 </div>
                 <dl
-                    class="grid grid-cols-[auto_minmax(0,1fr)] gap-x-3 gap-y-1.5 text-xs"
+                    class="grid grid-cols-[auto_minmax(0,1fr)] gap-x-3 gap-y-2 text-base"
                 >
-                    <dt class="text-on-secondary/65">Range</dt>
+                    <dt class="text-on-secondary/65 dark:text-zinc-400">
+                        Range
+                    </dt>
                     <dd class="text-right font-medium">
                         {{ formatCoordinateRange(viewer.selectedFeature) }}
                     </dd>
-                    <dt class="text-on-secondary/65">Length</dt>
+                    <dt class="text-on-secondary/65 dark:text-zinc-400">
+                        Length
+                    </dt>
                     <dd class="text-right font-medium">
                         {{ formatBasePairs(viewer.selectedFeatureLength) }}
                     </dd>
-                    <dt class="text-on-secondary/65">Strand</dt>
+                    <dt class="text-on-secondary/65 dark:text-zinc-400">
+                        Strand
+                    </dt>
                     <dd class="text-right font-medium">
                         {{ formatStrand(viewer.selectedFeature.strand) }}
                     </dd>
@@ -71,7 +85,9 @@
                         v-for="[key, values] in viewer.selectedFeatureDetails"
                         :key="key"
                     >
-                        <dt class="text-on-secondary/65 capitalize">
+                        <dt
+                            class="text-on-secondary/65 capitalize dark:text-zinc-400"
+                        >
                             {{ key.replaceAll("_", " ") }}
                         </dt>
                         <dd class="text-right break-words">
@@ -83,7 +99,7 @@
 
             <details
                 open
-                class="rounded-lg border border-surface-bright/60 p-3"
+                class="rounded-lg border border-surface-bright/60 p-3 dark:border-zinc-700"
             >
                 <summary class="cursor-pointer font-semibold">
                     Features · {{ viewer.features.length }}
@@ -93,11 +109,7 @@
                         v-for="(feature, index) in viewer.features"
                         :key="`${feature.name}:${feature.start}:${feature.end}:${index}`"
                         type="button"
-                        class="grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-2 rounded-md px-2 py-2 text-left text-xs transition-colors hover:bg-primary/15 focus-visible:outline-2 focus-visible:outline-outline"
-                        :class="{
-                            'bg-primary text-on-primary hover:bg-primary':
-                                viewer.selectedIndex === index,
-                        }"
+                        class="feature-button grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-2 rounded-md px-2 py-2.5 text-left text-base transition-colors hover:bg-primary/15 focus-visible:outline-2 focus-visible:outline-outline dark:hover:bg-zinc-800"
                         :aria-pressed="viewer.selectedIndex === index"
                         @click="viewer.selectFeature(index)"
                     >
@@ -109,7 +121,7 @@
                         <span class="min-w-0 truncate">
                             {{ feature.name }}
                         </span>
-                        <span class="font-mono text-[0.68rem] opacity-70">
+                        <span class="font-mono text-base opacity-70">
                             {{ feature.start.toLocaleString() }}–{{
                                 feature.end.toLocaleString()
                             }}
@@ -158,3 +170,12 @@ function featureSwatchStyle(feature: Feature) {
     };
 }
 </script>
+
+<style scoped>
+.feature-button[aria-pressed="true"],
+.feature-button[aria-pressed="true"]:hover,
+.feature-button[aria-pressed="true"]:focus-visible {
+    background: var(--primary);
+    color: var(--on-primary);
+}
+</style>

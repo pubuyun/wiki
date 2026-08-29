@@ -1,13 +1,13 @@
 <template>
     <section
-        class="my-6 w-full overflow-hidden rounded-xl border border-surface-bright bg-secondary text-on-secondary shadow-sm"
+        class="my-6 w-full overflow-hidden rounded-xl border border-surface-bright bg-secondary text-on-secondary shadow-sm dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-100"
         :aria-label="`${name || 'Plasmid'} map and details`"
     >
         <div
             class="grid min-w-0 lg:grid-cols-[minmax(0,2fr)_minmax(18rem,1fr)]"
         >
             <div
-                class="min-h-[32rem] border-b border-surface-bright lg:h-[42rem] lg:min-h-0 lg:border-r lg:border-b-0"
+                class="min-h-[32rem] border-b border-surface-bright lg:h-[42rem] lg:min-h-0 lg:border-r lg:border-b-0 dark:border-zinc-700"
             >
                 <PlasmidMap :viewer="viewer" />
             </div>
