@@ -134,9 +134,16 @@
 
                     <section
                         class="min-h-0 min-w-0 flex-1 overflow-hidden rounded-xl border border-surface-bright bg-secondary"
-                        aria-label="Molecular structure viewer"
+                        :aria-label="
+                            isSequenceView
+                                ? 'Plasmid sequence map'
+                                : 'Molecular structure viewer'
+                        "
                     >
-                        <ClientOnly>
+                        <template v-if="isSequenceView">
+                            <PlasmidMap :viewer="plasmidViewer" />
+                        </template>
+                        <ClientOnly v-else>
                             <StructureViewer
                                 :structure-url="selectedBinder?._pdb_url ?? ''"
                                 structure-url-format="pdb"
@@ -257,9 +264,11 @@
                         </TabsContent>
 
                         <TabsContent
-                            value="vmd-animation"
-                            class="min-h-0 flex-1"
-                        />
+                            value="sequence"
+                            class="min-h-0 flex-1 outline-none"
+                        >
+                            <PlasmidDetails :viewer="plasmidViewer" />
+                        </TabsContent>
                         <TabsContent
                             value="experiment-result"
                             class="min-h-0 flex-1"
@@ -284,6 +293,9 @@ import {
     TreeItem,
     TreeRoot,
 } from "reka-ui";
+import PlasmidDetails from "~/components/Plasmid/Details.vue";
+import PlasmidMap from "~/components/Plasmid/Map.client.vue";
+import { usePlasmidViewer } from "~/composables/usePlasmidViewer";
 
 definePageMeta({
     layout: "static",
@@ -298,6 +310,7 @@ type BinderRecord = Record<string, BinderValue> & {
     _rmsd_lig_url?: string;
     _rmsd_prot_url?: string;
     _membrane_fit_rmsd_url?: string;
+    _dna?: string;
 };
 
 type TreeNode = {
@@ -376,7 +389,7 @@ let viewportQuery: MediaQueryList | undefined;
 const tabValues = [
     "info",
     "md-graph",
-    "vmd-animation",
+    "sequence",
     "experiment-result",
 ] as const;
 type TabValue = (typeof tabValues)[number];
@@ -432,12 +445,23 @@ function initialExpandedKeys(currentNode?: TreeNode) {
 
 const expandedKeys = ref(initialExpandedKeys(selectedTreeNode.value));
 const activeTab = ref<TabValue>(isTabValue(initialTab) ? initialTab : "info");
+const selectedBinder = shallowRef<BinderRecord>();
 
-const tabs = [
-    { value: "info", label: "Info" },
-    { value: "md-graph", label: "MD Graph" },
-    { value: "experiment-result", label: "Experiment Result" },
-];
+const hasDna = computed(() => Boolean(selectedBinder.value?._dna));
+const isSequenceView = computed(
+    () => activeTab.value === "sequence" && hasDna.value,
+);
+const plasmidViewer = usePlasmidViewer(() =>
+    activeTab.value === "sequence" ? selectedBinder.value?._dna : undefined,
+);
+const tabs = computed(() => [
+    { value: "info" as const, label: "Info" },
+    { value: "md-graph" as const, label: "MD Graph" },
+    ...(hasDna.value
+        ? [{ value: "sequence" as const, label: "Sequence" }]
+        : []),
+    { value: "experiment-result" as const, label: "Experiment Result" },
+]);
 
 watch(
     () => route.fullPath,
@@ -497,7 +521,6 @@ watch(
     },
 );
 
-const selectedBinder = shallowRef<BinderRecord>();
 let recordLoadId = 0;
 
 watch(
@@ -512,6 +535,12 @@ watch(
     },
     { immediate: true },
 );
+
+watch(selectedBinder, (record) => {
+    if (record && activeTab.value === "sequence" && !record._dna) {
+        activeTab.value = "info";
+    }
+});
 
 const visibleProperties = computed(() =>
     Object.entries(selectedBinder.value ?? {}).filter(

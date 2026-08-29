@@ -441,6 +441,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@carabennemsi/plasmid@npm:^0.1.3":
+  version: 0.1.3
+  resolution: "@carabennemsi/plasmid@npm:0.1.3"
+  checksum: 10c0/a9c99b880f52fb2f43292ef635071bcb986bde3eeaac8fb0b2c4bea009ac0789a21a3b118ac9ce08ecf34be86bb2e4519dab14149ae3a13e826aa4044eaaf796
+  languageName: node
+  linkType: hard
+
 "@clack/core@npm:1.4.3":
   version: 1.4.3
   resolution: "@clack/core@npm:1.4.3"
@@ -13235,6 +13242,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "wiki@workspace:."
   dependencies:
+    "@carabennemsi/plasmid": "npm:^0.1.3"
     "@fontsource/belanosima": "npm:^5.2.7"
     "@fontsource/momo-trust-display": "npm:^5.2.1"
     "@fontsource/opendyslexic": "npm:^5.2.5"
