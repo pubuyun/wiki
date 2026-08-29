@@ -197,8 +197,8 @@ const SOLUTIONS = [
         id: "precursor-binder",
         title: "Precursor Binder",
         description:
-            'Design <span class="text-[#ffd55e]">protein binders</span> that capture the <span class="text-[#8ed0ff]">Cys-Gly-3M3SH</span> before it is taken up by <span class="text-[#de8949]">Staphylococcus hominis</span>.',
-        color: "#faf2a4",
+            'Design <span class="text-[#ffd368]">protein binders</span> that capture the <span class="text-[#b0e5fd]">Cys-Gly-3M3SH</span> before it is taken up by <span class="text-[#de8949]">Staphylococcus hominis</span>.',
+        color: "#ffd368",
         image: "https://static.igem.wiki/teams/6133/wiki/homepage/bindernoeyes.avif",
         angle: -90,
         iconWidth: 88,
@@ -208,8 +208,8 @@ const SOLUTIONS = [
         id: "transporter-binder",
         title: "Transporter Binder",
         description:
-            'Design <span class="text-[#8ed0ff]">PepTsh</span> plugs that bind to the <span class="text-[#8ed0ff]">PepTsh</span> transporters, reducing the uptake efficiency of <span class="text-[#8ed0ff]">Cys-Gly-3M3SH</span>.',
-        color: "#55c1fc",
+            'Design <span class="text-[#b0e5fd]">PepTsh</span> plugs that bind to the <span class="text-[#b0e5fd]">PepTsh</span> transporters, reducing the uptake efficiency of <span class="text-[#b0e5fd]">Cys-Gly-3M3SH</span>.',
+        color: "#b0e5fd",
         image: "https://static.igem.wiki/teams/6133/wiki/homepage/plugoutlined1.avif",
         angle: 30,
         iconWidth: 78,
@@ -219,8 +219,8 @@ const SOLUTIONS = [
         id: "cgtase",
         title: "CGTase",
         description:
-            'Engineer <span class="text-[#52dfc5]">CGTase</span> to transfer glucosyl groups to the hydroxyl of <span class="text-[#8ed0ff]">Cys-Gly-3M3SH</span>, reducing its affinity to the <span class="text-[#8ed0ff]">PepTsh</span> transporter.',
-        color: "#4ce0b1",
+            'Engineer <span class="text-[#a8f4d2]">CGTase</span> to transfer glucosyl groups to the hydroxyl of <span class="text-[#b0e5fd]">Cys-Gly-3M3SH</span>, reducing its affinity to the <span class="text-[#b0e5fd]">PepTsh</span> transporter.',
+        color: "#a8f4d2",
         image: "https://static.igem.wiki/teams/6133/wiki/homepage/cgtasseoutlined.avif",
         angle: 150,
         iconWidth: 88,

@@ -708,7 +708,7 @@ onUnmounted(() => {
                 class="mechanism-scene__copy-panel absolute right-20 left-20 m-0 box-border h-auto w-auto max-w-none text-[clamp(1.1rem,1.8vw,1.75rem)] leading-[1.55] [overflow-wrap:break-word] whitespace-normal text-[#f7fbff] will-change-[transform,opacity] portrait:relative portrait:right-auto portrait:left-auto portrait:w-full portrait:text-[clamp(0.95rem,3.8vw,1.25rem)] portrait:leading-[1.42] portrait:[grid-area:copy]"
             >
                 This precursor is transported into <em>S. hominis</em> cells by
-                <strong class="text-[#8ed0ff]">PepT<sub>sh</sub></strong> , a
+                <strong class="text-[#b0e5fd]">PepT<sub>sh</sub></strong> , a
                 member of the
                 <strong>POT</strong>
                 (Proton-dependent Oligopeptide Transporter) family.
@@ -720,7 +720,7 @@ onUnmounted(() => {
                 Inside the bacterium,
                 <strong class="text-[#ffc56e]">PepV</strong> uses water to
                 hydrolyze the peptide bond in
-                <strong class="text-[#8ed0ff]">Cys-Gly-3M3SH</strong>, producing
+                <strong class="text-[#b0e5fd]">Cys-Gly-3M3SH</strong>, producing
                 <strong class="text-[#ffc56e]">Cys-3M3SH</strong> and
                 <strong>glycine</strong>.
             </p>
@@ -736,7 +736,7 @@ onUnmounted(() => {
                 <strong class="text-[#ffc56e]">Cys-3M3SH</strong> into the
                 pungent volatile thiol
                 <strong class="text-[#ff91b8]">3M3SH</strong>, with
-                <strong class="text-[#8ed0ff]">ammonia</strong> and
+                <strong class="text-[#b0e5fd]">ammonia</strong> and
                 <strong>pyruvic acid</strong> as coproducts.
                 <strong class="text-[#ff91b8]">3M3SH</strong> is one of the
                 primary compounds responsible for axillary body odor.
