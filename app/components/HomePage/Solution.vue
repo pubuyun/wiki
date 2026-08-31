@@ -199,7 +199,7 @@ const SOLUTIONS = [
         description:
             'Design <span class="text-[#ffd368]">protein binders</span> that capture the <span class="text-[#b0e5fd]">Cys-Gly-3M3SH</span> before it is taken up by <span class="text-[#de8949]">Staphylococcus hominis</span>.',
         color: "#ffd368",
-        image: "https://static.igem.wiki/teams/6133/wiki/homepage/bindernoeyes.avif",
+        image: "https://static.igem.wiki/teams/6133/wiki/homepage/binderoutlined.avif",
         angle: -90,
         iconWidth: 88,
         flip: false,

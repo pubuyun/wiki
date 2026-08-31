@@ -202,7 +202,7 @@ defineExpose({ buildTimeline, getRoot });
                         ref="binder"
                         class="block h-auto max-h-full object-contain will-change-transform select-none"
                         :style="{ width: `${props.handoff.iconWidth}%` }"
-                        src="https://static.igem.wiki/teams/6133/wiki/homepage/bindernoeyes.avif"
+                        src="https://static.igem.wiki/teams/6133/wiki/homepage/binderoutlined.avif"
                         alt=""
                         loading="lazy"
                         fetchpriority="low"
