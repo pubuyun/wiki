@@ -270,7 +270,6 @@ onBeforeUnmount(() => {
     position: relative;
     width: 100%;
     height: 100%;
-    max-width: 100rem;
     margin-inline: auto;
     color: white;
     font-family: var(--font-righteous), sans-serif;
@@ -310,7 +309,7 @@ onBeforeUnmount(() => {
     top: 23.5%;
     left: 50%;
     z-index: 18;
-    width: min(88%, 78rem);
+    width: 88%;
     margin: 0;
     transform: translateX(-50%);
     font-size: clamp(1.35rem, 2.35vw, 2.35rem);
@@ -340,7 +339,7 @@ onBeforeUnmount(() => {
     position: absolute;
     top: 42.7%;
     left: 50%;
-    width: min(91%, 79rem);
+    width: 100%;
     height: 50%;
     transform: translateX(-50%);
 }
@@ -348,29 +347,29 @@ onBeforeUnmount(() => {
 .common-scene__card-wrap {
     position: absolute;
     z-index: 10;
-    width: min(17.2vw, 14.5rem);
+    width: 17.2vw;
     margin: 0;
     aspect-ratio: 0.78;
 }
 
 .common-scene__card-wrap--1 {
     top: 17%;
-    left: 7%;
+    left: 4.5%;
 }
 
 .common-scene__card-wrap--2 {
     top: 0;
-    left: 29.1%;
+    left: 28.5%;
 }
 
 .common-scene__card-wrap--3 {
     top: 19%;
-    left: 51.3%;
+    left: 54%;
 }
 
 .common-scene__card-wrap--4 {
     top: 0;
-    left: 73.5%;
+    left: 80%;
 }
 
 .common-scene__card,

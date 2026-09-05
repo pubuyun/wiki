@@ -2,11 +2,14 @@
     <Transition name="fade" @after-leave="handleLoadingAfterLeave">
         <div
             v-if="showLoading"
-            class="fixed inset-0 z-9999 flex items-center justify-center bg-surface backdrop-blur-sm"
+            class="site-loading fixed inset-0 z-9999 flex items-center justify-center"
+            :class="
+                isHomeOpening ? 'bg-[#03316d]' : 'bg-surface backdrop-blur-sm'
+            "
             role="status"
             aria-live="polite"
         >
-            <div class="flex flex-col items-center">
+            <div v-show="!isHomeOpening" class="flex flex-col items-center">
                 <p
                     class="mb-6 font-righteous text-4xl font-bold tracking-widest text-on-surface"
                 >
@@ -31,6 +34,10 @@
 
 <script setup>
 const MIN_INITIAL_ANIMATION_MS = 600;
+const route = useRoute();
+const isHomeOpening = computed(
+    () => route.path === "/" && !isInitialLoadingComplete.value,
+);
 
 const showLoading = ref(true);
 const canShowRouteLoading = ref(false);
@@ -69,14 +76,14 @@ const finishInitialLoading = () => {
     if (
         !isInitialLoading.value ||
         !isInitialPageReady.value ||
-        !isLoadingImageSettled.value
+        (!isHomeOpening.value && !isLoadingImageSettled.value)
     ) {
         return;
     }
 
     const remainingTime = Math.max(
         0,
-        MIN_INITIAL_ANIMATION_MS -
+        (isHomeOpening.value ? 0 : MIN_INITIAL_ANIMATION_MS) -
             (performance.now() - initialAnimationStartedAt),
     );
 

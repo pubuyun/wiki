@@ -15,6 +15,7 @@ import {
 import { HOME_SCROLL_CONTROLLER } from "~/utils/home-scroll-controller";
 
 gsap.registerPlugin(ScrollTrigger);
+const { settled: homeIntroSettled } = useHomeIntroState();
 
 let media: gsap.MatchMedia | undefined;
 let lenis: Lenis | undefined;
@@ -165,7 +166,10 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-    <div class="relative z-0 min-h-screen">
+    <div
+        class="home-layout relative z-0 min-h-screen"
+        :data-intro-covered="!homeIntroSettled"
+    >
         <header class="fixed top-0 z-100 flex w-full flex-col">
             <NavigationBar />
         </header>
@@ -180,3 +184,21 @@ onBeforeUnmount(() => {
         </div>
     </div>
 </template>
+
+<style>
+.home-layout {
+    background: #03316d;
+}
+.home-layout[data-intro-covered="true"] > header,
+.home-layout[data-intro-covered="true"]
+    nav[aria-label="Homepage chapter navigation"] {
+    visibility: hidden;
+}
+@media (prefers-reduced-motion: reduce) {
+    .home-layout[data-intro-covered="true"] > header,
+    .home-layout[data-intro-covered="true"]
+        nav[aria-label="Homepage chapter navigation"] {
+        visibility: visible;
+    }
+}
+</style>

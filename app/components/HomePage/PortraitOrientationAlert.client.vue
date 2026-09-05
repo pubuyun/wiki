@@ -15,6 +15,7 @@ const MIN_TABLET_ASPECT_RATIO = 0.62;
 const MAX_TABLET_ASPECT_RATIO = 0.85;
 
 const open = ref(false);
+const { settled: homeIntroSettled } = useHomeIntroState();
 const hasPrompted = ref(false);
 const hasContinuedOnPortrait = ref(false);
 
@@ -35,6 +36,7 @@ function isPortraitTabletLikeDevice() {
 }
 
 function updatePromptVisibility() {
+    if (!homeIntroSettled.value) return;
     if (!isPortraitTabletLikeDevice()) {
         open.value = false;
         return;
@@ -59,6 +61,10 @@ onMounted(() => {
     });
 
     updatePromptVisibility();
+});
+
+watch(homeIntroSettled, () => {
+    if (import.meta.client) updatePromptVisibility();
 });
 
 onBeforeUnmount(() => {
