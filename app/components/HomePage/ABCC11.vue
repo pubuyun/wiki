@@ -1450,9 +1450,8 @@ onUnmounted(() => {
 .abcc11-precursor__label,
 .scene-copy,
 .abcc11-story__label,
-.abcc11-story__curve-label text,
-.abcc11-story__copy {
-    font-family: var(--font-righteous), sans-serif;
+.abcc11-story__curve-label text {
+    font-family: var(--font-belanosima), sans-serif;
 }
 
 .abcc11-story {
@@ -1628,6 +1627,7 @@ onUnmounted(() => {
 }
 
 .abcc11-story__footer {
+    font-family: var(--font-belanosima);
     display: block;
     padding: 0 clamp(1rem, 3vw, 3rem) clamp(1rem, 2.5svh, 2.25rem);
 }

@@ -642,7 +642,7 @@ onUnmounted(() => {
                 <span
                     v-for="label in PROTEIN_LABELS"
                     :key="label.id"
-                    class="mechanism-scene__protein-label pointer-events-none absolute z-3 block -translate-x-1/2 -translate-y-1/2 text-[clamp(0.9rem,2svh,1.3rem)] leading-none font-extrabold whitespace-nowrap [text-shadow:0_1px_2px_rgb(255_255_255_/_90%),0_0_5px_rgb(255_255_255_/_65%)] portrait:rotate-90"
+                    class="mechanism-scene__protein-label pointer-events-none absolute z-3 block -translate-x-1/2 -translate-y-1/2 text-[clamp(0.9rem,2svh,1.3rem)] leading-none font-bold whitespace-nowrap [text-shadow:0_1px_2px_rgb(255_255_255_/_90%),0_0_5px_rgb(255_255_255_/_65%)] portrait:rotate-90"
                     :style="{
                         left: `${label.position.x * 100}%`,
                         top: `${label.position.y * 100}%`,
@@ -701,11 +701,11 @@ onUnmounted(() => {
         />
 
         <div
-            class="mechanism-scene__copy absolute inset-y-0 right-0 z-3 box-border grid place-items-center portrait:pointer-events-none portrait:relative portrait:inset-auto portrait:row-start-1 portrait:bg-[#03316d] portrait:px-[clamp(1rem,5vw,2rem)] portrait:py-20 portrait:[grid-template:'copy'_auto/minmax(0,1fr)]"
+            class="mechanism-scene__copy absolute inset-y-0 right-0 z-3 box-border grid place-items-center font-belanosima portrait:pointer-events-none portrait:relative portrait:inset-auto portrait:row-start-1 portrait:bg-[#03316d] portrait:px-[clamp(1rem,5vw,2rem)] portrait:py-20 portrait:[grid-template:'copy'_auto/minmax(0,1fr)]"
         >
             <p
                 ref="copyOne"
-                class="mechanism-scene__copy-panel absolute right-20 left-20 m-0 box-border h-auto w-auto max-w-none text-[clamp(1.1rem,1.8vw,1.75rem)] leading-[1.55] [overflow-wrap:break-word] whitespace-normal text-[#f7fbff] will-change-[transform,opacity] portrait:relative portrait:right-auto portrait:left-auto portrait:w-full portrait:text-[clamp(0.95rem,3.8vw,1.25rem)] portrait:leading-[1.42] portrait:[grid-area:copy]"
+                class="mechanism-scene__copy-panel absolute right-20 left-20 m-0 box-border h-auto w-auto max-w-none text-[clamp(1.4rem,2.0vw,2.0rem)] leading-[1.55] [overflow-wrap:break-word] whitespace-normal text-[#f7fbff] will-change-[transform,opacity] portrait:relative portrait:right-auto portrait:left-auto portrait:w-full portrait:text-[clamp(0.95rem,3.8vw,1.25rem)] portrait:leading-[1.42] portrait:[grid-area:copy]"
             >
                 This precursor is transported into <em>S. hominis</em> cells by
                 <strong class="text-[#b0e5fd]">PepT<sub>sh</sub></strong> , a

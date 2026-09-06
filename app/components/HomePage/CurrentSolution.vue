@@ -863,7 +863,7 @@ onUnmounted(() => {
     <section
         id="current-solution"
         ref="scene"
-        class="current-solution-scene relative h-svh min-h-152 w-full overflow-hidden bg-[#073873] font-righteous text-white"
+        class="current-solution-scene relative h-svh min-h-152 w-full overflow-hidden bg-[#073873] font-belanosima text-white"
         aria-labelledby="current-solution-title"
     >
         <div

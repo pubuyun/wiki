@@ -272,7 +272,7 @@ onBeforeUnmount(() => {
     height: 100%;
     margin-inline: auto;
     color: white;
-    font-family: var(--font-righteous), sans-serif;
+    font-family: var(--font-belanosima), sans-serif;
 }
 
 .common-scene__question {

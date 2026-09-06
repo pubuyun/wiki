@@ -1018,7 +1018,7 @@ onUnmounted(() => {
     <section
         id="solution"
         ref="scene"
-        class="solution-scene relative h-svh min-h-screen overflow-hidden bg-[#07366f] text-white"
+        class="solution-scene relative h-svh min-h-screen overflow-hidden bg-[#07366f] font-belanosima text-white"
         :style="sceneCssVariables"
         aria-label="Expelliodor solutions"
     >
@@ -1123,7 +1123,7 @@ onUnmounted(() => {
                     />
                 </div>
                 <p
-                    class="solution-marker__label pointer-events-none absolute top-[104%] left-1/2 m-0 -translate-x-1/2 text-center text-[clamp(0.72rem,1.7vw,1.65rem)] leading-none font-extrabold whitespace-nowrap text-white [text-shadow:0_2px_5px_rgb(2_30_71_/_85%)]"
+                    class="solution-marker__label pointer-events-none absolute top-[104%] left-1/2 m-0 -translate-x-1/2 text-center text-[clamp(0.72rem,1.7vw,1.65rem)] leading-none whitespace-nowrap text-white [text-shadow:0_2px_5px_rgb(2_30_71_/_85%)]"
                     :style="{ color: solution.color }"
                 >
                     {{ solution.title }}
@@ -1160,7 +1160,7 @@ onUnmounted(() => {
                     />
                 </div>
                 <p
-                    class="solution-entry-actor__label pointer-events-none absolute top-[104%] left-1/2 m-0 -translate-x-1/2 text-center text-[clamp(0.72rem,1.7vw,1.65rem)] leading-none font-extrabold whitespace-nowrap text-white [text-shadow:0_2px_5px_rgb(2_30_71_/_85%)]"
+                    class="solution-entry-actor__label pointer-events-none absolute top-[104%] left-1/2 m-0 -translate-x-1/2 text-center text-[clamp(0.72rem,1.7vw,1.65rem)] leading-none whitespace-nowrap text-white [text-shadow:0_2px_5px_rgb(2_30_71_/_85%)]"
                     :style="{ color: solution.color }"
                 >
                     {{ solution.title }}
@@ -1176,13 +1176,13 @@ onUnmounted(() => {
                 class="solution-copy__panel invisible absolute top-0 left-0 w-full opacity-0 will-change-[transform,opacity]"
             >
                 <h2
-                    class="m-0 text-[clamp(2rem,4vw,4.8rem)] leading-none font-extrabold tracking-[-0.02em]"
+                    class="m-0 text-[clamp(2rem,4vw,4.8rem)] leading-none tracking-[-0.02em]"
                     :style="{ color: solution.color }"
                 >
                     {{ solution.title }}
                 </h2>
                 <p
-                    class="mt-[5%] mb-0 max-w-[32ch] text-[clamp(1.15rem,2.3vw,2.75rem)] leading-[1.45] font-semibold text-[#f8fbff]"
+                    class="mt-[5%] mb-0 max-w-[32ch] text-[clamp(1.15rem,2.3vw,2.75rem)] leading-[1.45] text-[#f8fbff]"
                     v-html="solution.description"
                 ></p>
             </article>

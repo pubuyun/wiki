@@ -135,7 +135,7 @@ defineExpose({ getAnimationTargets });
 
             <span
                 data-pathway-reveal="pepV"
-                class="pathway__plus invisible absolute left-[42%] grid -translate-x-1/2 translate-y-3 place-items-center text-[clamp(1rem,2svh,1.35rem)] leading-none font-extrabold opacity-0 portrait:top-1/2 portrait:left-1/2 portrait:-translate-x-1/2 portrait:-translate-y-1/2"
+                class="pathway__plus invisible absolute left-[42%] grid -translate-x-1/2 translate-y-3 place-items-center text-[clamp(1rem,2svh,1.35rem)] leading-none font-bold opacity-0 portrait:top-1/2 portrait:left-1/2 portrait:-translate-x-1/2 portrait:-translate-y-1/2"
                 aria-hidden="true"
                 >+</span
             >
@@ -167,7 +167,7 @@ defineExpose({ getAnimationTargets });
         >
             <span
                 data-pathway-reveal="pepV"
-                class="reaction-arrow__enzyme invisible absolute top-[24%] left-[76%] z-1 translate-y-3 rounded-sm bg-[#b6fbf1] px-[0.3rem] py-[0.12rem] text-[clamp(0.78rem,1.5svh,1.05rem)] font-extrabold opacity-0 portrait:top-[-12%] portrait:left-1/2 portrait:-translate-x-1/2 portrait:-translate-y-1/2 portrait:text-[clamp(0.62rem,2.2vw,0.8rem)]"
+                class="reaction-arrow__enzyme invisible absolute top-[24%] left-[76%] z-1 translate-y-3 rounded-sm bg-[#b6fbf1] px-[0.3rem] py-[0.12rem] text-[clamp(0.78rem,1.5svh,1.05rem)] font-bold opacity-0 portrait:top-[-12%] portrait:left-1/2 portrait:-translate-x-1/2 portrait:-translate-y-1/2 portrait:text-[clamp(0.62rem,2.2vw,0.8rem)]"
                 >PepV</span
             >
             <svg
@@ -259,7 +259,7 @@ defineExpose({ getAnimationTargets });
         >
             <span
                 data-pathway-reveal="patB"
-                class="reaction-arrow__enzyme invisible absolute top-[24%] left-[76%] z-1 translate-y-3 rounded-sm bg-[#b6fbf1] px-[0.3rem] py-[0.12rem] text-[clamp(0.78rem,1.5svh,1.05rem)] font-extrabold opacity-0 portrait:top-[-12%] portrait:left-1/2 portrait:-translate-x-1/2 portrait:-translate-y-1/2 portrait:text-[clamp(0.62rem,2.2vw,0.8rem)]"
+                class="reaction-arrow__enzyme invisible absolute top-[24%] left-[76%] z-1 translate-y-3 rounded-sm bg-[#b6fbf1] px-[0.3rem] py-[0.12rem] text-[clamp(0.78rem,1.5svh,1.05rem)] font-bold opacity-0 portrait:top-[-12%] portrait:left-1/2 portrait:-translate-x-1/2 portrait:-translate-y-1/2 portrait:text-[clamp(0.62rem,2.2vw,0.8rem)]"
                 >PatB</span
             >
             <svg
@@ -327,7 +327,7 @@ defineExpose({ getAnimationTargets });
                     </h2>
                 </article>
                 <span
-                    class="pathway__plus grid place-items-center self-center justify-self-center text-[clamp(1rem,2svh,1.35rem)] leading-none font-extrabold"
+                    class="pathway__plus grid place-items-center self-center justify-self-center text-[clamp(1rem,2svh,1.35rem)] leading-none font-bold"
                     aria-hidden="true"
                     >+</span
                 >

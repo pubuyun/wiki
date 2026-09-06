@@ -617,7 +617,7 @@ onUnmounted(() => {
     <section
         id="surgery"
         ref="scene"
-        class="relative h-svh min-h-[38rem] w-full overflow-hidden bg-[#03316d] font-righteous text-white max-[52rem]:min-h-[42rem] portrait:min-h-[42rem]"
+        class="relative h-svh min-h-[38rem] w-full overflow-hidden bg-[#03316d] font-belanosima text-white max-[52rem]:min-h-[42rem] portrait:min-h-[42rem]"
         aria-labelledby="surgery-title"
     >
         <div ref="stage" class="surgery__stage absolute inset-0">

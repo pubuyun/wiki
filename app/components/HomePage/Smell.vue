@@ -655,7 +655,7 @@ onBeforeUnmount(() => {
 .smell-scene__content {
     pointer-events: none;
     color: white;
-    font-family: var(--font-righteous), sans-serif;
+    font-family: var(--font-belanosima), sans-serif;
 }
 
 .smell-scene__title-position,

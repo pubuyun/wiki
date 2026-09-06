@@ -138,7 +138,7 @@ onUnmounted(() => {
 
 <style scoped>
 .product-intro {
-    font-family: var(--font-righteous), sans-serif;
+    font-family: var(--font-belanosima), sans-serif;
 }
 
 .product-intro__question {

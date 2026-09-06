@@ -75,7 +75,7 @@ const FEATURES = [
     },
     {
         id: "clothes",
-        title: "No damage to clothes",
+        title: "Fabric-safe",
         image: "https://static.igem.wiki/teams/6133/wiki/homepage/clothes.avif",
         side: "left",
         tone: "soft",
@@ -95,7 +95,7 @@ const FEATURES = [
     },
     {
         id: "fragrance",
-        title: "Customised fragrance",
+        title: "Customised",
         image: "https://static.igem.wiki/teams/6133/wiki/homepage/costumised.avif",
         side: "left",
         tone: "strong",
@@ -529,7 +529,7 @@ onBeforeUnmount(() => {
             <article
                 v-for="feature in FEATURES"
                 :key="feature.id"
-                class="product-feature absolute flex min-h-[36vh] items-center px-30"
+                class="product-feature absolute flex min-h-[36vh] items-center px-30 font-righteous"
                 :class="[
                     `product-feature--${feature.id}`,
                     `product-feature--${feature.side}`,
@@ -787,7 +787,7 @@ onBeforeUnmount(() => {
     font-size: clamp(1.25rem, 2vw, 3rem);
     line-height: 0.98;
     font-weight: 800;
-    letter-spacing: -0.03em;
+    letter-spacing: 0.03em;
     text-align: center;
     text-shadow: 0 2px 5px rgb(1 28 69 / 45%);
 }
