@@ -12,9 +12,11 @@ import {
 withDefaults(
     defineProps<{
         hasCategorySidebar?: boolean;
+        homeOverlap?: boolean;
     }>(),
     {
         hasCategorySidebar: false,
+        homeOverlap: false,
     },
 );
 
@@ -156,10 +158,13 @@ const footerLinkClass =
 
 <template>
     <footer
-        class="relative isolate mt-auto overflow-hidden bg-surface-elevated text-on-surface"
+        class="site-footer relative isolate mt-auto overflow-hidden bg-surface-elevated text-on-surface"
+        :class="{ 'site-footer--home-overlap': homeOverlap }"
+        :data-home-footer="homeOverlap ? '' : undefined"
     >
         <div
-            class="relative h-24 bg-surface sm:h-32 lg:h-44"
+            class="site-footer__wave-stage relative h-24 bg-surface sm:h-32 lg:h-44"
+            :data-home-footer-wave="homeOverlap ? '' : undefined"
             aria-hidden="true"
         >
             <div
@@ -344,6 +349,17 @@ const footerLinkClass =
 </template>
 
 <style scoped>
+.site-footer.site-footer--home-overlap {
+    --footer-wave-overlap: 6rem;
+
+    z-index: 10;
+    margin-top: calc(-1 * var(--footer-wave-overlap));
+}
+
+.site-footer--home-overlap .site-footer__wave-stage {
+    background: #07366f;
+}
+
 .footer-team-name {
     text-shadow: 0.07em 0.07em 0 var(--primary);
 }
@@ -379,6 +395,18 @@ const footerLinkClass =
 @keyframes sponsor-scroll {
     to {
         transform: translateX(calc(-50% - 0.5rem));
+    }
+}
+
+@media (min-width: 40rem) {
+    .site-footer.site-footer--home-overlap {
+        --footer-wave-overlap: 8rem;
+    }
+}
+
+@media (min-width: 64rem) {
+    .site-footer.site-footer--home-overlap {
+        --footer-wave-overlap: 11rem;
     }
 }
 

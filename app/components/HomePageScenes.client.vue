@@ -109,16 +109,12 @@ const lazyScenes = [
     },
     {
         id: "product",
+        restoreIds: ["solution", "more-about-us"],
         loader: () => import("./HomePage/ProductSolution.vue"),
         minHeight: "100svh",
         // Product and Solution share one pinned master timeline so the bottle
         // paints the real Solution overview without a duplicate scene.
         loadImmediately: true,
-    },
-    {
-        id: "more-about-us",
-        loader: () => import("./HomePage/MoreAboutUs.vue"),
-        minHeight: "100svh",
     },
 ] as const;
 

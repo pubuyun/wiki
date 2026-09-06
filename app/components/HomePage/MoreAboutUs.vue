@@ -8,10 +8,25 @@ import engineeringSvg from "./MoreAboutUs/engineering.svg?raw";
 import ihpSvg from "./MoreAboutUs/ihp.svg?raw";
 import membersSvg from "./MoreAboutUs/members.svg?raw";
 import modelSvg from "./MoreAboutUs/model.svg?raw";
-import { HOME_CHAPTERS } from "~/utils/home-chapters";
+import {
+    HOME_CHAPTERS,
+    homeChapterActivationLabel,
+} from "~/utils/home-chapters";
 import { siteNavGroups } from "~/utils/site-navigation";
 
 gsap.registerPlugin(ScrollTrigger);
+
+const props = withDefaults(defineProps<{ embedded?: boolean }>(), {
+    embedded: false,
+});
+const emit = defineEmits<{
+    timelineReady: [
+        payload: {
+            timeline: gsap.core.Timeline;
+            scene: HTMLElement;
+        },
+    ];
+}>();
 
 const scene = ref<HTMLElement>();
 const hoverTimelines = new WeakMap<HTMLElement, gsap.core.Timeline>();
@@ -154,42 +169,44 @@ onMounted(async () => {
             allowMotion: "(prefers-reduced-motion: no-preference)",
         },
         (context) => {
-            if (context.conditions?.reduceMotion) {
-                gsap.set([photo, title, links, decorations], {
-                    autoAlpha: 1,
-                    clearProps: "transform",
+            const reduceMotion = Boolean(context.conditions?.reduceMotion);
+
+            if (!reduceMotion) {
+                geometry.forEach((element) => {
+                    const length = geometryLength(element) + 1;
+                    gsap.set(element, {
+                        strokeDasharray: length,
+                        strokeDashoffset: length,
+                    });
                 });
-                gsap.set(geometry, { strokeDashoffset: 0 });
-                gsap.set(fills, { fillOpacity: 1 });
-                return;
             }
 
-            geometry.forEach((element) => {
-                const length = geometryLength(element) + 1;
-                gsap.set(element, {
-                    strokeDasharray: length,
-                    strokeDashoffset: length,
-                });
-            });
-
             const timeline = gsap.timeline({
+                paused: props.embedded,
                 defaults: { ease: "power3.out" },
-                scrollTrigger: {
-                    id: "more-about-us-intro",
-                    trigger: root,
-                    start: "top 72%",
-                    once: true,
-                },
+                scrollTrigger: props.embedded
+                    ? undefined
+                    : {
+                          id: "more-about-us-intro",
+                          trigger: root,
+                          start: "top 72%",
+                          once: true,
+                      },
             });
 
             timeline
+                .addLabel(
+                    homeChapterActivationLabel(HOME_CHAPTERS.moreAboutUs),
+                    0,
+                )
+                .addLabel(HOME_CHAPTERS.moreAboutUs, 0)
                 .from(
                     decorations,
                     {
                         autoAlpha: 0,
-                        scale: 0.35,
-                        duration: 0.8,
-                        stagger: 0.06,
+                        scale: reduceMotion ? 1 : 0.35,
+                        duration: reduceMotion ? 0.01 : 0.8,
+                        stagger: reduceMotion ? 0 : 0.06,
                     },
                     0,
                 )
@@ -197,21 +214,29 @@ onMounted(async () => {
                     photo,
                     {
                         autoAlpha: 0,
-                        x: -72,
-                        rotation: -1.5,
-                        duration: 0.95,
+                        x: reduceMotion ? 0 : -72,
+                        rotation: reduceMotion ? 0 : -1.5,
+                        duration: reduceMotion ? 0.01 : 0.95,
                     },
                     0.05,
                 )
-                .from(title, { autoAlpha: 0, y: 42, duration: 0.72 }, 0.13)
+                .from(
+                    title,
+                    {
+                        autoAlpha: 0,
+                        y: reduceMotion ? 0 : 42,
+                        duration: reduceMotion ? 0.01 : 0.72,
+                    },
+                    0.13,
+                )
                 .from(
                     links,
                     {
                         autoAlpha: 0,
-                        y: 46,
-                        scale: 0.88,
-                        duration: 0.68,
-                        stagger: 0.09,
+                        y: reduceMotion ? 0 : 46,
+                        scale: reduceMotion ? 1 : 0.88,
+                        duration: reduceMotion ? 0.01 : 0.68,
+                        stagger: reduceMotion ? 0 : 0.09,
                     },
                     0.22,
                 )
@@ -219,9 +244,9 @@ onMounted(async () => {
                     geometry,
                     {
                         strokeDashoffset: 0,
-                        duration: 1.08,
+                        duration: reduceMotion ? 0.01 : 1.08,
                         ease: "power2.inOut",
-                        stagger: 0.018,
+                        stagger: reduceMotion ? 0 : 0.018,
                     },
                     0.28,
                 )
@@ -230,11 +255,15 @@ onMounted(async () => {
                     { fillOpacity: 0 },
                     {
                         fillOpacity: 1,
-                        duration: 0.52,
-                        stagger: 0.025,
+                        duration: reduceMotion ? 0.01 : 0.52,
+                        stagger: reduceMotion ? 0 : 0.025,
                     },
                     0.58,
                 );
+
+            if (props.embedded) {
+                emit("timelineReady", { timeline, scene: root });
+            }
         },
         root,
     );
@@ -254,14 +283,6 @@ onBeforeUnmount(() => {
         :data-home-chapter="HOME_CHAPTERS.moreAboutUs"
         aria-labelledby="more-about-us-title"
     >
-        <div
-            class="more-about-us__bubbles more-about-us__bubbles--left"
-            aria-hidden="true"
-        >
-            <i data-decoration />
-            <i data-decoration />
-            <i data-decoration />
-        </div>
         <div
             class="more-about-us__bubbles more-about-us__bubbles--right"
             aria-hidden="true"
@@ -316,8 +337,6 @@ onBeforeUnmount(() => {
                 </nav>
             </div>
         </div>
-
-        <span class="more-about-us__page-number" aria-hidden="true">33</span>
     </section>
 </template>
 
@@ -326,7 +345,7 @@ onBeforeUnmount(() => {
     position: relative;
     min-height: 100svh;
     overflow: hidden;
-    background: #093973;
+    background: #07366f;
     color: #fff;
     isolation: isolate;
 }
@@ -465,37 +484,6 @@ onBeforeUnmount(() => {
     transform-origin: center;
 }
 
-.more-about-us__bubbles--left {
-    bottom: -3rem;
-    left: -5rem;
-    width: 25rem;
-    height: 17rem;
-}
-
-.more-about-us__bubbles--left i:nth-child(1) {
-    bottom: -5rem;
-    left: -3rem;
-    width: 18rem;
-    height: 18rem;
-    background: #ffb142;
-}
-
-.more-about-us__bubbles--left i:nth-child(2) {
-    bottom: 4rem;
-    left: 0;
-    width: 7rem;
-    height: 7rem;
-    background: #ffdf6d;
-}
-
-.more-about-us__bubbles--left i:nth-child(3) {
-    right: 0;
-    bottom: -4rem;
-    width: 11rem;
-    height: 11rem;
-    background: #ffb142;
-}
-
 .more-about-us__bubbles--right {
     top: -4rem;
     right: -5rem;
@@ -533,15 +521,6 @@ onBeforeUnmount(() => {
     right: 1rem;
     width: 8rem;
     height: 8rem;
-}
-
-.more-about-us__page-number {
-    position: absolute;
-    z-index: 2;
-    right: clamp(2.2rem, 4.1vw, 3.8rem);
-    bottom: clamp(2.2rem, 7svh, 3.5rem);
-    font-family: var(--font-righteous), sans-serif;
-    font-size: 0.8rem;
 }
 
 @media (max-width: 62rem) {
@@ -611,11 +590,6 @@ onBeforeUnmount(() => {
 
     .more-about-us__bubbles--right {
         right: -10rem;
-    }
-
-    .more-about-us__page-number {
-        right: 1.5rem;
-        bottom: 1.5rem;
     }
 }
 

@@ -119,15 +119,18 @@ function preloadThrough(sceneIndex: number) {
 
 function findHashSceneIndex() {
     const hash = decodeURIComponent(window.location.hash.slice(1));
-    return props.scenes.findIndex((scene) => scene.id === hash);
+    return props.scenes.findIndex(
+        (scene) => scene.id === hash || scene.restoreIds?.includes(hash),
+    );
 }
 
 function scrollToHashScene(sceneIndex: number) {
     if (sceneIndex !== immediateThroughIndex.value) return;
 
     void nextTick(() => {
+        const hash = decodeURIComponent(window.location.hash.slice(1));
         document
-            .getElementById(props.scenes[sceneIndex]?.id ?? "")
+            .getElementById(hash || props.scenes[sceneIndex]?.id || "")
             ?.scrollIntoView();
     });
 }

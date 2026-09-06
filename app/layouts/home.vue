@@ -7,9 +7,11 @@ import { nextTick, onBeforeUnmount, onMounted, provide, ref, watch } from "vue";
 
 import {
     captureHomeScroll,
+    HOME_SCROLL_LOCK_CHANGE,
     HOME_SCROLL_REFRESH_END,
     HOME_SCROLL_REFRESH_START,
     restoreHomeScroll,
+    type HomeScrollLockChange,
     type HomeScrollSnapshot,
 } from "~/utils/home-scroll";
 import { HOME_SCROLL_CONTROLLER } from "~/utils/home-scroll-controller";
@@ -74,6 +76,12 @@ function cancelChapterScroll() {
     }
 
     window.scrollTo({ top: window.scrollY, behavior: "auto" });
+}
+
+function handleScrollLockChange(event: Event) {
+    const detail = (event as CustomEvent<HomeScrollLockChange>).detail;
+    if (detail.locked) lenis?.stop();
+    else lenis?.start();
 }
 
 provide(HOME_SCROLL_CONTROLLER, {
@@ -169,6 +177,7 @@ onMounted(async () => {
     window.addEventListener("resize", scheduleResizeRefresh, {
         passive: true,
     });
+    window.addEventListener(HOME_SCROLL_LOCK_CHANGE, handleScrollLockChange);
 
     await nextTick();
 
@@ -201,6 +210,7 @@ onBeforeUnmount(() => {
     headerEntrance?.kill();
     headerEntrance = undefined;
     window.removeEventListener("resize", scheduleResizeRefresh);
+    window.removeEventListener(HOME_SCROLL_LOCK_CHANGE, handleScrollLockChange);
     clearTimeout(resizeTimer);
     ScrollTrigger.config({
         autoRefreshEvents: "visibilitychange,DOMContentLoaded,load,resize",
@@ -230,7 +240,7 @@ onBeforeUnmount(() => {
                 <main class="flex-1">
                     <slot />
                 </main>
-                <LazyFooter hydrate-on-visible />
+                <LazyFooter home-overlap hydrate-on-visible />
             </div>
         </div>
     </div>
