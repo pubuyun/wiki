@@ -129,15 +129,19 @@ const previousChapterIndex = ref<number>();
 const nextChapterIndex = ref<number>();
 const isMoving = ref(false);
 const desktopNavigator = ref<HTMLElement>();
+const mobileNavigator = ref<HTMLElement>();
 const desktopNavigatorEdge = ref<DesktopNavigatorEdge>("right");
 const isDesktopNavigatorDragging = ref(false);
 const desktopNavigatorPosition = ref<NavigatorPosition>();
 const isMobileNavigatorDragging = ref(false);
 const mobileNavigatorPosition = ref<NavigatorPosition>();
 const scrollController = inject(HOME_SCROLL_CONTROLLER);
+const { settled: homeIntroSettled } = useHomeIntroState();
 
 let scrollFrame = 0;
 let moveToken = 0;
+let navigatorEntrance: gsap.core.Timeline | undefined;
+let navigatorRevealed = false;
 let desktopNavigatorDrag: NavigatorDrag | undefined;
 let desktopNavigatorDidDrag = false;
 let mobileNavigatorSide: "left" | "right" = "right";
@@ -221,6 +225,93 @@ watch(isNavigatorVisible, async (isVisible) => {
 
 const nextFrame = () =>
     new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
+
+function navigatorEdgeOffset(element: HTMLElement, edge: DesktopNavigatorEdge) {
+    const bounds = element.getBoundingClientRect();
+    const gutter = 24;
+
+    if (edge === "left") return { x: -bounds.right - gutter, y: 0 };
+    if (edge === "right") {
+        return { x: window.innerWidth - bounds.left + gutter, y: 0 };
+    }
+    if (edge === "top") return { x: 0, y: -bounds.bottom - gutter };
+    return { x: 0, y: window.innerHeight - bounds.top + gutter };
+}
+
+async function revealChapterNavigators() {
+    if (
+        navigatorRevealed ||
+        !homeIntroSettled.value ||
+        !isNavigatorVisible.value
+    ) {
+        return;
+    }
+
+    await nextTick();
+    await positionDesktopNavigatorAtEdge();
+    await nextTick();
+
+    navigatorRevealed = true;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    const visibleNavigators = [
+        desktopNavigator.value
+            ? {
+                  element: desktopNavigator.value,
+                  edge: desktopNavigatorEdge.value,
+              }
+            : undefined,
+        mobileNavigator.value
+            ? {
+                  element: mobileNavigator.value,
+                  edge: mobileNavigatorSide,
+              }
+            : undefined,
+    ].filter(
+        (
+            entry,
+        ): entry is {
+            element: HTMLElement;
+            edge: DesktopNavigatorEdge;
+        } =>
+            Boolean(
+                entry && getComputedStyle(entry.element).display !== "none",
+            ),
+    );
+
+    navigatorEntrance?.kill();
+    navigatorEntrance = gsap.timeline({
+        defaults: { duration: 0.74, ease: "power3.out" },
+    });
+    visibleNavigators.forEach(({ element, edge }) => {
+        const offset = navigatorEdgeOffset(element, edge);
+        navigatorEntrance!.fromTo(
+            element,
+            { x: offset.x, y: offset.y, autoAlpha: 0 },
+            {
+                x: 0,
+                y: 0,
+                autoAlpha: 1,
+                overwrite: "auto",
+                clearProps: "transform,opacity,visibility",
+            },
+            0.08,
+        );
+    });
+}
+
+watch(
+    [homeIntroSettled, isNavigatorVisible],
+    ([introSettled, navigatorVisible]) => {
+        if (!introSettled) {
+            navigatorEntrance?.kill();
+            navigatorRevealed = false;
+            return;
+        }
+        if (navigatorVisible) void revealChapterNavigators();
+    },
+    { flush: "post" },
+);
 
 function resolveChapterPositions() {
     const triggers = ScrollTrigger.getAll();
@@ -476,7 +567,7 @@ async function positionDesktopNavigatorAtEdge(
     position = desktopNavigatorPosition.value,
 ) {
     const element = desktopNavigator.value;
-    if (!element || element.offsetParent === null) return;
+    if (!element || getComputedStyle(element).display === "none") return;
 
     const oldSize = desktopNavigatorSize();
     const oldCenter = position
@@ -852,9 +943,12 @@ onMounted(() => {
     window.addEventListener("pointercancel", cancelDesktopNavigatorDrag);
     window.addEventListener("keydown", handleKeyIntent, { capture: true });
     ScrollTrigger.addEventListener("refresh", resolveChapterPositions);
+    if (homeIntroSettled.value) void revealChapterNavigators();
 });
 
 onBeforeUnmount(() => {
+    navigatorEntrance?.kill();
+    navigatorEntrance = undefined;
     moveToken += 1;
     if (isMoving.value) scrollController?.cancel();
     cancelAnimationFrame(scrollFrame);
@@ -884,7 +978,7 @@ onBeforeUnmount(() => {
     <nav
         v-if="isNavigatorVisible"
         ref="desktopNavigator"
-        class="fixed z-90 hidden touch-none overflow-hidden rounded-full border border-white/25 bg-[#032d65]/92 text-white shadow-[0_1rem_3rem_rgb(0_14_45_/_35%)] backdrop-blur-md select-none sm:flex"
+        class="home-chapter-navigation fixed z-90 hidden touch-none overflow-hidden rounded-full border border-white/25 bg-[#032d65]/92 text-white shadow-[0_1rem_3rem_rgb(0_14_45_/_35%)] backdrop-blur-md select-none sm:flex"
         :class="[
             isDesktopNavigatorVertical
                 ? 'flex-col'
@@ -894,6 +988,7 @@ onBeforeUnmount(() => {
                 : 'cursor-grab transition-[left,top,transform] duration-300 ease-out motion-reduce:transition-none',
         ]"
         :style="desktopNavigatorStyle"
+        :data-intro-covered="!homeIntroSettled"
         aria-label="Homepage chapter navigation"
         @click.capture="handleDesktopNavigatorClick"
         @pointerdown="handleDesktopNavigatorPointerDown"
@@ -1014,13 +1109,15 @@ onBeforeUnmount(() => {
 
     <nav
         v-if="isNavigatorVisible"
-        class="fixed z-90 sm:hidden"
+        ref="mobileNavigator"
+        class="home-chapter-navigation fixed z-90 sm:hidden"
         :class="
             isMobileNavigatorDragging
                 ? 'transition-none'
                 : 'transition-[left,top] duration-300 ease-out motion-reduce:transition-none'
         "
         :style="mobileNavigatorStyle"
+        :data-intro-covered="!homeIntroSettled"
         aria-label="Homepage chapter navigation"
     >
         <button
@@ -1085,3 +1182,16 @@ onBeforeUnmount(() => {
         </button>
     </nav>
 </template>
+
+<style scoped>
+.home-chapter-navigation[data-intro-covered="true"] {
+    pointer-events: none;
+    visibility: hidden;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .home-chapter-navigation[data-intro-covered="true"] {
+        visibility: visible;
+    }
+}
+</style>

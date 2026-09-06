@@ -3,7 +3,7 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Lenis from "lenis";
 import "lenis/dist/lenis.css";
-import { nextTick, onBeforeUnmount, onMounted, provide } from "vue";
+import { nextTick, onBeforeUnmount, onMounted, provide, ref, watch } from "vue";
 
 import {
     captureHomeScroll,
@@ -16,9 +16,11 @@ import { HOME_SCROLL_CONTROLLER } from "~/utils/home-scroll-controller";
 
 gsap.registerPlugin(ScrollTrigger);
 const { settled: homeIntroSettled } = useHomeIntroState();
+const siteHeader = ref<HTMLElement>();
 
 let media: gsap.MatchMedia | undefined;
 let lenis: Lenis | undefined;
+let headerEntrance: gsap.core.Tween | undefined;
 let updateLenis: ((time: number) => void) | undefined;
 let previousScrollRestoration: ScrollRestoration | undefined;
 let resizeSnapshot: HomeScrollSnapshot | undefined;
@@ -116,6 +118,50 @@ function destroyLenis() {
     lenis = undefined;
 }
 
+function coverHeader() {
+    headerEntrance?.kill();
+    if (!siteHeader.value) return;
+    gsap.set(siteHeader.value, {
+        clearProps: "transform,opacity,visibility",
+    });
+}
+
+function revealHeader() {
+    headerEntrance?.kill();
+    if (!siteHeader.value) return;
+
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        gsap.set(siteHeader.value, {
+            yPercent: 0,
+            autoAlpha: 1,
+            clearProps: "transform,opacity,visibility",
+        });
+        return;
+    }
+
+    headerEntrance = gsap.fromTo(
+        siteHeader.value,
+        { yPercent: -110, autoAlpha: 0 },
+        {
+            yPercent: 0,
+            autoAlpha: 1,
+            duration: 0.72,
+            ease: "power3.out",
+            overwrite: "auto",
+            clearProps: "transform,opacity,visibility",
+        },
+    );
+}
+
+watch(
+    homeIntroSettled,
+    (isSettled) => {
+        if (isSettled) revealHeader();
+        else coverHeader();
+    },
+    { flush: "post" },
+);
+
 onMounted(async () => {
     ScrollTrigger.config({
         autoRefreshEvents: "visibilitychange,DOMContentLoaded,load",
@@ -125,6 +171,9 @@ onMounted(async () => {
     });
 
     await nextTick();
+
+    if (homeIntroSettled.value) revealHeader();
+    else coverHeader();
 
     media = gsap.matchMedia();
     media.add("(prefers-reduced-motion: no-preference)", () => {
@@ -149,6 +198,8 @@ onMounted(async () => {
 });
 
 onBeforeUnmount(() => {
+    headerEntrance?.kill();
+    headerEntrance = undefined;
     window.removeEventListener("resize", scheduleResizeRefresh);
     clearTimeout(resizeTimer);
     ScrollTrigger.config({
@@ -170,7 +221,7 @@ onBeforeUnmount(() => {
         class="home-layout relative z-0 min-h-screen"
         :data-intro-covered="!homeIntroSettled"
     >
-        <header class="fixed top-0 z-100 flex w-full flex-col">
+        <header ref="siteHeader" class="fixed top-0 z-100 flex w-full flex-col">
             <NavigationBar />
         </header>
 
@@ -189,15 +240,15 @@ onBeforeUnmount(() => {
 .home-layout {
     background: #03316d;
 }
-.home-layout[data-intro-covered="true"] > header,
-.home-layout[data-intro-covered="true"]
-    nav[aria-label="Homepage chapter navigation"] {
+.home-layout[data-intro-covered="true"] > header {
+    opacity: 0;
+    transform: translateY(-110%);
     visibility: hidden;
 }
 @media (prefers-reduced-motion: reduce) {
-    .home-layout[data-intro-covered="true"] > header,
-    .home-layout[data-intro-covered="true"]
-        nav[aria-label="Homepage chapter navigation"] {
+    .home-layout[data-intro-covered="true"] > header {
+        opacity: 1;
+        transform: none;
         visibility: visible;
     }
 }

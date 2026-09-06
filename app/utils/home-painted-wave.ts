@@ -8,21 +8,32 @@ const n = (value: number) => Math.round(value * 100) / 100;
 
 // Art-directed silhouettes at evenly spaced horizontal stations. The upper
 // and lower edges have different crests, but each color follows its own edge.
+const PROFILE_MIN = -0.1;
+const PROFILE_MAX = 1.1;
 const TOP_INNER: Profile = [
-    0.205, 0.135, 0.19, 0.275, 0.235, 0.145, 0.13, 0.215, 0.255, 0.215, 0.135,
+    0.245, 0.205, 0.135, 0.19, 0.275, 0.235, 0.145, 0.13, 0.215, 0.255, 0.215,
+    0.135, 0.095,
 ];
 const BOTTOM_INNER: Profile = [
-    0.78, 0.73, 0.785, 0.87, 0.86, 0.81, 0.835, 0.875, 0.85, 0.823, 0.835,
+    0.82, 0.78, 0.73, 0.785, 0.87, 0.86, 0.81, 0.835, 0.875, 0.85, 0.823, 0.835,
+    0.85,
 ];
 const TOP_WIDTH: Profile = [
-    0.135, 0.1, 0.095, 0.1, 0.09, 0.085, 0.08, 0.105, 0.105, 0.1, 0.105,
+    0.15, 0.135, 0.1, 0.095, 0.1, 0.09, 0.085, 0.08, 0.105, 0.105, 0.1, 0.105,
+    0.11,
 ];
 const BOTTOM_WIDTH: Profile = [
-    0.16, 0.16, 0.135, 0.09, 0.085, 0.085, 0.12, 0.115, 0.105, 0.09, 0.1,
+    0.155, 0.16, 0.16, 0.135, 0.09, 0.085, 0.085, 0.12, 0.115, 0.105, 0.09, 0.1,
+    0.11,
 ];
 
 function sample(profile: Profile, x: number) {
-    const position = Math.min(1, Math.max(0, x)) * (profile.length - 1);
+    // The outer stations sit beyond the viewport, keeping the visible left
+    // and right edges inside the spline instead of on a clamped flat tangent.
+    const normalized =
+        (Math.min(PROFILE_MAX, Math.max(PROFILE_MIN, x)) - PROFILE_MIN) /
+        (PROFILE_MAX - PROFILE_MIN);
+    const position = normalized * (profile.length - 1);
     const index = Math.min(profile.length - 2, Math.floor(position));
     const t = position - index;
     const a = profile[Math.max(0, index - 1)]!;
