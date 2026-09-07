@@ -173,7 +173,7 @@ const footerLinkClass =
                 :class="sidebarExtensionClass"
             />
             <svg
-                class="absolute inset-x-0 top-0 z-10 h-full w-full"
+                class="site-footer__wave-svg absolute top-0 z-10 h-full"
                 viewBox="0 -500 1700 500"
                 preserveAspectRatio="none"
             >
@@ -354,10 +354,22 @@ const footerLinkClass =
 
     z-index: 10;
     margin-top: calc(-1 * var(--footer-wave-overlap));
+    background: #07366f;
 }
 
 .site-footer--home-overlap .site-footer__wave-stage {
     background: #07366f;
+}
+
+.site-footer__wave-stage {
+    overflow: hidden;
+}
+
+/* Fractional viewport widths can expose the SVG's rasterized edge. */
+.site-footer__wave-svg {
+    left: -2px;
+    width: calc(100% + 4px);
+    max-width: none;
 }
 
 .footer-team-name {

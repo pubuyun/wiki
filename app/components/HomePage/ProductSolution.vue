@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { onBeforeUnmount, onMounted, ref } from "vue";
+import { inject, onBeforeUnmount, onMounted, ref } from "vue";
 
 import {
     HOME_CHAPTERS,
@@ -15,6 +15,7 @@ import {
     isHomeScrollRestoring,
     type HomeScrollLockChange,
 } from "~/utils/home-scroll";
+import { HOME_SCROLL_CONTROLLER } from "~/utils/home-scroll-controller";
 
 import MoreAboutUs from "./MoreAboutUs.vue";
 import Product from "./Product.vue";
@@ -121,7 +122,6 @@ const WAVE_EXIT_LAYERS = [
 ] as const;
 
 const SOLUTION_MORE_AUTOMATIC_DURATION = 3.7;
-const SOLUTION_MORE_REVERSE_SPEED_MULTIPLIER = 3;
 const TRANSITION_SCROLL_KEYS = new Set([
     "ArrowDown",
     "ArrowUp",
@@ -172,10 +172,13 @@ let resizeResumeFrame = 0;
 let restoreResumeFrame = 0;
 let scrollLocked = false;
 let lockedScrollY = 0;
-let transitionRevealed = false;
+// This phase is the single authority for both the automatic timeline and scroll handoff.
+type SolutionMorePhase = "solution" | "revealing" | "more" | "hiding";
+let solutionMorePhase: SolutionMorePhase = "solution";
 let isLayoutRefreshing = false;
 let interruptedTransition:
-    { progress: number; reversed: boolean; revealed: boolean } | undefined;
+    { progress: number; phase: "revealing" | "hiding" } | undefined;
+const scrollController = inject(HOME_SCROLL_CONTROLLER, null);
 
 function handleProductReady(payload: ProductTimelinePayload) {
     productPayload = payload;
@@ -239,7 +242,8 @@ function preventTransitionScrollKey(event: KeyboardEvent) {
 
 function clampTransitionScroll() {
     if (scrollLocked && Math.abs(window.scrollY - lockedScrollY) > 1) {
-        window.scrollTo(0, lockedScrollY);
+        if (scrollController) scrollController.jumpTo(lockedScrollY);
+        else window.scrollTo(0, lockedScrollY);
     }
 }
 
@@ -255,6 +259,7 @@ function lockTransitionScroll(position: number, direction: "up" | "down") {
     lockedScrollY = position;
     if (scrollLocked) return;
 
+    scrollController?.cancel();
     scrollLocked = true;
     dispatchScrollLockChange({ locked: true, direction });
     window.addEventListener("wheel", preventTransitionScroll, {
@@ -279,7 +284,8 @@ function moveTransitionScroll(position: number) {
     const clampedPosition = gsap.utils.clamp(0, maxScroll, position);
 
     lockedScrollY = clampedPosition;
-    window.scrollTo(0, clampedPosition);
+    if (scrollController) scrollController.jumpTo(clampedPosition);
+    else window.scrollTo(0, clampedPosition);
     ScrollTrigger.update();
 }
 
@@ -333,6 +339,19 @@ function handoffHomeFooterToDocument() {
     return true;
 }
 
+function solutionMoreAnchor(target: "solution" | "more") {
+    const trigger = master?.scrollTrigger;
+    const threshold = master?.labels.solutionSmokeThreshold;
+    if (!trigger || typeof threshold !== "number" || !master) {
+        return window.scrollY;
+    }
+
+    const thresholdProgress = threshold / Math.max(master.duration(), 0.001);
+    const thresholdScroll =
+        trigger.start + thresholdProgress * (trigger.end - trigger.start);
+    return thresholdScroll + (target === "more" ? 1 : -1);
+}
+
 function syncTransitionToRestoredScroll() {
     if (!master || !automaticSolutionMore) return;
 
@@ -340,13 +359,22 @@ function syncTransitionToRestoredScroll() {
     const revealed =
         typeof threshold === "number" && master.time() >= threshold;
 
+    solutionMorePhase = revealed ? "more" : "solution";
     automaticSolutionMore
         .pause()
         .invalidate()
         .progress(revealed ? 1 : 0, true)
         .pause();
-    if (revealed) positionHomeFooterForReveal();
-    transitionRevealed = revealed;
+    if (revealed) {
+        const footerIsInDocumentFlow =
+            !!master.scrollTrigger &&
+            window.scrollY >= master.scrollTrigger.end - 1;
+        if (footerIsInDocumentFlow) {
+            gsap.set(homeFooter, { autoAlpha: 1, y: 0 });
+        } else {
+            positionHomeFooterForReveal();
+        }
+    }
     unlockTransitionScroll();
 }
 
@@ -362,11 +390,14 @@ function handleLayoutRefreshStart() {
     isLayoutRefreshing = true;
     cancelAnimationFrame(resizeResumeFrame);
 
-    if (scrollLocked && automaticSolutionMore) {
+    if (
+        scrollLocked &&
+        automaticSolutionMore &&
+        (solutionMorePhase === "revealing" || solutionMorePhase === "hiding")
+    ) {
         interruptedTransition = {
             progress: automaticSolutionMore.progress(),
-            reversed: automaticSolutionMore.reversed(),
-            revealed: transitionRevealed,
+            phase: solutionMorePhase,
         };
         automaticSolutionMore.pause();
         unlockTransitionScroll();
@@ -383,27 +414,22 @@ function handleLayoutRefreshEnd() {
 
             if (!transition || !automaticSolutionMore) return;
 
-            if (transition.reversed) {
-                automaticSolutionMore
-                    .progress(transition.progress, true)
-                    .pause();
+            solutionMorePhase = transition.phase;
+            automaticSolutionMore
+                .pause()
+                .progress(0, true)
+                .invalidate()
+                .progress(transition.progress, true)
+                .pause();
+            const target =
+                transition.phase === "revealing" ? "more" : "solution";
+            const anchor = solutionMoreAnchor(target);
+            lockTransitionScroll(anchor, target === "more" ? "down" : "up");
+            moveTransitionScroll(anchor);
+            if (transition.phase === "hiding") {
+                automaticSolutionMore.reverse();
             } else {
-                automaticSolutionMore
-                    .invalidate()
-                    .progress(transition.progress, true)
-                    .pause();
-            }
-            transitionRevealed = transition.revealed;
-            lockTransitionScroll(
-                window.scrollY,
-                transition.reversed ? "up" : "down",
-            );
-            if (transition.reversed) {
-                automaticSolutionMore
-                    .timeScale(SOLUTION_MORE_REVERSE_SPEED_MULTIPLIER)
-                    .reverse();
-            } else {
-                automaticSolutionMore.timeScale(1).play();
+                automaticSolutionMore.play();
             }
         });
     });
@@ -640,38 +666,31 @@ function buildSequence() {
         );
         timeline.time(labelTime, true);
     };
-    const runAutomaticTransition = (
-        self: ScrollTrigger,
-        shouldReveal: boolean,
-    ) => {
+    const startAutomaticTransition = (target: "solution" | "more") => {
         if (
             isLayoutRefreshing ||
             isHomeScrollRestoring() ||
-            !automaticSolutionMore ||
-            shouldReveal === transitionRevealed
+            !automaticSolutionMore
         ) {
             return;
         }
 
-        const threshold = timeline.labels.solutionSmokeThreshold;
-        if (typeof threshold !== "number") return;
-
-        transitionRevealed = shouldReveal;
-        const thresholdProgress =
-            threshold / Math.max(timeline.duration(), 0.001);
-        const thresholdScroll =
-            self.start + thresholdProgress * (self.end - self.start);
-        const anchoredScroll = thresholdScroll + (shouldReveal ? 1 : -1);
-        lockTransitionScroll(anchoredScroll, shouldReveal ? "down" : "up");
-        moveTransitionScroll(anchoredScroll);
-        if (shouldReveal) {
-            automaticSolutionMore.timeScale(1).invalidate().play();
+        if (target === "more") {
+            if (solutionMorePhase !== "solution") return;
+            solutionMorePhase = "revealing";
         } else {
-            automaticSolutionMore
-                .progress(1, true)
-                .pause()
-                .timeScale(SOLUTION_MORE_REVERSE_SPEED_MULTIPLIER)
-                .reverse();
+            if (solutionMorePhase !== "more") return;
+            solutionMorePhase = "hiding";
+        }
+
+        const anchor = solutionMoreAnchor(target);
+        lockTransitionScroll(anchor, target === "more" ? "down" : "up");
+        moveTransitionScroll(anchor);
+        if (target === "more") {
+            automaticSolutionMore.invalidate().play();
+        } else {
+            positionHomeFooterForReveal();
+            automaticSolutionMore.reverse();
         }
     };
 
@@ -689,18 +708,29 @@ function buildSequence() {
             anticipatePin: 1,
             invalidateOnRefresh: true,
             onUpdate: (self) => {
+                if (
+                    solutionMorePhase === "revealing" ||
+                    solutionMorePhase === "hiding"
+                ) {
+                    return;
+                }
+
                 const threshold = timeline.labels.solutionSmokeThreshold;
                 const thresholdProgress =
                     typeof threshold === "number"
                         ? threshold / Math.max(timeline.duration(), 0.001)
                         : undefined;
-                const shouldReveal =
+                if (
+                    self.direction > 0 &&
+                    solutionMorePhase === "solution" &&
                     typeof thresholdProgress === "number" &&
-                    self.progress >= thresholdProgress;
-                runAutomaticTransition(self, shouldReveal);
+                    self.progress >= thresholdProgress
+                ) {
+                    startAutomaticTransition("more");
+                } else if (self.direction < 0 && solutionMorePhase === "more") {
+                    startAutomaticTransition("solution");
+                }
             },
-            onLeave: (self) => runAutomaticTransition(self, true),
-            onLeaveBack: (self) => runAutomaticTransition(self, false),
         },
     });
     master = timeline;
@@ -1043,18 +1073,22 @@ function buildSequence() {
             : SOLUTION_MORE_AUTOMATIC_DURATION,
     );
     automaticSolutionMore.eventCallback("onComplete", () => {
+        if (solutionMorePhase !== "revealing") return;
+        solutionMorePhase = "more";
         if (!handoffHomeFooterToDocument()) {
             moveToLabel("moreAboutUsStory");
         }
         unlockTransitionScroll();
     });
     automaticSolutionMore.eventCallback("onReverseComplete", () => {
+        if (solutionMorePhase !== "hiding") return;
+        solutionMorePhase = "solution";
         gsap.set(homeFooter, { autoAlpha: 0, y: 0 });
         moveToLabel("solutionStoryComplete");
         unlockTransitionScroll();
     });
     automaticSolutionMore.progress(0, true).pause();
-    transitionRevealed = false;
+    solutionMorePhase = "solution";
 
     ScrollTrigger.refresh();
     requestAnimationFrame(() => {

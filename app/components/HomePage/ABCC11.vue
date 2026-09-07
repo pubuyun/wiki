@@ -173,6 +173,7 @@ const odorCopy = ref<HTMLElement | null>(null);
 const variantCopy = ref<HTMLElement | null>(null);
 const secondScene = ref<HTMLElement | null>(null);
 const glandTransporter = ref<TransporterAnimExpose | null>(null);
+const precursorVisibility = ref<HTMLElement | null>(null);
 const precursor = ref<HTMLElement | null>(null);
 const precursorVisual = ref<HTMLElement | null>(null);
 const precursorLabel = ref<HTMLElement | null>(null);
@@ -376,9 +377,12 @@ function destroyPrecursorRoute() {
     precursorRouteTimeline?.kill();
     precursorRouteTimeline = undefined;
     precursorRouteState = undefined;
+    precursorVisibility.value?.style.removeProperty("visibility");
     precursor.value?.style.removeProperty("visibility");
     document
-        .querySelector<HTMLElement>("#mechanism .mechanism-scene__molecule")
+        .querySelector<HTMLElement>(
+            "#mechanism .mechanism-scene__molecule-handoff-gate",
+        )
         ?.style.removeProperty("visibility");
 }
 
@@ -390,6 +394,7 @@ function setupPrecursorRoute(
     if (
         precursorRouteTimeline ||
         !scene.value ||
+        !precursorVisibility.value ||
         !precursor.value ||
         !precursorVisual.value
     ) {
@@ -404,6 +409,9 @@ function setupPrecursorRoute(
     const targetAnchor = targetScene?.querySelector<HTMLElement>(
         ".precursor-transition-target",
     );
+    const targetVisibility = targetScene?.querySelector<HTMLElement>(
+        ".mechanism-scene__molecule-handoff-gate",
+    );
     const mechanismTrigger = ScrollTrigger.getById("mechanism-story");
 
     if (
@@ -411,12 +419,14 @@ function setupPrecursorRoute(
         !targetScene ||
         !target ||
         !targetAnchor ||
+        !targetVisibility ||
         !mechanismTrigger
     ) {
         return false;
     }
 
     const source = precursor.value;
+    const sourceVisibility = precursorVisibility.value;
     const visual = precursorVisual.value;
     const routeStart = () => {
         const labelTime = storyTimeline.labels.odorRoute ?? 0;
@@ -448,9 +458,15 @@ function setupPrecursorRoute(
             // position in both directions; eased scrub creates a reverse gap.
             scrub: true,
             invalidateOnRefresh: true,
+            onUpdate: () => syncActors(),
             onRefresh: () => {
                 if (precursorRouteTimeline) syncActors(true);
             },
+            // A scrollbar drag can jump across the whole hand-off range in one
+            // frame. Keep these boundary callbacks explicit so the teleported,
+            // fixed source can never retain its previous visible state.
+            onLeave: () => syncActors(true),
+            onLeaveBack: () => syncActors(true),
         },
     });
 
@@ -509,7 +525,15 @@ function setupPrecursorRoute(
         );
 
     function syncActors(force = false) {
-        const progress = precursorRouteTimeline?.progress() ?? 0;
+        const trigger = precursorRouteTimeline?.scrollTrigger;
+        const progress = trigger
+            ? gsap.utils.clamp(
+                  0,
+                  1,
+                  (trigger.scroll() - trigger.start) /
+                      Math.max(trigger.end - trigger.start, 0.001),
+              )
+            : (precursorRouteTimeline?.progress() ?? 0);
         const nextState =
             progress <= 0.001
                 ? "before"
@@ -521,17 +545,20 @@ function setupPrecursorRoute(
         precursorRouteState = nextState;
 
         if (nextState === "after") {
-            setActorVisibility(source, false);
-            setActorVisibility(target, true);
+            setActorVisibility(sourceVisibility, false);
+            setActorVisibility(targetVisibility, true);
             return;
         }
 
-        setActorVisibility(source, true);
-        setActorVisibility(target, nextState === "before");
+        setActorVisibility(sourceVisibility, true);
+        setActorVisibility(targetVisibility, nextState === "before");
     }
 
-    precursorRouteTimeline.eventCallback("onUpdate", syncActors);
-    syncActors();
+    // ScrollTrigger can be created while a refresh or a fast scrollbar drag has
+    // already placed the viewport past its end. Its linked timeline may still
+    // report progress 0 until the next render, so derive the initial actor state
+    // directly from the trigger's current scroll position.
+    syncActors(true);
     precursorRouteObserver?.disconnect();
     precursorRouteObserver = undefined;
     if (refreshAfterSetup) {
@@ -599,6 +626,7 @@ onMounted(async () => {
         !odorCopy.value ||
         !variantCopy.value ||
         !secondScene.value ||
+        !precursorVisibility.value ||
         !precursor.value ||
         !precursorVisual.value ||
         !precursorLabel.value
@@ -1361,39 +1389,43 @@ onUnmounted(() => {
         </div>
 
         <Teleport to="body" :disabled="precursorTeleportDisabled">
-            <div
-                ref="precursor"
-                class="abcc11-precursor pointer-events-none invisible top-0 left-0 aspect-square w-[clamp(4rem,6.5vw,7.5rem)] will-change-[transform,opacity]"
-                :class="
-                    precursorTeleportDisabled
-                        ? 'absolute z-30'
-                        : 'fixed z-[100]'
-                "
-                aria-label="Odor precursor"
-            >
+            <!-- Cross-scene visibility stays on a separate gate because the
+                 story timeline animates autoAlpha on the actor itself. -->
+            <div ref="precursorVisibility" class="contents">
                 <div
-                    ref="precursorVisual"
-                    class="abcc11-precursor__visual absolute inset-0 size-full will-change-transform"
+                    ref="precursor"
+                    class="abcc11-precursor pointer-events-none invisible top-0 left-0 aspect-square w-[clamp(4rem,6.5vw,7.5rem)] will-change-[transform,opacity]"
+                    :class="
+                        precursorTeleportDisabled
+                            ? 'absolute z-30'
+                            : 'fixed z-[100]'
+                    "
+                    aria-label="Odor precursor"
                 >
-                    <img
-                        class="abcc11-precursor__layer absolute inset-0 block size-full scale-x-[-1] object-contain will-change-[transform,opacity] select-none"
-                        src="https://static.igem.wiki/teams/6133/wiki/homepage/precursorcys3m3sh.avif"
-                        alt=""
-                        draggable="false"
-                    />
-                    <img
-                        class="abcc11-precursor__layer absolute inset-0 block size-full scale-x-[-1] object-contain will-change-[transform,opacity] select-none"
-                        src="https://static.igem.wiki/teams/6133/wiki/homepage/precursorgly.avif"
-                        alt=""
-                        draggable="false"
-                    />
+                    <div
+                        ref="precursorVisual"
+                        class="abcc11-precursor__visual absolute inset-0 size-full will-change-transform"
+                    >
+                        <img
+                            class="abcc11-precursor__layer absolute inset-0 block size-full scale-x-[-1] object-contain will-change-[transform,opacity] select-none"
+                            src="https://static.igem.wiki/teams/6133/wiki/homepage/precursorcys3m3sh.avif"
+                            alt=""
+                            draggable="false"
+                        />
+                        <img
+                            class="abcc11-precursor__layer absolute inset-0 block size-full scale-x-[-1] object-contain will-change-[transform,opacity] select-none"
+                            src="https://static.igem.wiki/teams/6133/wiki/homepage/precursorgly.avif"
+                            alt=""
+                            draggable="false"
+                        />
+                    </div>
+                    <span
+                        ref="precursorLabel"
+                        class="abcc11-precursor__label absolute top-[calc(100%+0.25rem)] left-1/2 -translate-x-1/2 text-[clamp(0.72rem,1.15vw,1.2rem)] leading-none whitespace-nowrap text-white will-change-[transform,opacity]"
+                    >
+                        Cys-Gly-3M3SH
+                    </span>
                 </div>
-                <span
-                    ref="precursorLabel"
-                    class="abcc11-precursor__label absolute top-[calc(100%+0.25rem)] left-1/2 -translate-x-1/2 text-[clamp(0.72rem,1.15vw,1.2rem)] leading-none whitespace-nowrap text-white will-change-[transform,opacity]"
-                >
-                    Cys-Gly-3M3SH
-                </span>
             </div>
         </Teleport>
     </section>

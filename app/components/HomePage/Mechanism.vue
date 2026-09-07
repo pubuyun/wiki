@@ -652,28 +652,42 @@ onUnmounted(() => {
                     {{ label.text }}
                 </span>
 
-                <div
-                    ref="molecule"
-                    class="mechanism-scene__molecule pointer-events-none absolute top-0 left-0 z-10 aspect-square overflow-visible will-change-transform"
-                >
+                <!-- Cross-scene visibility stays on a separate gate because
+                     Mechanism also animates autoAlpha on the molecule. -->
+                <div class="mechanism-scene__molecule-handoff-gate contents">
                     <div
-                        ref="precursorVisual"
-                        class="mechanism-scene__precursor absolute inset-0 will-change-transform"
+                        ref="molecule"
+                        class="mechanism-scene__molecule pointer-events-none absolute top-0 left-0 z-10 aspect-square overflow-visible will-change-transform"
                     >
+                        <div
+                            ref="precursorVisual"
+                            class="mechanism-scene__precursor absolute inset-0 will-change-transform"
+                        >
+                            <img
+                                ref="cys3m3sh"
+                                class="mechanism-scene__molecule-layer absolute inset-0 block size-full object-contain will-change-[transform,opacity] select-none portrait:rotate-90"
+                                src="https://static.igem.wiki/teams/6133/wiki/homepage/precursorcys3m3sh.avif"
+                                alt=""
+                                loading="lazy"
+                                fetchpriority="low"
+                                decoding="async"
+                                draggable="false"
+                            />
+                            <img
+                                ref="gly"
+                                class="mechanism-scene__molecule-layer absolute inset-0 block size-full object-contain will-change-[transform,opacity] select-none portrait:rotate-90"
+                                src="https://static.igem.wiki/teams/6133/wiki/homepage/precursorgly.avif"
+                                alt=""
+                                loading="lazy"
+                                fetchpriority="low"
+                                decoding="async"
+                                draggable="false"
+                            />
+                        </div>
                         <img
-                            ref="cys3m3sh"
-                            class="mechanism-scene__molecule-layer absolute inset-0 block size-full object-contain will-change-[transform,opacity] select-none portrait:rotate-90"
-                            src="https://static.igem.wiki/teams/6133/wiki/homepage/precursorcys3m3sh.avif"
-                            alt=""
-                            loading="lazy"
-                            fetchpriority="low"
-                            decoding="async"
-                            draggable="false"
-                        />
-                        <img
-                            ref="gly"
-                            class="mechanism-scene__molecule-layer absolute inset-0 block size-full object-contain will-change-[transform,opacity] select-none portrait:rotate-90"
-                            src="https://static.igem.wiki/teams/6133/wiki/homepage/precursorgly.avif"
+                            ref="product"
+                            class="mechanism-scene__molecule-layer mechanism-scene__molecule-layer--product absolute inset-0 block size-full object-contain will-change-[transform,opacity] select-none portrait:rotate-90"
+                            src="https://static.igem.wiki/teams/6133/wiki/homepage/3m3sh.avif"
                             alt=""
                             loading="lazy"
                             fetchpriority="low"
@@ -681,16 +695,6 @@ onUnmounted(() => {
                             draggable="false"
                         />
                     </div>
-                    <img
-                        ref="product"
-                        class="mechanism-scene__molecule-layer mechanism-scene__molecule-layer--product absolute inset-0 block size-full object-contain will-change-[transform,opacity] select-none portrait:rotate-90"
-                        src="https://static.igem.wiki/teams/6133/wiki/homepage/3m3sh.avif"
-                        alt=""
-                        loading="lazy"
-                        fetchpriority="low"
-                        decoding="async"
-                        draggable="false"
-                    />
                 </div>
             </div>
         </div>

@@ -40,7 +40,7 @@ const nextFrame = () =>
 
 function scrollImmediately(position: number) {
     if (lenis) {
-        lenis.scrollTo(position, { immediate: true });
+        lenis.scrollTo(position, { immediate: true, force: true });
         return;
     }
 
@@ -86,6 +86,7 @@ function handleScrollLockChange(event: Event) {
 
 provide(HOME_SCROLL_CONTROLLER, {
     scrollTo: scrollToChapter,
+    jumpTo: scrollImmediately,
     cancel: cancelChapterScroll,
 });
 

@@ -366,9 +366,11 @@ onBeforeUnmount(() => {
 
 .more-about-us__photo-frame {
     position: relative;
-    width: 100%;
+    top: clamp(-4rem, -7svh, -2rem);
+    width: min(84%, 27.5rem);
     aspect-ratio: 1222 / 1599;
     margin: 0;
+    justify-self: center;
     border-radius: clamp(2rem, 4vw, 3.5rem);
     background: #fff9d9;
     box-shadow: clamp(1rem, 1.8vw, 1.7rem) clamp(1rem, 2.4vw, 2rem) 0 #3d82da;
@@ -548,6 +550,7 @@ onBeforeUnmount(() => {
     }
 
     .more-about-us__photo-frame {
+        top: 0;
         width: min(100%, 25rem);
         justify-self: center;
         border-radius: 2.25rem;
