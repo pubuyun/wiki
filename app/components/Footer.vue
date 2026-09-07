@@ -354,10 +354,11 @@ const footerLinkClass =
 
     z-index: 10;
     margin-top: calc(-1 * var(--footer-wave-overlap));
+    background: transparent;
 }
 
 .site-footer--home-overlap .site-footer__wave-stage {
-    background: #07366f;
+    background: transparent;
 }
 
 .footer-team-name {
