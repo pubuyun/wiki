@@ -127,11 +127,6 @@ function isIconUrl(icon: string) {
                                 aria-hidden="true"
                             />
                             <div class="min-w-0 flex-1">
-                                <span
-                                    class="font-main text-sm font-bold tracking-wide uppercase opacity-75"
-                                >
-                                    Overview document
-                                </span>
                                 <h2
                                     class="font-belanosima text-3xl leading-tight wrap-anywhere sm:text-4xl"
                                 >
@@ -160,46 +155,56 @@ function isIconUrl(icon: string) {
                     </h2>
 
                     <div
-                        class="grid min-w-0 gap-8 sm:grid-cols-2 xl:grid-cols-3"
+                        class="relative min-w-0 rounded-3xl border-4 border-accent px-4 pt-10 pb-4 sm:px-6 sm:pt-12 sm:pb-6 lg:px-8 lg:pb-8"
                     >
+                        <span
+                            aria-hidden="true"
+                            class="absolute top-0 left-1/2 max-w-[calc(100%-2rem)] -translate-x-1/2 -translate-y-1/2 truncate bg-secondary px-4 font-belanosima text-2xl leading-tight text-accent sm:px-6 sm:text-3xl"
+                        >
+                            {{ node.label }}
+                        </span>
                         <div
-                            v-for="child in node.children"
-                            :key="child.id"
-                            class="relative isolate flex min-w-0"
+                            class="grid min-w-0 gap-8 sm:grid-cols-2 xl:grid-cols-3"
                         >
                             <div
-                                aria-hidden="true"
-                                class="pointer-events-none absolute inset-0 -z-10 translate-x-2 translate-y-2 rounded-2xl bg-primary"
-                            ></div>
-                            <NuxtLink
-                                :to="child.path"
-                                class="group flex min-h-52 w-full min-w-0 flex-col rounded-2xl bg-surface-elevated p-4 text-on-surface no-underline shadow-sm transition hover:-translate-y-1 hover:border-primary hover:text-on-surface hover:shadow-lg focus-visible:-translate-y-1 focus-visible:border-outline focus-visible:text-on-surface focus-visible:outline-none sm:min-h-60 sm:p-5 lg:p-6"
+                                v-for="child in node.children"
+                                :key="child.id"
+                                class="relative isolate flex min-w-0"
                             >
-                                <img
-                                    v-if="isIconUrl(navIcon(child.path))"
-                                    :src="navIcon(child.path)"
-                                    alt=""
-                                    class="mb-8 size-14 object-contain sm:size-16"
-                                />
-                                <Icon
-                                    v-else
-                                    :icon="navIcon(child.path)"
-                                    class="mb-8 size-14 shrink-0 sm:size-16"
+                                <div
                                     aria-hidden="true"
-                                />
-                                <h3
-                                    class="mt-auto font-belanosima text-2xl leading-tight wrap-anywhere"
+                                    class="pointer-events-none absolute inset-0 -z-10 translate-x-2 translate-y-2 rounded-2xl bg-primary"
+                                ></div>
+                                <NuxtLink
+                                    :to="child.path"
+                                    class="group flex min-h-52 w-full min-w-0 flex-col rounded-2xl bg-surface-elevated p-4 text-on-surface no-underline shadow-sm transition hover:-translate-y-1 hover:border-primary hover:text-on-surface hover:shadow-lg focus-visible:-translate-y-1 focus-visible:border-outline focus-visible:text-on-surface focus-visible:outline-none sm:min-h-60 sm:p-5 lg:p-6"
                                 >
-                                    {{ child.label }}
-                                </h3>
+                                    <img
+                                        v-if="isIconUrl(navIcon(child.path))"
+                                        :src="navIcon(child.path)"
+                                        alt=""
+                                        class="mb-8 size-14 object-contain sm:size-16"
+                                    />
+                                    <Icon
+                                        v-else
+                                        :icon="navIcon(child.path)"
+                                        class="mb-8 size-14 shrink-0 sm:size-16"
+                                        aria-hidden="true"
+                                    />
+                                    <h3
+                                        class="mt-auto font-belanosima text-2xl leading-tight wrap-anywhere"
+                                    >
+                                        {{ child.label }}
+                                    </h3>
 
-                                <p
-                                    v-if="navDescription(child.path)"
-                                    class="mt-2 font-main text-base leading-relaxed opacity-85"
-                                >
-                                    {{ navDescription(child.path) }}
-                                </p>
-                            </NuxtLink>
+                                    <p
+                                        v-if="navDescription(child.path)"
+                                        class="mt-2 font-main text-base leading-relaxed opacity-85"
+                                    >
+                                        {{ navDescription(child.path) }}
+                                    </p>
+                                </NuxtLink>
+                            </div>
                         </div>
                     </div>
                 </section>
