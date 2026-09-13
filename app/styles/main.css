@@ -27,7 +27,7 @@
 }
 
 @custom-variant dark (&:where(.dark, .dark *));
-@custom-variant colorblind (&:where(.colorblind, .colorblind *));
+@custom-variant high-contrast (&:where(.high-contrast, .high-contrast *));
 
 @theme inline {
     --color-primary: var(--primary);
@@ -117,44 +117,44 @@ input[type="submit"],
         pointer;
 }
 
-.colorblind.dark {
-    --primary: #e69f00;
+.high-contrast.dark {
+    --primary: #66b2ff;
     --on-primary: #000000;
 
-    --accent: #e69f00;
+    --accent: #ffd60a;
     --on-accent: #000000;
 
-    --secondary: #f8ffff;
-    --on-secondary: #000000;
+    --secondary: #000000;
+    --on-secondary: #ffffff;
 
     --surface: #000000;
-    --on-surface: #f0e442;
+    --on-surface: #ffffff;
     --surface-navigation: #000000;
-    --surface-bright: #56b4e9;
-    --surface-elevated: #0072b2;
+    --surface-bright: #1a1a1a;
+    --surface-elevated: #262626;
 
-    --outline: #e69f00;
-    --outline-variant: #f0e44299;
+    --outline: #ffffff;
+    --outline-variant: #b3b3b3;
 }
 
-.colorblind {
-    --primary: #e69f00;
-    --on-primary: #153866;
+.high-contrast {
+    --primary: #0046a8;
+    --on-primary: #ffffff;
 
-    --accent: #e69f00;
-    --on-accent: #153866;
+    --accent: #6b21a8;
+    --on-accent: #ffffff;
 
-    --secondary: #f8ffff;
-    --on-secondary: #153866;
+    --secondary: #ffffff;
+    --on-secondary: #000000;
 
-    --surface: #006da8;
-    --on-surface: #f8ffff;
-    --surface-navigation: #006da8;
-    --surface-bright: #0072b2;
-    --surface-elevated: #0072b2;
+    --surface: #ffffff;
+    --on-surface: #000000;
+    --surface-navigation: #ffffff;
+    --surface-bright: #f2f2f2;
+    --surface-elevated: #e6e6e6;
 
     --outline: #000000;
-    --outline-variant: #0072b299;
+    --outline-variant: #595959;
 }
 
 .dark {
@@ -217,13 +217,23 @@ input[type="submit"],
     --outline-variant: #0853d1; 
 } */
 
-.colorblind button:not(.nav-menu-trigger):hover {
+.high-contrast button:not(.nav-menu-trigger):hover {
     text-decoration-line: underline;
+    text-decoration-thickness: 0.125em;
+    text-underline-offset: 0.2em;
 }
 
-.colorblind a:hover {
+.high-contrast a:hover {
     border: 2px solid currentColor;
     border-radius: 0.25rem;
+}
+
+.high-contrast :focus-visible {
+    outline-width: 3px;
+    outline-offset: 3px;
+    box-shadow:
+        0 0 0 2px #ffffff,
+        0 0 0 5px #000000;
 }
 
 body.dyslexia main,

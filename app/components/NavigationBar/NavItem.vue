@@ -164,10 +164,10 @@ let menuZIndex = 50;
 <template>
     <NavigationMenuItem class="relative inline-block">
         <NavigationMenuTrigger
-            class="nav-menu-trigger group inline-flex cursor-pointer list-none items-center gap-1 bg-transparent px-1 py-2 text-on-surface outline-offset-4 select-none hover:text-secondary focus-visible:outline-2 focus-visible:outline-outline"
+            class="nav-menu-trigger group inline-flex cursor-pointer list-none items-center gap-1 bg-transparent px-1 py-2 text-on-surface outline-offset-4 transition-transform duration-150 select-none hover:-translate-y-0.5 hover:text-on-secondary focus-visible:outline-2 focus-visible:outline-outline"
         >
             <span
-                class="decoration-2 underline-offset-2 colorblind:group-hover:underline colorblind:group-focus-visible:underline"
+                class="decoration-2 underline-offset-2 high-contrast:group-hover:underline high-contrast:group-focus-visible:underline"
                 >{{ title }}</span
             >
             <span

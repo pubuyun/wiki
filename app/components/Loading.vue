@@ -447,8 +447,8 @@ nuxtApp.hook("page:loading:end", () => {
     justify-content: center;
     width: 100%;
     height: 100%;
-    color: var(--color-on-surface);
-    background: var(--color-surface);
+    color: var(--on-surface);
+    background: var(--surface);
     backdrop-filter: blur(0.25rem);
 }
 .route-loader__label {

@@ -116,20 +116,47 @@ function isIconUrl(icon: string) {
                     :key="node.id"
                     class="flex min-w-0 flex-col gap-8"
                 >
-                    <h2
-                        class="w-fit max-w-full self-center rounded-3xl bg-accent px-4 py-2 text-center font-belanosima text-4xl leading-tight text-on-accent shadow-sm transition-transform hover:-translate-0.5 sm:px-6 sm:text-5xl"
-                    >
+                    <div v-if="node.path" class="w-full max-w-2xl self-center">
                         <NuxtLink
-                            v-if="node.path"
                             :to="node.path"
-                            class="decoration-4"
+                            class="group flex min-h-32 w-full min-w-0 items-center gap-4 rounded-2xl bg-accent p-4 text-on-accent no-underline shadow-sm transition hover:-translate-y-1 hover:text-on-accent hover:shadow-lg focus-visible:-translate-y-1 focus-visible:text-on-accent focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-outline sm:gap-6 sm:rounded-3xl sm:p-6"
                         >
-                            {{ node.label }}
+                            <Icon
+                                :icon="navIcon(node.path)"
+                                class="size-12 shrink-0 sm:size-16"
+                                aria-hidden="true"
+                            />
+                            <div class="min-w-0 flex-1">
+                                <span
+                                    class="font-main text-sm font-bold tracking-wide uppercase opacity-75"
+                                >
+                                    Overview document
+                                </span>
+                                <h2
+                                    class="font-belanosima text-3xl leading-tight wrap-anywhere sm:text-4xl"
+                                >
+                                    {{ node.label }}
+                                </h2>
+                                <p
+                                    v-if="navDescription(node.path)"
+                                    class="mt-1 font-main text-base leading-relaxed opacity-85"
+                                >
+                                    {{ navDescription(node.path) }}
+                                </p>
+                            </div>
+                            <Icon
+                                icon="line-md:arrow-right"
+                                class="size-7 shrink-0 transition-transform group-hover:translate-x-1 group-focus-visible:translate-x-1 sm:size-8"
+                                aria-hidden="true"
+                            />
                         </NuxtLink>
+                    </div>
 
-                        <template v-else>
-                            {{ node.label }}
-                        </template>
+                    <h2
+                        v-else
+                        class="self-center text-center font-belanosima text-4xl leading-tight text-on-secondary sm:text-5xl"
+                    >
+                        {{ node.label }}
                     </h2>
 
                     <div

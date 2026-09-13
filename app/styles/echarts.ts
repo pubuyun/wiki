@@ -1,6 +1,6 @@
 export interface WikiThemeMode {
     dark?: boolean;
-    colorblind?: boolean;
+    highContrast?: boolean;
 }
 
 interface WikiChartColors {
@@ -58,53 +58,51 @@ const palettes = {
             "#f8ffff",
         ],
     },
-    colorblindLight: {
-        primary: "#e69f00",
-        onPrimary: "#153866",
-        secondary: "#f8ffff",
-        onSecondary: "#153866",
-        surface: "#0083cc",
-        onSurface: "#f8ffff",
-        surfaceBright: "#0072b2",
-        surfaceElevated: "#0072b2",
-        outline: "#0072b2",
-        outlineVariant: "#0072b299",
+    highContrastLight: {
+        primary: "#0046a8",
+        onPrimary: "#ffffff",
+        secondary: "#ffffff",
+        onSecondary: "#000000",
+        surface: "#ffffff",
+        onSurface: "#000000",
+        surfaceBright: "#f2f2f2",
+        surfaceElevated: "#e6e6e6",
+        outline: "#000000",
+        outlineVariant: "#595959",
         series: [
-            "#e69f00",
-            "#0072b2",
-            "#009e73",
-            "#d55e00",
-            "#cc79a7",
-            "#56b4e9",
-            "#f0e442",
+            "#0046a8",
+            "#006b3c",
+            "#a23b00",
+            "#6b21a8",
+            "#9b1c31",
+            "#4d4d4d",
         ],
     },
-    colorblindDark: {
-        primary: "#e69f00",
+    highContrastDark: {
+        primary: "#66b2ff",
         onPrimary: "#000000",
-        secondary: "#f8ffff",
-        onSecondary: "#000000",
+        secondary: "#000000",
+        onSecondary: "#ffffff",
         surface: "#000000",
-        onSurface: "#f0e442",
-        surfaceBright: "#56b4e9",
-        surfaceElevated: "#0072b2",
-        outline: "#e69f00",
-        outlineVariant: "#f0e44299",
+        onSurface: "#ffffff",
+        surfaceBright: "#1a1a1a",
+        surfaceElevated: "#262626",
+        outline: "#ffffff",
+        outlineVariant: "#b3b3b3",
         series: [
-            "#e69f00",
-            "#56b4e9",
-            "#009e73",
-            "#f0e442",
-            "#d55e00",
-            "#cc79a7",
-            "#0072b2",
+            "#66b2ff",
+            "#ffd60a",
+            "#68d391",
+            "#ff8c42",
+            "#e879f9",
+            "#ffffff",
         ],
     },
 } satisfies Record<string, WikiChartColors>;
 
-function selectPalette({ dark = false, colorblind = false }: WikiThemeMode) {
-    if (colorblind) {
-        return dark ? palettes.colorblindDark : palettes.colorblindLight;
+function selectPalette({ dark = false, highContrast = false }: WikiThemeMode) {
+    if (highContrast) {
+        return dark ? palettes.highContrastDark : palettes.highContrastLight;
     }
 
     return dark ? palettes.dark : palettes.light;

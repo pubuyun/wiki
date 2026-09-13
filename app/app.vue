@@ -29,16 +29,16 @@ import { createWikiTheme } from "./styles/echarts";
 import "./styles/opendyslexic.css";
 
 const DARK_MODE_COOKIE = "wiki-dark-mode";
-const COLORBLIND_MODE_COOKIE = "wiki-colorblind-mode";
+const HIGH_CONTRAST_MODE_COOKIE = "wiki-high-contrast-mode";
 
-const savedColorblindMode = useCookie<boolean>(COLORBLIND_MODE_COOKIE, {
+const savedHighContrastMode = useCookie<boolean>(HIGH_CONTRAST_MODE_COOKIE, {
     default: () => false,
     maxAge: 60 * 60 * 24 * 365,
     sameSite: "lax",
 });
-const colorblindMode = useState<boolean>(
-    "colorblind-mode",
-    () => savedColorblindMode.value,
+const highContrastMode = useState<boolean>(
+    "high-contrast-mode",
+    () => savedHighContrastMode.value,
 );
 const savedDarkMode = useCookie<boolean>(DARK_MODE_COOKIE, {
     default: () => true,
@@ -48,8 +48,8 @@ const savedDarkMode = useCookie<boolean>(DARK_MODE_COOKIE, {
 const darkMode = useState<boolean>("dark-mode", () => savedDarkMode.value);
 const dyslexiaMode = useState<boolean>("dyslexia-mode", () => false);
 
-watch(colorblindMode, (enabled) => {
-    savedColorblindMode.value = enabled;
+watch(highContrastMode, (enabled) => {
+    savedHighContrastMode.value = enabled;
 });
 
 watch(darkMode, (enabled) => {
@@ -58,7 +58,7 @@ watch(darkMode, (enabled) => {
 
 const themeClass = computed(() =>
     [
-        colorblindMode.value && "colorblind",
+        highContrastMode.value && "high-contrast",
         darkMode.value && "dark",
         dyslexiaMode.value && "dyslexia",
     ]
@@ -77,7 +77,7 @@ useHead({
 const chartTheme = computed(() =>
     createWikiTheme({
         dark: darkMode.value,
-        colorblind: colorblindMode.value,
+        highContrast: highContrastMode.value,
     }),
 );
 

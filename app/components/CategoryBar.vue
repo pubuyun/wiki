@@ -279,15 +279,19 @@ function folderClass(node: ContentNavNode) {
 
 function folderTextClass(node: ContentNavNode) {
     return [
-        "flex min-w-0 flex-1 items-center rounded-l-md px-3 py-2 text-left no-underline transition-[border-radius,color,background-color] duration-200 ease-out group-hover:bg-secondary group-hover:text-on-secondary",
-        node.active && "bg-primary font-semibold text-on-primary",
+        "flex min-w-0 flex-1 items-center rounded-l-md px-3 py-2 text-left no-underline transition-[border-radius,color,background-color] duration-200 ease-out focus-visible:ring-2 focus-visible:ring-outline focus-visible:outline-none",
+        node.active
+            ? "bg-secondary font-semibold text-on-secondary group-hover:bg-secondary group-hover:text-on-secondary"
+            : "group-hover:bg-secondary group-hover:text-on-secondary",
     ];
 }
 
 function folderToggleClass(node: ContentNavNode) {
     return [
-        "group flex w-10 shrink-0 items-center justify-center rounded-r-md px-3 py-2 text-on-surface transition-[border-radius,color,background-color] duration-200 ease-out hover:bg-secondary hover:text-on-secondary group-hover:bg-secondary group-hover:text-on-secondary focus-visible:ring-2 focus-visible:ring-outline focus-visible:outline-none",
-        node.active && "bg-primary font-semibold text-on-primary",
+        "group flex w-10 shrink-0 items-center justify-center rounded-r-md px-3 py-2 transition-[border-radius,color,background-color] duration-200 ease-out focus-visible:ring-2 focus-visible:ring-outline focus-visible:outline-none",
+        node.active
+            ? "bg-secondary font-semibold text-on-secondary hover:bg-secondary hover:text-on-secondary group-hover:bg-secondary group-hover:text-on-secondary"
+            : "text-on-surface hover:bg-secondary hover:text-on-secondary group-hover:bg-secondary group-hover:text-on-secondary",
     ];
 }
 
@@ -300,12 +304,13 @@ function linkClass(depth: 0 | 1) {
 
 function linkTextClass(node: ContentNavNode, depth: 0 | 1) {
     return [
-        "flex min-w-0 flex-1 items-center justify-start rounded-md px-3 text-left transition-[border-radius,color,background-color] duration-200 ease-out group-hover:bg-secondary group-hover:text-on-secondary",
+        "flex min-w-0 flex-1 items-center justify-start rounded-md px-3 text-left transition-[border-radius,color,background-color,box-shadow] duration-200 ease-out",
         depth === 1 ? "h-9 py-0 xl:h-10" : "py-2",
-        node.active &&
-            (depth === 1
-                ? "bg-primary font-semibold text-on-primary"
-                : "bg-primary font-semibold text-on-primary"),
+        node.active
+            ? depth === 1
+                ? "bg-primary font-semibold text-on-primary shadow-sm group-hover:bg-primary group-hover:text-on-primary"
+                : "bg-secondary font-semibold text-on-secondary group-hover:bg-secondary group-hover:text-on-secondary"
+            : "group-hover:bg-secondary group-hover:text-on-secondary",
     ];
 }
 

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { Icon } from "@iconify/vue";
 import AccessibilityBackToTop from "./AccessibilityMenu/AccessibilityBackToTop.vue";
-import ColorblindModeToggle from "./AccessibilityMenu/ColorblindModeToggle.vue";
+import HighContrastModeToggle from "./AccessibilityMenu/HighContrastModeToggle.vue";
 import DyslexiaModeToggle from "./AccessibilityMenu/DyslexiaModeToggle.vue";
 
 const isOpen = ref(false);
@@ -90,7 +90,7 @@ onUnmounted(() => {
                         leave-active-class="accessibility-option-top-left-leave-active"
                     >
                         <div v-if="isOpen" class="pointer-events-auto size-12">
-                            <ColorblindModeToggle />
+                            <HighContrastModeToggle />
                         </div>
                     </Transition>
                 </div>
