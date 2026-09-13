@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onBeforeUnmount, onMounted } from "vue";
+import { computed, onBeforeUnmount, onMounted, useId } from "vue";
 import {
     Position,
     VueFlow,
@@ -76,12 +76,15 @@ const resolvedGraph = shallowRef<ResolvedGraph | null>(null);
 const isLoading = ref(true);
 const flowInstance = shallowRef<VueFlowStore | null>(null);
 const figureElement = ref<HTMLElement | null>(null);
+const fullscreenButton = ref<HTMLButtonElement | null>(null);
 const figureWidth = ref(0);
 const isPortrait = ref(false);
 const mediaReady = ref(false);
 const isFullscreen = ref(false);
 const isScrollSnapActive = ref(false);
 const viewportZoom = ref(1);
+const descriptionId = `content-graph-description-${useId().replace(/:/g, "")}`;
+const statusMessage = ref("");
 const baseURL = useRuntimeConfig().app.baseURL;
 const nodeTypes = {
     page: markRaw(ContentGraphPageNode),
@@ -300,6 +303,23 @@ const flow = computed(() => {
     );
     return { nodes, edges };
 });
+const graphNodeLabels = computed(
+    () =>
+        new Map(
+            flow.value.nodes.map((node) => [
+                node.id,
+                String(node.data?.label ?? node.id),
+            ]),
+        ),
+);
+const graphRelationships = computed(() =>
+    flow.value.edges.map((edge) => ({
+        id: edge.id,
+        source: graphNodeLabels.value.get(edge.source) ?? edge.source,
+        target: graphNodeLabels.value.get(edge.target) ?? edge.target,
+        label: typeof edge.label === "string" ? edge.label : "",
+    })),
+);
 
 function flattenGraph(
     graph: ResolvedGraph,
@@ -768,21 +788,28 @@ async function resizeSubgraphsToContent() {
 
 function zoomGraphIn() {
     void flowInstance.value?.zoomIn({ duration: 180 });
+    statusMessage.value = "Graph zoomed in";
 }
 
 function zoomGraphOut() {
     void flowInstance.value?.zoomOut({ duration: 180 });
+    statusMessage.value = "Graph zoomed out";
 }
 
 function resetGraphView() {
     void flowInstance.value?.fitView({ padding: 0.04, duration: 260 });
+    statusMessage.value = "Graph view reset";
 }
 
 function updateFullscreenState() {
     isFullscreen.value = document.fullscreenElement === figureElement.value;
+    statusMessage.value = isFullscreen.value
+        ? "Graph entered fullscreen"
+        : "Graph exited fullscreen";
     void nextTick(() =>
         flowInstance.value?.fitView({ padding: 0.04, duration: 180 }),
     );
+    void nextTick(() => fullscreenButton.value?.focus());
 }
 
 async function toggleFullscreen() {
@@ -803,7 +830,7 @@ async function toggleFullscreen() {
 
 <template>
     <figure
-        v-if="mediaReady && !isPortrait"
+        v-if="mediaReady"
         ref="figureElement"
         class="content-graph overflow-hidden rounded-2xl border-2 border-outline bg-surface-elevated text-on-surface shadow-sm [--content-graph-navigation-height:3rem] sm:rounded-3xl sm:[--content-graph-navigation-height:2.5rem] lg:rounded-4xl lg:[--content-graph-navigation-height:2.75rem] xl:[--content-graph-navigation-height:3.5rem] [&_.graph-node-default]:pointer-events-none [&_.graph-node-default]:!bg-secondary [&_.graph-node-default]:text-4xl [&_.graph-node-default]:leading-[1.15] [&_.graph-node-page]:!pointer-events-auto [&_.graph-node-page]:!border-0 [&_.graph-node-page]:!bg-transparent [&_.graph-node-page]:!p-0 [&_.graph-node-page]:!shadow-none [&_.graph-node-virtual]:!pointer-events-auto [&_.graph-node-virtual]:cursor-pointer [&_.graph-node-virtual]:!overflow-visible [&_.graph-node-virtual]:!bg-[color-mix(in_srgb,var(--surface-elevated)_88%,transparent)] [&_.graph-node-virtual]:!p-0 [&_.graph-node-virtual-label]:pointer-events-none [&_.graph-node-virtual-label]:!w-max [&_.graph-node-virtual-label]:!border-0 [&_.graph-node-virtual-label]:!bg-transparent [&_.graph-node-virtual-label]:!p-0 [&_.graph-node-virtual-label]:!shadow-none [&_.graph-node-virtual.mask-active]:!z-[2147483647] [&_.graph-node-virtual.mask-active_.virtual-node\_\_mask]:pointer-events-auto [&_.graph-node-virtual.mask-active_.virtual-node\_\_mask]:opacity-100 [&_.graph-node-virtual:has(.virtual-node\_\_mask:focus-visible)]:!z-[2147483647] [&_.vue-flow\_\_pane]:cursor-grab [&_.vue-flow\_\_pane.dragging]:cursor-grabbing [&_:is(.graph-node-default,.graph-node-virtual)]:!rounded-[0.875rem] [&_:is(.graph-node-default,.graph-node-virtual)]:!border-2 [&_:is(.graph-node-default,.graph-node-virtual)]:!border-outline [&_:is(.graph-node-default,.graph-node-virtual)]:font-[var(--font-main)] [&_:is(.graph-node-default,.graph-node-virtual)]:text-on-secondary [&_:is(.graph-node-default,.graph-node-virtual)]:!shadow-[0_4px_12px_rgb(0_0_0_/_15%)]"
         :class="{
@@ -812,6 +839,7 @@ async function toggleFullscreen() {
             'content-graph--snap-active': isScrollSnapActive,
         }"
         :aria-label="resolvedGraph?.title || 'Interactive graph'"
+        :aria-describedby="descriptionId"
         :aria-busy="isLoading"
         @pointermove.capture="updateActiveMask"
         @pointerleave="clearActiveMask"
@@ -824,6 +852,7 @@ async function toggleFullscreen() {
         </figcaption>
 
         <div
+            v-if="!isPortrait"
             class="content-graph__canvas relative w-full"
             :class="{ '!h-auto min-h-0 flex-1': isFullscreen }"
             :style="canvasStyle"
@@ -838,6 +867,7 @@ async function toggleFullscreen() {
 
             <VueFlow
                 v-else-if="resolvedGraph"
+                aria-hidden="true"
                 :nodes="flow.nodes"
                 :edges="flow.edges"
                 :node-types="nodeTypes"
@@ -845,6 +875,8 @@ async function toggleFullscreen() {
                 :nodes-draggable="false"
                 :nodes-connectable="false"
                 :elements-selectable="false"
+                :nodes-focusable="false"
+                :edges-focusable="false"
                 :edges-updatable="false"
                 :connect-on-click="false"
                 :min-zoom="0.05"
@@ -902,6 +934,7 @@ async function toggleFullscreen() {
             </div>
 
             <button
+                ref="fullscreenButton"
                 v-if="resolvedGraph"
                 type="button"
                 class="nodrag nopan content-graph__foreground-control absolute right-3 bottom-3 z-20 grid size-10 cursor-pointer place-items-center rounded-xl border-2 border-outline bg-accent text-on-accent shadow-[0_4px_12px_rgb(0_0_0/15%)] backdrop-blur hover:bg-primary hover:text-on-primary focus-visible:bg-primary focus-visible:text-on-primary focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-outline"
@@ -930,6 +963,46 @@ async function toggleFullscreen() {
                 </svg>
             </button>
         </div>
+        <details :id="descriptionId" class="border-t-2 border-outline p-4">
+            <summary class="cursor-pointer font-semibold">
+                Graph text alternative
+            </summary>
+            <p>
+                {{
+                    flow.nodes.filter((node) => !node.id.endsWith("::__title"))
+                        .length
+                }}
+                nodes and {{ graphRelationships.length }} connections.
+            </p>
+            <h3 class="mt-3 font-semibold">Nodes</h3>
+            <ul class="mt-2 list-disc space-y-1 pl-6">
+                <li
+                    v-for="node in flow.nodes.filter(
+                        (item) => !item.id.endsWith('::__title'),
+                    )"
+                    :key="node.id"
+                >
+                    <NuxtLink
+                        v-if="node.data?.path"
+                        :to="String(node.data.path)"
+                        class="underline underline-offset-2"
+                    >
+                        {{ node.data?.label || node.id }}
+                    </NuxtLink>
+                    <span v-else>{{ node.data?.label || node.id }}</span>
+                </li>
+            </ul>
+            <h3 class="mt-3 font-semibold">Connections</h3>
+            <ul class="mt-2 list-disc space-y-1 pl-6">
+                <li v-for="edge in graphRelationships" :key="edge.id">
+                    {{ edge.source }} to {{ edge.target
+                    }}<template v-if="edge.label">: {{ edge.label }}</template>
+                </li>
+            </ul>
+        </details>
+        <p class="sr-only" role="status" aria-live="polite" aria-atomic="true">
+            {{ statusMessage }}
+        </p>
     </figure>
 </template>
 

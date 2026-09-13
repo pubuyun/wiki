@@ -173,7 +173,7 @@ const footerLinkClass =
                 :class="sidebarExtensionClass"
             />
             <svg
-                class="site-footer__wave-svg absolute top-0 z-10 h-full"
+                class="site-footer__wave-svg absolute top-0 z-10"
                 viewBox="0 -500 1700 500"
                 preserveAspectRatio="none"
             >
@@ -302,7 +302,7 @@ const footerLinkClass =
                                 v-for="channel in footerSocialChannels"
                                 :key="channel.name"
                                 :href="channel.href"
-                                :aria-label="`Visit GreatBay-SCIE on ${channel.name}`"
+                                :aria-label="`Visit GreatBay-SCIE on ${channel.name} (opens in new tab)`"
                                 :title="channel.name"
                                 target="_blank"
                                 rel="noopener noreferrer"
@@ -365,10 +365,12 @@ const footerLinkClass =
     overflow: hidden;
 }
 
-/* Fractional viewport widths can expose the SVG's rasterized edge. */
+/* Oversize the SVG past the clipped stage edge so fractional browser zoom
+   cannot expose its anti-aliased bottom row as a seam. */
 .site-footer__wave-svg {
     left: -2px;
     width: calc(100% + 4px);
+    height: calc(100% + 2px);
     max-width: none;
 }
 

@@ -1,21 +1,94 @@
 <template>
     <div
-        class="border-surface-bright flex w-full flex-col rounded border bg-secondary p-4 text-on-secondary"
+        class="flex w-full flex-col rounded border border-surface-bright bg-secondary p-4 text-on-secondary"
         :class="heightClass"
     >
         <div
             v-if="errorMessage"
             class="flex flex-1 items-center justify-center text-sm"
+            role="alert"
         >
             {{ errorMessage }}
         </div>
         <div
             v-else-if="pending"
             class="flex flex-1 items-center justify-center text-sm"
+            role="status"
         >
             Loading RMSD data...
         </div>
-        <VChart v-else class="min-h-72 flex-1" :option="option" autoresize />
+        <template v-else>
+            <VChart class="min-h-72 flex-1" :option="option" autoresize />
+            <details class="mt-4 rounded-lg border border-outline p-3">
+                <summary class="cursor-pointer font-semibold">
+                    View chart data
+                </summary>
+                <div
+                    class="mt-3 max-w-full overflow-x-auto"
+                    role="region"
+                    aria-label="RMSD chart data"
+                    tabindex="0"
+                >
+                    <table class="w-full border-collapse text-sm">
+                        <caption class="sr-only">
+                            {{
+                                props.title || firstParsed.title
+                            }}
+                            data points
+                        </caption>
+                        <thead>
+                            <tr>
+                                <th
+                                    scope="col"
+                                    class="border border-outline p-2"
+                                >
+                                    Series
+                                </th>
+                                <th
+                                    scope="col"
+                                    class="border border-outline p-2"
+                                >
+                                    {{ firstParsed.xAxisLabel || "X" }}
+                                </th>
+                                <th
+                                    scope="col"
+                                    class="border border-outline p-2"
+                                >
+                                    {{ firstParsed.yAxisLabel || "Y" }}
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <template
+                                v-for="series in allSeries"
+                                :key="series.name"
+                                ><tr
+                                    v-for="(point, index) in series.values"
+                                    :key="`${series.name}-${index}`"
+                                >
+                                    <th
+                                        scope="row"
+                                        class="border border-outline p-2 text-left"
+                                    >
+                                        {{ series.name }}
+                                    </th>
+                                    <td
+                                        class="border border-outline p-2 text-right"
+                                    >
+                                        {{ point[0] }}
+                                    </td>
+                                    <td
+                                        class="border border-outline p-2 text-right"
+                                    >
+                                        {{ point[1] }}
+                                    </td>
+                                </tr></template
+                            >
+                        </tbody>
+                    </table>
+                </div>
+            </details>
+        </template>
     </div>
 </template>
 
@@ -116,6 +189,12 @@ const xAxisRange = computed(() => {
 });
 
 const option = computed<EChartsOption>(() => ({
+    aria: {
+        enabled: true,
+        label: {
+            description: `${props.title || firstParsed.value.title} line chart with ${allSeries.value.length} series. A complete data table follows the chart.`,
+        },
+    },
     title: {
         text: props.title || firstParsed.value.title,
         subtext: firstParsed.value.subtitle,

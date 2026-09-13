@@ -9,7 +9,7 @@
             v-if="!collapsed"
             to="/"
             class="icon-section absolute top-0 left-4 z-10 flex h-11 shrink-0 items-center gap-2 font-righteous! xl:h-14 xl:gap-3"
-            aria-label="Go to homepage"
+            aria-label="Expelliodor homepage"
         >
             <BrandIcon class="h-9! xl:h-10!" />
             <span
@@ -29,6 +29,7 @@
                 class="inline-flex min-w-0 flex-1 justify-center overflow-visible rounded-md px-2 py-1 text-center text-2xl leading-[1.1] font-semibold whitespace-nowrap transition-colors hover:bg-secondary hover:text-on-secondary focus-visible:ring-2 focus-visible:ring-outline focus-visible:outline-none xl:text-4xl"
                 :style="titleStyle"
                 :aria-label="`Go to ${title}`"
+                :aria-current="titleTo === activePath ? 'page' : undefined"
             >
                 <span
                     ref="titleText"
@@ -106,12 +107,17 @@
                                 :value="node.id"
                                 class="overflow-hidden text-on-surface"
                             >
-                                <AccordionHeader class="flex h-min gap-0">
+                                <div class="flex h-min gap-0">
                                     <div :class="folderClass(node)">
                                         <NuxtLink
                                             v-if="node.path"
                                             :to="node.path"
                                             :class="folderTextClass(node)"
+                                            :aria-current="
+                                                node.path === activePath
+                                                    ? 'page'
+                                                    : undefined
+                                            "
                                         >
                                             {{ node.label }}
                                         </NuxtLink>
@@ -133,7 +139,7 @@
                                             </span>
                                         </AccordionTrigger>
                                     </div>
-                                </AccordionHeader>
+                                </div>
                                 <AccordionContent
                                     class="category-sidebar-accordion-content overflow-hidden data-[state=closed]:animate-[category-sidebar-slide-up_200ms_ease-in] data-[state=open]:animate-[category-sidebar-slide-down_200ms_ease-out]"
                                 >
@@ -162,6 +168,12 @@
                                                     v-if="child.path"
                                                     :to="child.path"
                                                     :class="linkClass(1)"
+                                                    :aria-current="
+                                                        child.path ===
+                                                        activePath
+                                                            ? 'page'
+                                                            : undefined
+                                                    "
                                                 >
                                                     <span
                                                         :class="
@@ -183,6 +195,11 @@
                                 v-else-if="node.path"
                                 :to="node.path"
                                 :class="linkClass(0)"
+                                :aria-current="
+                                    node.path === activePath
+                                        ? 'page'
+                                        : undefined
+                                "
                             >
                                 <span :class="linkTextClass(node, 0)">
                                     {{ node.label }}
@@ -203,7 +220,6 @@
 <script setup lang="ts">
 import {
     AccordionContent,
-    AccordionHeader,
     AccordionItem,
     AccordionRoot,
     AccordionTrigger,
@@ -288,7 +304,7 @@ function linkTextClass(node: ContentNavNode, depth: 0 | 1) {
         depth === 1 ? "h-9 py-0 xl:h-10" : "py-2",
         node.active &&
             (depth === 1
-                ? "font-semibold text-primary"
+                ? "bg-primary font-semibold text-on-primary"
                 : "bg-primary font-semibold text-on-primary"),
     ];
 }

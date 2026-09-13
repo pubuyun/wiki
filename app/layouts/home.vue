@@ -232,13 +232,14 @@ onBeforeUnmount(() => {
         class="home-layout relative z-0 min-h-screen"
         :data-intro-covered="!homeIntroSettled"
     >
+        <SkipToContent />
         <header ref="siteHeader" class="fixed top-0 z-100 flex w-full flex-col">
             <NavigationBar />
         </header>
 
         <div id="home-smooth-wrapper">
             <div id="home-smooth-content" class="flex min-h-screen flex-col">
-                <main class="flex-1">
+                <main id="main-content" tabindex="-1" class="flex-1">
                     <slot />
                 </main>
                 <LazyFooter home-overlap hydrate-on-visible />

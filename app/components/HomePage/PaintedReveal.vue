@@ -7,6 +7,15 @@ import {
     HOME_SCROLL_RESTORE_END,
 } from "~/utils/home-scroll";
 
+const props = withDefaults(
+    defineProps<{
+        speed?: number;
+    }>(),
+    {
+        speed: 2,
+    },
+);
+
 const root = ref<HTMLElement>();
 const svg = ref<SVGSVGElement>();
 const wandSvg = ref<SVGSVGElement>();
@@ -187,8 +196,12 @@ function tick(_time: number, delta: number) {
         devHold
     )
         return;
+    const speed = Number.isFinite(props.speed) ? Math.max(0, props.speed) : 1;
     state.phase +=
-        (Math.min(delta, 40) / 1000) * ((Math.PI * 2) / 26) * state.energy;
+        (Math.min(delta, 40) / 1000) *
+        ((Math.PI * 2) / 26) *
+        state.energy *
+        speed;
     const now = performance.now();
     // Throttle this artwork only; Lenis keeps its existing shared ticker rate.
     if (now - lastPaint >= 1000 / (size.height > size.width ? 30 : 60)) {

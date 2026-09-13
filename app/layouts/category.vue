@@ -47,11 +47,16 @@ watchEffect(() => {
 
 <template>
     <div class="relative z-0 flex min-h-screen flex-col">
+        <SkipToContent />
         <header class="fixed top-0 z-100 flex w-full flex-col">
             <NavigationBar />
         </header>
 
-        <main class="flex flex-1 bg-surface text-on-surface">
+        <main
+            id="main-content"
+            tabindex="-1"
+            class="flex flex-1 bg-surface text-on-surface"
+        >
             <CategoryBar
                 v-if="page"
                 class="hidden lg:flex"

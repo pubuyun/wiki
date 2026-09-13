@@ -110,16 +110,17 @@ onUnmounted(() => {
             class="navigation-bar flex h-12 items-center justify-between gap-3 overflow-visible bg-surface-navigation px-3 font-righteous transition-transform duration-300 ease-out will-change-transform sm:h-10 sm:gap-4 sm:px-4 lg:h-11 lg:gap-6 xl:h-14"
             :class="navVisibilityClass"
             :data-hidden="navHidden"
+            @focusin="navHidden = false"
         >
             <MobileNavigationDialog />
             <NuxtLink
                 to="/"
-                class="icon-section flex h-full shrink-0 items-center gap-4"
-                aria-label="Go to homepage"
+                class="icon-section flex h-full shrink-0 items-center gap-2 sm:gap-4"
+                aria-label="Expelliodor homepage"
             >
                 <BrandIcon />
                 <span
-                    class="text-lg text-on-surface sm:text-base lg:text-2xl xl:text-3xl"
+                    class="hidden text-lg text-on-surface min-[360px]:inline sm:text-base lg:text-2xl xl:text-3xl"
                     aria-hidden="true"
                     >Expelliodor</span
                 >

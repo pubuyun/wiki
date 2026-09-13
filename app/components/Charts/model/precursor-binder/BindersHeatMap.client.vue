@@ -19,11 +19,11 @@
                     v-for="cycle in cycles"
                     :key="cycle.value"
                     :value="cycle.value"
-                    class="group flex items-center gap-2 rounded-full px-5 py-2 text-sm text-accent transition-colors outline-none hover:bg-accent/20 focus-visible:ring-2 focus-visible:ring-outline data-[state=active]:bg-accent data-[state=active]:text-on-accent"
+                    class="group flex items-center gap-2 rounded-full px-5 py-2 text-sm text-on-surface transition-colors outline-none hover:bg-accent/20 focus-visible:ring-2 focus-visible:ring-outline data-[state=active]:bg-accent data-[state=active]:text-on-accent"
                 >
                     <span>{{ cycle.label }}</span>
                     <span
-                        class="rounded-full bg-accent px-2 py-0.5 text-xs text-on-surface group-data-[state=active]:bg-primary group-data-[state=active]:text-on-accent"
+                        class="rounded-full bg-accent px-2 py-0.5 text-xs text-on-accent group-data-[state=active]:bg-primary group-data-[state=active]:text-on-primary"
                     >
                         {{ rowsByCycle[cycle.value].length }}
                     </span>
@@ -72,6 +72,88 @@
                         />
                     </div>
                 </div>
+                <details
+                    v-if="rowsByCycle[cycle.value].length"
+                    class="mt-4 rounded-lg border border-outline p-3"
+                >
+                    <summary class="cursor-pointer font-semibold">
+                        View {{ cycle.label }} data table
+                    </summary>
+                    <div
+                        class="mt-3 max-w-full overflow-x-auto"
+                        role="region"
+                        :aria-label="`${cycle.label} ${sourceLabel} binder data`"
+                        tabindex="0"
+                    >
+                        <table class="w-full border-collapse text-sm">
+                            <caption class="sr-only">
+                                {{
+                                    cycle.label
+                                }}
+                                {{
+                                    sourceLabel
+                                }}
+                                binder metrics
+                            </caption>
+                            <thead>
+                                <tr>
+                                    <th
+                                        scope="col"
+                                        class="border border-outline p-2"
+                                    >
+                                        Binder
+                                    </th>
+                                    <th
+                                        v-for="metric in metrics"
+                                        :key="metric.key"
+                                        scope="col"
+                                        class="border border-outline p-2"
+                                    >
+                                        {{ metric.label
+                                        }}<template v-if="metric.unit">
+                                            ({{ metric.unit }})</template
+                                        >
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr
+                                    v-for="row in rowsByCycle[cycle.value]"
+                                    :key="row.name"
+                                >
+                                    <th
+                                        scope="row"
+                                        class="border border-outline p-2 text-left"
+                                    >
+                                        {{ row.shortName }}
+                                    </th>
+                                    <td
+                                        v-for="metric in metrics"
+                                        :key="metric.key"
+                                        class="border border-outline p-2 text-right"
+                                    >
+                                        {{
+                                            formatValue(
+                                                metricValue(row, metric),
+                                                metric.digits,
+                                            )
+                                        }}
+                                        <span class="sr-only"
+                                            >,
+                                            {{
+                                                relativeStrength(
+                                                    row,
+                                                    metric,
+                                                    rowsByCycle[cycle.value],
+                                                )
+                                            }}</span
+                                        >
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </details>
             </TabsContent>
         </TabsRoot>
         <figcaption class="sr-only">
@@ -309,6 +391,26 @@ function formatValue(value: number | null, digits: number): string {
     return value.toFixed(digits).replace(/\.?0+$/, "");
 }
 
+function relativeStrength(
+    row: BinderRow,
+    metric: MetricDefinition,
+    rows: BinderRow[],
+) {
+    const value = metricValue(row, metric);
+    if (value === null) return "missing value";
+    const values = rows
+        .map((item) => metricValue(item, metric))
+        .filter(isFiniteNumber);
+    const min = Math.min(...values);
+    const max = Math.max(...values);
+    if (min === max) return "equal within this cycle";
+    const score = (value - min) / (max - min);
+    const strength = metric.higherIsBetter ? score : 1 - score;
+    return strength >= 0.5
+        ? "stronger within this cycle"
+        : "weaker within this cycle";
+}
+
 function escapeHtml(value: string): string {
     return value.replace(
         /[&<>'"]/g,
@@ -389,6 +491,12 @@ function buildOption(cycle: Cycle, rows: BinderRow[]): EChartsOption {
     const cycleLabel = cycles.find((item) => item.value === cycle)?.label;
 
     return {
+        aria: {
+            enabled: true,
+            label: {
+                description: `${cycleLabel} heatmap comparing ${rows.length} ${sourceLabel.value} binders across ${metrics.length} metrics. A complete data table follows the chart.`,
+            },
+        },
         title: {
             text: `${cycleLabel} binder performance`,
             subtext: `${rows.length} binders`,
@@ -474,7 +582,7 @@ function buildOption(cycle: Cycle, rows: BinderRow[]): EChartsOption {
                         const textStyle =
                             datum.rawValue === null
                                 ? "muted"
-                                : datum.value[2] >= 0.65
+                                : datum.value[2] >= 0.9
                                   ? "light"
                                   : "dark";
                         return `{${textStyle}|${formatValue(datum.rawValue, metric?.digits ?? 3)}}`;
@@ -482,7 +590,7 @@ function buildOption(cycle: Cycle, rows: BinderRow[]): EChartsOption {
                     rich: {
                         light: { color: "#ffffff" },
                         dark: { color: "#102a43" },
-                        muted: { color: "#ffffff" },
+                        muted: { color: "#102a43" },
                     },
                 },
                 itemStyle: {

@@ -6,6 +6,7 @@ type Dictionary = Record<string, DictionaryValue>;
 
 const props = defineProps<{
     source: string;
+    label?: string;
 }>();
 
 const parsed = computed(() => {
@@ -247,6 +248,8 @@ function parsePythonDictionary(source: string): Dictionary {
                 class="m-0 overflow-x-auto p-4 text-sm leading-6"
             ><code>{{ props.source }}</code></pre>
         </div>
-        <figcaption class="sr-only">key-value cards</figcaption>
+        <figcaption class="sr-only">
+            {{ props.label || "Dictionary" }} key-value cards
+        </figcaption>
     </figure>
 </template>

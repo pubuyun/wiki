@@ -33,8 +33,11 @@
                                 :to="matchedTerm.link"
                                 class="inline-annotation-content mt-2 inline-block font-semibold text-accent underline"
                                 target="_blank"
+                                rel="noopener noreferrer"
+                                :aria-label="`Learn more about ${matchedTerm.term} (opens in new tab)`"
                             >
-                                Learn more
+                                Learn more about {{ matchedTerm.term }} (opens
+                                in new tab)
                             </NuxtLink>
                         </div>
                     </div>

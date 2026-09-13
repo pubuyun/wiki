@@ -7,6 +7,7 @@
     <CodeGroupCodeDictionary
         v-else-if="isDictLanguage"
         :source="props.code"
+        :label="props.filename || 'Dictionary'"
         :class="$props.class"
     />
     <div

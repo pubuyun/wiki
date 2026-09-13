@@ -25,6 +25,8 @@
                 </span>
             </div>
             <svg
+                aria-hidden="true"
+                focusable="false"
                 class="top-border col-1 row-1 hidden self-end lg:block"
                 viewBox="0 -10 40 10"
                 preserveAspectRatio="none"

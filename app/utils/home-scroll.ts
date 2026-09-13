@@ -100,9 +100,8 @@ export function isHomeScrollRestoring() {
     return restoringHomeScroll;
 }
 
-function preventRestoreScroll(event: Event) {
-    event.preventDefault();
-    event.stopImmediatePropagation();
+function cancelRestoreOnPointerInput() {
+    cancelHomeScrollRestore();
 }
 
 function preventRestoreScrollKey(event: KeyboardEvent) {
@@ -113,7 +112,7 @@ function preventRestoreScrollKey(event: KeyboardEvent) {
         return;
     }
 
-    preventRestoreScroll(event);
+    cancelHomeScrollRestore();
 }
 
 function clampRestoreScroll() {
@@ -130,12 +129,12 @@ function lockRestoreInput() {
 
     restoreInputLocked = true;
     restoreLockedScrollY = window.scrollY;
-    window.addEventListener("wheel", preventRestoreScroll, {
-        passive: false,
+    window.addEventListener("wheel", cancelRestoreOnPointerInput, {
+        passive: true,
         capture: true,
     });
-    window.addEventListener("touchmove", preventRestoreScroll, {
-        passive: false,
+    window.addEventListener("touchmove", cancelRestoreOnPointerInput, {
+        passive: true,
         capture: true,
     });
     window.addEventListener("keydown", preventRestoreScrollKey, true);
@@ -151,8 +150,8 @@ function unlockRestoreInput() {
     if (!restoreInputLocked) return;
 
     restoreInputLocked = false;
-    window.removeEventListener("wheel", preventRestoreScroll, true);
-    window.removeEventListener("touchmove", preventRestoreScroll, true);
+    window.removeEventListener("wheel", cancelRestoreOnPointerInput, true);
+    window.removeEventListener("touchmove", cancelRestoreOnPointerInput, true);
     window.removeEventListener("keydown", preventRestoreScrollKey, true);
     window.removeEventListener("scroll", clampRestoreScroll);
     window.dispatchEvent(

@@ -218,11 +218,11 @@ function bodyWithChildren(body, children) {
                 <div class="mt-2 grid grid-cols-2 gap-3">
                     <NuxtLink
                         v-if="previousPage"
-                        class="group flex min-w-0 flex-col items-start gap-1 text-left text-on-secondary no-underline transition hover:-translate-y-px hover:text-accent focus-visible:-translate-y-px focus-visible:text-accent"
+                        class="group flex min-w-0 flex-col items-start gap-1 text-left text-on-surface no-underline transition hover:-translate-y-px hover:underline focus-visible:-translate-y-px focus-visible:underline"
                         :to="previousPage.path"
                     >
                         <div
-                            class="relative font-momo-trust-display text-sm text-accent"
+                            class="relative font-momo-trust-display text-sm text-on-surface"
                         >
                             <Icon
                                 icon="lucide:chevron-left"
@@ -243,11 +243,11 @@ function bodyWithChildren(body, children) {
 
                     <NuxtLink
                         v-if="nextPage"
-                        class="group flex min-w-0 flex-col items-end gap-1 text-right text-on-secondary no-underline transition hover:-translate-y-px hover:text-accent focus-visible:-translate-y-px focus-visible:text-accent"
+                        class="group flex min-w-0 flex-col items-end gap-1 text-right text-on-surface no-underline transition hover:-translate-y-px hover:underline focus-visible:-translate-y-px focus-visible:underline"
                         :to="nextPage.path"
                     >
                         <div
-                            class="relative font-momo-trust-display text-sm text-accent"
+                            class="relative font-momo-trust-display text-sm text-on-surface"
                         >
                             <span>Next</span>
                             <Icon

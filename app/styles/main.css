@@ -147,13 +147,13 @@ input[type="submit"],
     --secondary: #f8ffff;
     --on-secondary: #153866;
 
-    --surface: #0083cc;
+    --surface: #006da8;
     --on-surface: #f8ffff;
-    --surface-navigation: #0083cc;
+    --surface-navigation: #006da8;
     --surface-bright: #0072b2;
     --surface-elevated: #0072b2;
 
-    --outline: #0072b2;
+    --outline: #000000;
     --outline-variant: #0072b299;
 }
 
@@ -176,7 +176,7 @@ input[type="submit"],
     --surface-elevated: #2e6dbf;
 
     --outline: #f8ffff;
-    --outline-variant: #2e6dbf;
+    --outline-variant: #75bdf6;
 }
 
 :root {
@@ -186,7 +186,7 @@ input[type="submit"],
     /* --accent: #2b6cbf;
     --on-accent: #ffffff; */
     --accent: #ffb84d;
-    --on-accent: #ffffff;
+    --on-accent: #3f2500;
 
     --secondary: #f7fafc;
     --on-secondary: #3f3730;
@@ -231,4 +231,15 @@ body.dyslexia main *,
 body.dyslexia .inline-annotation-content,
 body.dyslexia .inline-annotation-content * {
     font-family: var(--font-opendyslexic);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
 }

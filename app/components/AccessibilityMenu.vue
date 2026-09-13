@@ -6,12 +6,22 @@ import DyslexiaModeToggle from "./AccessibilityMenu/DyslexiaModeToggle.vue";
 
 const isOpen = ref(false);
 const isBackToTopVisible = ref(false);
+const trigger = ref<HTMLButtonElement | null>(null);
+
+function closeMenu({ restoreFocus = false } = {}) {
+    if (!isOpen.value) return;
+    isOpen.value = false;
+    if (restoreFocus) nextTick(() => trigger.value?.focus());
+}
 
 function onScroll() {
     isBackToTopVisible.value = window.scrollY > 200;
 
-    if (isBackToTopVisible.value) {
-        isOpen.value = false;
+    if (isBackToTopVisible.value && isOpen.value) {
+        const focusIsInside = document.activeElement?.closest(
+            "#accessibility-options",
+        );
+        closeMenu({ restoreFocus: Boolean(focusIsInside) });
     }
 }
 
@@ -34,21 +44,20 @@ onUnmounted(() => {
         <div class="grid grid-cols-2 gap-2">
             <!-- bottom-right -->
             <button
+                ref="trigger"
                 type="button"
                 class="pointer-events-auto flex size-12 items-center justify-center rounded-full bg-accent text-on-accent shadow-lg transition-transform hover:scale-105 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-outline"
                 style="grid-area: 2 / 2"
                 :aria-expanded="isOpen"
-                :aria-label="
-                    isOpen
-                        ? 'Close accessibility options'
-                        : 'Open accessibility options'
-                "
+                aria-controls="accessibility-options"
+                aria-label="Accessibility options"
                 :title="
                     isOpen
                         ? 'Close accessibility options'
                         : 'Open accessibility options'
                 "
                 @click="isOpen = !isOpen"
+                @keydown.esc.stop.prevent="closeMenu({ restoreFocus: true })"
             >
                 <Icon
                     :icon="isOpen ? 'lucide:x' : 'lucide:accessibility'"
@@ -58,39 +67,45 @@ onUnmounted(() => {
             </button>
 
             <!-- top-right -->
-            <div class="size-12" style="grid-area: 1 / 2">
-                <Transition
-                    enter-active-class="accessibility-option-top-right-enter-active"
-                    leave-active-class="accessibility-option-top-right-leave-active"
-                >
-                    <div v-if="isOpen" class="pointer-events-auto size-12">
-                        <AccessibilityBackToTop />
-                    </div>
-                </Transition>
-            </div>
+            <div
+                id="accessibility-options"
+                class="contents"
+                @keydown.esc.stop.prevent="closeMenu({ restoreFocus: true })"
+            >
+                <div class="size-12" style="grid-area: 1 / 2">
+                    <Transition
+                        enter-active-class="accessibility-option-top-right-enter-active"
+                        leave-active-class="accessibility-option-top-right-leave-active"
+                    >
+                        <div v-if="isOpen" class="pointer-events-auto size-12">
+                            <AccessibilityBackToTop />
+                        </div>
+                    </Transition>
+                </div>
 
-            <!-- top-left -->
-            <div class="size-12" style="grid-area: 1 / 1">
-                <Transition
-                    enter-active-class="accessibility-option-top-left-enter-active"
-                    leave-active-class="accessibility-option-top-left-leave-active"
-                >
-                    <div v-if="isOpen" class="pointer-events-auto size-12">
-                        <ColorblindModeToggle />
-                    </div>
-                </Transition>
-            </div>
+                <!-- top-left -->
+                <div class="size-12" style="grid-area: 1 / 1">
+                    <Transition
+                        enter-active-class="accessibility-option-top-left-enter-active"
+                        leave-active-class="accessibility-option-top-left-leave-active"
+                    >
+                        <div v-if="isOpen" class="pointer-events-auto size-12">
+                            <ColorblindModeToggle />
+                        </div>
+                    </Transition>
+                </div>
 
-            <!-- bottom-left -->
-            <div class="size-12" style="grid-area: 2 / 1">
-                <Transition
-                    enter-active-class="accessibility-option-bottom-left-enter-active"
-                    leave-active-class="accessibility-option-bottom-left-leave-active"
-                >
-                    <div v-if="isOpen" class="pointer-events-auto size-12">
-                        <DyslexiaModeToggle />
-                    </div>
-                </Transition>
+                <!-- bottom-left -->
+                <div class="size-12" style="grid-area: 2 / 1">
+                    <Transition
+                        enter-active-class="accessibility-option-bottom-left-enter-active"
+                        leave-active-class="accessibility-option-bottom-left-leave-active"
+                    >
+                        <div v-if="isOpen" class="pointer-events-auto size-12">
+                            <DyslexiaModeToggle />
+                        </div>
+                    </Transition>
+                </div>
             </div>
         </div>
     </aside>

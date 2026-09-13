@@ -17,7 +17,6 @@ import { Icon } from "@iconify/vue";
 import { siteNavGroups } from "~/utils/site-navigation";
 
 const route = useRoute();
-const router = useRouter();
 const contentLayout = useContentLayoutState();
 const open = ref(false);
 const activeView = ref<"main" | "category">("main");
@@ -51,12 +50,6 @@ function closeDialog() {
 function categoryItemValue(id: string) {
     return `category:${id}`;
 }
-
-function navigateFolder(node: { path?: string }) {
-    if (!node.path) return;
-
-    router.push(node.path);
-}
 </script>
 
 <template>
@@ -78,7 +71,7 @@ function navigateFolder(node: { path?: string }) {
                 leave-to-class="translate-x-full"
             >
                 <DialogContent
-                    class="bg-surface-navigation fixed top-0 right-0 z-101 flex h-dvh w-[min(21rem,88vw)] flex-col overflow-hidden text-on-surface shadow-2xl outline-none lg:hidden"
+                    class="fixed top-0 right-0 z-101 flex h-dvh w-[min(21rem,88vw)] flex-col overflow-hidden bg-surface-navigation text-on-surface shadow-2xl outline-none lg:hidden"
                 >
                     <div
                         class="flex h-14 shrink-0 items-center justify-between border-b border-outline-variant px-4"
@@ -137,7 +130,7 @@ function navigateFolder(node: { path?: string }) {
                                     <AccordionItem
                                         v-if="node.children?.length"
                                         :value="categoryItemValue(node.id)"
-                                        class="bg-surface-navigation overflow-hidden rounded-md"
+                                        class="overflow-hidden rounded-md bg-surface-navigation"
                                     >
                                         <AccordionHeader>
                                             <AccordionTrigger
@@ -146,7 +139,6 @@ function navigateFolder(node: { path?: string }) {
                                                     node.active &&
                                                     'bg-primary text-on-primary'
                                                 "
-                                                @click="navigateFolder(node)"
                                             >
                                                 <span>{{ node.label }}</span>
                                                 <Icon
@@ -207,7 +199,7 @@ function navigateFolder(node: { path?: string }) {
                                 v-for="group in siteNavGroups"
                                 :key="group.title"
                                 :value="group.title"
-                                class="bg-surface-navigation overflow-hidden rounded-md"
+                                class="overflow-hidden rounded-md bg-surface-navigation"
                             >
                                 <AccordionHeader>
                                     <AccordionTrigger

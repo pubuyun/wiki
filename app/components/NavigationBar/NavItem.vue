@@ -34,6 +34,11 @@ function getContentElement(): HTMLElement | null {
     return (menuContent.value?.$el as HTMLElement) ?? null;
 }
 
+function syncHiddenContent(content: HTMLElement, isOpen: boolean) {
+    content.inert = !isOpen;
+    content.setAttribute("aria-hidden", String(!isOpen));
+}
+
 function animateMenu(isOpen: boolean) {
     const content = getContentElement();
     const inner = menuInner.value;
@@ -117,8 +122,10 @@ onMounted(async () => {
 
     // 初始状态渲染
     if (content.dataset.state === "open") {
+        syncHiddenContent(content, true);
         animateMenu(true);
     } else {
+        syncHiddenContent(content, false);
         gsap.set(content, { height: 0, opacity: 0, overflow: "hidden" });
         if (menuInner.value) {
             gsap.set(menuInner.value, { opacity: 0, y: -10 });
@@ -133,6 +140,7 @@ onMounted(async () => {
                 mutation.attributeName === "data-state"
             ) {
                 const isOpen = content.dataset.state === "open";
+                syncHiddenContent(content, isOpen);
                 animateMenu(isOpen);
             }
         }

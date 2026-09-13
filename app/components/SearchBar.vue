@@ -2,23 +2,29 @@
     <DialogRoot v-model:open="isSearchOpen" class="">
         <!-- Desktop / larger than lg -->
         <DialogTrigger
-            aria-label="Open search dialog"
-            class="flex size-9 shrink-0 items-center justify-center rounded-md bg-accent text-on-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-outline sm:mr-8 sm:ml-5 sm:h-3/4 sm:max-w-48 sm:flex-1 sm:justify-start sm:rounded-full sm:bg-primary sm:pr-3 sm:text-on-primary"
+            aria-label="Search wiki"
+            aria-keyshortcuts="Control+K Meta+K"
+            class="flex size-11 shrink-0 items-center justify-center rounded-full border-2 border-accent bg-accent text-on-accent shadow-sm transition-colors duration-200 ease-out focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-outline sm:mr-8 sm:ml-5 sm:h-10 sm:max-w-56 sm:min-w-40 sm:flex-1 sm:bg-secondary sm:px-3 sm:text-on-secondary sm:hover:bg-surface-navigation sm:hover:text-on-surface"
         >
             <div
-                class="flex h-full w-full items-center justify-center gap-2 p-1 sm:justify-start"
+                class="flex h-full w-full min-w-0 items-center justify-center gap-2 sm:justify-start"
+                aria-hidden="true"
             >
-                <span
-                    class="hidden h-full min-w-0 flex-1 items-center rounded-full bg-surface-elevated px-3 text-sm text-on-surface/78 sm:flex"
-                    aria-hidden="true"
-                >
-                    Ctrl + K
-                </span>
                 <Icon
                     icon="lucide:search"
                     class="size-5 shrink-0"
                     aria-hidden="true"
                 />
+                <span
+                    class="hidden min-w-0 flex-1 truncate text-left text-sm sm:block"
+                >
+                    Search wiki…
+                </span>
+                <kbd
+                    class="hidden shrink-0 rounded-md border border-outline-variant bg-primary px-2 py-1 font-main text-xs leading-none text-on-primary shadow-sm sm:inline-flex"
+                >
+                    Ctrl K
+                </kbd>
             </div>
         </DialogTrigger>
 
@@ -116,7 +122,7 @@
                                         >
                                             <NuxtLink
                                                 :to="documentGroup.key"
-                                                class="site-search-result group flex min-h-12 min-w-0 items-center gap-2 rounded border border-transparent bg-surface-bright px-3 py-2 text-on-surface hover:bg-secondary hover:text-on-secondary"
+                                                class="site-search-result group flex min-h-12 min-w-0 items-center gap-2 rounded border border-transparent bg-secondary px-3 py-2 text-on-secondary transition-colors duration-150 hover:bg-accent hover:text-on-accent focus-visible:bg-accent focus-visible:text-on-accent focus-visible:outline-3 focus-visible:outline-on-accent"
                                                 @click="
                                                     handleDocumentClick(
                                                         $event,
@@ -126,7 +132,7 @@
                                             >
                                                 <Icon
                                                     icon="lucide:file-text"
-                                                    class="size-5 shrink-0 text-on-surface/70 group-hover:text-on-secondary/80"
+                                                    class="size-5 shrink-0 text-on-secondary/80 group-hover:text-on-accent group-focus-visible:text-on-accent"
                                                     aria-hidden="true"
                                                 />
                                                 <span
@@ -136,7 +142,7 @@
                                                 </span>
                                                 <Icon
                                                     icon="lucide:corner-down-left"
-                                                    class="ml-auto size-4 shrink-0 text-on-surface/45 group-hover:text-on-secondary/65"
+                                                    class="ml-auto size-4 shrink-0 text-on-secondary/80 group-hover:text-on-accent group-focus-visible:text-on-accent"
                                                     aria-hidden="true"
                                                 />
                                             </NuxtLink>
@@ -152,7 +158,7 @@
                                                 >
                                                     <NuxtLink
                                                         :to="link.id"
-                                                        class="site-search-result group flex min-w-0 items-center gap-2 rounded border border-transparent bg-surface-bright px-3 py-2 hover:bg-secondary hover:text-on-secondary"
+                                                        class="site-search-result group flex min-w-0 items-center gap-2 rounded border border-transparent bg-secondary px-3 py-2 text-on-secondary transition-colors duration-150 hover:bg-accent hover:text-on-accent focus-visible:bg-accent focus-visible:text-on-accent focus-visible:outline-3 focus-visible:outline-on-accent"
                                                         @click="
                                                             handleResultClick(
                                                                 $event,
@@ -161,7 +167,7 @@
                                                         "
                                                     >
                                                         <svg
-                                                            class="ml-5 h-9 w-5 shrink-0 text-on-surface/45 group-hover:text-on-secondary/65 sm:ml-7"
+                                                            class="ml-5 h-9 w-5 shrink-0 text-on-secondary/80 group-hover:text-on-accent group-focus-visible:text-on-accent sm:ml-7"
                                                             viewBox="0 0 24 54"
                                                             aria-hidden="true"
                                                         >
@@ -183,14 +189,14 @@
                                                                     ? 'lucide:hash'
                                                                     : 'lucide:align-left'
                                                             "
-                                                            class="size-5 shrink-0 text-on-surface/65 group-hover:text-on-secondary/80"
+                                                            class="size-5 shrink-0 text-on-secondary/80 group-hover:text-on-accent group-focus-visible:text-on-accent"
                                                             aria-hidden="true"
                                                         />
                                                         <span
                                                             class="flex min-w-0 flex-1 flex-col gap-0.5"
                                                         >
                                                             <span
-                                                                class="min-w-0 truncate text-xs font-normal text-on-surface/90 group-hover:text-on-secondary/90"
+                                                                class="min-w-0 truncate text-xs font-normal text-on-secondary group-hover:text-on-accent group-focus-visible:text-on-accent"
                                                             >
                                                                 <template
                                                                     v-for="(
@@ -204,7 +210,7 @@
                                                                     <span
                                                                         :class="
                                                                             segment.matched
-                                                                                ? 'font-semibold text-primary underline decoration-primary decoration-2 underline-offset-3'
+                                                                                ? 'rounded-sm bg-accent px-0.5 font-semibold text-on-accent'
                                                                                 : ''
                                                                         "
                                                                     >
@@ -215,7 +221,7 @@
                                                                 </template>
                                                             </span>
                                                             <span
-                                                                class="truncate text-[0.7rem] text-on-surface/60 group-hover:text-on-secondary/70"
+                                                                class="truncate text-[0.7rem] text-on-secondary group-hover:text-on-accent group-focus-visible:text-on-accent"
                                                             >
                                                                 <template
                                                                     v-for="(
@@ -230,7 +236,7 @@
                                                                     <span
                                                                         :class="
                                                                             segment.matched
-                                                                                ? 'font-semibold text-primary underline decoration-primary decoration-2 underline-offset-3'
+                                                                                ? 'rounded-sm bg-accent px-0.5 font-semibold text-on-accent'
                                                                                 : ''
                                                                         "
                                                                     >
@@ -243,7 +249,7 @@
                                                         </span>
                                                         <Icon
                                                             icon="lucide:corner-down-left"
-                                                            class="size-4 shrink-0 text-on-surface/45 group-hover:text-on-secondary/65"
+                                                            class="size-4 shrink-0 text-on-secondary/80 group-hover:text-on-accent group-focus-visible:text-on-accent"
                                                             aria-hidden="true"
                                                         />
                                                     </NuxtLink>

@@ -37,10 +37,13 @@ watchEffect(() => {
 
 <template>
     <div class="relative z-0 flex min-h-screen flex-col">
+        <SkipToContent />
         <header class="fixed top-0 z-100 flex w-full flex-col">
             <NavigationBar />
         </header>
         <main
+            id="main-content"
+            tabindex="-1"
             class="flex h-full flex-1 flex-row gap-8 bg-surface text-on-surface"
             :class="{ 'lg:pr-8': !hasRightSidebar }"
         >

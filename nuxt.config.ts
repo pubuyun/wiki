@@ -68,6 +68,7 @@ export default defineNuxtConfig({
             "GridComponent",
             "LegendComponent",
             "VisualMapComponent",
+            "AriaComponent",
             // "ToolboxComponent",
             // "DataZoomComponent",
         ],

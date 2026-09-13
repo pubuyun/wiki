@@ -1073,7 +1073,7 @@ onBeforeUnmount(() => {
 
         <button
             type="button"
-            class="group flex shrink-0 items-center justify-center gap-2 border-0 bg-white/10 text-sm font-bold tracking-wide text-white transition-colors hover:bg-white/20 focus-visible:bg-white/20 focus-visible:outline-none disabled:cursor-default disabled:opacity-40"
+            class="group flex shrink-0 items-center justify-center gap-2 border-0 bg-white/10 text-sm font-bold tracking-wide text-white transition-colors hover:bg-white/20 focus-visible:bg-white/20 focus-visible:outline-3 focus-visible:outline-offset-[-3px] focus-visible:outline-[#61dfc7] disabled:cursor-default disabled:opacity-40"
             :class="
                 isDesktopNavigatorVertical
                     ? 'h-12 w-full min-w-10 border-t border-white/20'

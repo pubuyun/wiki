@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, markRaw, nextTick, onBeforeUnmount, ref } from "vue";
+import { computed, markRaw, nextTick, onBeforeUnmount, ref, useId } from "vue";
 import {
     VueFlow,
     type ViewportTransform,
@@ -19,11 +19,19 @@ const props = defineProps<{
 }>();
 
 const figureElement = ref<HTMLElement | null>(null);
+const fullscreenButton = ref<HTMLButtonElement | null>(null);
+const sectionHeading = ref("");
 const flowInstance = shallowRef<VueFlowStore | null>(null);
 const initialZoom = 0.38;
 const viewportPadding = 24;
 const viewportZoom = ref(initialZoom);
 const isFullscreen = ref(false);
+const descriptionId = `flowchart-description-${useId().replace(/:/g, "")}`;
+const statusMessage = ref("");
+const figureLabel = computed(() => {
+    const context = sectionHeading.value || "Workflow";
+    return `${context} flowchart`;
+});
 const nodeTypes = {
     flowchart: markRaw(FlowchartNode),
 };
@@ -59,6 +67,20 @@ watch(
 );
 
 onMounted(() => {
+    void nextTick(() => {
+        const figure = figureElement.value;
+        if (!figure) return;
+        const headings = Array.from(
+            document.querySelectorAll<HTMLElement>("h1, h2, h3, h4, h5, h6"),
+        );
+        const precedingHeading = headings.findLast((heading) =>
+            Boolean(
+                heading.compareDocumentPosition(figure) &
+                Node.DOCUMENT_POSITION_FOLLOWING,
+            ),
+        );
+        sectionHeading.value = precedingHeading?.textContent?.trim() || "";
+    });
     document.addEventListener("fullscreenchange", updateFullscreenState);
 });
 
@@ -109,19 +131,26 @@ function updateViewport(viewport: ViewportTransform) {
 
 function zoomIn() {
     void flowInstance.value?.zoomIn({ duration: 180 });
+    statusMessage.value = "Flowchart zoomed in";
 }
 
 function zoomOut() {
     void flowInstance.value?.zoomOut({ duration: 180 });
+    statusMessage.value = "Flowchart zoomed out";
 }
 
 function fitView() {
     void flowInstance.value?.fitView({ padding: 0.12, duration: 240 });
+    statusMessage.value = "Flowchart fitted to view";
 }
 
 function updateFullscreenState() {
     isFullscreen.value = document.fullscreenElement === figureElement.value;
+    statusMessage.value = isFullscreen.value
+        ? "Flowchart entered fullscreen"
+        : "Flowchart exited fullscreen";
     void resetInitialViewport();
+    void nextTick(() => fullscreenButton.value?.focus());
 }
 
 async function toggleFullscreen() {
@@ -143,7 +172,8 @@ async function toggleFullscreen() {
         :class="{
             'flex h-dvh w-dvw max-w-none flex-col border-0': isFullscreen,
         }"
-        aria-label="Interactive flowchart"
+        :aria-label="figureLabel"
+        :aria-describedby="descriptionId"
     >
         <div
             class="content-flowchart__canvas relative w-full bg-[radial-gradient(circle,var(--surface-bright)_1px,transparent_1px)] bg-size-[20px_20px]"
@@ -151,12 +181,15 @@ async function toggleFullscreen() {
             :style="{ height: canvasHeight }"
         >
             <VueFlow
+                aria-hidden="true"
                 :nodes="layout.nodes"
                 :edges="layout.edges"
                 :node-types="nodeTypes"
                 :nodes-draggable="false"
                 :nodes-connectable="false"
                 :elements-selectable="false"
+                :nodes-focusable="false"
+                :edges-focusable="false"
                 :edges-updatable="false"
                 :connect-on-click="false"
                 :min-zoom="0.15"
@@ -207,6 +240,7 @@ async function toggleFullscreen() {
             </div>
 
             <button
+                ref="fullscreenButton"
                 type="button"
                 class="nodrag nopan absolute right-3 bottom-3 z-20 grid size-10 cursor-pointer place-items-center rounded-xl border-2 border-outline bg-[color-mix(in_srgb,var(--surface)_92%,transparent)] text-on-surface shadow-sm backdrop-blur transition-colors hover:bg-primary hover:text-on-primary focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-outline"
                 :aria-label="
@@ -228,6 +262,45 @@ async function toggleFullscreen() {
                 </svg>
             </button>
         </div>
+        <details :id="descriptionId" class="border-t-2 border-outline p-4">
+            <summary class="cursor-pointer font-semibold">
+                Flowchart text alternative
+            </summary>
+            <p>
+                {{ definition?.nodes.length }} steps and
+                {{ definition?.edges.length }} connections.
+            </p>
+            <ol class="mt-2 list-decimal space-y-1 pl-6">
+                <li v-for="node in definition?.nodes" :key="node.id">
+                    {{ node.label || node.data?.label || node.id }} ({{
+                        node.type || node.data?.kind || "process"
+                    }})
+                </li>
+            </ol>
+            <h3 class="mt-3 font-semibold">Connections</h3>
+            <ul class="mt-2 list-disc space-y-1 pl-6">
+                <li
+                    v-for="(edge, index) in definition?.edges"
+                    :key="edge.id || index"
+                >
+                    {{
+                        definition?.nodes.find(
+                            (node) => node.id === edge.source,
+                        )?.label || edge.source
+                    }}
+                    to
+                    {{
+                        definition?.nodes.find(
+                            (node) => node.id === edge.target,
+                        )?.label || edge.target
+                    }}
+                    <template v-if="edge.label">: {{ edge.label }}</template>
+                </li>
+            </ul>
+        </details>
+        <p class="sr-only" role="status" aria-live="polite" aria-atomic="true">
+            {{ statusMessage }}
+        </p>
     </figure>
 </template>
 
