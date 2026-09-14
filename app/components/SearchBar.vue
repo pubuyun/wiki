@@ -21,7 +21,7 @@
                     Search wiki…
                 </span>
                 <kbd
-                    class="hidden shrink-0 rounded-md border border-outline-variant bg-primary px-2 py-1 font-main text-xs leading-none text-on-primary shadow-sm sm:inline-flex"
+                    class="hidden shrink-0 rounded-full border border-outline-variant bg-primary px-2 py-1 font-main text-xs leading-none text-on-primary shadow-sm sm:inline-flex"
                 >
                     Ctrl K
                 </kbd>
