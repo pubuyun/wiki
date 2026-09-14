@@ -9,7 +9,7 @@ definePageMeta({
     <section class="members-page" aria-label="Members">
         <MembersForest />
         <div class="members-content">
-            <!-- Future member content stays above the decorative forest. -->
+            <MembersArcade />
         </div>
     </section>
 </template>
@@ -23,6 +23,7 @@ definePageMeta({
 
 .members-content {
     position: relative;
+    z-index: 1;
     min-height: 100svh;
 }
 </style>
