@@ -9,6 +9,16 @@ order: 100
 
 ## Overview
 
+### LaTeX Rendering Test
+
+Inline math uses single dollar signs, for example $E = mc^2$.
+
+Display math uses double dollar signs:
+
+$$
+\int_{-\infty}^{\infty} e^{-x^2}\,dx = \sqrt{\pi}
+$$
+
 ### Philosophy
 
 :plasmid-viewer{.mb-8 src="https://static.igem.wiki/teams/6133/wiki/drylab/model/binders/dna/bcs1.js"}

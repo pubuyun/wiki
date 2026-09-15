@@ -88,7 +88,7 @@ export default defineNuxtConfig({
             contentGraphPaths,
         },
     },
-    css: ["~/styles/main.css"],
+    css: ["~/styles/main.css", "katex/dist/katex.min.css"],
     devtools: { enabled: isDevServer },
     compatibilityDate: "2024-04-03",
     content: {
@@ -98,6 +98,16 @@ export default defineNuxtConfig({
         build: {
             transformers: ["~~/app/utils/transformer"],
             markdown: {
+                remarkPlugins: {
+                    "remark-math": {
+                        options: {
+                            singleDollarTextMath: true,
+                        },
+                    },
+                },
+                rehypePlugins: {
+                    "rehype-katex": {},
+                },
                 highlight: {
                     langs: [
                         "python",
