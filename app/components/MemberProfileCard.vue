@@ -93,7 +93,12 @@ function memberInitials(name: string) {
         </div>
     </article>
 
-    <div v-else class="profile-empty" aria-label="No member selected">
+    <div
+        v-else
+        class="profile-empty"
+        role="img"
+        aria-label="No member selected"
+    >
         <span aria-hidden="true">?</span>
     </div>
 </template>
@@ -101,7 +106,8 @@ function memberInitials(name: string) {
 <style scoped>
 .profile-card {
     display: grid;
-    grid-template-columns: minmax(8rem, 0.35fr) minmax(0, 1fr);
+    box-sizing: border-box;
+    grid-template-columns: minmax(9rem, 0.44fr) minmax(0, 1fr);
     width: 100%;
     height: 100%;
     min-height: 0;
@@ -116,12 +122,13 @@ function memberInitials(name: string) {
 
 .profile-empty {
     display: grid;
-    width: min(42%, 18rem);
-    aspect-ratio: 1;
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+    min-height: 0;
     place-items: center;
-    margin: auto;
     border: clamp(0.22rem, 0.45vw, 0.38rem) dashed var(--empty-ring);
-    border-radius: 50%;
+    border-radius: clamp(1.25rem, 2.2vw, 2.5rem);
     background: var(--empty-fill);
     color: var(--empty-ring);
 }
@@ -283,13 +290,55 @@ function memberInitials(name: string) {
 
 @media (max-width: 58rem) {
     .profile-card {
-        grid-template-columns: minmax(6.5rem, 0.32fr) minmax(0, 1fr);
+        grid-template-columns: minmax(7.5rem, 0.4fr) minmax(0, 1fr);
+        border-width: 0.38rem;
+        border-radius: 1rem;
+    }
+
+    .portrait-column {
+        padding: 0.3rem;
+    }
+
+    .portrait-frame {
+        border-width: 0.25rem;
+        border-radius: 0.75rem 0.2rem 0.75rem 0.2rem;
+    }
+
+    .portrait-image {
+        object-position: center 28%;
+    }
+
+    .profile-sheet {
+        margin: 0.18rem;
+        padding: 0.35rem;
+    }
+
+    .profile-label {
+        font-size: 0.72rem;
+    }
+
+    .member-name {
+        margin: 0.18rem 0 0.35rem;
+        font-size: clamp(0.78rem, 2.5vw, 1.1rem);
+    }
+
+    .introduction-label,
+    .member-introduction {
+        display: none;
+    }
+
+    .locked-animal {
+        border-width: 0.2rem;
+    }
+
+    .locked-animal span {
+        font-size: clamp(2.6rem, 9vmin, 4rem);
     }
 }
 
 @media (max-width: 39rem) {
     .profile-card {
-        grid-template-columns: minmax(5.5rem, 0.28fr) minmax(0, 1fr);
+        grid-template-columns: minmax(6.5rem, 0.36fr) minmax(0, 1fr);
     }
     .profile-sheet {
         grid-template-columns: minmax(0, 1fr) minmax(5.5rem, 0.38fr);

@@ -122,6 +122,7 @@ const WAVE_EXIT_LAYERS = [
 ] as const;
 
 const SOLUTION_MORE_AUTOMATIC_DURATION = 3.7;
+const MORE_ABOUT_US_REVERSE_BUFFER_VIEWPORT_RATIO = 0.65;
 const TRANSITION_SCROLL_KEYS = new Set([
     "ArrowDown",
     "ArrowUp",
@@ -320,11 +321,13 @@ function homeFooterRevealOffset() {
     return Math.min(0, revealTop - naturalTop);
 }
 
-function positionHomeFooterForReveal() {
+function pinHomeFooterWaveToViewport() {
     if (!homeFooter) return;
 
-    gsap.set(homeFooter, { autoAlpha: 1, y: 0 });
-    gsap.set(homeFooter, { y: homeFooterRevealOffset() });
+    gsap.set(homeFooter, {
+        autoAlpha: 1,
+        y: homeFooterRevealOffset(),
+    });
 }
 
 function handoffHomeFooterToDocument() {
@@ -372,7 +375,7 @@ function syncTransitionToRestoredScroll() {
         if (footerIsInDocumentFlow) {
             gsap.set(homeFooter, { autoAlpha: 1, y: 0 });
         } else {
-            positionHomeFooterForReveal();
+            pinHomeFooterWaveToViewport();
         }
     }
     unlockTransitionScroll();
@@ -689,7 +692,7 @@ function buildSequence() {
         if (target === "more") {
             automaticSolutionMore.invalidate().play();
         } else {
-            positionHomeFooterForReveal();
+            pinHomeFooterWaveToViewport();
             automaticSolutionMore.reverse();
         }
     };
@@ -715,6 +718,23 @@ function buildSequence() {
                     return;
                 }
 
+                if (solutionMorePhase === "more") {
+                    const reverseBoundary = Math.max(
+                        self.start,
+                        self.end -
+                            window.innerHeight *
+                                MORE_ABOUT_US_REVERSE_BUFFER_VIEWPORT_RATIO,
+                    );
+
+                    // The footer has returned to document flow, so counter its
+                    // movement until the user intentionally leaves this scene.
+                    pinHomeFooterWaveToViewport();
+                    if (self.direction < 0 && self.scroll() <= reverseBoundary) {
+                        startAutomaticTransition("solution");
+                    }
+                    return;
+                }
+
                 const threshold = timeline.labels.solutionSmokeThreshold;
                 const thresholdProgress =
                     typeof threshold === "number"
@@ -722,13 +742,10 @@ function buildSequence() {
                         : undefined;
                 if (
                     self.direction > 0 &&
-                    solutionMorePhase === "solution" &&
                     typeof thresholdProgress === "number" &&
                     self.progress >= thresholdProgress
                 ) {
                     startAutomaticTransition("more");
-                } else if (self.direction < 0 && solutionMorePhase === "more") {
-                    startAutomaticTransition("solution");
                 }
             },
         },

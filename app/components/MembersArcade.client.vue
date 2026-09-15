@@ -39,6 +39,7 @@ const GAME_TUNING = {
     responseSmoothing: 0.28,
     missRecoveryFactor: 0.055,
     maxMissRecovery: 0.2,
+    missIntentPointerDistancePx: 18,
     hamsterRiseDuration: 0.24,
     hamsterRetreatDuration: 0.18,
     hamsterHiddenY: 96,
@@ -47,7 +48,11 @@ const GAME_TUNING = {
     hamsterOffsetY: -5,
     hamsterClipHalfWidth: 126,
     hamsterClipTopOffset: 178,
-    hamsterClipBottomOffset: 14,
+    hamsterImpactDrop: 18,
+    hamsterImpactScaleX: 1.38,
+    hamsterImpactScaleY: 0.52,
+    hamsterImpactDuration: 0.075,
+    hamsterKnockoutDuration: 0.2,
     hitHalfWidth: 138,
     hitTopOffset: 178,
     hitBottomOffset: 58,
@@ -70,6 +75,7 @@ const GAME_TUNING = {
     galleryWheelMultiplier: 1.15,
     galleryTouchMultiplier: 1.1,
     galleryScrollDuration: 0.85,
+    panelSlideDuration: 0.62,
 } as const;
 
 const SVG_WIDTH = 700;
@@ -97,6 +103,7 @@ const LIGHT_POSITIONS = [
 ] as const;
 
 const arcadeRoot = ref<HTMLElement>();
+const arcadeLayout = ref<HTMLElement>();
 const gameStage = ref<HTMLElement>();
 const hammer = ref<HTMLImageElement>();
 const profileFlipper = ref<HTMLElement>();
@@ -119,6 +126,8 @@ const isSwinging = ref(false);
 const failedAnimalIds = ref<string[]>([]);
 const canScrollGalleryLeft = ref(false);
 const canScrollGalleryRight = ref(false);
+const isPortrait = ref(false);
+const activeMobilePanel = ref<"game" | "members">("game");
 
 const unlockedSet = computed(() => new Set(unlockedIds.value));
 const failedAnimalSet = computed(() => new Set(failedAnimalIds.value));
@@ -153,12 +162,16 @@ let spawnStartedAt = 0;
 let lastHole = -1;
 let consecutiveMisses = 0;
 let averageResponseMs: number | null = null;
+let turnHadIntent = false;
+let turnPointerOrigin: Point | null = null;
+let lastPointerClient: Point | null = null;
 let hammerXTo: ReturnType<typeof gsap.quickTo> | undefined;
 let hammerYTo: ReturnType<typeof gsap.quickTo> | undefined;
 let hammerSwingTimeline: gsap.core.Timeline | undefined;
 let hamsterTimeline: gsap.core.Timeline | undefined;
 let lightTimeline: gsap.core.Timeline | undefined;
 let profileFlipTween: gsap.core.Tween | undefined;
+let panelSlideTimeline: gsap.core.Timeline | undefined;
 let profileRotation = 0;
 let profileIsFlipping = false;
 let queuedProfileId: string | null | undefined;
@@ -210,7 +223,7 @@ function getDifficultyTiming() {
         1 + revealedCount.value * GAME_TUNING.revealDifficultyGrowth;
     const responseBoost = averageResponseMs
         ? gsap.utils.clamp(
-              -0.12,
+              0,
               GAME_TUNING.responseInfluence,
               ((GAME_TUNING.responseTargetMs - averageResponseMs) /
                   GAME_TUNING.responseTargetMs) *
@@ -308,7 +321,7 @@ function retreatHamster() {
 
     if (retreatTimer) clearTimeout(retreatTimer);
     retreatTimer = undefined;
-    consecutiveMisses += 1;
+    if (turnHadIntent) consecutiveMisses += 1;
 
     const hamsterElement = hamsterElements[holeIndex];
     if (!hamsterElement) {
@@ -351,6 +364,8 @@ function spawnHamster() {
     activeHole.value = holeIndex;
     activeMemberId.value = member.id;
     spawnStartedAt = performance.now();
+    turnHadIntent = false;
+    turnPointerOrigin = lastPointerClient ? { ...lastPointerClient } : null;
 
     hamsterTimeline?.kill();
     gsap.set(hamsterElement, {
@@ -410,6 +425,8 @@ function restartGame() {
     failedAnimalIds.value = [];
     averageResponseMs = null;
     consecutiveMisses = 0;
+    turnHadIntent = false;
+    turnPointerOrigin = null;
     lastHole = -1;
     localStorage.removeItem(STORAGE_KEY);
 
@@ -584,31 +601,27 @@ function hitActiveHamster() {
         onComplete: () => finishHamsterTurn(holeIndex),
     });
     hamsterTimeline
-        .to(hamsterElement, {
-            y: 10,
-            scaleX: 1.24,
-            scaleY: 0.68,
-            rotation: -6,
-            duration: 0.075,
-        })
-        .to(hamsterElement, {
-            x: -8,
-            rotation: 7,
-            duration: 0.06,
-        })
-        .to(hamsterElement, {
-            x: 8,
-            rotation: -5,
-            duration: 0.055,
-        })
+        .addLabel("impact")
+        .to(
+            hamsterElement,
+            {
+                y: GAME_TUNING.hamsterImpactDrop,
+                scaleX: GAME_TUNING.hamsterImpactScaleX,
+                scaleY: GAME_TUNING.hamsterImpactScaleY,
+                rotation: -5,
+                duration: GAME_TUNING.hamsterImpactDuration,
+                ease: "power4.in",
+            },
+            "impact",
+        )
         .to(hamsterElement, {
             x: 0,
             y: GAME_TUNING.hamsterHiddenY,
             rotation: 0,
-            scaleX: 0.88,
-            scaleY: 0.82,
+            scaleX: 1.08,
+            scaleY: 0.58,
             autoAlpha: 0,
-            duration: 0.17,
+            duration: GAME_TUNING.hamsterKnockoutDuration,
             ease: "power3.in",
         });
 }
@@ -743,19 +756,37 @@ function handlePointerMove(event: PointerEvent) {
     if (event.pointerType === "touch") return;
     if (
         event.target instanceof Element &&
-        event.target.closest("[data-start-control]")
+        event.target.closest("[data-start-control], [data-panel-nav]")
     ) {
         return;
     }
+
+    const pointer = { x: event.clientX, y: event.clientY };
+    if (gamePhase.value === "running" && activeHole.value !== null) {
+        if (!turnPointerOrigin) turnPointerOrigin = pointer;
+        else if (
+            Math.hypot(
+                pointer.x - turnPointerOrigin.x,
+                pointer.y - turnPointerOrigin.y,
+            ) >= GAME_TUNING.missIntentPointerDistancePx
+        ) {
+            turnHadIntent = true;
+        }
+    }
+    lastPointerClient = pointer;
     moveHammer(event.clientX, event.clientY);
 }
 
 function handleGamePointerDown(event: PointerEvent) {
     const target = event.target;
-    if (target instanceof Element && target.closest("[data-start-control]")) {
+    if (
+        target instanceof Element &&
+        target.closest("[data-start-control], [data-panel-nav]")
+    ) {
         return;
     }
     if (gamePhase.value !== "running") return;
+    turnHadIntent = true;
 
     const svgPoint = clientPointToSvg(event.clientX, event.clientY);
     if (event.pointerType === "touch") {
@@ -781,6 +812,8 @@ function handleGamePointerDown(event: PointerEvent) {
 function strikeHole(holeIndex: number) {
     if (gamePhase.value !== "running" || !gameStage.value || !hammer.value)
         return;
+
+    turnHadIntent = true;
 
     const hole = HOLE_POSITIONS[holeIndex];
     const rect = gameStage.value.getBoundingClientRect();
@@ -838,6 +871,42 @@ function repositionHammer() {
     );
 }
 
+function syncShowcaseHeight() {
+    if (!arcadeRoot.value || !gameStage.value) return;
+    arcadeRoot.value.style.setProperty(
+        "--machine-height",
+        `${gameStage.value.getBoundingClientRect().height}px`,
+    );
+}
+
+function switchMobilePanel(panel: "game" | "members") {
+    if (!isPortrait.value || !arcadeLayout.value) return;
+    if (activeMobilePanel.value === panel) return;
+
+    activeMobilePanel.value = panel;
+    panelSlideTimeline?.kill();
+    panelSlideTimeline = gsap.timeline({
+        defaults: {
+            duration: reducedMotion.value
+                ? 0.01
+                : GAME_TUNING.panelSlideDuration,
+            ease: "power3.inOut",
+            overwrite: "auto",
+        },
+        onComplete: () => {
+            galleryLenis?.resize();
+            updateGalleryEdges();
+        },
+    });
+    panelSlideTimeline.to(arcadeLayout.value, {
+        xPercent: panel === "members" ? -100 : 0,
+    });
+    liveMessage.value =
+        panel === "members"
+            ? "Member profiles and animal collection shown."
+            : "Members game shown.";
+}
+
 onMounted(async () => {
     restoreUnlocks();
     await nextTick();
@@ -845,9 +914,26 @@ onMounted(async () => {
 
     motionMedia = gsap.matchMedia();
     motionMedia.add(
-        { reduceMotion: "(prefers-reduced-motion: reduce)" },
+        {
+            reduceMotion: "(prefers-reduced-motion: reduce)",
+            portrait: "(orientation: portrait)",
+        },
         (context) => {
             reducedMotion.value = Boolean(context.conditions?.reduceMotion);
+            const nextPortrait = Boolean(context.conditions?.portrait);
+            if (nextPortrait !== isPortrait.value) {
+                isPortrait.value = nextPortrait;
+                activeMobilePanel.value = "game";
+                panelSlideTimeline?.kill();
+                if (arcadeLayout.value) {
+                    gsap.set(arcadeLayout.value, { xPercent: 0 });
+                }
+                requestAnimationFrame(() => {
+                    syncShowcaseHeight();
+                    galleryLenis?.resize();
+                    updateGalleryEdges();
+                });
+            }
         },
         arcadeRoot.value,
     );
@@ -878,7 +964,12 @@ onMounted(async () => {
         ease: GAME_TUNING.hammerFollowEase,
     });
 
-    resizeObserver = new ResizeObserver(() => repositionHammer());
+    resizeObserver = new ResizeObserver(() => {
+        repositionHammer();
+        syncShowcaseHeight();
+        galleryLenis?.resize();
+        updateGalleryEdges();
+    });
     resizeObserver.observe(gameStage.value);
 
     if (galleryTrack.value && galleryContent.value) {
@@ -915,6 +1006,7 @@ onBeforeUnmount(() => {
     hamsterTimeline?.kill();
     lightTimeline?.kill();
     profileFlipTween?.kill();
+    panelSlideTimeline?.kill();
 });
 </script>
 
@@ -926,343 +1018,377 @@ onBeforeUnmount(() => {
     >
         <h1 id="members-arcade-title" class="sr-only">Meet our members</h1>
 
-        <div class="arcade-layout">
+        <div ref="arcadeLayout" class="arcade-layout">
             <div
-                ref="gameStage"
-                class="game-stage"
-                :class="{ 'is-running': gamePhase === 'running' }"
-                @pointermove="handlePointerMove"
-                @pointerdown="handleGamePointerDown"
+                class="game-panel relative grid w-full min-w-0 place-items-center"
+                :aria-hidden="isPortrait && activeMobilePanel !== 'game'"
+                :inert="isPortrait && activeMobilePanel !== 'game'"
             >
-                <svg
-                    class="machine-svg"
-                    viewBox="0 0 700 900"
-                    role="group"
-                    aria-labelledby="machine-title machine-description"
+                <div
+                    ref="gameStage"
+                    class="game-stage"
+                    :class="{ 'is-running': gamePhase === 'running' }"
+                    @pointermove="handlePointerMove"
+                    @pointerdown="handleGamePointerDown"
                 >
-                    <title id="machine-title">Members reveal game</title>
-                    <desc id="machine-description">
-                        Select READY, then strike the hamster when it appears in
-                        one of six holes to reveal a member character.
-                    </desc>
+                    <svg
+                        class="block h-full w-full"
+                        viewBox="0 0 700 900"
+                        role="group"
+                        aria-labelledby="machine-title machine-description"
+                    >
+                        <title id="machine-title">Members reveal game</title>
+                        <desc id="machine-description">
+                            Select READY, then strike the hamster when it
+                            appears in one of six holes to reveal a member
+                            character.
+                        </desc>
 
-                    <defs>
-                        <linearGradient
-                            id="machine-body-gradient"
-                            x1="0"
-                            y1="0"
-                            x2="0"
-                            y2="1"
-                        >
-                            <stop
-                                offset="0"
-                                stop-color="var(--machine-shell-top)"
-                            />
-                            <stop
-                                offset="1"
-                                stop-color="var(--machine-shell-bottom)"
-                            />
-                        </linearGradient>
-                        <linearGradient
-                            id="playfield-gradient"
-                            x1="0"
-                            y1="0"
-                            x2="0"
-                            y2="1"
-                        >
-                            <stop
-                                offset="0"
-                                stop-color="var(--playfield-top)"
-                            />
-                            <stop
-                                offset="1"
-                                stop-color="var(--playfield-bottom)"
-                            />
-                        </linearGradient>
-                        <linearGradient
-                            id="hole-gradient"
-                            x1="0"
-                            y1="0"
-                            x2="0"
-                            y2="1"
-                        >
-                            <stop offset="0" stop-color="#d57924" />
-                            <stop offset="0.6" stop-color="#ffa641" />
-                            <stop offset="1" stop-color="#ffd05b" />
-                        </linearGradient>
-                        <filter
-                            id="lamp-glow"
-                            x="-160%"
-                            y="-160%"
-                            width="420%"
-                            height="420%"
-                            color-interpolation-filters="sRGB"
-                        >
-                            <feGaussianBlur
-                                in="SourceAlpha"
-                                stdDeviation="8"
-                                result="blur"
-                            />
-                            <feFlood
-                                flood-color="#ffe58a"
-                                flood-opacity="0.95"
-                                result="glow-color"
-                            />
-                            <feComposite
-                                in="glow-color"
-                                in2="blur"
-                                operator="in"
-                                result="soft-glow"
-                            />
-                            <feMerge>
-                                <feMergeNode in="soft-glow" />
-                                <feMergeNode in="SourceGraphic" />
-                            </feMerge>
-                        </filter>
-                        <filter
-                            id="screen-soft-glow"
-                            x="-20%"
-                            y="-80%"
-                            width="140%"
-                            height="260%"
-                        >
-                            <feGaussianBlur
-                                in="SourceGraphic"
-                                stdDeviation="3"
-                                result="soft"
-                            />
-                            <feMerge>
-                                <feMergeNode in="soft" />
-                                <feMergeNode in="SourceGraphic" />
-                            </feMerge>
-                        </filter>
-                        <clipPath
-                            v-for="(hole, index) in HOLE_POSITIONS"
-                            :id="`hamster-clip-${index}`"
-                            :key="`clip-${index}`"
+                        <defs>
+                            <linearGradient
+                                id="machine-body-gradient"
+                                x1="0"
+                                y1="0"
+                                x2="0"
+                                y2="1"
+                            >
+                                <stop
+                                    offset="0"
+                                    stop-color="var(--machine-shell-top)"
+                                />
+                                <stop
+                                    offset="1"
+                                    stop-color="var(--machine-shell-bottom)"
+                                />
+                            </linearGradient>
+                            <linearGradient
+                                id="playfield-gradient"
+                                x1="0"
+                                y1="0"
+                                x2="0"
+                                y2="1"
+                            >
+                                <stop
+                                    offset="0"
+                                    stop-color="var(--playfield-top)"
+                                />
+                                <stop
+                                    offset="1"
+                                    stop-color="var(--playfield-bottom)"
+                                />
+                            </linearGradient>
+                            <linearGradient
+                                id="hole-gradient"
+                                x1="0"
+                                y1="0"
+                                x2="0"
+                                y2="1"
+                            >
+                                <stop offset="0" stop-color="#d57924" />
+                                <stop offset="0.6" stop-color="#ffa641" />
+                                <stop offset="1" stop-color="#ffd05b" />
+                            </linearGradient>
+                            <filter
+                                id="lamp-glow"
+                                x="-160%"
+                                y="-160%"
+                                width="420%"
+                                height="420%"
+                                color-interpolation-filters="sRGB"
+                            >
+                                <feGaussianBlur
+                                    in="SourceAlpha"
+                                    stdDeviation="8"
+                                    result="blur"
+                                />
+                                <feFlood
+                                    flood-color="#ffe58a"
+                                    flood-opacity="0.95"
+                                    result="glow-color"
+                                />
+                                <feComposite
+                                    in="glow-color"
+                                    in2="blur"
+                                    operator="in"
+                                    result="soft-glow"
+                                />
+                                <feMerge>
+                                    <feMergeNode in="soft-glow" />
+                                    <feMergeNode in="SourceGraphic" />
+                                </feMerge>
+                            </filter>
+                            <filter
+                                id="screen-soft-glow"
+                                x="-20%"
+                                y="-80%"
+                                width="140%"
+                                height="260%"
+                            >
+                                <feGaussianBlur
+                                    in="SourceGraphic"
+                                    stdDeviation="3"
+                                    result="soft"
+                                />
+                                <feMerge>
+                                    <feMergeNode in="soft" />
+                                    <feMergeNode in="SourceGraphic" />
+                                </feMerge>
+                            </filter>
+                            <clipPath
+                                v-for="(hole, index) in HOLE_POSITIONS"
+                                :id="`hamster-clip-${index}`"
+                                :key="`clip-${index}`"
+                            >
+                                <path
+                                    :d="`M ${hole.x - GAME_TUNING.hamsterClipHalfWidth} ${hole.y - GAME_TUNING.hamsterClipTopOffset} H ${hole.x + GAME_TUNING.hamsterClipHalfWidth} V ${hole.y + 3} H ${hole.x + 105} Q ${hole.x} ${hole.y + 74} ${hole.x - 105} ${hole.y + 3} H ${hole.x - GAME_TUNING.hamsterClipHalfWidth} Z`"
+                                />
+                            </clipPath>
+                        </defs>
+
+                        <rect
+                            x="9"
+                            y="8"
+                            width="682"
+                            height="884"
+                            rx="48"
+                            fill="url(#machine-body-gradient)"
+                            stroke="var(--machine-edge)"
+                            stroke-width="3"
+                        />
+                        <rect
+                            class="machine-rim"
+                            x="30"
+                            y="25"
+                            width="640"
+                            height="850"
+                            rx="38"
+                            fill="var(--machine-rim)"
+                        />
+
+                        <g
+                            class="start-control outline-none"
+                            :class="`is-${gamePhase}`"
+                            data-start-control
+                            role="button"
+                            :tabindex="startControlEnabled ? 0 : -1"
+                            :aria-label="startControlLabel"
+                            :aria-disabled="!startControlEnabled"
+                            @click.stop="startGame"
+                            @keydown.enter.stop.prevent="startGame"
+                            @keydown.space.stop.prevent="startGame"
                         >
                             <rect
-                                :x="hole.x - GAME_TUNING.hamsterClipHalfWidth"
-                                :y="hole.y - GAME_TUNING.hamsterClipTopOffset"
-                                :width="GAME_TUNING.hamsterClipHalfWidth * 2"
-                                :height="
-                                    GAME_TUNING.hamsterClipTopOffset +
-                                    GAME_TUNING.hamsterClipBottomOffset
-                                "
-                                rx="22"
+                                class="marquee-panel"
+                                x="43"
+                                y="35"
+                                width="614"
+                                height="224"
+                                rx="37"
+                                fill="#0f4296"
+                                stroke="transparent"
+                                stroke-width="7"
                             />
-                        </clipPath>
-                    </defs>
-
-                    <rect
-                        x="9"
-                        y="8"
-                        width="682"
-                        height="884"
-                        rx="48"
-                        fill="url(#machine-body-gradient)"
-                        stroke="var(--machine-edge)"
-                        stroke-width="3"
-                    />
-                    <rect
-                        class="machine-rim"
-                        x="30"
-                        y="25"
-                        width="640"
-                        height="850"
-                        rx="38"
-                        fill="var(--machine-rim)"
-                    />
-
-                    <g
-                        class="start-control"
-                        :class="`is-${gamePhase}`"
-                        data-start-control
-                        role="button"
-                        :tabindex="startControlEnabled ? 0 : -1"
-                        :aria-label="startControlLabel"
-                        :aria-disabled="!startControlEnabled"
-                        @click.stop="startGame"
-                        @keydown.enter.stop.prevent="startGame"
-                        @keydown.space.stop.prevent="startGame"
-                    >
-                        <rect
-                            class="marquee-panel"
-                            x="43"
-                            y="35"
-                            width="614"
-                            height="224"
-                            rx="37"
-                            fill="#0f4296"
-                            stroke="transparent"
-                            stroke-width="7"
-                        />
-                        <rect
-                            class="marquee-action"
-                            x="158"
-                            y="78"
-                            width="384"
-                            height="128"
-                            rx="28"
-                        />
-                        <text
-                            x="350"
-                            y="158"
-                            class="marquee-text"
-                            text-anchor="middle"
-                        >
-                            {{ marqueeLabel }}
-                        </text>
-                        <text
-                            v-if="gamePhase === 'ready'"
-                            x="350"
-                            y="188"
-                            class="marquee-hint"
-                            text-anchor="middle"
-                        >
-                            PRESS TO START
-                        </text>
-                    </g>
-
-                    <g
-                        v-for="(light, index) in LIGHT_POSITIONS"
-                        :key="`light-${index}`"
-                        :ref="(element) => setLightRef(element, index)"
-                        class="machine-light"
-                    >
-                        <circle
-                            class="light-halo"
-                            :cx="light.x"
-                            :cy="light.y"
-                            r="22"
-                            fill="#ffdd69"
-                            filter="url(#lamp-glow)"
-                        />
-                        <circle
-                            :cx="light.x"
-                            :cy="light.y"
-                            r="18"
-                            fill="#ffdc68"
-                        />
-                        <circle
-                            :cx="light.x - 5"
-                            :cy="light.y - 6"
-                            r="5"
-                            fill="#fff4bf"
-                            opacity="0.9"
-                        />
-                    </g>
-
-                    <rect
-                        x="43"
-                        y="278"
-                        width="614"
-                        height="588"
-                        rx="40"
-                        fill="url(#playfield-gradient)"
-                    />
-                    <rect
-                        x="179"
-                        y="311"
-                        width="342"
-                        height="77"
-                        rx="8"
-                        fill="#0d3999"
-                        stroke="#2655bd"
-                        stroke-width="3"
-                    />
-                    <text
-                        x="350"
-                        y="366"
-                        class="counter-text"
-                        text-anchor="middle"
-                        filter="url(#screen-soft-glow)"
-                    >
-                        {{ revealCounter }}
-                    </text>
-
-                    <g
-                        v-for="(hole, index) in HOLE_POSITIONS"
-                        :key="`hole-${index}`"
-                        class="hole-control"
-                        role="button"
-                        tabindex="0"
-                        :aria-label="`Strike hole ${index + 1}`"
-                        @keydown.enter.stop.prevent="strikeHole(index)"
-                        @keydown.space.stop.prevent="strikeHole(index)"
-                    >
-                        <ellipse
-                            :cx="hole.x"
-                            :cy="hole.y"
-                            rx="112"
-                            ry="46"
-                            fill="url(#hole-gradient)"
-                            stroke="#ffd55e"
-                            stroke-width="7"
-                        />
-                        <g :clip-path="`url(#hamster-clip-${index})`">
-                            <g
-                                :ref="
-                                    (element) => setHamsterRef(element, index)
-                                "
-                                class="hamster-sprite"
+                            <rect
+                                class="marquee-action"
+                                x="158"
+                                y="78"
+                                width="384"
+                                height="128"
+                                rx="28"
+                            />
+                            <text
+                                x="350"
+                                :y="gamePhase === 'ready' ? 128 : 142"
+                                class="marquee-text"
+                                text-anchor="middle"
+                                dominant-baseline="middle"
                             >
-                                <image
-                                    :href="hamsterUrl"
-                                    :x="
-                                        hole.x -
-                                        GAME_TUNING.hamsterSize / 2 +
-                                        GAME_TUNING.hamsterOffsetX
-                                    "
-                                    :y="
-                                        hole.y -
-                                        GAME_TUNING.hamsterSize +
-                                        GAME_TUNING.hamsterOffsetY
-                                    "
-                                    :width="GAME_TUNING.hamsterSize"
-                                    :height="GAME_TUNING.hamsterSize"
-                                    preserveAspectRatio="xMidYMid meet"
-                                />
-                            </g>
+                                {{ marqueeLabel }}
+                            </text>
+                            <text
+                                v-if="gamePhase === 'ready'"
+                                x="350"
+                                y="174"
+                                class="marquee-hint"
+                                text-anchor="middle"
+                            >
+                                PRESS TO START
+                            </text>
                         </g>
-                        <path
-                            :d="`M ${hole.x - 105} ${hole.y + 3} Q ${hole.x} ${hole.y + 74} ${hole.x + 105} ${hole.y + 3} Q ${hole.x} ${hole.y + 44} ${hole.x - 105} ${hole.y + 3} Z`"
-                            fill="#ffb347"
-                            opacity="0.96"
+
+                        <g
+                            v-for="(light, index) in LIGHT_POSITIONS"
+                            :key="`light-${index}`"
+                            :ref="(element) => setLightRef(element, index)"
+                            class="machine-light"
+                        >
+                            <circle
+                                class="light-halo"
+                                :cx="light.x"
+                                :cy="light.y"
+                                r="22"
+                                fill="#ffdd69"
+                                filter="url(#lamp-glow)"
+                            />
+                            <circle
+                                :cx="light.x"
+                                :cy="light.y"
+                                r="18"
+                                fill="#ffdc68"
+                            />
+                            <circle
+                                :cx="light.x - 5"
+                                :cy="light.y - 6"
+                                r="5"
+                                fill="#fff4bf"
+                                opacity="0.9"
+                            />
+                        </g>
+
+                        <rect
+                            x="43"
+                            y="278"
+                            width="614"
+                            height="588"
+                            rx="40"
+                            fill="url(#playfield-gradient)"
                         />
                         <rect
-                            class="hole-focus"
-                            :x="hole.x - 120"
-                            :y="hole.y - 138"
-                            width="240"
-                            height="192"
-                            rx="42"
-                            fill="transparent"
-                            stroke="#ffffff"
-                            stroke-width="5"
+                            x="179"
+                            y="311"
+                            width="342"
+                            height="77"
+                            rx="8"
+                            fill="#0d3999"
+                            stroke="#2655bd"
+                            stroke-width="3"
                         />
-                    </g>
-                </svg>
+                        <text
+                            x="350"
+                            y="366"
+                            class="counter-text"
+                            text-anchor="middle"
+                            filter="url(#screen-soft-glow)"
+                        >
+                            {{ revealCounter }}
+                        </text>
 
-                <img
-                    ref="hammer"
-                    :src="hammerUrl"
-                    alt=""
-                    class="hammer"
-                    aria-hidden="true"
-                    draggable="false"
-                />
+                        <g
+                            v-for="(hole, index) in HOLE_POSITIONS"
+                            :key="`hole-${index}`"
+                            class="hole-control outline-none"
+                            role="button"
+                            tabindex="0"
+                            :aria-label="`Strike hole ${index + 1}`"
+                            @keydown.enter.stop.prevent="strikeHole(index)"
+                            @keydown.space.stop.prevent="strikeHole(index)"
+                        >
+                            <ellipse
+                                :cx="hole.x"
+                                :cy="hole.y"
+                                rx="112"
+                                ry="46"
+                                fill="url(#hole-gradient)"
+                                stroke="#ffd55e"
+                                stroke-width="7"
+                            />
+                            <g :clip-path="`url(#hamster-clip-${index})`">
+                                <g
+                                    :ref="
+                                        (element) =>
+                                            setHamsterRef(element, index)
+                                    "
+                                    class="hamster-sprite"
+                                >
+                                    <image
+                                        :href="hamsterUrl"
+                                        :x="
+                                            hole.x -
+                                            GAME_TUNING.hamsterSize / 2 +
+                                            GAME_TUNING.hamsterOffsetX
+                                        "
+                                        :y="
+                                            hole.y -
+                                            GAME_TUNING.hamsterSize +
+                                            GAME_TUNING.hamsterOffsetY
+                                        "
+                                        :width="GAME_TUNING.hamsterSize"
+                                        :height="GAME_TUNING.hamsterSize"
+                                        preserveAspectRatio="xMidYMid meet"
+                                    />
+                                </g>
+                            </g>
+                            <path
+                                :d="`M ${hole.x - 105} ${hole.y + 3} Q ${hole.x} ${hole.y + 74} ${hole.x + 105} ${hole.y + 3} Q ${hole.x} ${hole.y + 44} ${hole.x - 105} ${hole.y + 3} Z`"
+                                fill="#ffb347"
+                                opacity="0.96"
+                            />
+                            <rect
+                                class="hole-focus"
+                                :x="hole.x - 120"
+                                :y="hole.y - 138"
+                                width="240"
+                                height="192"
+                                rx="42"
+                                fill="transparent"
+                                stroke="#ffffff"
+                                stroke-width="5"
+                            />
+                        </g>
+                    </svg>
 
-                <output class="sr-only" aria-live="polite">
-                    {{ revealCounter }} members revealed.
-                </output>
-                <p class="sr-only" aria-live="polite">{{ liveMessage }}</p>
+                    <img
+                        ref="hammer"
+                        :src="hammerUrl"
+                        alt=""
+                        class="hammer"
+                        aria-hidden="true"
+                        draggable="false"
+                    />
+
+                    <output class="sr-only" aria-live="polite">
+                        {{ revealCounter }} members revealed.
+                    </output>
+                    <p class="sr-only" aria-live="polite">{{ liveMessage }}</p>
+                </div>
+
+                <button
+                    type="button"
+                    class="panel-nav panel-nav-next"
+                    data-panel-nav
+                    aria-label="Show member profiles and animal collection"
+                    @click="switchMobilePanel('members')"
+                >
+                    <span aria-hidden="true">›</span>
+                </button>
             </div>
 
-            <div class="members-showcase">
-                <div class="profile-stage">
-                    <div ref="profileFlipper" class="profile-flipper">
-                        <div class="profile-face profile-front">
+            <div
+                class="members-showcase grid min-w-0"
+                :aria-hidden="isPortrait && activeMobilePanel !== 'members'"
+                :inert="isPortrait && activeMobilePanel !== 'members'"
+            >
+                <button
+                    type="button"
+                    class="panel-nav panel-nav-previous"
+                    data-panel-nav
+                    aria-label="Return to members game"
+                    @click="switchMobilePanel('game')"
+                >
+                    <span aria-hidden="true">‹</span>
+                </button>
+
+                <div
+                    class="profile-stage relative h-full min-h-0 w-full min-w-0 self-stretch overflow-hidden"
+                >
+                    <div
+                        ref="profileFlipper"
+                        class="profile-flipper relative h-full w-full"
+                    >
+                        <div
+                            class="profile-face profile-front absolute inset-0 grid min-h-0 min-w-0"
+                            :aria-hidden="visibleProfileFace !== 'front'"
+                        >
                             <MemberProfileCard
                                 :member="frontMember"
                                 :unlocked="
@@ -1280,7 +1406,10 @@ onBeforeUnmount(() => {
                                 @animal-error="handleAnimalError"
                             />
                         </div>
-                        <div class="profile-face profile-back">
+                        <div
+                            class="profile-face profile-back absolute inset-0 grid min-h-0 min-w-0"
+                            :aria-hidden="visibleProfileFace !== 'back'"
+                        >
                             <MemberProfileCard
                                 :member="backMember"
                                 :unlocked="
@@ -1301,17 +1430,19 @@ onBeforeUnmount(() => {
                 </div>
 
                 <section
-                    class="collection-panel"
+                    class="collection-panel relative [box-sizing:border-box] grid min-h-0 min-w-0 overflow-hidden"
                     aria-labelledby="collection-title"
                 >
-                    <div class="collection-heading">
+                    <div
+                        class="collection-heading flex items-baseline justify-between gap-4 text-white"
+                    >
                         <h2 id="collection-title">Animal collection</h2>
                         <span>{{ revealCounter }}</span>
                     </div>
 
                     <button
                         type="button"
-                        class="gallery-arrow gallery-arrow-left"
+                        class="gallery-arrow gallery-arrow-left absolute z-2 grid place-items-center p-0 text-white"
                         :class="{ 'is-visible': canScrollGalleryLeft }"
                         :disabled="!canScrollGalleryLeft"
                         aria-label="Scroll collection left"
@@ -1321,7 +1452,7 @@ onBeforeUnmount(() => {
                     </button>
 
                     <div
-                        class="gallery-viewport"
+                        class="gallery-viewport relative min-h-0 min-w-0 overflow-hidden"
                         :class="{
                             'can-scroll-left': canScrollGalleryLeft,
                             'can-scroll-right': canScrollGalleryRight,
@@ -1329,16 +1460,19 @@ onBeforeUnmount(() => {
                     >
                         <div
                             ref="galleryTrack"
-                            class="gallery-track"
+                            class="gallery-track [box-sizing:border-box] block h-full min-w-0 overflow-x-auto overflow-y-hidden"
                             tabindex="0"
                             aria-label="Member animal collection"
                         >
-                            <div ref="galleryContent" class="gallery-content">
+                            <div
+                                ref="galleryContent"
+                                class="gallery-content flex h-full w-max min-w-full items-stretch"
+                            >
                                 <button
                                     v-for="member in members"
                                     :key="member.id"
                                     type="button"
-                                    class="member-token"
+                                    class="member-token grid h-full min-h-0 min-w-0 content-stretch border-0 bg-transparent text-white"
                                     :class="{
                                         'is-unlocked': isUnlocked(member.id),
                                         'is-selected':
@@ -1351,7 +1485,9 @@ onBeforeUnmount(() => {
                                     "
                                     @click="selectMember(member.id)"
                                 >
-                                    <span class="token-art">
+                                    <span
+                                        class="token-art grid h-full min-h-0 w-auto max-w-full place-items-center justify-self-center overflow-hidden"
+                                    >
                                         <img
                                             v-if="
                                                 isUnlocked(member.id) &&
@@ -1359,13 +1495,14 @@ onBeforeUnmount(() => {
                                             "
                                             :src="member.animalUrl"
                                             alt=""
+                                            class="h-full w-full object-contain"
                                             @error="
                                                 handleAnimalError(member.id)
                                             "
                                         />
                                         <span
                                             v-else-if="isUnlocked(member.id)"
-                                            class="token-initials"
+                                            class="token-initials font-righteous leading-none text-[#0d3a76]"
                                             aria-hidden="true"
                                         >
                                             {{
@@ -1376,14 +1513,15 @@ onBeforeUnmount(() => {
                                         </span>
                                         <span
                                             v-else
-                                            class="token-question"
+                                            class="token-question font-righteous leading-none"
                                             aria-hidden="true"
                                             >?</span
                                         >
                                     </span>
-                                    <span class="token-name">{{
-                                        member.englishName
-                                    }}</span>
+                                    <span
+                                        class="token-name min-h-[1em] overflow-hidden text-center text-ellipsis whitespace-nowrap"
+                                        >{{ member.englishName }}</span
+                                    >
                                 </button>
                             </div>
                         </div>
@@ -1391,7 +1529,7 @@ onBeforeUnmount(() => {
 
                     <button
                         type="button"
-                        class="gallery-arrow gallery-arrow-right"
+                        class="gallery-arrow gallery-arrow-right absolute z-2 grid place-items-center p-0 text-white"
                         :class="{ 'is-visible': canScrollGalleryRight }"
                         :disabled="!canScrollGalleryRight"
                         aria-label="Scroll collection right"
@@ -1443,19 +1581,9 @@ onBeforeUnmount(() => {
     user-select: none;
 }
 
-.machine-svg {
-    display: block;
-    width: 100%;
-    height: 100%;
-}
-
 .machine-rim {
     stroke: rgb(255 255 255 / 0.18);
     stroke-width: 2;
-}
-
-.start-control {
-    outline: none;
 }
 
 .start-control[aria-disabled="false"] {
@@ -1492,10 +1620,6 @@ onBeforeUnmount(() => {
 
 .machine-light:nth-of-type(2n) .light-halo {
     animation-delay: -1.3s;
-}
-
-.hole-control {
-    outline: none;
 }
 
 .hole-focus {
@@ -1536,8 +1660,6 @@ onBeforeUnmount(() => {
 }
 
 .members-showcase {
-    display: grid;
-    min-width: 0;
     gap: clamp(1rem, 2.2vw, 2rem);
 }
 
@@ -1716,8 +1838,6 @@ onBeforeUnmount(() => {
 }
 
 .collection-panel {
-    position: relative;
-    min-width: 0;
     padding: 0.8rem clamp(2.5rem, 4vw, 4rem) 0.65rem;
     border-radius: clamp(1.25rem, 2.5vw, 2.5rem);
     background: #17599f;
@@ -1725,12 +1845,7 @@ onBeforeUnmount(() => {
 }
 
 .collection-heading {
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: 1rem;
     padding: 0 0.35rem 0.35rem;
-    color: #ffffff;
 }
 
 .collection-heading h2 {
@@ -1775,15 +1890,11 @@ onBeforeUnmount(() => {
 }
 
 .member-token {
-    display: grid;
     flex: 0 0 clamp(5.4rem, 8.5vw, 8.25rem);
     gap: 0.35rem;
     align-content: start;
     padding: 0.3rem;
-    border: 0;
     border-radius: 1rem;
-    background: transparent;
-    color: #ffffff;
     scroll-snap-align: center;
 }
 
@@ -1793,11 +1904,8 @@ onBeforeUnmount(() => {
 }
 
 .token-art {
-    display: grid;
     width: 100%;
     aspect-ratio: 1;
-    place-items: center;
-    overflow: hidden;
     border: 0.18rem dashed rgb(255 255 255 / 0.88);
     border-radius: 50%;
     background: rgb(12 60 132 / 0.28);
@@ -1815,51 +1923,30 @@ onBeforeUnmount(() => {
 
 .member-token.is-selected .token-art {
     border-color: #ffdf68;
-    box-shadow: 0 0 0 0.22rem rgb(255 223 104 / 0.38);
-    transform: translateY(-0.2rem) scale(1.04);
-}
-
-.token-art img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
+    box-shadow: inset 0 0 0 0.18rem rgb(255 223 104 / 0.38);
 }
 
 .token-question {
-    font-family: "Righteous", sans-serif;
     font-size: clamp(2.8rem, 5vw, 5rem);
-    line-height: 1;
 }
 
 .token-initials {
-    font-family: "Righteous", sans-serif;
     font-size: clamp(1.3rem, 2.2vw, 2.2rem);
-    color: #0d3a76;
 }
 
 .token-name {
-    overflow: hidden;
     font-family: "Belanosima", sans-serif;
     font-size: clamp(0.72rem, 0.9vw, 0.9rem);
     line-height: 1.08;
-    text-align: center;
-    text-overflow: ellipsis;
-    white-space: nowrap;
 }
 
 .gallery-arrow {
-    position: absolute;
-    z-index: 2;
     top: 58%;
-    display: grid;
     width: 2.25rem;
     height: 2.25rem;
-    padding: 0;
-    place-items: center;
     border: 0.13rem solid rgb(255 255 255 / 0.82);
     border-radius: 50%;
     background: rgb(13 58 137 / 0.7);
-    color: #ffffff;
     transform: translateY(-50%);
 }
 
@@ -1885,17 +1972,6 @@ onBeforeUnmount(() => {
 
 .gallery-arrow-right {
     right: 0.75rem;
-}
-
-.sr-only {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border: 0;
 }
 
 @keyframes lamp-breathe {
@@ -2061,7 +2137,7 @@ onBeforeUnmount(() => {
 .arcade-layout {
     grid-template-columns: minmax(15rem, 0.78fr) minmax(25rem, 1.22fr);
     width: min(100%, 118rem);
-    height: 100%;
+    height: auto;
     min-height: 0;
 }
 
@@ -2115,32 +2191,29 @@ onBeforeUnmount(() => {
 }
 
 .members-showcase {
-    grid-template-rows: minmax(0, 1fr) clamp(7rem, 18svh, 10.5rem);
-    height: 100%;
+    grid-template-rows: minmax(0, 1fr) clamp(7.5rem, 17svh, 10rem);
+    width: 100%;
+    height: var(--machine-height, auto);
     min-height: 0;
+    gap: clamp(0.65rem, 1.4svh, 1rem);
+    overflow: hidden;
 }
 
 .profile-stage {
-    position: relative;
-    min-width: 0;
-    min-height: 0;
+    border-radius: clamp(1.25rem, 2.2vw, 2.5rem);
     perspective: 100rem;
 }
 
+.panel-nav {
+    display: none;
+}
+
 .profile-flipper {
-    position: relative;
-    width: 100%;
-    height: 100%;
     transform-style: preserve-3d;
     will-change: transform;
 }
 
 .profile-face {
-    position: absolute;
-    inset: 0;
-    display: grid;
-    min-width: 0;
-    min-height: 0;
     backface-visibility: hidden;
 }
 
@@ -2149,19 +2222,13 @@ onBeforeUnmount(() => {
 }
 
 .collection-panel {
-    box-sizing: border-box;
-    min-height: 0;
+    grid-template-rows: auto minmax(0, 1fr);
     padding-block: 0.45rem;
     background: var(--collection-bg);
 }
 
 .collection-heading {
     padding-bottom: 0.1rem;
-}
-
-.gallery-viewport {
-    position: relative;
-    min-width: 0;
 }
 
 .gallery-viewport::before,
@@ -2193,24 +2260,25 @@ onBeforeUnmount(() => {
 }
 
 .gallery-track {
-    display: block;
-    padding: 0.2rem 0 0.35rem;
-    overflow-x: auto;
-    overflow-y: hidden;
+    padding: 0.15rem 0;
+    scrollbar-width: none;
     scroll-snap-type: none;
     touch-action: pan-x;
 }
 
+.gallery-track::-webkit-scrollbar {
+    display: none;
+}
+
 .gallery-content {
-    display: flex;
-    width: max-content;
-    min-width: 100%;
     gap: clamp(0.6rem, 1.25vw, 1.15rem);
 }
 
 .member-token {
-    flex-basis: clamp(4.7rem, 7.5vw, 7rem);
-    min-width: 0;
+    grid-template-rows: minmax(0, 1fr) auto;
+    flex-basis: clamp(4.4rem, 6.2vw, 6.5rem);
+    gap: 0.15rem;
+    padding-block: 0.08rem;
 }
 
 .gallery-arrow {
@@ -2239,27 +2307,112 @@ onBeforeUnmount(() => {
     }
 }
 
-@media (max-width: 58rem) {
+@media (orientation: landscape) and (max-width: 58rem) {
     .members-arcade {
-        padding-top: clamp(4.2rem, 8svh, 5.5rem);
+        padding: clamp(3.8rem, 14svh, 4.5rem) 0.65rem 0.45rem;
     }
 
     .arcade-layout {
-        grid-template-columns: 1fr;
-        grid-template-rows: minmax(0, 0.56fr) minmax(0, 0.44fr);
-        min-height: 0;
-        gap: clamp(0.4rem, 1.2svh, 0.85rem);
-    }
-
-    .game-stage {
-        width: auto;
-        height: 100%;
-        max-width: 100%;
+        grid-template-columns: minmax(11rem, 0.75fr) minmax(18rem, 1.25fr);
+        gap: 0.75rem;
     }
 
     .members-showcase {
-        width: min(100%, 50rem);
-        grid-template-rows: minmax(0, 1fr) clamp(5.5rem, 13svh, 7rem);
+        grid-template-rows: minmax(0, 1fr) clamp(5.25rem, 23svh, 6.75rem);
+    }
+}
+
+@media (orientation: portrait) {
+    .members-arcade {
+        padding: clamp(4.15rem, 8svh, 5.5rem) clamp(0.6rem, 2vw, 1.25rem)
+            clamp(0.55rem, 1.5svh, 1rem);
+    }
+
+    .arcade-layout {
+        display: flex;
+        width: 100%;
+        max-width: none;
+        height: 100%;
+        gap: 0;
+        align-items: stretch;
+        overflow: visible;
+        will-change: transform;
+    }
+
+    .game-panel,
+    .members-showcase {
+        width: 100%;
+        max-width: 100%;
+        height: 100%;
+        flex: 0 0 100%;
+        margin: 0;
+    }
+
+    .game-panel {
+        place-items: center;
+    }
+
+    .game-stage {
+        width: min(100%, calc((100svh - 6.2rem) * 7 / 9));
+        height: auto;
+        max-width: 100%;
+        max-height: 100%;
+    }
+
+    .members-showcase {
+        position: relative;
+        grid-template-rows: minmax(0, 1fr) clamp(9rem, 22svh, 11rem);
+        gap: clamp(0.65rem, 1.5svh, 1rem);
+        padding-inline: clamp(0.2rem, 1vw, 0.75rem);
+    }
+
+    .profile-stage {
+        width: min(100%, 62rem);
+        height: 100%;
+        align-self: stretch;
+        justify-self: center;
+    }
+
+    .panel-nav {
+        position: absolute;
+        z-index: 8;
+        top: 50%;
+        display: grid;
+        width: clamp(2.8rem, 10vw, 3.6rem);
+        aspect-ratio: 1;
+        padding: 0;
+        place-items: center;
+        border: 0.16rem solid rgb(255 255 255 / 0.9);
+        border-radius: 50%;
+        background: rgb(15 66 150 / 0.88);
+        box-shadow: 0 0.65rem 1.2rem rgb(4 31 75 / 0.28);
+        color: #ffffff;
+        transform: translateY(-50%);
+    }
+
+    .panel-nav:hover {
+        background: #ffbd43;
+        color: #153f7b;
+    }
+
+    .panel-nav:focus-visible {
+        outline: 0.22rem solid #ffdc68;
+        outline-offset: 0.2rem;
+    }
+
+    .panel-nav span {
+        margin-top: -0.12em;
+        font-family: Arial, sans-serif;
+        font-size: clamp(2.25rem, 8vw, 3rem);
+        line-height: 1;
+    }
+
+    .panel-nav-next {
+        right: clamp(0.35rem, 2vw, 1rem);
+    }
+
+    .panel-nav-previous {
+        left: clamp(0.45rem, 2vw, 1rem);
     }
 
     .collection-heading h2 {
