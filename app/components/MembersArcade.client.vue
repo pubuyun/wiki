@@ -9,9 +9,11 @@ interface Member {
     id: string;
     chineseName: string;
     englishName: string;
+    displayedName: string;
     title: string;
     photoUrl: string;
     animalUrl: string;
+    animalScale: number;
     introduction: string;
 }
 
@@ -23,6 +25,11 @@ interface Point {
 }
 
 const members = membersData as Member[];
+const galleryMembers = [...members].sort((memberA, memberB) =>
+    memberA.displayedName.localeCompare(memberB.displayedName, "en", {
+        sensitivity: "base",
+    }),
+);
 
 // All gameplay and motion tuning lives here so the feel can be adjusted quickly.
 const GAME_TUNING = {
@@ -109,6 +116,11 @@ const hammer = ref<HTMLImageElement>();
 const profileFlipper = ref<HTMLElement>();
 const galleryTrack = ref<HTMLElement>();
 const galleryContent = ref<HTMLElement>();
+const selectionIndicatorVisible = ref(false);
+const selectionIndicatorStyle = ref<Record<string, string>>({
+    width: "0px",
+    transform: "translate3d(0, 0, 0)",
+});
 const hamsterElements: Array<SVGGraphicsElement | undefined> = [];
 const lightElements: Array<SVGGElement | undefined> = [];
 
@@ -175,6 +187,8 @@ let panelSlideTimeline: gsap.core.Timeline | undefined;
 let profileRotation = 0;
 let profileIsFlipping = false;
 let queuedProfileId: string | null | undefined;
+let preparedMemberId: string | null = null;
+const preloadedImageUrls = new Set<string>();
 let galleryLenis: Lenis | undefined;
 let galleryTicker: ((time: number) => void) | undefined;
 let motionMedia: gsap.MatchMedia | undefined;
@@ -216,6 +230,39 @@ function randomItem<T>(items: readonly T[]): T | undefined {
 
 function getRemainingMembers() {
     return members.filter((member) => !unlockedSet.value.has(member.id));
+}
+
+function preloadImage(url: string) {
+    if (!url || preloadedImageUrls.has(url)) return;
+    preloadedImageUrls.add(url);
+
+    const image = new Image();
+    image.decoding = "async";
+    image.src = url;
+}
+
+function preloadMember(member: Member) {
+    preloadImage(member.photoUrl);
+    preloadImage(member.animalUrl);
+}
+
+function prepareNextMember() {
+    const preparedMember = members.find(
+        (member) => member.id === preparedMemberId && !isUnlocked(member.id),
+    );
+    if (preparedMember) return preparedMember;
+
+    const remainingMembers = getRemainingMembers();
+    const alternatives = remainingMembers.filter(
+        (member) => member.id !== activeMemberId.value,
+    );
+    const member = randomItem(
+        alternatives.length ? alternatives : remainingMembers,
+    );
+
+    preparedMemberId = member?.id ?? null;
+    if (member) preloadMember(member);
+    return member;
 }
 
 function getDifficultyTiming() {
@@ -288,6 +335,7 @@ function restoreUnlocks() {
 
 function scheduleNextSpawn(delayMs: number) {
     if (spawnTimer) clearTimeout(spawnTimer);
+    prepareNextMember();
     spawnTimer = setTimeout(() => spawnHamster(), delayMs);
 }
 
@@ -348,13 +396,13 @@ function retreatHamster() {
 function spawnHamster() {
     if (gamePhase.value !== "running" || activeHole.value !== null) return;
 
-    const remainingMembers = getRemainingMembers();
-    const member = randomItem(remainingMembers);
+    const member = prepareNextMember();
     if (!member) {
         gamePhase.value = "complete";
         liveMessage.value = "Collection complete. All members are revealed.";
         return;
     }
+    preparedMemberId = null;
 
     const holeIndex = chooseNextHole();
     const hamsterElement = hamsterElements[holeIndex];
@@ -418,6 +466,7 @@ function restartGame() {
     hamsterTimeline?.kill();
     activeHole.value = null;
     activeMemberId.value = null;
+    preparedMemberId = null;
     unlockedIds.value = [];
     selectedMemberId.value = null;
     frontMemberId.value = null;
@@ -529,6 +578,45 @@ function updateGalleryEdges() {
     canScrollGalleryRight.value = limit - current > 2;
 }
 
+function updateSelectionIndicator() {
+    const content = galleryContent.value;
+    const memberId = selectedMemberId.value;
+
+    if (!content || !memberId) {
+        selectionIndicatorVisible.value = false;
+        return;
+    }
+
+    const selectedToken = Array.from(
+        content.querySelectorAll<HTMLElement>(".member-token"),
+    ).find((token) => token.dataset.memberId === memberId);
+    const name = selectedToken?.querySelector<HTMLElement>(".token-name");
+
+    if (!name) {
+        selectionIndicatorVisible.value = false;
+        return;
+    }
+
+    const contentRect = content.getBoundingClientRect();
+    const nameRect = name.getBoundingClientRect();
+    const x = nameRect.left - contentRect.left;
+    const y = Math.min(
+        contentRect.height - 2,
+        nameRect.bottom - contentRect.top - 1,
+    );
+
+    selectionIndicatorStyle.value = {
+        width: `${nameRect.width}px`,
+        transform: `translate3d(${x}px, ${y}px, 0)`,
+    };
+    selectionIndicatorVisible.value = true;
+}
+
+watch(selectedMemberId, async () => {
+    await nextTick();
+    updateSelectionIndicator();
+});
+
 async function revealMember(memberId: string) {
     if (!unlockedSet.value.has(memberId)) {
         unlockedIds.value = [...unlockedIds.value, memberId];
@@ -575,6 +663,7 @@ function hitActiveHamster() {
 
     const member = members.find((item) => item.id === memberId);
     void revealMember(memberId);
+    prepareNextMember();
     flashLights();
     liveMessage.value = member
         ? `${member.englishName} revealed. ${revealedCount.value} of ${members.length} members found.`
@@ -969,6 +1058,7 @@ onMounted(async () => {
         syncShowcaseHeight();
         galleryLenis?.resize();
         updateGalleryEdges();
+        updateSelectionIndicator();
     });
     resizeObserver.observe(gameStage.value);
 
@@ -1379,7 +1469,7 @@ onBeforeUnmount(() => {
                 </button>
 
                 <div
-                    class="profile-stage relative h-full min-h-0 w-full min-w-0 self-stretch overflow-hidden"
+                    class="profile-stage relative h-full min-h-0 w-full min-w-0 self-stretch"
                 >
                     <div
                         ref="profileFlipper"
@@ -1466,10 +1556,10 @@ onBeforeUnmount(() => {
                         >
                             <div
                                 ref="galleryContent"
-                                class="gallery-content flex h-full w-max min-w-full items-stretch"
+                                class="gallery-content relative flex h-full w-max min-w-full items-stretch"
                             >
                                 <button
-                                    v-for="member in members"
+                                    v-for="member in galleryMembers"
                                     :key="member.id"
                                     type="button"
                                     class="member-token grid h-full min-h-0 min-w-0 content-stretch border-0 bg-transparent text-white"
@@ -1485,44 +1575,62 @@ onBeforeUnmount(() => {
                                     "
                                     @click="selectMember(member.id)"
                                 >
-                                    <span
-                                        class="token-art grid h-full min-h-0 w-auto max-w-full place-items-center justify-self-center overflow-hidden"
-                                    >
-                                        <img
-                                            v-if="
-                                                isUnlocked(member.id) &&
-                                                !failedAnimalSet.has(member.id)
-                                            "
-                                            :src="member.animalUrl"
-                                            alt=""
-                                            class="h-full w-full object-contain"
-                                            @error="
-                                                handleAnimalError(member.id)
-                                            "
-                                        />
+                                    <span class="token-art-slot">
                                         <span
-                                            v-else-if="isUnlocked(member.id)"
-                                            class="token-initials font-righteous leading-none text-[#0d3a76]"
-                                            aria-hidden="true"
+                                            class="token-art grid place-items-center"
                                         >
-                                            {{
-                                                memberInitials(
-                                                    member.englishName,
-                                                )
-                                            }}
+                                            <img
+                                                v-if="
+                                                    isUnlocked(member.id) &&
+                                                    !failedAnimalSet.has(
+                                                        member.id,
+                                                    )
+                                                "
+                                                :src="member.animalUrl"
+                                                alt=""
+                                                class="token-animal h-full w-full object-contain"
+                                                :style="{
+                                                    transform: `scale(${member.animalScale})`,
+                                                }"
+                                                @error="
+                                                    handleAnimalError(member.id)
+                                                "
+                                            />
+                                            <span
+                                                v-else-if="
+                                                    isUnlocked(member.id)
+                                                "
+                                                class="token-initials font-righteous leading-none text-[#0d3a76]"
+                                                aria-hidden="true"
+                                            >
+                                                {{
+                                                    memberInitials(
+                                                        member.englishName,
+                                                    )
+                                                }}
+                                            </span>
+                                            <span
+                                                v-else
+                                                class="token-question font-righteous leading-none"
+                                                aria-hidden="true"
+                                                >?</span
+                                            >
                                         </span>
-                                        <span
-                                            v-else
-                                            class="token-question font-righteous leading-none"
-                                            aria-hidden="true"
-                                            >?</span
-                                        >
                                     </span>
                                     <span
                                         class="token-name min-h-[1em] overflow-hidden text-center text-ellipsis whitespace-nowrap"
-                                        >{{ member.englishName }}</span
+                                    >{{ member.displayedName }}</span
                                     >
                                 </button>
+                                <span
+                                    class="token-selection-indicator"
+                                    :class="{
+                                        'is-visible':
+                                            selectionIndicatorVisible,
+                                    }"
+                                    :style="selectionIndicatorStyle"
+                                    aria-hidden="true"
+                                ></span>
                             </div>
                         </div>
                     </div>
@@ -1664,16 +1772,12 @@ onBeforeUnmount(() => {
 }
 
 .profile-card {
-    display: grid;
-    grid-template-columns: minmax(12rem, 0.38fr) minmax(0, 1fr);
-    min-height: clamp(22rem, 42vw, 35rem);
-    overflow: hidden;
-    border: clamp(0.7rem, 1.2vw, 1.25rem) solid #ffdf83;
-    border-radius: clamp(1.5rem, 3vw, 3rem);
-    background: #ffdf83;
-    box-shadow:
-        0.85rem 1rem 0 rgb(35 104 184 / 0.5),
-        0 1.4rem 2.2rem rgb(2 30 69 / 0.23);
+    min-height: 0;
+    overflow: visible;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
 }
 
 .portrait-column {
@@ -1903,9 +2007,24 @@ onBeforeUnmount(() => {
     outline-offset: 0.1rem;
 }
 
-.token-art {
+.token-art-slot {
+    container-type: size;
+    display: grid;
     width: 100%;
+    height: 100%;
+    min-height: 0;
+    align-items: end;
+    justify-items: center;
+    overflow: visible;
+}
+
+.token-art {
+    container-type: inline-size;
+    width: min(100cqw, 100cqh, 6.5rem);
+    height: auto;
     aspect-ratio: 1;
+    flex: none;
+    overflow: visible;
     border: 0.18rem dashed rgb(255 255 255 / 0.88);
     border-radius: 50%;
     background: rgb(12 60 132 / 0.28);
@@ -1918,16 +2037,45 @@ onBeforeUnmount(() => {
 .member-token.is-unlocked .token-art {
     border-style: solid;
     border-color: transparent;
-    background: #9ee6dd;
+    background: transparent;
 }
 
-.member-token.is-selected .token-art {
-    border-color: #ffdf68;
-    box-shadow: inset 0 0 0 0.18rem rgb(255 223 104 / 0.38);
+.member-token.is-unlocked .token-art img {
+    object-fit: contain;
+}
+
+.member-token.is-selected .token-name {
+    color: #ffdf68;
+}
+
+.token-selection-indicator {
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    height: 0.12rem;
+    border-radius: 999px;
+    background: #ffdf68;
+    opacity: 0;
+    pointer-events: none;
+    transition:
+        transform 320ms cubic-bezier(0.22, 1, 0.36, 1),
+        width 320ms cubic-bezier(0.22, 1, 0.36, 1),
+        opacity 160ms ease;
+    will-change: transform, width;
+}
+
+.token-selection-indicator.is-visible {
+    opacity: 1;
+}
+
+.token-animal {
+    transform-origin: center;
 }
 
 .token-question {
-    font-size: clamp(2.8rem, 5vw, 5rem);
+    max-width: 100%;
+    font-size: clamp(1rem, 52cqi, 5rem);
 }
 
 .token-initials {
@@ -1935,9 +2083,13 @@ onBeforeUnmount(() => {
 }
 
 .token-name {
+    width: fit-content;
+    max-width: 100%;
+    justify-self: center;
     font-family: "Belanosima", sans-serif;
     font-size: clamp(0.72rem, 0.9vw, 0.9rem);
     line-height: 1.08;
+    transition: color 220ms ease;
 }
 
 .gallery-arrow {
@@ -2196,10 +2348,11 @@ onBeforeUnmount(() => {
     height: var(--machine-height, auto);
     min-height: 0;
     gap: clamp(0.65rem, 1.4svh, 1rem);
-    overflow: hidden;
+    overflow: visible;
 }
 
 .profile-stage {
+    overflow: visible;
     border-radius: clamp(1.25rem, 2.2vw, 2.5rem);
     perspective: 100rem;
 }
@@ -2316,10 +2469,6 @@ onBeforeUnmount(() => {
         grid-template-columns: minmax(11rem, 0.75fr) minmax(18rem, 1.25fr);
         gap: 0.75rem;
     }
-
-    .members-showcase {
-        grid-template-rows: minmax(0, 1fr) clamp(5.25rem, 23svh, 6.75rem);
-    }
 }
 
 @media (orientation: portrait) {
@@ -2432,7 +2581,9 @@ onBeforeUnmount(() => {
     }
     .gallery-viewport::before,
     .gallery-viewport::after,
-    .gallery-arrow {
+    .gallery-arrow,
+    .token-name,
+    .token-selection-indicator {
         transition: none;
     }
 }

@@ -507,7 +507,7 @@ onBeforeUnmount(() => {
     <section
         id="product"
         ref="scene"
-        class="product-scene relative h-svh min-h-screen overflow-hidden bg-[#07366f] text-white"
+        class="product-scene relative h-svh min-h-screen overflow-hidden text-white"
         aria-labelledby="product-title"
         @pointermove="handlePointerMove"
         @pointerleave="resetPointer"
@@ -629,6 +629,8 @@ onBeforeUnmount(() => {
 <style scoped>
 .product-scene {
     isolation: isolate;
+    color-scheme: dark;
+    background-color: #07366f;
 }
 
 .product-features {
