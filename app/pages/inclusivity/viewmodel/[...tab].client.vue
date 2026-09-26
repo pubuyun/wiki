@@ -121,7 +121,10 @@
                                 :alt="`${selectedModel.title} 3D model`"
                                 camera-controls
                                 tabindex="0"
-                                :auto-rotate="!prefersReducedMotion"
+                                :auto-rotate="
+                                    !prefersReducedMotion &&
+                                    !hasUserTakenViewerControl
+                                "
                                 auto-rotate-delay="0"
                                 rotation-per-second="14deg"
                                 camera-orbit="-32deg 72deg auto"
@@ -137,6 +140,7 @@
                                 reveal="auto"
                                 @load="handleModelLoad"
                                 @poster-dismissed="handleModelLoad"
+                                @camera-change="handleCameraChange"
                                 @error="handleModelError"
                             />
 
@@ -151,7 +155,10 @@
                         </ClientOnly>
 
                         <div
-                            v-if="selectedModel && (!isModelLoaded || modelLoadError)"
+                            v-if="
+                                selectedModel &&
+                                (!isModelLoaded || modelLoadError)
+                            "
                             class="pointer-events-none absolute inset-x-0 bottom-0 bg-surface-elevated/90 px-4 py-2 text-center text-sm text-on-surface"
                             role="status"
                         >
@@ -184,16 +191,24 @@
                         class="flex h-full min-h-0 flex-col"
                     >
                         <TabsList
-                            class="flex shrink-0 gap-1 overflow-x-auto border-b border-surface-bright bg-surface-elevated p-1 font-momo-trust-display"
+                            class="flex shrink-0 gap-1 overflow-hidden border-b border-surface-bright bg-surface-elevated p-1 font-momo-trust-display"
                             aria-label="Model information views"
                         >
                             <TabsTrigger
                                 v-for="tab in tabs"
                                 :key="tab.value"
                                 :value="tab.value"
-                                class="flex min-w-max flex-1 items-center justify-center gap-1.5 rounded-full px-4 py-2 text-sm leading-tight text-primary transition-colors outline-none hover:bg-primary/20 focus-visible:ring-2 focus-visible:ring-outline data-[state=active]:bg-primary data-[state=active]:text-on-primary xl:text-base"
+                                :aria-label="tab.label.join(' ')"
+                                class="flex min-w-0 flex-1 items-center justify-center rounded-full px-2 py-2 text-center text-sm leading-tight text-primary transition-colors outline-none hover:bg-primary/20 focus-visible:ring-2 focus-visible:ring-outline data-[state=active]:bg-primary data-[state=active]:text-on-primary xl:text-base"
                             >
-                                {{ tab.label }}
+                                <span aria-hidden="true">
+                                    <span class="block">{{
+                                        tab.label[0]
+                                    }}</span>
+                                    <span class="block">{{
+                                        tab.label[1]
+                                    }}</span>
+                                </span>
                             </TabsTrigger>
                         </TabsList>
 
@@ -311,6 +326,7 @@ const isWideViewport = ref(true);
 const prefersReducedMotion = ref(false);
 const isModelLoaded = ref(false);
 const isModelViewerReady = ref(false);
+const hasUserTakenViewerControl = ref(false);
 let viewportQuery: MediaQueryList | undefined;
 let reducedMotionQuery: MediaQueryList | undefined;
 let previousRouteModelId: string | undefined;
@@ -319,9 +335,9 @@ const tabValues = ["image", "description-en", "description-cn"] as const;
 type TabValue = (typeof tabValues)[number];
 
 const tabs = [
-    { value: "image" as const, label: "Reference Image" },
-    { value: "description-en" as const, label: "English Description" },
-    { value: "description-cn" as const, label: "Chinese Description" },
+    { value: "image" as const, label: ["Reference", "Image"] },
+    { value: "description-en" as const, label: ["English", "Description"] },
+    { value: "description-cn" as const, label: ["Chinese", "Description"] },
 ];
 const modelViewerMeshoptDecoderLocation =
     "https://cdn.jsdelivr.net/npm/meshoptimizer@0.18.1/meshopt_decoder.js";
@@ -455,6 +471,13 @@ function configureModelViewerDecoders() {
     modelViewerGlobal.ModelViewerElement ??= {};
     modelViewerGlobal.ModelViewerElement.meshoptDecoderLocation =
         modelViewerMeshoptDecoderLocation;
+}
+
+function handleCameraChange(event: Event) {
+    const cameraChangeEvent = event as CustomEvent<{ source?: string }>;
+    if (cameraChangeEvent.detail?.source === "user-interaction") {
+        hasUserTakenViewerControl.value = true;
+    }
 }
 
 async function handleModelLoad(event: Event) {
