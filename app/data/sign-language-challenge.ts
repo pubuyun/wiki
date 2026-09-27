@@ -19,7 +19,7 @@ const words = (entries: Array<[string, string]>): SignLanguageWord[] =>
 export const SIGN_LANGUAGE_CATEGORIES: SignLanguageCategory[] = [
     {
         id: "biological-molecules",
-        label: "Biological Molecules",
+        label: "Molecules of Life",
         shortLabel: "Molecules",
         words: words([
             ["amino_acid", "Amino acid"],
@@ -36,7 +36,7 @@ export const SIGN_LANGUAGE_CATEGORIES: SignLanguageCategory[] = [
     },
     {
         id: "cell-organelle",
-        label: "Cell organelle",
+        label: "Cell Structures",
         shortLabel: "Organelles",
         words: words([
             ["cell", "Cell"],

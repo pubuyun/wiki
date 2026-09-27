@@ -10,165 +10,114 @@
         >
             {{ errorMessage }}
         </div>
-        <TabsRoot v-else default-value="cycle1" class="w-full">
-            <TabsList
-                class="mx-auto mb-4 flex w-fit gap-1 rounded-full border border-surface-bright bg-surface-elevated p-1 font-momo-trust-display"
-                aria-label="Binder design cycles"
-            >
-                <TabsTrigger
-                    v-for="cycle in cycles"
-                    :key="cycle.value"
-                    :value="cycle.value"
-                    class="group flex items-center gap-2 rounded-full px-5 py-2 text-sm text-on-surface transition-colors outline-none hover:bg-accent/20 focus-visible:ring-2 focus-visible:ring-outline data-[state=active]:bg-accent data-[state=active]:text-on-accent"
-                >
-                    <span>{{ cycle.label }}</span>
-                    <span
-                        class="rounded-full bg-accent px-2 py-0.5 text-xs text-on-accent group-data-[state=active]:bg-primary group-data-[state=active]:text-on-primary"
-                    >
-                        {{ rowsByCycle[cycle.value].length }}
-                    </span>
-                </TabsTrigger>
-            </TabsList>
-
-            <TabsContent
-                v-for="cycle in cycles"
-                :key="cycle.value"
-                :value="cycle.value"
-                class="outline-none focus-visible:ring-2 focus-visible:ring-outline"
+        <template v-else>
+            <div
+                class="w-full"
+                style="
+                    min-width: 0;
+                    max-width: 100%;
+                    overflow-x: auto;
+                    overscroll-behavior-inline: contain;
+                    -webkit-overflow-scrolling: touch;
+                "
+                role="region"
+                :aria-label="`${sourceLabel} binder heatmap; scroll horizontally to see all metrics`"
+                tabindex="0"
             >
                 <div
-                    v-if="rowsByCycle[cycle.value].length === 0"
-                    class="flex min-h-72 items-center justify-center px-6 text-center text-sm"
-                    role="status"
+                    :style="{
+                        width: '100%',
+                        minWidth: '48rem',
+                        height: `${chartHeight}px`,
+                    }"
                 >
-                    No {{ cycle.label }} binder JSON files were found for
-                    {{ sourceLabel }}.
+                    <VChart
+                        class="h-full w-full"
+                        :option="chartOption"
+                        autoresize
+                    />
                 </div>
+            </div>
+            <details class="mt-4 rounded-lg border border-outline p-3">
+                <summary class="cursor-pointer font-semibold">
+                    View binder data table
+                </summary>
                 <div
-                    v-else
-                    class="w-full"
-                    style="
-                        min-width: 0;
-                        max-width: 100%;
-                        overflow-x: auto;
-                        overscroll-behavior-inline: contain;
-                        -webkit-overflow-scrolling: touch;
-                    "
+                    class="mt-3 max-w-full overflow-x-auto"
                     role="region"
-                    :aria-label="`${cycle.label} heatmap; scroll horizontally to see all metrics`"
+                    :aria-label="`${sourceLabel} binder data`"
                     tabindex="0"
                 >
-                    <div
-                        :style="{
-                            width: '100%',
-                            minWidth: '48rem',
-                            height: `${chartHeight(cycle.value)}px`,
-                        }"
-                    >
-                        <VChart
-                            class="h-full w-full"
-                            :option="optionsByCycle[cycle.value]"
-                            autoresize
-                        />
-                    </div>
-                </div>
-                <details
-                    v-if="rowsByCycle[cycle.value].length"
-                    class="mt-4 rounded-lg border border-outline p-3"
-                >
-                    <summary class="cursor-pointer font-semibold">
-                        View {{ cycle.label }} data table
-                    </summary>
-                    <div
-                        class="mt-3 max-w-full overflow-x-auto"
-                        role="region"
-                        :aria-label="`${cycle.label} ${sourceLabel} binder data`"
-                        tabindex="0"
-                    >
-                        <table class="w-full border-collapse text-sm">
-                            <caption class="sr-only">
-                                {{
-                                    cycle.label
-                                }}
-                                {{
-                                    sourceLabel
-                                }}
-                                binder metrics
-                            </caption>
-                            <thead>
-                                <tr>
-                                    <th
-                                        scope="col"
-                                        class="border border-outline p-2"
-                                    >
-                                        Binder
-                                    </th>
-                                    <th
-                                        v-for="metric in metrics"
-                                        :key="metric.key"
-                                        scope="col"
-                                        class="border border-outline p-2"
-                                    >
-                                        {{ metric.label
-                                        }}<template v-if="metric.unit">
-                                            ({{ metric.unit }})</template
-                                        >
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr
-                                    v-for="row in rowsByCycle[cycle.value]"
-                                    :key="row.name"
+                    <table class="w-full border-collapse text-sm">
+                        <caption class="sr-only">
+                            {{
+                                sourceLabel
+                            }}
+                            binder metrics
+                        </caption>
+                        <thead>
+                            <tr>
+                                <th
+                                    scope="col"
+                                    class="border border-outline p-2"
                                 >
-                                    <th
-                                        scope="row"
-                                        class="border border-outline p-2 text-left"
+                                    Binder
+                                </th>
+                                <th
+                                    v-for="metric in metrics"
+                                    :key="metric.key"
+                                    scope="col"
+                                    class="border border-outline p-2"
+                                >
+                                    {{ metric.label
+                                    }}<template v-if="metric.unit">
+                                        ({{ metric.unit }})</template
                                     >
-                                        {{ row.shortName }}
-                                    </th>
-                                    <td
-                                        v-for="metric in metrics"
-                                        :key="metric.key"
-                                        class="border border-outline p-2 text-right"
-                                    >
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="row in rows" :key="row.name">
+                                <th
+                                    scope="row"
+                                    class="border border-outline p-2 text-left"
+                                >
+                                    {{ row.shortName }}
+                                </th>
+                                <td
+                                    v-for="metric in metrics"
+                                    :key="metric.key"
+                                    class="border border-outline p-2 text-right"
+                                >
+                                    {{
+                                        formatValue(
+                                            metricValue(row, metric),
+                                            metric.digits,
+                                        )
+                                    }}
+                                    <span class="sr-only"
+                                        >,
                                         {{
-                                            formatValue(
-                                                metricValue(row, metric),
-                                                metric.digits,
-                                            )
-                                        }}
-                                        <span class="sr-only"
-                                            >,
-                                            {{
-                                                relativeStrength(
-                                                    row,
-                                                    metric,
-                                                    rowsByCycle[cycle.value],
-                                                )
-                                            }}</span
-                                        >
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </details>
-            </TabsContent>
-        </TabsRoot>
+                                            relativeStrength(row, metric, rows)
+                                        }}</span
+                                    >
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </details>
+        </template>
         <figcaption class="sr-only">
-            Cycle tabs containing heatmaps that compare {{ totalBinderCount }}
-            {{ sourceLabel }} binders across seven prediction and stability
-            metrics. Cell labels contain the original values.
+            Heatmap comparing {{ rows.length }} {{ sourceLabel }} binders across
+            seven prediction and stability metrics. Cell labels contain the
+            original values.
         </figcaption>
     </figure>
 </template>
 
 <script setup lang="ts">
 import type { CustomSeriesRenderItem, EChartsOption } from "echarts";
-import { TabsContent, TabsList, TabsRoot, TabsTrigger } from "reka-ui";
-
-type Cycle = "cycle1" | "cycle2";
 
 interface BinderRecord {
     name?: string;
@@ -209,11 +158,6 @@ interface MetricDefinition {
 const props = defineProps<{
     binders: string;
 }>();
-
-const cycles: { value: Cycle; label: string }[] = [
-    { value: "cycle1", label: "Cycle 1" },
-    { value: "cycle2", label: "Cycle 2" },
-];
 
 const metrics: MetricDefinition[] = [
     {
@@ -324,62 +268,43 @@ function sortRows(records: BinderRow[]): BinderRow[] {
     );
 }
 
-const rowsByCycle = computed<Record<Cycle, BinderRow[]>>(() => {
-    const records: Record<Cycle, BinderRow[]> = {
-        cycle1: [],
-        cycle2: [],
-    };
-
+const rows = computed<BinderRow[]>(() => {
     if (!(["proteina", "rosetta"] as string[]).includes(binderSource.value)) {
-        return records;
+        return [];
     }
+
+    const records: BinderRow[] = [];
 
     for (const [modulePath, record] of Object.entries(binderModules)) {
         const path = canonicalDataPath(modulePath);
         const match = path.match(
-            /\/data\/model\/precursor-binder\/(cycle1|cycle2)\/(proteina|rosetta)\/(selected|rejected)\/([^/]+)\.json$/i,
+            /\/data\/model\/precursor-binder\/(proteina|rosetta)\/(selected|rejected)\/([^/]+)\.json$/i,
         );
 
-        if (!match || match[2].toLowerCase() !== binderSource.value) continue;
+        if (!match || match[1].toLowerCase() !== binderSource.value) continue;
 
-        const cycle = match[1].toLowerCase() as Cycle;
-        const name = record.name || record._id || match[4];
-        records[cycle].push({
+        const name = record.name || record._id || match[3];
+        records.push({
             name,
             shortName: shortBinderName(name),
             record,
         });
     }
 
-    return {
-        cycle1: sortRows(records.cycle1),
-        cycle2: sortRows(records.cycle2),
-    };
+    return sortRows(records);
 });
 
 const errorMessage = computed(() => {
     if (!(["proteina", "rosetta"] as string[]).includes(binderSource.value)) {
         return 'The binders parameter must be either "proteina" or "rosetta".';
     }
-    if (
-        rowsByCycle.value.cycle1.length === 0 &&
-        rowsByCycle.value.cycle2.length === 0
-    ) {
+    if (rows.value.length === 0) {
         return `No binder JSON files were found for “${props.binders}”.`;
     }
     return "";
 });
 
-const totalBinderCount = computed(
-    () => rowsByCycle.value.cycle1.length + rowsByCycle.value.cycle2.length,
-);
-
-function chartHeight(cycle: Cycle): number {
-    return Math.max(
-        580,
-        Math.min(1020, rowsByCycle.value[cycle].length * 31 + 268),
-    );
-}
+const chartHeight = computed(() => Math.max(580, rows.value.length * 31 + 268));
 
 function metricValue(row: BinderRow, metric: MetricDefinition): number | null {
     const value = row.record[metric.key];
@@ -403,12 +328,12 @@ function relativeStrength(
         .filter(isFiniteNumber);
     const min = Math.min(...values);
     const max = Math.max(...values);
-    if (min === max) return "equal within this cycle";
+    if (min === max) return "equal within this data set";
     const score = (value - min) / (max - min);
     const strength = metric.higherIsBetter ? score : 1 - score;
     return strength >= 0.5
-        ? "stronger within this cycle"
-        : "weaker within this cycle";
+        ? "stronger within this data set"
+        : "weaker within this data set";
 }
 
 function escapeHtml(value: string): string {
@@ -487,18 +412,16 @@ const renderRowSeparator: CustomSeriesRenderItem = (_, api) => {
     };
 };
 
-function buildOption(cycle: Cycle, rows: BinderRow[]): EChartsOption {
-    const cycleLabel = cycles.find((item) => item.value === cycle)?.label;
-
+function buildOption(rows: BinderRow[]): EChartsOption {
     return {
         aria: {
             enabled: true,
             label: {
-                description: `${cycleLabel} heatmap comparing ${rows.length} ${sourceLabel.value} binders across ${metrics.length} metrics. A complete data table follows the chart.`,
+                description: `Heatmap comparing ${rows.length} ${sourceLabel.value} binders across ${metrics.length} metrics. A complete data table follows the chart.`,
             },
         },
         title: {
-            text: `${cycleLabel} binder performance`,
+            text: `${sourceLabel.value} binder performance`,
             subtext: `${rows.length} binders`,
             left: "center",
         },
@@ -622,8 +545,5 @@ function buildOption(cycle: Cycle, rows: BinderRow[]): EChartsOption {
     };
 }
 
-const optionsByCycle = computed<Record<Cycle, EChartsOption>>(() => ({
-    cycle1: buildOption("cycle1", rowsByCycle.value.cycle1),
-    cycle2: buildOption("cycle2", rowsByCycle.value.cycle2),
-}));
+const chartOption = computed<EChartsOption>(() => buildOption(rows.value));
 </script>

@@ -1,9 +1,13 @@
 <script setup lang="ts">
+import { Icon } from "@iconify/vue";
 import { gsap } from "gsap";
 import Lenis from "lenis";
-import hammerUrl from "../../public/hammer.png?url";
+import { SwitchRoot, SwitchThumb } from "reka-ui";
 import hamsterUrl from "../../public/hamster.svg?url";
 import membersData from "../data/members.json";
+
+const hammerUrl =
+    "https://static.igem.wiki/teams/6133/wiki/teamphoto/hammer.avif";
 
 interface Member {
     id: string;
@@ -88,6 +92,8 @@ const GAME_TUNING = {
 const SVG_WIDTH = 700;
 const SVG_HEIGHT = 900;
 const STORAGE_KEY = "members-arcade-unlocked-v1";
+const SKIP_CODE = "expelliodor";
+const SKIP_CODE_RESET_MS = 5000;
 
 const HOLE_POSITIONS = [
     { x: 205, y: 515 },
@@ -133,6 +139,8 @@ const visibleProfileFace = ref<"front" | "back">("front");
 const activeHole = ref<number | null>(null);
 const activeMemberId = ref<string | null>(null);
 const liveMessage = ref("Select READY to begin the members game.");
+const relaxedMode = ref(false);
+const howToPlayOpen = ref(false);
 const reducedMotion = ref(false);
 const isSwinging = ref(false);
 const failedAnimalIds = ref<string[]>([]);
@@ -140,6 +148,7 @@ const canScrollGalleryLeft = ref(false);
 const canScrollGalleryRight = ref(false);
 const isPortrait = ref(false);
 const activeMobilePanel = ref<"game" | "members">("game");
+const howToPlayButton = ref<HTMLButtonElement>();
 
 const unlockedSet = computed(() => new Set(unlockedIds.value));
 const failedAnimalSet = computed(() => new Set(failedAnimalIds.value));
@@ -170,6 +179,13 @@ const startControlEnabled = computed(() => gamePhase.value !== "running");
 
 let spawnTimer: ReturnType<typeof setTimeout> | undefined;
 let retreatTimer: ReturnType<typeof setTimeout> | undefined;
+let skipCodeResetTimer: ReturnType<typeof setTimeout> | undefined;
+let spawnDeadline = 0;
+let retreatDeadline = 0;
+let pausedSpawnRemainingMs: number | null = null;
+let pausedRetreatRemainingMs: number | null = null;
+let hamsterTimelinePausedByHelp = false;
+let skipCodeBuffer = "";
 let spawnStartedAt = 0;
 let lastHole = -1;
 let consecutiveMisses = 0;
@@ -302,6 +318,22 @@ function clearGameTimers() {
     if (retreatTimer) clearTimeout(retreatTimer);
     spawnTimer = undefined;
     retreatTimer = undefined;
+    spawnDeadline = 0;
+    retreatDeadline = 0;
+    pausedSpawnRemainingMs = null;
+    pausedRetreatRemainingMs = null;
+}
+
+function hideAllHamsters() {
+    const hamsters = hamsterElements.filter(
+        (element): element is SVGGraphicsElement => Boolean(element),
+    );
+    gsap.set(hamsters, {
+        x: 0,
+        y: GAME_TUNING.hamsterHiddenY,
+        rotation: 0,
+        autoAlpha: 0,
+    });
 }
 
 function saveUnlocks() {
@@ -336,7 +368,40 @@ function restoreUnlocks() {
 function scheduleNextSpawn(delayMs: number) {
     if (spawnTimer) clearTimeout(spawnTimer);
     prepareNextMember();
-    spawnTimer = setTimeout(() => spawnHamster(), delayMs);
+    const safeDelayMs = Math.max(0, delayMs);
+
+    if (howToPlayOpen.value) {
+        spawnTimer = undefined;
+        spawnDeadline = 0;
+        pausedSpawnRemainingMs = safeDelayMs;
+        return;
+    }
+
+    spawnDeadline = performance.now() + safeDelayMs;
+    spawnTimer = setTimeout(() => {
+        spawnTimer = undefined;
+        spawnDeadline = 0;
+        spawnHamster();
+    }, safeDelayMs);
+}
+
+function scheduleRetreat(delayMs: number) {
+    if (retreatTimer) clearTimeout(retreatTimer);
+    const safeDelayMs = Math.max(0, delayMs);
+
+    if (howToPlayOpen.value) {
+        retreatTimer = undefined;
+        retreatDeadline = 0;
+        pausedRetreatRemainingMs = safeDelayMs;
+        return;
+    }
+
+    retreatDeadline = performance.now() + safeDelayMs;
+    retreatTimer = setTimeout(() => {
+        retreatTimer = undefined;
+        retreatDeadline = 0;
+        retreatHamster();
+    }, safeDelayMs);
 }
 
 function chooseNextHole() {
@@ -369,6 +434,7 @@ function retreatHamster() {
 
     if (retreatTimer) clearTimeout(retreatTimer);
     retreatTimer = undefined;
+    retreatDeadline = 0;
     if (turnHadIntent) consecutiveMisses += 1;
 
     const hamsterElement = hamsterElements[holeIndex];
@@ -394,7 +460,12 @@ function retreatHamster() {
 }
 
 function spawnHamster() {
-    if (gamePhase.value !== "running" || activeHole.value !== null) return;
+    if (
+        gamePhase.value !== "running" ||
+        howToPlayOpen.value ||
+        activeHole.value !== null
+    )
+        return;
 
     const member = prepareNextMember();
     if (!member) {
@@ -434,13 +505,13 @@ function spawnHamster() {
         ease: reducedMotion.value ? "none" : "back.out(1.7)",
     });
 
-    retreatTimer = setTimeout(
-        () => retreatHamster(),
-        getDifficultyTiming().visibleMs,
-    );
+    if (!relaxedMode.value) {
+        scheduleRetreat(getDifficultyTiming().visibleMs);
+    }
 }
 
 function startGame() {
+    if (howToPlayOpen.value) return;
     if (gamePhase.value === "complete") {
         gamePhase.value = "restart-confirm";
         liveMessage.value =
@@ -464,6 +535,7 @@ function startGame() {
 function restartGame() {
     clearGameTimers();
     hamsterTimeline?.kill();
+    hamsterTimelinePausedByHelp = false;
     activeHole.value = null;
     activeMemberId.value = null;
     preparedMemberId = null;
@@ -479,15 +551,7 @@ function restartGame() {
     lastHole = -1;
     localStorage.removeItem(STORAGE_KEY);
 
-    const hamsters = hamsterElements.filter(
-        (element): element is SVGGraphicsElement => Boolean(element),
-    );
-    gsap.set(hamsters, {
-        x: 0,
-        y: GAME_TUNING.hamsterHiddenY,
-        rotation: 0,
-        autoAlpha: 0,
-    });
+    hideAllHamsters();
     profileFlipTween?.kill();
     profileRotation = 0;
     profileIsFlipping = false;
@@ -499,6 +563,148 @@ function restartGame() {
     liveMessage.value = "Collection cleared. A new game has started.";
     scheduleNextSpawn(GAME_TUNING.firstSpawnDelayMs);
 }
+
+function skipGame() {
+    skipCodeBuffer = "";
+    if (skipCodeResetTimer) clearTimeout(skipCodeResetTimer);
+    skipCodeResetTimer = undefined;
+
+    if (revealedCount.value >= members.length) {
+        liveMessage.value = "The full member collection is already unlocked.";
+        return;
+    }
+
+    clearGameTimers();
+    hamsterTimeline?.kill();
+    hamsterTimelinePausedByHelp = false;
+    activeHole.value = null;
+    activeMemberId.value = null;
+    preparedMemberId = null;
+    unlockedIds.value = members.map((member) => member.id);
+    gamePhase.value = "complete";
+    hideAllHamsters();
+    saveUnlocks();
+
+    const firstMember = galleryMembers[0];
+    if (firstMember) void showProfile(firstMember.id);
+    liveMessage.value =
+        "Skip code accepted. All member characters are now unlocked.";
+}
+
+function openHowToPlay() {
+    if (howToPlayOpen.value) return;
+
+    const now = performance.now();
+    pausedSpawnRemainingMs = spawnTimer
+        ? Math.max(0, spawnDeadline - now)
+        : null;
+    pausedRetreatRemainingMs = retreatTimer
+        ? Math.max(0, retreatDeadline - now)
+        : null;
+
+    if (spawnTimer) clearTimeout(spawnTimer);
+    if (retreatTimer) clearTimeout(retreatTimer);
+    spawnTimer = undefined;
+    retreatTimer = undefined;
+    spawnDeadline = 0;
+    retreatDeadline = 0;
+
+    if (hamsterTimeline?.isActive()) {
+        hamsterTimeline.pause();
+        hamsterTimelinePausedByHelp = true;
+    }
+
+    howToPlayOpen.value = true;
+    liveMessage.value = "Game paused while the instructions are open.";
+}
+
+async function closeHowToPlay() {
+    if (!howToPlayOpen.value) return;
+
+    const spawnDelay = pausedSpawnRemainingMs;
+    const retreatDelay = pausedRetreatRemainingMs;
+    const resumeTimeline = hamsterTimelinePausedByHelp;
+
+    howToPlayOpen.value = false;
+    pausedSpawnRemainingMs = null;
+    pausedRetreatRemainingMs = null;
+    hamsterTimelinePausedByHelp = false;
+
+    if (resumeTimeline) hamsterTimeline?.resume();
+
+    if (gamePhase.value === "running") {
+        if (activeHole.value !== null) {
+            if (!relaxedMode.value && retreatDelay !== null) {
+                scheduleRetreat(retreatDelay);
+            }
+        } else {
+            scheduleNextSpawn(spawnDelay ?? GAME_TUNING.firstSpawnDelayMs);
+        }
+        liveMessage.value = "Game resumed.";
+    } else {
+        liveMessage.value = "Instructions closed.";
+    }
+
+    await nextTick();
+    howToPlayButton.value?.focus();
+}
+
+function toggleHowToPlay() {
+    if (howToPlayOpen.value) void closeHowToPlay();
+    else openHowToPlay();
+}
+
+function handleSkipCodeKeydown(event: KeyboardEvent) {
+    const target = event.target;
+    if (
+        event.isComposing ||
+        event.repeat ||
+        event.ctrlKey ||
+        event.altKey ||
+        event.metaKey ||
+        event.key.length !== 1 ||
+        (target instanceof Element &&
+            target.closest(
+                "input, textarea, select, [contenteditable='true'], [role='textbox']",
+            ))
+    ) {
+        return;
+    }
+
+    const key = event.key.toLowerCase();
+    const candidate = `${skipCodeBuffer}${key}`;
+    skipCodeBuffer = SKIP_CODE.startsWith(candidate)
+        ? candidate
+        : key === SKIP_CODE[0]
+          ? key
+          : "";
+
+    if (skipCodeResetTimer) clearTimeout(skipCodeResetTimer);
+    skipCodeResetTimer = setTimeout(() => {
+        skipCodeBuffer = "";
+        skipCodeResetTimer = undefined;
+    }, SKIP_CODE_RESET_MS);
+
+    if (skipCodeBuffer === SKIP_CODE) skipGame();
+}
+
+watch(relaxedMode, (enabled) => {
+    if (enabled) {
+        if (retreatTimer) clearTimeout(retreatTimer);
+        retreatTimer = undefined;
+        retreatDeadline = 0;
+        pausedRetreatRemainingMs = null;
+        liveMessage.value =
+            "Relaxed mode on. Targets stay visible until you strike them.";
+        return;
+    }
+
+    if (gamePhase.value === "running" && activeHole.value !== null) {
+        scheduleRetreat(getDifficultyTiming().visibleMs);
+    }
+    liveMessage.value =
+        "Relaxed mode off. Targets disappear after a short time.";
+});
 
 function flashLights() {
     const lights = lightElements.filter((element): element is SVGGElement =>
@@ -643,12 +849,15 @@ async function revealMember(memberId: string) {
 }
 
 function hitActiveHamster() {
+    if (howToPlayOpen.value) return;
+
     const holeIndex = activeHole.value;
     const memberId = activeMemberId.value;
     if (holeIndex === null || !memberId) return;
 
     if (retreatTimer) clearTimeout(retreatTimer);
     retreatTimer = undefined;
+    retreatDeadline = 0;
 
     const responseMs = performance.now() - spawnStartedAt;
     averageResponseMs =
@@ -842,10 +1051,12 @@ function clientPointToSvg(clientX: number, clientY: number): Point {
 }
 
 function handlePointerMove(event: PointerEvent) {
-    if (event.pointerType === "touch") return;
+    if (event.pointerType === "touch" || howToPlayOpen.value) return;
     if (
         event.target instanceof Element &&
-        event.target.closest("[data-start-control], [data-panel-nav]")
+        event.target.closest(
+            "[data-start-control], [data-panel-nav], [data-arcade-control]",
+        )
     ) {
         return;
     }
@@ -870,11 +1081,13 @@ function handleGamePointerDown(event: PointerEvent) {
     const target = event.target;
     if (
         target instanceof Element &&
-        target.closest("[data-start-control], [data-panel-nav]")
+        target.closest(
+            "[data-start-control], [data-panel-nav], [data-arcade-control]",
+        )
     ) {
         return;
     }
-    if (gamePhase.value !== "running") return;
+    if (gamePhase.value !== "running" || howToPlayOpen.value) return;
     turnHadIntent = true;
 
     const svgPoint = clientPointToSvg(event.clientX, event.clientY);
@@ -899,7 +1112,12 @@ function handleGamePointerDown(event: PointerEvent) {
 }
 
 function strikeHole(holeIndex: number) {
-    if (gamePhase.value !== "running" || !gameStage.value || !hammer.value)
+    if (
+        gamePhase.value !== "running" ||
+        howToPlayOpen.value ||
+        !gameStage.value ||
+        !hammer.value
+    )
         return;
 
     turnHadIntent = true;
@@ -997,6 +1215,7 @@ function switchMobilePanel(panel: "game" | "members") {
 }
 
 onMounted(async () => {
+    window.addEventListener("keydown", handleSkipCodeKeydown);
     restoreUnlocks();
     await nextTick();
     if (!arcadeRoot.value || !gameStage.value || !hammer.value) return;
@@ -1011,6 +1230,7 @@ onMounted(async () => {
             reducedMotion.value = Boolean(context.conditions?.reduceMotion);
             const nextPortrait = Boolean(context.conditions?.portrait);
             if (nextPortrait !== isPortrait.value) {
+                if (howToPlayOpen.value) void closeHowToPlay();
                 isPortrait.value = nextPortrait;
                 activeMobilePanel.value = "game";
                 panelSlideTimeline?.kill();
@@ -1086,6 +1306,8 @@ onMounted(async () => {
 
 onBeforeUnmount(() => {
     clearGameTimers();
+    if (skipCodeResetTimer) clearTimeout(skipCodeResetTimer);
+    window.removeEventListener("keydown", handleSkipCodeKeydown);
     resizeObserver?.disconnect();
     if (galleryTicker) gsap.ticker.remove(galleryTicker);
     galleryLenis?.destroy();
@@ -1115,331 +1337,466 @@ onBeforeUnmount(() => {
                 :inert="isPortrait && activeMobilePanel !== 'game'"
             >
                 <div
-                    ref="gameStage"
-                    class="game-stage"
-                    :class="{ 'is-running': gamePhase === 'running' }"
-                    @pointermove="handlePointerMove"
-                    @pointerdown="handleGamePointerDown"
+                    class="game-cabinet"
+                    :class="{ 'is-help-open': howToPlayOpen }"
+                    @keydown.esc.stop="closeHowToPlay"
                 >
-                    <svg
-                        class="block h-full w-full"
-                        viewBox="0 0 700 900"
-                        role="group"
-                        aria-labelledby="machine-title machine-description"
+                    <div
+                        ref="gameStage"
+                        class="game-stage"
+                        :class="{ 'is-running': gamePhase === 'running' }"
+                        :inert="howToPlayOpen"
+                        @pointermove="handlePointerMove"
+                        @pointerdown="handleGamePointerDown"
                     >
-                        <title id="machine-title">Members reveal game</title>
-                        <desc id="machine-description">
-                            Select READY, then strike the hamster when it
-                            appears in one of six holes to reveal a member
-                            character.
-                        </desc>
-
-                        <defs>
-                            <linearGradient
-                                id="machine-body-gradient"
-                                x1="0"
-                                y1="0"
-                                x2="0"
-                                y2="1"
-                            >
-                                <stop
-                                    offset="0"
-                                    stop-color="var(--machine-shell-top)"
-                                />
-                                <stop
-                                    offset="1"
-                                    stop-color="var(--machine-shell-bottom)"
-                                />
-                            </linearGradient>
-                            <linearGradient
-                                id="playfield-gradient"
-                                x1="0"
-                                y1="0"
-                                x2="0"
-                                y2="1"
-                            >
-                                <stop
-                                    offset="0"
-                                    stop-color="var(--playfield-top)"
-                                />
-                                <stop
-                                    offset="1"
-                                    stop-color="var(--playfield-bottom)"
-                                />
-                            </linearGradient>
-                            <linearGradient
-                                id="hole-gradient"
-                                x1="0"
-                                y1="0"
-                                x2="0"
-                                y2="1"
-                            >
-                                <stop offset="0" stop-color="#d57924" />
-                                <stop offset="0.6" stop-color="#ffa641" />
-                                <stop offset="1" stop-color="#ffd05b" />
-                            </linearGradient>
-                            <filter
-                                id="lamp-glow"
-                                x="-160%"
-                                y="-160%"
-                                width="420%"
-                                height="420%"
-                                color-interpolation-filters="sRGB"
-                            >
-                                <feGaussianBlur
-                                    in="SourceAlpha"
-                                    stdDeviation="8"
-                                    result="blur"
-                                />
-                                <feFlood
-                                    flood-color="#ffe58a"
-                                    flood-opacity="0.95"
-                                    result="glow-color"
-                                />
-                                <feComposite
-                                    in="glow-color"
-                                    in2="blur"
-                                    operator="in"
-                                    result="soft-glow"
-                                />
-                                <feMerge>
-                                    <feMergeNode in="soft-glow" />
-                                    <feMergeNode in="SourceGraphic" />
-                                </feMerge>
-                            </filter>
-                            <filter
-                                id="screen-soft-glow"
-                                x="-20%"
-                                y="-80%"
-                                width="140%"
-                                height="260%"
-                            >
-                                <feGaussianBlur
-                                    in="SourceGraphic"
-                                    stdDeviation="3"
-                                    result="soft"
-                                />
-                                <feMerge>
-                                    <feMergeNode in="soft" />
-                                    <feMergeNode in="SourceGraphic" />
-                                </feMerge>
-                            </filter>
-                            <clipPath
-                                v-for="(hole, index) in HOLE_POSITIONS"
-                                :id="`hamster-clip-${index}`"
-                                :key="`clip-${index}`"
-                            >
-                                <path
-                                    :d="`M ${hole.x - GAME_TUNING.hamsterClipHalfWidth} ${hole.y - GAME_TUNING.hamsterClipTopOffset} H ${hole.x + GAME_TUNING.hamsterClipHalfWidth} V ${hole.y + 3} H ${hole.x + 105} Q ${hole.x} ${hole.y + 74} ${hole.x - 105} ${hole.y + 3} H ${hole.x - GAME_TUNING.hamsterClipHalfWidth} Z`"
-                                />
-                            </clipPath>
-                        </defs>
-
-                        <rect
-                            x="9"
-                            y="8"
-                            width="682"
-                            height="884"
-                            rx="48"
-                            fill="url(#machine-body-gradient)"
-                            stroke="var(--machine-edge)"
-                            stroke-width="3"
-                        />
-                        <rect
-                            class="machine-rim"
-                            x="30"
-                            y="25"
-                            width="640"
-                            height="850"
-                            rx="38"
-                            fill="var(--machine-rim)"
-                        />
-
-                        <g
-                            class="start-control outline-none"
-                            :class="`is-${gamePhase}`"
-                            data-start-control
-                            role="button"
-                            :tabindex="startControlEnabled ? 0 : -1"
-                            :aria-label="startControlLabel"
-                            :aria-disabled="!startControlEnabled"
-                            @click.stop="startGame"
-                            @keydown.enter.stop.prevent="startGame"
-                            @keydown.space.stop.prevent="startGame"
+                        <svg
+                            class="block h-full w-full"
+                            viewBox="0 0 700 900"
+                            role="group"
+                            aria-labelledby="machine-title machine-description"
                         >
-                            <rect
-                                class="marquee-panel"
-                                x="43"
-                                y="35"
-                                width="614"
-                                height="224"
-                                rx="37"
-                                fill="#0f4296"
-                                stroke="transparent"
-                                stroke-width="7"
-                            />
-                            <rect
-                                class="marquee-action"
-                                x="158"
-                                y="78"
-                                width="384"
-                                height="128"
-                                rx="28"
-                            />
-                            <text
-                                x="350"
-                                :y="gamePhase === 'ready' ? 128 : 142"
-                                class="marquee-text"
-                                text-anchor="middle"
-                                dominant-baseline="middle"
-                            >
-                                {{ marqueeLabel }}
-                            </text>
-                            <text
-                                v-if="gamePhase === 'ready'"
-                                x="350"
-                                y="174"
-                                class="marquee-hint"
-                                text-anchor="middle"
-                            >
-                                PRESS TO START
-                            </text>
-                        </g>
+                            <title id="machine-title">
+                                Members reveal game
+                            </title>
+                            <desc id="machine-description">
+                                Select READY, then strike the hamster when it
+                                appears in one of six holes to reveal a member
+                                character.
+                            </desc>
 
-                        <g
-                            v-for="(light, index) in LIGHT_POSITIONS"
-                            :key="`light-${index}`"
-                            :ref="(element) => setLightRef(element, index)"
-                            class="machine-light"
-                        >
-                            <circle
-                                class="light-halo"
-                                :cx="light.x"
-                                :cy="light.y"
-                                r="22"
-                                fill="#ffdd69"
-                                filter="url(#lamp-glow)"
-                            />
-                            <circle
-                                :cx="light.x"
-                                :cy="light.y"
-                                r="18"
-                                fill="#ffdc68"
-                            />
-                            <circle
-                                :cx="light.x - 5"
-                                :cy="light.y - 6"
-                                r="5"
-                                fill="#fff4bf"
-                                opacity="0.9"
-                            />
-                        </g>
-
-                        <rect
-                            x="43"
-                            y="278"
-                            width="614"
-                            height="588"
-                            rx="40"
-                            fill="url(#playfield-gradient)"
-                        />
-                        <rect
-                            x="179"
-                            y="311"
-                            width="342"
-                            height="77"
-                            rx="8"
-                            fill="#0d3999"
-                            stroke="#2655bd"
-                            stroke-width="3"
-                        />
-                        <text
-                            x="350"
-                            y="366"
-                            class="counter-text"
-                            text-anchor="middle"
-                            filter="url(#screen-soft-glow)"
-                        >
-                            {{ revealCounter }}
-                        </text>
-
-                        <g
-                            v-for="(hole, index) in HOLE_POSITIONS"
-                            :key="`hole-${index}`"
-                            class="hole-control outline-none"
-                            role="button"
-                            tabindex="0"
-                            :aria-label="`Strike hole ${index + 1}`"
-                            @keydown.enter.stop.prevent="strikeHole(index)"
-                            @keydown.space.stop.prevent="strikeHole(index)"
-                        >
-                            <ellipse
-                                :cx="hole.x"
-                                :cy="hole.y"
-                                rx="112"
-                                ry="46"
-                                fill="url(#hole-gradient)"
-                                stroke="#ffd55e"
-                                stroke-width="7"
-                            />
-                            <g :clip-path="`url(#hamster-clip-${index})`">
-                                <g
-                                    :ref="
-                                        (element) =>
-                                            setHamsterRef(element, index)
-                                    "
-                                    class="hamster-sprite"
+                            <defs>
+                                <linearGradient
+                                    id="machine-body-gradient"
+                                    x1="0"
+                                    y1="0"
+                                    x2="0"
+                                    y2="1"
                                 >
-                                    <image
-                                        :href="hamsterUrl"
-                                        :x="
-                                            hole.x -
-                                            GAME_TUNING.hamsterSize / 2 +
-                                            GAME_TUNING.hamsterOffsetX
-                                        "
-                                        :y="
-                                            hole.y -
-                                            GAME_TUNING.hamsterSize +
-                                            GAME_TUNING.hamsterOffsetY
-                                        "
-                                        :width="GAME_TUNING.hamsterSize"
-                                        :height="GAME_TUNING.hamsterSize"
-                                        preserveAspectRatio="xMidYMid meet"
+                                    <stop
+                                        offset="0"
+                                        stop-color="var(--machine-shell-top)"
                                     />
-                                </g>
-                            </g>
-                            <path
-                                :d="`M ${hole.x - 105} ${hole.y + 3} Q ${hole.x} ${hole.y + 74} ${hole.x + 105} ${hole.y + 3} Q ${hole.x} ${hole.y + 44} ${hole.x - 105} ${hole.y + 3} Z`"
-                                fill="#ffb347"
-                                opacity="0.96"
+                                    <stop
+                                        offset="1"
+                                        stop-color="var(--machine-shell-bottom)"
+                                    />
+                                </linearGradient>
+                                <linearGradient
+                                    id="playfield-gradient"
+                                    x1="0"
+                                    y1="0"
+                                    x2="0"
+                                    y2="1"
+                                >
+                                    <stop
+                                        offset="0"
+                                        stop-color="var(--playfield-top)"
+                                    />
+                                    <stop
+                                        offset="1"
+                                        stop-color="var(--playfield-bottom)"
+                                    />
+                                </linearGradient>
+                                <linearGradient
+                                    id="hole-gradient"
+                                    x1="0"
+                                    y1="0"
+                                    x2="0"
+                                    y2="1"
+                                >
+                                    <stop offset="0" stop-color="#d57924" />
+                                    <stop offset="0.6" stop-color="#ffa641" />
+                                    <stop offset="1" stop-color="#ffd05b" />
+                                </linearGradient>
+                                <filter
+                                    id="lamp-glow"
+                                    x="-160%"
+                                    y="-160%"
+                                    width="420%"
+                                    height="420%"
+                                    color-interpolation-filters="sRGB"
+                                >
+                                    <feGaussianBlur
+                                        in="SourceAlpha"
+                                        stdDeviation="8"
+                                        result="blur"
+                                    />
+                                    <feFlood
+                                        flood-color="#ffe58a"
+                                        flood-opacity="0.95"
+                                        result="glow-color"
+                                    />
+                                    <feComposite
+                                        in="glow-color"
+                                        in2="blur"
+                                        operator="in"
+                                        result="soft-glow"
+                                    />
+                                    <feMerge>
+                                        <feMergeNode in="soft-glow" />
+                                        <feMergeNode in="SourceGraphic" />
+                                    </feMerge>
+                                </filter>
+                                <filter
+                                    id="screen-soft-glow"
+                                    x="-20%"
+                                    y="-80%"
+                                    width="140%"
+                                    height="260%"
+                                >
+                                    <feGaussianBlur
+                                        in="SourceGraphic"
+                                        stdDeviation="3"
+                                        result="soft"
+                                    />
+                                    <feMerge>
+                                        <feMergeNode in="soft" />
+                                        <feMergeNode in="SourceGraphic" />
+                                    </feMerge>
+                                </filter>
+                                <clipPath
+                                    v-for="(hole, index) in HOLE_POSITIONS"
+                                    :id="`hamster-clip-${index}`"
+                                    :key="`clip-${index}`"
+                                >
+                                    <path
+                                        :d="`M ${hole.x - GAME_TUNING.hamsterClipHalfWidth} ${hole.y - GAME_TUNING.hamsterClipTopOffset} H ${hole.x + GAME_TUNING.hamsterClipHalfWidth} V ${hole.y + 3} H ${hole.x + 105} Q ${hole.x} ${hole.y + 74} ${hole.x - 105} ${hole.y + 3} H ${hole.x - GAME_TUNING.hamsterClipHalfWidth} Z`"
+                                    />
+                                </clipPath>
+                            </defs>
+
+                            <rect
+                                x="9"
+                                y="8"
+                                width="682"
+                                height="884"
+                                rx="48"
+                                fill="url(#machine-body-gradient)"
+                                stroke="var(--machine-edge)"
+                                stroke-width="3"
                             />
                             <rect
-                                class="hole-focus"
-                                :x="hole.x - 120"
-                                :y="hole.y - 138"
-                                width="240"
-                                height="192"
-                                rx="42"
-                                fill="transparent"
-                                stroke="#ffffff"
-                                stroke-width="5"
+                                class="machine-rim"
+                                x="30"
+                                y="25"
+                                width="640"
+                                height="850"
+                                rx="38"
+                                fill="var(--machine-rim)"
                             />
-                        </g>
-                    </svg>
 
-                    <img
-                        ref="hammer"
-                        :src="hammerUrl"
-                        alt=""
-                        class="hammer"
-                        aria-hidden="true"
-                        draggable="false"
-                    />
+                            <g
+                                class="start-control outline-none"
+                                :class="`is-${gamePhase}`"
+                                data-start-control
+                                role="button"
+                                :tabindex="startControlEnabled ? 0 : -1"
+                                :aria-label="startControlLabel"
+                                :aria-disabled="!startControlEnabled"
+                                @click.stop="startGame"
+                                @keydown.enter.stop.prevent="startGame"
+                                @keydown.space.stop.prevent="startGame"
+                            >
+                                <rect
+                                    class="marquee-panel"
+                                    x="43"
+                                    y="35"
+                                    width="614"
+                                    height="224"
+                                    rx="37"
+                                    fill="#0f4296"
+                                    stroke="transparent"
+                                    stroke-width="7"
+                                />
+                                <rect
+                                    class="marquee-action"
+                                    x="158"
+                                    y="78"
+                                    width="384"
+                                    height="128"
+                                    rx="28"
+                                />
+                                <text
+                                    x="350"
+                                    :y="gamePhase === 'ready' ? 128 : 142"
+                                    class="marquee-text"
+                                    text-anchor="middle"
+                                    dominant-baseline="middle"
+                                >
+                                    {{ marqueeLabel }}
+                                </text>
+                                <text
+                                    v-if="gamePhase === 'ready'"
+                                    x="350"
+                                    y="174"
+                                    class="marquee-hint"
+                                    text-anchor="middle"
+                                >
+                                    PRESS TO START
+                                </text>
+                            </g>
 
-                    <output class="sr-only" aria-live="polite">
-                        {{ revealCounter }} members revealed.
-                    </output>
-                    <p class="sr-only" aria-live="polite">{{ liveMessage }}</p>
+                            <g
+                                v-for="(light, index) in LIGHT_POSITIONS"
+                                :key="`light-${index}`"
+                                :ref="(element) => setLightRef(element, index)"
+                                class="machine-light"
+                            >
+                                <circle
+                                    class="light-halo"
+                                    :cx="light.x"
+                                    :cy="light.y"
+                                    r="22"
+                                    fill="#ffdd69"
+                                    filter="url(#lamp-glow)"
+                                />
+                                <circle
+                                    :cx="light.x"
+                                    :cy="light.y"
+                                    r="18"
+                                    fill="#ffdc68"
+                                />
+                                <circle
+                                    :cx="light.x - 5"
+                                    :cy="light.y - 6"
+                                    r="5"
+                                    fill="#fff4bf"
+                                    opacity="0.9"
+                                />
+                            </g>
+
+                            <rect
+                                x="43"
+                                y="278"
+                                width="614"
+                                height="588"
+                                rx="40"
+                                fill="url(#playfield-gradient)"
+                            />
+                            <rect
+                                x="179"
+                                y="311"
+                                width="342"
+                                height="77"
+                                rx="8"
+                                fill="#0d3999"
+                                stroke="#2655bd"
+                                stroke-width="3"
+                            />
+                            <text
+                                x="350"
+                                y="366"
+                                class="counter-text"
+                                text-anchor="middle"
+                                filter="url(#screen-soft-glow)"
+                            >
+                                {{ revealCounter }}
+                            </text>
+
+                            <g
+                                v-for="(hole, index) in HOLE_POSITIONS"
+                                :key="`hole-${index}`"
+                                class="hole-control outline-none"
+                                role="button"
+                                tabindex="0"
+                                :aria-label="`Strike hole ${index + 1}`"
+                                @keydown.enter.stop.prevent="strikeHole(index)"
+                                @keydown.space.stop.prevent="strikeHole(index)"
+                            >
+                                <ellipse
+                                    :cx="hole.x"
+                                    :cy="hole.y"
+                                    rx="112"
+                                    ry="46"
+                                    fill="url(#hole-gradient)"
+                                    stroke="#ffd55e"
+                                    stroke-width="7"
+                                />
+                                <g :clip-path="`url(#hamster-clip-${index})`">
+                                    <g
+                                        :ref="
+                                            (element) =>
+                                                setHamsterRef(element, index)
+                                        "
+                                        class="hamster-sprite"
+                                    >
+                                        <image
+                                            :href="hamsterUrl"
+                                            :x="
+                                                hole.x -
+                                                GAME_TUNING.hamsterSize / 2 +
+                                                GAME_TUNING.hamsterOffsetX
+                                            "
+                                            :y="
+                                                hole.y -
+                                                GAME_TUNING.hamsterSize +
+                                                GAME_TUNING.hamsterOffsetY
+                                            "
+                                            :width="GAME_TUNING.hamsterSize"
+                                            :height="GAME_TUNING.hamsterSize"
+                                            preserveAspectRatio="xMidYMid meet"
+                                        />
+                                    </g>
+                                </g>
+                                <path
+                                    :d="`M ${hole.x - 105} ${hole.y + 3} Q ${hole.x} ${hole.y + 74} ${hole.x + 105} ${hole.y + 3} Q ${hole.x} ${hole.y + 44} ${hole.x - 105} ${hole.y + 3} Z`"
+                                    fill="#ffb347"
+                                    opacity="0.96"
+                                />
+                                <rect
+                                    class="hole-focus"
+                                    :x="hole.x - 120"
+                                    :y="hole.y - 138"
+                                    width="240"
+                                    height="192"
+                                    rx="42"
+                                    fill="transparent"
+                                    stroke="#ffffff"
+                                    stroke-width="5"
+                                />
+                            </g>
+                        </svg>
+
+                        <img
+                            ref="hammer"
+                            :src="hammerUrl"
+                            alt=""
+                            class="hammer"
+                            aria-hidden="true"
+                            draggable="false"
+                        />
+
+                        <output class="sr-only" aria-live="polite">
+                            {{ revealCounter }} members revealed.
+                        </output>
+                        <p class="sr-only" aria-live="polite">
+                            {{ liveMessage }}
+                        </p>
+                    </div>
+
+                    <div class="arcade-console" data-arcade-control>
+                        <div class="control-deck-bar">
+                            <div class="relaxed-mode-control">
+                                <div class="relaxed-mode-copy">
+                                    <span id="relaxed-mode-label"
+                                        >Relaxed mode</span
+                                    >
+                                    <small id="relaxed-mode-description"
+                                        >No time limit</small
+                                    >
+                                </div>
+
+                                <SwitchRoot
+                                    v-model="relaxedMode"
+                                    class="relaxed-mode-switch"
+                                    aria-labelledby="relaxed-mode-label"
+                                    aria-describedby="relaxed-mode-description"
+                                    title="Relaxed mode: targets stay visible until hit"
+                                >
+                                    <SwitchThumb class="relaxed-mode-thumb">
+                                        <Icon
+                                            :icon="
+                                                relaxedMode
+                                                    ? 'lucide:infinity'
+                                                    : 'lucide:timer'
+                                            "
+                                            class="size-3.5"
+                                            aria-hidden="true"
+                                        />
+                                    </SwitchThumb>
+                                </SwitchRoot>
+                            </div>
+
+                            <button
+                                ref="howToPlayButton"
+                                type="button"
+                                class="how-to-play-toggle"
+                                :aria-expanded="howToPlayOpen"
+                                aria-controls="arcade-how-to-play"
+                                @click="toggleHowToPlay"
+                            >
+                                <Icon
+                                    icon="lucide:book-open"
+                                    class="control-icon"
+                                    aria-hidden="true"
+                                />
+                                <span>How to play</span>
+                                <Icon
+                                    icon="lucide:chevron-down"
+                                    class="how-to-play-chevron"
+                                    aria-hidden="true"
+                                />
+                            </button>
+                        </div>
+
+                        <Transition name="control-drawer">
+                            <section
+                                v-if="howToPlayOpen"
+                                id="arcade-how-to-play"
+                                class="how-to-play"
+                                aria-labelledby="arcade-how-to-play-title"
+                            >
+                                <div class="how-to-play-copy">
+                                    <h2 id="arcade-how-to-play-title">
+                                        How to play
+                                    </h2>
+                                    <ol>
+                                        <li>
+                                            <span
+                                                class="instruction-step"
+                                                aria-hidden="true"
+                                                >1</span
+                                            >
+                                            <span class="instruction-copy"
+                                                >Press <strong>READY</strong> to
+                                                start.</span
+                                            >
+                                        </li>
+                                        <li>
+                                            <span
+                                                class="instruction-step"
+                                                aria-hidden="true"
+                                                >2</span
+                                            >
+                                            <span class="instruction-copy"
+                                                >Strike the hamster when it
+                                                appears.</span
+                                            >
+                                        </li>
+                                        <li>
+                                            <span
+                                                class="instruction-step"
+                                                aria-hidden="true"
+                                                >3</span
+                                            >
+                                            <span class="instruction-copy"
+                                                >Reveal every member to complete
+                                                the collection.</span
+                                            >
+                                        </li>
+                                    </ol>
+                                    <p class="skip-shortcut">
+                                        <span>Skip shortcut</span>
+                                        Type <kbd>expelliodor</kbd> anywhere
+                                        outside a text field.
+                                    </p>
+                                </div>
+
+                                <button
+                                    type="button"
+                                    class="reveal-all-button"
+                                    :disabled="revealedCount >= members.length"
+                                    @click="skipGame"
+                                >
+                                    <Icon
+                                        icon="lucide:users"
+                                        aria-hidden="true"
+                                    />
+                                    <span>Reveal everyone</span>
+                                </button>
+                            </section>
+                        </Transition>
+                    </div>
                 </div>
 
                 <button
@@ -1619,14 +1976,13 @@ onBeforeUnmount(() => {
                                     </span>
                                     <span
                                         class="token-name min-h-[1em] overflow-hidden text-center text-ellipsis whitespace-nowrap"
-                                    >{{ member.displayedName }}</span
+                                        >{{ member.displayedName }}</span
                                     >
                                 </button>
                                 <span
                                     class="token-selection-indicator"
                                     :class="{
-                                        'is-visible':
-                                            selectionIndicatorVisible,
+                                        'is-visible': selectionIndicatorVisible,
                                     }"
                                     :style="selectionIndicatorStyle"
                                     aria-hidden="true"
@@ -2293,9 +2649,331 @@ onBeforeUnmount(() => {
     min-height: 0;
 }
 
+.game-panel {
+    grid-template-rows: minmax(0, 1fr);
+    align-content: center;
+}
+
+.game-cabinet {
+    position: relative;
+    display: grid;
+    grid-template-rows: auto auto;
+    width: min(100%, calc((100svh - 12.25rem) * 7 / 9));
+    min-width: 0;
+    align-self: center;
+    justify-self: center;
+}
+
 .game-stage {
-    width: min(100%, calc((100svh - 6.8rem) * 7 / 9));
+    width: 100%;
     max-height: 100%;
+    transition:
+        filter 180ms ease,
+        opacity 180ms ease;
+}
+
+.game-cabinet.is-help-open .game-stage {
+    filter: saturate(0.72) brightness(0.84);
+    opacity: 0.82;
+}
+
+.arcade-console {
+    position: relative;
+    z-index: 9;
+    width: 100%;
+    box-sizing: border-box;
+    margin-top: clamp(-0.8rem, -1vw, -0.45rem);
+    padding: clamp(0.55rem, 1.1vw, 0.75rem) clamp(0.65rem, 1.4vw, 0.95rem);
+    border: 0.18rem solid var(--machine-edge);
+    border-radius: clamp(0.65rem, 1.2vw, 0.9rem) clamp(0.65rem, 1.2vw, 0.9rem)
+        clamp(1rem, 1.8vw, 1.35rem) clamp(1rem, 1.8vw, 1.35rem);
+    background:
+        linear-gradient(180deg, rgb(255 255 255 / 0.1), transparent 42%),
+        var(--marquee-panel);
+    box-shadow:
+        inset 0 0.12rem 0 rgb(255 255 255 / 0.22),
+        0 0.65rem 1rem rgb(2 27 66 / 0.24);
+    color: #fffef1;
+}
+
+.control-deck-bar {
+    display: grid;
+    grid-template-columns: minmax(9.5rem, 1fr) minmax(9rem, 0.86fr);
+    gap: clamp(0.55rem, 1.2vw, 0.85rem);
+    align-items: stretch;
+}
+
+.relaxed-mode-control {
+    display: flex;
+    min-width: 0;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.65rem;
+    padding-right: clamp(0.55rem, 1.2vw, 0.85rem);
+    border-right: 0.12rem solid rgb(255 255 255 / 0.28);
+}
+
+.relaxed-mode-copy {
+    display: grid;
+    min-width: 0;
+    gap: 0.05rem;
+}
+
+.relaxed-mode-copy > span,
+.how-to-play-toggle,
+.how-to-play h2 {
+    font-family: "Righteous", sans-serif;
+    font-size: clamp(0.78rem, 1.05vw, 0.95rem);
+    line-height: 1.1;
+    letter-spacing: 0.025em;
+}
+
+.relaxed-mode-copy small {
+    font-family: "Belanosima", sans-serif;
+    font-size: clamp(0.68rem, 0.9vw, 0.8rem);
+    color: #cfe8ff;
+}
+
+.relaxed-mode-switch {
+    display: flex;
+    width: 3.5rem;
+    height: 2rem;
+    flex: 0 0 auto;
+    align-items: center;
+    box-sizing: border-box;
+    padding: 0.25rem;
+    border: 0.12rem solid rgb(255 255 255 / 0.72);
+    border-radius: 999px;
+    background: #0d3999;
+    box-shadow: inset 0 0.16rem 0.3rem rgb(2 27 66 / 0.34);
+    cursor: pointer;
+    transition:
+        background-color 180ms ease,
+        border-color 180ms ease,
+        transform 180ms ease;
+}
+
+.relaxed-mode-switch:hover {
+    transform: scale(1.05);
+}
+
+.relaxed-mode-switch:focus-visible {
+    outline: 0.2rem solid #ffdf68;
+    outline-offset: 0.18rem;
+}
+
+.relaxed-mode-switch[data-state="checked"] {
+    border-color: #fff5bd;
+    background: #ffca50;
+}
+
+.relaxed-mode-thumb {
+    display: flex;
+    width: 1.25rem;
+    height: 1.25rem;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: #fffef1;
+    box-shadow: 0 0.12rem 0.25rem rgb(2 27 66 / 0.28);
+    color: #173e79;
+    transition:
+        color 180ms ease,
+        background-color 180ms ease,
+        transform 200ms ease;
+    will-change: transform;
+}
+
+.relaxed-mode-thumb[data-state="checked"] {
+    background: #173e79;
+    color: #ffdf68;
+    transform: translateX(1.5rem);
+}
+
+.how-to-play-toggle {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    min-height: 2.75rem;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.45rem 0.65rem;
+    border: 0.12rem solid rgb(255 255 255 / 0.5);
+    border-radius: 0.65rem;
+    background: rgb(8 42 111 / 0.54);
+    color: #fffef1;
+    text-align: left;
+    cursor: pointer;
+    transition:
+        border-color 180ms ease,
+        background-color 180ms ease,
+        transform 180ms ease;
+}
+
+.how-to-play-toggle:hover,
+.how-to-play-toggle[aria-expanded="true"] {
+    border-color: #ffdf68;
+    background: rgb(8 42 111 / 0.86);
+}
+
+.how-to-play-toggle:hover {
+    transform: translateY(-0.08rem);
+}
+
+.how-to-play-toggle:focus-visible,
+.reveal-all-button:focus-visible {
+    outline: 0.2rem solid #ffdf68;
+    outline-offset: 0.18rem;
+}
+
+.control-icon,
+.how-to-play-chevron {
+    width: 1rem;
+    height: 1rem;
+    flex: 0 0 auto;
+}
+
+.how-to-play-chevron {
+    transition: transform 180ms ease;
+}
+
+.how-to-play-toggle[aria-expanded="true"] .how-to-play-chevron {
+    transform: rotate(180deg);
+}
+
+.how-to-play {
+    position: absolute;
+    z-index: 12;
+    right: 0;
+    bottom: calc(100% + 0.4rem);
+    left: 0;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: clamp(0.75rem, 1.5vw, 1.1rem);
+    align-items: end;
+    min-width: 0;
+    max-height: min(21rem, calc(100svh - 12rem));
+    overflow: auto;
+    padding: clamp(0.85rem, 1.6vw, 1.15rem);
+    border: 0.18rem solid var(--machine-edge);
+    border-radius: clamp(0.85rem, 1.5vw, 1.1rem);
+    background: linear-gradient(
+        145deg,
+        rgb(34 91 173 / 0.98),
+        rgb(9 46 116 / 0.98)
+    );
+    box-shadow: 0 0.9rem 2rem rgb(2 27 66 / 0.38);
+    color: #fffef1;
+}
+
+.how-to-play h2,
+.how-to-play p,
+.how-to-play ol {
+    margin: 0;
+}
+
+.how-to-play ol {
+    display: grid;
+    gap: 0.4rem;
+    margin-top: 0.65rem;
+    padding: 0;
+    list-style: none;
+}
+
+.how-to-play li,
+.how-to-play p {
+    font-family: "Belanosima", sans-serif;
+    font-size: clamp(0.74rem, 0.9vw, 0.85rem);
+    line-height: 1.35;
+    color: #e9f5ff;
+}
+
+.how-to-play li {
+    display: grid;
+    grid-template-columns: 1.45rem minmax(0, 1fr);
+    gap: 0.48rem;
+    align-items: center;
+}
+
+.instruction-step {
+    display: grid;
+    width: 1.45rem;
+    aspect-ratio: 1;
+    place-items: center;
+    border: 0.08rem solid rgb(255 255 255 / 0.62);
+    border-radius: 50%;
+    background: #ffca50;
+    color: #173e79;
+    font-family: "Righteous", sans-serif;
+    font-size: 0.72rem;
+}
+
+.instruction-copy {
+    min-width: 0;
+}
+
+.skip-shortcut {
+    margin-top: 0.7rem !important;
+    padding-top: 0.6rem;
+    border-top: 0.08rem solid rgb(255 255 255 / 0.22);
+}
+
+.skip-shortcut > span {
+    margin-right: 0.35rem;
+    color: #ffdf68;
+    font-family: "Righteous", sans-serif;
+}
+
+.how-to-play kbd {
+    display: inline-block;
+    margin-inline: 0.12rem;
+    padding: 0.05rem 0.3rem 0.1rem;
+    border: 0.08rem solid rgb(255 255 255 / 0.68);
+    border-radius: 0.3rem;
+    background: rgb(8 42 111 / 0.74);
+    color: #ffdf68;
+    font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+    font-size: 0.92em;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+}
+
+.reveal-all-button {
+    display: inline-flex;
+    min-height: 2.75rem;
+    align-items: center;
+    justify-content: center;
+    gap: 0.45rem;
+    padding: 0.6rem 0.8rem;
+    border: 0.12rem solid #fff5bd;
+    border-radius: 0.65rem;
+    background: #ffca50;
+    color: #173e79;
+    font-family: "Righteous", sans-serif;
+    font-size: clamp(0.72rem, 0.9vw, 0.84rem);
+    white-space: nowrap;
+    cursor: pointer;
+}
+
+.reveal-all-button:hover:not(:disabled) {
+    background: #ffdf68;
+}
+
+.reveal-all-button:disabled {
+    opacity: 0.58;
+    cursor: not-allowed;
+}
+
+.control-drawer-enter-active,
+.control-drawer-leave-active {
+    transition:
+        opacity 180ms ease,
+        transform 180ms ease;
+}
+
+.control-drawer-enter-from,
+.control-drawer-leave-to {
+    opacity: 0;
+    transform: translateY(0.55rem);
 }
 
 .machine-rim {
@@ -2501,11 +3179,29 @@ onBeforeUnmount(() => {
         place-items: center;
     }
 
-    .game-stage {
-        width: min(100%, calc((100svh - 6.2rem) * 7 / 9));
+    .game-cabinet {
+        width: min(100%, calc((100svh - 12.25rem) * 7 / 9));
         height: auto;
         max-width: 100%;
         max-height: 100%;
+    }
+
+    .game-stage {
+        width: 100%;
+    }
+
+    .control-deck-bar {
+        grid-template-columns: minmax(8.5rem, 1fr) minmax(8rem, 0.92fr);
+    }
+
+    .how-to-play {
+        grid-template-columns: 1fr;
+        gap: 0.75rem;
+        max-height: min(22rem, calc(100svh - 10rem));
+    }
+
+    .reveal-all-button {
+        width: 100%;
     }
 
     .members-showcase {
@@ -2578,6 +3274,15 @@ onBeforeUnmount(() => {
 @media (prefers-reduced-motion: reduce) {
     .start-control.is-ready .marquee-action {
         animation: none;
+    }
+    .game-stage,
+    .relaxed-mode-switch,
+    .relaxed-mode-thumb,
+    .how-to-play-toggle,
+    .how-to-play-chevron,
+    .control-drawer-enter-active,
+    .control-drawer-leave-active {
+        transition: none;
     }
     .gallery-viewport::before,
     .gallery-viewport::after,
