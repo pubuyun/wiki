@@ -6,6 +6,7 @@
   "ranking_score": 0.8447,
   "pLDDT(%)": 80.25,
   "i_pAE": 10.71,
+  "Binder scRMSD (CA)": 0.524074,
   "_interface_target_residues": 18,
   "_interface_binder_residues": 20,
   "_interface_atom_contacts": 449,

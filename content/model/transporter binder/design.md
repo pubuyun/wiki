@@ -821,7 +821,10 @@ if __name__ == "__main__":
     {"id": "start", "type": "start", "label": "Start"},
     {"id": "prepare", "type": "input", "label": "Validate inputs and discover RF3 models"},
     {"id": "select", "type": "loop", "label": "Select next sample"},
-    {"id": "evaluate", "type": "subprocess", "label": "Measure contacts, filter interface, and read metrics"},
+    {"id": "evaluate", "type": "subprocess", "label": "Measure contacts and read confidence metrics"},
+    {"id": "reference", "type": "document", "label": "Find the matching ProteinMPNN design structure"},
+    {"id": "scrmsd", "type": "process", "label": "Align binder C-alpha atoms and calculate Binder scRMSD (CA)"},
+    {"id": "passes", "type": "decision", "label": "Interface filters pass and Binder scRMSD < 2 Å?"},
     {"id": "more", "type": "decision", "label": "More samples?"},
     {"id": "score", "type": "process", "label": "Normalize metrics and score accepted samples"},
     {"id": "rank", "type": "process", "label": "Select best sample per prediction and rank top binders"},
@@ -832,7 +835,11 @@ if __name__ == "__main__":
     {"id": "start-prepare", "source": "start", "target": "prepare"},
     {"id": "prepare-select", "source": "prepare", "target": "select"},
     {"id": "select-evaluate", "source": "select", "target": "evaluate"},
-    {"id": "evaluate-more", "source": "evaluate", "target": "more"},
+    {"id": "evaluate-reference", "source": "evaluate", "target": "reference"},
+    {"id": "reference-scrmsd", "source": "reference", "target": "scrmsd"},
+    {"id": "scrmsd-passes", "source": "scrmsd", "target": "passes"},
+    {"id": "passes-yes", "source": "passes", "target": "more", "label": "Yes"},
+    {"id": "passes-no", "source": "passes", "target": "more", "label": "No: reject"},
     {"id": "more-yes", "source": "more", "target": "select", "label": "Yes", "type": "loop"},
     {"id": "more-no", "source": "more", "target": "score", "label": "No"},
     {"id": "score-rank", "source": "score", "target": "rank"},
@@ -841,6 +848,12 @@ if __name__ == "__main__":
   ]
 }
 ```
+
+For each RF3 sample, the workflow finds the matching ProteinMPNN design structure
+and superimposes the predicted binder onto the design using binder C-alpha atoms.
+The resulting `binder_scRMSD_ca` measures whether the binder backbone was
+preserved. A sample must satisfy `binder_scRMSD_ca < 2.0` Å in addition to the
+interface-contact filters before it is normalized, scored, and ranked.
 
 ```python [rank_rf3_binders.py]
 import argparse
@@ -876,6 +889,7 @@ class Candidate:
     sample: int | None
 
     model_path: Path
+    design_path: Path
     summary_path: Path
     ranking_path: Path
 
@@ -883,6 +897,7 @@ class Candidate:
     pae: float
     pae_source: str
     ranking_score: float
+    binder_scrmsd_ca: float
 
     interface_target_residues: int
     interface_binder_residues: int
@@ -907,6 +922,111 @@ def load_structure(path: Path):
         atoms = atoms[0]
 
     return atoms
+
+
+def binder_ca_coordinates(structure_path: Path, chain_id: str):
+    atoms = load_structure(structure_path)
+    chain_ids = atoms.chain_id.astype(str)
+    atom_names = np.char.strip(atoms.atom_name.astype(str))
+    mask = (
+        struc.filter_amino_acids(atoms)
+        & (chain_ids == chain_id)
+        & (atom_names == "CA")
+    )
+    coordinates = np.asarray(atoms.coord[mask], dtype=float)
+
+    if len(coordinates) < 3:
+        raise ValueError(
+            f"Fewer than three binder C-alpha atoms in chain "
+            f"{chain_id!r} of {structure_path}"
+        )
+
+    return coordinates
+
+
+def kabsch_transform(moving_coordinates, reference_coordinates):
+    if moving_coordinates.shape != reference_coordinates.shape:
+        raise ValueError(
+            "Predicted and design binders must contain the same "
+            "number of C-alpha atoms"
+        )
+
+    moving_center = moving_coordinates.mean(axis=0)
+    reference_center = reference_coordinates.mean(axis=0)
+    moving_centered = moving_coordinates - moving_center
+    reference_centered = reference_coordinates - reference_center
+
+    u_matrix, _, vt_matrix = np.linalg.svd(
+        moving_centered.T @ reference_centered
+    )
+    rotation = u_matrix @ vt_matrix
+
+    if np.linalg.det(rotation) < 0:
+        u_matrix[:, -1] *= -1
+        rotation = u_matrix @ vt_matrix
+
+    translation = reference_center - moving_center @ rotation
+    return rotation, translation
+
+
+def calculate_binder_scrmsd_ca(
+    model_path: Path,
+    design_path: Path,
+    model_binder_chain: str,
+    design_binder_chain: str,
+):
+    predicted = binder_ca_coordinates(
+        model_path,
+        model_binder_chain,
+    )
+    design = binder_ca_coordinates(
+        design_path,
+        design_binder_chain,
+    )
+    rotation, translation = kabsch_transform(predicted, design)
+    aligned = predicted @ rotation + translation
+    difference = aligned - design
+    return float(
+        np.sqrt(np.mean(np.sum(difference * difference, axis=1)))
+    )
+
+
+def design_structure_name(path: Path):
+    name = path.name
+    if name.lower().endswith(".cif.gz"):
+        return name[:-7]
+    return path.stem
+
+
+def index_design_structures(design_directory: Path):
+    structures = {}
+
+    for path in design_directory.rglob("*"):
+        lower_name = path.name.lower()
+        if not path.is_file() or not lower_name.endswith(
+            (".cif", ".cif.gz", ".pdb")
+        ):
+            continue
+
+        name = design_structure_name(path)
+        structures.setdefault(name, []).append(path)
+
+    return structures
+
+
+def find_design_structure(prediction_name: str, structures):
+    matches = structures.get(prediction_name, [])
+
+    if len(matches) == 1:
+        return matches[0]
+    if not matches:
+        raise FileNotFoundError(
+            f"No ProteinMPNN design structure found for {prediction_name}"
+        )
+    raise ValueError(
+        f"Multiple ProteinMPNN design structures found for {prediction_name}: "
+        + ", ".join(str(path) for path in matches)
+    )
 
 
 def protein_heavy_atoms(atoms):
@@ -1501,6 +1621,9 @@ def candidate_to_row(candidate: Candidate):
         "ranking_score": (
             f"{candidate.ranking_score:.6f}"
         ),
+        "binder_scRMSD_ca": (
+            f"{candidate.binder_scrmsd_ca:.6f}"
+        ),
         "plddt": f"{candidate.plddt:.6f}",
         "pae": f"{candidate.pae:.6f}",
         "pae_source": candidate.pae_source,
@@ -1529,6 +1652,7 @@ def candidate_to_row(candidate: Candidate):
             f"{candidate.desired_contact_fraction:.6f}"
         ),
         "model_path": str(candidate.model_path),
+        "design_path": str(candidate.design_path),
     }
 
 
@@ -1541,6 +1665,7 @@ def write_ranking_csv(path: Path, candidates):
         "sample",
         "weighted_score",
         "ranking_score",
+        "binder_scRMSD_ca",
         "plddt",
         "pae",
         "pae_source",
@@ -1553,6 +1678,7 @@ def write_ranking_csv(path: Path, candidates):
         "total_target_contact_residues",
         "desired_contact_fraction",
         "model_path",
+        "design_path",
     ]
 
     with path.open("w", newline="") as handle:
@@ -1586,6 +1712,7 @@ def json_candidate(candidate: Candidate):
 
     for key in [
         "model_path",
+        "design_path",
         "summary_path",
         "ranking_path",
     ]:
@@ -1612,12 +1739,28 @@ def main():
         default="./rf3_6EXS_top20",
     )
     parser.add_argument(
+        "--design-dir",
+        default="./mpnn_6EXS",
+        help="Directory containing the ProteinMPNN design structures",
+    )
+    parser.add_argument(
         "--target-chain",
         default="A",
     )
     parser.add_argument(
         "--binder-chain",
         default="B",
+    )
+    parser.add_argument(
+        "--design-binder-chain",
+        default="A",
+        help="Binder chain in the ProteinMPNN design structures",
+    )
+    parser.add_argument(
+        "--max-binder-scrmsd-ca",
+        type=float,
+        default=2.0,
+        help="Exclusive Binder scRMSD (CA) cutoff in angstroms",
     )
     parser.add_argument(
         "--contact-cutoff",
@@ -1677,10 +1820,26 @@ def main():
     output_directory = (
         Path(args.output_dir).expanduser().resolve()
     )
+    design_directory = (
+        Path(args.design_dir).expanduser().resolve()
+    )
 
     if not input_directory.is_dir():
         raise NotADirectoryError(
             f"Input directory not found: {input_directory}"
+        )
+
+    if not design_directory.is_dir():
+        raise NotADirectoryError(
+            f"ProteinMPNN design directory not found: {design_directory}"
+        )
+
+    design_structures = index_design_structures(
+        design_directory
+    )
+    if not design_structures:
+        raise FileNotFoundError(
+            f"No design structures under {design_directory}"
         )
 
     model_paths = sorted(
@@ -1712,12 +1871,28 @@ def main():
                 cutoff=args.contact_cutoff,
             )
 
-            accepted = (
+            design_path = find_design_structure(
+                files["prediction_name"],
+                design_structures,
+            )
+            binder_scrmsd_ca = calculate_binder_scrmsd_ca(
+                model_path=model_path,
+                design_path=design_path,
+                model_binder_chain=args.binder_chain,
+                design_binder_chain=args.design_binder_chain,
+            )
+
+            interface_accepted = (
                 contacts["interface_target_residues"]
                 >= args.min_interface_residues
                 and contacts["desired_contact_fraction"]
                 >= args.min_desired_contact_fraction
             )
+            scrmsd_accepted = (
+                binder_scrmsd_ca
+                < args.max_binder_scrmsd_ca
+            )
+            accepted = interface_accepted and scrmsd_accepted
 
             print(
                 f"[{index}/{len(model_paths)}] "
@@ -1726,17 +1901,27 @@ def main():
                 f"{contacts['interface_target_residues']}, "
                 f"desired fraction="
                 f"{contacts['desired_contact_fraction']:.2f}, "
+                f"Binder scRMSD (CA)={binder_scrmsd_ca:.3f} Å, "
                 f"{'accepted' if accepted else 'rejected'}"
             )
 
             if not accepted:
+                rejection_reasons = []
+                if not interface_accepted:
+                    rejection_reasons.append("interface_filter")
+                if not scrmsd_accepted:
+                    rejection_reasons.append(
+                        "binder_scrmsd_ca_filter"
+                    )
                 rejected_samples.append(
                     {
                         "name": files["name"],
                         "prediction_name": (
                             files["prediction_name"]
                         ),
-                        "reason": "interface_filter",
+                        "reason": "+".join(rejection_reasons),
+                        "binder_scRMSD_ca": binder_scrmsd_ca,
+                        "design_path": str(design_path),
                         **contacts,
                         "model_path": str(model_path),
                     }
@@ -1763,12 +1948,14 @@ def main():
                     seed=files["seed"],
                     sample=files["sample"],
                     model_path=model_path,
+                    design_path=design_path,
                     summary_path=files["summary_path"],
                     ranking_path=files["ranking_path"],
                     plddt=plddt,
                     pae=pae,
                     pae_source=pae_source,
                     ranking_score=ranking_score,
+                    binder_scrmsd_ca=binder_scrmsd_ca,
                     **contacts,
                 )
             )
@@ -1789,7 +1976,7 @@ def main():
 
     if not accepted_samples:
         raise RuntimeError(
-            "No RF3 samples passed the interface filter"
+            "No RF3 samples passed the interface and Binder scRMSD filters"
         )
 
 
@@ -1861,7 +2048,7 @@ def main():
 
     run_summary = {
         "sample_structures_scanned": len(model_paths),
-        "samples_passing_interface_filter": len(
+        "samples_passing_filters": len(
             accepted_samples
         ),
         "predictions_with_an_accepted_sample": len(
@@ -1873,6 +2060,9 @@ def main():
         "interface_ranges": INTERFACE_RANGES,
         "target_chain": args.target_chain,
         "binder_chain": args.binder_chain,
+        "design_directory": str(design_directory),
+        "design_binder_chain": args.design_binder_chain,
+        "max_binder_scrmsd_ca": args.max_binder_scrmsd_ca,
         "contact_cutoff": args.contact_cutoff,
         "min_interface_residues": (
             args.min_interface_residues
@@ -1897,7 +2087,7 @@ def main():
     print()
     print(f"Sample structures scanned: {len(model_paths)}")
     print(
-        "Samples passing interface filter: "
+        "Samples passing interface and Binder scRMSD filters: "
         f"{len(accepted_samples)}"
     )
     print(

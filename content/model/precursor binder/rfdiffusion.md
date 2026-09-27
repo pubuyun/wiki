@@ -181,7 +181,27 @@ sync: rfdiffusion-top-n
     {
       "id": "evaluate-design",
       "type": "process",
-      "label": "Check chirality and collect confidence metrics"
+      "label": "Check ligand chirality"
+    },
+    {
+      "id": "is-s-chirality",
+      "type": "decision",
+      "label": "S configuration?"
+    },
+    {
+      "id": "find-reference",
+      "type": "document",
+      "label": "Find the matching LigandMPNN reference complex"
+    },
+    {
+      "id": "calculate-rmsd",
+      "type": "process",
+      "label": "Align binder C-alpha atoms and calculate both scRMSD metrics"
+    },
+    {
+      "id": "passes-rmsd",
+      "type": "decision",
+      "label": "Binder scRMSD < 2 Å and aligned ligand scRMSD < 5 Å?"
     },
     {
       "id": "more-designs",
@@ -191,7 +211,7 @@ sync: rfdiffusion-top-n
     {
       "id": "rank-candidates",
       "type": "output",
-      "label": "Rank S candidates and save the top 20 CSV"
+      "label": "Sort passing candidates by ranking_score and save the top 20 CSV"
     },
     {
       "id": "next-candidate",
@@ -214,7 +234,33 @@ sync: rfdiffusion-top-n
     { "id": "start-prepare", "source": "start", "target": "prepare" },
     { "id": "prepare-design", "source": "prepare", "target": "next-design" },
     { "id": "design-evaluate", "source": "next-design", "target": "evaluate-design" },
-    { "id": "evaluate-more-designs", "source": "evaluate-design", "target": "more-designs" },
+    { "id": "evaluate-chirality", "source": "evaluate-design", "target": "is-s-chirality" },
+    {
+      "id": "chirality-yes",
+      "source": "is-s-chirality",
+      "target": "find-reference",
+      "label": "Yes"
+    },
+    {
+      "id": "chirality-no",
+      "source": "is-s-chirality",
+      "target": "more-designs",
+      "label": "No: discard"
+    },
+    { "id": "reference-rmsd", "source": "find-reference", "target": "calculate-rmsd" },
+    { "id": "rmsd-passes", "source": "calculate-rmsd", "target": "passes-rmsd" },
+    {
+      "id": "passes-rmsd-yes",
+      "source": "passes-rmsd",
+      "target": "more-designs",
+      "label": "Yes"
+    },
+    {
+      "id": "passes-rmsd-no",
+      "source": "passes-rmsd",
+      "target": "more-designs",
+      "label": "No: discard"
+    },
     {
       "id": "more-designs-yes",
       "source": "more-designs",
@@ -260,18 +306,34 @@ sync: rfdiffusion-top-n
 }
 ```
 
+For each S-configuration RF3 prediction, the workflow locates the corresponding
+LigandMPNN complex, aligns the predicted binder to that reference using chain A
+C-alpha atoms, and applies the same rigid transformation to the ligand. A candidate
+is retained only when `binder_scRMSD_ca < 2.0` Å and
+`ligand_scRMSD_aligned < 5.0` Å. Passing candidates are then sorted by
+`ranking_score` in descending order before the top 20 are written and packaged.
+
 ```python [TopN.py]
 #!/usr/bin/env python3
 import glob
+import gzip
 import io
 import json
 import os
+import re
 import zipfile
 
+import numpy as np
 import pandas as pd
-from Bio.PDB import MMCIFParser, PDBIO, Select
+from Bio.PDB import MMCIFParser, PDBIO, PDBParser, Select
 from rdkit import Chem
 from rdkit.Chem import rdCIPLabeler
+
+
+BINDER_CHAIN_ID = "A"
+LIGAND_CHAIN_ID = "B"
+BINDER_SCRMSD_MAX = 2.0
+LIGAND_SCRMSD_ALIGNED_MAX = 5.0
 
 
 class LigandSelect(Select):
@@ -284,11 +346,141 @@ class LigandSelect(Select):
         return 0
 
 
-def get_chirality_of_C1_from_cif(cif_file):
-    parser = MMCIFParser(QUIET=True)
+def load_structure(structure_file):
+    """Load a PDB, CIF, or gzipped CIF structure with Biopython."""
+    path_without_gz = (
+        structure_file[:-3] if structure_file.endswith(".gz") else structure_file
+    )
+    parser = (
+        PDBParser(QUIET=True)
+        if path_without_gz.lower().endswith(".pdb")
+        else MMCIFParser(QUIET=True)
+    )
 
+    if structure_file.endswith(".gz"):
+        with gzip.open(structure_file, "rt") as handle:
+            return parser.get_structure("structure", handle)
+    return parser.get_structure("structure", structure_file)
+
+
+def find_reference_structure(design_id, reference_dir):
+    """Find the LigandMPNN complex used to create an RF3 sequence job."""
+    backbone_id = re.sub(r"_d\d+$", "", design_id)
+    supported_suffixes = (".pdb", ".cif", ".cif.gz")
+    candidates = []
+
+    for path in glob.glob(os.path.join(reference_dir, "**", "*"), recursive=True):
+        filename = os.path.basename(path)
+        if not os.path.isfile(path) or not filename.lower().endswith(supported_suffixes):
+            continue
+        stem = filename[:-3] if filename.lower().endswith(".gz") else filename
+        stem = os.path.splitext(stem)[0]
+        if stem == backbone_id:
+            return path
+        if stem.startswith(f"{backbone_id}_"):
+            candidates.append(path)
+
+    return sorted(candidates)[0] if candidates else None
+
+
+def get_binder_ca_coordinates(structure, chain_id=BINDER_CHAIN_ID):
+    model = next(structure.get_models())
+    if chain_id not in model:
+        raise ValueError(f"Binder chain {chain_id} was not found")
+
+    coordinates = [
+        residue["CA"].coord.astype(float)
+        for residue in model[chain_id]
+        if residue.id[0] == " " and "CA" in residue
+    ]
+    if len(coordinates) < 3:
+        raise ValueError("At least three binder C-alpha atoms are required")
+    return np.asarray(coordinates)
+
+
+def get_ligand_heavy_atoms(structure, chain_id=LIGAND_CHAIN_ID):
+    model = next(structure.get_models())
+    if chain_id not in model:
+        raise ValueError(f"Ligand chain {chain_id} was not found")
+
+    atoms = {}
+    for atom in model[chain_id].get_atoms():
+        if atom.element.strip().upper() == "H":
+            continue
+        atom_name = atom.get_name().strip()
+        if atom_name in atoms:
+            raise ValueError(f"Duplicate ligand atom name: {atom_name}")
+        atoms[atom_name] = atom.coord.astype(float)
+    return atoms
+
+
+def kabsch_transform(moving_coordinates, reference_coordinates):
+    """Return the rigid transform that maps moving coordinates to reference."""
+    if moving_coordinates.shape != reference_coordinates.shape:
+        raise ValueError(
+            "Predicted and reference binders must contain the same number of C-alpha atoms"
+        )
+
+    moving_center = moving_coordinates.mean(axis=0)
+    reference_center = reference_coordinates.mean(axis=0)
+    moving_centered = moving_coordinates - moving_center
+    reference_centered = reference_coordinates - reference_center
+
+    u_matrix, _, vt_matrix = np.linalg.svd(
+        moving_centered.T @ reference_centered
+    )
+    rotation = u_matrix @ vt_matrix
+    if np.linalg.det(rotation) < 0:
+        u_matrix[:, -1] *= -1
+        rotation = u_matrix @ vt_matrix
+
+    translation = reference_center - moving_center @ rotation
+    return rotation, translation
+
+
+def rmsd(first_coordinates, second_coordinates):
+    difference = first_coordinates - second_coordinates
+    return float(np.sqrt(np.mean(np.sum(difference * difference, axis=1))))
+
+
+def calculate_scrmsd_metrics(predicted_file, reference_file):
+    """Calculate binder CA scRMSD and ligand scRMSD after binder alignment."""
+    predicted = load_structure(predicted_file)
+    reference = load_structure(reference_file)
+    predicted_ca = get_binder_ca_coordinates(predicted)
+    reference_ca = get_binder_ca_coordinates(reference)
+
+    rotation, translation = kabsch_transform(predicted_ca, reference_ca)
+    aligned_predicted_ca = predicted_ca @ rotation + translation
+    binder_scrmsd_ca = rmsd(aligned_predicted_ca, reference_ca)
+
+    predicted_ligand = get_ligand_heavy_atoms(predicted)
+    reference_ligand = get_ligand_heavy_atoms(reference)
+    predicted_atom_names = set(predicted_ligand)
+    reference_atom_names = set(reference_ligand)
+    if predicted_atom_names != reference_atom_names:
+        raise ValueError("Predicted and reference ligand heavy-atom names differ")
+    common_atom_names = sorted(predicted_atom_names)
+    if len(common_atom_names) < 3:
+        raise ValueError("At least three named ligand heavy atoms are required")
+
+    predicted_ligand_coordinates = np.asarray(
+        [predicted_ligand[name] for name in common_atom_names]
+    )
+    reference_ligand_coordinates = np.asarray(
+        [reference_ligand[name] for name in common_atom_names]
+    )
+    aligned_ligand_coordinates = predicted_ligand_coordinates @ rotation + translation
+    ligand_scrmsd_aligned = rmsd(
+        aligned_ligand_coordinates,
+        reference_ligand_coordinates,
+    )
+    return binder_scrmsd_ca, ligand_scrmsd_aligned
+
+
+def get_chirality_of_C1_from_cif(cif_file):
     try:
-        structure = parser.get_structure("struct", cif_file)
+        structure = load_structure(cif_file)
     except Exception as error:
         print(f"  [Error] Biopython could not parse CIF {cif_file}: {error}")
         return None
@@ -332,6 +524,7 @@ def get_chirality_of_C1_from_cif(cif_file):
 
 def main():
     rf3_outputs_dir = "/data/foundry/rf3_outputs"
+    reference_structures_dir = "/data/foundry/mpnn_outputs"
     csv_filename = "rf3_S_chirality_top20.csv"
     zip_filename = "top20_S_candidates.zip"
 
@@ -357,6 +550,29 @@ def main():
         is_s = get_chirality_of_C1_from_cif(cif_file)
 
         if is_s is not True:
+            continue
+
+        reference_file = find_reference_structure(
+            design_id,
+            reference_structures_dir,
+        )
+        if reference_file is None:
+            print(f"  [Skip] No reference complex found for {design_id}")
+            continue
+
+        try:
+            binder_scrmsd_ca, ligand_scrmsd_aligned = calculate_scrmsd_metrics(
+                cif_file,
+                reference_file,
+            )
+        except (OSError, ValueError, KeyError) as error:
+            print(f"  [Skip] Could not calculate scRMSD for {design_id}: {error}")
+            continue
+
+        if (
+            binder_scrmsd_ca >= BINDER_SCRMSD_MAX
+            or ligand_scrmsd_aligned >= LIGAND_SCRMSD_ALIGNED_MAX
+        ):
             continue
 
         with open(summary_file, "r") as file:
@@ -411,6 +627,8 @@ def main():
                 "interface_PAE": (
                     round(interface_pae, 2) if interface_pae is not None else None
                 ),
+                "binder_scRMSD_ca": round(binder_scrmsd_ca, 4),
+                "ligand_scRMSD_aligned": round(ligand_scrmsd_aligned, 4),
                 "has_clash": has_clash,
                 "C1_Chirality": "S",
             }
@@ -418,8 +636,8 @@ def main():
 
     if not results:
         print(
-            "No valid S-configuration data was extracted. "
-            "Check the output directory and ligand structures."
+            "No S-configuration candidate passed both scRMSD thresholds. "
+            "Check the output and reference structure directories."
         )
         return
 
@@ -433,7 +651,8 @@ def main():
     df_top20.to_csv(csv_filename, index=False)
 
     print(
-        f"Found and ranked {len(df)} S-configuration jobs. "
+        f"Found and ranked {len(df)} S-configuration jobs that passed "
+        "both scRMSD filters. "
         f"The top 20 results were saved to: {csv_filename}"
     )
     print("\nTop 10 S-configuration binder rankings:")

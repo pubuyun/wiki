@@ -4,6 +4,8 @@
   "_id": "complex_job_0_n_94_id_1_bon_orig4_r1_mpnn_seq1_complex_model",
   "pLDDT(%)": 87.35,
   "i_pAE": 0.203226,
+  "Binder scRMSD (CA)": 0.52799,
+  "Ligand scRMSD (aligned)": 2.32786,
   "ptm": 0.917722166,
   "iptm": 0.833416522,
   "conf_ranking_score": 0.8503,

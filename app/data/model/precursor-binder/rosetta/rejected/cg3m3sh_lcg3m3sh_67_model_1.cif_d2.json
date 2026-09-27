@@ -4,6 +4,8 @@
   "_id": "cg3m3sh_lcg3m3sh_67_model_1.cif_d2",
   "pLDDT(%)": 86.56,
   "i_pAE": 1.1,
+  "Binder scRMSD (CA)": 0.570527,
+  "Ligand scRMSD (aligned)": 2.191759,
   "ptm": 0.9402,
   "iptm": 0.9122,
   "conf_ranking_score": 0.9178,

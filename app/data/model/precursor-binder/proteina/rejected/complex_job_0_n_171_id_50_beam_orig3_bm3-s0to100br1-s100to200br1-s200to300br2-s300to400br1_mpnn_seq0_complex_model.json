@@ -4,6 +4,8 @@
   "_id": "complex_job_0_n_171_id_50_beam_orig3_bm3-s0to100br1-s100to200br1-s200to300br2-s300to400br1_mpnn_seq0_complex_model",
   "pLDDT(%)": 86.25,
   "i_pAE": 0.184516,
+  "Binder scRMSD (CA)": 0.676274,
+  "Ligand scRMSD (aligned)": 1.464083,
   "ptm": 0.940084,
   "iptm": 0.90046,
   "conf_ranking_score": 0.9084,

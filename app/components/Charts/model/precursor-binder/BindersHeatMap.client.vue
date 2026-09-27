@@ -110,7 +110,7 @@
         </template>
         <figcaption class="sr-only">
             Heatmap comparing {{ rows.length }} {{ sourceLabel }} binders across
-            seven prediction and stability metrics. Cell labels contain the
+            nine prediction and stability metrics. Cell labels contain the
             original values.
         </figcaption>
     </figure>
@@ -123,8 +123,11 @@ interface BinderRecord {
     name?: string;
     _id?: string;
     selected?: boolean;
+    expname?: string;
     "pLDDT(%)"?: number;
     i_pAE?: number;
+    "Binder scRMSD (CA)"?: number;
+    "Ligand scRMSD (aligned)"?: number;
     ptm?: number;
     iptm?: number;
     conf_ranking_score?: number;
@@ -170,6 +173,20 @@ const metrics: MetricDefinition[] = [
     {
         key: "i_pAE",
         label: "i_pAE",
+        unit: "Å",
+        higherIsBetter: false,
+        digits: 3,
+    },
+    {
+        key: "Binder scRMSD (CA)",
+        label: "Binder scRMSD (CA)",
+        unit: "Å",
+        higherIsBetter: false,
+        digits: 3,
+    },
+    {
+        key: "Ligand scRMSD (aligned)",
+        label: "Ligand scRMSD (aligned)",
         unit: "Å",
         higherIsBetter: false,
         digits: 3,
@@ -286,7 +303,7 @@ const rows = computed<BinderRow[]>(() => {
         const name = record.name || record._id || match[3];
         records.push({
             name,
-            shortName: shortBinderName(name),
+            shortName: `${shortBinderName(name)}${record.expname ? ` (${record.expname})` : ""}`,
             record,
         });
     }
@@ -457,6 +474,8 @@ function buildOption(rows: BinderRow[]): EChartsOption {
             axisLabel: {
                 interval: 0,
                 rotate: 0,
+                width: 64,
+                overflow: "break",
                 fontSize: 11,
                 lineHeight: 14,
             },
