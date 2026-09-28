@@ -145,9 +145,17 @@
                         </template>
                         <ClientOnly v-else>
                             <StructureViewer
-                                :structure-url="selectedBinder?._pdb_url ?? ''"
+                                v-if="selectedBinder?._pdb_url"
+                                :structure-url="selectedBinder._pdb_url"
                                 structure-url-format="pdb"
                             />
+                            <div
+                                v-else
+                                class="grid h-full place-items-center px-6 text-center text-sm text-on-secondary/70"
+                                role="status"
+                            >
+                                No PDB structure is available for this model.
+                            </div>
                             <template #fallback>
                                 <div
                                     class="grid h-full place-items-center text-sm"
@@ -193,13 +201,13 @@
                                 <Icon
                                     v-if="tab.value === 'md-graph'"
                                     :icon="
-                                        isSelectedBinder
+                                        isMdGraphVerified
                                             ? 'lucide:circle-check-big'
                                             : 'lucide:circle-x'
                                     "
                                     class="size-5 shrink-0"
                                     :class="
-                                        isSelectedBinder
+                                        isMdGraphVerified
                                             ? 'text-green-500'
                                             : 'text-red-500'
                                     "
@@ -320,8 +328,9 @@ type TreeNode = {
     loadRecord?: () => Promise<BinderRecord>;
 };
 
-const modules = import.meta.glob<BinderRecord>("../../data/model/**/*.json", {
+const records = import.meta.glob<BinderRecord>("../../data/model/**/*.json", {
     import: "default",
+    eager: true,
 });
 
 function titleCase(segment: string) {
@@ -335,11 +344,15 @@ function titleCase(segment: string) {
 function buildTree(): TreeNode[] {
     const roots: TreeNode[] = [];
 
-    for (const [path, loadRecord] of Object.entries(modules).sort(([a], [b]) =>
+    for (const [path, record] of Object.entries(records).sort(([a], [b]) =>
         a.localeCompare(b),
     )) {
+        if (!record._pdb_url) continue;
+
         const relativePath = path.split("/model/")[1];
         if (!relativePath) continue;
+
+        const loadRecord = () => Promise.resolve(record);
 
         const segments = relativePath.split("/");
         let siblings = roots;
@@ -568,6 +581,11 @@ const viewerFileName = computed(
 );
 const isSelectedBinder = computed(
     () => selectedTreeNode.value?.key.split("/").includes("selected") ?? false,
+);
+const isMdGraphVerified = computed(
+    () =>
+        isSelectedBinder.value ||
+        selectedTreeNode.value?.key.split("/")[0] === "enzyme",
 );
 
 function formatValue(value: BinderValue) {

@@ -1,0 +1,8 @@
+{
+    "name": "T370K",
+    "_id": "t370k",
+    "mutation": "T370K",
+    "_rmsd_lig_url": "https://static.igem.wiki/teams/6133/wiki/drylab/model/enzyme/analysismd/cgtase-t370k-ligand.js",
+    "_rmsd_prot_url": "https://static.igem.wiki/teams/6133/wiki/drylab/model/enzyme/analysismd/cgtase-t370k-protein.js",
+    "_pdb_url": "https://static.igem.wiki/teams/6133/wiki/drylab/model/enzyme/pdb/t370k.js"
+}

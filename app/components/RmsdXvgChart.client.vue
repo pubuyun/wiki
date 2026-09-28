@@ -1,7 +1,10 @@
 <template>
     <div
-        class="flex w-full flex-col rounded border border-surface-bright bg-secondary p-4 text-on-secondary"
-        :class="heightClass"
+        class="flex w-full min-w-0 flex-col bg-secondary p-4 text-on-secondary"
+        :class="[
+            heightClass,
+            { 'rounded border border-surface-bright': !embedded },
+        ]"
     >
         <div
             v-if="errorMessage"
@@ -103,6 +106,7 @@ const props = withDefaults(
         title?: string;
         seriesName?: string | string[];
         heightClass?: string;
+        embedded?: boolean;
     }>(),
     {
         title: "",

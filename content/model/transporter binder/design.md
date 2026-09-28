@@ -849,12 +849,6 @@ if __name__ == "__main__":
 }
 ```
 
-For each RF3 sample, the workflow finds the matching ProteinMPNN design structure
-and superimposes the predicted binder onto the design using binder C-alpha atoms.
-The resulting `binder_scRMSD_ca` measures whether the binder backbone was
-preserved. A sample must satisfy `binder_scRMSD_ca < 2.0` Å in addition to the
-interface-contact filters before it is normalized, scored, and ranked.
-
 ```python [rank_rf3_binders.py]
 import argparse
 import csv

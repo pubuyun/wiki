@@ -2,7 +2,6 @@
 import { Icon } from "@iconify/vue";
 import { gsap } from "gsap";
 import Lenis from "lenis";
-import { SwitchRoot, SwitchThumb } from "reka-ui";
 import hamsterUrl from "../../public/hamster.svg?url";
 import membersData from "../data/members.json";
 
@@ -96,12 +95,12 @@ const SKIP_CODE = "expelliodor";
 const SKIP_CODE_RESET_MS = 5000;
 
 const HOLE_POSITIONS = [
-    { x: 205, y: 515 },
-    { x: 495, y: 515 },
-    { x: 205, y: 660 },
-    { x: 495, y: 660 },
-    { x: 205, y: 805 },
-    { x: 495, y: 805 },
+    { x: 205, y: 465 },
+    { x: 495, y: 465 },
+    { x: 205, y: 600 },
+    { x: 495, y: 600 },
+    { x: 205, y: 735 },
+    { x: 495, y: 735 },
 ] as const;
 
 const LIGHT_POSITIONS = [
@@ -138,9 +137,13 @@ const backMemberId = ref<string | null>(null);
 const visibleProfileFace = ref<"front" | "back">("front");
 const activeHole = ref<number | null>(null);
 const activeMemberId = ref<string | null>(null);
-const liveMessage = ref("Select READY to begin the members game.");
+const liveMessage = ref("Press the play button to begin the members game.");
 const relaxedMode = ref(false);
 const howToPlayOpen = ref(false);
+const manuallyPaused = ref(false);
+const gameSuspended = computed(
+    () => manuallyPaused.value || howToPlayOpen.value,
+);
 const reducedMotion = ref(false);
 const isSwinging = ref(false);
 const failedAnimalIds = ref<string[]>([]);
@@ -165,17 +168,25 @@ const backMember = computed(() =>
 const marqueeLabel = computed(() => {
     if (gamePhase.value === "complete") return "CLEAR!";
     if (gamePhase.value === "restart-confirm") return "RESTART?";
-    if (gamePhase.value === "running") return "GO";
+    if (gamePhase.value === "running")
+        return gameSuspended.value ? "PAUSED" : "GO";
     return "READY";
 });
 const startControlLabel = computed(() => {
     if (gamePhase.value === "complete") return "Clear game; select to restart";
     if (gamePhase.value === "restart-confirm")
         return "Confirm restart and clear revealed members";
-    if (gamePhase.value === "running") return "Game in progress";
+    if (gamePhase.value === "running")
+        return manuallyPaused.value ? "Resume game" : "Pause game";
     return "Start game";
 });
-const startControlEnabled = computed(() => gamePhase.value !== "running");
+const startControlIcon = computed(() => {
+    if (gamePhase.value === "restart-confirm") return "lucide:check";
+    if (gamePhase.value === "complete") return "lucide:rotate-ccw";
+    return gamePhase.value === "running" && !manuallyPaused.value
+        ? "lucide:pause"
+        : "lucide:play";
+});
 
 let spawnTimer: ReturnType<typeof setTimeout> | undefined;
 let retreatTimer: ReturnType<typeof setTimeout> | undefined;
@@ -370,7 +381,7 @@ function scheduleNextSpawn(delayMs: number) {
     prepareNextMember();
     const safeDelayMs = Math.max(0, delayMs);
 
-    if (howToPlayOpen.value) {
+    if (gameSuspended.value) {
         spawnTimer = undefined;
         spawnDeadline = 0;
         pausedSpawnRemainingMs = safeDelayMs;
@@ -389,7 +400,7 @@ function scheduleRetreat(delayMs: number) {
     if (retreatTimer) clearTimeout(retreatTimer);
     const safeDelayMs = Math.max(0, delayMs);
 
-    if (howToPlayOpen.value) {
+    if (gameSuspended.value) {
         retreatTimer = undefined;
         retreatDeadline = 0;
         pausedRetreatRemainingMs = safeDelayMs;
@@ -462,7 +473,7 @@ function retreatHamster() {
 function spawnHamster() {
     if (
         gamePhase.value !== "running" ||
-        howToPlayOpen.value ||
+        gameSuspended.value ||
         activeHole.value !== null
     )
         return;
@@ -515,7 +526,7 @@ function startGame() {
     if (gamePhase.value === "complete") {
         gamePhase.value = "restart-confirm";
         liveMessage.value =
-            "Select RESTART again to clear the collection and play again.";
+            "Press the center button again to clear the collection and play again.";
         return;
     }
 
@@ -524,6 +535,13 @@ function startGame() {
         return;
     }
 
+    if (gamePhase.value === "running") {
+        manuallyPaused.value = !manuallyPaused.value;
+        liveMessage.value = manuallyPaused.value
+            ? "Game paused."
+            : "Game resumed.";
+        return;
+    }
     if (gamePhase.value !== "ready") return;
 
     gamePhase.value = "running";
@@ -533,6 +551,7 @@ function startGame() {
 }
 
 function restartGame() {
+    manuallyPaused.value = false;
     clearGameTimers();
     hamsterTimeline?.kill();
     hamsterTimelinePausedByHelp = false;
@@ -582,6 +601,7 @@ function skipGame() {
     preparedMemberId = null;
     unlockedIds.value = members.map((member) => member.id);
     gamePhase.value = "complete";
+    manuallyPaused.value = false;
     hideAllHamsters();
     saveUnlocks();
 
@@ -591,8 +611,10 @@ function skipGame() {
         "Skip code accepted. All member characters are now unlocked.";
 }
 
-function openHowToPlay() {
-    if (howToPlayOpen.value) return;
+let suspensionStartedAt = 0;
+
+function pauseGameplay() {
+    suspensionStartedAt = performance.now();
 
     const now = performance.now();
     pausedSpawnRemainingMs = spawnTimer
@@ -613,19 +635,15 @@ function openHowToPlay() {
         hamsterTimeline.pause();
         hamsterTimelinePausedByHelp = true;
     }
-
-    howToPlayOpen.value = true;
-    liveMessage.value = "Game paused while the instructions are open.";
 }
 
-async function closeHowToPlay() {
-    if (!howToPlayOpen.value) return;
+function resumeGameplay() {
+    spawnStartedAt += performance.now() - suspensionStartedAt;
 
     const spawnDelay = pausedSpawnRemainingMs;
     const retreatDelay = pausedRetreatRemainingMs;
     const resumeTimeline = hamsterTimelinePausedByHelp;
 
-    howToPlayOpen.value = false;
     pausedSpawnRemainingMs = null;
     pausedRetreatRemainingMs = null;
     hamsterTimelinePausedByHelp = false;
@@ -644,7 +662,25 @@ async function closeHowToPlay() {
     } else {
         liveMessage.value = "Instructions closed.";
     }
+}
 
+watch(
+    gameSuspended,
+    (paused) => {
+        if (paused) pauseGameplay();
+        else resumeGameplay();
+    },
+    { flush: "sync" },
+);
+
+function openHowToPlay() {
+    howToPlayOpen.value = true;
+    liveMessage.value = "Instructions open. Gameplay is paused.";
+}
+
+async function closeHowToPlay() {
+    if (!howToPlayOpen.value) return;
+    howToPlayOpen.value = false;
     await nextTick();
     howToPlayButton.value?.focus();
 }
@@ -849,7 +885,7 @@ async function revealMember(memberId: string) {
 }
 
 function hitActiveHamster() {
-    if (howToPlayOpen.value) return;
+    if (gamePhase.value !== "running" || gameSuspended.value) return;
 
     const holeIndex = activeHole.value;
     const memberId = activeMemberId.value;
@@ -1051,7 +1087,7 @@ function clientPointToSvg(clientX: number, clientY: number): Point {
 }
 
 function handlePointerMove(event: PointerEvent) {
-    if (event.pointerType === "touch" || howToPlayOpen.value) return;
+    if (event.pointerType === "touch" || gameSuspended.value) return;
     if (
         event.target instanceof Element &&
         event.target.closest(
@@ -1087,7 +1123,7 @@ function handleGamePointerDown(event: PointerEvent) {
     ) {
         return;
     }
-    if (gamePhase.value !== "running" || howToPlayOpen.value) return;
+    if (gamePhase.value !== "running" || gameSuspended.value) return;
     turnHadIntent = true;
 
     const svgPoint = clientPointToSvg(event.clientX, event.clientY);
@@ -1114,7 +1150,7 @@ function handleGamePointerDown(event: PointerEvent) {
 function strikeHole(holeIndex: number) {
     if (
         gamePhase.value !== "running" ||
-        howToPlayOpen.value ||
+        gameSuspended.value ||
         !gameStage.value ||
         !hammer.value
     )
@@ -1344,7 +1380,10 @@ onBeforeUnmount(() => {
                     <div
                         ref="gameStage"
                         class="game-stage"
-                        :class="{ 'is-running': gamePhase === 'running' }"
+                        :class="{
+                            'is-running':
+                                gamePhase === 'running' && !gameSuspended,
+                        }"
                         :inert="howToPlayOpen"
                         @pointermove="handlePointerMove"
                         @pointerdown="handleGamePointerDown"
@@ -1359,9 +1398,9 @@ onBeforeUnmount(() => {
                                 Members reveal game
                             </title>
                             <desc id="machine-description">
-                                Select READY, then strike the hamster when it
-                                appears in one of six holes to reveal a member
-                                character.
+                                Press the play button, then strike the hamster
+                                when it appears in one of six holes to reveal a
+                                member character.
                             </desc>
 
                             <defs>
@@ -1486,16 +1525,9 @@ onBeforeUnmount(() => {
                             />
 
                             <g
-                                class="start-control outline-none"
-                                :class="`is-${gamePhase}`"
-                                data-start-control
-                                role="button"
-                                :tabindex="startControlEnabled ? 0 : -1"
-                                :aria-label="startControlLabel"
-                                :aria-disabled="!startControlEnabled"
-                                @click.stop="startGame"
-                                @keydown.enter.stop.prevent="startGame"
-                                @keydown.space.stop.prevent="startGame"
+                                class="marquee-status"
+                                role="status"
+                                :aria-label="marqueeLabel"
                             >
                                 <rect
                                     class="marquee-panel"
@@ -1508,31 +1540,14 @@ onBeforeUnmount(() => {
                                     stroke="transparent"
                                     stroke-width="7"
                                 />
-                                <rect
-                                    class="marquee-action"
-                                    x="158"
-                                    y="78"
-                                    width="384"
-                                    height="128"
-                                    rx="28"
-                                />
                                 <text
                                     x="350"
-                                    :y="gamePhase === 'ready' ? 128 : 142"
+                                    y="147"
                                     class="marquee-text"
                                     text-anchor="middle"
                                     dominant-baseline="middle"
                                 >
                                     {{ marqueeLabel }}
-                                </text>
-                                <text
-                                    v-if="gamePhase === 'ready'"
-                                    x="350"
-                                    y="174"
-                                    class="marquee-hint"
-                                    text-anchor="middle"
-                                >
-                                    PRESS TO START
                                 </text>
                             </g>
 
@@ -1657,15 +1672,6 @@ onBeforeUnmount(() => {
                             </g>
                         </svg>
 
-                        <img
-                            ref="hammer"
-                            :src="hammerUrl"
-                            alt=""
-                            class="hammer"
-                            aria-hidden="true"
-                            draggable="false"
-                        />
-
                         <output class="sr-only" aria-live="polite">
                             {{ revealCounter }} members revealed.
                         </output>
@@ -1674,56 +1680,74 @@ onBeforeUnmount(() => {
                         </p>
                     </div>
 
+                    <img
+                        ref="hammer"
+                        :src="hammerUrl"
+                        alt=""
+                        class="hammer"
+                        aria-hidden="true"
+                        draggable="false"
+                    />
+
                     <div class="arcade-console" data-arcade-control>
                         <div class="control-deck-bar">
-                            <div class="relaxed-mode-control">
-                                <div class="relaxed-mode-copy">
-                                    <span id="relaxed-mode-label"
-                                        >Relaxed mode</span
-                                    >
-                                    <small id="relaxed-mode-description"
-                                        >No time limit</small
-                                    >
-                                </div>
-
-                                <SwitchRoot
-                                    v-model="relaxedMode"
-                                    class="relaxed-mode-switch"
-                                    aria-labelledby="relaxed-mode-label"
-                                    aria-describedby="relaxed-mode-description"
-                                    title="Relaxed mode: targets stay visible until hit"
-                                >
-                                    <SwitchThumb class="relaxed-mode-thumb">
-                                        <Icon
-                                            :icon="
-                                                relaxedMode
-                                                    ? 'lucide:infinity'
-                                                    : 'lucide:timer'
-                                            "
-                                            class="size-3.5"
-                                            aria-hidden="true"
-                                        />
-                                    </SwitchThumb>
-                                </SwitchRoot>
-                            </div>
-
                             <button
                                 ref="howToPlayButton"
                                 type="button"
-                                class="how-to-play-toggle"
+                                class="cabinet-button"
+                                :class="{ 'is-active': howToPlayOpen }"
                                 :aria-expanded="howToPlayOpen"
                                 aria-controls="arcade-how-to-play"
+                                aria-label="How to play"
+                                title="How to play"
                                 @click="toggleHowToPlay"
                             >
                                 <Icon
-                                    icon="lucide:book-open"
-                                    class="control-icon"
+                                    :icon="
+                                        howToPlayOpen
+                                            ? 'lucide:x'
+                                            : 'lucide:book-open'
+                                    "
                                     aria-hidden="true"
                                 />
-                                <span>How to play</span>
+                            </button>
+                            <button
+                                type="button"
+                                class="cabinet-button cabinet-button-play"
+                                :class="{
+                                    'is-active':
+                                        gamePhase === 'running' &&
+                                        !gameSuspended,
+                                }"
+                                :aria-label="startControlLabel"
+                                :title="startControlLabel"
+                                :disabled="howToPlayOpen"
+                                @click="startGame"
+                            >
                                 <Icon
-                                    icon="lucide:chevron-down"
-                                    class="how-to-play-chevron"
+                                    :icon="startControlIcon"
+                                    aria-hidden="true"
+                                />
+                            </button>
+                            <button
+                                type="button"
+                                class="cabinet-button"
+                                :class="{ 'is-active': relaxedMode }"
+                                :aria-pressed="relaxedMode"
+                                aria-label="Relaxed mode"
+                                :title="
+                                    relaxedMode
+                                        ? 'Relaxed mode on: no time limit'
+                                        : 'Relaxed mode off: timed targets'
+                                "
+                                @click="relaxedMode = !relaxedMode"
+                            >
+                                <Icon
+                                    :icon="
+                                        relaxedMode
+                                            ? 'lucide:infinity'
+                                            : 'lucide:clock'
+                                    "
                                     aria-hidden="true"
                                 />
                             </button>
@@ -1748,8 +1772,10 @@ onBeforeUnmount(() => {
                                                 >1</span
                                             >
                                             <span class="instruction-copy"
-                                                >Press <strong>READY</strong> to
-                                                start.</span
+                                                >Press the center
+                                                <strong>play button</strong> to
+                                                start. Press again to pause or
+                                                resume.</span
                                             >
                                         </li>
                                         <li>
@@ -1775,25 +1801,30 @@ onBeforeUnmount(() => {
                                             >
                                         </li>
                                     </ol>
+                                </div>
+
+                                <div class="how-to-play-footer">
                                     <p class="skip-shortcut">
                                         <span>Skip shortcut</span>
                                         Type <kbd>expelliodor</kbd> anywhere
                                         outside a text field.
                                     </p>
-                                </div>
 
-                                <button
-                                    type="button"
-                                    class="reveal-all-button"
-                                    :disabled="revealedCount >= members.length"
-                                    @click="skipGame"
-                                >
-                                    <Icon
-                                        icon="lucide:users"
-                                        aria-hidden="true"
-                                    />
-                                    <span>Reveal everyone</span>
-                                </button>
+                                    <button
+                                        type="button"
+                                        class="reveal-all-button"
+                                        :disabled="
+                                            revealedCount >= members.length
+                                        "
+                                        @click="skipGame"
+                                    >
+                                        <Icon
+                                            icon="lucide:users"
+                                            aria-hidden="true"
+                                        />
+                                        <span>Reveal everyone</span>
+                                    </button>
+                                </div>
                             </section>
                         </Transition>
                     </div>
@@ -2050,14 +2081,6 @@ onBeforeUnmount(() => {
     stroke-width: 2;
 }
 
-.start-control[aria-disabled="false"] {
-    cursor: pointer;
-}
-
-.start-control:focus-visible .marquee-panel {
-    stroke: #ffffff;
-}
-
 .marquee-text,
 .counter-text {
     fill: #fffef1;
@@ -2104,7 +2127,7 @@ onBeforeUnmount(() => {
 
 .hammer {
     position: absolute;
-    z-index: 5;
+    z-index: 10;
     top: 0;
     left: 0;
     width: clamp(7rem, 25%, 12.5rem);
@@ -2657,8 +2680,8 @@ onBeforeUnmount(() => {
 .game-cabinet {
     position: relative;
     display: grid;
-    grid-template-rows: auto auto;
-    width: min(100%, calc((100svh - 12.25rem) * 7 / 9));
+    grid-template-rows: auto;
+    width: min(100%, calc((100svh - 8rem) * 7 / 9));
     min-width: 0;
     align-self: center;
     justify-self: center;
@@ -2677,181 +2700,104 @@ onBeforeUnmount(() => {
     opacity: 0.82;
 }
 
+.game-cabinet.is-help-open .hammer {
+    visibility: hidden !important;
+}
+
 .arcade-console {
-    position: relative;
+    position: absolute;
     z-index: 9;
-    width: 100%;
-    box-sizing: border-box;
-    margin-top: clamp(-0.8rem, -1vw, -0.45rem);
-    padding: clamp(0.55rem, 1.1vw, 0.75rem) clamp(0.65rem, 1.4vw, 0.95rem);
-    border: 0.18rem solid var(--machine-edge);
-    border-radius: clamp(0.65rem, 1.2vw, 0.9rem) clamp(0.65rem, 1.2vw, 0.9rem)
-        clamp(1rem, 1.8vw, 1.35rem) clamp(1rem, 1.8vw, 1.35rem);
-    background:
-        linear-gradient(180deg, rgb(255 255 255 / 0.1), transparent 42%),
-        var(--marquee-panel);
-    box-shadow:
-        inset 0 0.12rem 0 rgb(255 255 255 / 0.22),
-        0 0.65rem 1rem rgb(2 27 66 / 0.24);
-    color: #fffef1;
+    right: 19%;
+    bottom: 5.5%;
+    left: 19%;
+    height: 7.2%;
 }
 
 .control-deck-bar {
     display: grid;
-    grid-template-columns: minmax(9.5rem, 1fr) minmax(9rem, 0.86fr);
-    gap: clamp(0.55rem, 1.2vw, 0.85rem);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     align-items: stretch;
+    gap: 8%;
+    height: 100%;
 }
 
-.relaxed-mode-control {
-    display: flex;
-    min-width: 0;
-    align-items: center;
-    justify-content: space-between;
-    gap: 0.65rem;
-    padding-right: clamp(0.55rem, 1.2vw, 0.85rem);
-    border-right: 0.12rem solid rgb(255 255 255 / 0.28);
-}
-
-.relaxed-mode-copy {
+.cabinet-button {
+    --button-face: #98defa;
+    --button-edge: #54acd9;
     display: grid;
-    min-width: 0;
-    gap: 0.05rem;
-}
-
-.relaxed-mode-copy > span,
-.how-to-play-toggle,
-.how-to-play h2 {
-    font-family: "Righteous", sans-serif;
-    font-size: clamp(0.78rem, 1.05vw, 0.95rem);
-    line-height: 1.1;
-    letter-spacing: 0.025em;
-}
-
-.relaxed-mode-copy small {
-    font-family: "Belanosima", sans-serif;
-    font-size: clamp(0.68rem, 0.9vw, 0.8rem);
-    color: #cfe8ff;
-}
-
-.relaxed-mode-switch {
-    display: flex;
-    width: 3.5rem;
-    height: 2rem;
-    flex: 0 0 auto;
-    align-items: center;
-    box-sizing: border-box;
-    padding: 0.25rem;
-    border: 0.12rem solid rgb(255 255 255 / 0.72);
-    border-radius: 999px;
-    background: #0d3999;
-    box-shadow: inset 0 0.16rem 0.3rem rgb(2 27 66 / 0.34);
-    cursor: pointer;
-    transition:
-        background-color 180ms ease,
-        border-color 180ms ease,
-        transform 180ms ease;
-}
-
-.relaxed-mode-switch:hover {
-    transform: scale(1.05);
-}
-
-.relaxed-mode-switch:focus-visible {
-    outline: 0.2rem solid #ffdf68;
-    outline-offset: 0.18rem;
-}
-
-.relaxed-mode-switch[data-state="checked"] {
-    border-color: #fff5bd;
-    background: #ffca50;
-}
-
-.relaxed-mode-thumb {
-    display: flex;
-    width: 1.25rem;
-    height: 1.25rem;
-    align-items: center;
-    justify-content: center;
+    place-items: center;
+    width: 100%;
+    height: 100%;
+    min-height: 32px;
+    padding: 0;
+    border: 0;
+    border-top: 3px solid #d4f3ff;
     border-radius: 50%;
-    background: #fffef1;
-    box-shadow: 0 0.12rem 0.25rem rgb(2 27 66 / 0.28);
-    color: #173e79;
-    transition:
-        color 180ms ease,
-        background-color 180ms ease,
-        transform 200ms ease;
-    will-change: transform;
-}
-
-.relaxed-mode-thumb[data-state="checked"] {
-    background: #173e79;
-    color: #ffdf68;
-    transform: translateX(1.5rem);
-}
-
-.how-to-play-toggle {
-    display: grid;
-    grid-template-columns: auto minmax(0, 1fr) auto;
-    min-height: 2.75rem;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.45rem 0.65rem;
-    border: 0.12rem solid rgb(255 255 255 / 0.5);
-    border-radius: 0.65rem;
-    background: rgb(8 42 111 / 0.54);
-    color: #fffef1;
-    text-align: left;
+    background: var(--button-face);
+    color: #123d75;
+    box-shadow:
+        0 7px 0 var(--button-edge),
+        0 10px 0 rgb(20 60 130 / 0.18);
     cursor: pointer;
     transition:
-        border-color 180ms ease,
-        background-color 180ms ease,
-        transform 180ms ease;
+        transform 140ms ease,
+        box-shadow 140ms ease,
+        background-color 140ms ease;
 }
 
-.how-to-play-toggle:hover,
-.how-to-play-toggle[aria-expanded="true"] {
-    border-color: #ffdf68;
-    background: rgb(8 42 111 / 0.86);
+.cabinet-button-play {
+    --button-face: #ffe27d;
+    --button-edge: #f5ad46;
+    border-top-color: #fff2b5;
 }
 
-.how-to-play-toggle:hover {
-    transform: translateY(-0.08rem);
+.cabinet-button svg {
+    width: 52%;
+    height: 72%;
+    stroke-width: 1.7;
+    pointer-events: none;
 }
 
-.how-to-play-toggle:focus-visible,
+.cabinet-button-play svg {
+    fill: currentColor;
+}
+.cabinet-button:hover:not(:disabled) {
+    filter: brightness(1.08);
+}
+.cabinet-button.is-active,
+.cabinet-button:active:not(:disabled) {
+    background: #ffbd50;
+    border-top-color: #ffe692;
+    box-shadow:
+        0 2px 0 #df8f31,
+        inset 0 3px 5px rgb(130 74 17 / 0.18);
+    transform: translateY(5px);
+}
+.cabinet-button:focus-visible,
 .reveal-all-button:focus-visible {
-    outline: 0.2rem solid #ffdf68;
-    outline-offset: 0.18rem;
+    outline: 3px solid #ffffff;
+    outline-offset: 5px;
 }
-
-.control-icon,
-.how-to-play-chevron {
+.cabinet-button:disabled {
+    opacity: 0.55;
+    cursor: default;
+}
+.control-icon {
     width: 1rem;
     height: 1rem;
-    flex: 0 0 auto;
-}
-
-.how-to-play-chevron {
-    transition: transform 180ms ease;
-}
-
-.how-to-play-toggle[aria-expanded="true"] .how-to-play-chevron {
-    transform: rotate(180deg);
 }
 
 .how-to-play {
     position: absolute;
     z-index: 12;
-    right: 0;
-    bottom: calc(100% + 0.4rem);
-    left: 0;
+    right: -22%;
+    bottom: calc(100% + 1rem);
+    left: -22%;
     display: grid;
-    grid-template-columns: minmax(0, 1fr) auto;
-    gap: clamp(0.75rem, 1.5vw, 1.1rem);
-    align-items: end;
+    grid-template-columns: minmax(0, 1fr);
+    gap: clamp(0.8rem, 1.5vw, 1.1rem);
     min-width: 0;
-    max-height: min(21rem, calc(100svh - 12rem));
+    max-height: min(28rem, calc(100svh - 10rem));
     overflow: auto;
     padding: clamp(0.85rem, 1.6vw, 1.15rem);
     border: 0.18rem solid var(--machine-edge);
@@ -2871,10 +2817,16 @@ onBeforeUnmount(() => {
     margin: 0;
 }
 
+.how-to-play h2 {
+    font-family: "Righteous", sans-serif;
+    font-size: clamp(1.25rem, 1.8vw, 1.55rem);
+    line-height: 1.2;
+}
+
 .how-to-play ol {
     display: grid;
-    gap: 0.4rem;
-    margin-top: 0.65rem;
+    gap: 0.65rem;
+    margin-top: 0.85rem;
     padding: 0;
     list-style: none;
 }
@@ -2882,21 +2834,21 @@ onBeforeUnmount(() => {
 .how-to-play li,
 .how-to-play p {
     font-family: "Belanosima", sans-serif;
-    font-size: clamp(0.74rem, 0.9vw, 0.85rem);
-    line-height: 1.35;
+    font-size: clamp(1rem, 1.25vw, 1.1rem);
+    line-height: 1.4;
     color: #e9f5ff;
 }
 
 .how-to-play li {
     display: grid;
-    grid-template-columns: 1.45rem minmax(0, 1fr);
-    gap: 0.48rem;
+    grid-template-columns: 2rem minmax(0, 1fr);
+    gap: 0.7rem;
     align-items: center;
 }
 
 .instruction-step {
     display: grid;
-    width: 1.45rem;
+    width: 2rem;
     aspect-ratio: 1;
     place-items: center;
     border: 0.08rem solid rgb(255 255 255 / 0.62);
@@ -2904,17 +2856,24 @@ onBeforeUnmount(() => {
     background: #ffca50;
     color: #173e79;
     font-family: "Righteous", sans-serif;
-    font-size: 0.72rem;
+    font-size: 0.9rem;
 }
 
 .instruction-copy {
     min-width: 0;
 }
 
-.skip-shortcut {
-    margin-top: 0.7rem !important;
-    padding-top: 0.6rem;
+.how-to-play-footer {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 0.85rem;
+    align-items: end;
+    padding-top: 0.75rem;
     border-top: 0.08rem solid rgb(255 255 255 / 0.22);
+}
+
+.skip-shortcut {
+    min-width: 0;
 }
 
 .skip-shortcut > span {
@@ -2949,7 +2908,7 @@ onBeforeUnmount(() => {
     background: #ffca50;
     color: #173e79;
     font-family: "Righteous", sans-serif;
-    font-size: clamp(0.72rem, 0.9vw, 0.84rem);
+    font-size: clamp(0.82rem, 1vw, 0.95rem);
     white-space: nowrap;
     cursor: pointer;
 }
@@ -2983,41 +2942,11 @@ onBeforeUnmount(() => {
     fill: var(--marquee-panel);
 }
 
-.marquee-action {
-    fill: rgb(8 42 111 / 0.6);
-    stroke: rgb(255 255 255 / 0.2);
-    stroke-width: 3;
-}
-
-.start-control.is-ready .marquee-action,
-.start-control.is-complete .marquee-action,
-.start-control.is-restart-confirm .marquee-action {
-    fill: #ffca50;
-    stroke: #fff5bd;
-    stroke-width: 6;
-    filter: drop-shadow(0 0 0.8rem rgb(255 220 104 / 0.88));
-}
-
-.start-control.is-ready .marquee-action {
-    animation: ready-button-pulse 1.35s ease-in-out infinite alternate;
-}
-
-.start-control.is-ready .marquee-text,
-.start-control.is-complete .marquee-text,
-.start-control.is-restart-confirm .marquee-text {
-    fill: #173e79;
-    font-size: 68px;
-}
-
-.start-control.is-restart-confirm .marquee-text {
-    font-size: 56px;
-}
-
-.marquee-hint {
-    fill: #173e79;
-    font-family: "Belanosima", sans-serif;
-    font-size: 16px;
-    letter-spacing: 0.15em;
+.marquee-status .marquee-text {
+    fill: #fffef1;
+    font-size: 76px;
+    letter-spacing: 0.045em;
+    pointer-events: none;
 }
 
 .members-showcase {
@@ -3129,15 +3058,6 @@ onBeforeUnmount(() => {
     visibility: hidden;
 }
 
-@keyframes ready-button-pulse {
-    from {
-        filter: drop-shadow(0 0 0.3rem rgb(255 220 104 / 0.62));
-    }
-    to {
-        filter: drop-shadow(0 0 1.1rem rgb(255 235 151 / 1));
-    }
-}
-
 @media (orientation: landscape) and (max-width: 58rem) {
     .members-arcade {
         padding: clamp(3.8rem, 14svh, 4.5rem) 0.65rem 0.45rem;
@@ -3180,7 +3100,7 @@ onBeforeUnmount(() => {
     }
 
     .game-cabinet {
-        width: min(100%, calc((100svh - 12.25rem) * 7 / 9));
+        width: min(100%, calc((100svh - 8rem) * 7 / 9));
         height: auto;
         max-width: 100%;
         max-height: 100%;
@@ -3190,18 +3110,17 @@ onBeforeUnmount(() => {
         width: 100%;
     }
 
-    .control-deck-bar {
-        grid-template-columns: minmax(8.5rem, 1fr) minmax(8rem, 0.92fr);
+    .how-to-play {
+        max-height: min(28rem, calc(100svh - 10rem));
     }
 
-    .how-to-play {
+    .how-to-play-footer {
         grid-template-columns: 1fr;
         gap: 0.75rem;
-        max-height: min(22rem, calc(100svh - 10rem));
     }
 
     .reveal-all-button {
-        width: 100%;
+        justify-self: stretch;
     }
 
     .members-showcase {
@@ -3272,14 +3191,8 @@ onBeforeUnmount(() => {
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .start-control.is-ready .marquee-action {
-        animation: none;
-    }
+    .cabinet-button,
     .game-stage,
-    .relaxed-mode-switch,
-    .relaxed-mode-thumb,
-    .how-to-play-toggle,
-    .how-to-play-chevron,
     .control-drawer-enter-active,
     .control-drawer-leave-active {
         transition: none;

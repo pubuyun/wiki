@@ -1,0 +1,8 @@
+{
+    "name": "reference_pose",
+    "_id": "reference_pose",
+    "mutation": "Wild Type",
+    "_rmsd_lig_url": "https://static.igem.wiki/teams/6133/wiki/drylab/model/enzyme/analysismd/run-cg3m3sh-cgtase-9-lig.js",
+    "_rmsd_prot_url": "https://static.igem.wiki/teams/6133/wiki/drylab/model/enzyme/analysismd/run-cg3m3sh-cgtase-9-prot.js",
+    "_pdb_url": "https://static.igem.wiki/teams/6133/wiki/drylab/model/enzyme/pdb/dockingpose.js"
+}

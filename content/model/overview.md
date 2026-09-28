@@ -11,13 +11,11 @@ order: 100
 
 ### LaTeX Rendering Test
 
-Inline math uses single dollar signs, for example $E = mc^2$.
+Inline math uses single dollar signs, for example [[]{.katex-mathml}[[[]{.strut style="height:0.6833em;"}[E]{.mord.mathnormal style="margin-right:0.0576em;"}[]{.mspace style="margin-right:0.2778em;"}[=]{.mrel}[]{.mspace style="margin-right:0.2778em;"}]{.base}[[]{.strut style="height:0.8141em;"}[m]{.mord.mathnormal}[[c]{.mord.mathnormal}[[[[[[]{.pstrut style="height:2.7em;"}[[2]{.mord.mtight}]{.sizing.reset-size6.size3.mtight}]{style="top:-3.063em;margin-right:0.05em;"}]{.vlist style="height:0.8141em;"}]{.vlist-r}]{.vlist-t}]{.msupsub}]{.mord}]{.base}]{.katex-html ariaHidden="true"}]{.katex}.
 
 Display math uses double dollar signs:
 
-$$
-\int_{-\infty}^{\infty} e^{-x^2}\,dx = \sqrt{\pi}
-$$
+[[[]{.katex-mathml}[[[]{.strut style="height:2.3846em;vertical-align:-0.9703em;"}[[∫]{.mop.op-symbol.large-op style="margin-right:0.4445em;position:relative;top:-0.0011em;"}[[[[[[]{.pstrut style="height:2.7em;"}[[[−]{.mord.mtight}[∞]{.mord.mtight}]{.mord.mtight}]{.sizing.reset-size6.size3.mtight}]{style="top:-1.7881em;margin-left:-0.4445em;margin-right:0.05em;"}[[]{.pstrut style="height:2.7em;"}[[[∞]{.mord.mtight}]{.mord.mtight}]{.sizing.reset-size6.size3.mtight}]{style="top:-3.8129em;margin-right:0.05em;"}]{.vlist style="height:1.4143em;"}[​]{.vlist-s}]{.vlist-r}[[[]]{.vlist style="height:0.9703em;"}]{.vlist-r}]{.vlist-t.vlist-t2}]{.msupsub}]{.mop}[]{.mspace style="margin-right:0.1667em;"}[[e]{.mord.mathnormal}[[[[[[]{.pstrut style="height:2.7em;"}[[[−]{.mord.mtight}[[x]{.mord.mathnormal.mtight}[[[[[[]{.pstrut style="height:2.5em;"}[[2]{.mord.mtight}]{.sizing.reset-size3.size1.mtight}]{style="top:-2.931em;margin-right:0.0714em;"}]{.vlist style="height:0.8913em;"}]{.vlist-r}]{.vlist-t}]{.msupsub}]{.mord.mtight}]{.mord.mtight}]{.sizing.reset-size6.size3.mtight}]{style="top:-3.113em;margin-right:0.05em;"}]{.vlist style="height:1.0369em;"}]{.vlist-r}]{.vlist-t}]{.msupsub}]{.mord}[]{.mspace style="margin-right:0.1667em;"}[d]{.mord.mathnormal}[x]{.mord.mathnormal}[]{.mspace style="margin-right:0.2778em;"}[=]{.mrel}[]{.mspace style="margin-right:0.2778em;"}]{.base}[[]{.strut style="height:1.04em;vertical-align:-0.1908em;"}[[[[[[]{.pstrut style="height:3em;"}[[π]{.mord.mathnormal style="margin-right:0.0359em;"}]{.mord style="padding-left:0.833em;"}]{.svg-align style="top:-3em;"}[[]{.pstrut style="height:3em;"}[]{.hide-tail style="min-width:0.853em;height:1.08em;"}]{style="top:-2.8092em;"}]{.vlist style="height:0.8492em;"}[​]{.vlist-s}]{.vlist-r}[[[]]{.vlist style="height:0.1908em;"}]{.vlist-r}]{.vlist-t.vlist-t2}]{.mord.sqrt}]{.base}]{.katex-html ariaHidden="true"}]{.katex}]{.katex-display}
 
 ### Philosophy
 
@@ -66,15 +64,6 @@ by one or more blank lines. (A blank line is any line that looks like a
 blank line -- a line containing nothing but spaces or tabs is considered
 blank.) Normal paragraphs should not be indented with spaces or tabs.
 
-The implication of the "one or more consecutive lines of text" rule is
-that Markdown supports "hard-wrapped" text paragraphs. This differs
-significantly from most other text-to-HTML formatters (including Movable
-Type's "Convert Line Breaks" option) which translate every line break
-character in a paragraph into a `<br />` tag.
-
-When you *do* want to insert a `<br />` break tag using Markdown, you
-end a line with two or more spaces, then type return.
-
 ### Headers
 
 Markdown supports two styles of headers, [Setext] [1] and [atx] [2].
@@ -111,6 +100,17 @@ and code blocks:
 > ```text
 > return shell_exec("echo $input | $markdown_script");
 > ```
+
+::collapsible-paragraph{#paragraph-details title="Paragraph Details"}
+The implication of the "one or more consecutive lines of text" rule is
+that Markdown supports "hard-wrapped" text paragraphs. This differs
+significantly from most other text-to-HTML formatters (including Movable
+Type's "Convert Line Breaks" option) which translate every line break
+character in a paragraph into a `<br />` tag.
+
+When you *do* want to insert a `<br />` break tag using Markdown, you
+end a line with two or more spaces, then type return.
+::
 
 ## header 3
 

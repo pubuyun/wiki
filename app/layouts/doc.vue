@@ -1,4 +1,6 @@
 <script setup>
+import { contentTocLinks } from "~/utils/content-toc";
+
 const route = useRoute();
 const category = computed(() => String(route.params.category ?? ""));
 const categoryPath = computed(() => `/${category.value}`);
@@ -18,9 +20,8 @@ const categoryTitle = computed(
 const categoryNavNodes = computed(() =>
     buildCategoryNavTree(children.value, category.value, activePath.value),
 );
-const hasRightSidebar = computed(
-    () => page.value?.body?.toc?.links?.length > 0,
-);
+const tocLinks = computed(() => contentTocLinks(page.value?.body));
+const hasRightSidebar = computed(() => tocLinks.value.length > 0);
 
 const contentLayout = useContentLayoutState();
 watchEffect(() => {
@@ -66,10 +67,7 @@ watchEffect(() => {
                 class="contents"
                 aria-label="Page contents"
             >
-                <ContentBar
-                    class="order-last hidden lg:flex"
-                    :toc="page.body.toc.links"
-                />
+                <ContentBar class="order-last hidden lg:flex" :toc="tocLinks" />
             </aside>
 
             <AccessibilityMenu />

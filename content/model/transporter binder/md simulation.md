@@ -382,6 +382,9 @@ echo "  ${RESULT_DIR}/${PROD_PREFIX}_${PROD_NSEG}.tpr"
 
 ## RMSD Analysis
 
+::document-rmsd-xvg-chart{collection="transporter-binder"}
+::
+
 ::code-group{defaultValue="0" sync="transporter-binder-rmsd-workflow" label="Workflow and source code"}
 
 ```graph [Workflow]

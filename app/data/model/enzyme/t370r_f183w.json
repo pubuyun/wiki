@@ -1,0 +1,8 @@
+{
+    "name": "T370R_F183W",
+    "_id": "t370r_f183w",
+    "mutation": "T370R, F183W",
+    "_rmsd_lig_url": "https://static.igem.wiki/teams/6133/wiki/drylab/model/enzyme/analysismd/cgtase-t370r-f183w-ligand.js",
+    "_rmsd_prot_url": "https://static.igem.wiki/teams/6133/wiki/drylab/model/enzyme/analysismd/cgtase-t370r-f183w-protein.js",
+    "_pdb_url": "https://static.igem.wiki/teams/6133/wiki/drylab/model/enzyme/pdb/t370r-f183w.js"
+}

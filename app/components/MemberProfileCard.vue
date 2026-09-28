@@ -179,19 +179,18 @@ function memberInitials(name: string) {
     --paper-background-width: 150%;
     --copy-top: 10%;
     --copy-bottom: 10%;
-    --copy-left: 22%;
-    --copy-width: 34%;
+    --copy-left: 25%;
+    --copy-width: 43%;
     --animal-top: 15%;
     --animal-right: 0.5%;
-    --animal-size: 40%;
+    --animal-size: 28%;
     --animal-scale: 1.16;
-    --name-tag-left: 20%;
+    --name-tag-left: 7%;
     --name-tag-bottom: -21%;
-    --name-tag-min-width: 100%;
-    --name-tag-max-width: 175%;
-    --name-tag-height: clamp(3.75rem, 7.5vw, 6.25rem);
+    --name-tag-max-width: 95%;
+    --name-tag-height: clamp(3.25rem, 6vw, 5rem);
     --name-tag-rotation: -7deg;
-    --name-tag-font-size: clamp(1.35rem, 3.5vw, 3.4rem);
+    --name-tag-font-size: clamp(0.7rem, 11.5cqw, 2.4rem);
 
     position: relative;
     isolation: isolate;
@@ -235,6 +234,7 @@ function memberInitials(name: string) {
     height: var(--portrait-height);
     min-height: 0;
     grid-template-rows: minmax(0, 1fr);
+    container-type: inline-size;
 }
 
 .portrait-frame {
@@ -316,13 +316,11 @@ function memberInitials(name: string) {
     left: var(--name-tag-left);
     display: grid;
     box-sizing: border-box;
-    width: max-content;
-    min-width: var(--name-tag-min-width);
+    width: var(--name-tag-max-width);
     max-width: var(--name-tag-max-width);
     min-height: var(--name-tag-height);
     margin: 0;
-    padding: 0.3rem clamp(2.8rem, 4vw, 5rem) 0.55rem
-        clamp(1.25rem, 2.2vw, 2.5rem);
+    padding: 0.3rem 14% 0.55rem 4%;
     place-items: center;
     clip-path: polygon(0 0, 100% 0, 88% 50%, 100% 100%, 0 100%);
     background: #0b3b73;
@@ -361,7 +359,7 @@ function memberInitials(name: string) {
     place-items: center;
     border-radius: 50%;
     background: transparent;
-    transform: scale(var(--animal-scale));
+    transform: scale(min(var(--animal-scale), 1.05));
     transform-origin: center;
 }
 
@@ -458,15 +456,13 @@ function memberInitials(name: string) {
         --portrait-left: 2%;
         --portrait-width: 32%;
         --paper-left: 23%;
-        --copy-left: 20%;
-        --copy-width: 35%;
-        --animal-size: 39%;
-        --animal-scale: 1.1;
+        --copy-left: 23%;
+        --copy-width: 44%;
+        --animal-size: 26%;
         --name-tag-left: 7%;
-        --name-tag-min-width: 100%;
-        --name-tag-max-width: 165%;
+        --name-tag-max-width: 95%;
         --name-tag-height: 2.8rem;
-        --name-tag-font-size: clamp(0.92rem, 2.6vw, 1.8rem);
+        --name-tag-font-size: clamp(0.7rem, 11.5cqw, 1.8rem);
 
         border-width: 0;
         border-radius: 0;
@@ -488,11 +484,22 @@ function memberInitials(name: string) {
     .locked-animal span {
         font-size: clamp(2.6rem, 9vmin, 4rem);
     }
+
+    .animal-display {
+        transform: scale(min(var(--animal-scale), 0.85));
+    }
 }
 
 @media (max-width: 39rem) {
     .member-name {
         display: grid;
+    }
+}
+
+@media (max-width: 25rem) {
+    .member-introduction {
+        font-size: clamp(0.6rem, 3vw, 0.72rem);
+        line-height: 1.25;
     }
 }
 </style>

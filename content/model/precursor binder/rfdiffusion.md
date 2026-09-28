@@ -306,13 +306,6 @@ sync: rfdiffusion-top-n
 }
 ```
 
-For each S-configuration RF3 prediction, the workflow locates the corresponding
-LigandMPNN complex, aligns the predicted binder to that reference using chain A
-C-alpha atoms, and applies the same rigid transformation to the ligand. A candidate
-is retained only when `binder_scRMSD_ca < 2.0` Å and
-`ligand_scRMSD_aligned < 5.0` Å. Passing candidates are then sorted by
-`ranking_score` in descending order before the top 20 are written and packaged.
-
 ```python [TopN.py]
 #!/usr/bin/env python3
 import glob

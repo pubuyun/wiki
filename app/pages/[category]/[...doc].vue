@@ -1,5 +1,6 @@
 <script setup>
 import { Icon } from "@iconify/vue";
+import { contentTocLinks } from "~/utils/content-toc";
 definePageMeta({
     layout: "doc",
     key: (route) => route.fullPath,
@@ -12,6 +13,7 @@ const categoryPath = computed(() => `/${category.value}`);
 const activePath = computed(() => normalizeContentPath(route.path));
 
 const { data: page } = await useContentPageData(activePath);
+const tocLinks = computed(() => contentTocLinks(page.value?.body));
 
 const contentGraphPaths = new Set(runtimeConfig.public.contentGraphPaths);
 const graphSrc = computed(() => {
@@ -77,9 +79,20 @@ const sections = computed(() => {
             continue;
         }
 
+        if (nodeTag(child) === "collapsible-paragraph") {
+            result.push({
+                id: nodeProps(child)?.id ?? `section-${result.length}`,
+                heading: null,
+                children: [child],
+                collapsible: true,
+            });
+            currentSection = null;
+            continue;
+        }
+
         if (!currentSection) {
             currentSection = {
-                id: "intro",
+                id: result.length === 0 ? "intro" : `section-${result.length}`,
                 heading: null,
                 children: [],
             };
@@ -152,22 +165,24 @@ function bodyWithChildren(body, children) {
 
         <ContentGraph v-if="graphSrc" :src="graphSrc" />
 
-        <MobileContentBar
-            v-if="page.body?.toc?.links?.length"
-            :toc="page.body.toc.links"
-        />
+        <MobileContentBar v-if="tocLinks.length" :toc="tocLinks" />
         <section
             v-for="section in sections"
             :key="section.id"
             class="mb-4 flex max-w-full min-w-0 flex-col gap-4"
         >
             <ContentRenderer
-                v-if="section.heading"
+                v-if="section.collapsible"
+                :value="sectionValue(section.children)"
+                class="content min-w-0 flex-1 text-on-surface"
+            />
+            <ContentRenderer
+                v-if="section.heading && !section.collapsible"
                 :value="sectionValue([section.heading])"
                 class="content overflow-wrap-anywhere min-w-0 flex-1 text-on-surface"
             />
             <div
-                v-if="section.children.length"
+                v-if="section.children.length && !section.collapsible"
                 class="relative -translate-x-2 pr-2"
             >
                 <div

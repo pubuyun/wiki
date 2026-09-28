@@ -176,7 +176,10 @@ const glandTransporter = ref<TransporterAnimExpose | null>(null);
 const precursorVisibility = ref<HTMLElement | null>(null);
 const precursor = ref<HTMLElement | null>(null);
 const precursorVisual = ref<HTMLElement | null>(null);
+const precursorGlutamate = ref<HTMLElement | null>(null);
 const precursorLabel = ref<HTMLElement | null>(null);
+
+const GLUTAMATE_RELEASE_DURATION = 0.48;
 
 type PrecursorPathPoint = {
     x: number;
@@ -313,7 +316,12 @@ function precursorPointVars(point: PrecursorPathPoint) {
 }
 
 function setPrecursorStartState(path = activePrecursorPath) {
-    if (!precursor.value || !precursorVisual.value || !precursorLabel.value) {
+    if (
+        !precursor.value ||
+        !precursorVisual.value ||
+        !precursorGlutamate.value ||
+        !precursorLabel.value
+    ) {
         return;
     }
 
@@ -324,6 +332,12 @@ function setPrecursorStartState(path = activePrecursorPath) {
         yPercent: -50,
     });
     gsap.set(precursorLabel.value, { autoAlpha: 1, y: 0 });
+    gsap.set(precursorGlutamate.value, {
+        autoAlpha: 1,
+        xPercent: 0,
+        yPercent: 0,
+        rotation: 0,
+    });
     gsap.set(precursorVisual.value, {
         rotation: path.start.rotation,
         scale: path.start.scale,
@@ -629,6 +643,7 @@ onMounted(async () => {
         !precursorVisibility.value ||
         !precursor.value ||
         !precursorVisual.value ||
+        !precursorGlutamate.value ||
         !precursorLabel.value
     ) {
         return;
@@ -772,6 +787,7 @@ onMounted(async () => {
                     scale: path.final.scale,
                 });
                 gsap.set(precursorLabel.value, { autoAlpha: 0 });
+                gsap.set(precursorGlutamate.value, { autoAlpha: 0 });
                 return;
             }
 
@@ -781,7 +797,7 @@ onMounted(async () => {
                     id: "abcc11-genotype-story",
                     trigger: scene.value,
                     start: "top top",
-                    end: () => `+=${window.innerHeight * 4.8}`,
+                    end: () => `+=${window.innerHeight * 5.35}`,
                     scrub: 0.65,
                     pin: true,
                     anticipatePin: 1,
@@ -978,10 +994,27 @@ onMounted(async () => {
                     "throughTransporter",
                 );
 
-            timeline.addLabel(
-                "odorRoute",
-                `throughTransporter+=${path.glandInside.moveDuration}`,
-            );
+            timeline
+                .addLabel(
+                    "glutamateRelease",
+                    `throughTransporter+=${path.glandInside.moveDuration}`,
+                )
+                .to(
+                    precursorGlutamate.value,
+                    {
+                        xPercent: 45,
+                        yPercent: -55,
+                        rotation: 35,
+                        autoAlpha: 0,
+                        duration: GLUTAMATE_RELEASE_DURATION,
+                        ease: "power2.in",
+                    },
+                    "glutamateRelease",
+                )
+                .addLabel(
+                    "odorRoute",
+                    `glutamateRelease+=${GLUTAMATE_RELEASE_DURATION}`,
+                );
 
             if (transporterTimeline) {
                 timeline.to(
@@ -1418,12 +1451,24 @@ onUnmounted(() => {
                             alt=""
                             draggable="false"
                         />
+                        <div
+                            ref="precursorGlutamate"
+                            class="abcc11-precursor__glutamate absolute inset-0 size-full will-change-[transform,opacity]"
+                            aria-hidden="true"
+                        >
+                            <img
+                                class="abcc11-precursor__layer absolute inset-0 block size-full scale-x-[-1] object-contain select-none"
+                                src="/glu.png"
+                                alt=""
+                                draggable="false"
+                            />
+                        </div>
                     </div>
                     <span
                         ref="precursorLabel"
                         class="abcc11-precursor__label absolute top-[calc(100%+0.25rem)] left-1/2 -translate-x-1/2 text-[clamp(0.72rem,1.15vw,1.2rem)] leading-none whitespace-nowrap text-white will-change-[transform,opacity]"
                     >
-                        Cys-Gly-3M3SH
+                        SG-3M3SH
                     </span>
                 </div>
             </div>

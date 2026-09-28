@@ -4,6 +4,11 @@ description: Molecular dynamics and binding-energy analysis for precursor binder
 order: 230
 ---
 
+## RMSD Analysis
+
+::document-rmsd-xvg-chart{collection="precursor-binder"}
+::
+
 ## Molecular Dynamics Parameters
 
 ### Energy Minimization (`em.mdp`)
