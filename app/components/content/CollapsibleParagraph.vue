@@ -4,18 +4,61 @@ import {
     CollapsibleRoot,
     CollapsibleTrigger,
 } from "reka-ui";
+import { onBeforeUnmount, onMounted, ref } from "vue";
 
-defineProps<{
+const props = defineProps<{
     title: string;
     id?: string;
+    blurPreview?: boolean;
 }>();
+
+const isOpen = ref(false);
+const contentCard = ref<HTMLElement | null>(null);
+const contentBody = ref<HTMLElement | null>(null);
+const expandedHeight = ref(0);
+let resizeObserver: ResizeObserver | undefined;
+
+function updateExpandedHeight() {
+    if (contentCard.value) {
+        expandedHeight.value = Math.ceil(contentCard.value.scrollHeight) + 1;
+    }
+}
+
+onMounted(() => {
+    updateExpandedHeight();
+    if (contentBody.value) {
+        resizeObserver = new ResizeObserver(updateExpandedHeight);
+        resizeObserver.observe(contentBody.value);
+    }
+    window.addEventListener("resize", updateExpandedHeight);
+});
+
+onBeforeUnmount(() => {
+    resizeObserver?.disconnect();
+    window.removeEventListener("resize", updateExpandedHeight);
+});
+
+function onContentClick(event: MouseEvent) {
+    if (!props.blurPreview || !isOpen.value) return;
+
+    const target = event.target;
+    if (
+        target instanceof Element &&
+        target.closest("a, button, input, select, textarea, [role='button']")
+    ) {
+        return;
+    }
+
+    isOpen.value = false;
+}
 </script>
 
 <template>
     <CollapsibleRoot
-        :default-open="false"
+        v-model:open="isOpen"
         :unmount-on-hide="false"
-        class="flex min-w-0 flex-col gap-4"
+        class="flex min-w-0 flex-col transition-[gap] duration-300 motion-reduce:transition-none"
+        :class="blurPreview || isOpen ? 'gap-4' : 'gap-0'"
     >
         <h2
             :id="id"
@@ -48,15 +91,43 @@ defineProps<{
             />
         </h2>
 
-        <CollapsibleContent class="relative -translate-x-2 pr-2">
+        <CollapsibleContent
+            force-mount
+            class="relative -translate-x-2 pr-2"
+            @click="onContentClick"
+        >
             <div
-                class="absolute inset-0 translate-x-2 translate-y-4 rounded-2xl bg-primary sm:rounded-3xl lg:rounded-4xl"
+                class="absolute inset-0 translate-x-2 translate-y-4 rounded-2xl bg-primary transition-opacity duration-300 motion-reduce:transition-none sm:rounded-3xl lg:rounded-4xl"
+                :class="blurPreview || isOpen ? 'opacity-100' : 'opacity-0'"
                 aria-hidden="true"
             />
             <div
-                class="content paragraph overflow-wrap-anywhere relative min-w-0 rounded-2xl bg-secondary p-4 text-on-secondary sm:rounded-3xl sm:p-5 lg:rounded-4xl lg:p-6"
+                ref="contentCard"
+                class="content paragraph collapsible-card overflow-wrap-anywhere relative min-w-0 rounded-2xl bg-secondary text-on-secondary sm:rounded-3xl lg:rounded-4xl"
+                :class="blurPreview && isOpen ? 'cursor-pointer' : ''"
+                :data-preview="blurPreview ? '' : undefined"
+                :data-state="isOpen ? 'open' : 'closed'"
+                :style="{ '--expanded-height': `${expandedHeight}px` }"
             >
-                <slot />
+                <div
+                    ref="contentBody"
+                    class="p-4 transition-[filter] duration-300 motion-reduce:transition-none sm:p-5 lg:p-6"
+                    :inert="!isOpen"
+                    :class="
+                        blurPreview && !isOpen
+                            ? 'pointer-events-none blur-sm select-none'
+                            : ''
+                    "
+                >
+                    <slot />
+                </div>
+                <button
+                    v-if="blurPreview && !isOpen"
+                    type="button"
+                    class="absolute inset-0 w-full cursor-pointer rounded-[inherit] focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-outline"
+                    :aria-label="`Expand ${title}`"
+                    @click.stop="isOpen = true"
+                />
             </div>
         </CollapsibleContent>
     </CollapsibleRoot>
@@ -65,5 +136,25 @@ defineProps<{
 <style scoped>
 .overflow-wrap-anywhere {
     overflow-wrap: anywhere;
+}
+
+.collapsible-card {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 300ms ease;
+}
+
+.collapsible-card[data-preview] {
+    max-height: 9rem;
+}
+
+.collapsible-card[data-state="open"] {
+    max-height: var(--expanded-height);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .collapsible-card {
+        transition: none;
+    }
 }
 </style>

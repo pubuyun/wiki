@@ -112,6 +112,15 @@ When you *do* want to insert a `<br />` break tag using Markdown, you
 end a line with two or more spaces, then type return.
 ::
 
+::collapsible-paragraph{#paragraph-preview title="Paragraph Preview" blur-preview}
+A paragraph can span several lines without adding a break after each line.
+This preview shows the beginning of the text while the paragraph is folded.
+Click the title or the blurred paragraph to read the whole explanation.
+
+Once expanded, clicking the paragraph folds it again. The title works in
+both directions as well.
+::
+
 ## header 3
 
 ### Lists
