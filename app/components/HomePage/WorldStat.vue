@@ -19,15 +19,6 @@ const WORLD_MAP_SCALE = 1;
 
 const regions = [
     {
-        name: "Europe",
-        value: 85,
-        display: "85%",
-        className: "world-stat-card--europe",
-        origin: "82% 70%",
-        fromX: "11vw",
-        fromY: "10vh",
-    },
-    {
         name: "South Asia",
         value: 70,
         display: "70%",
@@ -44,6 +35,15 @@ const regions = [
         origin: "0% 92%",
         fromX: "-10vw",
         fromY: "14vh",
+    },
+    {
+        name: "Europe",
+        value: 85,
+        display: "85%",
+        className: "world-stat-card--europe",
+        origin: "82% 70%",
+        fromX: "11vw",
+        fromY: "10vh",
     },
     {
         name: "Africa",
@@ -127,6 +127,14 @@ onMounted(() => {
 
                 const counter = { value: 0 };
                 const start = 0;
+                valueElement.textContent = "0%";
+                gsap.set(card, {
+                    autoAlpha: 0,
+                    scale: 0.08,
+                    x: region.fromX,
+                    y: region.fromY,
+                    transformOrigin: region.origin,
+                });
 
                 timeline
                     .fromTo(
@@ -145,6 +153,7 @@ onMounted(() => {
                             y: 0,
                             duration: 0.72,
                             ease: "back.out(1.45)",
+                            immediateRender: true,
                         },
                         start,
                     )
@@ -187,7 +196,7 @@ onUnmounted(() => {
         aria-labelledby="world-stat-title"
     >
         <h2 id="world-stat-title" class="sr-only">
-            Unmutated ABCC11 gene frequency around the world
+            Odor–associated ABCC11 allele frequency around the world
         </h2>
 
         <div ref="stage" class="world-stat-scene__stage">
@@ -200,23 +209,25 @@ onUnmounted(() => {
                 aria-hidden="true"
             />
 
-            <article
-                v-for="region in regions"
-                :key="region.name"
-                class="world-stat-card"
-                :class="region.className"
-                :aria-label="`${region.name}: ${region.display}`"
-            >
-                <h3 class="world-stat-card__name">
-                    {{ region.name }}
-                </h3>
-                <span class="world-stat-card__value" aria-hidden="true">
-                    0%
-                </span>
-            </article>
+            <div class="world-stat-scene__grid">
+                <article
+                    v-for="region in regions"
+                    :key="region.name"
+                    class="world-stat-card"
+                    :class="region.className"
+                    :aria-label="`${region.name}: ${region.display}`"
+                >
+                    <h3 class="world-stat-card__name">
+                        {{ region.name }}
+                    </h3>
+                    <span class="world-stat-card__value" aria-hidden="true">
+                        {{ region.display }}
+                    </span>
+                </article>
+            </div>
 
             <p class="world-stat-scene__footer">
-                Unmutated ABCC11 Gene Frequency
+                Odor–associated ABCC11 allele frequency
             </p>
         </div>
     </section>
@@ -225,217 +236,135 @@ onUnmounted(() => {
 <style scoped>
 .world-stat-scene__stage {
     position: relative;
-    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: clamp(1.5rem, 5svh, 3rem);
+    width: min(100%, 100rem);
     height: 100%;
     margin-inline: auto;
-    overflow: hidden;
+    padding: 8svh 5.5%;
 }
-
 .world-stat-scene__map {
     position: absolute;
     z-index: 0;
-    top: 56%;
+    top: 50%;
     left: 50%;
     width: var(--world-map-width, 100%);
     height: auto;
     color: #2e6dbf;
     transform: translate(-50%, -50%);
-    opacity: 0.96;
+    opacity: 0.65;
+    pointer-events: none;
 }
-
 .world-stat-scene__map :deep(path) {
     fill: #2e6dbf;
 }
-
+.world-stat-scene__grid {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: repeat(2, minmax(0, 1fr));
+    gap: clamp(1rem, 3.5vw, 2.5rem);
+    flex: 1;
+    min-height: 0;
+    max-height: 65svh;
+}
 .world-stat-card {
-    position: absolute;
-    z-index: 2;
+    container-type: inline-size;
     display: flex;
     align-items: center;
-    justify-content: space-around;
-    gap: clamp(0.5rem, 2vw, 2rem);
-    padding: clamp(1rem, 3vw, 3rem);
-    border-radius: clamp(1.5rem, 3vw, 3.25rem);
-    font-family: var(--font-righteous), sans-serif;
-    will-change: transform, opacity;
+    justify-content: space-between;
+    gap: clamp(0.5rem, 1.5vw, 1.5rem);
+    min-width: 0;
+    padding: clamp(1rem, 2.5vw, 2.5rem);
+    border-radius: clamp(1.5rem, 2.5vw, 3rem);
+    color: #073873;
+    font-family: var(--font-belanosima), sans-serif;
 }
-
 .world-stat-card__name,
 .world-stat-card__value {
     margin: 0;
-    line-height: 0.95;
-}
-
-.world-stat-card__name {
-    font-size: clamp(1.7rem, 4vw, 4.5rem);
     font-weight: 400;
+    line-height: 1.05;
+}
+.world-stat-card__name {
+    max-width: 38%;
+    font-size: clamp(1.25rem, 9cqi, 4rem);
     text-align: center;
     text-wrap: balance;
 }
-
 .world-stat-card__value {
     flex: 0 0 auto;
     color: #fff;
-    font-size: clamp(3.4rem, 8.5vw, 9.5rem);
+    font-size: clamp(2rem, 17cqi, 8rem);
     white-space: nowrap;
 }
-
-.world-stat-card--europe {
-    top: 10.5%;
-    left: 6.5%;
-    width: 42.5%;
-    height: 32.5%;
-    color: #fff;
-    background: #0a4297;
-}
-
 .world-stat-card--south-asia {
-    top: 10.5%;
-    left: 51%;
-    width: 32.5%;
-    height: 32.5%;
-    color: #073873;
-    background: #28b5d4;
+    background: #53c3d4;
 }
-
-.world-stat-card--south-asia .world-stat-card__name {
-    max-width: 42%;
-}
-
 .world-stat-card--east-asia {
-    top: 10.5%;
-    right: 5%;
-    flex-direction: column;
-    width: 10%;
-    height: 32.5%;
-    padding: clamp(0.75rem, 1.2vw, 1.5rem);
-    color: #073873;
-    background: #65dbbf;
+    background: #60c5b2;
 }
-
-.world-stat-card--east-asia .world-stat-card__name {
-    font-size: clamp(1.25rem, 3vw, 3.2rem);
-}
-
-.world-stat-card--east-asia .world-stat-card__value {
-    font-size: clamp(2.7rem, 5.8vw, 6.5rem);
-}
-
-.world-stat-card--africa {
-    top: 47.5%;
-    right: 5%;
-    left: 6.5%;
-    height: 35.5%;
+.world-stat-card--europe {
     color: #fff;
-    background: #0a0044;
+    background: #72b8e3;
 }
-
-.world-stat-card--africa .world-stat-card__value {
-    font-size: clamp(4.4rem, 10.5vw, 12rem);
+.world-stat-card--africa {
+    color: #fff;
+    background: #88b5df;
 }
-
 .world-stat-scene__footer {
-    position: absolute;
-    z-index: 2;
-    right: 1rem;
-    bottom: 4%;
-    left: 1rem;
+    position: relative;
+    z-index: 1;
     margin: 0;
     color: #fff;
-    font-family: var(--font-righteous), sans-serif;
-    font-size: clamp(1.4rem, 3.2vw, 3.8rem);
-    line-height: 1;
+    font-family: var(--font-belanosima), sans-serif;
+    font-size: clamp(1.25rem, 3vw, 3rem);
+    line-height: 1.2;
     text-align: center;
     text-wrap: balance;
-    will-change: transform, opacity;
 }
-
-@media (max-width: 52rem) {
+@media (max-width: 40rem) {
+    .world-stat-scene__stage {
+        padding: 10svh 5%;
+    }
+    .world-stat-scene__grid {
+        gap: 1rem;
+        max-height: 62svh;
+    }
     .world-stat-card {
-        padding: clamp(0.75rem, 2.5vw, 1.5rem);
-        border-radius: clamp(1rem, 3vw, 2rem);
+        flex-direction: column;
+        justify-content: center;
+        gap: 1rem;
+        padding: 1rem 0.5rem;
     }
-
     .world-stat-card__name {
-        font-size: clamp(1.25rem, 4vw, 2.25rem);
+        max-width: none;
+        font-size: clamp(1.2rem, 5vw, 2rem);
     }
-
     .world-stat-card__value {
-        font-size: clamp(2.5rem, 8vw, 5rem);
-    }
-
-    .world-stat-card--europe {
-        width: 43%;
-    }
-
-    .world-stat-card--south-asia {
-        left: 51%;
-        width: 31%;
-    }
-
-    .world-stat-card--east-asia {
-        right: 3%;
-        width: 13%;
-    }
-
-    .world-stat-card--east-asia .world-stat-card__name {
-        font-size: clamp(0.9rem, 3vw, 1.65rem);
-    }
-
-    .world-stat-card--east-asia .world-stat-card__value {
-        font-size: clamp(2rem, 6vw, 3.75rem);
-    }
-
-    .world-stat-card--africa {
-        right: 3%;
+        font-size: clamp(2rem, 10vw, 4rem);
     }
 }
-
-@media (orientation: portrait) and (max-width: 40rem) {
-    .world-stat-card--europe,
-    .world-stat-card--south-asia {
-        top: 8%;
-        flex-direction: column;
-        height: 25%;
-        gap: 0.25rem;
+@media (max-height: 32rem) and (min-width: 40.01rem) {
+    .world-stat-scene {
+        min-height: 24rem;
     }
-
-    .world-stat-card--europe {
-        left: 3%;
-        width: 45%;
+    .world-stat-scene__stage {
+        padding-block: 2rem;
+        gap: 1rem;
     }
-
-    .world-stat-card--south-asia {
-        left: 50%;
-        width: 47%;
+    .world-stat-scene__grid {
+        max-height: none;
+        gap: 1rem;
     }
-
-    .world-stat-card--south-asia .world-stat-card__name {
-        max-width: none;
+    .world-stat-card__name {
+        font-size: clamp(1.25rem, 3vw, 2rem);
     }
-
-    .world-stat-card--east-asia {
-        top: 36%;
-        right: 3%;
-        width: 24%;
-        height: 22%;
-    }
-
-    .world-stat-card--africa {
-        top: 36%;
-        right: auto;
-        left: 3%;
-        width: 69%;
-        height: 38%;
-    }
-
-    .world-stat-card--africa .world-stat-card__value {
-        font-size: clamp(3rem, 13vw, 5.5rem);
-    }
-
-    .world-stat-scene__footer {
-        bottom: 6%;
-        font-size: clamp(1.2rem, 5vw, 2rem);
+    .world-stat-card__value {
+        font-size: clamp(2rem, 6vw, 4rem);
     }
 }
 </style>

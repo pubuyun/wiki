@@ -3,6 +3,7 @@ export const HOME_CHAPTERS = {
     smell: "pause:?!Odor!?",
     isThisCommon: "pause:Is this common?",
     worldStat: "pause:Odor around the world",
+    eastAsiaAwareness: "pause:Understanding and awareness in East Asia",
     abcc11Gene: "pause:The ABCC11 gene",
     abcc11Pathway: "pause:From sweat gland to bacteria",
     peptsh: "pause:PepTsh transports the precursor",

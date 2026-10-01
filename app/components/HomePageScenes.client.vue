@@ -88,6 +88,11 @@ const lazyScenes = [
         minHeight: "100svh",
     },
     {
+        id: "east-asia-awareness",
+        loader: () => import("./HomePage/EastAsiaAwareness.vue"),
+        minHeight: "100svh",
+    },
+    {
         id: "abcc11",
         loader: () => import("./HomePage/ABCC11.vue"),
         minHeight: "100svh",
