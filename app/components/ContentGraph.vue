@@ -9,19 +9,28 @@ defineOptions({ inheritAttrs: false });
 
 defineProps<{
     src: string;
+    fullHeight?: boolean;
 }>();
 </script>
 
 <template>
     <ClientOnly>
         <Suspense>
-            <ContentGraphInteractive v-bind="$attrs" :src="src" />
+            <ContentGraphInteractive
+                v-bind="$attrs"
+                :src="src"
+                :full-height="fullHeight"
+            />
 
             <template #fallback>
                 <figure
                     v-bind="$attrs"
                     class="grid w-full place-items-center overflow-hidden rounded-2xl border-2 border-outline bg-surface-elevated text-sm text-on-surface shadow-sm sm:rounded-3xl lg:rounded-4xl portrait:hidden"
-                    style="height: min(560px, calc(100dvh - 5rem))"
+                    :style="{
+                        height: fullHeight
+                            ? 'calc(100dvh - 5rem)'
+                            : 'min(560px, calc(100dvh - 5rem))',
+                    }"
                     aria-label="Interactive graph"
                     aria-busy="true"
                 >
@@ -34,7 +43,11 @@ defineProps<{
             <figure
                 v-bind="$attrs"
                 class="grid w-full place-items-center overflow-hidden rounded-2xl border-2 border-outline bg-surface-elevated text-sm text-on-surface shadow-sm sm:rounded-3xl lg:rounded-4xl portrait:hidden"
-                style="height: min(560px, calc(100dvh - 5rem))"
+                :style="{
+                    height: fullHeight
+                        ? 'calc(100dvh - 5rem)'
+                        : 'min(560px, calc(100dvh - 5rem))',
+                }"
                 aria-label="Interactive graph"
                 aria-busy="true"
             >

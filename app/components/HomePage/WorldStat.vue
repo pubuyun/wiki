@@ -297,7 +297,7 @@ onUnmounted(() => {
 }
 .world-stat-card__value {
     flex: 0 0 auto;
-    color: #fff;
+    color: inherit;
     font-size: clamp(2rem, 17cqi, 8rem);
     white-space: nowrap;
 }
@@ -308,11 +308,9 @@ onUnmounted(() => {
     background: #60c5b2;
 }
 .world-stat-card--europe {
-    color: #fff;
     background: #72b8e3;
 }
 .world-stat-card--africa {
-    color: #fff;
     background: #88b5df;
 }
 .world-stat-scene__footer {

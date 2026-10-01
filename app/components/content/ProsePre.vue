@@ -22,18 +22,26 @@
         >
             Invalid Vue Flow JSON
         </p>
-        <pre class="m-0 overflow-x-auto p-4 text-sm leading-6"><slot /></pre>
+        <pre
+            ref="scrollElement"
+            :tabindex="isScrollable ? 0 : undefined"
+            class="prose-scroll-region m-0 overflow-x-auto p-4 text-sm leading-6"
+        ><slot /></pre>
     </div>
     <pre
         v-else
+        ref="scrollElement"
+        :tabindex="isScrollable ? 0 : undefined"
         :class="[
             $props.class,
-            'my-6 overflow-x-auto rounded-lg bg-white p-4 text-sm leading-6 shadow-sm dark:bg-[#24292e]',
+            'prose-scroll-region my-6 overflow-x-auto rounded-lg bg-white p-4 text-sm leading-6 shadow-sm dark:bg-[#24292e]',
         ]"
     ><slot /></pre>
 </template>
 
 <script setup lang="ts">
+const { scrollElement, isScrollable } = useHorizontalScroll();
+
 const props = defineProps({
     code: {
         type: String,
@@ -89,6 +97,11 @@ const parsedGraph = computed(() => {
 </script>
 
 <style>
+.prose-scroll-region:focus-visible {
+    outline: 3px solid var(--outline);
+    outline-offset: 3px;
+}
+
 pre code .line {
     display: block;
 }

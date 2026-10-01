@@ -206,7 +206,12 @@ const footerLinkClass =
                         >
                             Sponsors
                         </h2>
-                        <div class="sponsor-marquee">
+                        <div
+                            class="sponsor-marquee"
+                            tabindex="0"
+                            role="group"
+                            aria-labelledby="footer-sponsors-title"
+                        >
                             <div class="sponsor-track">
                                 <div
                                     v-for="isDuplicate in sponsorTrackCopies"
@@ -296,6 +301,7 @@ const footerLinkClass =
 
                         <div
                             class="mt-8 flex w-full flex-wrap justify-center gap-3 xl:mt-10 xl:flex-nowrap xl:justify-between xl:gap-0"
+                            role="group"
                             aria-label="GreatBay-SCIE social media"
                         >
                             <a
@@ -404,6 +410,20 @@ const footerLinkClass =
 
 .sponsor-marquee:hover .sponsor-track {
     animation-play-state: paused;
+}
+
+.sponsor-marquee:focus-visible {
+    outline: 3px solid var(--outline);
+    outline-offset: 3px;
+}
+
+.sponsor-marquee:focus-within {
+    overflow-x: auto;
+}
+
+.sponsor-marquee:focus-within .sponsor-track {
+    animation: none;
+    transform: none;
 }
 
 @keyframes sponsor-scroll {

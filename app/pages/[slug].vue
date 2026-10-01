@@ -98,7 +98,12 @@ function isIconUrl(icon: string) {
         v-if="displayPage"
         class="flex min-w-0 flex-1 flex-col px-4 pt-4 sm:px-6 lg:px-8 xl:px-12"
     >
-        <ContentGraph v-if="graphSrc" :src="graphSrc" class="mb-8" />
+        <ContentGraph
+            v-if="graphSrc"
+            :src="graphSrc"
+            :full-height="graphSrc === '/content/model/index.json'"
+            class="mb-8"
+        />
 
         <nav
             class="relative flex min-w-0 -translate-x-2 flex-col gap-10 pr-2 pb-4"
@@ -134,7 +139,7 @@ function isIconUrl(icon: string) {
                                 </h2>
                                 <p
                                     v-if="navDescription(node.path)"
-                                    class="mt-1 font-main text-base leading-relaxed opacity-85"
+                                    class="mt-1 font-main text-base leading-relaxed"
                                 >
                                     {{ navDescription(node.path) }}
                                 </p>
@@ -177,7 +182,7 @@ function isIconUrl(icon: string) {
                                 ></div>
                                 <NuxtLink
                                     :to="child.path"
-                                    class="group flex min-h-52 w-full min-w-0 flex-col rounded-2xl bg-surface-elevated p-4 text-on-surface no-underline shadow-sm transition hover:-translate-y-1 hover:border-primary hover:text-on-surface hover:shadow-lg focus-visible:-translate-y-1 focus-visible:border-outline focus-visible:text-on-surface focus-visible:outline-none sm:min-h-60 sm:p-5 lg:p-6"
+                                    class="group flex min-h-52 w-full min-w-0 flex-col rounded-2xl bg-surface-elevated p-4 text-on-surface no-underline shadow-sm transition hover:-translate-y-1 hover:border-primary hover:text-on-surface hover:shadow-lg focus-visible:-translate-y-1 focus-visible:border-outline focus-visible:text-on-surface focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-outline sm:min-h-60 sm:p-5 lg:p-6"
                                 >
                                     <img
                                         v-if="isIconUrl(navIcon(child.path))"
@@ -199,7 +204,7 @@ function isIconUrl(icon: string) {
 
                                     <p
                                         v-if="navDescription(child.path)"
-                                        class="mt-2 font-main text-base leading-relaxed opacity-85"
+                                        class="mt-2 font-main text-base leading-relaxed"
                                     >
                                         {{ navDescription(child.path) }}
                                     </p>
@@ -225,7 +230,7 @@ function isIconUrl(icon: string) {
                         ></div>
                         <NuxtLink
                             :to="node.path"
-                            class="group relative z-10 flex min-h-52 w-full min-w-0 flex-col rounded-2xl bg-surface-elevated p-4 text-on-surface no-underline shadow-sm transition hover:-translate-y-1 hover:border-primary hover:text-on-surface hover:shadow-lg focus-visible:-translate-y-1 focus-visible:border-outline focus-visible:text-on-surface focus-visible:outline-none sm:min-h-60 sm:p-5 lg:p-6"
+                            class="group relative z-10 flex min-h-52 w-full min-w-0 flex-col rounded-2xl bg-surface-elevated p-4 text-on-surface no-underline shadow-sm transition hover:-translate-y-1 hover:border-primary hover:text-on-surface hover:shadow-lg focus-visible:-translate-y-1 focus-visible:border-outline focus-visible:text-on-surface focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-outline sm:min-h-60 sm:p-5 lg:p-6"
                         >
                             <img
                                 v-if="isIconUrl(navIcon(node.path))"
@@ -247,7 +252,7 @@ function isIconUrl(icon: string) {
 
                             <p
                                 v-if="navDescription(node.path)"
-                                class="mt-2 font-main text-base leading-relaxed opacity-85"
+                                class="mt-2 font-main text-base leading-relaxed"
                             >
                                 {{ navDescription(node.path) }}
                             </p>

@@ -1,6 +1,9 @@
 <script setup>
 import { Icon } from "@iconify/vue";
 import { contentTocLinks } from "~/utils/content-toc";
+import katexMainFont from "katex/dist/fonts/KaTeX_Main-Regular.woff2?url";
+import katexMathFont from "katex/dist/fonts/KaTeX_Math-Italic.woff2?url";
+import katexSizeFont from "katex/dist/fonts/KaTeX_Size2-Regular.woff2?url";
 definePageMeta({
     layout: "doc",
     key: (route) => route.fullPath,
@@ -13,6 +16,17 @@ const categoryPath = computed(() => `/${category.value}`);
 const activePath = computed(() => normalizeContentPath(route.path));
 
 const { data: page } = await useContentPageData(activePath);
+useHead(() => ({
+    link: JSON.stringify(page.value?.body ?? {}).includes("katex")
+        ? [katexMainFont, katexMathFont, katexSizeFont].map((href) => ({
+              rel: "preload",
+              as: "font",
+              type: "font/woff2",
+              crossorigin: "anonymous",
+              href,
+          }))
+        : [],
+}));
 const tocLinks = computed(() => contentTocLinks(page.value?.body));
 
 const contentGraphPaths = new Set(runtimeConfig.public.contentGraphPaths);

@@ -37,7 +37,6 @@
             <div v-else class="route-loader">
                 <p class="route-loader__label">Loading...</p>
                 <img
-                    ref="loadingImage"
                     :src="loadingImageUrl"
                     class="route-loader__image"
                     alt=""
@@ -55,25 +54,23 @@
 <script setup lang="ts">
 import { gsap } from "gsap";
 
-const MIN_INITIAL_ANIMATION_MS = 600;
 const route = useRoute();
 const initialRouteIsHome = route.path === "/";
 
-const showLoading = ref(true);
+const showLoading = ref(initialRouteIsHome);
 const canShowRouteLoading = ref(false);
 const isLoadingImageLoaded = ref(false);
 const isLoadingImageSettled = ref(false);
-const isInitialLoading = ref(true);
+const isInitialLoading = ref(initialRouteIsHome);
 const isInitialPageReady = ref(false);
 const shouldSkipRouteLoading = ref(false);
 const displayedProgress = ref(0);
-const loadingImage = ref<HTMLImageElement>();
 const homeFill = ref<HTMLElement>();
 const homeErase = ref<HTMLElement>();
 const homeWordmark = ref<HTMLElement>();
 const isInitialLoadingComplete = useState(
     "initial-loading-complete",
-    () => false,
+    () => !initialRouteIsHome,
 );
 
 const nuxtApp = useNuxtApp();
@@ -88,21 +85,6 @@ const loadingTransitionName = computed(() =>
     isHomeOpening.value ? "home-loading" : "fade",
 );
 
-if (!initialRouteIsHome) {
-    useHead({
-        link: [
-            {
-                rel: "preload",
-                as: "image",
-                href: loadingImageUrl,
-                fetchpriority: "high",
-            },
-        ],
-    });
-}
-
-let initialAnimationStartedAt = 0;
-let initialLoadingTimer: ReturnType<typeof window.setTimeout> | undefined;
 let loaderTimeline: gsap.core.Timeline | undefined;
 let loaderSequenceReady = false;
 let loaderExitStarted = false;
@@ -248,34 +230,16 @@ function startHomeLoader() {
 
 function finishInitialLoading() {
     if (!isInitialLoading.value || !isInitialPageReady.value) return;
-    if (isHomeOpening.value) {
-        finishHomeLoader();
-        return;
-    }
-    if (!isLoadingImageSettled.value) return;
-
-    const remainingTime = Math.max(
-        0,
-        MIN_INITIAL_ANIMATION_MS -
-            (performance.now() - initialAnimationStartedAt),
-    );
-    window.clearTimeout(initialLoadingTimer);
-    initialLoadingTimer = window.setTimeout(() => {
-        showLoading.value = false;
-    }, remainingTime);
+    finishHomeLoader();
 }
 
 function handleLoadingImageLoad() {
-    if (initialAnimationStartedAt === 0)
-        initialAnimationStartedAt = performance.now();
     isLoadingImageLoaded.value = true;
     isLoadingImageSettled.value = true;
     finishInitialLoading();
 }
 
 function handleLoadingImageError() {
-    if (initialAnimationStartedAt === 0)
-        initialAnimationStartedAt = performance.now();
     isLoadingImageSettled.value = true;
     finishInitialLoading();
 }
@@ -318,11 +282,11 @@ function isSameCategoryContentNavigation(to: typeof route, from: typeof route) {
 }
 
 onMounted(async () => {
-    initialAnimationStartedAt = performance.now();
     if (initialRouteIsHome) startHomeLoader();
-    else if (loadingImage.value?.complete) {
-        if (loadingImage.value.naturalWidth > 0) handleLoadingImageLoad();
-        else handleLoadingImageError();
+    else {
+        if (window.requestIdleCallback)
+            window.requestIdleCallback(preloadRouteLoadingImage);
+        else window.setTimeout(preloadRouteLoadingImage, 1);
     }
 
     await router.isReady();
@@ -334,7 +298,6 @@ onMounted(async () => {
 });
 
 onBeforeUnmount(() => {
-    window.clearTimeout(initialLoadingTimer);
     loaderTimeline?.kill();
 });
 

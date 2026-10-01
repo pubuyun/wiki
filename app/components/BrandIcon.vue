@@ -1,9 +1,11 @@
 <template>
-    <div class="relative h-full shrink-0">
+    <div class="relative aspect-[200/201] h-full shrink-0">
         <img
             src="https://static.igem.wiki/teams/6133/wiki/general/logo.webp"
             alt="Logo"
-            class="relative h-full"
+            width="200"
+            height="201"
+            class="relative h-full w-full"
         />
         <svg
             class="animate-float absolute inset-0 h-full w-full"

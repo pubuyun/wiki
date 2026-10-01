@@ -14,7 +14,8 @@
                     :alt="props.alt"
                     :width="props.width"
                     :height="props.height"
-                    class="w-full rounded-lg object-cover"
+                    class="h-auto w-full rounded-lg object-cover"
+                    decoding="async"
                 />
             </button>
             <component
@@ -24,7 +25,8 @@
                 alt=""
                 :width="props.width"
                 :height="props.height"
-                class="my-8 w-full rounded-lg border border-outline bg-secondary object-cover shadow-sm"
+                class="my-8 h-auto w-full rounded-lg border border-outline bg-secondary object-cover shadow-sm"
+                decoding="async"
             />
         </template>
     </LightboxImage>

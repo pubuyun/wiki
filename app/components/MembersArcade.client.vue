@@ -1940,7 +1940,8 @@ onBeforeUnmount(() => {
                             ref="galleryTrack"
                             class="gallery-track [box-sizing:border-box] block h-full min-w-0 overflow-x-auto overflow-y-hidden"
                             tabindex="0"
-                            aria-label="Member animal collection"
+                        aria-label="Member animal collection"
+                        role="group"
                         >
                             <div
                                 ref="galleryContent"

@@ -8,13 +8,14 @@ import {
     type HomeScrollLockChange,
 } from "~/utils/home-scroll";
 
-const navHidden = ref(false);
+const navHidden = useState<boolean>("navigation-bar-hidden", () => false);
 const lastScrollY = ref(0);
 const scrollDirectionThreshold = 6;
 const hideAfterScrollY = 80;
 const ignoreHashScrollDuration = 2400;
 let ignoreVisibilityUntil = 0;
 let visibilityLocked = false;
+let scrollFrame = 0;
 
 function updateNavVisibility() {
     const scrollY = Math.max(window.scrollY, 0);
@@ -59,8 +60,12 @@ function updateProgress() {
 }
 
 function updateScrollState() {
-    updateNavVisibility();
-    updateProgress();
+    if (scrollFrame) return;
+    scrollFrame = requestAnimationFrame(() => {
+        scrollFrame = 0;
+        updateProgress();
+        updateNavVisibility();
+    });
 }
 
 function ignoreHashScrollVisibilityChange() {
@@ -91,6 +96,7 @@ onMounted(() => {
 });
 
 onUnmounted(() => {
+    cancelAnimationFrame(scrollFrame);
     window.removeEventListener("scroll", updateScrollState);
     window.removeEventListener(
         "wiki:hash-scroll",

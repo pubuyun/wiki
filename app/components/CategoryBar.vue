@@ -7,6 +7,7 @@
         <h2 class="sr-only" id="category-sidebar-title">Category navigation</h2>
         <NuxtLink
             v-if="!collapsed"
+            :inert="!navigationBarHidden"
             to="/"
             class="icon-section absolute top-0 left-4 z-10 flex h-11 shrink-0 items-center gap-2 font-righteous! xl:h-14 xl:gap-3"
             aria-label="Expelliodor homepage"
@@ -234,6 +235,10 @@ const props = defineProps<{
 }>();
 
 const dyslexiaMode = useState<boolean>("dyslexia-mode", () => false);
+const navigationBarHidden = useState<boolean>(
+    "navigation-bar-hidden",
+    () => false,
+);
 const collapsed = useState<boolean>("category-sidebar-collapsed", () => false);
 const contentRendered = ref(!collapsed.value);
 const contentVisible = ref(!collapsed.value);

@@ -1069,6 +1069,7 @@ onUnmounted(() => {
             <div
                 ref="odorGenotypes"
                 class="genotype-group genotype-group--odor absolute z-6 flex items-center will-change-transform"
+                role="group"
                 aria-label="CC and TC genotypes express the ABCC11 transporter"
             >
                 <div
@@ -1123,6 +1124,7 @@ onUnmounted(() => {
             <div
                 ref="ttGenotype"
                 class="genotype-group genotype-group--tt absolute z-6 flex items-center will-change-transform"
+                role="group"
                 aria-label="TT genotype does not express the ABCC11 transporter"
             >
                 <div
@@ -1170,6 +1172,7 @@ onUnmounted(() => {
             >
                 <div
                     class="abcc11-story__genotypes"
+                    role="group"
                     aria-label="CC, TC, and TT ABCC11 genotypes"
                 >
                     <Chromosome :genome="0" data-genotype-target="cc" />
@@ -1177,6 +1180,7 @@ onUnmounted(() => {
                     <div
                         data-genotype-target="transporter"
                         class="abcc11-story__transporter"
+                        role="img"
                         aria-label="ABCC11 transporter"
                     >
                         <div class="transporter-stack relative aspect-964/847">
@@ -1201,6 +1205,7 @@ onUnmounted(() => {
                     <div
                         data-genotype-target="transporter-disabled"
                         class="abcc11-story__transporter"
+                        role="img"
                         aria-label="Inactive ABCC11 transporter"
                     >
                         <div class="transporter-stack relative aspect-964/847">
@@ -1433,7 +1438,8 @@ onUnmounted(() => {
                             ? 'absolute z-30'
                             : 'fixed z-[100]'
                     "
-                    aria-label="Odor precursor"
+                    role="img"
+                    aria-label="Odor precursor, SG-3M3SH"
                 >
                     <div
                         ref="precursorVisual"
@@ -1458,7 +1464,7 @@ onUnmounted(() => {
                         >
                             <img
                                 class="abcc11-precursor__layer absolute inset-0 block size-full scale-x-[-1] object-contain select-none"
-                                src="/glu.png"
+                                src="https://static.igem.wiki/teams/6133/wiki/homepage/glu.avif"
                                 alt=""
                                 draggable="false"
                             />
@@ -1726,7 +1732,7 @@ onUnmounted(() => {
 }
 
 .abcc11-story__gene {
-    color: #ff6257;
+    color: #ff8e81;
 }
 
 @media (max-width: 52rem) {

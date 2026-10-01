@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { Icon } from "@iconify/vue";
-import { gsap } from "gsap";
-import { nextTick, onMounted, onUnmounted, ref } from "vue";
+import { onMounted, onUnmounted, ref } from "vue";
 import {
     NavigationMenuContent,
     NavigationMenuItem,
@@ -15,7 +14,7 @@ interface DropdownLink {
     icon: string;
 }
 
-const props = withDefaults(
+withDefaults(
     defineProps<{
         title: string;
         to?: string;
@@ -25,140 +24,27 @@ const props = withDefaults(
 );
 
 const menuContent = ref<InstanceType<typeof NavigationMenuContent>>();
-const menuInner = ref<HTMLElement | null>(null);
-
 let observer: MutationObserver | null = null;
-let tl: gsap.core.Timeline | null = null;
 
-function getContentElement(): HTMLElement | null {
-    return (menuContent.value?.$el as HTMLElement) ?? null;
-}
-
-function syncHiddenContent(content: HTMLElement, isOpen: boolean) {
-    content.inert = !isOpen;
-    content.setAttribute("aria-hidden", String(!isOpen));
-}
-
-function animateMenu(isOpen: boolean) {
-    const content = getContentElement();
-    const inner = menuInner.value;
-    if (!content || !inner) return;
-
-    tl?.kill();
-
-    if (isOpen) {
-        content.style.zIndex = String(++menuZIndex);
-        gsap.set(content, {
-            height: "auto",
-            overflow: "hidden",
-        });
-
-        const targetHeight = content.offsetHeight;
-
-        gsap.set(content, {
-            height: 0,
-            opacity: 0,
-        });
-
-        gsap.set(inner, {
-            opacity: 0,
-            y: -10,
-        });
-
-        tl = gsap.timeline();
-
-        tl.to(content, {
-            height: targetHeight,
-            opacity: 1,
-            duration: 0.4,
-            ease: "expo.out",
-        })
-            .to(
-                inner,
-                {
-                    opacity: 1,
-                    y: 0,
-                    duration: 0.3,
-                    ease: "power3.out",
-                },
-                0.05,
-            )
-            .set(content, {
-                height: "auto",
-            });
-    } else {
-        // 此时 content 仍然保持打开状态
-        // 所以能够真正看到关闭动画
-
-        gsap.set(content, {
-            height: content.offsetHeight,
-            overflow: "hidden",
-        });
-
-        tl = gsap.timeline();
-
-        tl.to(inner, {
-            opacity: 0,
-            y: -8,
-            duration: 0.2,
-            ease: "power2.in",
-        }).to(
-            content,
-            {
-                height: 0,
-                opacity: 0,
-                duration: 0.3,
-                ease: "expo.inOut",
-            },
-            "-=0.1",
-        );
-    }
-}
-
-onMounted(async () => {
-    await nextTick();
-    const content = getContentElement();
+onMounted(() => {
+    const content = menuContent.value?.$el as HTMLElement | undefined;
     if (!content) return;
 
-    // 初始状态渲染
-    if (content.dataset.state === "open") {
-        syncHiddenContent(content, true);
-        animateMenu(true);
-    } else {
-        syncHiddenContent(content, false);
-        gsap.set(content, { height: 0, opacity: 0, overflow: "hidden" });
-        if (menuInner.value) {
-            gsap.set(menuInner.value, { opacity: 0, y: -10 });
-        }
-    }
+    const syncHiddenContent = () => {
+        const isOpen = content.dataset.state === "open";
+        content.inert = !isOpen;
+        content.setAttribute("aria-hidden", String(!isOpen));
+    };
 
-    // 监听 data-state 变化
-    observer = new MutationObserver((mutations) => {
-        for (const mutation of mutations) {
-            if (
-                mutation.type === "attributes" &&
-                mutation.attributeName === "data-state"
-            ) {
-                const isOpen = content.dataset.state === "open";
-                syncHiddenContent(content, isOpen);
-                animateMenu(isOpen);
-            }
-        }
-    });
+    syncHiddenContent();
+    observer = new MutationObserver(syncHiddenContent);
     observer.observe(content, {
         attributes: true,
         attributeFilter: ["data-state"],
     });
 });
 
-onUnmounted(() => {
-    observer?.disconnect();
-    tl?.kill();
-});
-</script>
-
-<script lang="ts">
-let menuZIndex = 50;
+onUnmounted(() => observer?.disconnect());
 </script>
 
 <template>
@@ -180,9 +66,9 @@ let menuZIndex = 50;
         <NavigationMenuContent
             ref="menuContent"
             force-mount
-            class="absolute top-full -left-1/3 w-62 overflow-hidden rounded-2xl bg-surface-bright text-on-surface shadow-sm data-[state=closed]:pointer-events-none! data-[state=open]:pointer-events-auto!"
+            class="nav-menu-content absolute top-full -left-1/3 w-62 overflow-hidden rounded-2xl bg-surface-bright text-on-surface shadow-sm data-[state=closed]:pointer-events-none! data-[state=open]:pointer-events-auto!"
         >
-            <div ref="menuInner" class="mx-auto flex w-fit flex-col">
+            <div class="mx-auto flex w-fit flex-col">
                 <NavigationMenuLink
                     v-for="link in links"
                     :key="link.to"
@@ -205,3 +91,31 @@ let menuZIndex = 50;
         </NavigationMenuContent>
     </NavigationMenuItem>
 </template>
+
+<style scoped>
+:global(.nav-menu-content) {
+    z-index: 50;
+    clip-path: inset(0);
+    transition:
+        clip-path 0.3s ease,
+        opacity 0.3s ease,
+        visibility 0s;
+}
+
+:global(.nav-menu-content[data-state="open"]) {
+    z-index: 51;
+}
+
+:global(.nav-menu-content[data-state="closed"]) {
+    clip-path: inset(0 0 100% 0);
+    opacity: 0;
+    visibility: hidden;
+    transition-delay: 0s, 0s, 0.3s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    :global(.nav-menu-content) {
+        transition: none;
+    }
+}
+</style>

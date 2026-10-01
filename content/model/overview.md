@@ -5,17 +5,48 @@ order: 100
 
 ## Full Workflow
 
-:content-graph{.mb-8 src="/content/model/index.json"}
+:content-graph{.mb-8 src="/content/model/index.json" :full-height="true"}
 
 ## Overview
 
+### Image Beside Text
+
+::image-text
+This layout keeps the project image beside its description when there is enough space. On smaller screens, the image appears below the text.
+
+Markdown formatting stays available, including **emphasis**, paragraphs, and lists:
+
+- The image keeps its original proportions.
+- Select the image to open an enlarged view.
+
+#image
+![Illustration of Expelliodor spray and enzyme mechanisms](https://static.igem.wiki/teams/6133/wiki/project/description/banner.avif){width="4269" height="2019"}
+::
+
+### Lightbox Image Beside Text
+
+::image-text
+The same layout also accepts a LightboxImage component directly. Select the image or focus it and press Enter to open the enlarged view.
+
+#image
+  :::lightbox-image
+  ---
+  src:
+    - https://static.igem.wiki/teams/6133/wiki/project/description/banner.avif
+  alt: Illustration of Expelliodor spray and enzyme mechanisms
+  width: 4269
+  height: 2019
+  ---
+  :::
+::
+
 ### LaTeX Rendering Test
 
-Inline math uses single dollar signs, for example [[]{.katex-mathml}[[[]{.strut style="height:0.6833em;"}[E]{.mord.mathnormal style="margin-right:0.0576em;"}[]{.mspace style="margin-right:0.2778em;"}[=]{.mrel}[]{.mspace style="margin-right:0.2778em;"}]{.base}[[]{.strut style="height:0.8141em;"}[m]{.mord.mathnormal}[[c]{.mord.mathnormal}[[[[[[]{.pstrut style="height:2.7em;"}[[2]{.mord.mtight}]{.sizing.reset-size6.size3.mtight}]{style="top:-3.063em;margin-right:0.05em;"}]{.vlist style="height:0.8141em;"}]{.vlist-r}]{.vlist-t}]{.msupsub}]{.mord}]{.base}]{.katex-html ariaHidden="true"}]{.katex}.
+Inline math uses single dollar signs, for example \[\[]{.katex-mathml}\[\[\[]{.strut style="height:0.6833em;"} [E]{.mord.mathnormal style="margin-right:0.0576em;"}[]{.mspace style="margin-right:0.2778em;"}[=]{.mrel}[]{.mspace style="margin-right:0.2778em;"} ]{.base}\[\[]{.strut style="height:0.8141em;"} [m]{.mord.mathnormal} \[\[c]{.mord.mathnormal}\[\[\[\[\[\[]{.pstrut style="height:2.7em;"}\[\[2]{.mord.mtight}]{.sizing.reset-size6.size3.mtight}]{style="top:-3.063em;margin-right:0.05em;"}]{.vlist style="height:0.8141em;"}]{.vlist-r}]{.vlist-t}]{.msupsub}]{.mord}]{.base}]{.katex-html ariaHidden="true"}]{.katex}.
 
 Display math uses double dollar signs:
 
-[[[]{.katex-mathml}[[[]{.strut style="height:2.3846em;vertical-align:-0.9703em;"}[[∫]{.mop.op-symbol.large-op style="margin-right:0.4445em;position:relative;top:-0.0011em;"}[[[[[[]{.pstrut style="height:2.7em;"}[[[−]{.mord.mtight}[∞]{.mord.mtight}]{.mord.mtight}]{.sizing.reset-size6.size3.mtight}]{style="top:-1.7881em;margin-left:-0.4445em;margin-right:0.05em;"}[[]{.pstrut style="height:2.7em;"}[[[∞]{.mord.mtight}]{.mord.mtight}]{.sizing.reset-size6.size3.mtight}]{style="top:-3.8129em;margin-right:0.05em;"}]{.vlist style="height:1.4143em;"}[​]{.vlist-s}]{.vlist-r}[[[]]{.vlist style="height:0.9703em;"}]{.vlist-r}]{.vlist-t.vlist-t2}]{.msupsub}]{.mop}[]{.mspace style="margin-right:0.1667em;"}[[e]{.mord.mathnormal}[[[[[[]{.pstrut style="height:2.7em;"}[[[−]{.mord.mtight}[[x]{.mord.mathnormal.mtight}[[[[[[]{.pstrut style="height:2.5em;"}[[2]{.mord.mtight}]{.sizing.reset-size3.size1.mtight}]{style="top:-2.931em;margin-right:0.0714em;"}]{.vlist style="height:0.8913em;"}]{.vlist-r}]{.vlist-t}]{.msupsub}]{.mord.mtight}]{.mord.mtight}]{.sizing.reset-size6.size3.mtight}]{style="top:-3.113em;margin-right:0.05em;"}]{.vlist style="height:1.0369em;"}]{.vlist-r}]{.vlist-t}]{.msupsub}]{.mord}[]{.mspace style="margin-right:0.1667em;"}[d]{.mord.mathnormal}[x]{.mord.mathnormal}[]{.mspace style="margin-right:0.2778em;"}[=]{.mrel}[]{.mspace style="margin-right:0.2778em;"}]{.base}[[]{.strut style="height:1.04em;vertical-align:-0.1908em;"}[[[[[[]{.pstrut style="height:3em;"}[[π]{.mord.mathnormal style="margin-right:0.0359em;"}]{.mord style="padding-left:0.833em;"}]{.svg-align style="top:-3em;"}[[]{.pstrut style="height:3em;"}[]{.hide-tail style="min-width:0.853em;height:1.08em;"}]{style="top:-2.8092em;"}]{.vlist style="height:0.8492em;"}[​]{.vlist-s}]{.vlist-r}[[[]]{.vlist style="height:0.1908em;"}]{.vlist-r}]{.vlist-t.vlist-t2}]{.mord.sqrt}]{.base}]{.katex-html ariaHidden="true"}]{.katex}]{.katex-display}
+\[\[\[]{.katex-mathml}\[\[\[]{.strut style="height:2.3846em;vertical-align:-0.9703em;"}\[\[∫]{.mop.op-symbol.large-op style="margin-right:0.4445em;position\:relative;top:-0.0011em;"}\[\[\[\[\[\[]{.pstrut style="height:2.7em;"}\[\[\[−]{.mord.mtight} [∞]{.mord.mtight} ]{.mord.mtight}]{.sizing.reset-size6.size3.mtight}]{style="top:-1.7881em;margin-left:-0.4445em;margin-right:0.05em;"}\[\[]{.pstrut style="height:2.7em;"}\[\[\[∞]{.mord.mtight}]{.mord.mtight}]{.sizing.reset-size6.size3.mtight}]{style="top:-3.8129em;margin-right:0.05em;"}]{.vlist style="height:1.4143em;"} [​]{.vlist-s} ]{.vlist-r}\[\[\[]]{.vlist style="height:0.9703em;"}]{.vlist-r}]{.vlist-t.vlist-t2}]{.msupsub}]{.mop} []{.mspace style="margin-right:0.1667em;"} \[\[e]{.mord.mathnormal}\[\[\[\[\[\[]{.pstrut style="height:2.7em;"}\[\[\[−]{.mord.mtight}\[\[x]{.mord.mathnormal.mtight}\[\[\[\[\[\[]{.pstrut style="height:2.5em;"}\[\[2]{.mord.mtight}]{.sizing.reset-size3.size1.mtight}]{style="top:-2.931em;margin-right:0.0714em;"}]{.vlist style="height:0.8913em;"}]{.vlist-r}]{.vlist-t}]{.msupsub}]{.mord.mtight}]{.mord.mtight}]{.sizing.reset-size6.size3.mtight}]{style="top:-3.113em;margin-right:0.05em;"}]{.vlist style="height:1.0369em;"}]{.vlist-r}]{.vlist-t}]{.msupsub}]{.mord} []{.mspace style="margin-right:0.1667em;"}[d]{.mord.mathnormal}[x]{.mord.mathnormal}[]{.mspace style="margin-right:0.2778em;"}[=]{.mrel}[]{.mspace style="margin-right:0.2778em;"} ]{.base}\[\[]{.strut style="height:1.04em;vertical-align:-0.1908em;"}\[\[\[\[\[\[]{.pstrut style="height:3em;"}\[\[π]{.mord.mathnormal style="margin-right:0.0359em;"}]{.mord style="padding-left:0.833em;"}]{.svg-align style="top:-3em;"}\[\[]{.pstrut style="height:3em;"} []{.hide-tail style="min-width:0.853em;height:1.08em;"} ]{style="top:-2.8092em;"}]{.vlist style="height:0.8492em;"} [​]{.vlist-s} ]{.vlist-r}\[\[\[]]{.vlist style="height:0.1908em;"}]{.vlist-r}]{.vlist-t.vlist-t2}]{.mord.sqrt}]{.base}]{.katex-html ariaHidden="true"}]{.katex}]{.katex-display}
 
 ### Philosophy
 
@@ -33,7 +64,7 @@ Title reference test: :reference{#heading-ref-1 destination="#title-reference-ta
 
 This heading is the destination of the title reference above.
 
-![](https://static.igem.wiki/teams/6133/wiki/project/description/banner.avif)
+![](https://static.igem.wiki/teams/6133/wiki/project/description/banner.avif){width="4269" height="2019"}
 
 | Feature     | Description                         | Status   |
 | ----------- | ----------------------------------- | -------- |
@@ -112,7 +143,12 @@ When you *do* want to insert a `<br />` break tag using Markdown, you
 end a line with two or more spaces, then type return.
 ::
 
-::collapsible-paragraph{#paragraph-preview title="Paragraph Preview" blur-preview}
+::collapsible-paragraph
+---
+blur-preview: true
+id: paragraph-preview
+title: Paragraph Preview
+---
 A paragraph can span several lines without adding a break after each line.
 This preview shows the beginning of the text while the paragraph is folded.
 Click the title or the blurred paragraph to read the whole explanation.
@@ -317,8 +353,8 @@ Use the `printf()` function.
 
 ## Foot Notes
 
-1. :ref-fn[[Reference ID 1](Baidu.com)]{#1}
-2. :ref-fn[[Reference ID 2](Google.com)]{#2}
+1. :ref-fn[[Reference ID 1](https://www.baidu.com/)]{#1}
+2. :ref-fn[[Reference ID 2](https://www.google.com/)]{#2}
 3. :ref-fn[Reference ID 3]{#3}
 4. :ref-fn[Reference ID 4]{#4}
 5. :ref-fn[Reference ID 5]{#5}

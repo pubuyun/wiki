@@ -150,10 +150,10 @@ onUnmounted(() => media?.revert());
     font-weight: inherit;
 }
 .awareness-scene__misunderstanding {
-    color: #8cf1d0;
+    color: #c0ffe8;
 }
 .awareness-scene__discrimination {
-    color: #ffdb61;
+    color: #fff0ac;
 }
 .awareness-scene__character {
     position: absolute;

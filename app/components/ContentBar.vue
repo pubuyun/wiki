@@ -61,6 +61,16 @@ const { scrollToHash } = useHashScroll();
 const activeId = ref<string>();
 let hashScrollUntil = 0;
 let stopScrollSpy: (() => void) | undefined;
+let headingOffsets: Array<{ id: string; top: number }> = [];
+let scrollPaddingTop = 0;
+
+function measureArticleHeadings() {
+    scrollPaddingTop = getScrollPaddingTop();
+    headingOffsets = collectArticleHeadings().map((heading) => ({
+        id: heading.id,
+        top: headingStartOffset(heading),
+    }));
+}
 
 const flatToc = computed(() =>
     props.toc.flatMap((link) => [
@@ -150,15 +160,14 @@ function collectArticleHeadings() {
 function updateActiveHeading() {
     if (Date.now() < hashScrollUntil) return;
 
-    const headings = collectArticleHeadings();
-    if (!headings.length) return;
+    if (!headingOffsets.length) return;
 
     const scrollLine =
-        window.scrollY + getScrollPaddingTop() + scrollSpyActivationOffset;
-    let current = headings[0]!;
+        window.scrollY + scrollPaddingTop + scrollSpyActivationOffset;
+    let current = headingOffsets[0]!;
 
-    for (const heading of headings) {
-        if (headingStartOffset(heading) <= scrollLine) {
+    for (const heading of headingOffsets) {
+        if (heading.top <= scrollLine) {
             current = heading;
         }
     }
@@ -187,9 +196,30 @@ function headingStartOffset(heading: HTMLElement) {
 
 function setupScrollSpy() {
     stopScrollSpy?.();
-    const update = () => updateActiveHeading();
+    let frame = 0;
+    let needsMeasurement = true;
+    let anchorTimer: ReturnType<typeof window.setTimeout> | undefined;
+    const update = () => {
+        if (frame) return;
+        frame = requestAnimationFrame(() => {
+            frame = 0;
+            if (needsMeasurement) {
+                needsMeasurement = false;
+                measureArticleHeadings();
+            }
+            updateActiveHeading();
+        });
+    };
+    const updateLayout = () => {
+        needsMeasurement = true;
+        update();
+    };
+    const observer = new ResizeObserver(updateLayout);
+    const article = document.querySelector("main article");
+    if (article) observer.observe(article);
     const updateAfterAnchorScroll = () => {
-        window.setTimeout(update, hashScrollLockDuration + 50);
+        window.clearTimeout(anchorTimer);
+        anchorTimer = window.setTimeout(update, hashScrollLockDuration + 50);
     };
     const updateForHashScroll = (event: Event) => {
         const { id } = (event as CustomEvent<{ id?: string }>).detail ?? {};
@@ -199,12 +229,15 @@ function setupScrollSpy() {
     };
 
     window.addEventListener("scroll", update, { passive: true });
-    window.addEventListener("resize", update);
+    window.addEventListener("resize", updateLayout);
     window.addEventListener("hashchange", updateAfterAnchorScroll);
     window.addEventListener("wiki:hash-scroll", updateForHashScroll);
     stopScrollSpy = () => {
+        cancelAnimationFrame(frame);
+        window.clearTimeout(anchorTimer);
+        observer.disconnect();
         window.removeEventListener("scroll", update);
-        window.removeEventListener("resize", update);
+        window.removeEventListener("resize", updateLayout);
         window.removeEventListener("hashchange", updateAfterAnchorScroll);
         window.removeEventListener("wiki:hash-scroll", updateForHashScroll);
     };

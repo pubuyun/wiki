@@ -4,22 +4,29 @@
     >
         <div
             v-if="isUnsupportedViewport"
-            class="fixed inset-0 z-[1000] flex items-center justify-center bg-surface p-8 text-center text-on-surface"
-            role="alert"
-            aria-live="assertive"
+            class="flex min-h-[80dvh] items-center justify-center bg-surface p-8 text-center text-on-surface"
         >
             <div class="flex max-w-md flex-col items-center gap-4">
-                <Icon icon="lucide:rotate-cw" class="size-12" />
+                <Icon icon="lucide:rotate-cw" class="size-12" aria-hidden="true" />
                 <h1 class="text-2xl font-semibold">
                     A large landscape screen is required
                 </h1>
-                <p class="text-sm text-on-surface/75">
-                    Returning to the previous page in 3 seconds...
+                <p class="text-sm text-on-surface">
+                    Open this viewer on a larger screen or rotate your device to
+                    landscape to explore the model. You can return when ready.
                 </p>
+                <button
+                    type="button"
+                    class="rounded-xl bg-primary px-4 py-3 text-on-primary focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-outline"
+                    @click="goBack"
+                >
+                    Back to Previous
+                </button>
             </div>
         </div>
 
         <SplitterGroup
+            v-else
             id="viewbinder-layout"
             direction="horizontal"
             :keyboard-resize-by="2"
@@ -195,7 +202,7 @@
                                 v-for="tab in tabs"
                                 :key="tab.value"
                                 :value="tab.value"
-                                class="flex min-w-0 flex-1 items-center justify-center gap-1.5 rounded-full px-4 py-2 text-sm leading-tight text-primary transition-colors outline-none hover:bg-primary/20 focus-visible:ring-2 focus-visible:ring-outline data-[state=active]:bg-primary data-[state=active]:text-on-primary xl:text-base"
+                                class="flex min-w-0 flex-1 items-center justify-center gap-1.5 rounded-full px-4 py-2 text-sm leading-tight text-on-surface transition-colors outline-none hover:bg-secondary hover:text-on-secondary focus-visible:ring-2 focus-visible:ring-outline data-[state=active]:bg-primary data-[state=active]:text-on-primary xl:text-base"
                             >
                                 <span>{{ tab.label }}</span>
                                 <Icon
@@ -396,7 +403,6 @@ const router = useRouter();
 const previousNonBinderPath = ref<string | null>(null);
 const isUnsupportedViewport = ref(false);
 const treeScrollContainerRef = ref<HTMLElement | null>(null);
-let viewportReturnTimer: ReturnType<typeof setTimeout> | undefined;
 let viewportQuery: MediaQueryList | undefined;
 
 const tabValues = [
@@ -601,27 +607,15 @@ function isBinderPath(path: unknown): path is string {
 function goBack() {
     if (previousNonBinderPath.value) {
         void navigateTo(previousNonBinderPath.value);
-    } else if (window.history.length > 1) {
+    } else if (typeof window.history.state?.back === "string") {
         router.back();
     } else {
         void navigateTo("/");
     }
 }
 
-function clearViewportReturnTimer() {
-    if (viewportReturnTimer !== undefined) {
-        clearTimeout(viewportReturnTimer);
-        viewportReturnTimer = undefined;
-    }
-}
-
 function updateViewportSupport() {
     isUnsupportedViewport.value = viewportQuery?.matches ?? false;
-    clearViewportReturnTimer();
-
-    if (isUnsupportedViewport.value) {
-        viewportReturnTimer = setTimeout(goBack, 3000);
-    }
 }
 
 onMounted(() => {
@@ -638,7 +632,6 @@ onMounted(() => {
 });
 
 onBeforeUnmount(() => {
-    clearViewportReturnTimer();
     viewportQuery?.removeEventListener("change", updateViewportSupport);
 });
 </script>

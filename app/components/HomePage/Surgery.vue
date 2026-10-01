@@ -1179,7 +1179,7 @@ onUnmounted(() => {
     }
 
     .surgery-final__risk--scarring {
-        color: #ff8e81;
+        color: #ffa99f;
     }
 
     .surgery-final__risk--nerve {

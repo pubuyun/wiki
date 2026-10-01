@@ -70,6 +70,7 @@ interface ResolvedGraph extends Omit<GraphDefinition, "nodes"> {
 
 const props = defineProps<{
     src: string;
+    fullHeight?: boolean;
 }>();
 
 const resolvedGraph = shallowRef<ResolvedGraph | null>(null);
@@ -138,8 +139,8 @@ watch(
     figureElement,
     (element) => {
         resizeObserver?.disconnect();
-        intersectionObserver?.disconnect();
         resizeObserver = null;
+        intersectionObserver?.disconnect();
         intersectionObserver = null;
         isScrollSnapActive.value = false;
         if (!element) return;
@@ -526,9 +527,12 @@ const graphHeight = computed(() => {
 });
 
 const canvasStyle = computed(() => ({
-    height: `min(${graphHeight.value}, calc(100dvh - var(--content-graph-navigation-height) - 2rem - ${
-        resolvedGraph.value?.title ? "3.5rem" : "0rem"
-    }))`,
+    height:
+        props.fullHeight || isFullscreen.value
+            ? undefined
+            : `min(${graphHeight.value}, calc(100dvh - var(--content-graph-navigation-height) - 2rem - ${
+                  resolvedGraph.value?.title ? "3.5rem" : "0rem"
+              }))`,
     "--content-graph-label-scale": Math.min(
         maxLabelScale,
         Math.max(1, 0.8 / viewportZoom.value),
@@ -813,10 +817,10 @@ async function toggleFullscreen() {
 
 <template>
     <figure
-        v-if="mediaReady && !isPortrait"
         ref="figureElement"
         class="content-graph overflow-hidden rounded-2xl border-2 border-outline bg-surface-elevated text-on-surface shadow-sm [--content-graph-navigation-height:3rem] sm:rounded-3xl sm:[--content-graph-navigation-height:2.5rem] lg:rounded-4xl lg:[--content-graph-navigation-height:2.75rem] xl:[--content-graph-navigation-height:3.5rem] [&_.graph-node-default]:pointer-events-none [&_.graph-node-default]:!bg-secondary [&_.graph-node-default]:text-4xl [&_.graph-node-default]:leading-[1.15] [&_.graph-node-page]:!pointer-events-auto [&_.graph-node-page]:!border-0 [&_.graph-node-page]:!bg-transparent [&_.graph-node-page]:!p-0 [&_.graph-node-page]:!shadow-none [&_.graph-node-virtual]:!pointer-events-auto [&_.graph-node-virtual]:cursor-pointer [&_.graph-node-virtual]:!overflow-visible [&_.graph-node-virtual]:!bg-[color-mix(in_srgb,var(--surface-elevated)_88%,transparent)] [&_.graph-node-virtual]:!p-0 [&_.graph-node-virtual-label]:pointer-events-none [&_.graph-node-virtual-label]:!w-max [&_.graph-node-virtual-label]:!border-0 [&_.graph-node-virtual-label]:!bg-transparent [&_.graph-node-virtual-label]:!p-0 [&_.graph-node-virtual-label]:!shadow-none [&_.graph-node-virtual.mask-active]:!z-[2147483647] [&_.graph-node-virtual.mask-active_.virtual-node\_\_mask]:pointer-events-auto [&_.graph-node-virtual.mask-active_.virtual-node\_\_mask]:opacity-100 [&_.graph-node-virtual:has(.virtual-node\_\_mask:focus-visible)]:!z-[2147483647] [&_.vue-flow\_\_pane]:cursor-grab [&_.vue-flow\_\_pane.dragging]:cursor-grabbing [&_:is(.graph-node-default,.graph-node-virtual)]:!rounded-[0.875rem] [&_:is(.graph-node-default,.graph-node-virtual)]:!border-2 [&_:is(.graph-node-default,.graph-node-virtual)]:!border-outline [&_:is(.graph-node-default,.graph-node-virtual)]:font-[var(--font-main)] [&_:is(.graph-node-default,.graph-node-virtual)]:text-on-secondary [&_:is(.graph-node-default,.graph-node-virtual)]:!shadow-[0_4px_12px_rgb(0_0_0_/_15%)]"
         :class="{
+            'content-graph--full-height': fullHeight,
             'flex h-dvh w-dvw max-w-none flex-col rounded-none border-0 bg-surface-elevated':
                 isFullscreen,
             'content-graph--snap-active': isScrollSnapActive,
@@ -827,15 +831,17 @@ async function toggleFullscreen() {
         @pointerleave="clearActiveMask"
     >
         <figcaption
-            v-if="resolvedGraph?.title"
-            class="border-b-2 border-outline bg-secondary px-4 py-3 font-belanosima text-xl text-on-secondary sm:px-5"
+            class="shrink-0 border-b-2 border-outline bg-secondary px-4 py-3 font-belanosima text-xl text-on-secondary sm:px-5"
         >
-            {{ resolvedGraph?.title }}
+            {{ resolvedGraph?.title || "Interactive graph" }}
         </figcaption>
 
         <div
-            class="content-graph__canvas relative w-full"
-            :class="{ '!h-auto min-h-0 flex-1': isFullscreen }"
+            class="content-graph__canvas relative min-h-0 w-full"
+            :class="{
+                '!h-auto min-h-0 flex-1': isFullscreen,
+                'flex-1': fullHeight,
+            }"
             :style="canvasStyle"
         >
             <div
@@ -848,7 +854,6 @@ async function toggleFullscreen() {
 
             <VueFlow
                 v-else-if="resolvedGraph"
-                aria-hidden="true"
                 :nodes="flow.nodes"
                 :edges="flow.edges"
                 :node-types="nodeTypes"
@@ -951,6 +956,21 @@ async function toggleFullscreen() {
 </template>
 
 <style scoped>
+.content-graph {
+    display: flex;
+    flex-direction: column;
+}
+
+.content-graph--full-height:not(:fullscreen) {
+    height: calc(100dvh - 5rem);
+}
+
+@media (orientation: portrait) {
+    .content-graph:not(:fullscreen) {
+        display: none;
+    }
+}
+
 :global(html:has(.content-graph)) {
     --content-graph-page-navigation-height: 3rem;
 

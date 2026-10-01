@@ -27,6 +27,9 @@
 import { THEME_KEY } from "vue-echarts";
 import { createWikiTheme } from "./styles/echarts";
 import "./styles/opendyslexic.css";
+import momoFont from "@fontsource/momo-trust-display/files/momo-trust-display-latin-400-normal.woff2?url";
+import righteousFont from "@fontsource/righteous/files/righteous-latin-400-normal.woff2?url";
+import belanosimaFont from "@fontsource/belanosima/files/belanosima-latin-400-normal.woff2?url";
 
 const DARK_MODE_COOKIE = "wiki-dark-mode";
 const HIGH_CONTRAST_MODE_COOKIE = "wiki-high-contrast-mode";
@@ -69,6 +72,13 @@ const themeClass = computed(() =>
 useHead({
     title: "GreatBay-SCIE - iGEM 2026",
     titleTemplate: "%s | GreatBay-SCIE - iGEM 2026",
+    link: [momoFont, righteousFont, belanosimaFont].map((href) => ({
+        rel: "preload",
+        as: "font",
+        type: "font/woff2",
+        crossorigin: "anonymous",
+        href,
+    })),
     bodyAttrs: {
         class: themeClass,
     },

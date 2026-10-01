@@ -1,11 +1,18 @@
 <script setup lang="ts">
-import LightboxImageOverlay from "./LightBox/LightboxImageOverlay.client.vue";
+import { defineAsyncComponent } from "vue";
+
+const LightboxImageOverlay = defineAsyncComponent(
+    () => import("./LightBox/LightboxImageOverlay.client.vue"),
+);
 const props = defineProps<{
     src: string[];
     alt?: string | string[];
+    width?: number | string;
+    height?: number | string;
 }>();
 
 const visible = ref(false);
+const hasOpened = ref(false);
 const index = ref(0);
 
 const imageAlt = (imageIndex: number) =>
@@ -15,6 +22,7 @@ const imageAlt = (imageIndex: number) =>
 
 const open = (imageIndex = 0) => {
     if (!props.src.length) return;
+    hasOpened.value = true;
     index.value = Math.min(Math.max(imageIndex, 0), props.src.length - 1);
     visible.value = true;
 };
@@ -23,7 +31,7 @@ defineExpose({ open });
 </script>
 
 <template>
-    <div class="contents">
+    <span class="contents">
         <slot :open="open">
             <button
                 v-for="(imageSrc, imageIndex) in src"
@@ -33,16 +41,24 @@ defineExpose({ open });
                 :aria-label="`Open image ${imageIndex + 1} of ${src.length}`"
                 @click="open(imageIndex)"
             >
-                <img :src="imageSrc" :alt="imageAlt(imageIndex)" />
+                <img
+                    :src="imageSrc"
+                    :alt="imageAlt(imageIndex)"
+                    :width="width"
+                    :height="height"
+                    class="h-auto max-w-full"
+                    decoding="async"
+                />
             </button>
         </slot>
 
         <LightboxImageOverlay
+            v-if="hasOpened"
             :visible="visible"
             :src="src"
             :index="index"
             @hide="visible = false"
             @update:index="index = $event"
         />
-    </div>
+    </span>
 </template>

@@ -29,6 +29,10 @@ export default defineNuxtConfig({
             htmlAttrs: {
                 lang: "en",
             },
+            link: [
+                { rel: "preconnect", href: "https://static.igem.wiki" },
+                { rel: "preconnect", href: "https://api.iconify.design" },
+            ],
         },
     },
     modules: [
@@ -57,7 +61,31 @@ export default defineNuxtConfig({
                 "lenis",
             ],
         },
-        plugins: [tailwindcss()],
+        plugins: [
+            tailwindcss(),
+            {
+                name: "katex-font-display",
+                enforce: "pre",
+                transform(code, id) {
+                    if (
+                        !/[/\\]katex[/\\]dist[/\\]katex(?:\.min)?\.css(?:\?|$)/.test(
+                            id,
+                        )
+                    ) {
+                        return;
+                    }
+
+                    // Keep math visible while KaTeX's fonts load.
+                    return {
+                        code: code.replace(
+                            /font-display\s*:\s*\w+/g,
+                            "font-display: swap",
+                        ),
+                        map: null,
+                    };
+                },
+            },
+        ],
     },
     echarts: {
         renderer: "svg",
