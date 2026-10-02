@@ -1,6 +1,12 @@
 <template>
+    <Echarts
+        v-if="isEchartsLanguage"
+        :code="props.code"
+        :label="props.filename || 'ECharts chart'"
+        :class="$props.class"
+    />
     <CodeGroupCodeFlowchart
-        v-if="parsedGraph.value"
+        v-else-if="parsedGraph.value"
         :graph="parsedGraph.value"
         :class="$props.class"
     />
@@ -76,6 +82,10 @@ const isGraphLanguage = computed(() =>
 );
 
 const isDictLanguage = computed(() => props.language?.toLowerCase() === "dict");
+
+const isEchartsLanguage = computed(() =>
+    ["echarts", "echart"].includes(props.language?.toLowerCase() ?? ""),
+);
 
 const parsedGraph = computed(() => {
     if (!isGraphLanguage.value) return { value: null };

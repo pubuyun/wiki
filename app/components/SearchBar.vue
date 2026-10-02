@@ -1,7 +1,11 @@
 <template>
     <DialogRoot v-model:open="isSearchOpen" class="">
+        <DialogTrigger v-if="$slots.trigger" as-child>
+            <slot name="trigger" />
+        </DialogTrigger>
         <!-- Desktop / larger than lg -->
         <DialogTrigger
+            v-else
             aria-label="Search wiki"
             aria-keyshortcuts="Control+K Meta+K"
             class="flex size-11 shrink-0 items-center justify-center rounded-full border-2 border-accent bg-accent text-on-accent shadow-sm transition-colors duration-200 ease-out focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-outline sm:mr-8 sm:ml-5 sm:h-10 sm:max-w-56 sm:min-w-40 sm:flex-1 sm:bg-secondary sm:px-3 sm:text-on-secondary sm:hover:bg-surface-navigation sm:hover:text-on-surface"
@@ -45,7 +49,7 @@
                         <div
                             class="shrink-0 text-center text-2xl font-bold text-on-surface"
                         >
-                            <label for="site-search" class="sr-only">
+                            <label :for="searchId" class="sr-only">
                                 Search site content
                             </label>
                             <div class="relative">
@@ -54,10 +58,10 @@
                                     v-model="query"
                                     type="text"
                                     role="searchbox"
-                                    id="site-search"
+                                    :id="searchId"
                                     autocomplete="off"
                                     placeholder="Search..."
-                                    aria-describedby="search-result-count"
+                                    :aria-describedby="`${searchId}-result-count`"
                                     class="h-12 w-full rounded border border-outline bg-surface-bright py-2 pr-12 pl-4 text-on-surface outline-none placeholder:text-on-surface/60 focus:border-outline sm:h-10"
                                 />
                                 <button
@@ -74,7 +78,7 @@
                                 </button>
                             </div>
                             <p
-                                id="search-result-count"
+                                :id="`${searchId}-result-count`"
                                 class="sr-only"
                                 aria-live="polite"
                             >
@@ -298,6 +302,10 @@ import {
 import { Icon } from "@iconify/vue";
 import { siteNavGroups } from "~/utils/site-navigation";
 
+const props = defineProps({
+    enableShortcut: { type: Boolean, default: true },
+});
+const searchId = `site-search-${useId()}`;
 const isSearchOpen = ref(false);
 const searchInput = ref(null);
 const { scrollToHash } = useHashScroll();
@@ -377,7 +385,9 @@ function openSearchFromShortcut(event) {
 }
 
 onMounted(() => {
-    window.addEventListener("keydown", openSearchFromShortcut);
+    if (props.enableShortcut) {
+        window.addEventListener("keydown", openSearchFromShortcut);
+    }
 });
 
 onBeforeUnmount(() => {

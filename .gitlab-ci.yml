@@ -6,7 +6,7 @@ stages:
 variables:
     NUXT_APP_BASE_URL: "/greatbay-scie/"
     NUXT_STUDIO: "false"
-    NODE_OPTIONS: "--max-old-space-size=1400"
+    # NODE_OPTIONS: "--max-old-space-size=1400"
 
 .install-cache: &install-cache
     key:

@@ -49,9 +49,10 @@ const items = computed(() =>
         const language = String(vnode.props?.language ?? "").toLowerCase();
         const isGraph = ["graph", "vueflow", "vue-flow"].includes(language);
         const isDictionary = language === "dict";
+        const isEcharts = ["echarts", "echart"].includes(language);
         return {
             isGraph,
-            isVisual: isGraph || isDictionary,
+            isVisual: isGraph || isDictionary || isEcharts,
             label:
                 String(
                     vnode.props?.filename ?? vnode.props?.language ?? "",

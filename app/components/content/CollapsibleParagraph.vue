@@ -10,6 +10,7 @@ const props = defineProps<{
     title: string;
     id?: string;
     blurPreview?: boolean;
+    headingTag?: "h2" | "h3" | "h4";
 }>();
 
 const isOpen = ref(false);
@@ -60,7 +61,8 @@ function onContentClick(event: MouseEvent) {
         class="flex min-w-0 flex-col transition-[gap] duration-300 motion-reduce:transition-none"
         :class="blurPreview || isOpen ? 'gap-4' : 'gap-0'"
     >
-        <h2
+        <component
+            :is="headingTag || 'h2'"
             :id="id"
             class="flex scroll-mt-24 flex-row items-center justify-center gap-3 sm:gap-8"
         >
@@ -89,7 +91,7 @@ function onContentClick(event: MouseEvent) {
                 aria-hidden="true"
                 class="my-10 min-w-3 flex-1 border-3 border-t-2 border-accent"
             />
-        </h2>
+        </component>
 
         <CollapsibleContent
             force-mount
