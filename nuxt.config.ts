@@ -29,10 +29,7 @@ export default defineNuxtConfig({
             htmlAttrs: {
                 lang: "en",
             },
-            link: [
-                { rel: "preconnect", href: "https://static.igem.wiki" },
-                { rel: "preconnect", href: "https://api.iconify.design" },
-            ],
+            link: [{ rel: "preconnect", href: "https://static.igem.wiki" }],
         },
     },
     modules: [
@@ -42,9 +39,20 @@ export default defineNuxtConfig({
         ...(isDevServer ? ["@nuxt/a11y"] : []),
     ],
     vite: {
+        resolve: {
+            // Use local icon storage with no API fallback across all components.
+            alias: [
+                {
+                    find: /^@iconify\/vue$/,
+                    replacement: fileURLToPath(
+                        import.meta.resolve("@iconify/vue/offline"),
+                    ),
+                },
+            ],
+        },
         optimizeDeps: {
             include: [
-                "@iconify/vue",
+                "@iconify/vue/offline",
                 "@vue/devtools-core",
                 "@vue/devtools-kit",
                 "reka-ui",

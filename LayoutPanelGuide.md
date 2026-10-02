@@ -129,15 +129,15 @@ Use `#left-bottom` instead if the extra panel belongs under the left panel. To c
 
 ## Use other MDC components
 
-Place a component's usual MDC markup inside a slot. For example, this document's plasmid viewer can appear beside explanatory text:
+Place a component's usual MDC markup inside a slot. For example, a structure viewer can appear beside explanatory text:
 
 ```md
-::panel-layout{height="36rem" label="Plasmid map and explanation"}
+::panel-layout{height="36rem" label="Molecular structure and explanation"}
 #left
-Describe the plasmid and its features here.
+Describe the molecular structure and its features here.
 
 #right
-:::plasmid-viewer{src="/BCS1.js"}
+:::structure-viewer{structure-url="/model.pdb" structure-url-format="pdb"}
 :::
 ::
 ```

@@ -2,6 +2,7 @@ import { defineTransformer } from "@nuxt/content";
 import { parseMarkdown } from "@nuxtjs/mdc/runtime";
 import { slug } from "github-slugger";
 import { fromHast } from "minimark/hast";
+import { transformReferenceTree } from "./content-references";
 
 export function transformReferenceMarkdown(markdown: string) {
     let headingReferenceIndex = 0;
@@ -19,9 +20,9 @@ export function transformReferenceMarkdown(markdown: string) {
             },
         )
         .replace(
-            /(\S?)\^(\d+)(\s)/g,
-            (_match, previous, id, trailingSpace) =>
-                `${previous}${previous ? " " : ""}:fn-ref{#${id}}${trailingSpace}`,
+            /(\S?)\^(\d+)(?=$|[\s.,!?;:，。！？；：])/gm,
+            (_match, previous, id) =>
+                `${previous}${previous ? " " : ""}:fn-ref{#${id}}`,
         );
 }
 
@@ -81,9 +82,12 @@ export default defineTransformer({
             },
         );
 
+        const references = transformReferenceTree(parsed.body);
+
         if (options.compress) {
             return {
                 ...parsed.data,
+                ...references,
                 excerpt: parsed.excerpt ? fromHast(parsed.excerpt) : undefined,
                 body: {
                     ...fromHast(parsed.body),
@@ -96,6 +100,7 @@ export default defineTransformer({
 
         return {
             ...parsed.data,
+            ...references,
             excerpt: parsed.excerpt,
             body: {
                 ...parsed.body,

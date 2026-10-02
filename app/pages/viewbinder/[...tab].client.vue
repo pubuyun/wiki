@@ -7,7 +7,11 @@
             class="flex min-h-[80dvh] items-center justify-center bg-surface p-8 text-center text-on-surface"
         >
             <div class="flex max-w-md flex-col items-center gap-4">
-                <Icon icon="lucide:rotate-cw" class="size-12" aria-hidden="true" />
+                <Icon
+                    icon="lucide:rotate-cw"
+                    class="size-12"
+                    aria-hidden="true"
+                />
                 <h1 class="text-2xl font-semibold">
                     A large landscape screen is required
                 </h1>
@@ -141,16 +145,9 @@
 
                     <section
                         class="min-h-0 min-w-0 flex-1 overflow-hidden rounded-xl border border-surface-bright bg-secondary"
-                        :aria-label="
-                            isSequenceView
-                                ? 'Plasmid sequence map'
-                                : 'Molecular structure viewer'
-                        "
+                        aria-label="Molecular structure viewer"
                     >
-                        <template v-if="isSequenceView">
-                            <PlasmidMap :viewer="plasmidViewer" />
-                        </template>
-                        <ClientOnly v-else>
+                        <ClientOnly>
                             <StructureViewer
                                 v-if="selectedBinder?._pdb_url"
                                 :structure-url="selectedBinder._pdb_url"
@@ -279,12 +276,6 @@
                         </TabsContent>
 
                         <TabsContent
-                            value="sequence"
-                            class="min-h-0 flex-1 outline-none"
-                        >
-                            <PlasmidDetails :viewer="plasmidViewer" />
-                        </TabsContent>
-                        <TabsContent
                             value="experiment-result"
                             class="min-h-0 flex-1"
                         />
@@ -308,9 +299,6 @@ import {
     TreeItem,
     TreeRoot,
 } from "reka-ui";
-import PlasmidDetails from "~/components/Plasmid/Details.vue";
-import PlasmidMap from "~/components/Plasmid/Map.client.vue";
-import { usePlasmidViewer } from "~/composables/usePlasmidViewer";
 
 definePageMeta({
     layout: "static",
@@ -325,7 +313,6 @@ type BinderRecord = Record<string, BinderValue> & {
     _rmsd_lig_url?: string;
     _rmsd_prot_url?: string;
     _membrane_fit_rmsd_url?: string;
-    _dna?: string;
 };
 
 type TreeNode = {
@@ -405,12 +392,7 @@ const isUnsupportedViewport = ref(false);
 const treeScrollContainerRef = ref<HTMLElement | null>(null);
 let viewportQuery: MediaQueryList | undefined;
 
-const tabValues = [
-    "info",
-    "md-graph",
-    "sequence",
-    "experiment-result",
-] as const;
+const tabValues = ["info", "md-graph", "experiment-result"] as const;
 type TabValue = (typeof tabValues)[number];
 
 function isTabValue(value: string | undefined): value is TabValue {
@@ -466,21 +448,11 @@ const expandedKeys = ref(initialExpandedKeys(selectedTreeNode.value));
 const activeTab = ref<TabValue>(isTabValue(initialTab) ? initialTab : "info");
 const selectedBinder = shallowRef<BinderRecord>();
 
-const hasDna = computed(() => Boolean(selectedBinder.value?._dna));
-const isSequenceView = computed(
-    () => activeTab.value === "sequence" && hasDna.value,
-);
-const plasmidViewer = usePlasmidViewer(() =>
-    activeTab.value === "sequence" ? selectedBinder.value?._dna : undefined,
-);
-const tabs = computed(() => [
+const tabs = [
     { value: "info" as const, label: "Info" },
     { value: "md-graph" as const, label: "MD Graph" },
-    ...(hasDna.value
-        ? [{ value: "sequence" as const, label: "Sequence" }]
-        : []),
     { value: "experiment-result" as const, label: "Experiment Result" },
-]);
+];
 
 watch(
     () => route.fullPath,
@@ -554,12 +526,6 @@ watch(
     },
     { immediate: true },
 );
-
-watch(selectedBinder, (record) => {
-    if (record && activeTab.value === "sequence" && !record._dna) {
-        activeTab.value = "info";
-    }
-});
 
 const visibleProperties = computed(() =>
     Object.entries(selectedBinder.value ?? {}).filter(

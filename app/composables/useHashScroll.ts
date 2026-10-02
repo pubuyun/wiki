@@ -4,6 +4,14 @@ export function useHashScroll() {
         hashOrId?: string | null,
         options: { focus?: boolean } = { focus: true },
     ) {
+        if (
+            event.button !== 0 ||
+            event.ctrlKey ||
+            event.metaKey ||
+            event.shiftKey ||
+            event.altKey
+        )
+            return false;
         const id = normalizeHashId(hashOrId);
         if (!id) return false;
 

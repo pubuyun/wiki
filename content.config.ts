@@ -8,13 +8,16 @@ export default defineContentConfig({
             source: "**/*.md",
             schema: z.object({
                 order: z.number().default(999),
+                hasReference: z.boolean().default(false),
+                referenceIds: z.array(z.string()).default([]),
+                citationIds: z.array(z.string()).default([]),
             }),
         }),
         glossary: defineCollection({
             type: "data",
             source: "glossary/*.json",
             schema: z.object({
-                term: z.string(),
+                term: z.union([z.string(), z.array(z.string()).nonempty()]),
                 detail: z.string(),
                 link: z.string().optional(),
             }),

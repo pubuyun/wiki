@@ -1,8 +1,9 @@
 <template>
     <Reference
         :id="`ref-${id}`"
-        :destination="`#fnref-${id}`"
+        :destination="referenceLink(id)"
         :label="label || id"
+        @click="rememberCitation(id, $event)"
     />
 </template>
 
@@ -13,4 +14,6 @@ defineProps<{
     id: string;
     label?: string;
 }>();
+
+const { referenceLink, rememberCitation } = await useCategoryReferences();
 </script>
