@@ -2,8 +2,6 @@
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { onMounted, onUnmounted, ref } from "vue";
-import wronged from "../../../assets/wronged.png";
-import rotate from "../../../assets/rotate.png";
 import {
     HOME_CHAPTERS,
     homeChapterActivationLabel,
@@ -78,12 +76,12 @@ onUnmounted(() => media?.revert());
         </h2>
         <div class="awareness-scene__stage">
             <img
-                :src="rotate"
+                src="https://static.igem.wiki/teams/6133/wiki/homepage/rotate.avif"
                 alt=""
                 class="awareness-scene__symbol awareness-scene__symbol--top"
             />
             <img
-                :src="rotate"
+                src="https://static.igem.wiki/teams/6133/wiki/homepage/rotate.avif"
                 alt=""
                 class="awareness-scene__symbol awareness-scene__symbol--small"
             />
@@ -100,10 +98,14 @@ onUnmounted(() => media?.revert());
                     >
                     against those who do.
                 </p>
-                <img :src="wronged" alt="" class="awareness-scene__character" />
+                <img
+                    src="https://static.igem.wiki/teams/6133/wiki/homepage/wronged.avif"
+                    alt=""
+                    class="awareness-scene__character"
+                />
             </div>
             <img
-                :src="rotate"
+                src="https://static.igem.wiki/teams/6133/wiki/homepage/rotate.avif"
                 alt=""
                 class="awareness-scene__symbol awareness-scene__symbol--bottom"
             />
