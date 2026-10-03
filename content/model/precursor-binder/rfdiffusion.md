@@ -6,11 +6,11 @@ order: 210
 
 ## Binder Performance
 
-:charts-model-precursor-binder-binders-heat-map{binders="rosetta"}
+:content-components-model-precursor-binder-binders-heat-map{binders="rosetta"}
 
 ## Ligand Binder Input
 
-::code-group
+::content-components-code-group
 ---
 default-value: "0"
 label: Ligand binder input
@@ -36,7 +36,7 @@ sync: rfdiffusion-ligand-input
 
 ## Batch LigandMPNN
 
-::code-group
+::content-components-code-group
 ---
 default-value: "0"
 label: LigandMPNN batch workflow
@@ -158,7 +158,7 @@ if __name__ == "__main__":
 
 ## Rank and Package Top RF3 Candidates
 
-::code-group
+::content-components-code-group
 ---
 default-value: "0"
 label: Top RF3 candidate workflow
@@ -683,7 +683,7 @@ if __name__ == "__main__":
 
 ## Batch RF3 Input Preparation
 
-::code-group
+::content-components-code-group
 ---
 default-value: "0"
 label: RF3 batch input workflow

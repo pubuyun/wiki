@@ -6,14 +6,14 @@ order: 230
 
 ## RMSD Analysis
 
-::document-rmsd-xvg-chart{collection="precursor-binder"}
+::content-components-model-document-rmsd-xvg-chart{collection="precursor-binder"}
 ::
 
 ## Molecular Dynamics Parameters
 
 ### Energy Minimization (`em.mdp`)
 
-::code-group
+::content-components-code-group
 ---
 default-value: "0"
 label: Energy minimization parameters
@@ -40,7 +40,7 @@ pbc         = xyz
 
 ### Ion Addition (`ions.mdp`)
 
-::code-group
+::content-components-code-group
 ---
 default-value: "0"
 label: Ion-addition preprocessing parameters
@@ -64,7 +64,7 @@ pbc         = xyz
 
 ### NVT Equilibration (`nvt.mdp`)
 
-::code-group
+::content-components-code-group
 ---
 default-value: "0"
 label: NVT equilibration parameters
@@ -96,7 +96,7 @@ gen_temp                = 307       ; Initial velocity temperature: 307 K
 
 ### NPT Equilibration (`npt.mdp`)
 
-::code-group
+::content-components-code-group
 ---
 default-value: "0"
 label: NPT equilibration parameters
@@ -132,7 +132,7 @@ gen_vel                 = no
 
 ### Production MD (`md.mdp`)
 
-::code-group
+::content-components-code-group
 ---
 default-value: "0"
 label: Production MD parameters
@@ -166,7 +166,7 @@ gen_vel                 = no
 ```
 ::
 
-::code-group{defaultValue="0" sync="md-mmpbsa-workflow" label="Workflow and source code"}
+::content-components-code-group{defaultValue="0" sync="md-mmpbsa-workflow" label="Workflow and source code"}
 
 ```graph [Workflow]
 {

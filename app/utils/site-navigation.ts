@@ -118,6 +118,16 @@ export const siteNavGroups: SiteNavGroup[] = [
                 icon: "griddy-icons:hands-support",
             },
             {
+                to: "/inclusivity/viewmodel",
+                label: "Teaching Model",
+                icon: "",
+            },
+            {
+                to: "/inclusivity/game",
+                label: "Sign Language Game",
+                icon: "",
+            },
+            {
                 to: "/entrepreneurship",
                 label: "Entrepreneurship",
                 icon: "majesticons:briefcase-line",

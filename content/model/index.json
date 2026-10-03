@@ -27,7 +27,7 @@
             },
             "data": {
                 "path": "/model/precursor-binder",
-                "graph": "/content/model/precursor binder/index.json"
+                "graph": "/content/model/precursor-binder/index.json"
             }
         },
         {
@@ -44,7 +44,7 @@
             },
             "data": {
                 "path": "/model/transporter-binder",
-                "graph": "/content/model/transporter binder/index.json"
+                "graph": "/content/model/transporter-binder/index.json"
             }
         },
         {

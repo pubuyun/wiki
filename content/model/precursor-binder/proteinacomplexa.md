@@ -6,7 +6,7 @@ order: 220
 
 ## Binder Performance
 
-::code-group
+::content-components-code-group
 ---
 
 default-value: "0"
@@ -28,12 +28,12 @@ sync: cys-gly-3m3sh-ligand-target
 
 ::
 
-::charts-model-precursor-binder-binders-heat-map{binders="proteina"}
+::content-components-model-precursor-binder-binders-heat-map{binders="proteina"}
 ::
 
 ## Binder Generation Configuration
 
-::code-group
+::content-components-code-group
 ---
 
 default-value: "0"
@@ -70,7 +70,7 @@ sync: binder-generation-configuration
 
 ## PDB Collection
 
-::code-group{defaultValue="0" sync="proteina-pdb-collection" label="Workflow and source code"}
+::content-components-code-group{defaultValue="0" sync="proteina-pdb-collection" label="Workflow and source code"}
 
 ```graph [Workflow]
 {
@@ -292,7 +292,7 @@ if __name__ == "__main__":
 
 ## Confidence Metrics
 
-::code-group{defaultValue="0" sync="proteina-confidence-metrics" label="Workflow and source code"}
+::content-components-code-group{defaultValue="0" sync="proteina-confidence-metrics" label="Workflow and source code"}
 
 ```graph [Workflow]
 {
@@ -446,7 +446,7 @@ if __name__ == "__main__":
 
 ## Binder Ranking
 
-::code-group{defaultValue="0" sync="proteina-binder-ranking" label="Workflow and source code"}
+::content-components-code-group{defaultValue="0" sync="proteina-binder-ranking" label="Workflow and source code"}
 
 ```graph [Workflow]
 {

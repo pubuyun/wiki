@@ -6,7 +6,7 @@ title: Overview
 
 ### Interviews
 
-::interview-script{src="human-practices/potential costumer sun.md"}
+::content-components-human-practices-interview-script{src="human-practices/potential costumer sun.md"}
 ::
 
 This is the main page displaying Markdown located at [content/index.md](https://github.com/nuxt/starter/blob/content/content/index.md).

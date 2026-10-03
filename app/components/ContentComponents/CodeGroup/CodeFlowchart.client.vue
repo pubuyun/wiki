@@ -5,7 +5,7 @@ import {
     type ViewportTransform,
     type VueFlowStore,
 } from "@vue-flow/core";
-import FlowchartNode from "../FlowchartNode.vue";
+import FlowchartNode from "~/components/ContentGraph/FlowchartNode.vue";
 import {
     layoutFlowchart,
     parseFlowchartDefinition,

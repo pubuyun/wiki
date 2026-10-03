@@ -24,7 +24,7 @@
             },
             "data": {
                 "path": "/model/precursor-binder/rfdiffusion",
-                "graph": "/content/model/precursor binder/rfdiffusion.json",
+                "graph": "/content/model/precursor-binder/rfdiffusion.json",
                 "direction": "left-right"
             }
         },
@@ -42,7 +42,7 @@
             },
             "data": {
                 "path": "/model/precursor-binder/proteinacomplexa",
-                "graph": "/content/model/precursor binder/proteinacomplexa.json",
+                "graph": "/content/model/precursor-binder/proteinacomplexa.json",
                 "direction": "left-right"
             }
         },
@@ -60,7 +60,7 @@
             },
             "data": {
                 "path": "/model/precursor-binder/md-simulation",
-                "graph": "/content/model/precursor binder/md simulation.json",
+                "graph": "/content/model/precursor-binder/md simulation.json",
                 "direction": "top-bottom"
             }
         },

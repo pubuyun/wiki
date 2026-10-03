@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { ref, useId } from "vue";
 import { Icon } from "@iconify/vue";
-import SearchBar from "../SearchBar.vue";
-import ProseEm from "./ProseEm.vue";
-import CollapsibleParagraph from "./CollapsibleParagraph.vue";
+import SearchBar from "~/components/SearchBar.vue";
+import ProseEm from "~/components/content/ProseEm.vue";
+import CollapsibleParagraph from "~/components/ContentComponents/CollapsibleParagraph.vue";
 import {
     AccordionRoot,
     AccordionItem,

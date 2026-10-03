@@ -6,5 +6,5 @@ order: 430
 
 ## RMSD Analysis
 
-::document-rmsd-xvg-chart{collection="enzyme"}
+::content-components-model-document-rmsd-xvg-chart{collection="enzyme"}
 ::

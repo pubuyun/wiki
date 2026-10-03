@@ -85,7 +85,7 @@ watch(charts, (items) => {
                 class="min-w-0 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-outline"
             >
                 <ClientOnly>
-                    <RmsdXvgChart
+                    <ContentComponentsModelRmsdXvgChart
                         v-if="selected === item.value"
                         :key="item.sources.join('|')"
                         :src="item.sources"

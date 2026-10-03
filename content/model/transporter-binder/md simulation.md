@@ -6,7 +6,7 @@ order: 330
 
 ## Membrane System Preparation
 
-::code-group
+::content-components-code-group
 ---
 default-value: "0"
 label: CHARMM-GUI membrane system configuration
@@ -74,7 +74,7 @@ sync: transporter-binder-membrane-system
 
 ## Molecular Dynamics
 
-::code-group{defaultValue="0" sync="transporter-binder-md-workflow" label="Workflow and source code"}
+::content-components-code-group{defaultValue="0" sync="transporter-binder-md-workflow" label="Workflow and source code"}
 
 ```graph [Workflow]
 {
@@ -382,10 +382,10 @@ echo "  ${RESULT_DIR}/${PROD_PREFIX}_${PROD_NSEG}.tpr"
 
 ## RMSD Analysis
 
-::document-rmsd-xvg-chart{collection="transporter-binder"}
+::content-components-model-document-rmsd-xvg-chart{collection="transporter-binder"}
 ::
 
-::code-group{defaultValue="0" sync="transporter-binder-rmsd-workflow" label="Workflow and source code"}
+::content-components-code-group{defaultValue="0" sync="transporter-binder-rmsd-workflow" label="Workflow and source code"}
 
 ```graph [Workflow]
 {
@@ -577,7 +577,7 @@ echo "RMSD outputs are in ${RMSD_DIR}/"
 
 ## MM/PBSA Binding Energy
 
-::code-group{defaultValue="0" sync="transporter-binder-mmpbsa-workflow" label="Workflow and source code"}
+::content-components-code-group{defaultValue="0" sync="transporter-binder-mmpbsa-workflow" label="Workflow and source code"}
 
 ```graph [Workflow]
 {

@@ -1,5 +1,5 @@
 <template>
-    <LightboxImage :src="[refinedSrc]" :alt="props.alt">
+    <ContentComponentsLightboxImage :src="[refinedSrc]" :alt="props.alt">
         <template #default="{ open }">
             <button
                 v-if="props.alt"
@@ -29,7 +29,7 @@
                 decoding="async"
             />
         </template>
-    </LightboxImage>
+    </ContentComponentsLightboxImage>
 </template>
 
 <script setup lang="ts">

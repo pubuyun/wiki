@@ -17,4 +17,4 @@ The following components help you navigate and interact with the wiki:
 
 Try each component below to learn what it does and practice using it with a keyboard.
 
-:accessibility-playground
+:content-components-inclusivity-accessible-wiki-accessibility-playground

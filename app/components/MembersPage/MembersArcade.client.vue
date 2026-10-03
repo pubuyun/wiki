@@ -3,7 +3,7 @@ import { Icon } from "@iconify/vue";
 import { gsap } from "gsap";
 import Lenis from "lenis";
 import hamsterUrl from "../../public/hamster.svg?url";
-import membersData from "../data/members.json";
+import membersData from "../../data/members.json";
 
 const hammerUrl =
     "https://static.igem.wiki/teams/6133/wiki/teamphoto/hammer.avif";
@@ -1940,8 +1940,8 @@ onBeforeUnmount(() => {
                             ref="galleryTrack"
                             class="gallery-track [box-sizing:border-box] block h-full min-w-0 overflow-x-auto overflow-y-hidden"
                             tabindex="0"
-                        aria-label="Member animal collection"
-                        role="group"
+                            aria-label="Member animal collection"
+                            role="group"
                         >
                             <div
                                 ref="galleryContent"

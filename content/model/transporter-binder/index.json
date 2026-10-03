@@ -24,7 +24,7 @@
             },
             "data": {
                 "path": "/model/transporter-binder/analysis",
-                "graph": "/content/model/transporter binder/analysis.json",
+                "graph": "/content/model/transporter-binder/analysis.json",
                 "direction": "top-bottom"
             }
         },
@@ -42,7 +42,7 @@
             },
             "data": {
                 "path": "/model/transporter-binder/design",
-                "graph": "/content/model/transporter binder/design.json",
+                "graph": "/content/model/transporter-binder/design.json",
                 "direction": "top-bottom"
             }
         },
@@ -60,7 +60,7 @@
             },
             "data": {
                 "path": "/model/transporter-binder/md-simulation",
-                "graph": "/content/model/transporter binder/md simulation.json",
+                "graph": "/content/model/transporter-binder/md simulation.json",
                 "direction": "top-bottom"
             }
         },

@@ -1,5 +1,12 @@
 ---
 title: Overview
+citationIds:
+  - "1"
+  - "2"
+  - "3"
+  - "4"
+  - "5"
+hasReference: false
 order: 100
 ---
 
@@ -12,14 +19,12 @@ order: 100
 
 ### ECharts Rendering Test
 
-::echarts
+::content-components-echarts
 ---
-
 description: "Example data: A has a value of 10 and B has a value of 20."
 height: "400"
 label: Example bar chart
 ---
-
 ```js
 option = {
     xAxis: { data: ["A", "B"] },
@@ -27,18 +32,15 @@ option = {
     series: [{ type: "bar", data: [10, 20] }],
 };
 ```
-
 ::
 
 ### Two Panels
 
-::panel-layout
+::content-components-panel-layout
 ---
-
 height: 24rem
 label: Two panels example
 ---
-
 #left
 This layout accepts **Markdown or any MDC component** in either panel. Drag the divider to adjust the widths, or focus it and use the arrow keys.
 
@@ -53,13 +55,11 @@ On smaller screens, the panels stack in reading order and expand to fit their co
 
 ### One Left, Two Right
 
-::panel-layout
+::content-components-panel-layout
 ---
-
 height: 32rem
 label: One left, two right example
 ---
-
 #left
 **Panel A** fills the left column. The right column contains two panels, each of which can hold text, an image, a chart, or another component.
 
@@ -68,34 +68,33 @@ Both the column divider and the right row divider can be resized independently.
 #right
 **Panel B** opens an enlarged image.
 
-:::lightbox-image
----
-
-height: 2019
-src: - https://static.igem.wiki/teams/6133/wiki/project/description/banner.avif
-width: 4269
-alt: Illustration of Expelliodor spray and enzyme mechanisms
----
-
-:::
+  :::content-components-lightbox-image
+  ---
+  height: 2019
+  https://static:
+    igem:
+      wiki/teams/6133/wiki/project/description/banner:
+        avif: null
+  src: null
+  width: 4269
+  alt: Illustration of Expelliodor spray and enzyme mechanisms
+  ---
+  :::
 
 #right-bottom
 **Panel C** contains regular Markdown.
 
 - The layout adapts to the available width.
 - The image lightbox continues to work inside a resizable panel.
-
 ::
 
 ### Two Left, One Right
 
-::panel-layout
+::content-components-panel-layout
 ---
-
 height: 24rem
 label: Two left, one right example
 ---
-
 #left
 **Panel A** is the upper left panel.
 
@@ -110,36 +109,31 @@ label: Two left, one right example
 
 ### Four Panels
 
-::panel-layout
+::content-components-panel-layout
 ---
-
 height: 32rem
 label: Four panels example
 ---
-
 #left
 **Panel A** contains Markdown.
 
 #left-bottom
 **Panel B** contains a chart.
 
-:::echarts
----
-
-description: A has a value of 10 and B has a value of 20.
-height: "180"
-label: Panel B bar chart
----
-
-```js
-option = {
-    xAxis: { data: ["A", "B"] },
-    yAxis: {},
-    series: [{ type: "bar", data: [10, 20] }],
-};
-```
-
-:::
+  :::content-components-echarts
+  ---
+  description: A has a value of 10 and B has a value of 20.
+  height: "180"
+  label: Panel B bar chart
+  ---
+  ```js
+  option = {
+      xAxis: { data: ["A", "B"] },
+      yAxis: {},
+      series: [{ type: "bar", data: [10, 20] }],
+  };
+  ```
+  :::
 
 #right
 **Panel C** contains an image.
@@ -152,26 +146,23 @@ option = {
 - Resize the two columns with the central divider.
 - Resize each column's rows independently.
 - Narrow layouts stack A, B, C, then D.
-
 ::
 
 ### LaTeX Rendering Test
 
-Inline math uses single dollar signs, for example $E = mc^2$.
+Inline math uses single dollar signs, for example [[]{.katex-mathml}[[[]{.strut style="height:0.6833em;"}[E]{.mord.mathnormal style="margin-right:0.0576em;"}[]{.mspace style="margin-right:0.2778em;"}[=]{.mrel}[]{.mspace style="margin-right:0.2778em;"}]{.base}[[]{.strut style="height:0.8141em;"}[m]{.mord.mathnormal}[[c]{.mord.mathnormal}[[[[[[]{.pstrut style="height:2.7em;"}[[2]{.mord.mtight}]{.sizing.reset-size6.size3.mtight}]{style="top:-3.063em;margin-right:0.05em;"}]{.vlist style="height:0.8141em;"}]{.vlist-r}]{.vlist-t}]{.msupsub}]{.mord}]{.base}]{.katex-html ariaHidden="true"}]{.katex}.
 
 Display math uses double dollar signs:
 
-$$
-\int_{-\infty}^{\infty} e^{-x^2}\,dx = \sqrt{\pi}
-$$
+[[[]{.katex-mathml}[[[]{.strut style="height:2.3846em;vertical-align:-0.9703em;"}[[∫]{.mop.op-symbol.large-op style="margin-right:0.4445em;position:relative;top:-0.0011em;"}[[[[[[]{.pstrut style="height:2.7em;"}[[[−]{.mord.mtight}[∞]{.mord.mtight}]{.mord.mtight}]{.sizing.reset-size6.size3.mtight}]{style="top:-1.7881em;margin-left:-0.4445em;margin-right:0.05em;"}[[]{.pstrut style="height:2.7em;"}[[[∞]{.mord.mtight}]{.mord.mtight}]{.sizing.reset-size6.size3.mtight}]{style="top:-3.8129em;margin-right:0.05em;"}]{.vlist style="height:1.4143em;"}[​]{.vlist-s}]{.vlist-r}[[[]]{.vlist style="height:0.9703em;"}]{.vlist-r}]{.vlist-t.vlist-t2}]{.msupsub}]{.mop}[]{.mspace style="margin-right:0.1667em;"}[[e]{.mord.mathnormal}[[[[[[]{.pstrut style="height:2.7em;"}[[[−]{.mord.mtight}[[x]{.mord.mathnormal.mtight}[[[[[[]{.pstrut style="height:2.5em;"}[[2]{.mord.mtight}]{.sizing.reset-size3.size1.mtight}]{style="top:-2.931em;margin-right:0.0714em;"}]{.vlist style="height:0.8913em;"}]{.vlist-r}]{.vlist-t}]{.msupsub}]{.mord.mtight}]{.mord.mtight}]{.sizing.reset-size6.size3.mtight}]{style="top:-3.113em;margin-right:0.05em;"}]{.vlist style="height:1.0369em;"}]{.vlist-r}]{.vlist-t}]{.msupsub}]{.mord}[]{.mspace style="margin-right:0.1667em;"}[d]{.mord.mathnormal}[x]{.mord.mathnormal}[]{.mspace style="margin-right:0.2778em;"}[=]{.mrel}[]{.mspace style="margin-right:0.2778em;"}]{.base}[[]{.strut style="height:1.04em;vertical-align:-0.1908em;"}[[[[[[]{.pstrut style="height:3em;"}[[π]{.mord.mathnormal style="margin-right:0.0359em;"}]{.mord style="padding-left:0.833em;"}]{.svg-align style="top:-3em;"}[[]{.pstrut style="height:3em;"}[]{.hide-tail style="min-width:0.853em;height:1.08em;"}]{style="top:-2.8092em;"}]{.vlist style="height:0.8492em;"}[​]{.vlist-s}]{.vlist-r}[[[]]{.vlist style="height:0.1908em;"}]{.vlist-r}]{.vlist-t.vlist-t2}]{.mord.sqrt}]{.base}]{.katex-html ariaHidden="true"}]{.katex}]{.katex-display}
 
 ### Philosophy
 
-_Markdown_ is intended to be as easy-to-read and easy-to-write as is feasible. :fn-ref{#1}
+*Markdown* is intended to be as easy-to-read and easy-to-write as is feasible. :fn-ref{#1}
 
-Readability, _however_, is emphasized above all else. A Markdown-formatted--- Unknown node: hardBreak ---document should be publishable as-is, as plain text, without looking--- Unknown node: hardBreak ---like it's been marked up with tags or formatting instructions. While--- Unknown node: hardBreak ---Markdown's syntax has been influenced by several existing text-to-HTML--- Unknown node: hardBreak ---filters -- including [Setext](http://docutils.sourceforge.net/mirror/setext.html), [atx](http://www.aaronsw.com/2002/atx/), [Textile](http://textism.com/tools/textile/), [reStructuredText](http://docutils.sourceforge.net/rst.html),--- Unknown node: hardBreak ---[Grutatext](http://www.triptico.com/software/grutatxt.html), and [EtText](http://ettext.taint.org/doc/) -- the single biggest source of--- Unknown node: hardBreak ---inspiration for Markdown's syntax is the format of plain text email. :fn-ref{#2}
+Readability, *however*, is emphasized above all else. A Markdown-formatted--- Unknown node: hardBreak ---document should be publishable as-is, as plain text, without looking--- Unknown node: hardBreak ---like it's been marked up with tags or formatting instructions. While--- Unknown node: hardBreak ---Markdown's syntax has been influenced by several existing text-to-HTML--- Unknown node: hardBreak ---filters -- including [Setext](http://docutils.sourceforge.net/mirror/setext.html), [atx](http://www.aaronsw.com/2002/atx/), [Textile](http://textism.com/tools/textile/), [reStructuredText](http://docutils.sourceforge.net/rst.html),--- Unknown node: hardBreak ---[Grutatext](http://www.triptico.com/software/grutatxt.html), and [EtText](http://ettext.taint.org/doc/) -- the single biggest source of--- Unknown node: hardBreak ---inspiration for Markdown's syntax is the format of plain text email. :fn-ref{#2}
 
-This line is added by _NuxtStudio_
+This line is added by *NuxtStudio*
 
 Title reference test: :reference{#heading-ref-1 destination="#title-reference-target" label="Title Reference Target"}
 
@@ -247,25 +238,27 @@ and code blocks:
 > return shell_exec("echo $input | $markdown_script");
 > ```
 
-::collapsible-paragraph{#paragraph-details title="Paragraph Details"}
+::content-components-collapsible-paragraph
+---
+id: paragraph-details
+title: Paragraph Details
+---
 The implication of the "one or more consecutive lines of text" rule is
 that Markdown supports "hard-wrapped" text paragraphs. This differs
 significantly from most other text-to-HTML formatters (including Movable
 Type's "Convert Line Breaks" option) which translate every line break
 character in a paragraph into a `<br />` tag.
 
-When you _do_ want to insert a `<br />` break tag using Markdown, you
+When you *do* want to insert a `<br />` break tag using Markdown, you
 end a line with two or more spaces, then type return.
 ::
 
-::collapsible-paragraph
+::content-components-collapsible-paragraph
 ---
-
 blur-preview: true
 id: paragraph-preview
 title: Paragraph Preview
 ---
-
 A paragraph can span several lines without adding a break after each line.
 This preview shows the beginning of the text while the paragraph is folded.
 Click the title or the blurred paragraph to read the whole explanation.
@@ -358,26 +351,26 @@ paragraphs, but here again, Markdown will allow you to be
 lazy:
 
 - This is a list item with two paragraphs.
-    ```text
-      This is the second paragraph in the list item. You're
-    ```
-    : bronly required to indent the first line. Lorem ipsum dolor
-    sit amet, consectetuer adipiscing elit.
+  ```text
+    This is the second paragraph in the list item. You're
+  ```
+  : bronly required to indent the first line. Lorem ipsum dolor
+  sit amet, consectetuer adipiscing elit.
 - Another item in the same list.
 
 To put a blockquote within a list item, the blockquote's `>`--- Unknown node: hardBreak ---delimiters need to be indented: :fn-ref{#5}
 
 - A list item with a blockquote:
-    > This is a blockquote
-    > inside a list item.
+  > This is a blockquote
+  > inside a list item.
 
 To put a code block within a list item, the code block needs
-to be indented _twice_ -- 8 spaces or two tabs:
+to be indented *twice* -- 8 spaces or two tabs:
 
 - A list item with a code block:
-    ```text
-      <code goes here>
-    ```
+  ```text
+    <code goes here>
+  ```
 
 ### Code Blocks
 
@@ -432,13 +425,13 @@ end tell
 
 ### Links
 
-Markdown supports two style of links: _inline_ and _reference_.
+Markdown supports two style of links: *inline* and *reference*.
 
 In both styles, the link text is delimited by [square brackets].
 
 To create an inline link, use a set of regular parentheses immediately
 after the link text's closing square bracket. Inside the parentheses,
-put the URL where you want the link to point, along with an _optional_
+put the URL where you want the link to point, along with an *optional*
 title for the link, surrounded in quotes. For example:
 
 This is [an example](http://example.com/) inline link.
@@ -452,9 +445,9 @@ emphasis. Text wrapped with one `*` or `_` will be wrapped with an
 HTML `<em>` tag; double `*`'s or `_`'s will be wrapped with an HTML
 `<strong>` tag. E.g., this input:
 
-_single asterisks_
+*single asterisks*
 
-_single underscores_
+*single underscores*
 
 **double asterisks**
 

@@ -8,7 +8,7 @@ order: 410
 
 <!-- prettier-ignore-start -->
 
-::rmsd-xvg-chart
+::content-components-model-rmsd-xvg-chart
 ---
 title: CGTase-9 RMSD
 src:

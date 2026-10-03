@@ -6,7 +6,7 @@ order: 320
 
 ## RFdiffusion generation
 
-::code-group
+::content-components-code-group
 ---
 default-value: "0"
 label: PeptSH interface design
@@ -48,7 +48,7 @@ sync: peptsh-interface-design
 
 ## Interface redesign
 
-::code-group{defaultValue="0" sync="mpnn-interface-redesign" label="Workflow and source code"}
+::content-components-code-group{defaultValue="0" sync="mpnn-interface-redesign" label="Workflow and source code"}
 
 ```graph [Workflow]
 {
@@ -298,7 +298,7 @@ if __name__ == "__main__":
 
 ## Reference cofolding
 
-::code-group{defaultValue="0" sync="rf3-reference-cofold" label="Workflow and source code"}
+::content-components-code-group{defaultValue="0" sync="rf3-reference-cofold" label="Workflow and source code"}
 
 ```graph [Workflow]
 {
@@ -813,7 +813,7 @@ if __name__ == "__main__":
 
 ## Binder ranking
 
-::code-group{defaultValue="0" sync="rf3-binder-ranking" label="Workflow and source code"}
+::content-components-code-group{defaultValue="0" sync="rf3-binder-ranking" label="Workflow and source code"}
 
 ```graph [Workflow]
 {
@@ -2106,5 +2106,5 @@ if __name__ == "__main__":
 
 ::
 
-::charts-model-transporter-binder-binders-heat-map
+::content-components-model-transporter-binder-binders-heat-map
 ::

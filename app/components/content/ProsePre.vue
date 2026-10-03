@@ -1,16 +1,16 @@
 <template>
-    <Echarts
+    <ContentComponentsEcharts
         v-if="isEchartsLanguage"
         :code="props.code"
         :label="props.filename || 'ECharts chart'"
         :class="$props.class"
     />
-    <CodeGroupCodeFlowchart
+    <ContentComponentsCodeGroupCodeFlowchart
         v-else-if="parsedGraph.value"
         :graph="parsedGraph.value"
         :class="$props.class"
     />
-    <CodeGroupCodeDictionary
+    <ContentComponentsCodeGroupCodeDictionary
         v-else-if="isDictLanguage"
         :source="props.code"
         :label="props.filename || 'Dictionary'"

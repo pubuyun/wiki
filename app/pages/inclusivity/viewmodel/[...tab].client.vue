@@ -124,6 +124,8 @@
                                 :auto-rotate="
                                     !prefersReducedMotion &&
                                     !hasUserTakenViewerControl
+                                        ? ''
+                                        : null
                                 "
                                 auto-rotate-delay="0"
                                 rotation-per-second="14deg"
@@ -140,6 +142,8 @@
                                 reveal="auto"
                                 @load="handleModelLoad"
                                 @poster-dismissed="handleModelLoad"
+                                @pointerdown="stopAutoRotation"
+                                @wheel.passive="stopAutoRotation"
                                 @camera-change="handleCameraChange"
                                 @error="handleModelError"
                             />
@@ -220,13 +224,28 @@
                                 v-if="selectedModel"
                                 class="flex min-h-full flex-col gap-3"
                             >
-                                <img
-                                    class="max-h-full min-h-0 w-full rounded-lg object-contain"
-                                    :src="selectedModel.imageUrl"
+                                <LightboxImage
+                                    :key="selectedModel.id"
+                                    :src="[selectedModel.imageUrl]"
                                     :alt="`Reference image for ${selectedModel.title}`"
-                                    loading="eager"
-                                    decoding="async"
-                                />
+                                >
+                                    <template #default="{ open }">
+                                        <button
+                                            type="button"
+                                            class="block min-h-0 w-full cursor-zoom-in rounded-lg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-outline"
+                                            :aria-label="`Open enlarged reference image: ${selectedModel.title}`"
+                                            @click="open(0)"
+                                        >
+                                            <img
+                                                class="max-h-full min-h-0 w-full rounded-lg object-contain"
+                                                :src="selectedModel.imageUrl"
+                                                :alt="`Reference image for ${selectedModel.title}`"
+                                                loading="eager"
+                                                decoding="async"
+                                            />
+                                        </button>
+                                    </template>
+                                </LightboxImage>
                                 <figcaption
                                     class="text-sm text-on-secondary/75"
                                 >
@@ -273,6 +292,7 @@
 <script setup lang="ts">
 import { Icon } from "@iconify/vue";
 import { parseMarkdown } from "@nuxtjs/mdc/runtime";
+import LightboxImage from "~/components/ContentComponents/LightboxImage.vue";
 import {
     SplitterGroup,
     SplitterPanel,
@@ -473,10 +493,14 @@ function configureModelViewerDecoders() {
         modelViewerMeshoptDecoderLocation;
 }
 
+function stopAutoRotation() {
+    hasUserTakenViewerControl.value = true;
+}
+
 function handleCameraChange(event: Event) {
     const cameraChangeEvent = event as CustomEvent<{ source?: string }>;
     if (cameraChangeEvent.detail?.source === "user-interaction") {
-        hasUserTakenViewerControl.value = true;
+        stopAutoRotation();
     }
 }
 
