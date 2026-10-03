@@ -32,7 +32,7 @@ export const footerSocialChannels = [
     {
         name: "WeChat",
         icon: "simple-icons:wechat",
-        href: "https://mp.weixin.qq.com/mp/profile_ext?action=home&__biz=MzU5MjU3MzQ2OA==",
+        href: "https://mp.weixin.qq.com/s/-g_PcYoGGHpWePJ7JwuTBA",
         color: "bg-[#07c160]",
     },
     {
