@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { Icon } from "@iconify/vue";
 import { onMounted, onUnmounted, ref } from "vue";
+import type { SiteNavLink } from "~/utils/site-navigation";
 import {
     NavigationMenuContent,
     NavigationMenuItem,
@@ -8,17 +9,11 @@ import {
     NavigationMenuTrigger,
 } from "reka-ui";
 
-interface DropdownLink {
-    to: string;
-    label: string;
-    icon: string;
-}
-
 withDefaults(
     defineProps<{
         title: string;
         to?: string;
-        links?: DropdownLink[];
+        links?: SiteNavLink[];
     }>(),
     { links: () => [] },
 );
@@ -68,26 +63,61 @@ onUnmounted(() => observer?.disconnect());
             force-mount
             class="nav-menu-content absolute top-full -left-1/3 w-62 overflow-hidden rounded-2xl bg-surface-bright text-on-surface shadow-sm data-[state=closed]:pointer-events-none! data-[state=open]:pointer-events-auto!"
         >
-            <div class="mx-auto flex w-fit flex-col">
-                <NavigationMenuLink
-                    v-for="link in links"
-                    :key="link.to"
-                    as-child
-                >
-                    <NuxtLink
-                        :to="link.to"
-                        @pointerdown.stop
-                        class="group flex min-h-16 w-53 items-center gap-3 px-5 py-4 text-xl text-on-surface no-underline -outline-offset-2 first:rounded-t-2xl last:rounded-b-2xl focus-visible:outline-2 focus-visible:outline-outline"
-                    >
-                        <Icon :icon="link.icon" class="size-6 shrink-0" />
-                        <span
-                            class="transition-transform duration-150 ease-out group-hover:translate-x-2"
+            <ul class="m-0 flex list-none flex-col p-0 whitespace-normal">
+                <li v-for="link in links" :key="link.to">
+                    <NavigationMenuLink as-child>
+                        <NuxtLink
+                            :to="link.to"
+                            @pointerdown.stop
+                            class="group flex min-h-16 items-center gap-3 px-5 py-4 text-xl text-on-surface no-underline -outline-offset-2 focus-visible:outline-2 focus-visible:outline-outline"
                         >
-                            {{ link.label }}
-                        </span>
-                    </NuxtLink>
-                </NavigationMenuLink>
-            </div>
+                            <Icon
+                                :icon="link.icon"
+                                class="size-6 shrink-0"
+                                aria-hidden="true"
+                            />
+                            <span
+                                class="transition-transform duration-150 ease-out group-hover:translate-x-2"
+                            >
+                                {{ link.label }}
+                            </span>
+                        </NuxtLink>
+                    </NavigationMenuLink>
+                    <ul
+                        v-if="link.children?.length"
+                        :aria-label="`${link.label} subpages`"
+                        class="m-0 list-none p-0"
+                    >
+                        <li v-for="child in link.children" :key="child.to">
+                            <NavigationMenuLink as-child>
+                                <NuxtLink
+                                    :to="child.to"
+                                    @pointerdown.stop
+                                    class="group flex min-h-12 items-center gap-3 py-3 pr-5 pl-11 text-base text-on-surface no-underline -outline-offset-2 focus-visible:outline-2 focus-visible:outline-outline"
+                                >
+                                    <svg
+                                        class="h-5 w-3 shrink-0"
+                                        viewBox="0 0 12 20"
+                                        fill="none"
+                                        aria-hidden="true"
+                                        focusable="false"
+                                    >
+                                        <path
+                                            d="M2 2v14h8"
+                                            stroke="currentColor"
+                                            stroke-width="1.5"
+                                        />
+                                    </svg>
+                                    <span
+                                        class="transition-transform duration-150 ease-out group-hover:translate-x-1"
+                                        >{{ child.label }}</span
+                                    >
+                                </NuxtLink>
+                            </NavigationMenuLink>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
         </NavigationMenuContent>
     </NavigationMenuItem>
 </template>

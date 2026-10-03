@@ -300,7 +300,7 @@ import {
     DialogTrigger,
 } from "reka-ui";
 import { Icon } from "@iconify/vue";
-import { siteNavGroups } from "~/utils/site-navigation";
+import { flattenNavLinks, siteNavGroups } from "~/utils/site-navigation";
 
 const props = defineProps({
     enableShortcut: { type: Boolean, default: true },
@@ -369,7 +369,10 @@ async function loadSearchIndex() {
 const hasResults = computed(() => result.value.length > 0 && query.value);
 const categoryLabels = new Map(
     siteNavGroups.flatMap((group) =>
-        group.links.map((link) => [normalizeContentPath(link.to), link.label]),
+        flattenNavLinks(group.links).map((link) => [
+            normalizeContentPath(link.to),
+            link.label,
+        ]),
     ),
 );
 const groupedResults = computed(() => groupSearchResults(result.value));

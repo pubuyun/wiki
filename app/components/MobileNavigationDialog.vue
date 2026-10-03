@@ -232,6 +232,42 @@ function categoryItemValue(id: string) {
                                             >
                                                 {{ link.label }}
                                             </NuxtLink>
+                                            <ul
+                                                v-if="link.children?.length"
+                                                :aria-label="`${link.label} subpages`"
+                                                class="m-0 list-none p-0"
+                                            >
+                                                <li
+                                                    v-for="child in link.children"
+                                                    :key="child.to"
+                                                >
+                                                    <NuxtLink
+                                                        :to="child.to"
+                                                        class="flex min-h-11 items-center gap-3 rounded-md py-2 pr-3 pl-6 font-belanosima text-sm text-on-surface hover:bg-secondary hover:text-on-secondary focus-visible:outline-2 focus-visible:outline-outline"
+                                                        :class="
+                                                            route.path ===
+                                                                child.to &&
+                                                            'bg-primary text-on-primary'
+                                                        "
+                                                        @click="closeDialog"
+                                                    >
+                                                        <svg
+                                                            class="h-5 w-3 shrink-0"
+                                                            viewBox="0 0 12 20"
+                                                            fill="none"
+                                                            aria-hidden="true"
+                                                            focusable="false"
+                                                        >
+                                                            <path
+                                                                d="M2 2v14h8"
+                                                                stroke="currentColor"
+                                                                stroke-width="1.5"
+                                                            />
+                                                        </svg>
+                                                        {{ child.label }}
+                                                    </NuxtLink>
+                                                </li>
+                                            </ul>
                                         </li>
                                     </ul>
                                 </AccordionContent>

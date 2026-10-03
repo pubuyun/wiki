@@ -1,10 +1,20 @@
+export interface SiteNavChildLink {
+    to: string;
+    label: string;
+}
+
+export interface SiteNavLink extends SiteNavChildLink {
+    icon: string;
+    children?: SiteNavChildLink[];
+}
+
 export interface SiteNavGroup {
     title: string;
-    links: {
-        to: string;
-        label: string;
-        icon: string;
-    }[];
+    links: SiteNavLink[];
+}
+
+export function flattenNavLinks(links: SiteNavLink[]): SiteNavChildLink[] {
+    return links.flatMap((link) => [link, ...(link.children ?? [])]);
 }
 
 export const siteNavGroups: SiteNavGroup[] = [
@@ -81,7 +91,12 @@ export const siteNavGroups: SiteNavGroup[] = [
     {
         title: "Dry Lab",
         links: [
-            { to: "/model", label: "Model", icon: "carbon:model-alt" },
+            {
+                to: "/model",
+                label: "Model",
+                icon: "carbon:model-alt",
+                children: [{ to: "/viewbinder", label: "Binder Viewer" }],
+            },
             {
                 to: "/software",
                 label: "Software",
@@ -91,11 +106,6 @@ export const siteNavGroups: SiteNavGroup[] = [
                 to: "/hardware",
                 label: "Hardware",
                 icon: "mingcute:bottle-line",
-            },
-            {
-                to: "/viewbinder",
-                label: "Binder Viewer",
-                icon: "tabler:files",
             },
         ],
     },
@@ -116,16 +126,16 @@ export const siteNavGroups: SiteNavGroup[] = [
                 to: "/inclusivity",
                 label: "Inclusivity",
                 icon: "griddy-icons:hands-support",
-            },
-            {
-                to: "/inclusivity/viewmodel",
-                label: "Teaching Model",
-                icon: "",
-            },
-            {
-                to: "/inclusivity/game",
-                label: "Sign Language Game",
-                icon: "",
+                children: [
+                    {
+                        to: "/inclusivity/viewmodel",
+                        label: "Tactile Graphics",
+                    },
+                    {
+                        to: "/inclusivity/game",
+                        label: "Sign Language Game",
+                    },
+                ],
             },
             {
                 to: "/entrepreneurship",
