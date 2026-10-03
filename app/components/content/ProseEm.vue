@@ -31,13 +31,11 @@
                             <NuxtLink
                                 v-if="matchedTerm.link"
                                 :to="matchedTerm.link"
-                                class="inline-annotation-content mt-2 inline-block font-semibold text-accent underline"
+                                class="inline-annotation-content mt-2 inline-block font-semibold text-on-surface underline underline-offset-2"
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                :aria-label="`Learn more about ${slotText} (opens in new tab)`"
                             >
-                                Learn more about {{ slotText }} (opens in new
-                                tab)
+                                Learn more about {{ slotText }}
                             </NuxtLink>
                         </div>
                     </div>

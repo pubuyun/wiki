@@ -393,7 +393,11 @@ const sections = [
     min-width: 0;
 }
 .a11y-playground h2 {
-    color: var(--accent);
+    width: fit-content;
+    padding: 0.125rem 0.5rem;
+    border-radius: 0.25rem;
+    background: var(--secondary);
+    color: var(--on-secondary);
     font-size: 1.3rem;
     font-weight: 700;
     margin: 0 0 0.75rem;
