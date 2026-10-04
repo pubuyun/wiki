@@ -1,10 +1,15 @@
 <template>
-    <ContentComponentsLightboxImage :src="[refinedSrc]" :alt="props.alt">
+    <ContentComponentsLightboxImage
+        :src="[refinedSrc]"
+        :alt="props.alt"
+        :caption="props.title"
+    >
         <template #default="{ open }">
             <button
                 v-if="props.alt"
                 type="button"
-                class="my-8 block w-full cursor-zoom-in rounded-lg border border-outline bg-secondary p-0 shadow-sm focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-outline"
+                class="block w-full cursor-zoom-in rounded-lg border border-outline bg-secondary p-0 shadow-sm focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-outline"
+                :class="{ 'my-8': !props.title }"
                 :aria-label="`Open enlarged image: ${props.alt}`"
                 @click="open(0)"
             >
@@ -25,7 +30,8 @@
                 alt=""
                 :width="props.width"
                 :height="props.height"
-                class="my-8 h-auto w-full rounded-lg border border-outline bg-secondary object-cover shadow-sm"
+                class="h-auto w-full rounded-lg border border-outline bg-secondary object-cover shadow-sm"
+                :class="{ 'my-8': !props.title }"
                 decoding="async"
             />
         </template>
@@ -44,6 +50,10 @@ const props = defineProps({
         default: "",
     },
     alt: {
+        type: String,
+        default: "",
+    },
+    title: {
         type: String,
         default: "",
     },

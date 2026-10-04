@@ -86,6 +86,20 @@ export function buildCategoryNavTree(
         });
     }
 
+    const pagesByPath = new Map(pages.map((page) => [page.path, page]));
+    function sortNodes(nodes: ContentNavNode[]) {
+        nodes.sort((a, b) =>
+            compareContentPages(
+                pagesByPath.get(a.id) ?? { path: a.id },
+                pagesByPath.get(b.id) ?? { path: b.id },
+            ),
+        );
+        for (const node of nodes) {
+            if (node.children?.length) sortNodes(node.children);
+        }
+    }
+
+    sortNodes(root);
     markActiveFolders(root);
     return root;
 }

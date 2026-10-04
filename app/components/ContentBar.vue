@@ -153,7 +153,9 @@ function indicatorX(link: ToCLink) {
 
 function collectArticleHeadings() {
     return [
-        ...document.querySelectorAll<HTMLElement>("main h2[id], main h3[id]"),
+        ...document.querySelectorAll<HTMLElement>(
+            "main article h2[id], main article h3[id]",
+        ),
     ];
 }
 
@@ -176,8 +178,23 @@ function updateActiveHeading() {
 }
 
 function lockToHashScrollDestination(id: string) {
+    measureArticleHeadings();
+    const target = document.getElementById(id);
+    const destination =
+        flatToc.value.find((link) => link.id === id)?.id ??
+        (target
+            ? collectArticleHeadings().findLast(
+                  (heading) =>
+                      heading === target ||
+                      Boolean(
+                          heading.compareDocumentPosition(target) &
+                          Node.DOCUMENT_POSITION_FOLLOWING,
+                      ),
+              )?.id
+            : undefined);
+    if (!destination) return;
     hashScrollUntil = Date.now() + hashScrollLockDuration;
-    activeId.value = id;
+    activeId.value = destination;
 }
 
 function getScrollPaddingTop() {
@@ -225,6 +242,7 @@ function setupScrollSpy() {
         const { id } = (event as CustomEvent<{ id?: string }>).detail ?? {};
         if (id) {
             lockToHashScrollDestination(id);
+            updateAfterAnchorScroll();
         }
     };
 
@@ -248,6 +266,8 @@ function setupScrollSpy() {
 watch(
     () => props.toc,
     async () => {
+        hashScrollUntil = 0;
+        activeId.value = undefined;
         await nextTick();
         setupScrollSpy();
     },

@@ -1,0 +1,5 @@
+{
+    "term": ["RosettaFold3", "RF3"],
+    "detail": "A biomolecular structure prediction model used to predict protein folds and complexes from sequences and molecular inputs.",
+    "link": "https://github.com/RosettaCommons/foundry"
+}

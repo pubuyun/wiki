@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import MembersForest from "~/components/MembersPage/MembersForest.vue";
+import { MembersPageMembersArcade as MembersArcade } from "#components";
+
 useSeoMeta({ title: "Members" });
 definePageMeta({
     layout: "static",

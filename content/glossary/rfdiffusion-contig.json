@@ -1,0 +1,5 @@
+{
+    "term": ["RFdiffusion3 contig", "RFdiffusion3 contigs"],
+    "detail": "A configuration string in RFdiffusion3 that specifies generated protein segment lengths, retained chain and residue ranges, and chain breaks.",
+    "link": "https://rosettacommons.github.io/foundry/models/rfd3/input.html"
+}

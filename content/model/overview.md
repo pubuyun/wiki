@@ -71,11 +71,8 @@ Both the column divider and the right row divider can be resized independently.
   :::content-components-lightbox-image
   ---
   height: 2019
-  https://static:
-    igem:
-      wiki/teams/6133/wiki/project/description/banner:
-        avif: null
-  src: null
+  src:
+    - https://static.igem.wiki/teams/6133/wiki/project/description/banner.avif
   width: 4269
   alt: Illustration of Expelliodor spray and enzyme mechanisms
   ---

@@ -1,0 +1,5 @@
+{
+    "term": "LigandMPNN",
+    "detail": "A sequence-design model that accounts for nearby non-protein atoms when proposing amino-acid sequences.",
+    "link": "https://github.com/dauparas/LigandMPNN"
+}

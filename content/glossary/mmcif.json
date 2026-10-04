@@ -1,0 +1,5 @@
+{
+    "term": ["PDBx/mmCIF", "mmCIF"],
+    "detail": "Macromolecular Crystallographic Information File, a structured format for biomolecular coordinates and associated metadata.",
+    "link": "https://en.wikipedia.org/wiki/Macromolecular_Crystallographic_Information_File"
+}

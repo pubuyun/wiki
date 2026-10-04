@@ -1,0 +1,5 @@
+{
+    "term": ["Rosetta Foundry", "Foundry"],
+    "detail": "A Rosetta Commons toolkit that brings protein generation, sequence design, and structure prediction models into a shared framework.",
+    "link": "https://github.com/RosettaCommons/foundry"
+}

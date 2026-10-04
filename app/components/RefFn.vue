@@ -9,7 +9,7 @@
 
     <NuxtLink
         :to="citationLink(id)"
-        class="ml-2 inline-flex rounded-sm align-baseline font-bold text-surface-bright no-underline hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-outline"
+        class="ml-2 inline-flex rounded-sm align-baseline font-bold text-on-secondary no-underline hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-outline"
         :aria-label="`Back to reference ${id} in the text`"
         @click="scrollToHash($event, citationLink(id))"
     >

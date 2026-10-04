@@ -16,6 +16,7 @@ const ignoreHashScrollDuration = 2400;
 let ignoreVisibilityUntil = 0;
 let visibilityLocked = false;
 let scrollFrame = 0;
+let progressObserver: ResizeObserver | undefined;
 
 function updateNavVisibility() {
     const scrollY = Math.max(window.scrollY, 0);
@@ -56,7 +57,10 @@ function updateProgress() {
     const scrollTop = window.scrollY;
     const docHeight =
         document.documentElement.scrollHeight - window.innerHeight;
-    progress.value = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+    progress.value =
+        docHeight > 0
+            ? Math.min(100, Math.max(0, (scrollTop / docHeight) * 100))
+            : 0;
 }
 
 function updateScrollState() {
@@ -71,6 +75,7 @@ function updateScrollState() {
 function ignoreHashScrollVisibilityChange() {
     ignoreVisibilityUntil = Date.now() + ignoreHashScrollDuration;
     lastScrollY.value = Math.max(window.scrollY, 0);
+    updateScrollState();
 }
 
 function handleScrollLockChange(event: Event) {
@@ -88,6 +93,9 @@ onMounted(() => {
     lastScrollY.value = Math.max(window.scrollY, 0);
     updateScrollState();
     window.addEventListener("scroll", updateScrollState, { passive: true });
+    window.addEventListener("resize", updateScrollState);
+    progressObserver = new ResizeObserver(updateScrollState);
+    progressObserver.observe(document.documentElement);
     window.addEventListener(
         "wiki:hash-scroll",
         ignoreHashScrollVisibilityChange,
@@ -97,7 +105,9 @@ onMounted(() => {
 
 onUnmounted(() => {
     cancelAnimationFrame(scrollFrame);
+    progressObserver?.disconnect();
     window.removeEventListener("scroll", updateScrollState);
+    window.removeEventListener("resize", updateScrollState);
     window.removeEventListener(
         "wiki:hash-scroll",
         ignoreHashScrollVisibilityChange,

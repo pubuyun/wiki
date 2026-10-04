@@ -1,0 +1,5 @@
+{
+    "term": "pTM",
+    "detail": "Predicted template modelling score, a model confidence estimate for the overall arrangement of a predicted structure.",
+    "link": "https://www.ebi.ac.uk/training/online/courses/alphafold/alphafold-3-and-alphafold-server/how-to-assess-the-quality-of-alphafold-3-predictions/"
+}

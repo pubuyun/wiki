@@ -1,0 +1,5 @@
+{
+    "term": "pLDDT",
+    "detail": "Predicted local distance difference test, a model confidence estimate for local structural accuracy. Its scale and aggregation depend on the model and output format.",
+    "link": "https://www.ebi.ac.uk/training/online/courses/alphafold/alphafold-3-and-alphafold-server/how-to-assess-the-quality-of-alphafold-3-predictions/"
+}

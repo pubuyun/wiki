@@ -1,4 +1,5 @@
 import type { RouterConfig } from "@nuxt/schema";
+import { waitForHashTarget } from "./utils/hash-scroll-target";
 
 export default <RouterConfig>{
     scrollBehavior(to, from, savedPosition) {
@@ -15,30 +16,41 @@ export default <RouterConfig>{
             ) {
                 const nuxtApp = useNuxtApp();
                 const router = useRouter();
+                const isCurrent = () =>
+                    router.currentRoute.value.fullPath === to.fullPath;
                 return new Promise((resolve) => {
-                    nuxtApp.hooks.hookOnce("page:loading:end", () => {
+                    nuxtApp.hooks.hookOnce("page:loading:end", async () => {
+                        const target = await waitForHashTarget(
+                            to.hash,
+                            isCurrent,
+                        );
+                        if (!target) {
+                            resolve(false);
+                            return;
+                        }
                         requestAnimationFrame(() => {
-                            if (
-                                router.currentRoute.value.fullPath !==
-                                to.fullPath
-                            ) {
+                            if (!isCurrent() || !target.isConnected) {
                                 resolve(false);
                                 return;
                             }
-                            const target = document.getElementById(
-                                decodeURIComponent(to.hash.slice(1)),
+                            window.dispatchEvent(
+                                new CustomEvent("wiki:hash-scroll", {
+                                    detail: { id: target.id },
+                                }),
                             );
-                            target?.focus({ preventScroll: true });
+                            target.focus({ preventScroll: true });
                             resolve({
-                                el: to.hash,
-                                top:
-                                    getScrollPaddingTop() +
-                                    (target
-                                        ? Number.parseFloat(
-                                              getComputedStyle(target)
-                                                  .scrollMarginTop,
-                                          ) || 0
-                                        : 0),
+                                top: Math.max(
+                                    0,
+                                    target.getBoundingClientRect().top +
+                                        window.scrollY -
+                                        getScrollPaddingTop() -
+                                        (Number.parseFloat(
+                                            getComputedStyle(target)
+                                                .scrollMarginTop,
+                                        ) || 0),
+                                ),
+                                behavior: "instant",
                             });
                         });
                     });

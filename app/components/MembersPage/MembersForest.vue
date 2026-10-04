@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { gsap } from "gsap";
 import { MorphSVGPlugin } from "gsap/MorphSVGPlugin";
-import forestSvg from "/public/mpbackground.svg?raw";
+import forestSvg from "~~/public/mpbackground.svg?raw";
 
 interface DepthLayer {
     name: string;

@@ -1,0 +1,5 @@
+{
+    "term": "FASTA",
+    "detail": "A sequence format in which each record begins with a greater-than sign and an identifier, followed by a nucleotide or amino-acid sequence.",
+    "link": "https://en.wikipedia.org/wiki/FASTA_format"
+}

@@ -1,0 +1,5 @@
+{
+    "term": "ipTM",
+    "detail": "Interface predicted template modelling score, a confidence estimate for the relative placement of interacting chains in a predicted complex.",
+    "link": "https://www.ebi.ac.uk/training/online/courses/alphafold/alphafold-3-and-alphafold-server/how-to-assess-the-quality-of-alphafold-3-predictions/"
+}

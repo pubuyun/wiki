@@ -2,8 +2,9 @@
 import { Icon } from "@iconify/vue";
 import { gsap } from "gsap";
 import Lenis from "lenis";
-import hamsterUrl from "../../public/hamster.svg?url";
+import hamsterUrl from "~~/public/hamster.svg?url";
 import membersData from "../../data/members.json";
+import MemberProfileCard from "./MemberProfileCard.vue";
 
 const hammerUrl =
     "https://static.igem.wiki/teams/6133/wiki/teamphoto/hammer.avif";

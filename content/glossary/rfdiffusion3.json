@@ -1,0 +1,5 @@
+{
+    "term": ["RFdiffusion3", "RFD3"],
+    "detail": "An all-atom diffusion model that generates protein structures subject to constraints, including interactions with proteins and small molecules.",
+    "link": "https://github.com/RosettaCommons/foundry"
+}

@@ -1,0 +1,5 @@
+{
+    "term": "ProteinMPNN",
+    "detail": "An inverse-folding model that proposes amino-acid sequences compatible with a supplied protein backbone.",
+    "link": "https://github.com/dauparas/ProteinMPNN"
+}
