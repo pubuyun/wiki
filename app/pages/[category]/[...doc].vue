@@ -1,6 +1,6 @@
 <script setup>
 import { Icon } from "@iconify/vue";
-import { contentTocLinks } from "~/utils/content-toc";
+import { contentTocLinks, isCollapsibleParagraph } from "~/utils/content-toc";
 import katexMainFont from "katex/dist/fonts/KaTeX_Main-Regular.woff2?url";
 import katexMathFont from "katex/dist/fonts/KaTeX_Math-Italic.woff2?url";
 import katexSizeFont from "katex/dist/fonts/KaTeX_Size2-Regular.woff2?url";
@@ -93,7 +93,7 @@ const sections = computed(() => {
             continue;
         }
 
-        if (nodeTag(child) === "collapsible-paragraph") {
+        if (isCollapsibleParagraph(child)) {
             result.push({
                 id: nodeProps(child)?.id ?? `section-${result.length}`,
                 heading: null,
@@ -171,7 +171,7 @@ function bodyWithChildren(body, children) {
 <template>
     <article
         v-if="page"
-        class="mt-16 flex w-full max-w-[100vw] min-w-0 flex-1 flex-col gap-4 overflow-x-visible px-4 sm:mt-20 sm:gap-6 sm:px-6 lg:px-0"
+        class="flex w-full max-w-[100vw] min-w-0 flex-1 flex-col gap-4 overflow-x-visible px-4 sm:gap-6 sm:px-6 lg:px-0"
     >
         <h1 class="sr-only">
             {{ pageTitle(page) }}

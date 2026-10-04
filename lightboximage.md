@@ -19,20 +19,17 @@ To use `LightboxImage` explicitly or group multiple images into one gallery, add
 ```markdown
 ::content-components-lightbox-image
 ---
-
 src:
-
-- https://example.com/image-1.jpg
-- https://example.com/image-2.jpg
-  alt:
-- Overview of the experiment setup
-- Close-up of the sample holder
-  caption:
-- Fig. 1 | Overview of the experiment setup.
-- Fig. 2 | Detail of the sample holder.
-  width: 1200
-  height: 800
-
+  - https://example.com/image-1.jpg
+  - https://example.com/image-2.jpg
+alt:
+  - Overview of the experiment setup
+  - Close-up of the sample holder
+caption:
+  - Fig. 1 | Overview of the experiment setup.
+  - Fig. 2 | Detail of the sample holder.
+width: 1200
+height: 800
 ---
 
 ::

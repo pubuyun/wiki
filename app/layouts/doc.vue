@@ -45,8 +45,7 @@ watchEffect(() => {
         <main
             id="main-content"
             tabindex="-1"
-            class="flex h-full flex-1 flex-row gap-8 bg-surface text-on-surface"
-            :class="{ 'lg:pr-8': !hasRightSidebar }"
+            class="flex h-full flex-1 flex-row bg-surface text-on-surface"
         >
             <aside
                 v-if="page"
@@ -54,7 +53,7 @@ watchEffect(() => {
                 aria-label="Category navigation"
             >
                 <CategoryBar
-                    class="hidden lg:flex"
+                    class="hidden shrink-0 lg:flex"
                     :title="categoryTitle"
                     :title-to="categoryPath"
                     :nodes="categoryNavNodes"
@@ -62,16 +61,26 @@ watchEffect(() => {
                 />
             </aside>
 
-            <aside
-                v-if="hasRightSidebar"
-                class="contents"
-                aria-label="Page contents"
-            >
-                <ContentBar class="order-last hidden lg:flex" :toc="tocLinks" />
-            </aside>
-
             <AccessibilityMenu />
-            <slot />
+            <div class="min-w-0 flex-1 lg:px-8">
+                <div
+                    class="mx-auto mt-16 flex w-full min-w-0 gap-8 font-main sm:mt-20"
+                    :class="
+                        hasRightSidebar
+                            ? 'doc-content-with-toc'
+                            : 'lg:max-w-[calc(75ch+3rem)]'
+                    "
+                >
+                    <slot />
+                    <aside
+                        v-if="hasRightSidebar"
+                        class="contents"
+                        aria-label="Page contents"
+                    >
+                        <ContentBar class="hidden lg:flex" :toc="tocLinks" />
+                    </aside>
+                </div>
+            </div>
         </main>
         <LazyFooter hydrate-on-visible has-category-sidebar />
         <aside aria-label="Page utilities">
@@ -80,3 +89,23 @@ watchEffect(() => {
         <ClickAnimation />
     </div>
 </template>
+
+<style scoped>
+@media (width >= 64rem) {
+    .doc-content-with-toc {
+        --content-group-width: calc(75ch + 21rem);
+        max-width: var(--content-group-width);
+    }
+
+    .doc-content-with-toc :deep(article) {
+        flex: 0 1 calc(75ch + 3rem);
+        max-width: calc(75ch + 3rem);
+    }
+}
+
+@media (width >= 80rem) {
+    .doc-content-with-toc {
+        --content-group-width: calc(75ch + 25rem);
+    }
+}
+</style>

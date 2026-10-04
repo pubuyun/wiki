@@ -1,6 +1,6 @@
 <template>
     <nav
-        class="sticky top-20 mb-6 w-52 shrink-0 flex-col self-start pr-6 font-belanosima text-base text-on-surface xl:w-60"
+        class="sticky top-20 mb-6 w-64 min-w-64 flex-1 flex-col self-start font-belanosima text-base text-on-surface xl:w-80 xl:min-w-80"
         aria-labelledby="toc-title"
     >
         <h2 id="toc-title" class="mb-4 font-momo-trust-display text-base">
@@ -8,35 +8,41 @@
         </h2>
 
         <div
-            class="relative max-h-[calc(100vh-13rem)] scrollbar-thin scrollbar-thumb-surface-bright scrollbar-track-surface overflow-auto"
+            ref="contentScroll"
+            class="content-bar-scroll max-h-[calc(100vh-13rem)] overflow-x-hidden overflow-y-auto p-1"
+            :style="scrollFadeStyle"
+            @scroll="updateScrollGradients"
         >
-            <div
-                class="pointer-events-none absolute top-0 left-0 w-3"
-                :style="indicatorStyle"
-                aria-hidden="true"
-            >
-                <div class="absolute inset-0 bg-surface-bright" />
+            <div class="relative">
                 <div
-                    class="absolute inset-x-0 top-0 bg-primary transition-transform duration-200 ease-out"
-                    :style="activeIndicatorStyle"
-                />
-            </div>
+                    class="pointer-events-none absolute top-0 left-0 w-3"
+                    :style="indicatorStyle"
+                    aria-hidden="true"
+                >
+                    <div class="absolute inset-0 bg-surface-bright" />
+                    <div
+                        class="absolute inset-x-0 top-0 bg-primary transition-transform duration-200 ease-out"
+                        :style="activeIndicatorStyle"
+                    />
+                </div>
 
-            <ul class="relative">
-                <li v-for="link in flatToc" :key="link.id">
-                    <a
-                        :href="`#${link.id}`"
-                        :class="linkClass(link)"
-                        :aria-current="
-                            activeId === link.id ? 'location' : undefined
-                        "
-                        :data-content-bar-link-id="link.id"
-                        @click="scrollToHash($event, link.id)"
-                    >
-                        {{ link.text }}
-                    </a>
-                </li>
-            </ul>
+                <ul ref="contentList" class="relative">
+                    <li v-for="link in flatToc" :key="link.id">
+                        <a
+                            :href="`#${link.id}`"
+                            :class="linkClass(link)"
+                            :aria-current="
+                                activeId === link.id ? 'location' : undefined
+                            "
+                            :data-content-bar-link-id="link.id"
+                            @click="scrollToHash($event, link.id)"
+                            @focus="revealFocusedLink"
+                        >
+                            {{ link.text }}
+                        </a>
+                    </li>
+                </ul>
+            </div>
         </div>
     </nav>
 </template>
@@ -62,10 +68,59 @@ const props = defineProps<{
 
 const { scrollToHash } = useHashScroll();
 const activeId = ref<string>();
+const contentScroll = ref<HTMLElement>();
+const contentList = ref<HTMLElement>();
+const canScrollUp = ref(false);
+const canScrollDown = ref(false);
+const scrollFadeStyle = computed(() => ({
+    "--fade-top": canScrollUp.value ? "24px" : "0px",
+    "--fade-bottom": canScrollDown.value ? "24px" : "0px",
+}));
 let hashScrollUntil = 0;
 let stopScrollSpy: (() => void) | undefined;
 let headingOffsets: Array<{ id: string; top: number }> = [];
 let scrollPaddingTop = 0;
+
+function updateScrollGradients() {
+    const el = contentScroll.value;
+    if (!el) return;
+    canScrollUp.value = el.scrollTop > 1;
+    canScrollDown.value = el.scrollTop + el.clientHeight < el.scrollHeight - 1;
+}
+
+function revealFocusedLink(event: FocusEvent) {
+    const viewport = contentScroll.value;
+    if (!viewport) return;
+
+    const link = event.target as HTMLElement;
+    const linkBounds = link.getBoundingClientRect();
+    const viewportBounds = viewport.getBoundingClientRect();
+    const viewportStyle = getComputedStyle(viewport);
+    const visibleTop =
+        viewportBounds.top +
+        viewport.clientTop +
+        (Number.parseFloat(viewportStyle.scrollPaddingTop) || 0);
+    const visibleBottom =
+        viewportBounds.top +
+        viewport.clientTop +
+        viewport.clientHeight -
+        (Number.parseFloat(viewportStyle.scrollPaddingBottom) || 0);
+    const offset =
+        linkBounds.top < visibleTop
+            ? linkBounds.top - visibleTop
+            : linkBounds.bottom > visibleBottom
+              ? linkBounds.bottom - visibleBottom
+              : 0;
+
+    // Reveal the link inside the TOC without scrolling its page ancestors.
+    if (offset) {
+        viewport.scrollTo({
+            top: viewport.scrollTop + offset,
+            behavior: "instant",
+        });
+    }
+    updateScrollGradients();
+}
 
 function measureArticleHeadings() {
     scrollPaddingTop = getScrollPaddingTop();
@@ -232,11 +287,14 @@ function setupScrollSpy() {
     };
     const updateLayout = () => {
         needsMeasurement = true;
+        updateScrollGradients();
         update();
     };
     const observer = new ResizeObserver(updateLayout);
     const article = document.querySelector("main article");
     if (article) observer.observe(article);
+    if (contentScroll.value) observer.observe(contentScroll.value);
+    if (contentList.value) observer.observe(contentList.value);
     const updateAfterAnchorScroll = () => {
         window.clearTimeout(anchorTimer);
         anchorTimer = window.setTimeout(update, hashScrollLockDuration + 50);
@@ -263,7 +321,7 @@ function setupScrollSpy() {
         window.removeEventListener("wiki:hash-scroll", updateForHashScroll);
     };
 
-    update();
+    updateLayout();
 }
 
 watch(
@@ -286,3 +344,21 @@ onBeforeUnmount(() => {
     stopScrollSpy?.();
 });
 </script>
+
+<style scoped>
+.content-bar-scroll {
+    scrollbar-width: none;
+    scroll-padding-block: 24px;
+    mask-image: linear-gradient(
+        to bottom,
+        transparent,
+        black var(--fade-top),
+        black calc(100% - var(--fade-bottom)),
+        transparent
+    );
+}
+
+.content-bar-scroll::-webkit-scrollbar {
+    display: none;
+}
+</style>

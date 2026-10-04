@@ -25,12 +25,19 @@ function nodeProps(node: unknown): Record<string, unknown> | undefined {
     }
 }
 
+export function isCollapsibleParagraph(node: unknown): boolean {
+    return [
+        "collapsible-paragraph",
+        "content-components-collapsible-paragraph",
+    ].includes(nodeTag(node) ?? "");
+}
+
 export function contentTocLinks(body?: ContentBody | null): ToCLink[] {
     const links = [...(body?.toc?.links ?? [])];
     const children = body?.children ?? body?.value ?? [];
 
     for (const [index, child] of children.entries()) {
-        if (nodeTag(child) !== "collapsible-paragraph") continue;
+        if (!isCollapsibleParagraph(child)) continue;
 
         const { id, title } = nodeProps(child) ?? {};
         if (typeof id !== "string" || typeof title !== "string") continue;

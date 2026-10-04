@@ -10,7 +10,7 @@
         <!-- 这个h2必须在最外层 -->
         <span
             v-if="isFootNote"
-            class="font-momo-trust-display text-4xl leading-tight text-primary"
+            class="font-momo-trust-display text-3xl leading-tight text-primary"
         >
             <a
                 v-if="props.id && generate"
@@ -26,7 +26,7 @@
         </span>
         <span v-else class="flex h-min rounded-4xl bg-accent">
             <span
-                class="mx-6 my-1.5 flex items-center justify-center text-center font-momo-trust-display text-4xl text-on-accent"
+                class="mx-6 my-1.5 flex items-center justify-center text-center font-momo-trust-display text-3xl text-on-accent"
             >
                 <a
                     v-if="props.id && generate"

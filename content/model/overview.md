@@ -1,19 +1,14 @@
 ---
 title: Overview
 citationIds:
+  - "3"
   - "1"
   - "2"
-  - "3"
   - "4"
   - "5"
 hasReference: false
 order: 100
 ---
-
-## Full Workflow
-
-::content-graph{.mb-8 full-height src="/content/model/index.json"}
-::
 
 ## Overview
 
@@ -83,15 +78,12 @@ Both the column divider and the right row divider can be resized independently.
 
 - The layout adapts to the available width.
 - The image lightbox continues to work inside a resizable panel.
-::
+  \::
 
 ### Two Left, One Right
 
-::content-components-panel-layout
----
-height: 24rem
-label: Two left, one right example
----
+:content-components-panel-layout{height="24rem" label="Two left, one right example"}
+
 #left
 **Panel A** is the upper left panel.
 
@@ -102,15 +94,12 @@ label: Two left, one right example
 **Panel C** fills the right column.
 
 ![Illustration of Expelliodor spray and enzyme mechanisms](https://static.igem.wiki/teams/6133/wiki/project/description/banner.avif){height="2019" width="4269"}
-::
+\:::
 
 ### Four Panels
 
-::content-components-panel-layout
----
-height: 32rem
-label: Four panels example
----
+:content-components-panel-layout{height="32rem" label="Four panels example"}
+
 #left
 **Panel A** contains Markdown.
 
@@ -138,20 +127,43 @@ label: Four panels example
 ![Illustration of Expelliodor spray and enzyme mechanisms](https://static.igem.wiki/teams/6133/wiki/project/description/banner.avif){height="2019" width="4269"}
 
 #right-bottom
+> This is a blockquote with two paragraphs. Lorem ipsum dolor sit amet,
+> consectetuer adipiscing elit. Aliquam hendrerit mi posuere lectus.
+> Vestibulum enim wisi, viverra nec, fringilla in, laoreet vitae, risus.
+>
+> Donec sit amet nisl. Aliquam semper ipsum sit amet velit. Suspendisse
+> id sem consectetuer libero luctus adipiscing.> This is a blockquote with two paragraphs. Lorem ipsum dolor sit amet,
+> consectetuer adipiscing elit. Aliquam hendrerit mi posuere lectus.
+> Vestibulum enim wisi, viverra nec, fringilla in, laoreet vitae, risus.> Donec sit amet nisl. Aliquam semper ipsum sit amet velit. Suspendisse
+> id sem consectetuer libero luctus adipiscing.> This is the first level of quoting.
+>
+> > This is nested blockquote.
+>
+> Back to the first level. :fn-ref{#3} > ## Not a header.
+>
+> 1. This is the first list item.
+> 2. This is the second list item.
+>
+> Here's some example code:
+>
+> ```text
+> return shell_exec("echo $input | $markdown_script");
+> ```
+
 **Panel D** contains a list.
 
 - Resize the two columns with the central divider.
 - Resize each column's rows independently.
 - Narrow layouts stack A, B, C, then D.
-::
+  \::
 
 ### LaTeX Rendering Test
 
-Inline math uses single dollar signs, for example [[]{.katex-mathml}[[[]{.strut style="height:0.6833em;"}[E]{.mord.mathnormal style="margin-right:0.0576em;"}[]{.mspace style="margin-right:0.2778em;"}[=]{.mrel}[]{.mspace style="margin-right:0.2778em;"}]{.base}[[]{.strut style="height:0.8141em;"}[m]{.mord.mathnormal}[[c]{.mord.mathnormal}[[[[[[]{.pstrut style="height:2.7em;"}[[2]{.mord.mtight}]{.sizing.reset-size6.size3.mtight}]{style="top:-3.063em;margin-right:0.05em;"}]{.vlist style="height:0.8141em;"}]{.vlist-r}]{.vlist-t}]{.msupsub}]{.mord}]{.base}]{.katex-html ariaHidden="true"}]{.katex}.
+Inline math uses single dollar signs, for example \[\[]{.katex-mathml}\[\[\[]{.strut style="height:0.6833em;"} [E]{.mord.mathnormal style="margin-right:0.0576em;"}[]{.mspace style="margin-right:0.2778em;"}[=]{.mrel}[]{.mspace style="margin-right:0.2778em;"} ]{.base}\[\[]{.strut style="height:0.8141em;"} [m]{.mord.mathnormal} \[\[c]{.mord.mathnormal}\[\[\[\[\[\[]{.pstrut style="height:2.7em;"}\[\[2]{.mord.mtight}]{.sizing.reset-size6.size3.mtight}]{style="top:-3.063em;margin-right:0.05em;"}]{.vlist style="height:0.8141em;"}]{.vlist-r}]{.vlist-t}]{.msupsub}]{.mord}]{.base}]{.katex-html ariaHidden="true"}]{.katex}.
 
 Display math uses double dollar signs:
 
-[[[]{.katex-mathml}[[[]{.strut style="height:2.3846em;vertical-align:-0.9703em;"}[[∫]{.mop.op-symbol.large-op style="margin-right:0.4445em;position:relative;top:-0.0011em;"}[[[[[[]{.pstrut style="height:2.7em;"}[[[−]{.mord.mtight}[∞]{.mord.mtight}]{.mord.mtight}]{.sizing.reset-size6.size3.mtight}]{style="top:-1.7881em;margin-left:-0.4445em;margin-right:0.05em;"}[[]{.pstrut style="height:2.7em;"}[[[∞]{.mord.mtight}]{.mord.mtight}]{.sizing.reset-size6.size3.mtight}]{style="top:-3.8129em;margin-right:0.05em;"}]{.vlist style="height:1.4143em;"}[​]{.vlist-s}]{.vlist-r}[[[]]{.vlist style="height:0.9703em;"}]{.vlist-r}]{.vlist-t.vlist-t2}]{.msupsub}]{.mop}[]{.mspace style="margin-right:0.1667em;"}[[e]{.mord.mathnormal}[[[[[[]{.pstrut style="height:2.7em;"}[[[−]{.mord.mtight}[[x]{.mord.mathnormal.mtight}[[[[[[]{.pstrut style="height:2.5em;"}[[2]{.mord.mtight}]{.sizing.reset-size3.size1.mtight}]{style="top:-2.931em;margin-right:0.0714em;"}]{.vlist style="height:0.8913em;"}]{.vlist-r}]{.vlist-t}]{.msupsub}]{.mord.mtight}]{.mord.mtight}]{.sizing.reset-size6.size3.mtight}]{style="top:-3.113em;margin-right:0.05em;"}]{.vlist style="height:1.0369em;"}]{.vlist-r}]{.vlist-t}]{.msupsub}]{.mord}[]{.mspace style="margin-right:0.1667em;"}[d]{.mord.mathnormal}[x]{.mord.mathnormal}[]{.mspace style="margin-right:0.2778em;"}[=]{.mrel}[]{.mspace style="margin-right:0.2778em;"}]{.base}[[]{.strut style="height:1.04em;vertical-align:-0.1908em;"}[[[[[[]{.pstrut style="height:3em;"}[[π]{.mord.mathnormal style="margin-right:0.0359em;"}]{.mord style="padding-left:0.833em;"}]{.svg-align style="top:-3em;"}[[]{.pstrut style="height:3em;"}[]{.hide-tail style="min-width:0.853em;height:1.08em;"}]{style="top:-2.8092em;"}]{.vlist style="height:0.8492em;"}[​]{.vlist-s}]{.vlist-r}[[[]]{.vlist style="height:0.1908em;"}]{.vlist-r}]{.vlist-t.vlist-t2}]{.mord.sqrt}]{.base}]{.katex-html ariaHidden="true"}]{.katex}]{.katex-display}
+\[\[\[]{.katex-mathml}\[\[\[]{.strut style="height:2.3846em;vertical-align:-0.9703em;"}\[\[∫]{.mop.op-symbol.large-op style="margin-right:0.4445em;position\:relative;top:-0.0011em;"}\[\[\[\[\[\[]{.pstrut style="height:2.7em;"}\[\[\[−]{.mord.mtight} [∞]{.mord.mtight} ]{.mord.mtight}]{.sizing.reset-size6.size3.mtight}]{style="top:-1.7881em;margin-left:-0.4445em;margin-right:0.05em;"}\[\[]{.pstrut style="height:2.7em;"}\[\[\[∞]{.mord.mtight}]{.mord.mtight}]{.sizing.reset-size6.size3.mtight}]{style="top:-3.8129em;margin-right:0.05em;"}]{.vlist style="height:1.4143em;"} [​]{.vlist-s} ]{.vlist-r}\[\[\[]]{.vlist style="height:0.9703em;"}]{.vlist-r}]{.vlist-t.vlist-t2}]{.msupsub}]{.mop} []{.mspace style="margin-right:0.1667em;"} \[\[e]{.mord.mathnormal}\[\[\[\[\[\[]{.pstrut style="height:2.7em;"}\[\[\[−]{.mord.mtight}\[\[x]{.mord.mathnormal.mtight}\[\[\[\[\[\[]{.pstrut style="height:2.5em;"}\[\[2]{.mord.mtight}]{.sizing.reset-size3.size1.mtight}]{style="top:-2.931em;margin-right:0.0714em;"}]{.vlist style="height:0.8913em;"}]{.vlist-r}]{.vlist-t}]{.msupsub}]{.mord.mtight}]{.mord.mtight}]{.sizing.reset-size6.size3.mtight}]{style="top:-3.113em;margin-right:0.05em;"}]{.vlist style="height:1.0369em;"}]{.vlist-r}]{.vlist-t}]{.msupsub}]{.mord} []{.mspace style="margin-right:0.1667em;"}[d]{.mord.mathnormal}[x]{.mord.mathnormal}[]{.mspace style="margin-right:0.2778em;"}[=]{.mrel}[]{.mspace style="margin-right:0.2778em;"} ]{.base}\[\[]{.strut style="height:1.04em;vertical-align:-0.1908em;"}\[\[\[\[\[\[]{.pstrut style="height:3em;"}\[\[π]{.mord.mathnormal style="margin-right:0.0359em;"}]{.mord style="padding-left:0.833em;"}]{.svg-align style="top:-3em;"}\[\[]{.pstrut style="height:3em;"} []{.hide-tail style="min-width:0.853em;height:1.08em;"} ]{style="top:-2.8092em;"}]{.vlist style="height:0.8492em;"} [​]{.vlist-s} ]{.vlist-r}\[\[\[]]{.vlist style="height:0.1908em;"}]{.vlist-r}]{.vlist-t.vlist-t2}]{.mord.sqrt}]{.base}]{.katex-html ariaHidden="true"}]{.katex}]{.katex-display}
 
 ### Philosophy
 
@@ -176,20 +188,6 @@ This heading is the destination of the title reference above.
 | File-based  | Works like a local Headless CMS     | Active   |
 
 ## Block Elements
-
-> This is a blockquote with two paragraphs. Lorem ipsum dolor sit amet,
-> consectetuer adipiscing elit. Aliquam hendrerit mi posuere lectus.
-> Vestibulum enim wisi, viverra nec, fringilla in, laoreet vitae, risus.
->
-> Donec sit amet nisl. Aliquam semper ipsum sit amet velit. Suspendisse
-> id sem consectetuer libero luctus adipiscing.> This is a blockquote with two paragraphs. Lorem ipsum dolor sit amet,
-> consectetuer adipiscing elit. Aliquam hendrerit mi posuere lectus.
-> Vestibulum enim wisi, viverra nec, fringilla in, laoreet vitae, risus.> Donec sit amet nisl. Aliquam semper ipsum sit amet velit. Suspendisse
-> id sem consectetuer libero luctus adipiscing.> This is the first level of quoting.
->
-> > This is nested blockquote.
->
-> Back to the first level. :fn-ref{#3}
 
 ### Paragraphs and Line Breaks
 
@@ -224,30 +222,22 @@ adding additional levels of `>`:
 Blockquotes can contain other Markdown elements, including headers, lists,
 and code blocks:
 
-> ## Not a header.
->
-> 1. This is the first list item.
-> 2. This is the second list item.
->
-> Here's some example code:
->
-> ```text
-> return shell_exec("echo $input | $markdown_script");
-> ```
+  :::content-components-collapsible-paragraph
+  ---
+  id: paragraph-details
+  title: Paragraph Details
+  ---
+  The implication of the "one or more consecutive lines of text" rule is
+  that Markdown supports "hard-wrapped" text paragraphs. This differs
+  significantly from most other text-to-HTML formatters (including Movable
+  Type's "Convert Line Breaks" option) which translate every line break
+  character in a paragraph into a `<br />` tag.
 
-::content-components-collapsible-paragraph
----
-id: paragraph-details
-title: Paragraph Details
----
-The implication of the "one or more consecutive lines of text" rule is
-that Markdown supports "hard-wrapped" text paragraphs. This differs
-significantly from most other text-to-HTML formatters (including Movable
-Type's "Convert Line Breaks" option) which translate every line break
-character in a paragraph into a `<br />` tag.
+  When you *do* want to insert a `<br />` break tag using Markdown, you
+  end a line with two or more spaces, then type return.
+  :::
 
-When you *do* want to insert a `<br />` break tag using Markdown, you
-end a line with two or more spaces, then type return.
+\:::
 ::
 
 ::content-components-collapsible-paragraph

@@ -112,7 +112,8 @@ Explain the illustration here.
 :::lightbox-image
 ---
 
-src: - https://static.igem.wiki/teams/6133/wiki/project/description/banner.avif
+src:
+  - https://static.igem.wiki/teams/6133/wiki/project/description/banner.avif
 alt: Illustration of Expelliodor spray and enzyme mechanisms
 width: 4269
 height: 2019

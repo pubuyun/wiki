@@ -7,6 +7,8 @@ order: 0
 
 ## FoundryUI
 
+### Introduction
+
 We developed FoundryUI to organize computational protein design into visual flows.
 
 This is a trial of integrating computational protein engineering with flow programming. Some other software has shown that this works well with 3D modeling (Blender), game programming (GameMaker), and image generation (ComfyUI). They have made overly technical workflows more accessible and greatly reduced the effort needed to create, share, and implement workflows.
