@@ -183,7 +183,7 @@ function bodyWithChildren(body, children) {
         <section
             v-for="section in sections"
             :key="section.id"
-            class="mb-4 flex max-w-full min-w-0 flex-col gap-4"
+            class="mb-4 flex w-full max-w-full min-w-0 flex-col gap-4 self-center font-main lg:max-w-[calc(75ch+3rem)]"
         >
             <ContentRenderer
                 v-if="section.collapsible"
@@ -195,14 +195,7 @@ function bodyWithChildren(body, children) {
                 :value="sectionValue([section.heading])"
                 class="content overflow-wrap-anywhere min-w-0 flex-1 text-on-surface"
             />
-            <div
-                v-if="section.children.length && !section.collapsible"
-                class="relative -translate-x-2 pr-2"
-            >
-                <div
-                    class="absolute inset-0 translate-x-2 translate-y-4 rounded-2xl bg-primary sm:rounded-3xl lg:rounded-4xl"
-                    aria-hidden="true"
-                />
+            <div v-if="section.children.length && !section.collapsible">
                 <ContentRenderer
                     :value="sectionValue(section.children)"
                     class="content paragraph overflow-wrap-anywhere relative min-w-0 rounded-2xl bg-secondary p-4 text-on-secondary sm:rounded-3xl sm:p-5 lg:rounded-4xl lg:p-6"
@@ -301,5 +294,9 @@ function bodyWithChildren(body, children) {
 <style scoped>
 .overflow-wrap-anywhere {
     overflow-wrap: anywhere;
+}
+
+:deep(.content h3) {
+    font-family: var(--font-main);
 }
 </style>

@@ -27,7 +27,7 @@
         >
             <NuxtLink
                 :to="titleTo"
-                class="inline-flex min-w-0 flex-1 justify-center overflow-visible rounded-md px-2 py-1 text-center text-2xl leading-[1.1] font-semibold whitespace-nowrap transition-colors hover:bg-secondary hover:text-on-secondary focus-visible:ring-2 focus-visible:ring-outline focus-visible:outline-none xl:text-4xl"
+                class="inline-flex min-w-0 flex-1 justify-center overflow-visible rounded-md px-2 py-1 text-center text-xl leading-[1.1] font-semibold whitespace-nowrap transition-colors hover:bg-secondary hover:text-on-secondary focus-visible:ring-2 focus-visible:ring-outline focus-visible:outline-none xl:text-2xl"
                 :style="titleStyle"
                 :aria-label="`Go to ${title}`"
                 :aria-current="titleTo === activePath ? 'page' : undefined"
@@ -82,12 +82,12 @@
 
         <div
             v-if="contentRendered"
-            class="relative mt-28 min-h-0 w-full flex-1 xl:mt-36"
+            class="relative mt-28 min-h-0 w-full flex-1 xl:mt-32"
             :class="contentClass"
         >
             <div
                 v-if="contentVisible && canScrollUp"
-                class="pointer-events-none absolute top-0 z-10 h-8 w-full bg-linear-to-b from-surface-elevated to-transparent"
+                class="pointer-events-none absolute top-0 z-10 h-8 w-full bg-linear-to-b from-surface-sidebar to-transparent"
             />
             <div
                 :id="contentId"
@@ -212,7 +212,7 @@
             </div>
             <div
                 v-if="contentVisible && canScrollDown"
-                class="pointer-events-none absolute bottom-0 z-10 h-8 w-full bg-linear-to-t from-surface-elevated to-transparent"
+                class="pointer-events-none absolute bottom-0 z-10 h-8 w-full bg-linear-to-t from-surface-sidebar to-transparent"
             />
         </div>
     </nav>
@@ -255,7 +255,7 @@ let titleResizeObserver: ResizeObserver | undefined;
 let titleScaleFrame: number | undefined;
 
 const sidebarClass = computed(() => [
-    "sticky top-0 h-screen max-h-screen flex-col overflow-hidden bg-surface-elevated font-momo-trust-display text-on-surface transition-[width,height,padding,translate] duration-200 ease-out",
+    "category-sidebar sticky top-0 h-screen max-h-screen flex-col overflow-hidden bg-surface-sidebar font-momo-trust-display font-normal text-on-surface transition-[width,height,padding,translate] duration-200 ease-out",
     collapsed.value ? "w-12 py-6" : "w-66 pt-4",
     "translate-x-0",
 ]);
@@ -285,18 +285,15 @@ function folderClass(node: ContentNavNode) {
 function folderTextClass(node: ContentNavNode) {
     return [
         "flex min-w-0 flex-1 items-center rounded-l-md px-3 py-2 text-left no-underline transition-[border-radius,color,background-color] duration-200 ease-out focus-visible:ring-2 focus-visible:ring-outline focus-visible:outline-none",
-        node.active
-            ? "bg-secondary font-semibold text-on-secondary group-hover:bg-secondary group-hover:text-on-secondary"
-            : "group-hover:bg-secondary group-hover:text-on-secondary",
+        node.path === props.activePath ? "font-bold" : "font-normal",
+        itemStateClass(node),
     ];
 }
 
 function folderToggleClass(node: ContentNavNode) {
     return [
         "group flex w-10 shrink-0 items-center justify-center rounded-r-md px-3 py-2 transition-[border-radius,color,background-color] duration-200 ease-out focus-visible:ring-2 focus-visible:ring-outline focus-visible:outline-none",
-        node.active
-            ? "bg-secondary font-semibold text-on-secondary hover:bg-secondary hover:text-on-secondary group-hover:bg-secondary group-hover:text-on-secondary"
-            : "text-on-surface hover:bg-secondary hover:text-on-secondary group-hover:bg-secondary group-hover:text-on-secondary",
+        itemStateClass(node),
     ];
 }
 
@@ -309,13 +306,22 @@ function linkClass(depth: 0 | 1) {
 
 function linkTextClass(node: ContentNavNode, depth: 0 | 1) {
     return [
-        "flex min-w-0 flex-1 items-center justify-start rounded-md px-3 text-left transition-[border-radius,color,background-color,box-shadow] duration-200 ease-out",
+        "flex min-w-0 flex-1 items-center justify-start rounded-md px-3 text-left transition-[border-radius,color,background-color] duration-200 ease-out",
         depth === 1 ? "h-9 py-0 xl:h-10" : "py-2",
-        node.active
-            ? depth === 1
-                ? "bg-primary font-semibold text-on-primary shadow-sm group-hover:bg-primary group-hover:text-on-primary"
-                : "bg-secondary font-semibold text-on-secondary group-hover:bg-secondary group-hover:text-on-secondary"
-            : "group-hover:bg-secondary group-hover:text-on-secondary",
+        node.path === props.activePath ? "font-bold" : "font-normal",
+        itemStateClass(node),
+    ];
+}
+
+function itemStateClass(node: ContentNavNode) {
+    if (node.path === props.activePath) {
+        return "bg-transparent text-primary hover:bg-[var(--category-sidebar-hover)] hover:text-primary group-hover:bg-[var(--category-sidebar-hover)] group-hover:text-primary";
+    }
+
+    return [
+        "hover:bg-[var(--category-sidebar-hover)] hover:text-[var(--category-sidebar-highlight-text)] group-hover:bg-[var(--category-sidebar-hover)] group-hover:text-[var(--category-sidebar-highlight-text)]",
+        node.active &&
+            "bg-[var(--category-sidebar-highlight)] text-[var(--category-sidebar-highlight-text)]",
     ];
 }
 
@@ -487,6 +493,30 @@ onBeforeUnmount(() => {
 </script>
 
 <style>
+.category-sidebar {
+    --category-sidebar-highlight: #d5e7f3;
+    --category-sidebar-highlight-text: var(--on-surface);
+    --category-sidebar-hover: var(--category-sidebar-highlight);
+}
+
+.dark .category-sidebar {
+    --category-sidebar-hover: color-mix(
+        in srgb,
+        var(--surface-sidebar) 88%,
+        var(--primary)
+    );
+}
+
+.dark .category-sidebar,
+.high-contrast .category-sidebar {
+    --category-sidebar-highlight: var(--secondary);
+    --category-sidebar-highlight-text: var(--on-secondary);
+}
+
+.high-contrast .category-sidebar {
+    --category-sidebar-hover: var(--secondary);
+}
+
 .category-sidebar-scroll {
     direction: rtl;
     scrollbar-color: var(--secondary) transparent;

@@ -95,14 +95,9 @@ function onContentClick(event: MouseEvent) {
 
         <CollapsibleContent
             force-mount
-            class="relative -translate-x-2 pr-2"
+            class="relative"
             @click="onContentClick"
         >
-            <div
-                class="absolute inset-0 translate-x-2 translate-y-4 rounded-2xl bg-primary transition-opacity duration-300 motion-reduce:transition-none sm:rounded-3xl lg:rounded-4xl"
-                :class="blurPreview || isOpen ? 'opacity-100' : 'opacity-0'"
-                aria-hidden="true"
-            />
             <div
                 ref="contentCard"
                 class="content paragraph collapsible-card overflow-wrap-anywhere relative min-w-0 rounded-2xl bg-secondary text-on-secondary sm:rounded-3xl lg:rounded-4xl"

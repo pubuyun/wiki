@@ -42,6 +42,7 @@
     --color-surface: var(--surface);
     --color-on-surface: var(--on-surface);
     --color-surface-navigation: var(--surface-navigation);
+    --color-surface-sidebar: var(--surface-sidebar);
     --color-surface-bright: var(--surface-bright);
     --color-surface-elevated: var(--surface-elevated);
 
@@ -130,6 +131,7 @@ input[type="submit"],
     --surface: #000000;
     --on-surface: #ffffff;
     --surface-navigation: #000000;
+    --surface-sidebar: #262626;
     --surface-bright: #1a1a1a;
     --surface-elevated: #262626;
 
@@ -150,6 +152,7 @@ input[type="submit"],
     --surface: #ffffff;
     --on-surface: #000000;
     --surface-navigation: #ffffff;
+    --surface-sidebar: #e6e6e6;
     --surface-bright: #f2f2f2;
     --surface-elevated: #e6e6e6;
 
@@ -172,6 +175,7 @@ input[type="submit"],
     --surface: #03316d;
     --on-surface: #f8ffff;
     --surface-navigation: #2e6dbf;
+    --surface-sidebar: #0a4296;
     --surface-bright: #2f85f5;
     --surface-elevated: #2e6dbf;
 
@@ -194,6 +198,7 @@ input[type="submit"],
     --surface: #e5f0f8;
     --on-surface: #334e5f;
     --surface-navigation: #9ed3f3;
+    --surface-sidebar: #eff9fe;
     --surface-bright: #eff9fe;
     --surface-elevated: #9ed3f3;
 
