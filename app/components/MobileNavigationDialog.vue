@@ -29,7 +29,7 @@ const hasCategoryNavigation = computed(
     () => isContentRoute.value && categoryNodes.value.length > 0,
 );
 const categoryTitle = computed(
-    () => contentLayout.value.categoryTitle || contentLayout.value.page?.title,
+    () => contentLayout.value.categoryTitle || contentLayout.value.pageTitle,
 );
 const categoryPath = computed(() => contentLayout.value.categoryPath);
 

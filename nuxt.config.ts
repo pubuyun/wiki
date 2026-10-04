@@ -72,7 +72,7 @@ export default defineNuxtConfig({
         plugins: [
             tailwindcss(),
             {
-                name: "katex-font-display",
+                name: "katex-fonts",
                 enforce: "pre",
                 transform(code, id) {
                     if (
@@ -83,12 +83,30 @@ export default defineNuxtConfig({
                         return;
                     }
 
-                    // Keep math visible while KaTeX's fonts load.
+                    // Keep math visible while loading only modern WOFF2 fonts.
                     return {
-                        code: code.replace(
-                            /font-display\s*:\s*\w+/g,
-                            "font-display: swap",
-                        ),
+                        code: code
+                            .replace(
+                                /font-display\s*:\s*\w+/g,
+                                "font-display: swap",
+                            )
+                            .replace(
+                                /src\s*:\s*([^;}]+)/g,
+                                (declaration, sources: string) => {
+                                    const woff2 = sources
+                                        .split(",")
+                                        .filter((source) =>
+                                            /format\(\s*["']?woff2["']?\s*\)/.test(
+                                                source,
+                                            ),
+                                        )
+                                        .join(",");
+
+                                    return woff2
+                                        ? `src: ${woff2}`
+                                        : declaration;
+                                },
+                            ),
                         map: null,
                     };
                 },
@@ -96,8 +114,8 @@ export default defineNuxtConfig({
         ],
     },
     echarts: {
-        renderer: "svg",
-        charts: ["LineChart", "HeatmapChart", "CustomChart"],
+        renderer: ["svg", "canvas"],
+        charts: ["LineChart", "BarChart", "HeatmapChart", "CustomChart"],
         components: [
             "TitleComponent",
             "TooltipComponent",
@@ -105,8 +123,7 @@ export default defineNuxtConfig({
             "LegendComponent",
             "VisualMapComponent",
             "AriaComponent",
-            // "ToolboxComponent",
-            // "DataZoomComponent",
+            "DataZoomComponent",
         ],
     },
     studio: {

@@ -174,10 +174,6 @@ export function createWikiTheme(mode: WikiThemeMode = {}) {
         valueAxis: axis,
         timeAxis: axis,
         logAxis: axis,
-        toolbox: {
-            iconStyle: { borderColor: colors.onSecondary },
-            emphasis: { iconStyle: { borderColor: colors.primary } },
-        },
         dataZoom: {
             backgroundColor: colors.surface,
             dataBackground: {

@@ -213,18 +213,6 @@ const option = computed<EChartsOption>(() => ({
         valueFormatter: (value) =>
             typeof value === "number" ? value.toFixed(3) : String(value),
     },
-    toolbox: {
-        show: true,
-        right: 16,
-        feature: {
-            dataZoom: {
-                xAxisIndex: 0,
-                yAxisIndex: "none",
-            },
-            restore: {},
-            saveAsImage: {},
-        },
-    },
     dataZoom: [
         {
             type: "inside",

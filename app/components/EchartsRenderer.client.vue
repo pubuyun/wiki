@@ -1,12 +1,13 @@
 <script setup lang="ts">
-// The full import registers every built-in chart, component, and renderer.
-import * as echarts from "echarts";
+import "#build/echarts.mjs";
+import * as echarts from "echarts/core";
+import type { EChartsOption } from "echarts";
 import VChart from "vue-echarts";
 import { parseEchartsOption } from "~/utils/echarts-option";
 
 const props = withDefaults(
     defineProps<{
-        option: string | echarts.EChartsOption;
+        option: string | EChartsOption;
         height?: string | number;
         renderer?: "svg" | "canvas";
         label?: string;

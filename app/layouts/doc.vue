@@ -26,7 +26,7 @@ const hasRightSidebar = computed(() => tocLinks.value.length > 0);
 const contentLayout = useContentLayoutState();
 watchEffect(() => {
     contentLayout.value = {
-        page: page.value,
+        pageTitle: page.value?.title ?? "",
         categoryTitle: categoryTitle.value,
         categoryPath: categoryPath.value,
         categoryNavNodes: categoryNavNodes.value,

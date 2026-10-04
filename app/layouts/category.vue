@@ -35,7 +35,7 @@ const hasRightSidebar = computed(
 
 watchEffect(() => {
     contentLayout.value = {
-        page: page.value,
+        pageTitle: page.value?.title ?? "",
         categoryTitle: categoryTitle.value,
         categoryPath: categoryPath.value,
         categoryNavNodes: categoryNavNodes.value,

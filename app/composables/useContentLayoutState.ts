@@ -1,7 +1,7 @@
 import type { ContentNavNode } from "~/utils/content-pages";
 
 export interface ContentLayoutState {
-    page: Record<string, any> | null;
+    pageTitle: string;
     categoryTitle: string;
     categoryPath: string;
     categoryNavNodes: ContentNavNode[];
@@ -11,7 +11,7 @@ export interface ContentLayoutState {
 
 export function useContentLayoutState() {
     return useState<ContentLayoutState>("content-layout", () => ({
-        page: null,
+        pageTitle: "",
         categoryTitle: "",
         categoryPath: "",
         categoryNavNodes: [],
