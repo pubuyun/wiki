@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import plantCells from "~/data/inlcusivity/plant_cell.json";
+import models from "~/data/inlcusivity/models.json";
 
-const model = plantCells[0]!;
-const modelRoute = `/inclusivity/viewmodel/${model.id}/image`;
+const model = models.find((model) => model.id === "plant_cell")!;
+const modelRoute = `/inclusivity/viewmodel/${model.id}/description-en`;
 const characterUrl =
     "https://static.igem.wiki/teams/6133/wiki/homepage/magicwond.avif";
 const decoderUrl =
@@ -107,7 +107,6 @@ onMounted(async () => {
                         v-if="isViewerReady"
                         class="sample-model__viewer"
                         :src="model.modelUrl"
-                        :poster="model.imageUrl"
                         alt="Tactile plant cell model with a raised cell structure, direction arrow, and QR code paste area. Drag or use arrow keys to rotate."
                         camera-controls
                         camera-orbit="-18deg 64deg auto"
@@ -146,11 +145,9 @@ onMounted(async () => {
                         <div slot="progress-bar" />
                     </component>
                     <template #fallback>
-                        <img
-                            class="sample-model__poster"
-                            :src="model.imageUrl"
-                            :alt="model.title"
-                        />
+                        <p class="sample-model__status" role="status">
+                            Loading plant cell model…
+                        </p>
                     </template>
                 </ClientOnly>
                 <p
@@ -209,19 +206,11 @@ onMounted(async () => {
     height: clamp(25rem, 48vw, 36rem);
 }
 
-.sample-model__viewer,
-.sample-model__poster {
+.sample-model__viewer {
     display: block;
     width: 100%;
     height: 100%;
     background: transparent;
-}
-
-.sample-model__poster {
-    object-fit: contain;
-}
-
-.sample-model__viewer {
     --poster-color: transparent;
 }
 

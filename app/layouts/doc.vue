@@ -93,19 +93,17 @@ watchEffect(() => {
 <style scoped>
 @media (width >= 64rem) {
     .doc-content-with-toc {
-        --content-group-width: calc(75ch + 21rem);
-        max-width: var(--content-group-width);
-    }
-
-    .doc-content-with-toc :deep(article) {
-        flex: 0 1 calc(75ch + 3rem);
-        max-width: calc(75ch + 3rem);
+        --doc-body-width: calc(75ch + 3rem);
+        --doc-toc-width: 16rem;
+        display: grid;
+        grid-template-columns: minmax(0, var(--doc-body-width)) var(--doc-toc-width);
+        max-width: calc(var(--doc-body-width) + 2rem + var(--doc-toc-width));
     }
 }
 
 @media (width >= 80rem) {
     .doc-content-with-toc {
-        --content-group-width: calc(75ch + 25rem);
+        --doc-toc-width: 20rem;
     }
 }
 </style>

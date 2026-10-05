@@ -117,7 +117,6 @@
                                 v-if="selectedModel && isModelViewerReady"
                                 class="educational-model-viewer block size-full bg-secondary outline-none"
                                 :src="selectedModel.modelUrl"
-                                :poster="selectedModel.imageUrl"
                                 :alt="`${selectedModel.title} 3D model`"
                                 camera-controls
                                 tabindex="0"
@@ -217,44 +216,6 @@
                         </TabsList>
 
                         <TabsContent
-                            value="image"
-                            class="min-h-0 flex-1 overflow-auto p-4 outline-none"
-                        >
-                            <figure
-                                v-if="selectedModel"
-                                class="flex min-h-full flex-col gap-3"
-                            >
-                                <LightboxImage
-                                    :key="selectedModel.id"
-                                    :src="[selectedModel.imageUrl]"
-                                    :alt="`Reference image for ${selectedModel.title}`"
-                                >
-                                    <template #default="{ open }">
-                                        <button
-                                            type="button"
-                                            class="block min-h-0 w-full cursor-zoom-in rounded-lg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-outline"
-                                            :aria-label="`Open enlarged reference image: ${selectedModel.title}`"
-                                            @click="open(0)"
-                                        >
-                                            <img
-                                                class="max-h-full min-h-0 w-full rounded-lg object-contain"
-                                                :src="selectedModel.imageUrl"
-                                                :alt="`Reference image for ${selectedModel.title}`"
-                                                loading="eager"
-                                                decoding="async"
-                                            />
-                                        </button>
-                                    </template>
-                                </LightboxImage>
-                                <figcaption
-                                    class="text-sm text-on-secondary/75"
-                                >
-                                    {{ selectedModel.title }}
-                                </figcaption>
-                            </figure>
-                        </TabsContent>
-
-                        <TabsContent
                             value="description-en"
                             class="min-h-0 flex-1 overflow-auto p-4 outline-none"
                         >
@@ -292,7 +253,7 @@
 <script setup lang="ts">
 import { Icon } from "@iconify/vue";
 import { parseMarkdown } from "@nuxtjs/mdc/runtime";
-import LightboxImage from "~/components/ContentComponents/LightboxImage.vue";
+import modelData from "~/data/inlcusivity/models.json";
 import {
     SplitterGroup,
     SplitterPanel,
@@ -306,28 +267,27 @@ import {
 definePageMeta({
     layout: "static",
     key: false,
+    validate: (route) => {
+        const value = route.params.tab;
+        const segments = Array.isArray(value) ? value : value ? [value] : [];
+        return (
+            segments.length <= 2 &&
+            (segments[1] === undefined ||
+                ["description-en", "description-cn"].includes(segments[1]))
+        );
+    },
 });
 
 type InclusivityModel = {
     id: string;
     title: string;
-    imageUrl: string;
     modelUrl: string;
 };
 
-type InclusivityJsonModule = InclusivityModel | InclusivityModel[];
 type ParsedMarkdownDocument = Awaited<ReturnType<typeof parseMarkdown>> & {
     id: string;
     title?: string;
 };
-
-const jsonModules = import.meta.glob<InclusivityJsonModule>(
-    ["../../../data/inlcusivity/*.json", "../../../data/inclusivity/*.json"],
-    {
-        eager: true,
-        import: "default",
-    },
-);
 
 const markdownModules = import.meta.glob<string>(
     ["../../../data/inlcusivity/*.md", "../../../data/inclusivity/*.md"],
@@ -341,7 +301,7 @@ const markdownModules = import.meta.glob<string>(
 const route = useRoute();
 const router = useRouter();
 const previousNonModelPath = ref<string | null>(null);
-const activeTab = ref<TabValue>("image");
+const activeTab = ref<TabValue>("description-en");
 const isWideViewport = ref(true);
 const prefersReducedMotion = ref(false);
 const isModelLoaded = ref(false);
@@ -351,11 +311,10 @@ let viewportQuery: MediaQueryList | undefined;
 let reducedMotionQuery: MediaQueryList | undefined;
 let previousRouteModelId: string | undefined;
 
-const tabValues = ["image", "description-en", "description-cn"] as const;
+const tabValues = ["description-en", "description-cn"] as const;
 type TabValue = (typeof tabValues)[number];
 
 const tabs = [
-    { value: "image" as const, label: ["Reference", "Image"] },
     { value: "description-en" as const, label: ["English", "Description"] },
     { value: "description-cn" as const, label: ["Chinese", "Description"] },
 ];
@@ -385,22 +344,14 @@ const chineseDescription = computed(() =>
 function buildModels() {
     const modelMap = new Map<string, InclusivityModel>();
 
-    for (const [path, moduleValue] of Object.entries(jsonModules)) {
-        const records = Array.isArray(moduleValue)
-            ? moduleValue
-            : [moduleValue];
-        const fallbackId = fileStem(path);
+    for (const record of modelData) {
+        const model = {
+            ...record,
+            title: record.title || titleizeSlug(record.id),
+        };
 
-        for (const record of records) {
-            const model = {
-                ...record,
-                id: record.id || fallbackId,
-                title: record.title || titleizeSlug(record.id || fallbackId),
-            };
-
-            if (model.id && model.imageUrl && model.modelUrl) {
-                modelMap.set(model.id, model);
-            }
+        if (model.id && model.modelUrl) {
+            modelMap.set(model.id, model);
         }
     }
 
@@ -554,14 +505,17 @@ function syncRouteState() {
     const routeTab = catchallTab();
     const routeModel = selectedModel.value;
 
-    if (!routeModel || !isTabValue(routeTab)) {
-        void navigateTo(modelRoute(firstModel.id, "image"), {
-            replace: true,
-        });
+    if (!routeModel || routeTab === undefined) {
+        void navigateTo(
+            modelRoute(routeModel?.id ?? firstModel.id, "description-en"),
+            { replace: true },
+        );
         return;
     }
 
-    if (activeTab.value !== routeTab) activeTab.value = routeTab;
+    if (isTabValue(routeTab) && activeTab.value !== routeTab) {
+        activeTab.value = routeTab;
+    }
 }
 
 function updateViewportPreferences() {

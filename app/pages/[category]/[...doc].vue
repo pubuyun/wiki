@@ -171,7 +171,7 @@ function bodyWithChildren(body, children) {
 <template>
     <article
         v-if="page"
-        class="flex w-full max-w-[100vw] min-w-0 flex-1 flex-col gap-4 overflow-x-visible px-4 sm:gap-6 sm:px-6 lg:px-0"
+        class="flex w-full max-w-[100vw] min-w-0 flex-1 flex-col gap-4 overflow-x-visible px-4 sm:gap-6 sm:px-6 lg:max-w-[calc(75ch+3rem)] lg:px-0"
     >
         <h1 class="sr-only">
             {{ pageTitle(page) }}
