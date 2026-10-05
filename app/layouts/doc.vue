@@ -1,5 +1,6 @@
 <script setup>
 import { contentTocLinks } from "~/utils/content-toc";
+import { buildCategorySidebarNodes } from "~/utils/content-pages";
 
 const route = useRoute();
 const category = computed(() => String(route.params.category ?? ""));
@@ -18,7 +19,7 @@ const categoryTitle = computed(
     () => categoryRootPage.value?.title ?? titleizeSlug(category.value),
 );
 const categoryNavNodes = computed(() =>
-    buildCategoryNavTree(children.value, category.value, activePath.value),
+    buildCategorySidebarNodes(children.value, category.value, activePath.value),
 );
 const tocLinks = computed(() => contentTocLinks(page.value?.body));
 const hasRightSidebar = computed(() => tocLinks.value.length > 0);
@@ -96,7 +97,9 @@ watchEffect(() => {
         --doc-body-width: calc(75ch + 3rem);
         --doc-toc-width: 16rem;
         display: grid;
-        grid-template-columns: minmax(0, var(--doc-body-width)) var(--doc-toc-width);
+        grid-template-columns: minmax(0, var(--doc-body-width)) var(
+                --doc-toc-width
+            );
         max-width: calc(var(--doc-body-width) + 2rem + var(--doc-toc-width));
     }
 }

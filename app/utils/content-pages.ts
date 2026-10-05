@@ -104,6 +104,24 @@ export function buildCategoryNavTree(
     return root;
 }
 
+export function buildCategorySidebarNodes(
+    pages: ContentPageLike[],
+    rootSlug: string,
+    activePath: string,
+): ContentNavNode[] {
+    const categoryPath = `/${rootSlug}`;
+    return [
+        {
+            id: categoryPath,
+            slug: "overview",
+            label: "Overview",
+            path: categoryPath,
+            active: activePath === categoryPath,
+        },
+        ...buildCategoryNavTree(pages, rootSlug, activePath),
+    ];
+}
+
 function markActiveFolders(nodes: ContentNavNode[]) {
     for (const node of nodes) {
         if (!node.children?.length) continue;

@@ -2,7 +2,7 @@
 
 Use `::panel-layout` in a Nuxt Content Markdown document to arrange two to four panels. Each panel can contain Markdown, images, or MDC components. Readers can resize the panels on wide layouts; narrow layouts stack the content automatically.
 
-The component is defined in [PanelLayout.vue](app/components/content/PanelLayout.vue). Working examples are in [the model overview document](content/model/overview.md).
+The component is defined in [PanelLayout.vue](app/components/content/PanelLayout.vue). Working examples are in [the model index document](content/model/index.md).
 
 ## Slot names
 

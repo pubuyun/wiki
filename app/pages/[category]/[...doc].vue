@@ -1,9 +1,5 @@
 <script setup>
 import { Icon } from "@iconify/vue";
-import { contentTocLinks, isCollapsibleParagraph } from "~/utils/content-toc";
-import katexMainFont from "katex/dist/fonts/KaTeX_Main-Regular.woff2?url";
-import katexMathFont from "katex/dist/fonts/KaTeX_Math-Italic.woff2?url";
-import katexSizeFont from "katex/dist/fonts/KaTeX_Size2-Regular.woff2?url";
 definePageMeta({
     layout: "doc",
     key: (route) => route.fullPath,
@@ -12,23 +8,9 @@ definePageMeta({
 const route = useRoute();
 const runtimeConfig = useRuntimeConfig();
 const category = computed(() => String(route.params.category ?? ""));
-const categoryPath = computed(() => `/${category.value}`);
 const activePath = computed(() => normalizeContentPath(route.path));
 
 const { data: page } = await useContentPageData(activePath);
-useHead(() => ({
-    link: JSON.stringify(page.value?.body ?? {}).includes("katex")
-        ? [katexMainFont, katexMathFont, katexSizeFont].map((href) => ({
-              rel: "preload",
-              as: "font",
-              type: "font/woff2",
-              crossorigin: "anonymous",
-              href,
-          }))
-        : [],
-}));
-const tocLinks = computed(() => contentTocLinks(page.value?.body));
-
 const contentGraphPaths = new Set(runtimeConfig.public.contentGraphPaths);
 const graphSrc = computed(() => {
     const candidate = page.value?.stem
@@ -68,57 +50,6 @@ const currentFolderCards = computed(() => {
         })
         .sort(compareContentPages);
 });
-const categoryRootPage = computed(() =>
-    pages.value.find((item) => item.path === categoryPath.value),
-);
-const categoryTitle = computed(
-    () => categoryRootPage.value?.title ?? titleizeSlug(category.value),
-);
-const categoryNavNodes = computed(() =>
-    buildCategoryNavTree(children.value, category.value, activePath.value),
-);
-const sections = computed(() => {
-    const children = bodyChildren(page.value?.body);
-    const result = [];
-    let currentSection = null;
-
-    for (const child of children) {
-        if (nodeTag(child) === "h2") {
-            currentSection = {
-                id: nodeProps(child)?.id ?? `section-${result.length}`,
-                heading: child,
-                children: [],
-            };
-            result.push(currentSection);
-            continue;
-        }
-
-        if (isCollapsibleParagraph(child)) {
-            result.push({
-                id: nodeProps(child)?.id ?? `section-${result.length}`,
-                heading: null,
-                children: [child],
-                collapsible: true,
-            });
-            currentSection = null;
-            continue;
-        }
-
-        if (!currentSection) {
-            currentSection = {
-                id: result.length === 0 ? "intro" : `section-${result.length}`,
-                heading: null,
-                children: [],
-            };
-            result.push(currentSection);
-        }
-
-        currentSection.children.push(child);
-    }
-
-    return result;
-});
-
 if (!page.value || !children.value.length) {
     throw createError({
         statusCode: 404,
@@ -131,41 +62,6 @@ useSeoMeta({
     title: () => pageSeoTitle(page.value),
     description: () => pageDescription(page.value),
 });
-
-function bodyChildren(body) {
-    return body?.children ?? body?.value ?? [];
-}
-
-function nodeTag(node) {
-    return Array.isArray(node) ? node[0] : node?.tag;
-}
-
-function nodeProps(node) {
-    return Array.isArray(node) ? node[1] : node?.props;
-}
-
-function sectionValue(children) {
-    if (!page.value) return {};
-
-    return {
-        ...page.value,
-        body: bodyWithChildren(page.value.body, children),
-    };
-}
-
-function bodyWithChildren(body, children) {
-    if (body?.value) {
-        return {
-            ...body,
-            value: children,
-        };
-    }
-
-    return {
-        ...body,
-        children,
-    };
-}
 </script>
 
 <template>
@@ -179,29 +75,7 @@ function bodyWithChildren(body, children) {
 
         <ContentGraph v-if="graphSrc" :src="graphSrc" />
 
-        <MobileContentBar v-if="tocLinks.length" :toc="tocLinks" />
-        <section
-            v-for="section in sections"
-            :key="section.id"
-            class="mb-4 flex w-full max-w-full min-w-0 flex-col gap-4 self-center font-main lg:max-w-[calc(75ch+3rem)]"
-        >
-            <ContentRenderer
-                v-if="section.collapsible"
-                :value="sectionValue(section.children)"
-                class="content min-w-0 flex-1 text-on-surface"
-            />
-            <ContentRenderer
-                v-if="section.heading && !section.collapsible"
-                :value="sectionValue([section.heading])"
-                class="content overflow-wrap-anywhere min-w-0 flex-1 text-on-surface"
-            />
-            <div v-if="section.children.length && !section.collapsible">
-                <ContentRenderer
-                    :value="sectionValue(section.children)"
-                    class="content paragraph overflow-wrap-anywhere relative min-w-0 rounded-2xl bg-secondary p-4 text-on-secondary sm:rounded-3xl sm:p-5 lg:rounded-4xl lg:p-6"
-                />
-            </div>
-        </section>
+        <ContentDocument :page="page" />
         <section
             v-if="currentFolderCards.length"
             class="grid max-w-full min-w-0 gap-4 sm:grid-cols-2 xl:grid-cols-3"
@@ -290,13 +164,3 @@ function bodyWithChildren(body, children) {
         </nav>
     </article>
 </template>
-
-<style scoped>
-.overflow-wrap-anywhere {
-    overflow-wrap: anywhere;
-}
-
-:deep(.content h3) {
-    font-family: var(--font-main);
-}
-</style>

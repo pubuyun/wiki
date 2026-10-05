@@ -4,6 +4,7 @@ definePageMeta({
 });
 
 import { Icon } from "@iconify/vue";
+import { contentTocLinks } from "~/utils/content-toc";
 
 const route = useRoute();
 const runtimeConfig = useRuntimeConfig();
@@ -11,6 +12,7 @@ const slug = computed(() => String(route.params.slug ?? ""));
 const pagePath = computed(() => `/${slug.value}`);
 
 const { data: page } = await useContentPageData(pagePath);
+const tocLinks = computed(() => contentTocLinks(page.value?.body));
 
 const contentGraphPaths = new Set(runtimeConfig.public.contentGraphPaths);
 const graphSrc = computed(() => {
@@ -54,15 +56,6 @@ const categoryNavNodes = computed(() =>
     buildCategoryNavTree(children.value, slug.value, pagePath.value),
 );
 
-const overviewPath = computed(() => `${pagePath.value}/overview`);
-const displayNavNodes = computed(() =>
-    categoryNavNodes.value.filter(
-        (node) =>
-            node.children?.length ||
-            (node.path && node.path !== overviewPath.value),
-    ),
-);
-
 function navDescription(path?: string) {
     if (!path) return "";
 
@@ -100,6 +93,20 @@ function isReferenceTitle(title: string) {
             class="mb-8"
         />
 
+        <div v-if="page" class="mb-8 flex min-w-0 gap-8">
+            <ContentDocument :page="page" class="flex-1" />
+            <aside
+                v-if="tocLinks.length"
+                class="contents"
+                aria-label="Page contents"
+            >
+                <ContentBar
+                    class="hidden lg:flex lg:flex-none"
+                    :toc="tocLinks"
+                />
+            </aside>
+        </div>
+
         <nav
             class="relative flex min-w-0 -translate-x-2 flex-col gap-10 pr-2 pb-4"
             aria-label="Category documents"
@@ -111,7 +118,7 @@ function isReferenceTitle(title: string) {
             <div
                 class="relative grid min-w-0 gap-10 rounded-2xl bg-secondary p-4 text-on-secondary sm:grid-cols-2 sm:rounded-3xl sm:p-6 lg:rounded-4xl lg:p-8 xl:grid-cols-3"
             >
-                <template v-for="node in displayNavNodes" :key="node.id">
+                <template v-for="node in categoryNavNodes" :key="node.id">
                     <section
                         v-if="node.children?.length"
                         class="col-span-full min-w-0"

@@ -181,6 +181,12 @@ function categoryItemValue(id: string) {
                                             node.active &&
                                             'bg-primary text-on-primary'
                                         "
+                                        :aria-current="
+                                            node.path ===
+                                            contentLayout.activePath
+                                                ? 'page'
+                                                : undefined
+                                        "
                                         @click="closeDialog"
                                     >
                                         {{ node.label }}
