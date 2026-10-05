@@ -169,7 +169,7 @@ const footerLinkClass =
         >
             <div
                 v-if="hasCategorySidebar"
-                class="absolute inset-y-0 left-0 hidden bg-surface-elevated transition-[width] duration-200 ease-out lg:block"
+                class="absolute inset-y-0 left-0 hidden bg-surface-sidebar transition-[width] duration-200 ease-out lg:block"
                 :class="sidebarExtensionClass"
             />
             <svg
