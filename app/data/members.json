@@ -295,5 +295,27 @@
         "animalUrl": "https://static.igem.wiki/teams/6133/wiki/animalphoto/roxanne-mei.avif",
         "animalScale": 1.1,
         "introduction": ""
+    },
+    {
+        "id": "jiawen-chen",
+        "chineseName": "",
+        "englishName": "Jiawen Chen",
+        "displayedName": "Jiawen Chen",
+        "title": "instructor",
+        "photoUrl": "https://static.igem.wiki/teams/6133/wiki/teamphoto/jiawen-chen.avif",
+        "animalUrl": "https://static.igem.wiki/teams/6133/wiki/animalphoto/garmen.avif",
+        "animalScale": 1,
+        "introduction": ""
+    },
+    {
+        "id": "yuhe-zhu",
+        "chineseName": "",
+        "englishName": "Yuhe Zhu",
+        "displayedName": "Yuhe Zhu",
+        "title": "instructor",
+        "photoUrl": "https://static.igem.wiki/teams/6133/wiki/teamphoto/yuhe-zhu.avif",
+        "animalUrl": "https://static.igem.wiki/teams/6133/wiki/animalphoto/zhu.avif",
+        "animalScale": 1,
+        "introduction": ""
     }
 ]
