@@ -46,6 +46,11 @@ export const siteNavGroups: SiteNavGroup[] = [
                 label: "Contribution",
                 icon: "lucide:blocks",
             },
+            {
+                to: "/safety-and-security",
+                label: "Safety",
+                icon: "mingcute:safety-certificate-line",
+            },
         ],
     },
     {
@@ -80,11 +85,6 @@ export const siteNavGroups: SiteNavGroup[] = [
                 to: "/notebook",
                 label: "Notebook",
                 icon: "tabler:notebook",
-            },
-            {
-                to: "/safety-and-security",
-                label: "Safety",
-                icon: "mingcute:safety-certificate-line",
             },
         ],
     },
