@@ -1,12 +1,12 @@
 <template>
     <h3
         :id="props.id"
-        class="text-textcolor mt-3 mb-3 scroll-mt-24 font-belanosima text-3xl leading-snug font-semibold"
+        class="mt-8 mb-3 scroll-mt-24 font-main text-2xl leading-snug font-semibold text-balance wrap-anywhere text-on-surface sm:mt-10 sm:text-[1.75rem]"
     >
         <a
             v-if="props.id && generate"
             :href="`#${props.id}`"
-            class="text-inherit no-underline"
+            class="rounded-sm text-inherit no-underline decoration-primary/60 decoration-2 underline-offset-4 hover:underline focus-visible:underline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
             @click="scrollToHash($event, props.id)"
         >
             <slot />

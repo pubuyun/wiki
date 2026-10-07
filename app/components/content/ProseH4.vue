@@ -1,12 +1,12 @@
 <template>
     <h4
         :id="props.id"
-        class="mt-7 mb-3 scroll-mt-24 font-belanosima text-xl leading-snug font-semibold"
+        class="mt-7 mb-3 scroll-mt-24 font-main text-xl leading-snug font-semibold text-balance wrap-anywhere text-on-surface sm:mt-8 sm:text-2xl"
     >
         <a
             v-if="props.id && generate"
             :href="`#${props.id}`"
-            class="text-inherit no-underline"
+            class="rounded-sm text-inherit no-underline decoration-primary/60 decoration-2 underline-offset-4 hover:underline focus-visible:underline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
         >
             <slot />
         </a>

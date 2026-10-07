@@ -210,11 +210,13 @@ function indicatorX(link: ToCLink) {
 }
 
 function collectArticleHeadings() {
+    const tocIds = new Set(flatToc.value.map((link) => link.id));
+
     return [
         ...document.querySelectorAll<HTMLElement>(
             "main article h2[id], main article h3[id]",
         ),
-    ];
+    ].filter((heading) => tocIds.has(heading.id));
 }
 
 function updateActiveHeading() {

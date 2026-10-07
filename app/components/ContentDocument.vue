@@ -121,4 +121,8 @@ function sectionValue(children) {
 :deep(.content h3) {
     font-family: var(--font-main);
 }
+
+:deep(.paragraph > :is(h3, h4, h5):first-child) {
+    margin-top: 0;
+}
 </style>

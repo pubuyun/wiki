@@ -1,15 +1,15 @@
 ---
 title: Model
-description: Integrated modeling workflow for precursor binders, transporter binders, and enzyme engineering.
-order: 0
-banner: https://static.igem.wiki/teams/6133/wiki/drylab/model/bindercg3m3shcartoon.avif
 citationIds:
   - "3"
   - "1"
   - "2"
   - "4"
   - "5"
+description: Integrated modeling workflow for precursor binders, transporter binders, and enzyme engineering.
 hasReference: false
+order: 0
+banner: https://static.igem.wiki/teams/6133/wiki/drylab/model/bindercg3m3shcartoon.avif
 ---
 
 ## Overview
@@ -210,10 +210,7 @@ determines the header level.)
 
 ### Blockquotes
 
-Markdown uses email-style `>` characters for blockquoting. If you're
-familiar with quoting passages of text in an email message, then you
-know how to create a blockquote in Markdown. It looks best if you hard
-wrap the text and put a `>` before every line:
+Markdown uses email-style `>` characters for blockquoting. If you're--- Unknown node: hardBreak ---familiar with quoting passages of text in an email message, then you--- Unknown node: hardBreak ---know how to create a blockquote in Markdown. It looks best if you hard--- Unknown node: hardBreak ---wrap the text and put a `>` before every line:
 
 Markdown allows you to be lazy and only put the `>` before the first
 line of a hard-wrapped paragraph:
@@ -286,6 +283,8 @@ Ordered lists use numbers followed by periods:
 1. Bird
 2. McHale
 3. Parish
+
+#### Header4
 
 It's important to note that the actual numbers you use to mark the
 list have no effect on the HTML output Markdown produces. The HTML
