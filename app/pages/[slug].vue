@@ -14,13 +14,13 @@ const pagePath = computed(() => `/${slug.value}`);
 const { data: page } = await useContentPageData(pagePath);
 const tocLinks = computed(() => contentTocLinks(page.value?.body));
 
-const contentGraphPaths = new Set(runtimeConfig.public.contentGraphPaths);
-const graphSrc = computed(() => {
+const contentGraphViews = new Set(runtimeConfig.public.contentGraphViews);
+const graphView = computed(() => {
     const candidate = page.value?.stem
-        ? `/content/${page.value.stem}.json`
-        : `/content/${slug.value}/index.json`;
+        ? page.value.stem
+        : `${slug.value}/index`;
 
-    return contentGraphPaths.has(candidate) ? candidate : null;
+    return contentGraphViews.has(candidate) ? candidate : null;
 });
 
 const { data: allPages } = await useContentNavigationData();
@@ -87,9 +87,9 @@ function isReferenceTitle(title: string) {
         class="flex min-w-0 flex-1 flex-col px-4 pt-4 sm:px-6 lg:px-8 xl:px-12"
     >
         <ContentGraph
-            v-if="graphSrc"
-            :src="graphSrc"
-            :full-height="graphSrc === '/content/model/index.json'"
+            v-if="graphView"
+            :view="graphView"
+            :full-height="graphView === 'model/index'"
             class="mb-8"
         />
 

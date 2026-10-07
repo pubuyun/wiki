@@ -34,6 +34,7 @@
                     <VChart
                         class="h-full w-full"
                         :option="chartOption"
+                        :theme="chartTheme"
                         autoresize
                     />
                 </div>
@@ -114,6 +115,7 @@
 </template>
 
 <script setup lang="ts">
+const chartTheme = useWikiChartTheme();
 import type { CustomSeriesRenderItem, EChartsOption } from "echarts";
 
 interface BinderRecord {

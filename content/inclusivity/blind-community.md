@@ -1,6 +1,7 @@
 ---
 title: Blind Community
 description: Exploring tactile biology models with raised structures, orientation cues, and linked descriptions.
+hasReference: false
 order: 2
 ---
 
@@ -11,3 +12,5 @@ A tactile model brings biological structures into a form that can be explored by
 Explore the sample below, or follow our little guide to open the full collection of 3D models and their descriptions.
 
 :content-components-inclusivity-blind-community-samplemodel
+
+:content-components-inclusivity-blind-community-model-gallery

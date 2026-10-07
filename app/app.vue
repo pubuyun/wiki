@@ -24,8 +24,6 @@
 </template>
 
 <script setup lang="ts">
-import { THEME_KEY } from "vue-echarts";
-import { createWikiTheme } from "./styles/echarts";
 import "./styles/opendyslexic.css";
 import momoFont from "@fontsource/momo-trust-display/files/momo-trust-display-latin-400-normal.woff2?url";
 import righteousFont from "@fontsource/righteous/files/righteous-latin-400-normal.woff2?url";
@@ -83,13 +81,4 @@ useHead({
         class: themeClass,
     },
 });
-
-const chartTheme = computed(() =>
-    createWikiTheme({
-        dark: darkMode.value,
-        highContrast: highContrastMode.value,
-    }),
-);
-
-provide(THEME_KEY, chartTheme);
 </script>

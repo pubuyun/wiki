@@ -21,6 +21,7 @@
                     :height="props.height"
                     class="h-auto w-full rounded-lg object-cover"
                     decoding="async"
+                    loading="lazy"
                 />
             </button>
             <component
@@ -33,6 +34,7 @@
                 class="h-auto w-full rounded-lg border border-outline bg-secondary object-cover shadow-sm"
                 :class="{ 'my-8': !props.title }"
                 decoding="async"
+                loading="lazy"
             />
         </template>
     </ContentComponentsLightboxImage>

@@ -189,6 +189,7 @@ onMounted(async () => {
 .sample-model {
     position: relative;
     isolation: isolate;
+    container-type: inline-size;
     width: 100%;
     min-width: 0;
     overflow: hidden;
@@ -197,13 +198,13 @@ onMounted(async () => {
 }
 
 .sample-model__figure {
-    width: 80%;
+    width: 72%;
     margin: 0;
 }
 
 .sample-model__stage {
     position: relative;
-    height: clamp(25rem, 48vw, 36rem);
+    height: clamp(25rem, 48cqw, 36rem);
 }
 
 .sample-model__viewer {
@@ -290,16 +291,16 @@ onMounted(async () => {
     max-width: 10rem;
     padding: 0.25rem 0.5rem;
     border-radius: 0.4rem;
-    background: var(--secondary);
+    background: color-mix(in srgb, var(--secondary) 75%, transparent);
     color: var(--on-secondary);
-    font-size: clamp(0.9rem, 1.7vw, 1.2rem);
+    font-size: clamp(0.9rem, 1.7cqw, 1.2rem);
     line-height: 1.2;
     text-align: left;
     transform: translateY(-50%);
 }
 
 .Hotspot--concept {
-    --leader-length: clamp(11rem, 18vw, 14rem);
+    --leader-length: clamp(5rem, 12cqw, 10rem);
     --leader-angle: -12deg;
 }
 
@@ -308,7 +309,7 @@ onMounted(async () => {
 }
 
 .Hotspot--direction {
-    --leader-length: clamp(3.5rem, 7vw, 6rem);
+    --leader-length: clamp(2rem, 5cqw, 4rem);
     --leader-angle: 180deg;
 }
 
@@ -318,7 +319,7 @@ onMounted(async () => {
 }
 
 .Hotspot--qr {
-    --leader-length: clamp(5rem, 8vw, 7rem);
+    --leader-length: clamp(4rem, 7cqw, 6rem);
     --leader-angle: 45deg;
 }
 
@@ -331,7 +332,7 @@ onMounted(async () => {
     z-index: 2;
     top: 12%;
     right: 0;
-    width: 24%;
+    width: 26%;
     height: 80%;
     color: inherit;
     text-decoration: none;
@@ -344,7 +345,7 @@ onMounted(async () => {
     right: 0.5rem;
     width: max-content;
     max-width: 100%;
-    font-size: clamp(1.15rem, 2.5vw, 1.8rem);
+    font-size: clamp(1.15rem, 2.5cqw, 1.8rem);
     line-height: 1.2;
     transform: rotate(-8deg);
     transition: transform 250ms ease;
@@ -361,9 +362,9 @@ onMounted(async () => {
 .sample-model__character {
     position: absolute;
     top: 28%;
-    right: -55%;
+    right: -40%;
     display: block;
-    width: 165%;
+    width: 140%;
     max-width: none;
     height: auto;
     transform: rotate(-37deg);
@@ -387,43 +388,38 @@ onMounted(async () => {
     border-radius: 1rem;
 }
 
+/* The article column can be narrow even on a wide browser window. */
+@container (max-width: 60rem) {
+    .Hotspot--direction {
+        --leader-length: 2.5rem;
+        --leader-angle: 90deg;
+    }
+
+    .Hotspot--qr {
+        --leader-angle: 90deg;
+    }
+
+    .Hotspot--direction .HotspotAnnotation,
+    .Hotspot--qr .HotspotAnnotation {
+        transform: translate(-50%, -50%);
+    }
+
+    .sample-model__speech {
+        font-size: clamp(0.85rem, 3cqw, 1.8rem);
+    }
+
+    .sample-model__cta {
+        font-size: clamp(0.75rem, 2cqw, 0.85rem);
+    }
+}
+
 @media (max-width: 40rem) {
     .sample-model__figure {
         width: 100%;
     }
 
     .sample-model__stage {
-        height: clamp(23rem, 100vw, 30rem);
-    }
-
-    .HotspotAnnotation {
-        max-width: 6.5rem;
-        font-size: 0.8rem;
-    }
-
-    .Hotspot--direction {
-        --leader-length: 1.25rem;
-    }
-
-    .Hotspot--direction .HotspotAnnotation {
-        max-width: 3.5rem;
-    }
-
-    .Hotspot--concept {
-        --leader-length: clamp(2rem, calc(50vw - 7rem), 5.5rem);
-    }
-
-    .Hotspot--concept .HotspotAnnotation {
-        max-width: 4rem;
-    }
-
-    .Hotspot--qr {
-        --leader-length: 4rem;
-        --leader-angle: 65deg;
-    }
-
-    .Hotspot--qr .HotspotAnnotation {
-        max-width: 4rem;
+        height: clamp(23rem, 70cqw, 30rem);
     }
 
     .sample-model__invitation {
@@ -439,17 +435,54 @@ onMounted(async () => {
         top: 1.5rem;
         right: 45%;
         max-width: 50%;
-        font-size: 1.5rem;
+        font-size: clamp(1.15rem, 4cqw, 1.5rem);
     }
 
     .sample-model__character {
         top: 0.5rem;
-        right: -3rem;
-        width: 14rem;
+        right: -2rem;
+        width: 12rem;
     }
 }
 
-@media (max-width: 24rem) {
+@container (max-width: 40rem) {
+    .HotspotAnnotation {
+        max-width: 6.5rem;
+        font-size: 0.8rem;
+    }
+
+    .Hotspot--direction {
+        --leader-length: 2.5rem;
+    }
+
+    .Hotspot--direction .HotspotAnnotation {
+        max-width: 4.5rem;
+    }
+
+    .Hotspot--concept {
+        --leader-length: clamp(1rem, 8cqw, 3rem);
+    }
+
+    .Hotspot--concept .HotspotAnnotation {
+        max-width: 4rem;
+    }
+
+    .Hotspot--qr {
+        --leader-length: 4rem;
+        --leader-angle: 90deg;
+    }
+
+    .Hotspot--qr .HotspotAnnotation {
+        max-width: 4rem;
+    }
+}
+
+@container (max-width: 24rem) {
+    .Hotspot--concept {
+        --leader-length: 2rem;
+        --leader-angle: -90deg;
+    }
+
     .Hotspot--direction {
         --leader-length: 3rem;
         --leader-angle: 90deg;
@@ -460,6 +493,7 @@ onMounted(async () => {
         --leader-angle: 90deg;
     }
 
+    .Hotspot--concept .HotspotAnnotation,
     .Hotspot--direction .HotspotAnnotation,
     .Hotspot--qr .HotspotAnnotation {
         transform: translate(-50%, -50%);

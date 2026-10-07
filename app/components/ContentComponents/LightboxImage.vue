@@ -72,6 +72,7 @@ defineExpose({ open });
                         :height="height"
                         class="h-auto max-w-full rounded-2xl"
                         decoding="async"
+                        loading="lazy"
                     />
                 </button>
                 <figcaption

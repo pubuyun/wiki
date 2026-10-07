@@ -9,7 +9,7 @@ type ToolbarMethods = {
     rotateRight: () => void;
 };
 
-defineProps<{
+const props = defineProps<{
     visible: boolean;
     src: string[];
     index: number;
@@ -19,6 +19,23 @@ defineEmits<{
     hide: [];
     "update:index": [index: number];
 }>();
+
+// The lazy-loaded lightbox can mount already visible, before its own scroll watcher runs.
+watch(
+    () => props.visible,
+    (visible, _previousVisible, onCleanup) => {
+        if (!visible) return;
+
+        const root = document.documentElement;
+        const previousOverflowY = root.style.overflowY;
+        root.style.overflowY = "hidden";
+
+        onCleanup(() => {
+            root.style.overflowY = previousOverflowY;
+        });
+    },
+    { immediate: true },
+);
 </script>
 
 <template>

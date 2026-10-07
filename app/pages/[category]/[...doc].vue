@@ -11,13 +11,13 @@ const category = computed(() => String(route.params.category ?? ""));
 const activePath = computed(() => normalizeContentPath(route.path));
 
 const { data: page } = await useContentPageData(activePath);
-const contentGraphPaths = new Set(runtimeConfig.public.contentGraphPaths);
-const graphSrc = computed(() => {
+const contentGraphViews = new Set(runtimeConfig.public.contentGraphViews);
+const graphView = computed(() => {
     const candidate = page.value?.stem
-        ? `/content/${page.value.stem}.json`
-        : `/content${activePath.value}.json`;
+        ? page.value.stem
+        : activePath.value.replace(/^\//, "");
 
-    return contentGraphPaths.has(candidate) ? candidate : null;
+    return contentGraphViews.has(candidate) ? candidate : null;
 });
 
 const { data: allPages } = await useContentNavigationData();
@@ -73,7 +73,7 @@ useSeoMeta({
             {{ pageTitle(page) }}
         </h1>
 
-        <ContentGraph v-if="graphSrc" :src="graphSrc" />
+        <ContentGraph v-if="graphView" :view="graphView" />
 
         <ContentDocument :page="page" />
         <section

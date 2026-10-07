@@ -5,6 +5,7 @@
                 v-if="imgSrc"
                 class="col-1 row-1 h-full w-full object-cover"
                 :src="imgSrc"
+                fetchpriority="high"
                 alt=""
                 :style="{ objectPosition: imgPosition }"
             />

@@ -3,5 +3,100 @@
         "id": "plant_cell",
         "title": "Plant Cell Structure",
         "modelUrl": "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/3dmodel/plant-cell.glb"
+    },
+    {
+        "id": "alveoli",
+        "title": "Alveoli",
+        "modelUrl": "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/3dmodel/alveoli.glb"
+    },
+    {
+        "id": "animal_cell",
+        "title": "Animal Cell",
+        "modelUrl": "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/3dmodel/animal-cell.glb"
+    },
+    {
+        "id": "bacterial_cell",
+        "title": "Bacterial Cell",
+        "modelUrl": "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/3dmodel/bacterial-cell.glb"
+    },
+    {
+        "id": "digestive_system",
+        "title": "Digestive System",
+        "modelUrl": "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/3dmodel/digestive-system.glb"
+    },
+    {
+        "id": "dna_structure",
+        "title": "DNA Structure",
+        "modelUrl": "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/3dmodel/dna-structure.glb"
+    },
+    {
+        "id": "ear_structure",
+        "title": "Ear Structure",
+        "modelUrl": "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/3dmodel/ear-structure.glb"
+    },
+    {
+        "id": "egg_cell",
+        "title": "Egg Cell",
+        "modelUrl": "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/3dmodel/egg-cell.glb"
+    },
+    {
+        "id": "eye_structure",
+        "title": "Eye Structure",
+        "modelUrl": "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/3dmodel/eye-structure.glb"
+    },
+    {
+        "id": "female_karyotype",
+        "title": "Female Karyotype",
+        "modelUrl": "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/3dmodel/female-karyotype.glb"
+    },
+    {
+        "id": "female_reproductive_system",
+        "title": "Female Reproductive System",
+        "modelUrl": "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/3dmodel/female-reproductive-system.glb"
+    },
+    {
+        "id": "heart_structure",
+        "title": "Heart Structure",
+        "modelUrl": "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/3dmodel/heart-structure.glb"
+    },
+    {
+        "id": "male_karyotype",
+        "title": "Male Karyotype",
+        "modelUrl": "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/3dmodel/male-karyotype.glb"
+    },
+    {
+        "id": "male_reproductive_system",
+        "title": "Male Reproductive System",
+        "modelUrl": "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/3dmodel/male-reproductive-system.glb"
+    },
+    {
+        "id": "nephron",
+        "title": "Nephron",
+        "modelUrl": "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/3dmodel/nephron.glb"
+    },
+    {
+        "id": "neuron",
+        "title": "Neuron",
+        "modelUrl": "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/3dmodel/neuron.glb"
+    },
+    {
+        "id": "paramecium",
+        "title": "Paramecium",
+        "modelUrl": "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/3dmodel/paramecium.glb"
+    },
+    {
+        "id": "respiratory_system",
+        "title": "Respiratory System",
+        "modelUrl": "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/3dmodel/respiratory-system.glb"
+    },
+    {
+        "id": "sperm_cell",
+        "title": "Sperm Cell",
+        "modelUrl": "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/3dmodel/sperm-cell.glb"
+    },
+    {
+        "id": "urinary_system",
+        "title": "Urinary System",
+        "modelUrl": "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/3dmodel/urinary-system.glb"
     }
 ]

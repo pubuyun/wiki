@@ -21,6 +21,7 @@ const props = withDefaults(
 );
 
 const renderError = ref("");
+const chartTheme = useWikiChartTheme();
 const parsed = computed(() => {
     try {
         const option = parseEchartsOption(props.option, echarts);
@@ -72,6 +73,7 @@ const chartHeight = computed(() =>
     </p>
     <VChart
         v-else-if="parsed.option"
+        :theme="chartTheme"
         :option="parsed.option"
         :init-options="{ renderer }"
         :update-options="{ notMerge: true }"

@@ -8,7 +8,7 @@ const ContentGraphInteractive = defineAsyncComponent(
 defineOptions({ inheritAttrs: false });
 
 defineProps<{
-    src: string;
+    view: string;
     fullHeight?: boolean;
 }>();
 </script>
@@ -18,7 +18,7 @@ defineProps<{
         <Suspense>
             <ContentGraphInteractive
                 v-bind="$attrs"
-                :src="src"
+                :view="view"
                 :full-height="fullHeight"
             />
 

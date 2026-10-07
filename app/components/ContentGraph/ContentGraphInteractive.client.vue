@@ -30,7 +30,7 @@ type GraphDirection = "top-bottom" | "left-right";
 
 interface GraphNodeData {
     path?: string;
-    graph?: string;
+    subgraph?: string;
     direction?: GraphDirection;
     layout?: GraphDirection;
     layoutPosition?: Point;
@@ -59,21 +59,31 @@ interface GraphDefinition {
     crossEdges?: CrossEdgeDefinition[];
 }
 
-interface ResolvedNode {
-    definition: GraphNodeDefinition;
-    child: ResolvedGraph | null;
+interface GraphRegistry {
+    version: number;
+    graphs: Record<string, GraphDefinition>;
 }
 
-interface ResolvedGraph extends Omit<GraphDefinition, "nodes"> {
-    nodes: ResolvedNode[];
+interface GraphFrame {
+    graph: GraphDefinition;
+    prefix: string;
+    parentNode: string | undefined;
+    depth: number;
+    mode: GraphDirection;
+    ancestors: Set<string>;
 }
 
 const props = defineProps<{
-    src: string;
+    view: string;
     fullHeight?: boolean;
 }>();
 
-const resolvedGraph = shallowRef<ResolvedGraph | null>(null);
+// Reuse one registry across page navigation without repeated graph requests.
+const graphRegistry = useState<GraphRegistry | null>(
+    "content-graph-registry",
+    () => null,
+);
+const resolvedGraph = shallowRef<GraphDefinition | null>(null);
 const isLoading = ref(true);
 const flowInstance = shallowRef<VueFlowStore | null>(null);
 const figureElement = ref<HTMLElement | null>(null);
@@ -225,47 +235,30 @@ function publicUrl(src: string) {
     return `${baseURL.replace(/\/$/, "")}/${src.replace(/^\//, "")}`;
 }
 
-async function fetchGraph(
-    src: string,
-    signal: AbortSignal,
-    ancestors = new Set<string>(),
-    depth = 0,
-): Promise<ResolvedGraph | null> {
-    if (depth > 8 || ancestors.has(src)) return null;
+async function loadGraphRegistry(signal: AbortSignal): Promise<GraphRegistry> {
+    if (graphRegistry.value) return graphRegistry.value;
 
-    const response = await fetch(publicUrl(src), { signal });
-    if (!response.ok) return null;
+    const response = await fetch(publicUrl("/content/model/graphs.json"), {
+        signal,
+    });
+    if (!response.ok)
+        throw new Error(`Graph registry request failed: ${response.status}`);
 
-    const value = (await response.json()) as GraphDefinition;
-    if (!Array.isArray(value.nodes) || !Array.isArray(value.edges)) {
-        return null;
+    const value = (await response.json()) as GraphRegistry;
+    if (
+        value.version !== 1 ||
+        !value.graphs ||
+        typeof value.graphs !== "object"
+    ) {
+        throw new Error("Invalid graph registry.");
     }
-
-    const nextAncestors = new Set(ancestors).add(src);
-    const nodes = await Promise.all(
-        value.nodes.map(async (definition) => ({
-            definition,
-            child:
-                definition.type === "virtual" && definition.data?.graph
-                    ? await fetchGraph(
-                          definition.data.graph,
-                          signal,
-                          nextAncestors,
-                          depth + 1,
-                      )
-                    : null,
-        })),
-    );
-
-    return {
-        ...value,
-        nodes,
-    };
+    graphRegistry.value = value;
+    return value;
 }
 
 watch(
-    [() => props.src, mediaReady, isPortrait],
-    async ([src, ready, portrait], _, onCleanup) => {
+    [() => props.view, mediaReady, isPortrait],
+    async ([view, ready, portrait], _, onCleanup) => {
         const controller = new AbortController();
         onCleanup(() => controller.abort());
         resolvedGraph.value = null;
@@ -274,12 +267,23 @@ watch(
         if (!ready || portrait) return;
 
         try {
-            resolvedGraph.value = await fetchGraph(src, controller.signal);
+            const registry = await loadGraphRegistry(controller.signal);
+            if (!controller.signal.aborted) {
+                const graph = registry.graphs[view];
+                if (
+                    !graph ||
+                    !Array.isArray(graph.nodes) ||
+                    !Array.isArray(graph.edges)
+                ) {
+                    throw new Error(`Unknown graph view: ${view}`);
+                }
+                resolvedGraph.value = graph;
+            }
         } catch (error) {
             if (!(
                 error instanceof DOMException && error.name === "AbortError"
             )) {
-                console.error(`Unable to load graph from ${src}`, error);
+                console.error(`Unable to load graph view ${view}`, error);
             }
         } finally {
             if (!controller.signal.aborted) isLoading.value = false;
@@ -294,45 +298,64 @@ const flow = computed(() => {
 
     if (!resolvedGraph.value) return { nodes, edges };
 
-    flattenGraph(
-        resolvedGraph.value,
-        "",
-        undefined,
-        0,
-        "left-right",
-        nodes,
-        edges,
+    const frames: GraphFrame[] = [
+        {
+            graph: resolvedGraph.value,
+            prefix: "",
+            parentNode: undefined,
+            depth: 0,
+            mode: "left-right",
+            ancestors: new Set([props.view]),
+        },
+    ];
+    const crossEdges: Edge[] = [];
+
+    // Append parents before their children, using a queue instead of recursion.
+    for (let index = 0; index < frames.length; index += 1) {
+        appendGraphFrame(frames[index]!, nodes, edges, frames, crossEdges);
+    }
+    const renderedNodeIds = new Set(nodes.map((node) => node.id));
+    edges.push(
+        ...crossEdges.filter(
+            (edge) =>
+                renderedNodeIds.has(edge.source) &&
+                renderedNodeIds.has(edge.target),
+        ),
     );
     return { nodes, edges };
 });
-function flattenGraph(
-    graph: ResolvedGraph,
-    prefix: string,
-    parentNode: string | undefined,
-    depth: number,
-    mode: GraphDirection,
+
+function appendGraphFrame(
+    { graph, prefix, parentNode, depth, mode, ancestors }: GraphFrame,
     nodes: Node[],
     edges: Edge[],
+    frames: GraphFrame[],
+    crossEdges: Edge[],
 ) {
     const leftToRight = mode === "left-right";
     const visibleNodes = graph.nodes.filter(
-        ({ definition, child }) =>
+        (definition) =>
             definition.type !== "virtual" ||
-            Boolean(definition.data?.graph && child),
+            Boolean(
+                definition.data?.subgraph &&
+                graphRegistry.value?.graphs[definition.data.subgraph] &&
+                !ancestors.has(definition.data.subgraph) &&
+                depth < 8,
+            ),
     );
     const visibleNodeIds = new Set(
-        visibleNodes.map(({ definition }) => definition.id),
+        visibleNodes.map((definition) => definition.id),
     );
     const topBottomWidth = Math.max(
         ...visibleNodes.map(
-            ({ definition }) =>
+            (definition) =>
                 definition.size?.width ?? defaultNodeLayoutSize.width,
         ),
         defaultNodeLayoutSize.width,
     );
     let topBottomY = topBottomSubgraphPadding;
 
-    for (const { definition, child } of visibleNodes) {
+    for (const definition of visibleNodes) {
         const {
             id: localId,
             label,
@@ -429,17 +452,18 @@ function flattenGraph(
             } as Node);
         }
 
-        if (child) {
-            const childMode = data?.direction ?? mode;
-            flattenGraph(
-                child,
-                `${id}::`,
-                id,
-                depth + 1,
-                childMode,
-                nodes,
-                edges,
-            );
+        const child = data?.subgraph
+            ? graphRegistry.value?.graphs[data.subgraph]
+            : undefined;
+        if (definition.type === "virtual" && child && data?.subgraph) {
+            frames.push({
+                graph: child,
+                prefix: `${id}::`,
+                parentNode: id,
+                depth: depth + 1,
+                mode: data.direction ?? mode,
+                ancestors: new Set([...ancestors, data.subgraph]),
+            });
         }
     }
 
@@ -462,15 +486,10 @@ function flattenGraph(
         });
     }
 
-    const renderedNodeIds = new Set(nodes.map((node) => node.id));
     for (const edge of graph.crossEdges ?? []) {
         const source = resolveCrossEdgeEndpoint(prefix, edge.source);
         const target = resolveCrossEdgeEndpoint(prefix, edge.target);
-        if (!renderedNodeIds.has(source) || !renderedNodeIds.has(target)) {
-            continue;
-        }
-
-        edges.push({
+        crossEdges.push({
             ...edge,
             id: `${prefix}${edge.id}`,
             source,
@@ -492,16 +511,19 @@ const graphAspectRatio = computed(() => {
     if (!graph) return 1;
 
     const visibleNodes = graph.nodes.filter(
-        ({ definition, child }) =>
+        (definition) =>
             definition.type !== "virtual" ||
-            Boolean(definition.data?.graph && child),
+            Boolean(
+                definition.data?.subgraph &&
+                graphRegistry.value?.graphs[definition.data.subgraph],
+            ),
     );
     let minX = Number.POSITIVE_INFINITY;
     let minY = Number.POSITIVE_INFINITY;
     let maxX = Number.NEGATIVE_INFINITY;
     let maxY = Number.NEGATIVE_INFINITY;
 
-    for (const { definition } of visibleNodes) {
+    for (const definition of visibleNodes) {
         const position = definition.position;
         const size = definition.size ?? defaultNodeLayoutSize;
         minX = Math.min(minX, position.x);

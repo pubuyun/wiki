@@ -21,7 +21,12 @@
             Loading RMSD data...
         </div>
         <template v-else>
-            <VChart class="min-h-72 flex-1" :option="option" autoresize />
+            <VChart
+                class="min-h-72 flex-1"
+                :option="option"
+                :theme="chartTheme"
+                autoresize
+            />
             <details class="mt-4 rounded-lg border border-outline p-3">
                 <summary class="cursor-pointer font-semibold">
                     View chart data
@@ -98,6 +103,8 @@
 <script setup lang="ts">
 import type { EChartsOption } from "echarts";
 import { parseXvg } from "~/utils/xvg";
+
+const chartTheme = useWikiChartTheme();
 
 const props = withDefaults(
     defineProps<{

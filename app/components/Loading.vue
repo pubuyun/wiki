@@ -37,11 +37,12 @@
             <div v-else class="route-loader">
                 <p class="route-loader__label">Loading...</p>
                 <img
+                    v-if="isLoadingImageLoaded"
                     :src="loadingImageUrl"
                     class="route-loader__image"
                     alt=""
                     decoding="async"
-                    fetchpriority="high"
+                    fetchpriority="low"
                     @load="handleLoadingImageLoad"
                     @error="handleLoadingImageError"
                 />
@@ -52,7 +53,7 @@
 </template>
 
 <script setup lang="ts">
-import { gsap } from "gsap";
+import type { gsap as Gsap } from "gsap";
 
 const route = useRoute();
 const initialRouteIsHome = route.path === "/";
@@ -85,9 +86,12 @@ const loadingTransitionName = computed(() =>
     isHomeOpening.value ? "home-loading" : "fade",
 );
 
-let loaderTimeline: gsap.core.Timeline | undefined;
+let gsap: typeof Gsap | undefined;
+let loaderTimeline: Gsap.core.Timeline | undefined;
 let loaderSequenceReady = false;
 let loaderExitStarted = false;
+let isUnmounted = false;
+let loadingImage: HTMLImageElement | undefined;
 
 function updateProgress(value: number) {
     displayedProgress.value = Math.min(100, Math.round(value));
@@ -96,6 +100,7 @@ function updateProgress(value: number) {
 function finishHomeLoader() {
     if (
         !isHomeOpening.value ||
+        !gsap ||
         !isInitialPageReady.value ||
         !loaderSequenceReady ||
         loaderExitStarted
@@ -136,7 +141,11 @@ function finishHomeLoader() {
         );
 }
 
-function startHomeLoader() {
+async function startHomeLoader() {
+    // Only the homepage opening animation needs GSAP.
+    const module = await import("gsap");
+    if (isUnmounted) return;
+    gsap = module.gsap;
     const characters = homeWordmark.value?.querySelectorAll<HTMLElement>(
         ".home-loader__character",
     );
@@ -245,9 +254,11 @@ function handleLoadingImageError() {
 }
 
 function preloadRouteLoadingImage() {
-    if (isLoadingImageSettled.value) return;
+    if (isLoadingImageSettled.value || loadingImage) return;
     const image = new Image();
+    loadingImage = image;
     image.decoding = "async";
+    image.fetchPriority = "low";
     image.onload = handleLoadingImageLoad;
     image.onerror = handleLoadingImageError;
     image.src = loadingImageUrl;
@@ -257,12 +268,6 @@ function handleLoadingAfterLeave() {
     if (!isInitialLoading.value) return;
     isInitialLoading.value = false;
     isInitialLoadingComplete.value = true;
-
-    if (initialRouteIsHome) {
-        if (window.requestIdleCallback)
-            window.requestIdleCallback(preloadRouteLoadingImage);
-        else window.setTimeout(preloadRouteLoadingImage, 1);
-    }
 }
 
 function categoryFromPath(path: string) {
@@ -282,12 +287,8 @@ function isSameCategoryContentNavigation(to: typeof route, from: typeof route) {
 }
 
 onMounted(async () => {
-    if (initialRouteIsHome) startHomeLoader();
-    else {
-        if (window.requestIdleCallback)
-            window.requestIdleCallback(preloadRouteLoadingImage);
-        else window.setTimeout(preloadRouteLoadingImage, 1);
-    }
+    if (initialRouteIsHome) await startHomeLoader();
+    if (isUnmounted) return;
 
     await router.isReady();
     canShowRouteLoading.value = true;
@@ -298,11 +299,19 @@ onMounted(async () => {
 });
 
 onBeforeUnmount(() => {
+    isUnmounted = true;
     loaderTimeline?.kill();
+    if (loadingImage) {
+        loadingImage.onload = null;
+        loadingImage.onerror = null;
+    }
 });
 
 router.beforeEach((to, from) => {
     shouldSkipRouteLoading.value = isSameCategoryContentNavigation(to, from);
+    if (canShowRouteLoading.value && !shouldSkipRouteLoading.value) {
+        preloadRouteLoadingImage();
+    }
 });
 
 nuxtApp.hook("page:loading:start", () => {
@@ -310,8 +319,7 @@ nuxtApp.hook("page:loading:start", () => {
         showLoading.value = false;
         return;
     }
-    if (canShowRouteLoading.value && isLoadingImageLoaded.value)
-        showLoading.value = true;
+    if (canShowRouteLoading.value) showLoading.value = true;
 });
 
 nuxtApp.hook("page:loading:end", () => {
