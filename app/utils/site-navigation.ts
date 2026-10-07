@@ -127,10 +127,10 @@ export const siteNavGroups: SiteNavGroup[] = [
                 label: "Inclusivity",
                 icon: "griddy-icons:hands-support",
                 children: [
-                    {
-                        to: "/inclusivity/viewmodel",
-                        label: "Tactile Graphics",
-                    },
+                    // {
+                    //     to: "/inclusivity/viewmodel",
+                    //     label: "Tactile Graphics",
+                    // },
                     {
                         to: "/inclusivity/game",
                         label: "Sign Language Game",
