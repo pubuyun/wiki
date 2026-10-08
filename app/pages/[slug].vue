@@ -93,7 +93,15 @@ function isReferenceTitle(title: string) {
             class="mb-8"
         />
 
-        <div v-if="page" class="mb-8 flex min-w-0 gap-8">
+        <div
+            v-if="page"
+            class="mx-auto mb-8 flex w-full min-w-0 gap-8 font-main"
+            :class="
+                tocLinks.length
+                    ? 'lg:max-w-[calc(75ch+21rem)] xl:max-w-[calc(75ch+25rem)]'
+                    : 'lg:max-w-[calc(75ch+3rem)]'
+            "
+        >
             <ContentDocument :page="page" class="flex-1" />
             <aside
                 v-if="tocLinks.length"
