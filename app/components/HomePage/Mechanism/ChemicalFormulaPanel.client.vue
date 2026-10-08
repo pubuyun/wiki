@@ -179,15 +179,15 @@ defineExpose({ getAnimationTargets });
                 <defs>
                     <marker
                         id="arrow-pepv"
-                        markerWidth="7"
-                        markerHeight="7"
-                        refX="6"
-                        refY="3.5"
+                        markerWidth="5"
+                        markerHeight="2.5"
+                        refX="4.5"
+                        refY="1.25"
                         orient="auto"
                     >
                         <path
                             class="reaction-arrow__head fill-current"
-                            d="M0,0 L7,3.5 L0,7 Z"
+                            d="M0,0 L5,1.25 L0,2.5 Z"
                         />
                     </marker>
                 </defs>
@@ -271,15 +271,15 @@ defineExpose({ getAnimationTargets });
                 <defs>
                     <marker
                         id="arrow-patb"
-                        markerWidth="7"
-                        markerHeight="7"
-                        refX="6"
-                        refY="3.5"
+                        markerWidth="5"
+                        markerHeight="2.5"
+                        refX="4.5"
+                        refY="1.25"
                         orient="auto"
                     >
                         <path
                             class="reaction-arrow__head fill-current"
-                            d="M0,0 L7,3.5 L0,7 Z"
+                            d="M0,0 L5,1.25 L0,2.5 Z"
                         />
                     </marker>
                 </defs>
