@@ -63,14 +63,12 @@ watchEffect(() => {
             </aside>
 
             <AccessibilityMenu />
-            <div class="min-w-0 flex-1 lg:px-8">
+            <div class="content-reading-container min-w-0 flex-1 lg:px-8">
                 <div
-                    class="mx-auto mt-16 flex w-full min-w-0 gap-8 font-main sm:mt-20"
-                    :class="
-                        hasRightSidebar
-                            ? 'doc-content-with-toc'
-                            : 'lg:max-w-[calc(75ch+3rem)]'
-                    "
+                    class="content-reading-layout mt-16 sm:mt-20"
+                    :class="{
+                        'content-reading-layout--with-toc': hasRightSidebar,
+                    }"
                 >
                     <slot />
                     <aside
@@ -78,7 +76,7 @@ watchEffect(() => {
                         class="contents"
                         aria-label="Page contents"
                     >
-                        <ContentBar class="hidden lg:flex" :toc="tocLinks" />
+                        <ContentBar :toc="tocLinks" />
                     </aside>
                 </div>
             </div>
@@ -90,23 +88,3 @@ watchEffect(() => {
         <ClickAnimation />
     </div>
 </template>
-
-<style scoped>
-@media (width >= 64rem) {
-    .doc-content-with-toc {
-        --doc-body-width: calc(75ch + 3rem);
-        --doc-toc-width: 16rem;
-        display: grid;
-        grid-template-columns: minmax(0, var(--doc-body-width)) var(
-                --doc-toc-width
-            );
-        max-width: calc(var(--doc-body-width) + 2rem + var(--doc-toc-width));
-    }
-}
-
-@media (width >= 80rem) {
-    .doc-content-with-toc {
-        --doc-toc-width: 20rem;
-    }
-}
-</style>

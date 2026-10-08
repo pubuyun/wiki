@@ -84,7 +84,7 @@ function isReferenceTitle(title: string) {
 <template>
     <article
         v-if="displayPage"
-        class="flex min-w-0 flex-1 flex-col px-4 pt-4 sm:px-6 lg:px-8 xl:px-12"
+        class="content-reading-container flex min-w-0 flex-1 flex-col px-4 pt-4 sm:px-6 lg:px-8 xl:px-12"
     >
         <ContentGraph
             v-if="graphView"
@@ -95,12 +95,8 @@ function isReferenceTitle(title: string) {
 
         <div
             v-if="page"
-            class="mx-auto mb-8 flex w-full min-w-0 gap-8 font-main"
-            :class="
-                tocLinks.length
-                    ? 'lg:max-w-[calc(75ch+21rem)] xl:max-w-[calc(75ch+25rem)]'
-                    : 'lg:max-w-[calc(75ch+3rem)]'
-            "
+            class="content-reading-layout mb-8"
+            :class="{ 'content-reading-layout--with-toc': tocLinks.length }"
         >
             <ContentDocument :page="page" class="flex-1" />
             <aside
@@ -108,10 +104,7 @@ function isReferenceTitle(title: string) {
                 class="contents"
                 aria-label="Page contents"
             >
-                <ContentBar
-                    class="hidden lg:flex lg:flex-none"
-                    :toc="tocLinks"
-                />
+                <ContentBar :toc="tocLinks" />
             </aside>
         </div>
 

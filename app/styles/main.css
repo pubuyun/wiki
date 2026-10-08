@@ -57,6 +57,58 @@
         -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 }
 
+.content-reading-container {
+    container: reading / inline-size;
+}
+
+.content-reading-layout {
+    --reading-body-width: calc(75ch + 3rem);
+    --reading-toc-width: 16rem;
+    --reading-column-gap: clamp(2rem, 3cqi, 4rem);
+    display: flex;
+    width: 100%;
+    max-width: var(--reading-body-width);
+    min-width: 0;
+    margin-inline: auto;
+    font-family: var(--font-main);
+}
+
+.content-bar-desktop {
+    display: none;
+}
+
+.content-bar-mobile {
+    display: block;
+}
+
+@container reading (width >= 60rem) {
+    .content-reading-layout--with-toc {
+        display: grid;
+        grid-template-columns: minmax(0, var(--reading-body-width)) var(
+                --reading-toc-width
+            );
+        column-gap: var(--reading-column-gap);
+        max-width: calc(
+            var(--reading-body-width) + var(--reading-column-gap) +
+                var(--reading-toc-width)
+        );
+    }
+
+    .content-bar-desktop {
+        display: flex;
+    }
+
+    .content-bar-mobile {
+        display: none;
+    }
+}
+
+@container reading (width >= 72rem) {
+    .content-reading-layout {
+        --reading-toc-width: 20rem;
+    }
+}
+
 html {
     scroll-padding-top: 12rem;
 }

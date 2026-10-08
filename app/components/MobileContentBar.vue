@@ -1,22 +1,29 @@
 <template>
     <nav
-        class="w-full rounded-2xl bg-surface font-belanosima text-on-surface shadow-lg lg:hidden"
+        class="content-bar-mobile w-full min-w-0 rounded-2xl bg-secondary font-belanosima text-on-secondary shadow-lg"
         aria-labelledby="mobile-toc-title"
     >
         <AccordionRoot
             v-model="expandedItem"
             type="single"
-            collapsible
+            :collapsible="!isLargeScreen"
             class="w-full"
         >
             <AccordionItem value="toc">
                 <AccordionHeader as="h2">
                     <AccordionTrigger
-                        class="group flex w-full items-center justify-between gap-4 rounded-2xl px-5 py-4 text-left text-xl text-on-surface focus-visible:ring-2 focus-visible:ring-outline focus-visible:outline-none"
+                        :disabled="isLargeScreen"
+                        class="group flex w-full items-center justify-between gap-4 rounded-2xl px-5 py-4 text-left text-xl text-on-secondary focus-visible:ring-2 focus-visible:ring-outline focus-visible:outline-none"
                     >
-                        <span id="mobile-toc-title">On this page</span>
                         <span
-                            class="text-2xl leading-none transition-transform duration-200 group-data-[state=open]:rotate-180"
+                            id="mobile-toc-title"
+                            class="min-w-0 truncate"
+                            title="On this page"
+                            >On this page</span
+                        >
+                        <span
+                            v-if="!isLargeScreen"
+                            class="shrink-0 text-2xl leading-none transition-transform duration-200 group-data-[state=open]:rotate-180"
                             aria-hidden="true"
                         >
                             ^
@@ -34,7 +41,8 @@
                         >
                             <a
                                 :href="`#${link.id}`"
-                                class="block rounded-lg px-2 py-1 text-base text-on-surface hover:bg-secondary hover:text-on-secondary focus-visible:ring-2 focus-visible:ring-outline focus-visible:outline-none"
+                                :title="link.text"
+                                class="block truncate rounded-lg px-2 py-1 text-base text-on-secondary hover:bg-primary/10 focus-visible:ring-2 focus-visible:ring-outline focus-visible:outline-none"
                                 :class="
                                     link.depth === 3 ? 'text-sm' : 'text-lg'
                                 "
@@ -71,7 +79,29 @@ const props = defineProps<{
 }>();
 
 const { scrollToHash } = useHashScroll();
-const expandedItem = ref("toc");
+const isLargeScreen = ref(false);
+const mobileExpandedItem = ref("");
+const expandedItem = computed({
+    get: () => (isLargeScreen.value ? "toc" : mobileExpandedItem.value),
+    set: (value: string | undefined) => {
+        mobileExpandedItem.value = value ?? "";
+    },
+});
+
+let largeScreenQuery: MediaQueryList | undefined;
+function updateScreenSize() {
+    isLargeScreen.value = largeScreenQuery?.matches ?? false;
+}
+
+onMounted(() => {
+    largeScreenQuery = window.matchMedia("(min-width: 64rem)");
+    updateScreenSize();
+    largeScreenQuery.addEventListener("change", updateScreenSize);
+});
+
+onBeforeUnmount(() => {
+    largeScreenQuery?.removeEventListener("change", updateScreenSize);
+});
 
 const flatToc = computed(() =>
     props.toc.flatMap((link) => [

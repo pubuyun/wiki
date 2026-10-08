@@ -1,9 +1,13 @@
 <template>
     <nav
-        class="sticky top-20 mb-6 w-64 min-w-64 flex-1 flex-col self-start font-belanosima text-base text-on-surface xl:w-80 xl:min-w-80"
+        class="content-bar-desktop sticky top-20 mb-6 w-full min-w-0 flex-none flex-col self-start font-belanosima text-base text-on-surface"
         aria-labelledby="toc-title"
     >
-        <h2 id="toc-title" class="mb-4 font-momo-trust-display text-base">
+        <h2
+            id="toc-title"
+            class="mb-4 truncate font-momo-trust-display text-base"
+            title="On this page"
+        >
             On this page
         </h2>
 
@@ -30,6 +34,7 @@
                     <li v-for="link in flatToc" :key="link.id">
                         <a
                             :href="`#${link.id}`"
+                            :title="link.text"
                             :class="linkClass(link)"
                             :aria-current="
                                 activeId === link.id ? 'location' : undefined
