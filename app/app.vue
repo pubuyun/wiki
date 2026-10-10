@@ -48,6 +48,7 @@ const savedDarkMode = useCookie<boolean>(DARK_MODE_COOKIE, {
 });
 const darkMode = useState<boolean>("dark-mode", () => savedDarkMode.value);
 const dyslexiaMode = useState<boolean>("dyslexia-mode", () => false);
+const faviconHref = `${useRuntimeConfig().app.baseURL.replace(/\/?$/, "/")}favicon.ico`;
 
 watch(highContrastMode, (enabled) => {
     savedHighContrastMode.value = enabled;
@@ -70,13 +71,20 @@ const themeClass = computed(() =>
 useHead({
     title: "GreatBay-SCIE - iGEM 2026",
     titleTemplate: "%s | GreatBay-SCIE - iGEM 2026",
-    link: [momoFont, righteousFont, belanosimaFont].map((href) => ({
-        rel: "preload",
-        as: "font",
-        type: "font/woff2",
-        crossorigin: "anonymous",
-        href,
-    })),
+    link: [
+        {
+            rel: "icon",
+            type: "image/x-icon",
+            href: faviconHref,
+        },
+        ...[momoFont, righteousFont, belanosimaFont].map((href) => ({
+            rel: "preload",
+            as: "font",
+            type: "font/woff2",
+            crossorigin: "anonymous",
+            href,
+        })),
+    ],
     bodyAttrs: {
         class: themeClass,
     },
