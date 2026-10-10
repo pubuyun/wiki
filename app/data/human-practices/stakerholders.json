@@ -22,20 +22,20 @@
             "color": "#56b4df",
             "nodeColor": "#dff3ee",
             "position": {
-                "x": 39,
+                "x": 34,
                 "y": 34,
-                "width": 867,
+                "width": 862.5,
                 "height": 480
             },
             "nodes": [
                 {
                     "id": "surgery",
-                    "name": "Potential customer who had surgery",
+                    "name": "PCs who had surgery",
                     "position": {
-                        "x": 203,
-                        "y": 231,
-                        "width": 235,
-                        "height": 144
+                        "x": 220,
+                        "y": 225,
+                        "width": 240,
+                        "height": 120
                     },
                     "incoming": [
                         {
@@ -57,20 +57,16 @@
                             "text": "Aims to reduce social pressure, particularly for people experiencing recurrence."
                         }
                     ],
-                    "labelLines": [
-                        "Potential",
-                        "customer who",
-                        "had surgery"
-                    ]
+                    "labelLines": ["PCs who had", "surgery"]
                 },
                 {
                     "id": "deodorants",
-                    "name": "Potential customers who use deodorants",
+                    "name": "PCs who use deodorants",
                     "position": {
-                        "x": 744,
-                        "y": 141,
-                        "width": 247,
-                        "height": 147
+                        "x": 720,
+                        "y": 170,
+                        "width": 245,
+                        "height": 120
                     },
                     "detail": "Anonymous teammate, Mr Chen, Ms Wu and Mr Wu",
                     "incoming": [
@@ -97,20 +93,16 @@
                             "text": "Aims to reduce social pressure caused by axillary odor."
                         }
                     ],
-                    "labelLines": [
-                        "Potential",
-                        "customers who",
-                        "use deodorants"
-                    ]
+                    "labelLines": ["PCs who", "use deodorants"]
                 },
                 {
                     "id": "gym",
                     "name": "Gym owner",
                     "position": {
-                        "x": 261,
-                        "y": 427,
-                        "width": 235,
-                        "height": 82
+                        "x": 260,
+                        "y": 415,
+                        "width": 220,
+                        "height": 80
                     },
                     "incoming": [
                         {
@@ -132,18 +124,16 @@
                             "text": "May encourage more people to use gyms as they become less self-conscious."
                         }
                     ],
-                    "labelLines": [
-                        "Gym owner"
-                    ]
+                    "labelLines": ["Gym owner"]
                 },
                 {
                     "id": "hotel",
                     "name": "Hotel owner",
                     "position": {
-                        "x": 548,
-                        "y": 299,
-                        "width": 235,
-                        "height": 82
+                        "x": 575,
+                        "y": 330,
+                        "width": 220,
+                        "height": 80
                     },
                     "incoming": [
                         {
@@ -165,9 +155,7 @@
                             "text": "May encourage people bothered by axillary odor to use hotel facilities."
                         }
                     ],
-                    "labelLines": [
-                        "Hotel owner"
-                    ]
+                    "labelLines": ["Hotel owner"]
                 }
             ],
             "titleColor": "#ffffff"
@@ -178,20 +166,20 @@
             "color": "#ffe071",
             "nodeColor": "#dff3ee",
             "position": {
-                "x": 929,
+                "x": 930.5,
                 "y": 34,
-                "width": 867,
-                "height": 484
+                "width": 862.5,
+                "height": 480
             },
             "nodes": [
                 {
                     "id": "tcm",
                     "name": "TCM specialist",
                     "position": {
-                        "x": 1121,
-                        "y": 78,
-                        "width": 237,
-                        "height": 64
+                        "x": 1115,
+                        "y": 95,
+                        "width": 230,
+                        "height": 68
                     },
                     "incoming": [
                         {
@@ -213,19 +201,18 @@
                             "text": "Offers a potential alternative to use alongside TCM."
                         }
                     ],
-                    "labelLines": [
-                        "TCM specialist"
-                    ]
+                    "labelLines": ["TCM specialist"]
                 },
                 {
                     "id": "xia",
-                    "name": "Dermatologist (Mr Xia)",
+                    "name": "Dermatologist",
                     "position": {
-                        "x": 1052,
-                        "y": 177,
-                        "width": 213,
-                        "height": 106
+                        "x": 1060,
+                        "y": 215,
+                        "width": 240,
+                        "height": 88
                     },
+                    "detail": "Mr Xia",
                     "incoming": [
                         {
                             "title": "Experiential",
@@ -246,62 +233,16 @@
                             "text": "May inspire synthetic-biology-based dermatological solutions."
                         }
                     ],
-                    "labelLines": [
-                        "Dermatologist",
-                        "(Mr Xia)"
-                    ]
-                },
-                {
-                    "id": "zhou-hu",
-                    "name": "Dermatologists (Mr Zhou and Mr Hu)",
-                    "position": {
-                        "x": 1094,
-                        "y": 308,
-                        "width": 227,
-                        "height": 124
-                    },
-                    "incoming": [
-                        {
-                            "title": "Experiential",
-                            "text": "Shared clinical observations of effects on mental wellbeing."
-                        },
-                        {
-                            "title": "Technical",
-                            "text": "Explained how dermatologists notice early emotional distress."
-                        },
-                        {
-                            "title": "Ethical",
-                            "text": "Emphasized reassuring patients that axillary odor is not a disease."
-                        }
-                    ],
-                    "outgoing": [
-                        {
-                            "title": "Treatment",
-                            "text": "Supports a product that avoids portraying axillary odor as abnormal."
-                        },
-                        {
-                            "title": "Technical",
-                            "text": "Supports evaluation of whether patients need psychiatric support."
-                        },
-                        {
-                            "title": "Psychosocial",
-                            "text": "Promotes understanding that axillary odor is not a disease or a source of shame."
-                        }
-                    ],
-                    "labelLines": [
-                        "Dermatologists",
-                        "(Mr Zhou and",
-                        "Mr Hu)"
-                    ]
+                    "labelLines": ["Dermatologist"]
                 },
                 {
                     "id": "skincare",
                     "name": "Skincare product expert",
                     "position": {
-                        "x": 1297,
+                        "x": 1365,
                         "y": 165,
-                        "width": 237,
-                        "height": 96
+                        "width": 260,
+                        "height": 92
                     },
                     "incoming": [
                         {
@@ -314,19 +255,16 @@
                         }
                     ],
                     "outgoing": [],
-                    "labelLines": [
-                        "Skincare product",
-                        "expert"
-                    ]
+                    "labelLines": ["Skincare product", "expert"]
                 },
                 {
                     "id": "modelling",
                     "name": "Modelling expert",
                     "position": {
-                        "x": 1356,
-                        "y": 298,
-                        "width": 245,
-                        "height": 64
+                        "x": 1370,
+                        "y": 290,
+                        "width": 260,
+                        "height": 72
                     },
                     "incoming": [
                         {
@@ -340,43 +278,16 @@
                             "text": "Provides an opportunity to validate the proposed workflow."
                         }
                     ],
-                    "labelLines": [
-                        "Modelling expert"
-                    ]
-                },
-                {
-                    "id": "gb25",
-                    "name": "GB25",
-                    "position": {
-                        "x": 1021,
-                        "y": 433,
-                        "width": 130,
-                        "height": 66
-                    },
-                    "incoming": [
-                        {
-                            "title": "Technical",
-                            "text": "Inspired the engineered enzyme workflow."
-                        }
-                    ],
-                    "outgoing": [
-                        {
-                            "title": "Technical",
-                            "text": "Provides a potential case study for their workflow."
-                        }
-                    ],
-                    "labelLines": [
-                        "GB25"
-                    ]
+                    "labelLines": ["Modelling expert"]
                 },
                 {
                     "id": "biomaterials",
-                    "name": "Professor of Biomaterials and Biomimetics",
+                    "name": "Professor of Biomaterials & Biomimetics",
                     "position": {
-                        "x": 1219,
-                        "y": 447,
-                        "width": 228,
-                        "height": 124
+                        "x": 1215,
+                        "y": 420,
+                        "width": 260,
+                        "height": 116
                     },
                     "incoming": [
                         {
@@ -387,7 +298,7 @@
                     "outgoing": [],
                     "labelLines": [
                         "Professor of",
-                        "Biomaterials and",
+                        "Biomaterials &",
                         "Biomimetics"
                     ]
                 },
@@ -395,10 +306,10 @@
                     "id": "immunologist",
                     "name": "Immunologist",
                     "position": {
-                        "x": 1586,
-                        "y": 214,
-                        "width": 242,
-                        "height": 57
+                        "x": 1630,
+                        "y": 210,
+                        "width": 250,
+                        "height": 72
                     },
                     "incoming": [
                         {
@@ -416,18 +327,16 @@
                             "text": "The online platform could support future iGEM teams and potentially immunologists evaluating immunogenicity risks."
                         }
                     ],
-                    "labelLines": [
-                        "Immunologist"
-                    ]
+                    "labelLines": ["Immunologist"]
                 },
                 {
                     "id": "surgeon",
                     "name": "Axillary surgeon",
                     "position": {
-                        "x": 1642,
-                        "y": 338,
-                        "width": 237,
-                        "height": 65
+                        "x": 1635,
+                        "y": 330,
+                        "width": 250,
+                        "height": 72
                     },
                     "incoming": [
                         {
@@ -453,18 +362,16 @@
                             "text": "Offers insight into mechanism-based approaches instead of gland removal."
                         }
                     ],
-                    "labelLines": [
-                        "Axillary surgeon"
-                    ]
+                    "labelLines": ["Axillary surgeon"]
                 },
                 {
                     "id": "formulation",
                     "name": "Cosmetic formulation expert",
                     "position": {
-                        "x": 1484,
-                        "y": 438,
-                        "width": 222,
-                        "height": 120
+                        "x": 1515,
+                        "y": 430,
+                        "width": 250,
+                        "height": 112
                     },
                     "incoming": [
                         {
@@ -477,11 +384,7 @@
                         }
                     ],
                     "outgoing": [],
-                    "labelLines": [
-                        "Cosmetic",
-                        "formulation",
-                        "expert"
-                    ]
+                    "labelLines": ["Cosmetic", "formulation", "expert"]
                 }
             ],
             "titleColor": "#08346a"
@@ -493,34 +396,32 @@
             "nodeColor": "#ffebac",
             "position": {
                 "x": 34,
-                "y": 546,
-                "width": 867,
-                "height": 479
+                "y": 548,
+                "width": 862.5,
+                "height": 480
             },
             "nodes": [
                 {
                     "id": "ai4s",
-                    "name": "AI4S",
+                    "name": "AI4S expert",
                     "position": {
-                        "x": 157,
-                        "y": 673,
+                        "x": 160,
+                        "y": 680,
                         "width": 190,
-                        "height": 95
+                        "height": 76
                     },
                     "incoming": [],
                     "outgoing": [],
-                    "labelLines": [
-                        "AI4S"
-                    ]
+                    "labelLines": ["AI4S expert"]
                 },
                 {
                     "id": "psychiatrist",
                     "name": "Psychiatrist",
                     "position": {
-                        "x": 406,
-                        "y": 715,
+                        "x": 430,
+                        "y": 700,
                         "width": 190,
-                        "height": 94
+                        "height": 76
                     },
                     "incoming": [
                         {
@@ -550,33 +451,16 @@
                             "text": "Provides resources to help dermatologists recognize psychological distress early."
                         }
                     ],
-                    "labelLines": [
-                        "Psychiatrist"
-                    ]
-                },
-                {
-                    "id": "ms-lin",
-                    "name": "Ms Lin",
-                    "position": {
-                        "x": 279,
-                        "y": 819,
-                        "width": 190,
-                        "height": 68
-                    },
-                    "incoming": [],
-                    "outgoing": [],
-                    "labelLines": [
-                        "Ms Lin"
-                    ]
+                    "labelLines": ["Psychiatrist"]
                 },
                 {
                     "id": "counsellor",
                     "name": "Community psychological counsellor",
                     "position": {
-                        "x": 502,
-                        "y": 883,
-                        "width": 205,
-                        "height": 161
+                        "x": 230,
+                        "y": 880,
+                        "width": 220,
+                        "height": 122
                     },
                     "incoming": [
                         {
@@ -606,20 +490,16 @@
                             "text": "Provides a handbook with accessible information."
                         }
                     ],
-                    "labelLines": [
-                        "Community",
-                        "psychological",
-                        "counsellor"
-                    ]
+                    "labelLines": ["Community", "psychological", "counsellor"]
                 },
                 {
                     "id": "school-counsellor",
                     "name": "School wellbeing counsellor",
                     "position": {
-                        "x": 800,
-                        "y": 800,
-                        "width": 185,
-                        "height": 128
+                        "x": 505,
+                        "y": 855,
+                        "width": 210,
+                        "height": 112
                     },
                     "incoming": [
                         {
@@ -645,20 +525,16 @@
                             "text": "Provides a handbook with accessible information on axillary odor."
                         }
                     ],
-                    "labelLines": [
-                        "School",
-                        "wellbeing",
-                        "counsellor"
-                    ]
+                    "labelLines": ["School", "wellbeing", "counsellor"]
                 },
                 {
                     "id": "teachers",
-                    "name": "School teachers",
+                    "name": "International PCs",
                     "position": {
-                        "x": 735,
-                        "y": 938,
-                        "width": 190,
-                        "height": 95
+                        "x": 755,
+                        "y": 930,
+                        "width": 210,
+                        "height": 82
                     },
                     "detail": "Mr Islam, Ms Okungbowa and Mr Wood",
                     "incoming": [
@@ -685,19 +561,16 @@
                             "text": "Encourages stigma-conscious marketing to reduce prejudice."
                         }
                     ],
-                    "labelLines": [
-                        "School",
-                        "teachers"
-                    ]
+                    "labelLines": ["International", "PCs"]
                 },
                 {
                     "id": "anthropologist",
                     "name": "Anthropologist",
                     "position": {
-                        "x": 761,
-                        "y": 676,
-                        "width": 232,
-                        "height": 84
+                        "x": 735,
+                        "y": 680,
+                        "width": 220,
+                        "height": 76
                     },
                     "incoming": [
                         {
@@ -719,38 +592,7 @@
                             "text": "Promotes body-odor acceptance through educational social media posts."
                         }
                     ],
-                    "labelLines": [
-                        "Anthropologist"
-                    ]
-                },
-                {
-                    "id": "sociologist",
-                    "name": "Sociologist",
-                    "position": {
-                        "x": 229,
-                        "y": 939,
-                        "width": 190,
-                        "height": 67
-                    },
-                    "incoming": [
-                        {
-                            "title": "Ethical",
-                            "text": "Emphasized reducing stigma."
-                        },
-                        {
-                            "title": "Applicational",
-                            "text": "Suggested including older generations in outreach."
-                        }
-                    ],
-                    "outgoing": [
-                        {
-                            "title": "Psychosocial",
-                            "text": "Extended educational materials and outreach beyond adolescents to wider communities."
-                        }
-                    ],
-                    "labelLines": [
-                        "Sociologist"
-                    ]
+                    "labelLines": ["Anthropologist"]
                 }
             ],
             "titleColor": "#08346a"
@@ -761,20 +603,20 @@
             "color": "#377cd0",
             "nodeColor": "#91d7ff",
             "position": {
-                "x": 942,
-                "y": 546,
-                "width": 854,
-                "height": 479
+                "x": 930.5,
+                "y": 548,
+                "width": 862.5,
+                "height": 480
             },
             "nodes": [
                 {
                     "id": "kleank",
                     "name": "KleanK",
                     "position": {
-                        "x": 1628,
-                        "y": 720,
-                        "width": 190,
-                        "height": 70
+                        "x": 1570,
+                        "y": 750,
+                        "width": 200,
+                        "height": 76
                     },
                     "incoming": [
                         {
@@ -808,19 +650,18 @@
                             "text": "Offers a potential safe, mechanism-based approach."
                         }
                     ],
-                    "labelLines": [
-                        "KleanK"
-                    ]
+                    "labelLines": ["KleanK"]
                 },
                 {
                     "id": "link-spider",
-                    "name": "CTO of Link Spider",
+                    "name": "Patent expert",
                     "position": {
-                        "x": 1643,
-                        "y": 893,
-                        "width": 190,
-                        "height": 90
+                        "x": 1360,
+                        "y": 920,
+                        "width": 210,
+                        "height": 82
                     },
+                    "detail": "CTO of Link Spider",
                     "incoming": [
                         {
                             "title": "Technical",
@@ -841,19 +682,16 @@
                             "text": "Provides a case study of protecting AI-designed proteins."
                         }
                     ],
-                    "labelLines": [
-                        "CTO of Link",
-                        "Spider"
-                    ]
+                    "labelLines": ["Patent expert"]
                 },
                 {
                     "id": "deonatulle",
                     "name": "Deonatulle",
                     "position": {
-                        "x": 1101,
-                        "y": 948,
-                        "width": 190,
-                        "height": 80
+                        "x": 1120,
+                        "y": 760,
+                        "width": 200,
+                        "height": 76
                     },
                     "incoming": [
                         {
@@ -879,42 +717,7 @@
                             "text": "Presents a synthetic-biology approach that could inspire future products."
                         }
                     ],
-                    "labelLines": [
-                        "Deonatulle"
-                    ]
-                },
-                {
-                    "id": "unilever",
-                    "name": "Unilever",
-                    "position": {
-                        "x": 1196,
-                        "y": 793,
-                        "width": 190,
-                        "height": 80
-                    },
-                    "incoming": [
-                        {
-                            "title": "Ethical",
-                            "text": "Brought inclusive packaging to our attention."
-                        },
-                        {
-                            "title": "Applicational",
-                            "text": "Demonstrated a successful inclusive product."
-                        }
-                    ],
-                    "outgoing": [
-                        {
-                            "title": "Treatment",
-                            "text": "Aims to offer accessible, inclusive deodorant."
-                        },
-                        {
-                            "title": "Psychosocial",
-                            "text": "Encourages education reaching older adults and people with disabilities."
-                        }
-                    ],
-                    "labelLines": [
-                        "Unilever"
-                    ]
+                    "labelLines": ["Deonatulle"]
                 }
             ],
             "titleColor": "#ffffff"

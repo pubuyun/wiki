@@ -19,6 +19,8 @@ const nodes = data.groups.flatMap((group) =>
     group.nodes.map((node) => ({
         ...node,
         edgeColor: group.nodeColor,
+        groupId: group.id,
+        groupBox: group.position,
     })),
 );
 const graphElement = ref<HTMLElement | null>(null);
@@ -82,16 +84,43 @@ function inside(point: Point, box: Box, radius: number) {
     return dx * dx + dy * dy <= radius * radius;
 }
 const round = (value: number) => Number(value.toFixed(3));
+const controlRatios: Partial<Record<string, Point>> = {
+    tcm: { x: 0.6, y: 0.3 },
+    xia: { x: 0.4, y: 0.3 },
+    counsellor: { x: 0.5, y: 0.4 },
+};
 const edges = nodes.map((node) => {
     const a = node.position,
-        b = data.center;
-    const c =
-        a.y > b.y
-            ? { x: b.x + (a.x - b.x) * 0.12, y: a.y + (b.y - a.y) * 0.12 }
-            : { x: a.x + (b.x - a.x) * 0.22, y: b.y + (a.y - b.y) * 0.12 };
+        center = data.center,
+        group = node.groupBox,
+        isTopGroup = group.y < center.y;
+    const siblings = nodes
+        .filter((candidate) => candidate.groupId === node.groupId)
+        .sort((left, right) => left.position.x - right.position.x);
+    const rank = siblings.findIndex((candidate) => candidate.id === node.id);
+    const inset = 8;
+    const portMin = Math.max(group.x, center.x - center.width / 2) + inset;
+    const portMax =
+        Math.min(group.x + group.width, center.x + center.width / 2) - inset;
+    const progress = siblings.length > 1 ? rank / (siblings.length - 1) : 0.5;
+    const b = {
+        x: portMin + (portMax - portMin) * progress,
+        y: isTopGroup
+            ? Math.min(
+                  group.y + group.height - inset,
+                  center.y - center.height / 2 + 24,
+              )
+            : Math.max(group.y + inset, center.y + center.height / 2 - 24),
+    };
+    const ratio = controlRatios[node.id] ?? { x: 0.5, y: 0.3 };
+    // Ordered ports and a control point inside the group keep the arcs shallow.
+    const c = {
+        x: b.x + (a.x - b.x) * ratio.x,
+        y: b.y + (a.y - b.y) * ratio.y,
+    };
     const at = (t: number): Point => ({
-        x: (1 - t) ** 2 * a.x + 2 * (1 - t) * t * c.x + t * t * b.x,
-        y: (1 - t) ** 2 * a.y + 2 * (1 - t) * t * c.y + t * t * b.y,
+        x: (1 - t) ** 2 * b.x + 2 * (1 - t) * t * c.x + t * t * a.x,
+        y: (1 - t) ** 2 * b.y + 2 * (1 - t) * t * c.y + t * t * a.y,
     });
     // Locate both intersections with the actual rounded tag/card boundaries.
     function boundary(box: Box, radius: number, fromStart: boolean) {
@@ -104,22 +133,38 @@ const edges = nodes.map((node) => {
         }
         return (low + high) / 2;
     }
-    const t0 = boundary(a, Math.min(48, a.height / 2), true);
-    const t1 = boundary(b, 30, false);
+    const t0 = boundary(center, 1827 * 0.0165, true);
+    const t1 = boundary(a, Math.min(1827 * 0.0265, a.height / 2), false);
     const first = at(t0),
         last = at(t1);
     const control = {
-        x: first.x + (t1 - t0) * ((1 - t0) * (c.x - a.x) + t0 * (b.x - c.x)),
-        y: first.y + (t1 - t0) * ((1 - t0) * (c.y - a.y) + t0 * (b.y - c.y)),
+        x: first.x + (t1 - t0) * ((1 - t0) * (c.x - b.x) + t0 * (a.x - c.x)),
+        y: first.y + (t1 - t0) * ((1 - t0) * (c.y - b.y) + t0 * (a.y - c.y)),
     };
     const point = (p: Point) => round(p.x) + " " + round(p.y);
+    // Draw arrowheads directly at the same endpoints as the curve. Animating
+    // ordinary paths avoids browser inconsistencies with animated SVG markers.
+    function arrow(tip: Point, from: Point) {
+        const length = Math.hypot(tip.x - from.x, tip.y - from.y);
+        const dx = (tip.x - from.x) / length;
+        const dy = (tip.y - from.y) / length;
+        const wing = (side: number) => ({
+            x: tip.x - 10 * dx - side * 5 * dy,
+            y: tip.y - 10 * dy + side * 5 * dx,
+        });
+        return (
+            "M " + point(wing(-1)) + " L " + point(tip) + " L " + point(wing(1))
+        );
+    }
     return {
         id: node.id,
         color: node.edgeColor,
         incoming:
-            "M " + point(first) + " Q " + point(control) + " " + point(last),
-        outgoing:
             "M " + point(last) + " Q " + point(control) + " " + point(first),
+        outgoing:
+            "M " + point(first) + " Q " + point(control) + " " + point(last),
+        incomingHead: arrow(first, control),
+        outgoingHead: arrow(last, control),
     };
 });
 </script>
@@ -134,36 +179,11 @@ const edges = nodes.map((node) => {
         <div class="stakeholders-panel">
             <div class="stakeholders-map">
                 <svg
-                    :key="mode"
                     class="graph-edges"
-                    :class="{ 'graph-edges--drawing': turns > 0 }"
+                    :class="turns > 0 ? `graph-edges--draw-${mode}` : undefined"
                     viewBox="0 0 1827 1030"
                     aria-hidden="true"
                 >
-                    <defs>
-                        <marker
-                            v-for="edge in edges"
-                            :key="edge.id"
-                            :id="uid + '-arrow-' + edge.id"
-                            viewBox="0 0 12 12"
-                            refX="11"
-                            refY="6"
-                            markerWidth="12"
-                            markerHeight="12"
-                            markerUnits="userSpaceOnUse"
-                            orient="auto"
-                        >
-                            <path
-                                class="edge-head"
-                                d="M 1 1 L 11 6 L 1 11"
-                                fill="none"
-                                :stroke="edge.color"
-                                stroke-width="3"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                            />
-                        </marker>
-                    </defs>
                     <g>
                         <path
                             v-for="edge in edges"
@@ -174,9 +194,21 @@ const edges = nodes.map((node) => {
                             fill="none"
                             :stroke="edge.color"
                             stroke-width="4"
-                            :marker-end="
-                                'url(#' + uid + '-arrow-' + edge.id + ')'
+                        />
+                        <path
+                            v-for="edge in edges"
+                            :key="`head-${edge.id}`"
+                            :d="
+                                mode === 'incoming'
+                                    ? edge.incomingHead
+                                    : edge.outgoingHead
                             "
+                            class="edge-head"
+                            fill="none"
+                            :stroke="edge.color"
+                            stroke-width="3"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
                         />
                     </g>
                 </svg>
@@ -416,24 +448,64 @@ const edges = nodes.map((node) => {
     overflow: visible;
     pointer-events: none;
 }
-.graph-edges--drawing .edge-line {
+.edge-line {
     stroke-dasharray: 1;
-    animation: stakeholder-line-draw .62s cubic-bezier(.455,.03,.515,.955) both;
+    stroke-dashoffset: 0;
 }
-.graph-edges--drawing .edge-head {
-    animation: stakeholder-head-reveal .16s ease-out .5s both;
+.edge-head {
+    opacity: 1;
 }
-@keyframes stakeholder-line-draw {
-    from { stroke-dashoffset: 1; }
-    to { stroke-dashoffset: 0; }
+.graph-edges--draw-incoming .edge-line {
+    animation: stakeholder-line-incoming 0.62s
+        cubic-bezier(0.455, 0.03, 0.515, 0.955) backwards;
 }
-@keyframes stakeholder-head-reveal {
-    from { opacity: 0; }
-    to { opacity: 1; }
+.graph-edges--draw-outgoing .edge-line {
+    animation: stakeholder-line-outgoing 0.62s
+        cubic-bezier(0.455, 0.03, 0.515, 0.955) backwards;
+}
+.graph-edges--draw-incoming .edge-head {
+    animation: stakeholder-head-incoming 0.12s ease-out 0.62s backwards;
+}
+.graph-edges--draw-outgoing .edge-head {
+    animation: stakeholder-head-outgoing 0.12s ease-out 0.62s backwards;
+}
+@keyframes stakeholder-line-incoming {
+    from {
+        stroke-dashoffset: 1;
+    }
+    to {
+        stroke-dashoffset: 0;
+    }
+}
+@keyframes stakeholder-line-outgoing {
+    from {
+        stroke-dashoffset: 1;
+    }
+    to {
+        stroke-dashoffset: 0;
+    }
+}
+@keyframes stakeholder-head-incoming {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+@keyframes stakeholder-head-outgoing {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }
 @media (prefers-reduced-motion: reduce) {
-    .graph-edges--drawing .edge-line,
-    .graph-edges--drawing .edge-head { animation: none; }
+    .edge-line,
+    .edge-head {
+        animation: none;
+    }
 }
 .graph-center {
     position: absolute;
@@ -453,7 +525,7 @@ const edges = nodes.map((node) => {
     background: var(--node-color);
     border: 2px solid transparent;
     border-radius: 2.65cqi;
-    padding: 0.2em;
+    padding: 0.25em 0.55em;
     font-size: 1.4cqi;
     font-weight: 650;
     line-height: 1.25;
@@ -462,8 +534,15 @@ const edges = nodes.map((node) => {
         box-shadow 0.2s,
         background 0.2s;
 }
+.stakeholder-node > span {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    text-align: center;
+}
 .node-label-line {
     display: block;
+    max-width: 100%;
     white-space: nowrap;
 }
 .stakeholder-node:hover,
@@ -482,8 +561,8 @@ const edges = nodes.map((node) => {
     align-items: center;
     justify-content: center;
     gap: 2cqi;
-    height: 11cqi;
-    padding: 2.8cqi 18% 2.2cqi;
+    height: 12.8cqi;
+    padding: 2.2cqi 18% 3.51cqi;
 }
 .switch-button {
     flex: 0 0 5cqi;
