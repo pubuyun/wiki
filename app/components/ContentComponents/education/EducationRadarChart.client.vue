@@ -535,11 +535,7 @@ onBeforeUnmount(() => {
                     :class="{ 'radar-legend--reference': comparison }"
                     aria-hidden="true"
                 ></span
-                >{{
-                    comparison
-                        ? "Fixed reference points"
-                        : "Fixed characteristics"
-                }}</span
+                >Fixed characteristics</span
             >
             <template v-if="comparison">
                 <span class="radar-legend-item"
@@ -562,7 +558,7 @@ onBeforeUnmount(() => {
                     class="radar-legend radar-legend--before"
                     aria-hidden="true"
                 ></span
-                >Developable dimensions</span
+                >Developable characteristics</span
             >
         </div>
     </div>

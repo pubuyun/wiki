@@ -4,6 +4,7 @@ definePageMeta({
 });
 
 import { Icon } from "@iconify/vue";
+import StakeholdersGraph from "~/components/ContentComponents/human-practices/StakeholdersGraph.vue";
 import { contentTocLinks } from "~/utils/content-toc";
 
 const route = useRoute();
@@ -86,8 +87,9 @@ function isReferenceTitle(title: string) {
         v-if="displayPage"
         class="content-reading-container flex min-w-0 flex-1 flex-col px-4 pt-4 sm:px-6 lg:px-8 xl:px-12"
     >
+        <StakeholdersGraph v-if="slug === 'human-practices'" class="mb-8" />
         <ContentGraph
-            v-if="graphView"
+            v-else-if="graphView"
             :view="graphView"
             :full-height="graphView === 'model/index'"
             class="mb-8"

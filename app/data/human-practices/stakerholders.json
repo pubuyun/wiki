@@ -1,0 +1,923 @@
+{
+    "title": "Stakeholder Analysis",
+    "center": {
+        "name": "Expelliodor",
+        "x": 912,
+        "y": 533,
+        "width": 365,
+        "height": 98
+    },
+    "modes": {
+        "incoming": {
+            "label": "How the world affects our work?"
+        },
+        "outgoing": {
+            "label": "How our work affects the world?"
+        }
+    },
+    "groups": [
+        {
+            "id": "customers",
+            "name": "Potential Customers",
+            "color": "#56b4df",
+            "nodeColor": "#dff3ee",
+            "position": {
+                "x": 39,
+                "y": 34,
+                "width": 867,
+                "height": 480
+            },
+            "nodes": [
+                {
+                    "id": "surgery",
+                    "name": "Potential customer who had surgery",
+                    "position": {
+                        "x": 203,
+                        "y": 231,
+                        "width": 235,
+                        "height": 144
+                    },
+                    "incoming": [
+                        {
+                            "title": "Experiential",
+                            "text": "Shared personal experience with axillary odor surgery."
+                        },
+                        {
+                            "title": "Applicational",
+                            "text": "Identified people experiencing recurrence after surgery as target customers."
+                        }
+                    ],
+                    "outgoing": [
+                        {
+                            "title": "Treatment",
+                            "text": "Aims to address remaining odor after surgery without further skin harm."
+                        },
+                        {
+                            "title": "Psychosocial",
+                            "text": "Aims to reduce social pressure, particularly for people experiencing recurrence."
+                        }
+                    ],
+                    "labelLines": [
+                        "Potential",
+                        "customer who",
+                        "had surgery"
+                    ]
+                },
+                {
+                    "id": "deodorants",
+                    "name": "Potential customers who use deodorants",
+                    "position": {
+                        "x": 744,
+                        "y": 141,
+                        "width": 247,
+                        "height": 147
+                    },
+                    "detail": "Anonymous teammate, Mr Chen, Ms Wu and Mr Wu",
+                    "incoming": [
+                        {
+                            "title": "Experiential",
+                            "text": "Shared dissatisfaction with current products, unmet needs, and psychological effects."
+                        },
+                        {
+                            "title": "Ethical",
+                            "text": "Highlighted effects on wellbeing."
+                        },
+                        {
+                            "title": "Applicational",
+                            "text": "Discussed costs and identified adolescents as primary target customers."
+                        }
+                    ],
+                    "outgoing": [
+                        {
+                            "title": "Treatment",
+                            "text": "Offers a solution balancing key user needs."
+                        },
+                        {
+                            "title": "Psychosocial",
+                            "text": "Aims to reduce social pressure caused by axillary odor."
+                        }
+                    ],
+                    "labelLines": [
+                        "Potential",
+                        "customers who",
+                        "use deodorants"
+                    ]
+                },
+                {
+                    "id": "gym",
+                    "name": "Gym owner",
+                    "position": {
+                        "x": 261,
+                        "y": 427,
+                        "width": 235,
+                        "height": 82
+                    },
+                    "incoming": [
+                        {
+                            "title": "Experiential",
+                            "text": "Shared gym users’ experiences with body odor."
+                        },
+                        {
+                            "title": "Applicational",
+                            "text": "Highlighted convenience and cost."
+                        }
+                    ],
+                    "outgoing": [
+                        {
+                            "title": "Treatment",
+                            "text": "Aims to offer a cheaper, more effective solution in gyms."
+                        },
+                        {
+                            "title": "Social",
+                            "text": "May encourage more people to use gyms as they become less self-conscious."
+                        }
+                    ],
+                    "labelLines": [
+                        "Gym owner"
+                    ]
+                },
+                {
+                    "id": "hotel",
+                    "name": "Hotel owner",
+                    "position": {
+                        "x": 548,
+                        "y": 299,
+                        "width": 235,
+                        "height": 82
+                    },
+                    "incoming": [
+                        {
+                            "title": "Experiential",
+                            "text": "Shared hotel guests’ deodorant usage habits."
+                        },
+                        {
+                            "title": "Applicational",
+                            "text": "Suggested traits of a desired product."
+                        }
+                    ],
+                    "outgoing": [
+                        {
+                            "title": "Treatment",
+                            "text": "Aims to offer an economical, efficient solution in guest rooms, laundry rooms, and gyms."
+                        },
+                        {
+                            "title": "Social",
+                            "text": "May encourage people bothered by axillary odor to use hotel facilities."
+                        }
+                    ],
+                    "labelLines": [
+                        "Hotel owner"
+                    ]
+                }
+            ],
+            "titleColor": "#ffffff"
+        },
+        {
+            "id": "experts",
+            "name": "Specialist Experts",
+            "color": "#ffe071",
+            "nodeColor": "#dff3ee",
+            "position": {
+                "x": 929,
+                "y": 34,
+                "width": 867,
+                "height": 484
+            },
+            "nodes": [
+                {
+                    "id": "tcm",
+                    "name": "TCM specialist",
+                    "position": {
+                        "x": 1121,
+                        "y": 78,
+                        "width": 237,
+                        "height": 64
+                    },
+                    "incoming": [
+                        {
+                            "title": "Experiential",
+                            "text": "Shared extensive treatment experience."
+                        },
+                        {
+                            "title": "Technical",
+                            "text": "Explained existing TCM treatments."
+                        },
+                        {
+                            "title": "Applicational",
+                            "text": "Provided insight into practical treatment options."
+                        }
+                    ],
+                    "outgoing": [
+                        {
+                            "title": "Treatment",
+                            "text": "Offers a potential alternative to use alongside TCM."
+                        }
+                    ],
+                    "labelLines": [
+                        "TCM specialist"
+                    ]
+                },
+                {
+                    "id": "xia",
+                    "name": "Dermatologist (Mr Xia)",
+                    "position": {
+                        "x": 1052,
+                        "y": 177,
+                        "width": 213,
+                        "height": 106
+                    },
+                    "incoming": [
+                        {
+                            "title": "Experiential",
+                            "text": "Shared patients’ experiences of conventional solutions."
+                        },
+                        {
+                            "title": "Technical",
+                            "text": "Provided medical and skin expertise, a critical research paper, and direction toward TCM and surgery."
+                        }
+                    ],
+                    "outgoing": [
+                        {
+                            "title": "Treatment",
+                            "text": "Offers a potential new treatment option."
+                        },
+                        {
+                            "title": "Technical",
+                            "text": "May inspire synthetic-biology-based dermatological solutions."
+                        }
+                    ],
+                    "labelLines": [
+                        "Dermatologist",
+                        "(Mr Xia)"
+                    ]
+                },
+                {
+                    "id": "zhou-hu",
+                    "name": "Dermatologists (Mr Zhou and Mr Hu)",
+                    "position": {
+                        "x": 1094,
+                        "y": 308,
+                        "width": 227,
+                        "height": 124
+                    },
+                    "incoming": [
+                        {
+                            "title": "Experiential",
+                            "text": "Shared clinical observations of effects on mental wellbeing."
+                        },
+                        {
+                            "title": "Technical",
+                            "text": "Explained how dermatologists notice early emotional distress."
+                        },
+                        {
+                            "title": "Ethical",
+                            "text": "Emphasized reassuring patients that axillary odor is not a disease."
+                        }
+                    ],
+                    "outgoing": [
+                        {
+                            "title": "Treatment",
+                            "text": "Supports a product that avoids portraying axillary odor as abnormal."
+                        },
+                        {
+                            "title": "Technical",
+                            "text": "Supports evaluation of whether patients need psychiatric support."
+                        },
+                        {
+                            "title": "Psychosocial",
+                            "text": "Promotes understanding that axillary odor is not a disease or a source of shame."
+                        }
+                    ],
+                    "labelLines": [
+                        "Dermatologists",
+                        "(Mr Zhou and",
+                        "Mr Hu)"
+                    ]
+                },
+                {
+                    "id": "skincare",
+                    "name": "Skincare product expert",
+                    "position": {
+                        "x": 1297,
+                        "y": 165,
+                        "width": 237,
+                        "height": 96
+                    },
+                    "incoming": [
+                        {
+                            "title": "Technical",
+                            "text": "Discussed protein activity in the underarm environment."
+                        },
+                        {
+                            "title": "Applicational",
+                            "text": "Helped eliminate the spray format and prompted research into de novo protein safety."
+                        }
+                    ],
+                    "outgoing": [],
+                    "labelLines": [
+                        "Skincare product",
+                        "expert"
+                    ]
+                },
+                {
+                    "id": "modelling",
+                    "name": "Modelling expert",
+                    "position": {
+                        "x": 1356,
+                        "y": 298,
+                        "width": 245,
+                        "height": 64
+                    },
+                    "incoming": [
+                        {
+                            "title": "Technical",
+                            "text": "Advised on the binder design workflow and enzyme targeting of the precursor."
+                        }
+                    ],
+                    "outgoing": [
+                        {
+                            "title": "Technical",
+                            "text": "Provides an opportunity to validate the proposed workflow."
+                        }
+                    ],
+                    "labelLines": [
+                        "Modelling expert"
+                    ]
+                },
+                {
+                    "id": "gb25",
+                    "name": "GB25",
+                    "position": {
+                        "x": 1021,
+                        "y": 433,
+                        "width": 130,
+                        "height": 66
+                    },
+                    "incoming": [
+                        {
+                            "title": "Technical",
+                            "text": "Inspired the engineered enzyme workflow."
+                        }
+                    ],
+                    "outgoing": [
+                        {
+                            "title": "Technical",
+                            "text": "Provides a potential case study for their workflow."
+                        }
+                    ],
+                    "labelLines": [
+                        "GB25"
+                    ]
+                },
+                {
+                    "id": "biomaterials",
+                    "name": "Professor of Biomaterials and Biomimetics",
+                    "position": {
+                        "x": 1219,
+                        "y": 447,
+                        "width": 228,
+                        "height": 124
+                    },
+                    "incoming": [
+                        {
+                            "title": "Technical",
+                            "text": "Suggested periplasmic expression using the DsbA signal peptide."
+                        }
+                    ],
+                    "outgoing": [],
+                    "labelLines": [
+                        "Professor of",
+                        "Biomaterials and",
+                        "Biomimetics"
+                    ]
+                },
+                {
+                    "id": "immunologist",
+                    "name": "Immunologist",
+                    "position": {
+                        "x": 1586,
+                        "y": 214,
+                        "width": 242,
+                        "height": 57
+                    },
+                    "incoming": [
+                        {
+                            "title": "Technical",
+                            "text": "Explained that de novo proteins were not more likely to cause allergic reactions; suggested in silico screening and wet-lab immunogenicity testing."
+                        },
+                        {
+                            "title": "Applicational",
+                            "text": "Inspired a simplified in silico safety-screening platform."
+                        }
+                    ],
+                    "outgoing": [
+                        {
+                            "title": "Technical",
+                            "text": "The online platform could support future iGEM teams and potentially immunologists evaluating immunogenicity risks."
+                        }
+                    ],
+                    "labelLines": [
+                        "Immunologist"
+                    ]
+                },
+                {
+                    "id": "surgeon",
+                    "name": "Axillary surgeon",
+                    "position": {
+                        "x": 1642,
+                        "y": 338,
+                        "width": 237,
+                        "height": 65
+                    },
+                    "incoming": [
+                        {
+                            "title": "Experiential",
+                            "text": "Shared extensive experience with people affected by axillary odor."
+                        },
+                        {
+                            "title": "Technical",
+                            "text": "Explained surgical treatments and limitations."
+                        },
+                        {
+                            "title": "Applicational",
+                            "text": "Identified people unsuitable for surgery as potential customers."
+                        }
+                    ],
+                    "outgoing": [
+                        {
+                            "title": "Treatment",
+                            "text": "Aims to provide a safe, non-surgical option."
+                        },
+                        {
+                            "title": "Technical",
+                            "text": "Offers insight into mechanism-based approaches instead of gland removal."
+                        }
+                    ],
+                    "labelLines": [
+                        "Axillary surgeon"
+                    ]
+                },
+                {
+                    "id": "formulation",
+                    "name": "Cosmetic formulation expert",
+                    "position": {
+                        "x": 1484,
+                        "y": 438,
+                        "width": 222,
+                        "height": 120
+                    },
+                    "incoming": [
+                        {
+                            "title": "Technical",
+                            "text": "Advised on solubilizer choice and testing PP packaging."
+                        },
+                        {
+                            "title": "Applicational",
+                            "text": "Led us to revise manufacturing steps and eliminate freeze-drying as a product format."
+                        }
+                    ],
+                    "outgoing": [],
+                    "labelLines": [
+                        "Cosmetic",
+                        "formulation",
+                        "expert"
+                    ]
+                }
+            ],
+            "titleColor": "#08346a"
+        },
+        {
+            "id": "community",
+            "name": "Wider Community",
+            "color": "#ffa51d",
+            "nodeColor": "#ffebac",
+            "position": {
+                "x": 34,
+                "y": 546,
+                "width": 867,
+                "height": 479
+            },
+            "nodes": [
+                {
+                    "id": "ai4s",
+                    "name": "AI4S",
+                    "position": {
+                        "x": 157,
+                        "y": 673,
+                        "width": 190,
+                        "height": 95
+                    },
+                    "incoming": [],
+                    "outgoing": [],
+                    "labelLines": [
+                        "AI4S"
+                    ]
+                },
+                {
+                    "id": "psychiatrist",
+                    "name": "Psychiatrist",
+                    "position": {
+                        "x": 406,
+                        "y": 715,
+                        "width": 190,
+                        "height": 94
+                    },
+                    "incoming": [
+                        {
+                            "title": "Experiential",
+                            "text": "Shared clinical observations of effects on mental wellbeing."
+                        },
+                        {
+                            "title": "Ethical",
+                            "text": "Emphasized referral for mental-health support."
+                        },
+                        {
+                            "title": "Applicational",
+                            "text": "Inspired outreach about mental wellbeing to more communities."
+                        }
+                    ],
+                    "outgoing": [
+                        {
+                            "title": "Treatment",
+                            "text": "Supports a product that avoids portraying axillary odor as abnormal."
+                        },
+                        {
+                            "title": "Psychosocial",
+                            "text": "Aims to reduce emotional distress and social anxiety through education."
+                        },
+                        {
+                            "title": "Technical",
+                            "text": "Provides resources to help dermatologists recognize psychological distress early."
+                        }
+                    ],
+                    "labelLines": [
+                        "Psychiatrist"
+                    ]
+                },
+                {
+                    "id": "ms-lin",
+                    "name": "Ms Lin",
+                    "position": {
+                        "x": 279,
+                        "y": 819,
+                        "width": 190,
+                        "height": 68
+                    },
+                    "incoming": [],
+                    "outgoing": [],
+                    "labelLines": [
+                        "Ms Lin"
+                    ]
+                },
+                {
+                    "id": "counsellor",
+                    "name": "Community psychological counsellor",
+                    "position": {
+                        "x": 502,
+                        "y": 883,
+                        "width": 205,
+                        "height": 161
+                    },
+                    "incoming": [
+                        {
+                            "title": "Experiential",
+                            "text": "Shared experiences of bullying due to axillary odor."
+                        },
+                        {
+                            "title": "Ethical",
+                            "text": "Emphasized effects on adolescents’ mental wellbeing."
+                        },
+                        {
+                            "title": "Applicational",
+                            "text": "Suggested turning seminar content into a school handbook."
+                        }
+                    ],
+                    "outgoing": [
+                        {
+                            "title": "Treatment",
+                            "text": "Provides information about treatment options."
+                        },
+                        {
+                            "title": "Psychosocial",
+                            "text": "Raises bullying awareness and encourages supportive communication."
+                        },
+                        {
+                            "title": "Technical",
+                            "text": "Provides a handbook with accessible information."
+                        }
+                    ],
+                    "labelLines": [
+                        "Community",
+                        "psychological",
+                        "counsellor"
+                    ]
+                },
+                {
+                    "id": "school-counsellor",
+                    "name": "School wellbeing counsellor",
+                    "position": {
+                        "x": 800,
+                        "y": 800,
+                        "width": 185,
+                        "height": 128
+                    },
+                    "incoming": [
+                        {
+                            "title": "Experiential",
+                            "text": "Explained how adolescents perceive sensitive conversations."
+                        },
+                        {
+                            "title": "Ethical",
+                            "text": "Highlighted respectful, non-stigmatizing handbook language."
+                        },
+                        {
+                            "title": "Applicational",
+                            "text": "Reviewed suitability for teenagers and identified potential overseas markets."
+                        }
+                    ],
+                    "outgoing": [
+                        {
+                            "title": "Psychosocial",
+                            "text": "Encourages supportive communication."
+                        },
+                        {
+                            "title": "Technical",
+                            "text": "Provides a handbook with accessible information on axillary odor."
+                        }
+                    ],
+                    "labelLines": [
+                        "School",
+                        "wellbeing",
+                        "counsellor"
+                    ]
+                },
+                {
+                    "id": "teachers",
+                    "name": "School teachers",
+                    "position": {
+                        "x": 735,
+                        "y": 938,
+                        "width": 190,
+                        "height": 95
+                    },
+                    "detail": "Mr Islam, Ms Okungbowa and Mr Wood",
+                    "incoming": [
+                        {
+                            "title": "Experiential",
+                            "text": "Shared personal experiences of managing body odor."
+                        },
+                        {
+                            "title": "Ethical",
+                            "text": "Highlighted cultural norms, advertising, prejudice, and sustainability."
+                        },
+                        {
+                            "title": "Applicational",
+                            "text": "Shared cross-cultural deodorant habits."
+                        }
+                    ],
+                    "outgoing": [
+                        {
+                            "title": "Treatment",
+                            "text": "Aims to offer effective, sustainable deodorant for diverse needs."
+                        },
+                        {
+                            "title": "Psychosocial",
+                            "text": "Encourages stigma-conscious marketing to reduce prejudice."
+                        }
+                    ],
+                    "labelLines": [
+                        "School",
+                        "teachers"
+                    ]
+                },
+                {
+                    "id": "anthropologist",
+                    "name": "Anthropologist",
+                    "position": {
+                        "x": 761,
+                        "y": 676,
+                        "width": 232,
+                        "height": 84
+                    },
+                    "incoming": [
+                        {
+                            "title": "Experiential",
+                            "text": "Explained how advertising shapes attitudes toward body odor."
+                        },
+                        {
+                            "title": "Ethical",
+                            "text": "Warned against exploiting odor-related insecurities."
+                        },
+                        {
+                            "title": "Applicational",
+                            "text": "Inspired “Expelliodor — Expell Your Way”."
+                        }
+                    ],
+                    "outgoing": [
+                        {
+                            "title": "Psychosocial",
+                            "text": "Promotes body-odor acceptance through educational social media posts."
+                        }
+                    ],
+                    "labelLines": [
+                        "Anthropologist"
+                    ]
+                },
+                {
+                    "id": "sociologist",
+                    "name": "Sociologist",
+                    "position": {
+                        "x": 229,
+                        "y": 939,
+                        "width": 190,
+                        "height": 67
+                    },
+                    "incoming": [
+                        {
+                            "title": "Ethical",
+                            "text": "Emphasized reducing stigma."
+                        },
+                        {
+                            "title": "Applicational",
+                            "text": "Suggested including older generations in outreach."
+                        }
+                    ],
+                    "outgoing": [
+                        {
+                            "title": "Psychosocial",
+                            "text": "Extended educational materials and outreach beyond adolescents to wider communities."
+                        }
+                    ],
+                    "labelLines": [
+                        "Sociologist"
+                    ]
+                }
+            ],
+            "titleColor": "#08346a"
+        },
+        {
+            "id": "industry",
+            "name": "Industry & Market",
+            "color": "#377cd0",
+            "nodeColor": "#91d7ff",
+            "position": {
+                "x": 942,
+                "y": 546,
+                "width": 854,
+                "height": 479
+            },
+            "nodes": [
+                {
+                    "id": "kleank",
+                    "name": "KleanK",
+                    "position": {
+                        "x": 1628,
+                        "y": 720,
+                        "width": 190,
+                        "height": 70
+                    },
+                    "incoming": [
+                        {
+                            "title": "Experiential",
+                            "text": "Provided surveys on user preferences and deodorant habits."
+                        },
+                        {
+                            "title": "Technical",
+                            "text": "Advised on formulation, safety, and protein stability."
+                        },
+                        {
+                            "title": "Ethical",
+                            "text": "Emphasized consumer privacy, responsible marketing, and supportive packaging messages."
+                        },
+                        {
+                            "title": "Applicational",
+                            "text": "Advised on competition, commercialization, regulations, patents, and sales channels."
+                        }
+                    ],
+                    "outgoing": [
+                        {
+                            "title": "Technical",
+                            "text": "Wet-lab results explore a mechanism-based solution."
+                        },
+                        {
+                            "title": "Psychosocial",
+                            "text": "Encourages stigma-conscious design and marketing."
+                        },
+                        {
+                            "title": "Treatment",
+                            "text": "Offers a potential safe, mechanism-based approach."
+                        }
+                    ],
+                    "labelLines": [
+                        "KleanK"
+                    ]
+                },
+                {
+                    "id": "link-spider",
+                    "name": "CTO of Link Spider",
+                    "position": {
+                        "x": 1643,
+                        "y": 893,
+                        "width": 190,
+                        "height": 90
+                    },
+                    "incoming": [
+                        {
+                            "title": "Technical",
+                            "text": "Introduced patentability, protection scope, and protein-sequence protection strategies."
+                        },
+                        {
+                            "title": "Ethical",
+                            "text": "Highlighted how AI workflows can be copied and exploited."
+                        },
+                        {
+                            "title": "Applicational",
+                            "text": "Suggested protecting DNA and amino-acid sequences alongside their functions."
+                        }
+                    ],
+                    "outgoing": [
+                        {
+                            "title": "Technical",
+                            "text": "Provides a case study of protecting AI-designed proteins."
+                        }
+                    ],
+                    "labelLines": [
+                        "CTO of Link",
+                        "Spider"
+                    ]
+                },
+                {
+                    "id": "deonatulle",
+                    "name": "Deonatulle",
+                    "position": {
+                        "x": 1101,
+                        "y": 948,
+                        "width": 190,
+                        "height": 80
+                    },
+                    "incoming": [
+                        {
+                            "title": "Experiential",
+                            "text": "Shared Japanese consumer preferences."
+                        },
+                        {
+                            "title": "Technical",
+                            "text": "Explained formulation considerations."
+                        },
+                        {
+                            "title": "Applicational",
+                            "text": "Highlighted market differences and commercialization challenges."
+                        }
+                    ],
+                    "outgoing": [
+                        {
+                            "title": "Psychosocial",
+                            "text": "Promotes destigmatized marketing."
+                        },
+                        {
+                            "title": "Technical",
+                            "text": "Presents a synthetic-biology approach that could inspire future products."
+                        }
+                    ],
+                    "labelLines": [
+                        "Deonatulle"
+                    ]
+                },
+                {
+                    "id": "unilever",
+                    "name": "Unilever",
+                    "position": {
+                        "x": 1196,
+                        "y": 793,
+                        "width": 190,
+                        "height": 80
+                    },
+                    "incoming": [
+                        {
+                            "title": "Ethical",
+                            "text": "Brought inclusive packaging to our attention."
+                        },
+                        {
+                            "title": "Applicational",
+                            "text": "Demonstrated a successful inclusive product."
+                        }
+                    ],
+                    "outgoing": [
+                        {
+                            "title": "Treatment",
+                            "text": "Aims to offer accessible, inclusive deodorant."
+                        },
+                        {
+                            "title": "Psychosocial",
+                            "text": "Encourages education reaching older adults and people with disabilities."
+                        }
+                    ],
+                    "labelLines": [
+                        "Unilever"
+                    ]
+                }
+            ],
+            "titleColor": "#ffffff"
+        }
+    ]
+}
