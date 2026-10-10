@@ -1,0 +1,83 @@
+[
+    {
+        "id": "tom",
+        "name": "Tom",
+        "introduction": "Hi, I'm Tom, a student who loves synbio and research. I'm really excited to be part of Expelliodor. All the best with GB-SCIE2026!",
+        "photoUrl": "https://static.igem.wiki/teams/6133/wiki/teamphoto/advisor-tom.avif",
+        "photoWidth": 1200,
+        "photoHeight": 900,
+        "photoPosition": "50% 50%"
+    },
+    {
+        "id": "brandon",
+        "name": "Brandon",
+        "introduction": "Here's Brandon, a 17-year-old advisor that hopes he’s no longer fragile. I really hope that my experience in iHP could help Expelliodor become the ultimate solution to axillary odor. May glory (and the biobrick trophy) be with you all. Enjoy your time in Paris!",
+        "photoUrl": "https://static.igem.wiki/teams/6133/wiki/teamphoto/advisor-brandon.avif",
+        "photoWidth": 752,
+        "photoHeight": 564,
+        "photoPosition": "50% 50%"
+    },
+    {
+        "id": "nicole",
+        "name": "Nicole",
+        "introduction": "Hi, this is Nicole, a 17-year-old but still slouches and lurks around the lab as an advisor just for cake and chicken nuggets. In the lab, trying to make play dough out of scrap we used during water absorption of the dialysis tubing which is great fun! Experimenting with Expelliodor is not a pleasurable experience when we work with the stinky molecule all day and I end up stinking like a sweatshirt.",
+        "photoUrl": "https://static.igem.wiki/teams/6133/wiki/teamphoto/advisor-nicole.avif",
+        "photoWidth": 1200,
+        "photoHeight": 900,
+        "photoPosition": "50% 50%"
+    },
+    {
+        "id": "tatiana",
+        "name": "Tatiana",
+        "introduction": "Hi, here’s Tatiana. As a former igemer in GB-SCIE25, I’m glad to be back this year as an advisor and to support Expelliodor through another iGEM journey! Completing a project may be consuming, emotionally and somatically :(  , but I hope you will also enjoy it!",
+        "photoUrl": "https://static.igem.wiki/teams/6133/wiki/teamphoto/advisor-tatiana.avif",
+        "photoWidth": 1200,
+        "photoHeight": 900,
+        "photoPosition": "50% 50%"
+    },
+    {
+        "id": "jeremy",
+        "name": "Jeremy",
+        "introduction": "Hi, here is Jeremy, an 18-year-old male Homo sapiens sapiens, Animalia, Chordata, Vertebrata, Mammalia, Theria, Primates, Haplorhini, Simiiformes, Hominoidea, Hominidae, Homininae, Hominini, Homo. As an igemer of GB25, I'm glab to back this year as a advisor. All the best for GreatBay-SCIE 2026!!!",
+        "photoUrl": "https://static.igem.wiki/teams/6133/wiki/teamphoto/advisor-jeremy.avif",
+        "photoWidth": 1200,
+        "photoHeight": 900,
+        "photoPosition": "50% 50%"
+    },
+    {
+        "id": "bonnie",
+        "name": "Bonnie",
+        "introduction": "Hi , I'm Bonnie. I'm made mostly of carbon and water ;). I was the leader of art & design group last year. It's my pleasure to support GB-SCIE 2026 as an advisor this year. Wishing you all the best~",
+        "photoUrl": "https://static.igem.wiki/teams/6133/wiki/teamphoto/advisor-bonnie.avif",
+        "photoWidth": 1008,
+        "photoHeight": 756,
+        "photoPosition": "50% 50%"
+    },
+    {
+        "id": "murphy",
+        "name": "Murphy",
+        "introduction": "Hi, here’s Murphy! After surviving GB-SCIE25 and an unhealthy number of colony PCRs, I’m back this year as an advisor for Expelliodor. I still don’t fully understand why E. coli sometimes decides to do absolutely nothing we ask it to, but I suppose that’s part of the fun of synthetic biology. Hope you all have an amazing iGEM journey—and remember: when an experiment fails, you can always blame the plasmid. 🧬",
+        "photoUrl": "https://static.igem.wiki/teams/6133/wiki/teamphoto/advisor-murphy.avif",
+        "photoWidth": 432,
+        "photoHeight": 324,
+        "photoPosition": "50% 50%"
+    },
+    {
+        "id": "lucas",
+        "name": "Lucas",
+        "introduction": "Hi! I’m Lucas~ I’m excited to be back as an advisor and to support the team on its journey!\n\nFavorite saying: “All the surprises and good luck in the world are the accumulation of your character and kindness.”",
+        "photoUrl": "https://static.igem.wiki/teams/6133/wiki/teamphoto/advisor-lucas.avif",
+        "photoWidth": 1200,
+        "photoHeight": 900,
+        "photoPosition": "50% 50%"
+    },
+    {
+        "id": "andy",
+        "name": "Andy",
+        "introduction": "Hi, this is Andy. It is now my second year as an advisor for GB-SCIE and working with the team is enjoyable as always. This year I am mostly working with the modelling team and will be providing support for writing the wiki pages.\n\nAll the best to the team and good luck at Paris!",
+        "photoUrl": "https://static.igem.wiki/teams/6133/wiki/teamphoto/advisor-andy.avif",
+        "photoWidth": 1024,
+        "photoHeight": 768,
+        "photoPosition": "50% 50%"
+    }
+]

@@ -338,7 +338,6 @@ onMounted(() => {
             const pointer = { x: 0, y: 0 };
             const pointerTarget = { x: 0, y: 0 };
             let windElapsed = 0;
-            let scrollPosition = window.scrollY;
             let frame = 0;
             let lastTime = performance.now();
 
@@ -352,17 +351,11 @@ onMounted(() => {
                 pointer.x += (pointerTarget.x - pointer.x) * pointerFollow;
                 pointer.y += (pointerTarget.y - pointer.y) * pointerFollow;
                 windElapsed += delta * WIND_SPEED;
-                const scrollProgress = gsap.utils.clamp(
-                    0,
-                    1,
-                    scrollPosition / window.innerHeight,
-                );
                 const targetX = pointer.x * POINTER_RESPONSE_STRENGTH;
                 const targetY = gsap.utils.clamp(
                     -1,
                     1,
-                    pointer.y * POINTER_PARALLAX_Y * POINTER_RESPONSE_STRENGTH -
-                        scrollProgress * 0.28,
+                    pointer.y * POINTER_PARALLAX_Y * POINTER_RESPONSE_STRENGTH,
                 );
                 const follow = 1 - Math.exp(-CAMERA_DAMPING * delta);
                 camera.x += (targetX - camera.x) * follow;
@@ -460,9 +453,6 @@ onMounted(() => {
                 frame = requestAnimationFrame(renderCamera);
             };
 
-            const readScroll = () => {
-                scrollPosition = window.scrollY;
-            };
             const readPointer = (event: PointerEvent) => {
                 pointerTarget.x = gsap.utils.clamp(
                     -1,
@@ -483,7 +473,6 @@ onMounted(() => {
                 if (!document.hidden) lastTime = performance.now();
             };
 
-            window.addEventListener("scroll", readScroll, { passive: true });
             window.addEventListener("pointermove", readPointer, {
                 passive: true,
             });
@@ -497,7 +486,6 @@ onMounted(() => {
 
             return () => {
                 cancelAnimationFrame(frame);
-                window.removeEventListener("scroll", readScroll);
                 window.removeEventListener("pointermove", readPointer);
                 document.documentElement.removeEventListener(
                     "pointerleave",

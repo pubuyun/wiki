@@ -22,7 +22,14 @@ export default defineNuxtConfig({
             htmlAttrs: {
                 lang: "en",
             },
-            link: [{ rel: "preconnect", href: "https://static.igem.wiki" }],
+            link: [
+                { rel: "preconnect", href: "https://static.igem.wiki" },
+                {
+                    rel: "icon",
+                    type: "image/x-icon",
+                    href: "https://2026.igem.wiki/greatbay-scie/favicon.ico",
+                },
+            ],
         },
     },
     modules: [
