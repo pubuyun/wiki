@@ -77,13 +77,16 @@ useHead({
             type: "image/x-icon",
             href: faviconHref,
         },
-        ...[momoFont, righteousFont, belanosimaFont].map((href) => ({
-            rel: "preload",
-            as: "font",
-            type: "font/woff2",
-            crossorigin: "anonymous",
-            href,
-        })),
+        ...[momoFont, righteousFont, belanosimaFont].map(
+            (href) =>
+                ({
+                    rel: "preload",
+                    as: "font",
+                    type: "font/woff2",
+                    crossorigin: "anonymous",
+                    href,
+                }) as const,
+        ),
     ],
     bodyAttrs: {
         class: themeClass,

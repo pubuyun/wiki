@@ -544,17 +544,17 @@ onBeforeUnmount(() => {
 
     .more-about-us__layout {
         grid-template-columns: 1fr;
-        gap: 3.5rem;
+        gap: clamp(1rem, 3svh, 1.75rem);
         min-height: auto;
-        padding: 5.5rem 1.5rem 7rem;
+        padding: 6svh 1.5rem 10svh;
     }
 
     .more-about-us__photo-frame {
         top: 0;
-        width: min(100%, 25rem);
+        width: min(56vw, 26svh, 15rem);
         justify-self: center;
-        border-radius: 2.25rem;
-        box-shadow: 1rem 1.25rem 0 #3d82da;
+        border-radius: 1.5rem;
+        box-shadow: 0.65rem 0.8rem 0 #3d82da;
     }
 
     .more-about-us__content {
@@ -562,33 +562,25 @@ onBeforeUnmount(() => {
     }
 
     .more-about-us h2 {
-        margin-bottom: 3rem;
-        font-size: clamp(2.75rem, 13vw, 4.5rem);
+        margin-bottom: clamp(1rem, 3svh, 1.75rem);
+        font-size: clamp(1.75rem, 8.5vw, 3rem);
         white-space: nowrap;
     }
 
     .more-about-us__links {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 2.75rem 1.25rem;
-    }
-
-    .more-about-us__link:nth-child(n) {
-        grid-column: auto;
-    }
-
-    .more-about-us__link:last-child {
-        grid-column: 1 / -1;
-        width: 50%;
-        justify-self: center;
+        grid-template-columns: repeat(6, minmax(0, 1fr));
+        gap: clamp(0.75rem, 2.5svh, 1.5rem) 0.5rem;
     }
 
     .more-about-us__icon {
-        width: clamp(5.75rem, 27vw, 7.25rem);
-        height: clamp(5.75rem, 27vw, 7.25rem);
+        width: min(18vw, 9svh, 5rem);
+        height: min(18vw, 9svh, 5rem);
     }
 
     .more-about-us__label {
-        font-size: clamp(1.25rem, 6vw, 1.65rem);
+        margin-top: 0.5rem;
+        font-size: clamp(0.85rem, 3.5vw, 1.1rem);
+        line-height: 1.2;
     }
 
     .more-about-us__bubbles--right {
