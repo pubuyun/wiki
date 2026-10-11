@@ -90,7 +90,7 @@ const GAME_TUNING = {
 } as const;
 
 const SVG_WIDTH = 700;
-const SVG_HEIGHT = 900;
+const SVG_HEIGHT = 930;
 const STORAGE_KEY = "members-arcade-unlocked-v1";
 const SKIP_CODE = "expelliodor";
 const SKIP_CODE_RESET_MS = 5000;
@@ -1391,7 +1391,7 @@ onBeforeUnmount(() => {
                     >
                         <svg
                             class="block h-full w-full"
-                            viewBox="0 0 700 900"
+                            :viewBox="`0 0 ${SVG_WIDTH} ${SVG_HEIGHT}`"
                             role="group"
                             aria-labelledby="machine-title machine-description"
                         >
@@ -1509,18 +1509,16 @@ onBeforeUnmount(() => {
                                 x="9"
                                 y="8"
                                 width="682"
-                                height="884"
+                                height="914"
                                 rx="48"
                                 fill="url(#machine-body-gradient)"
-                                stroke="var(--machine-edge)"
-                                stroke-width="3"
                             />
                             <rect
                                 class="machine-rim"
                                 x="30"
                                 y="25"
                                 width="640"
-                                height="850"
+                                height="880"
                                 rx="38"
                                 fill="var(--machine-rim)"
                             />
@@ -1585,7 +1583,7 @@ onBeforeUnmount(() => {
                                 x="43"
                                 y="278"
                                 width="614"
-                                height="588"
+                                height="618"
                                 rx="40"
                                 fill="url(#playfield-gradient)"
                             />
@@ -2069,7 +2067,7 @@ onBeforeUnmount(() => {
     position: relative;
     isolation: isolate;
     width: min(100%, 44rem);
-    aspect-ratio: 7 / 9;
+    aspect-ratio: 700 / 930;
     justify-self: center;
     overflow: hidden;
     border-radius: 6.8%;
@@ -2079,8 +2077,7 @@ onBeforeUnmount(() => {
 }
 
 .machine-rim {
-    stroke: rgb(255 255 255 / 0.18);
-    stroke-width: 2;
+    stroke: none;
 }
 
 .marquee-text,
@@ -2683,7 +2680,7 @@ onBeforeUnmount(() => {
     position: relative;
     display: grid;
     grid-template-rows: auto;
-    width: min(100%, calc((100svh - 8rem) * 7 / 9));
+    width: min(100%, calc((100svh - 7rem) * 700 / 930));
     min-width: 0;
     align-self: center;
     justify-self: center;
@@ -2712,7 +2709,7 @@ onBeforeUnmount(() => {
     right: 19%;
     bottom: 5.5%;
     left: 19%;
-    height: 7.2%;
+    height: 7%;
 }
 
 .control-deck-bar {
@@ -3102,7 +3099,7 @@ onBeforeUnmount(() => {
     }
 
     .game-cabinet {
-        width: min(100%, calc((100svh - 8rem) * 7 / 9));
+        width: min(100%, calc((100svh - 7rem) * 700 / 930));
         height: auto;
         max-width: 100%;
         max-height: 100%;
