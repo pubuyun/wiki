@@ -66,22 +66,21 @@ const photoUrl = (path: string) =>
     flex-direction: column;
     min-width: 0;
     padding: 0.85rem;
-    border: 2px solid var(--outline-variant);
+    border: 0;
     border-radius: 1.5rem;
     background: var(--surface-sidebar);
     color: var(--on-surface);
     box-shadow: 0 0.6rem 1.5rem rgb(4 31 75 / 0.18);
     transition:
         background-color 180ms ease,
-        color 180ms ease,
-        border-color 180ms ease;
+        color 180ms ease;
 }
 
 .advisor-photo-frame {
     flex: none;
     aspect-ratio: 4 / 3;
     overflow: hidden;
-    border: 2px solid var(--surface-navigation);
+    border: 0;
     border-radius: 0.75rem;
     background: var(--surface);
 }
@@ -113,7 +112,7 @@ const photoUrl = (path: string) =>
 .advisor-name-row h2 {
     padding: 0.2rem 0.6rem;
     border-radius: 0.5rem;
-    background: #03316d;
+    background: transparent;
     color: var(--accent);
     font-family: var(--font-righteous);
     font-size: 1.75rem;
@@ -122,7 +121,7 @@ const photoUrl = (path: string) =>
 
 .advisor-role {
     padding: 0.3rem 0.65rem;
-    border: 1px solid var(--outline-variant);
+    border: 0;
     border-radius: 999px;
     background: var(--surface-navigation);
     color: var(--on-surface);
@@ -142,7 +141,6 @@ const photoUrl = (path: string) =>
 }
 
 :global(.high-contrast) .advisor-name-row h2 {
-    background: var(--surface);
     color: var(--on-surface);
 }
 
