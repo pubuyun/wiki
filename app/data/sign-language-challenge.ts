@@ -55,8 +55,8 @@ export const SIGN_LANGUAGE_CATEGORIES: SignLanguageCategory[] = [
     },
     {
         id: "synbio",
-        label: "Synbio",
-        shortLabel: "Synbio",
+        label: "SynBio",
+        shortLabel: "SynBio",
         words: words([
             ["agar", "Agar"],
             ["allele", "Allele"],
