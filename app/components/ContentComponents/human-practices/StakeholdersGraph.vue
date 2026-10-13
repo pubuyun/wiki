@@ -89,8 +89,25 @@ const controlRatios: Partial<Record<string, Point>> = {
     xia: { x: 0.4, y: 0.3 },
     counsellor: { x: 0.5, y: 0.4 },
 };
+const expertEndpoints: Partial<
+    Record<
+        string,
+        { centerX: number; nodeAngle: number | null; nodeOffsetX?: number }
+    >
+> = {
+    tcm: { centerX: 976, nodeAngle: null, nodeOffsetX: 28 },
+    skincare: { centerX: 1002, nodeAngle: 135 },
+    modelling: { centerX: 1025, nodeAngle: 150 },
+    biomaterials: { centerX: 1048, nodeAngle: 142 },
+    immunologist: { centerX: 1080, nodeAngle: null },
+    surgeon: { centerX: 1089, nodeAngle: 125 },
+    formulation: { centerX: 1094, nodeAngle: 110 },
+};
 const edges = nodes.map((node) => {
-    const a = node.position,
+    const a = {
+            ...node.position,
+            x: node.position.x + (node.id === "link-spider" ? 24 : 0),
+        },
         center = data.center,
         group = node.groupBox,
         isTopGroup = group.y < center.y;
@@ -134,13 +151,71 @@ const edges = nodes.map((node) => {
         return (low + high) / 2;
     }
     const t0 = boundary(center, 1827 * 0.0165, true);
-    const t1 = boundary(a, Math.min(1827 * 0.0265, a.height / 2), false);
+    const t1 = boundary(
+        node.position,
+        Math.min(1827 * 0.0265, a.height / 2),
+        false,
+    );
     const first = at(t0),
-        last = at(t1);
+        last =
+            node.id === "link-spider"
+                ? {
+                      x: node.position.x + 34,
+                      y: node.position.y - node.position.height / 2,
+                  }
+                : at(t1);
     const control = {
         x: first.x + (t1 - t0) * ((1 - t0) * (c.x - b.x) + t0 * (a.x - c.x)),
         y: first.y + (t1 - t0) * ((1 - t0) * (c.y - b.y) + t0 * (a.y - c.y)),
     };
+    if (node.id === "link-spider") control.x += 16;
+    if (node.id === "teachers") {
+        first.x -= 20;
+        control.x -= 12;
+    }
+    if (node.id === "surgery") {
+        const radius = 1827 * 0.0165;
+        const angle = (105 * Math.PI) / 180;
+        first.x =
+            center.x - center.width / 2 + radius + radius * Math.cos(angle);
+        first.y =
+            center.y - center.height / 2 + radius - radius * Math.sin(angle);
+    }
+    if (node.id === "hotel") {
+        first.x = center.x - center.width / 2 + 75;
+        first.y = center.y - center.height / 2;
+    }
+    if (node.id === "counsellor") {
+        first.x = center.x - center.width / 2 + 1827 * 0.0165;
+        first.y = center.y + center.height / 2;
+        const radius = Math.min(1827 * 0.0265, a.height / 2);
+        const angle = (40 * Math.PI) / 180;
+        last.x = a.x + a.width / 2 - radius + radius * Math.cos(angle);
+        last.y = a.y - a.height / 2 + radius - radius * Math.sin(angle);
+    }
+    const expertEndpoint = expertEndpoints[node.id];
+    if (expertEndpoint) {
+        const centerRadius = 1827 * 0.0165;
+        const cornerX = center.x + center.width / 2 - centerRadius;
+        const dx = Math.max(0, expertEndpoint.centerX - cornerX);
+        first.x = expertEndpoint.centerX;
+        first.y =
+            center.y -
+            center.height / 2 +
+            centerRadius -
+            Math.sqrt(centerRadius ** 2 - dx ** 2);
+        if (expertEndpoint.nodeAngle === null) {
+            last.x = a.x + (expertEndpoint.nodeOffsetX ?? -64);
+            last.y = a.y + a.height / 2;
+        } else {
+            const radius = Math.min(1827 * 0.0265, a.height / 2);
+            const angle = (expertEndpoint.nodeAngle * Math.PI) / 180;
+            last.x = a.x - a.width / 2 + radius + radius * Math.cos(angle);
+            last.y = a.y + a.height / 2 - radius + radius * Math.sin(angle);
+        }
+        control.x = (first.x + last.x) / 2;
+        control.y = (first.y + last.y) / 2 + 8;
+    }
     const point = (p: Point) => round(p.x) + " " + round(p.y);
     // Draw arrowheads directly at the same endpoints as the curve. Animating
     // ordinary paths avoids browser inconsistencies with animated SVG markers.
