@@ -1,0 +1,8 @@
+{
+    "term": [
+        "Google Colab",
+        "Colab"
+    ],
+    "detail": "A hosted Jupyter notebook service for writing and executing Python in a browser, with optional hardware accelerators.",
+    "link": "https://developers.google.com/colab"
+}

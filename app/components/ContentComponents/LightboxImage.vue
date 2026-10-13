@@ -88,6 +88,7 @@ defineExpose({ open });
             v-if="hasOpened"
             :visible="visible"
             :src="src"
+            :alt="alt"
             :index="index"
             @hide="visible = false"
             @update:index="index = $event"

@@ -1,10 +1,6 @@
 ---
 title: "Example Workflows"
-description: "Example FoundryUI workflows for folding prediction, ligand binder design, and protein binder design."
+description: "Example FoundryUI workflows for ligand-binder design, protein-binder design, and folding prediction."
 hasReference: false
-order: 10
+order: 4
 ---
-
-- [Folding Prediction](/software/example-workflows/folding-prediction)
-- [Ligand Binder](/software/example-workflows/ligand-binder)
-- [Protein Binder](/software/example-workflows/protein-binder)

@@ -1,0 +1,5 @@
+{
+    "term": "FastAPI",
+    "detail": "A Python framework for building web APIs with type hints, data validation, and asynchronous request handling.",
+    "link": "https://github.com/fastapi/fastapi"
+}

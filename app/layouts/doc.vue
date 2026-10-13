@@ -12,12 +12,7 @@ const { data: allPages } = await useContentNavigationData();
 
 const pages = computed(() => allPages.value ?? []);
 const children = computed(() => categoryPages(pages.value, category.value));
-const categoryRootPage = computed(() =>
-    pages.value.find((item) => item.path === categoryPath.value),
-);
-const categoryTitle = computed(
-    () => categoryRootPage.value?.title ?? titleizeSlug(category.value),
-);
+const categoryTitle = computed(() => titleizeSlug(category.value));
 const categoryNavNodes = computed(() =>
     buildCategorySidebarNodes(children.value, category.value, activePath.value),
 );

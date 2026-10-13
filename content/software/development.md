@@ -1,15 +1,15 @@
 ---
 title: "Development"
-description: "FoundryUI architecture, custom node development, artifact registration, and workflow APIs."
+description: "FoundryUI architecture, node development, artifact registration, and external APIs."
 hasReference: false
-order: 4
+order: 3
 ---
 
 ## Architecture
 
-The Nuxt and Vue frontend renders the BaklavaJS graph and 3Dmol.js viewer. FastAPI provides workflow, run, session, event, and artifact endpoints. RyvenCore executes validated graphs. Node classes call biological helpers or external-tool adapters and register their outputs in the artifact store.
+The _Nuxt_ and _Vue_ frontend renders the _BaklavaJS_ graph and _3Dmol.js_ viewer. _FastAPI_ provides workflow, run, session, event, and artifact endpoints. _ryvencore_ executes validated graphs. Node classes call biological helpers or external-tool adapters and register their outputs in the artifact store.
 
-<!-- Illustration pending: illustration of the frontend, FastAPI, workflow runtime, node classes, external tools, and artifact store. -->
+<!-- Illustration pending: frontend, FastAPI, workflow runtime, node classes, external tools, and artifact store. -->
 
 ## Adding a node
 

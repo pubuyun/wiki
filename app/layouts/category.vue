@@ -22,9 +22,7 @@ const page = computed(() => {
         body: { children: [], toc: { links: [] } },
     };
 });
-const categoryTitle = computed(
-    () => page.value?.title ?? titleizeSlug(category.value),
-);
+const categoryTitle = computed(() => titleizeSlug(category.value));
 const categoryNavNodes = computed(() =>
     buildCategorySidebarNodes(children.value, category.value, activePath.value),
 );
@@ -63,9 +61,12 @@ watchEffect(() => {
                 :active-path="activePath"
             />
 
-            <div class="flex min-w-0 flex-1 flex-col">
+            <div
+                class="flex min-w-0 flex-1 flex-col portrait:pt-12 sm:portrait:pt-10 lg:portrait:pt-11 xl:portrait:pt-14"
+            >
                 <Banner
                     v-if="page"
+                    class="portrait:hidden"
                     :title="page.title"
                     :img-src="page.meta?.banner"
                     :img-position="page.meta?.bannerPosition"
@@ -75,7 +76,10 @@ watchEffect(() => {
                             : undefined
                     "
                 />
-                <hr class="mx-12" />
+                <h1 v-if="page" class="sr-only landscape:hidden">
+                    {{ page.title }}
+                </h1>
+                <hr class="mx-12 portrait:hidden" />
                 <div class="flex min-w-0 flex-1 flex-col pt-6 pb-20">
                     <slot />
                 </div>

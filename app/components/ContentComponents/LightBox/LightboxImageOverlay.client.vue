@@ -12,8 +12,18 @@ type ToolbarMethods = {
 const props = defineProps<{
     visible: boolean;
     src: string[];
+    alt?: string | string[];
     index: number;
 }>();
+
+const images = computed(() =>
+    props.src.map((src, imageIndex) => ({
+        src,
+        alt: Array.isArray(props.alt)
+            ? (props.alt[imageIndex] ?? "")
+            : (props.alt ?? ""),
+    })),
+);
 
 defineEmits<{
     hide: [];
@@ -41,7 +51,7 @@ watch(
 <template>
     <VueEasyLightbox
         :visible="visible"
-        :imgs="src"
+        :imgs="images"
         :index="index"
         teleport="body"
         @hide="$emit('hide')"

@@ -1,15 +1,23 @@
 ---
 title: "Ligand Binder"
-description: "Design ligand-binding proteins through atom selection, backbone generation, sequence design, folding, filtering, and export."
+description: "Design ligand-binding proteins using atom selection, backbone generation, sequence design, prediction, and filtering."
 hasReference: false
 order: 0
 ---
 
 ## Overview
 
-This preset designs proteins around a small molecule. It connects ligand preparation, atom selection, _RFDiffusion3_ backbone generation, _LigandMPNN_ sequence design, _RosettaFold3_ structure prediction, chirality checking, score filtering, visualization, and export in one workflow.
+This preset designs proteins to bind a small molecule.
 
-![Ligand binder workflow](https://static.igem.wiki/teams/6133/wiki/drylab/software/software-example-workflows-ligand-binder-fig1.avif "Fig. 1 | Ligand binder workflow.")
+::content-components-lightbox-image
+---
+src:
+  - https://static.igem.wiki/teams/6133/wiki/drylab/software/example-workflows-ligand-binder-fig1.avif
+alt: "Connected ligand input, atom selectors, backbone generation, LigandMPNN, RosettaFold3, filtering, viewing, and saving nodes."
+caption: "Fig. 1 | Ligand-binder workflow."
+---
+
+::
 
 The graph is available as `ligand-binder-denovo.fuiworkflow` from the **Presets** list in the header. Its values are demonstration defaults, not universal design parameters.
 
@@ -17,56 +25,141 @@ The graph is available as `ligand-binder-denovo.fuiworkflow` from the **Presets*
 
 ### 1. Load the ligand
 
-The **Ligand Input** node reads a ligand _PDB_. FoundryUI validates and standardizes the structure, then makes the same ligand available to generation and folding nodes.
+::content-components-panel-layout
+---
+height: 32rem
+label: "Ligand Binder: text and figure 2"
+---
+#left
+The **Ligand Input** node reads a ligand *PDB*. FoundryUI validates and standardizes the structure, then outputs a "Ligand".
 
-To reproduce the example, download [Cys-Gly-(S)-3M3SH.pdb](https://gitlab.igem.org/2026/software/greatbay-scie/foundryui/-/raw/main/example_inputs/Cys-Gly-%28S%29-3M3SH.pdb) and upload it in the **Ligand Input** node. For another project, replace it with the intended molecule. Check its residue identity, bond representation, and stereochemistry before running the workflow.
+To reproduce the example, download [Cys-Gly-(S)-3M3SH.pdb](https://gitlab.igem.org/2026/software/greatbay-scie/foundryui/-/raw/main/example_inputs/Cys-Gly-%28S%29-3M3SH.pdb) and upload it in the **Ligand Input** node. For another project, replace it with the intended molecule.
+
+#right
+:::content-components-lightbox-image
+---
+src:
+  - https://static.igem.wiki/teams/6133/wiki/drylab/software/example-workflows-ligand-binder-fig2.avif
+alt: "A ligand PDB file-upload control and a 3D Viewer button output a Ligand payload."
+caption: "Fig. 2 | Ligand Input node."
+---
+
+:::
+::
 
 ### 2. Select interacting atoms
 
-The **Atom Selector** opens the ligand in the **Structure Viewer** dialog. In this preset, the selected atoms are connected to both `select_fixed_atoms` and `select_buried` on **RFDiffusion3 SM Binder**. They therefore define atoms whose positions should remain constrained and be buried by the designed protein.
+The **Atom Selector** opens the ligand in a 3D structure viewer and allows the user to select atoms. It outputs a list of atoms for which atom constraints are needed.
 
-<!-- Illustration pending: image of ligand atoms selected in the Structure Viewer dialog. -->
+::content-components-lightbox-panels
+---
+src:
+  - https://static.igem.wiki/teams/6133/wiki/drylab/software/example-workflows-ligand-binder-fig3-a.avif
+  - https://static.igem.wiki/teams/6133/wiki/drylab/software/example-workflows-ligand-binder-fig3-b.avif
+alt:
+  - The Atom Fixed viewer displays the ligand as colored sticks with atom-selection controls and a Submit button.
+  - The Atom buried viewer displays the ligand as colored spheres and bonds with atom-selection controls and a Submit button.
+caption: "Fig. 3 | (a) Fixed-atom selection in the 3D selector. (b) Buried-atom selection in the 3D selector."
+---
 
-The appropriate atoms depend on the intended binding mode. Select chemically meaningful interaction points rather than copying the example selection.
+::
+
+In this case, the selectors are used to select fixed atoms and buried atoms for *RFdiffusion3* inputs.
 
 ### 3. Generate binder backbones
 
-**RFDiffusion3 SM Binder** generates protein–ligand complexes around the selected atoms. The preset uses:
+::content-components-panel-layout
+---
+height: 32rem
+label: "Ligand Binder: text and figure 4"
+---
+#left
+**RFdiffusion3 SM Binder** generates protein–ligand complexes around the selected atoms. The preset uses:
 
-Table 1 | Backbone generation parameters for the ligand binder preset.
+|Parameter|Preset value|Meaning|
+|---|---|---|
+|Length|`120-200`|Allowed binder-length range|
+|Batches|`1`|Number of generation batches|
+|Diffusion batch size|`2`|Designs generated per batch|
 
-| Parameter            | Preset value | Meaning                      |
-| -------------------- | ------------ | ---------------------------- |
-| Length               | `120-200`    | Allowed binder-length range  |
-| Batches              | `1`          | Number of generation batches |
-| Diffusion batch size | `2`          | Designs generated per batch  |
+#right
+:::content-components-lightbox-image
+---
+src:
+  - https://static.igem.wiki/teams/6133/wiki/drylab/software/example-workflows-ligand-binder-fig4.avif
+alt: "Ligand and selected-atom inputs feed backbone generation, with length 120–200, one batch, and diffusion batch size 2."
+caption: "Fig. 4 | RFdiffusion3 SM Binder node."
+---
 
-With these defaults, the node requests two candidate complexes. Increasing either batch setting explores more candidates but also increases GPU time and storage.
+:::
+::
+
+This only generates two designs. For production usage, increase the number of batches and diffusion batch size.
 
 ### 4. Design sequences
 
-The generated complexes enter **LigandMPNN**, which proposes sequences while retaining ligand context. The preset fixes the selected residue positions and uses one batch of five sequences, seed `42`, and temperature `0.05`. A higher temperature generally increases sequence diversity.
+::content-components-panel-layout
+---
+height: 32rem
+label: "Ligand Binder: text and figure 5"
+---
+#left
+The generated complexes enter ***LigandMPNN***, which redesigns the sequence based on ligand context. The preset does not specify fixed residues and generates 5 designs for each input structure (number of designs = `number_of_batches` × `batch_size`).
+
+#right
+:::content-components-lightbox-image
+---
+src:
+  - https://static.igem.wiki/teams/6133/wiki/drylab/software/example-workflows-ligand-binder-fig5.avif
+alt: "A protein–ligand structure input feeds sequence design with one batch, batch size 5, seed 42, and temperature 0.050."
+caption: "Fig. 5 | LigandMPNN node."
+---
+
+:::
+::
 
 ### 5. Predict structures
 
-The designed sequences and original ligand enter **RosettaFold3**. The preset uses 50 diffusion steps, seed `42`, and a diffusion batch size of one. RF3 returns predicted structures together with confidence metrics such as ranking score, _pLDDT_, _pTM_, and _ipTM_ when available.
+::content-components-panel-layout
+---
+height: 32rem
+label: "Ligand Binder: text and figure 6"
+---
+#left
+The designed sequences and original ligand enter ***RosettaFold3***. The preset uses 50 diffusion steps, seed `42`, and a diffusion batch size of one. RF3 returns predicted structures together with confidence metrics stored as "Score" type.
+
+#right
+:::content-components-lightbox-image
+---
+src:
+  - https://static.igem.wiki/teams/6133/wiki/drylab/software/example-workflows-ligand-binder-fig6.avif
+alt: "Designed sequences and ligand inputs feed folding prediction; controls show diffusion batch size 1, 50 steps, and seed 42."
+caption: "Fig. 6 | RosettaFold3 node."
+---
+
+:::
+::
 
 ### 6. Filter and save
 
-**Filter Atoms Chirality** removes complexes whose ligand stereochemistry does not match the selected targets. **Filter By Score** then keeps the top candidates by `ranking_score`; the preset threshold is 20, so all candidates may pass when the generated set is smaller.
+::content-components-panel-layout
+---
+height: 32rem
+label: "Ligand Binder: text and figure 7"
+---
+#left
+**Filter Atoms Chirality** removes complexes whose ligand stereochemistry does not match the selected targets. **Filter By Score** then ranks the candidates based on the selected metric and outputs the largest top 20.
+
+#right
+:::content-components-lightbox-image
+---
+src:
+  - https://static.igem.wiki/teams/6133/wiki/drylab/software/example-workflows-ligand-binder-fig7.avif
+alt: "Filter Atoms Chirality feeds Filter By Score, configured to retain the largest top 20 scores."
+caption: "Fig. 7 | Chirality and score-filtering nodes."
+---
+
+:::
+::
 
 The remaining structures are sent to **PDB Viewer** and **Save Proteins with Scores**. The save node packages each selected PDB with its aligned score record in the `outputs` folder.
-
-<!-- Illustration pending: image of generated ligand-binding candidates being compared in the PDB Viewer. -->
-
-## Before running
-
-- Upload the intended ligand again after loading the preset.
-
-- Review atom selections and chirality targets for that ligand.
-
-- Choose generation counts that fit the available GPU memory and time.
-
-- Treat confidence scores as computational screening evidence, not experimental proof of binding.
-
-- Download both the run archive and `.fuiworkflow` file to preserve results and parameters.
