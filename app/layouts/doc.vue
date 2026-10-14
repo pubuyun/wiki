@@ -1,5 +1,4 @@
 <script setup>
-import { contentTocLinks } from "~/utils/content-toc";
 import { buildCategorySidebarNodes } from "~/utils/content-pages";
 
 const route = useRoute();
@@ -16,8 +15,6 @@ const categoryTitle = computed(() => titleizeSlug(category.value));
 const categoryNavNodes = computed(() =>
     buildCategorySidebarNodes(children.value, category.value, activePath.value),
 );
-const tocLinks = computed(() => contentTocLinks(page.value?.body));
-const hasRightSidebar = computed(() => tocLinks.value.length > 0);
 
 const contentLayout = useContentLayoutState();
 watchEffect(() => {
@@ -58,22 +55,10 @@ watchEffect(() => {
             </aside>
 
             <AccessibilityMenu />
-            <div class="content-reading-container min-w-0 flex-1 lg:px-8">
-                <div
-                    class="content-reading-layout mt-16 sm:mt-20"
-                    :class="{
-                        'content-reading-layout--with-toc': hasRightSidebar,
-                    }"
-                >
-                    <slot />
-                    <aside
-                        v-if="hasRightSidebar"
-                        class="contents"
-                        aria-label="Page contents"
-                    >
-                        <ContentBar :toc="tocLinks" />
-                    </aside>
-                </div>
+            <div
+                class="content-reading-container mt-16 min-w-0 flex-1 sm:mt-20 lg:px-8"
+            >
+                <slot />
             </div>
         </main>
         <LazyFooter hydrate-on-visible has-category-sidebar />

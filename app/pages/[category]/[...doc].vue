@@ -1,5 +1,6 @@
 <script setup>
 import { Icon } from "@iconify/vue";
+import { contentTocLinks } from "~/utils/content-toc";
 definePageMeta({
     layout: "doc",
     key: (route) => route.fullPath,
@@ -13,6 +14,7 @@ const category = computed(() => String(route.params.category ?? ""));
 const activePath = ref(normalizeContentPath(route.path));
 
 const { data: page } = await useContentPageData(activePath);
+const tocLinks = computed(() => contentTocLinks(page.value?.body));
 const contentGraphViews = new Set(runtimeConfig.public.contentGraphViews);
 const graphView = computed(() => {
     const candidate = page.value?.stem
@@ -69,7 +71,7 @@ useSeoMeta({
 <template>
     <article
         v-if="page"
-        class="flex w-full max-w-[100vw] min-w-0 flex-1 flex-col gap-4 overflow-x-visible px-4 sm:gap-6 sm:px-6 lg:max-w-[calc(75ch+3rem)] lg:px-0"
+        class="flex w-full min-w-0 flex-1 flex-col gap-4 overflow-x-visible px-4 sm:gap-6 sm:px-6 lg:px-0"
     >
         <h1 class="sr-only">
             {{ pageTitle(page) }}
@@ -77,92 +79,108 @@ useSeoMeta({
 
         <ContentGraph v-if="graphView" :view="graphView" />
 
-        <ContentDocument :page="page" />
-        <section
-            v-if="currentFolderCards.length"
-            class="grid max-w-full min-w-0 gap-4 sm:grid-cols-2 xl:grid-cols-3"
-            aria-label="Current folder documents"
+        <div
+            class="content-reading-layout"
+            :class="{ 'content-reading-layout--with-toc': tocLinks.length }"
         >
-            <NuxtLink
-                v-for="doc in currentFolderCards"
-                :key="doc.path"
-                :to="doc.path"
-                class="group flex min-h-36 min-w-0 flex-col gap-3 rounded-2xl border-2 border-outline bg-secondary p-4 text-on-secondary no-underline transition hover:-translate-y-px hover:border-secondary hover:text-on-secondary focus-visible:-translate-y-px focus-visible:border-outline focus-visible:text-on-secondary focus-visible:outline-none sm:rounded-3xl sm:p-5 lg:rounded-4xl lg:p-6"
+            <div
+                class="flex w-full min-w-0 flex-1 flex-col gap-4 sm:gap-6 lg:max-w-[calc(75ch+3rem)]"
             >
-                <h2
-                    class="font-belanosima text-2xl leading-tight wrap-anywhere"
+                <ContentDocument :page="page" />
+                <section
+                    v-if="currentFolderCards.length"
+                    class="grid max-w-full min-w-0 gap-4 sm:grid-cols-2 xl:grid-cols-3"
+                    aria-label="Current folder documents"
                 >
-                    {{ doc.title }}
-                </h2>
-                <p
-                    v-if="pageDescription(doc)"
-                    class="font-main text-base leading-relaxed text-on-secondary/85 transition group-hover:text-on-secondary/85"
+                    <NuxtLink
+                        v-for="doc in currentFolderCards"
+                        :key="doc.path"
+                        :to="doc.path"
+                        class="group flex min-h-36 min-w-0 flex-col gap-3 rounded-2xl border-2 border-outline bg-secondary p-4 text-on-secondary no-underline transition hover:-translate-y-px hover:border-secondary hover:text-on-secondary focus-visible:-translate-y-px focus-visible:border-outline focus-visible:text-on-secondary focus-visible:outline-none sm:rounded-3xl sm:p-5 lg:rounded-4xl lg:p-6"
+                    >
+                        <h2
+                            class="font-belanosima text-2xl leading-tight wrap-anywhere"
+                        >
+                            {{ doc.title }}
+                        </h2>
+                        <p
+                            v-if="pageDescription(doc)"
+                            class="font-main text-base leading-relaxed text-on-secondary/85 transition group-hover:text-on-secondary/85"
+                        >
+                            {{ pageDescription(doc) }}
+                        </p>
+                    </NuxtLink>
+                </section>
+                <nav
+                    v-if="previousPage || nextPage"
+                    class="my-6"
+                    aria-label="Docs pages"
                 >
-                    {{ pageDescription(doc) }}
-                </p>
-            </NuxtLink>
-        </section>
-        <nav
-            v-if="previousPage || nextPage"
-            class="my-6"
-            aria-label="Docs pages"
-        >
-            <div class="px-6">
-                <div
-                    class="w-full border-t-2 border-outline"
-                    aria-hidden="true"
-                />
-
-                <div class="mt-2 grid grid-cols-2 gap-3">
-                    <NuxtLink
-                        v-if="previousPage"
-                        class="group flex min-w-0 flex-col items-start gap-1 text-left text-on-surface no-underline transition hover:-translate-y-px hover:underline focus-visible:-translate-y-px focus-visible:underline"
-                        :to="previousPage.path"
-                    >
+                    <div class="px-6">
                         <div
-                            class="relative font-momo-trust-display text-sm text-accent"
-                        >
-                            <Icon
-                                icon="lucide:chevron-left"
-                                class="absolute top-1/2 right-full size-5 -translate-x-1 -translate-y-1/2"
-                                aria-hidden="true"
-                            />
-                            <span>Previous</span>
-                        </div>
+                            class="w-full border-t-2 border-outline"
+                            aria-hidden="true"
+                        />
 
-                        <div
-                            class="font-belanosima text-lg leading-tight wrap-anywhere"
-                        >
-                            {{ pageTitle(previousPage) }}
-                        </div>
-                    </NuxtLink>
+                        <div class="mt-2 grid grid-cols-2 gap-3">
+                            <NuxtLink
+                                v-if="previousPage"
+                                class="group flex min-w-0 flex-col items-start gap-1 text-left text-on-surface no-underline transition hover:-translate-y-px hover:underline focus-visible:-translate-y-px focus-visible:underline"
+                                :to="previousPage.path"
+                            >
+                                <div
+                                    class="relative font-momo-trust-display text-sm text-accent"
+                                >
+                                    <Icon
+                                        icon="lucide:chevron-left"
+                                        class="absolute top-1/2 right-full size-5 -translate-x-1 -translate-y-1/2"
+                                        aria-hidden="true"
+                                    />
+                                    <span>Previous</span>
+                                </div>
 
-                    <span v-else aria-hidden="true" />
+                                <div
+                                    class="font-belanosima text-lg leading-tight wrap-anywhere"
+                                >
+                                    {{ pageTitle(previousPage) }}
+                                </div>
+                            </NuxtLink>
 
-                    <NuxtLink
-                        v-if="nextPage"
-                        class="group flex min-w-0 flex-col items-end gap-1 text-right text-on-surface no-underline transition hover:-translate-y-px hover:underline focus-visible:-translate-y-px focus-visible:underline"
-                        :to="nextPage.path"
-                    >
-                        <div
-                            class="relative font-momo-trust-display text-sm text-accent"
-                        >
-                            <span>Next</span>
-                            <Icon
-                                icon="lucide:chevron-right"
-                                class="absolute top-1/2 left-full size-5 translate-x-1 -translate-y-1/2"
-                                aria-hidden="true"
-                            />
-                        </div>
+                            <span v-else aria-hidden="true" />
 
-                        <div
-                            class="font-belanosima text-lg leading-tight wrap-anywhere"
-                        >
-                            {{ pageTitle(nextPage) }}
+                            <NuxtLink
+                                v-if="nextPage"
+                                class="group flex min-w-0 flex-col items-end gap-1 text-right text-on-surface no-underline transition hover:-translate-y-px hover:underline focus-visible:-translate-y-px focus-visible:underline"
+                                :to="nextPage.path"
+                            >
+                                <div
+                                    class="relative font-momo-trust-display text-sm text-accent"
+                                >
+                                    <span>Next</span>
+                                    <Icon
+                                        icon="lucide:chevron-right"
+                                        class="absolute top-1/2 left-full size-5 translate-x-1 -translate-y-1/2"
+                                        aria-hidden="true"
+                                    />
+                                </div>
+
+                                <div
+                                    class="font-belanosima text-lg leading-tight wrap-anywhere"
+                                >
+                                    {{ pageTitle(nextPage) }}
+                                </div>
+                            </NuxtLink>
                         </div>
-                    </NuxtLink>
-                </div>
+                    </div>
+                </nav>
             </div>
-        </nav>
+            <aside
+                v-if="tocLinks.length"
+                class="contents"
+                aria-label="Page contents"
+            >
+                <ContentBar :toc="tocLinks" />
+            </aside>
+        </div>
     </article>
 </template>

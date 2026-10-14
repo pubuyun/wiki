@@ -96,7 +96,19 @@ watchEffect(() => {
 
 <style scoped>
 .category-page {
-    --category-header-height: 2.75rem;
+    --category-header-height: 3rem;
+}
+
+@media (min-width: 40rem) {
+    .category-page {
+        --category-header-height: 2.5rem;
+    }
+}
+
+@media (min-width: 64rem) {
+    .category-page {
+        --category-header-height: 2.75rem;
+    }
 }
 
 @media (min-width: 80rem) {

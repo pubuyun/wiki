@@ -25,8 +25,6 @@ withDefaults(
             'banner--raised': imgFit === 'raised',
         }"
         :style="{
-            '--banner-position': imgPosition,
-            '--banner-mobile-position': imgMobilePosition ?? imgPosition,
             '--banner-background': imgBackground,
         }"
     >
@@ -40,7 +38,7 @@ withDefaults(
             alt=""
         />
         <div
-            class="banner-heading relative col-start-1 row-start-1 min-w-0 self-end"
+            class="banner-heading category-content-shell relative col-start-1 row-start-1 min-w-0 self-end"
         >
             <span class="banner-accent block" aria-hidden="true" />
             <h1
@@ -54,12 +52,18 @@ withDefaults(
 
 <style scoped>
 .banner {
+    --banner-max-height: calc(100svh - var(--category-header-height, 3rem));
     background-color: var(--banner-background, var(--surface));
 }
 
+.banner--with-image {
+    max-height: var(--banner-max-height);
+}
+
 .banner-image {
-    object-fit: contain;
-    object-position: var(--banner-position);
+    max-height: var(--banner-max-height);
+    object-fit: cover;
+    object-position: center;
     z-index: -2;
 }
 
@@ -97,7 +101,6 @@ withDefaults(
 
 .banner-heading {
     padding-block: clamp(2rem, 5cqi, 4rem);
-    padding-inline: clamp(1rem, 2.75cqi, 3rem);
 }
 
 .banner-accent {
@@ -118,11 +121,5 @@ withDefaults(
 
 .banner--with-image .banner-title {
     color: #f8ffff;
-}
-
-@media (max-width: 40rem) {
-    .banner-image {
-        object-position: var(--banner-mobile-position);
-    }
 }
 </style>

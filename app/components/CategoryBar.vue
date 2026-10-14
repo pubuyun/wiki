@@ -33,8 +33,14 @@
                 :aria-current="titleTo === activePath ? 'page' : undefined"
             >
                 <span
-                    ref="titleText"
-                    class="inline-block [font-size:calc(1em*var(--category-sidebar-title-font-scale,1))]"
+                    class="inline-block shrink-0 [font-size:calc(1em*var(--category-sidebar-title-font-scale,1))]"
+                >
+                    {{ title }}
+                </span>
+                <span
+                    ref="titleMeasure"
+                    class="pointer-events-none invisible absolute w-max"
+                    aria-hidden="true"
                 >
                     {{ title }}
                 </span>
@@ -240,7 +246,7 @@ const collapsed = useState<boolean>("category-sidebar-collapsed", () => false);
 const contentRendered = ref(!collapsed.value);
 const contentVisible = ref(!collapsed.value);
 const contentScroll = ref<HTMLDivElement | null>(null);
-const titleText = ref<HTMLElement | null>(null);
+const titleMeasure = ref<HTMLElement | null>(null);
 const titleFontScale = ref(1);
 const expandedItems = ref<string[]>([]);
 const canScrollUp = ref(false);
@@ -249,7 +255,6 @@ const transitionDuration = 200;
 const contentId = "category-sidebar-nav";
 let contentRevealTimer: ReturnType<typeof setTimeout> | undefined;
 let titleResizeObserver: ResizeObserver | undefined;
-let titleScaleFrame: number | undefined;
 
 const sidebarClass = computed(() => [
     "category-sidebar sticky top-0 h-screen max-h-screen flex-col overflow-hidden bg-surface-sidebar font-momo-trust-display font-normal text-on-surface transition-[width,height,padding,translate] duration-200 ease-out",
@@ -331,45 +336,34 @@ function updateScrollGradients() {
 }
 
 function updateTitleScale() {
-    const el = titleText.value;
+    const el = titleMeasure.value;
     const container = el?.parentElement;
     if (!el || !container) return;
 
-    if (titleScaleFrame !== undefined) {
-        cancelAnimationFrame(titleScaleFrame);
-    }
+    // Measure at the inherited font size without resetting the visible title.
+    // Apply the result synchronously so mounts/resizes cannot paint at scale 1.
+    const styles = getComputedStyle(container);
+    const availableWidth =
+        container.clientWidth -
+        Number.parseFloat(styles.paddingLeft) -
+        Number.parseFloat(styles.paddingRight);
+    const textWidth = el.scrollWidth;
 
-    titleFontScale.value = 1;
-    titleScaleFrame = requestAnimationFrame(() => {
-        titleScaleFrame = undefined;
-        const styles = getComputedStyle(container);
-        const availableWidth =
-            container.clientWidth -
-            Number.parseFloat(styles.paddingLeft) -
-            Number.parseFloat(styles.paddingRight);
-        const textWidth = el.scrollWidth;
-
-        titleFontScale.value =
-            availableWidth > 0 && textWidth > availableWidth
-                ? Math.max(0.6, availableWidth / textWidth)
-                : 1;
-    });
+    titleFontScale.value =
+        availableWidth > 0 && textWidth > availableWidth
+            ? Math.max(0.6, availableWidth / textWidth)
+            : 1;
 }
 
 async function refreshTitleScale() {
     await nextTick();
-    await new Promise<void>((resolve) =>
-        requestAnimationFrame(() => resolve()),
-    );
+    updateTitleScale();
 
     if (dyslexiaMode.value) {
         await document.fonts.load("1em OpenDyslexic", props.title);
     }
 
     await document.fonts.ready;
-    await new Promise<void>((resolve) =>
-        requestAnimationFrame(() => resolve()),
-    );
     updateTitleScale();
 }
 
@@ -444,23 +438,21 @@ watch(contentScroll, (newVal) => {
     }
 });
 
-watch(titleText, (newVal) => {
-    titleResizeObserver?.disconnect();
-
-    if (newVal) {
-        titleResizeObserver = new ResizeObserver(updateTitleScale);
-        titleResizeObserver.observe(newVal.parentElement!);
-        updateTitleScale();
-    }
-});
-
 watch(
-    () => props.title,
-    async () => {
-        await nextTick();
-        updateTitleScale();
+    titleMeasure,
+    (newVal) => {
+        titleResizeObserver?.disconnect();
+
+        if (newVal) {
+            titleResizeObserver = new ResizeObserver(updateTitleScale);
+            titleResizeObserver.observe(newVal.parentElement!);
+            updateTitleScale();
+        }
     },
+    { flush: "post" },
 );
+
+watch(() => props.title, updateTitleScale, { flush: "post" });
 
 watch(dyslexiaMode, () => void refreshTitleScale(), { flush: "post" });
 
@@ -472,9 +464,6 @@ onMounted(() => {
 onBeforeUnmount(() => {
     clearContentRevealTimer();
     titleResizeObserver?.disconnect();
-    if (titleScaleFrame !== undefined) {
-        cancelAnimationFrame(titleScaleFrame);
-    }
     document.fonts.removeEventListener("loadingdone", handleFontLoadingDone);
 });
 </script>
