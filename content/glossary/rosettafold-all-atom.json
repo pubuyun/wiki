@@ -1,0 +1,9 @@
+{
+    "term": [
+        "RoseTTAFold All-Atom",
+        "RosettaFoldAA",
+        "RosettaFold AA"
+    ],
+    "detail": "A neural structure prediction model for complexes containing proteins, nucleic acids, small molecules, metals, and covalent modifications.",
+    "link": "https://github.com/baker-laboratory/RoseTTAFold-All-Atom"
+}

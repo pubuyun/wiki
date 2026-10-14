@@ -1,0 +1,5 @@
+{
+    "term": "CHARMM-GUI",
+    "detail": "A web-based interface that prepares molecular systems and input files for molecular dynamics simulation engines.",
+    "link": "https://www.charmm-gui.org/"
+}

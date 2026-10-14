@@ -80,7 +80,10 @@ async function main() {
   if (['.png', '.jpg', '.jpeg', '.webp'].includes(extension)) {
     candidates.add(`${path.parse(name).name}.avif`);
   }
-  if (!values.overwrite && before.files?.some(f => candidates.has(f.name))) {
+  // iGEM normalizes stored filenames to lowercase, including unconverted WebP.
+  const normalizedCandidates = new Set([...candidates].map(candidate => candidate.toLowerCase()));
+  const matchesFilename = file => normalizedCandidates.has(file.name.toLowerCase());
+  if (!values.overwrite && before.files?.some(matchesFilename)) {
     throw new Error('This destination already contains the filename or AVIF equivalent. Use --overwrite intentionally.');
   }
   const form = new FormData();
@@ -107,7 +110,7 @@ async function main() {
   // Read the actual stored URL rather than assuming the original extension survived.
   for (let attempt = 0; attempt < 10; attempt++) {
     const listing = await request(route);
-    const stored = listing.files?.find(f => candidates.has(f.name));
+    const stored = listing.files?.find(matchesFilename);
     if (stored?.url) {
       console.log(`Stored: ${stored.name}\nURL: ${stored.url}`);
       return;

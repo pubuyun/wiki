@@ -1,12 +1,26 @@
+<script setup lang="ts">
+import { inject } from "vue";
+
+const captionId = inject<string | undefined>(
+    "wiki-table-caption-id",
+    undefined,
+);
+</script>
+
 <template>
     <div
-        class="my-8 max-w-full overflow-x-auto rounded-lg border border-outline focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-outline"
+        class="max-w-full overflow-x-auto rounded-lg border border-outline focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-outline"
+        :class="{ 'my-8': !captionId }"
         role="region"
-        aria-label="Scrollable data table"
+        :aria-label="captionId ? undefined : 'Scrollable data table'"
+        :aria-labelledby="captionId"
         tabindex="0"
     >
-        <table class="w-full border-collapse text-left text-sm shadow-sm">
-            <caption class="sr-only">
+        <table
+            class="w-full border-collapse text-left text-sm shadow-sm"
+            :aria-labelledby="captionId"
+        >
+            <caption v-if="!captionId" class="sr-only">
                 Data table
             </caption>
             <slot />
@@ -15,6 +29,12 @@
 </template>
 
 <style scoped>
+table {
+    /* Keep prose's emergency wrapping from shrinking columns to single letters. */
+    overflow-wrap: normal;
+    word-break: normal;
+}
+
 /* The rounded container draws the perimeter; cells draw the internal grid. */
 :deep(tr > :first-child) {
     border-left: 0;

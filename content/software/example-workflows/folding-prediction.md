@@ -25,7 +25,7 @@ Load `Rosetta Cofolding` from the **Presets** list in the header. This is the sh
 
 ### 1. Load sequences
 
-The **Sequence Input** node reads a *FASTA* file. Each record becomes an item in a `Batch Sequence` type, allowing several designs to be processed in one run.
+The **Sequence Input** node reads a FASTA file. Each record becomes an item in a `Batch Sequence` type, allowing several designs to be processed in one run.
 
 Two inputs are provided:
 
@@ -37,7 +37,7 @@ Upload one of these files in **Sequence Input**. For a new dataset, use unique, 
 
 ### 2. Add an optional ligand
 
-The **Ligand Input** accepts a ligand *PDB* and connects it to RF3. Remove this input for protein-only prediction. When a ligand is supplied, FoundryUI converts its representation for RF3 and retains ligand context in the predicted output.
+The **Ligand Input** accepts a ligand PDB and connects it to RF3. Remove this input for protein-only prediction. When a ligand is supplied, FoundryUI converts its representation for RF3 and retains ligand context in the predicted output.
 
 ### 3. Configure RosettaFold3
 

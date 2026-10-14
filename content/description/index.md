@@ -1,8 +1,11 @@
 ---
 title: Description
-banner: https://static.igem.wiki/teams/6133/wiki/project/description/banner.avif
-bannerPosition: 25% center
+banner: https://static.igem.wiki/teams/6133/wiki/general/banners/description.avif
+bannerPosition: 45% 45%
 description: this is the description page
+bannerWidth: 3800
+bannerHeight: 1792
+bannerMobilePosition: 65% 40%
 ---
 
 ## Overview

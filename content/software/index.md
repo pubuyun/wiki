@@ -1,8 +1,15 @@
 ---
-title: "Overview"
-description: "Motivation, implementation, and educational use of FoundryUI for visual computational protein design."
+title: "Software"
+banner: https://static.igem.wiki/teams/6133/wiki/general/banners/software.avif
+bannerPosition: 100% 15%
+# description: "Motivation, implementation, and educational use of FoundryUI for visual computational protein design."
 hasReference: false
 order: 0
+bannerWidth: 2172
+bannerHeight: 724
+bannerMobilePosition: 100% 30%
+bannerFit: raised
+bannerBackground: "#063568"
 ---
 
 ## FoundryUI
@@ -29,7 +36,7 @@ This creates a barrier for users who understand the biological question but are 
 
 ## Implementation
 
-FoundryUI brings these operations into a GUI workspace. Users connect nodes for inputs, generation, sequence redesign, folding, filtering, visualization, and saving. We included pre-designed workflows for ligand-binder design, protein-binder design, enzyme design, *MPNN* sequence design, and folding prediction.
+FoundryUI brings these operations into a GUI workspace. Users connect nodes for inputs, generation, sequence redesign, folding, filtering, visualization, and saving. We included pre-designed workflows for ligand-binder design, protein-binder design, enzyme design, MPNN sequence design, and folding prediction.
 
 - **Typed connections** prevent users from linking incompatible data.
 
@@ -41,7 +48,7 @@ FoundryUI brings these operations into a GUI workspace. Users connect nodes for 
 
 The node-based visual programming interface is inspired by ComfyUI. Each node performs a specific task, while the connections show how data move through the flow. This makes the workflow easier to explain, modify, and reuse than a script. Teams can start from a supplied workflow, replace inputs, adjust design constraints and filters, then save the workflow for another project.
 
-FoundryUI connects four main design tools from [*Rosetta Foundry*](https://github.com/RosettaCommons/foundry/): *RFdiffusion3*^1, *RosettaFold3*^2, *ProteinMPNN*^3, and *LigandMPNN*^4. It supports common scientific formats, including *PDB*, *FASTA*, *mmCIF*, *SMILES*, JSON, and CSV, so outputs remain available for use in other software.
+FoundryUI connects four main design tools from [*Rosetta Foundry*](https://github.com/RosettaCommons/foundry/): *RFdiffusion3*^1, *RosettaFold3*^2, *ProteinMPNN*^3, and *LigandMPNN*^4. It supports common scientific formats, including PDB, FASTA, mmCIF, SMILES, JSON, and CSV, so outputs remain available for use in other software.
 
 ## Does it work?
 

@@ -1,0 +1,5 @@
+{
+    "term": "Proteina-Complexa",
+    "detail": "A generative model for protein complex design that jointly models backbone geometry, side-chain conformations, and sequences, with search-based optimization.",
+    "link": "https://github.com/NVIDIA-BioNeMo/Proteina-Complexa"
+}

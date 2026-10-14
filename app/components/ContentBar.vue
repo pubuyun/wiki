@@ -94,10 +94,20 @@ function updateScrollGradients() {
 }
 
 function revealFocusedLink(event: FocusEvent) {
+    revealLink(event.target as HTMLElement);
+}
+
+function revealActiveLink() {
+    const link = contentList.value?.querySelector<HTMLElement>(
+        '[aria-current="location"]',
+    );
+    if (link) revealLink(link);
+}
+
+function revealLink(link: HTMLElement) {
     const viewport = contentScroll.value;
     if (!viewport) return;
 
-    const link = event.target as HTMLElement;
     const linkBounds = link.getBoundingClientRect();
     const viewportBounds = viewport.getBoundingClientRect();
     const viewportStyle = getComputedStyle(viewport);
@@ -294,6 +304,7 @@ function setupScrollSpy() {
     };
     const updateLayout = () => {
         needsMeasurement = true;
+        revealActiveLink();
         updateScrollGradients();
         update();
     };
@@ -330,6 +341,8 @@ function setupScrollSpy() {
 
     updateLayout();
 }
+
+watch(activeId, revealActiveLink, { flush: "post" });
 
 watch(
     () => props.toc,

@@ -1,5 +1,0 @@
-{
-    "term": "MPNN",
-    "detail": "Message-passing neural network, a graph neural-network architecture that updates node representations by exchanging information along graph edges.",
-    "link": "https://arxiv.org/abs/1704.01212"
-}

@@ -30,7 +30,7 @@ const contentLayout = useContentLayoutState();
 
 watchEffect(() => {
     contentLayout.value = {
-        pageTitle: page.value?.title ?? "",
+        pageTitle: categoryTitle.value,
         categoryTitle: categoryTitle.value,
         categoryPath: categoryPath.value,
         categoryNavNodes: categoryNavNodes.value,
@@ -62,25 +62,22 @@ watchEffect(() => {
             />
 
             <div
-                class="flex min-w-0 flex-1 flex-col portrait:pt-12 sm:portrait:pt-10 lg:portrait:pt-11 xl:portrait:pt-14"
+                class="category-page flex min-w-0 flex-1 flex-col pt-12 sm:pt-10 lg:pt-11 xl:pt-14"
             >
                 <Banner
                     v-if="page"
-                    class="portrait:hidden"
-                    :title="page.title"
+                    :title="categoryTitle"
                     :img-src="page.meta?.banner"
+                    :img-width="page.meta?.bannerWidth"
+                    :img-height="page.meta?.bannerHeight"
                     :img-position="page.meta?.bannerPosition"
-                    :description="
-                        page.path === categoryPath
-                            ? pageDescription(page)
-                            : undefined
-                    "
+                    :img-mobile-position="page.meta?.bannerMobilePosition"
+                    :img-fit="page.meta?.bannerFit"
+                    :img-background="page.meta?.bannerBackground"
                 />
-                <h1 v-if="page" class="sr-only landscape:hidden">
-                    {{ page.title }}
-                </h1>
-                <hr class="mx-12 portrait:hidden" />
-                <div class="flex min-w-0 flex-1 flex-col pt-6 pb-20">
+                <div
+                    class="category-reading-region flex min-w-0 flex-1 flex-col pb-20"
+                >
                     <slot />
                 </div>
             </div>
@@ -96,3 +93,19 @@ watchEffect(() => {
         <ClickAnimation />
     </div>
 </template>
+
+<style scoped>
+.category-page {
+    --category-header-height: 2.75rem;
+}
+
+@media (min-width: 80rem) {
+    .category-page {
+        --category-header-height: 3.5rem;
+    }
+}
+
+.category-reading-region {
+    padding-top: 0.75rem;
+}
+</style>

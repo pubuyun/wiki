@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { defineAsyncComponent } from "vue";
+import DocumentCaption from "./DocumentCaption.vue";
 
 const LightboxImageOverlay = defineAsyncComponent(
     () => import("./LightBox/LightboxImageOverlay.client.vue"),
@@ -8,6 +9,7 @@ const props = defineProps<{
     src: string[];
     alt?: string | string[];
     caption?: string | string[];
+    imageBackground?: string;
     width?: number | string;
     height?: number | string;
 }>();
@@ -41,13 +43,15 @@ defineExpose({ open });
         <span
             v-if="$slots.default && imageCaption(0)"
             role="figure"
-            :aria-label="imageCaption(0)"
+            :aria-label="
+                imageCaption(0)
+                    .replace(/<[^>]+>/g, '')
+                    .replace(/\*/g, '')
+            "
             class="my-8 block max-w-full min-w-0"
         >
             <slot :open="open" />
-            <span class="lightbox-image-caption">
-                {{ imageCaption(0) }}
-            </span>
+            <DocumentCaption :text="imageCaption(0)" />
         </span>
         <slot v-else :open="open">
             <figure
@@ -70,17 +74,17 @@ defineExpose({ open });
                         :alt="imageAlt(imageIndex)"
                         :width="width"
                         :height="height"
+                        :style="{ backgroundColor: imageBackground }"
                         class="h-auto max-w-full rounded-2xl"
                         decoding="async"
                         loading="lazy"
                     />
                 </button>
-                <figcaption
+                <DocumentCaption
                     v-if="imageCaption(imageIndex)"
-                    class="lightbox-image-caption"
-                >
-                    {{ imageCaption(imageIndex) }}
-                </figcaption>
+                    as="figcaption"
+                    :text="imageCaption(imageIndex)"
+                />
             </figure>
         </slot>
 
@@ -90,20 +94,9 @@ defineExpose({ open });
             :src="src"
             :alt="alt"
             :index="index"
+            :image-background="imageBackground"
             @hide="visible = false"
             @update:index="index = $event"
         />
     </span>
 </template>
-
-<style scoped>
-.lightbox-image-caption {
-    display: block;
-    margin-top: 1rem;
-    font-family: Georgia, "Times New Roman", serif;
-    font-size: 1rem;
-    line-height: 1.5;
-    text-align: justify;
-    overflow-wrap: anywhere;
-}
-</style>

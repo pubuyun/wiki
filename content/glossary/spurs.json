@@ -1,0 +1,5 @@
+{
+    "term": "SPURS",
+    "detail": "Stability prediction using a rewired strategy, a model that combines protein sequence and structure representations to predict mutation-induced changes in protein stability.",
+    "link": "https://github.com/luo-group/SPURS"
+}

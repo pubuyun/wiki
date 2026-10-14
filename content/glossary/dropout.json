@@ -1,0 +1,8 @@
+{
+    "term": [
+        "dropout",
+        "Dropout"
+    ],
+    "detail": "A neural-network technique that randomly sets a fraction of activations to zero to reduce dependence on individual units; repeated stochastic passes can also sample variation in predictions.",
+    "link": "https://docs.pytorch.org/docs/stable/generated/torch.nn.Dropout.html"
+}

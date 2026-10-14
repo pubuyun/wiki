@@ -1,0 +1,5 @@
+{
+    "term": "LASErMPNN",
+    "detail": "An all-atom, ligand-conditioned neural network for protein sequence design and side-chain packing that includes hydrogen atoms.",
+    "link": "https://github.com/polizzilab/LASErMPNN"
+}

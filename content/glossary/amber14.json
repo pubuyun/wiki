@@ -1,0 +1,5 @@
+{
+    "term": "Amber14",
+    "detail": "A collection of Amber molecular force-field parameter sets distributed by OpenMM for simulating biomolecular systems.",
+    "link": "https://docs.openmm.org/latest/userguide/application/02_running_sims.html#amber14"
+}

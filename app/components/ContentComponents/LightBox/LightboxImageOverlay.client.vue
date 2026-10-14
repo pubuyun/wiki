@@ -14,6 +14,7 @@ const props = defineProps<{
     src: string[];
     alt?: string | string[];
     index: number;
+    imageBackground?: string;
 }>();
 
 const images = computed(() =>
@@ -49,98 +50,123 @@ watch(
 </script>
 
 <template>
-    <VueEasyLightbox
-        :visible="visible"
-        :imgs="images"
-        :index="index"
-        teleport="body"
-        @hide="$emit('hide')"
-        @on-index-change="
-            (_oldIndex, newIndex) => $emit('update:index', newIndex)
-        "
-    >
-        <template #toolbar="{ toolbarMethods }">
-            <aside
-                class="lightbox-toolbar fixed right-4 bottom-4 z-9999"
-                aria-label="Image controls"
+    <Teleport to="body">
+        <div
+            class="contents"
+            :style="{
+                '--lightbox-image-background': imageBackground ?? 'transparent',
+            }"
+        >
+            <VueEasyLightbox
+                :visible="visible"
+                :imgs="images"
+                :index="index"
+                @hide="$emit('hide')"
+                @on-index-change="
+                    (_oldIndex, newIndex) => $emit('update:index', newIndex)
+                "
             >
-                <div class="grid grid-cols-2 gap-2">
-                    <Transition appear name="lightbox-tool-top-left">
-                        <button
-                            type="button"
-                            class="lightbox-tool-button"
-                            style="grid-area: 1 / 1"
-                            title="Zoom in"
-                            aria-label="Zoom in"
-                            @click="(toolbarMethods as ToolbarMethods).zoomIn"
-                        >
-                            <Icon
-                                icon="lucide:zoom-in"
-                                class="size-6"
-                                aria-hidden="true"
-                            />
-                        </button>
-                    </Transition>
+                <template #toolbar="{ toolbarMethods }">
+                    <aside
+                        class="lightbox-toolbar fixed right-4 bottom-4 z-9999"
+                        aria-label="Image controls"
+                    >
+                        <div class="grid grid-cols-2 gap-2">
+                            <Transition appear name="lightbox-tool-top-left">
+                                <button
+                                    type="button"
+                                    class="lightbox-tool-button"
+                                    style="grid-area: 1 / 1"
+                                    title="Zoom in"
+                                    aria-label="Zoom in"
+                                    @click="
+                                        (toolbarMethods as ToolbarMethods)
+                                            .zoomIn
+                                    "
+                                >
+                                    <Icon
+                                        icon="lucide:zoom-in"
+                                        class="size-6"
+                                        aria-hidden="true"
+                                    />
+                                </button>
+                            </Transition>
 
-                    <Transition appear name="lightbox-tool-top-right">
-                        <button
-                            type="button"
-                            class="lightbox-tool-button"
-                            style="grid-area: 1 / 2"
-                            title="Reset zoom"
-                            aria-label="Reset zoom"
-                            @click="(toolbarMethods as ToolbarMethods).resize"
-                        >
-                            <Icon
-                                icon="lucide:scan"
-                                class="size-6"
-                                aria-hidden="true"
-                            />
-                        </button>
-                    </Transition>
+                            <Transition appear name="lightbox-tool-top-right">
+                                <button
+                                    type="button"
+                                    class="lightbox-tool-button"
+                                    style="grid-area: 1 / 2"
+                                    title="Reset zoom"
+                                    aria-label="Reset zoom"
+                                    @click="
+                                        (toolbarMethods as ToolbarMethods)
+                                            .resize
+                                    "
+                                >
+                                    <Icon
+                                        icon="lucide:scan"
+                                        class="size-6"
+                                        aria-hidden="true"
+                                    />
+                                </button>
+                            </Transition>
 
-                    <Transition appear name="lightbox-tool-bottom-left">
-                        <button
-                            type="button"
-                            class="lightbox-tool-button"
-                            style="grid-area: 2 / 1"
-                            title="Zoom out"
-                            aria-label="Zoom out"
-                            @click="(toolbarMethods as ToolbarMethods).zoomOut"
-                        >
-                            <Icon
-                                icon="lucide:zoom-out"
-                                class="size-6"
-                                aria-hidden="true"
-                            />
-                        </button>
-                    </Transition>
+                            <Transition appear name="lightbox-tool-bottom-left">
+                                <button
+                                    type="button"
+                                    class="lightbox-tool-button"
+                                    style="grid-area: 2 / 1"
+                                    title="Zoom out"
+                                    aria-label="Zoom out"
+                                    @click="
+                                        (toolbarMethods as ToolbarMethods)
+                                            .zoomOut
+                                    "
+                                >
+                                    <Icon
+                                        icon="lucide:zoom-out"
+                                        class="size-6"
+                                        aria-hidden="true"
+                                    />
+                                </button>
+                            </Transition>
 
-                    <Transition appear name="lightbox-tool-bottom-right">
-                        <button
-                            type="button"
-                            class="lightbox-tool-button"
-                            style="grid-area: 2 / 2"
-                            title="Rotate right 90 degrees"
-                            aria-label="Rotate right 90 degrees"
-                            @click="
-                                (toolbarMethods as ToolbarMethods).rotateRight
-                            "
-                        >
-                            <Icon
-                                icon="lucide:rotate-cw"
-                                class="size-6"
-                                aria-hidden="true"
-                            />
-                        </button>
-                    </Transition>
-                </div>
-            </aside>
-        </template>
-    </VueEasyLightbox>
+                            <Transition
+                                appear
+                                name="lightbox-tool-bottom-right"
+                            >
+                                <button
+                                    type="button"
+                                    class="lightbox-tool-button"
+                                    style="grid-area: 2 / 2"
+                                    title="Rotate right 90 degrees"
+                                    aria-label="Rotate right 90 degrees"
+                                    @click="
+                                        (toolbarMethods as ToolbarMethods)
+                                            .rotateRight
+                                    "
+                                >
+                                    <Icon
+                                        icon="lucide:rotate-cw"
+                                        class="size-6"
+                                        aria-hidden="true"
+                                    />
+                                </button>
+                            </Transition>
+                        </div>
+                    </aside>
+                </template>
+            </VueEasyLightbox>
+        </div>
+    </Teleport>
 </template>
 
 <style scoped>
+:global(.vel-img) {
+    background-color: var(--lightbox-image-background, transparent);
+}
+
 :global(.vel-fade-enter-active) {
     transition-duration: 0s;
 }

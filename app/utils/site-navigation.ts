@@ -95,7 +95,9 @@ export const siteNavGroups: SiteNavGroup[] = [
                 to: "/model",
                 label: "Model",
                 icon: "carbon:model-alt",
-                children: [{ to: "/viewbinder", label: "Binder Viewer" }],
+                children: [
+                    { to: "/structureviewer", label: "Structure Viewer" },
+                ],
             },
             {
                 to: "/software",

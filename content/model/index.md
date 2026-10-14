@@ -1,458 +1,599 @@
 ---
-title: Model
-citationIds:
-  - "3"
-  - "1"
-  - "2"
-  - "4"
-  - "5"
-description: Integrated modeling workflow for precursor binders, transporter binders, and enzyme engineering.
+title: "Overview"
+description: "Computational modeling of precursor sequestration, transporter inhibition, CGTase engineering, and protein optimization using a Characterize–DBTL framework."
 hasReference: false
-order: 0
-banner: https://static.igem.wiki/teams/6133/wiki/drylab/model/bindercg3m3shcartoon.avif
+order: 1
+banner: https://static.igem.wiki/teams/6133/wiki/general/banners/model.avif
+bannerWidth: 3600
+bannerHeight: 1400
+bannerFit: raised
+bannerBackground: "#14274e"
+bannerPosition: 50% 10%
+bannerMobilePosition: 50% 10%
 ---
 
-## Overview
+## Key success
 
-### ECharts Rendering Test
+- Among 9 tested **precursor binders** designed by *RFdiffusion3* and *Proteina-Complexa*, 4 displayed significant reduction in 3M3SH production compared to the control group.
 
-::content-components-echarts
+- Among 5 designed **transporter binders** aiming to restrict conformational change, 4 showed significant reduction in 3M3SH production, with a maximum reduction of 21%
+
+- We identified wild-type **CGTase** as a functional starting enzyme for Cys-Gly-3M3SH modification, supported by experimental activity relative to control.
+
+- We developed a **Characterize–DBTL framework** that translates understanding of biological mechanisms into explicit design requirements.
+
+- We compared **RFdiffusion3** and **Proteina-Complexa** for designing Cys-Gly-(S)-3M3SH binders, examining how computational metrics relate to experimental responses.
+
+- We uploaded all our **automation scripts** and built **[software](/software)** for the computational modeling process, providing reusable workflows for future iGEM teams.
+
+## Abstract
+
+Axillary odor arises when *Staphylococcus hominis* imports and metabolizes the odorless precursor Cys-Gly-3M3SH. To reduce precursor availability or uptake, we developed three solution strategies: a *de novo* small-molecule binding protein that sequesters the precursor Cys-Gly-3M3SH, a *de novo* protein-binding protein that inhibits the conformational changes of the transporter *PepT<sub>Sh</sub>*, and an enzyme that chemically modifies the precursor to make it unrecognizable to the transporter. We also carried out thermostability optimizations for the enzyme.
+
+We introduced a Characterize stage before the conventional DBTL cycle to translate biological mechanisms and application conditions into explicit design requirements. For computational design pipelines (precursor binder, transporter binder, optimizations), we developed a decision-gated workflow. It progressively filters candidates using outputs from each computational evaluation, prioritizing the most reliable candidates for wet-lab testing.
+
+Experimental assays supported wild-type CGTase activity toward the precursor. Comparisons between computational metrics and experimental responses of the binders revealed that metric performance depended on the design route, highlighting the need for further experimental feedback when selecting evaluation criteria. 
+
+Together, our workflow and automated scripts provide a reusable framework for future iGEM teams who aim to integrate computational protein design with limited experimental resources. Combined with our wet-lab efforts, this work paves the way for further development of targeted interventions against axillary odor.
+
+## Introduction
+
+Since Cys-Gly-3M3SH first needs to be imported into the *S. hominis* cytoplasm via a peptide transporter (PepT<sub>Sh</sub>), we hypothesized that preventing Cys-Gly-3M3SH uptake could prevent odor formation, while aiming to avoid broadly suppressing the resident skin microbiota. :fn-ref{#1} We developed three protein-engineering strategies to reduce odor-precursor availability or uptake through distinct mechanisms.
+
+::content-components-lightbox-image
 ---
-description: "Example data: A has a value of 10 and B has a value of 20."
-height: "400"
-label: Example bar chart
+src:
+  - https://static.igem.wiki/teams/6133/wiki/drylab/model/overview-fig1.avif
+alt:
+  - ""
+caption: "Fig. 1 | Schematic for the three solutions. Precursor binder sequesters the precursor, preventing the uptake by PepT<sub>Sh</sub> transporter; Transporter binder binds to PepT<sub>Sh</sub> transporter directly, preventing the uptake; CGTase chemically modifies the precursor by adding an additional group, making it unrecognizable for PepT<sub>Sh</sub>"
+imageBackground: white
 ---
-```js
-option = {
-    xAxis: { data: ["A", "B"] },
-    yAxis: {},
-    series: [{ type: "bar", data: [10, 20] }],
-};
-```
+
 ::
 
-### Two Panels
+- **Precursor Binder:** selective protein binders for Cys-Gly-3M3SH designed using two different deep-learning based design tools.
 
-::content-components-panel-layout
+    - **Precursor Binder Affinity Optimization:** precursor binders that displayed binding ability were selected for further affinity optimization
+
+- **Transporter Binder:** a protein binder that could limit this uptake through blocking the transporter. 
+
+- **CGTase**: an enzyme that we characterized could covalently modify the precursor, attaching an additional group to the precursor before bacterial uptake.
+
+    - **CGTase Thermal Stability Optimization:** Two computationally designed CGTase parents (T370K and T370R/F183W) were selected for further thermal stability optimization. Sequencing identified the intended experimental T370K variant as T370L, which is labeled T370L in the experimental result plots.
+
+## Characterize–DBTL Framework
+
+### Why Characterize
+
+As systems-level and mechanistic understanding of biological systems continues to advance, synthetic biology design is expanding beyond the design of genetic sequences toward the development of context-specific solutions based on biological mechanisms. :fn-ref{#2}
+
+We therefore introduced a **Characterize** stage before the conventional DBTL cycle. By analysing the biological mechanism, target, structural context, and application environment, this stage translates biological understanding into explicit design specifications that define what should be designed and which constraints the resulting solution must satisfy.
+
+::content-components-lightbox-image
 ---
-height: 24rem
-label: Two panels example
+src:
+  - https://static.igem.wiki/teams/6133/wiki/drylab/model/overview-fig2.avif
+alt:
+  - "Problem definition, target definition, mechanistic characterization, and design specification lead into the Design–Build–Test–Learn cycle."
+caption: "Fig. 2 | **Schematic for Characterize stage and its four substages**, showing the progression from problem definition to design specification, and finally to conventional DBTL cycle. Characterize stage directly connects to design stage by outputting design specifications."
+imageBackground: white
 ---
-#left
-This layout accepts **Markdown or any MDC component** in either panel. Drag the divider to adjust the widths, or focus it and use the arrow keys.
 
-On smaller screens, the panels stack in reading order and expand to fit their content.
-
-- Images keep their original proportions.
-- Select the image to open an enlarged view.
-
-#right
-![Illustration of Expelliodor spray and enzyme mechanisms](https://static.igem.wiki/teams/6133/wiki/project/description/banner.avif){height="2019" width="4269"}
 ::
 
-### One Left, Two Right
+### Substages
 
-::content-components-panel-layout
+Specifically, the Characterize stage includes the following substages:
+
+#### **1. Problem Definition**
+
+**Establish what the design is expected to achieve.**
+
+Define the biological problem, intended outcome, application context, and potential point of intervention. 
+
+#### **2. Target Definition**
+
+**Specify the biological entity to be engineered**
+
+This may be a molecule, protein, conformational state, interaction interface, or biochemical reaction. Relevant boundaries are also defined.
+
+#### **3. Mechanistic Characterization**
+
+**Investigate the biological and molecular mechanisms underlying the proposed design strategy.** 
+
+Available experimental, structural, and computational evidence is used to assess mechanistic plausibility.
+
+#### **4. Design Specification**
+
+**Translate characterization findings into explicit design requirements.** 
+
+This produces the output directly for design, for example, a molecule to bind, an interface to bind, or a site to modify. This substage connects Characterize and Design stages, and should be the main outcome of characterize stage.
+
+### Project Application  
+
+::content-components-captioned-table
 ---
-height: 32rem
-label: One left, two right example
+caption: "Table 1 | The application of characterize stage in our project."
 ---
-#left
-**Panel A** fills the left column. The right column contains two panels, each of which can hold text, an image, a chart, or another component.
 
-Both the column divider and the right row divider can be resized independently.
+| **Strategy** | **Approach** | **Target** | **Design Specification** |
+| :--- | :--- | :--- | :--- |
+| Precursor binder | Bind the precursor. | Cys-Gly-3M3SH | Use Cys-Gly-(S)-3M3SH and reject structures with wrong chirality. |
+| Transporter binder | Inhibit the transporter. | PepT<sub>Sh</sub> | Target extracellular features of inward-facing 6EXS with an 80–120-residue binder. |
+| CGTase | Chemically modify the precursor. | CGTase & Cys-Gly-3M3SH | Choose the transglycosylation reaction of the precursor catalysed by CGTase. Preserve the catalytic pose and optimize interactions with the carboxylate and hydrophobic tail. |
 
-#right
-**Panel B** opens an enlarged image.
-
-  :::content-components-lightbox-image
-  ---
-  height: 2019
-  src:
-    - https://static.igem.wiki/teams/6133/wiki/project/description/banner.avif
-  width: 4269
-  alt: Illustration of Expelliodor spray and enzyme mechanisms
-  ---
-  :::
-
-#right-bottom
-**Panel C** contains regular Markdown.
-
-- The layout adapts to the available width.
-- The image lightbox continues to work inside a resizable panel.
-  \::
-
-### Two Left, One Right
-
-:content-components-panel-layout{height="24rem" label="Two left, one right example"}
-
-#left
-**Panel A** is the upper left panel.
-
-#left-bottom
-**Panel B** is the lower left panel. Each column decides whether to split vertically from the presence of its bottom slot.
-
-#right
-**Panel C** fills the right column.
-
-![Illustration of Expelliodor spray and enzyme mechanisms](https://static.igem.wiki/teams/6133/wiki/project/description/banner.avif){height="2019" width="4269"}
-\:::
-
-### Four Panels
-
-:content-components-panel-layout{height="32rem" label="Four panels example"}
-
-#left
-**Panel A** contains Markdown.
-
-#left-bottom
-**Panel B** contains a chart.
-
-  :::content-components-echarts
-  ---
-  description: A has a value of 10 and B has a value of 20.
-  height: "180"
-  label: Panel B bar chart
-  ---
-  ```js
-  option = {
-      xAxis: { data: ["A", "B"] },
-      yAxis: {},
-      series: [{ type: "bar", data: [10, 20] }],
-  };
-  ```
-  :::
-
-#right
-**Panel C** contains an image.
-
-![Illustration of Expelliodor spray and enzyme mechanisms](https://static.igem.wiki/teams/6133/wiki/project/description/banner.avif){height="2019" width="4269"}
-
-#right-bottom
-> This is a blockquote with two paragraphs. Lorem ipsum dolor sit amet,
-> consectetuer adipiscing elit. Aliquam hendrerit mi posuere lectus.
-> Vestibulum enim wisi, viverra nec, fringilla in, laoreet vitae, risus.
->
-> Donec sit amet nisl. Aliquam semper ipsum sit amet velit. Suspendisse
-> id sem consectetuer libero luctus adipiscing.> This is a blockquote with two paragraphs. Lorem ipsum dolor sit amet,
-> consectetuer adipiscing elit. Aliquam hendrerit mi posuere lectus.
-> Vestibulum enim wisi, viverra nec, fringilla in, laoreet vitae, risus.> Donec sit amet nisl. Aliquam semper ipsum sit amet velit. Suspendisse
-> id sem consectetuer libero luctus adipiscing.> This is the first level of quoting.
->
-> > This is nested blockquote.
->
-> Back to the first level. :fn-ref{#3} > ## Not a header.
->
-> 1. This is the first list item.
-> 2. This is the second list item.
->
-> Here's some example code:
->
-> ```text
-> return shell_exec("echo $input | $markdown_script");
-> ```
-
-**Panel D** contains a list.
-
-- Resize the two columns with the central divider.
-- Resize each column's rows independently.
-- Narrow layouts stack A, B, C, then D.
-  \::
-
-### LaTeX Rendering Test
-
-Inline math uses single dollar signs, for example \[\[]{.katex-mathml}\[\[\[]{.strut style="height:0.6833em;"} [E]{.mord.mathnormal style="margin-right:0.0576em;"}[]{.mspace style="margin-right:0.2778em;"}[=]{.mrel}[]{.mspace style="margin-right:0.2778em;"} ]{.base}\[\[]{.strut style="height:0.8141em;"} [m]{.mord.mathnormal} \[\[c]{.mord.mathnormal}\[\[\[\[\[\[]{.pstrut style="height:2.7em;"}\[\[2]{.mord.mtight}]{.sizing.reset-size6.size3.mtight}]{style="top:-3.063em;margin-right:0.05em;"}]{.vlist style="height:0.8141em;"}]{.vlist-r}]{.vlist-t}]{.msupsub}]{.mord}]{.base}]{.katex-html ariaHidden="true"}]{.katex}.
-
-Display math uses double dollar signs:
-
-\[\[\[]{.katex-mathml}\[\[\[]{.strut style="height:2.3846em;vertical-align:-0.9703em;"}\[\[∫]{.mop.op-symbol.large-op style="margin-right:0.4445em;position\:relative;top:-0.0011em;"}\[\[\[\[\[\[]{.pstrut style="height:2.7em;"}\[\[\[−]{.mord.mtight} [∞]{.mord.mtight} ]{.mord.mtight}]{.sizing.reset-size6.size3.mtight}]{style="top:-1.7881em;margin-left:-0.4445em;margin-right:0.05em;"}\[\[]{.pstrut style="height:2.7em;"}\[\[\[∞]{.mord.mtight}]{.mord.mtight}]{.sizing.reset-size6.size3.mtight}]{style="top:-3.8129em;margin-right:0.05em;"}]{.vlist style="height:1.4143em;"} [​]{.vlist-s} ]{.vlist-r}\[\[\[]]{.vlist style="height:0.9703em;"}]{.vlist-r}]{.vlist-t.vlist-t2}]{.msupsub}]{.mop} []{.mspace style="margin-right:0.1667em;"} \[\[e]{.mord.mathnormal}\[\[\[\[\[\[]{.pstrut style="height:2.7em;"}\[\[\[−]{.mord.mtight}\[\[x]{.mord.mathnormal.mtight}\[\[\[\[\[\[]{.pstrut style="height:2.5em;"}\[\[2]{.mord.mtight}]{.sizing.reset-size3.size1.mtight}]{style="top:-2.931em;margin-right:0.0714em;"}]{.vlist style="height:0.8913em;"}]{.vlist-r}]{.vlist-t}]{.msupsub}]{.mord.mtight}]{.mord.mtight}]{.sizing.reset-size6.size3.mtight}]{style="top:-3.113em;margin-right:0.05em;"}]{.vlist style="height:1.0369em;"}]{.vlist-r}]{.vlist-t}]{.msupsub}]{.mord} []{.mspace style="margin-right:0.1667em;"}[d]{.mord.mathnormal}[x]{.mord.mathnormal}[]{.mspace style="margin-right:0.2778em;"}[=]{.mrel}[]{.mspace style="margin-right:0.2778em;"} ]{.base}\[\[]{.strut style="height:1.04em;vertical-align:-0.1908em;"}\[\[\[\[\[\[]{.pstrut style="height:3em;"}\[\[π]{.mord.mathnormal style="margin-right:0.0359em;"}]{.mord style="padding-left:0.833em;"}]{.svg-align style="top:-3em;"}\[\[]{.pstrut style="height:3em;"} []{.hide-tail style="min-width:0.853em;height:1.08em;"} ]{style="top:-2.8092em;"}]{.vlist style="height:0.8492em;"} [​]{.vlist-s} ]{.vlist-r}\[\[\[]]{.vlist style="height:0.1908em;"}]{.vlist-r}]{.vlist-t.vlist-t2}]{.mord.sqrt}]{.base}]{.katex-html ariaHidden="true"}]{.katex}]{.katex-display}
-
-### Philosophy
-
-*Markdown* is intended to be as easy-to-read and easy-to-write as is feasible. :fn-ref{#1}
-
-Readability, *however*, is emphasized above all else. A Markdown-formatted--- Unknown node: hardBreak ---document should be publishable as-is, as plain text, without looking--- Unknown node: hardBreak ---like it's been marked up with tags or formatting instructions. While--- Unknown node: hardBreak ---Markdown's syntax has been influenced by several existing text-to-HTML--- Unknown node: hardBreak ---filters -- including [Setext](http://docutils.sourceforge.net/mirror/setext.html), [atx](http://www.aaronsw.com/2002/atx/), [Textile](http://textism.com/tools/textile/), [reStructuredText](http://docutils.sourceforge.net/rst.html),--- Unknown node: hardBreak ---[Grutatext](http://www.triptico.com/software/grutatxt.html), and [EtText](http://ettext.taint.org/doc/) -- the single biggest source of--- Unknown node: hardBreak ---inspiration for Markdown's syntax is the format of plain text email. :fn-ref{#2}
-
-This line is added by *NuxtStudio*
-
-Title reference test: :reference{#heading-ref-1 destination="#title-reference-target" label="Title Reference Target"}
-
-### Title Reference Target
-
-This heading is the destination of the title reference above.
-
-![](https://static.igem.wiki/teams/6133/wiki/project/description/banner.avif){height="2019" width="4269"}
-
-| Feature     | Description                         | Status   |
-| ----------- | ----------------------------------- | -------- |
-| MDC Syntax  | Vue components directly in Markdown | Ready    |
-| Code Blocks | Native syntax highlighting          | Built-in |
-| File-based  | Works like a local Headless CMS     | Active   |
-
-## Block Elements
-
-### Paragraphs and Line Breaks
-
-A paragraph is simply one or more consecutive lines of text, separated
-by one or more blank lines. (A blank line is any line that looks like a
-blank line -- a line containing nothing but spaces or tabs is considered
-blank.) Normal paragraphs should not be indented with spaces or tabs.
-
-### Headers
-
-Markdown supports two styles of headers, [Setext] [1] and [atx] [2].
-
-Optionally, you may "close" atx-style headers. This is purely
-cosmetic -- you can use this if you think it looks better. The
-closing hashes don't even need to match the number of hashes
-used to open the header. (The number of opening hashes
-determines the header level.)
-
-### Blockquotes
-
-Markdown uses email-style `>` characters for blockquoting. If you're--- Unknown node: hardBreak ---familiar with quoting passages of text in an email message, then you--- Unknown node: hardBreak ---know how to create a blockquote in Markdown. It looks best if you hard--- Unknown node: hardBreak ---wrap the text and put a `>` before every line:
-
-Markdown allows you to be lazy and only put the `>` before the first
-line of a hard-wrapped paragraph:
-
-Blockquotes can be nested (i.e. a blockquote-in-a-blockquote) by
-adding additional levels of `>`:
-
-Blockquotes can contain other Markdown elements, including headers, lists,
-and code blocks:
-
-  :::content-components-collapsible-paragraph
-  ---
-  id: paragraph-details
-  title: Paragraph Details
-  ---
-  The implication of the "one or more consecutive lines of text" rule is
-  that Markdown supports "hard-wrapped" text paragraphs. This differs
-  significantly from most other text-to-HTML formatters (including Movable
-  Type's "Convert Line Breaks" option) which translate every line break
-  character in a paragraph into a `<br />` tag.
-
-  When you *do* want to insert a `<br />` break tag using Markdown, you
-  end a line with two or more spaces, then type return.
-  :::
-
-\:::
 ::
 
-::content-components-collapsible-paragraph
----
-blur-preview: true
-id: paragraph-preview
-title: Paragraph Preview
----
-A paragraph can span several lines without adding a break after each line.
-This preview shows the beginning of the text while the paragraph is folded.
-Click the title or the blurred paragraph to read the whole explanation.
+## Computational Design
 
-Once expanded, clicking the paragraph folds it again. The title works in
-both directions as well.
+### Computational Approach
+
+Many conventional protein-discovery approaches use large physical libraries and repeated experimental screening. As a high-school team, we largely applied a deep-learning-guided protein design strategy, which explores large sequence-and-structure spaces computationally and significantly reduces the wet-lab effort needed to create successful binder designs. 
+
+### Decision-Gated Workflow
+
+We introduce a reusable and resource-aware method of integrating AI into protein engineering.
+
+We organized candidate selection as a decision-gated workflow, which progressively selects designs using increasingly resource-intensive methods, with evidence from each stage informing the next decision.
+
+::content-components-lightbox-image
+---
+src:
+  - https://static.igem.wiki/teams/6133/wiki/drylab/model/overview-fig3.avif
+alt:
+  - ""
+caption: "Fig. 3 | **Schematic for the funnel-shaped decision-gated workflow.** Each evaluation filters the candidates, leading to progressively smaller candidate sets."
+imageBackground: white
+---
+
 ::
 
-## header 3
+In our project, a large number of designs are generated, enabling rapid exploration of binding structures. The following co-folding then assesses and filters the candidates. A smaller set of candidates subsequently proceeds to physics-based molecular dynamics simulation and finally experimental testing. 
 
-### Lists
+## Precursor Binder
 
-Markdown supports ordered (numbered) and unordered (bulleted) lists. :fn-ref{#4}
+> This is a summary of documents under [Precursor Binder](/model/precursor-binder). If you are interested in the detailed modeling process, please view the full version.
+> 
+> 
+> 
+> 
+> 
+> 
 
-Unordered lists use asterisks, pluses, and hyphens -- interchangably
-\-- as list markers:
+::content-components-lightbox-panels
+---
+src:
+  - https://static.igem.wiki/teams/6133/wiki/drylab/model/overview-fig4a.avif
+  - https://static.igem.wiki/teams/6133/wiki/drylab/model/overview-fig4b.avif
+  - https://static.igem.wiki/teams/6133/wiki/drylab/model/overview-fig4c.avif
+alt:
+  - "A blue helical Proteina-Complexa binder surrounds a green small-molecule ligand in its central pocket."
+  - "A yellow RFdiffusion3 binder surrounds a green small-molecule ligand in a central pocket."
+  - "RFdiffusion3 and Proteina-Complexa routes converge on chirality filtering, ranking, 50-ns molecular dynamics, and in-vitro candidate selection."
+caption: "Fig. 4 | **Sample precursor binder designs and the design process.** **(a)** precursor binder designed by Proteina-Complexa **(b)** precursor binder designed by RFdiffusion3 **(c)** Schematic for precursor binder design workflow."
+imageBackground: white
+label: "Overview — Fig. 4"
+---
 
-- Red
-- Green
-- Blue
+::
 
-is equivalent to:
+### Characterize
 
-- Red
-- Green
-- Blue
+#### Problem Definition
 
-and:
+We aim to design selective protein binders to sequester Cys-Gly-3M3SH.
 
-- Red
-- Green
-- Blue
+#### Target Definition
 
-Ordered lists use numbers followed by periods:
+**Cys-Gly-3M3SH**, the odorless precursor of axillary odor, consists of a cysteinylglycine moiety S-linked to a branched hydroxyalkyl group. 
 
-1. Bird
-2. McHale
-3. Parish
+#### Mechanism Analysis 
 
-#### Header4
+::content-components-lightbox-image
+---
+src:
+  - https://static.igem.wiki/teams/6133/wiki/drylab/model/overview-fig5.avif
+alt:
+  - "Chemical structures compare the S and R stereoisomers of the precursor and their corresponding thioalcohols."
+caption: "Fig. 5 | **Structure diagrams for Cys-Gly-(S)-3M3SH and Cys-Gly-(R)-3M3SH precursor, and their corresponding 3M3SH molecule's smell.**"
+imageBackground: white
+---
 
-It's important to note that the actual numbers you use to mark the
-list have no effect on the HTML output Markdown produces. The HTML
-Markdown produces from the above list is:
+::
 
-If you instead wrote the list in Markdown like this:
+3M3SH exists as two stereoisomers with distinct smells. We selected **Cys-Gly-(S)-3M3SH**, which is associated with the sweat- and onion-like odor of axillary odor, as the target molecule for binder design :fn-ref{#3}.  We investigated that protein–ligand recognition is stereochemistry-dependent, while deep-learning models often introduce stereochemical errors :fn-ref{#4}. We then adjusted our design specifications accordingly.
 
-1. Bird
-2. McHale
-3. Parish
+#### Design Specification
 
-or even:
+Cys-Gly-(S)-3M3SH was identified as the odor-relevant stereoisomer and therefore selected as the target for binder design. A ligand representation with explicitly-defined stereochemistry should be used as input for both design pipelines, and ligand chirality should be verified after structure generation before candidates proceed to further evaluation.
 
-3. Bird
-4. McHale
-5. Parish
+### Design
 
-you'd get the exact same HTML output. The point is, if you want to,
-you can use ordinal numbers in your ordered Markdown lists, so that
-the numbers in your source match the numbers in your published HTML.
-But if you want to be lazy, you don't have to.
+Small-molecule-binding proteins targeting Cys-Gly-3M3SH were designed using the [*Rosetta Foundry*](/model/precursor-binder/design-rfdiffusion) and [Proteina-Complexa](/model/precursor-binder/design-proteina-complexa) separately. The full design pipeline includes backbone scaffold generation, sequence redesign and folding validation. RFdiffusion3 binders are ranked based on the ranking_score outputted by *RF3*, while Proteina-Complexa binders are ranked based on a custom composite score. Then, a [molecular dynamics simulation](/model/precursor-binder/md-simulation) is performed on selected top binders from each pipeline to determine the set of candidates for *in vitro* testing.
 
-To make lists look nice, you can wrap items with hanging indents:
+22 binders (11 from each design tool) were planned for experimental testing in cycle1. Nine were successfully tested: 4 from RFdiffusion3 and 5 from Proteina-Complexa.
 
-- Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
-  Aliquam hendrerit mi posuere lectus. Vestibulum enim wisi,
-  viverra nec, fringilla in, laoreet vitae, risus.
-- Donec sit amet nisl. Aliquam semper ipsum sit amet velit.
-  Suspendisse id sem consectetuer libero luctus adipiscing.
+### Discussion
 
-But if you want to be lazy, you don't have to:
+::content-components-lightbox-panels
+---
+src:
+  - https://static.igem.wiki/teams/6133/wiki/drylab/model/overview-fig6a.avif
+  - https://static.igem.wiki/teams/6133/wiki/drylab/model/overview-fig6b.avif
+alt:
+  - ""
+  - ""
+caption: "Fig. 6 | **Relationships between computational metrics and experimental responses of precursor binders designed by RFdiffusion3 and Proteina-Complexa.** Each point represents one tested binder (n = 4 for RFdiffusion3 in the top panel **(a)**; n = 5 for Proteina-Complexa in the bottom panel **(b)**), with A412 signal reduction calculated as 100 × (1 − mean binder A412/mean control A412). **(a)**. MD Metrics of 4 RFdiffusion3 branch binders, including **(G)** estimated binding free energy (ΔG) from MM/PBSA (**H-I)** the mean and SD of MD ligand RMSD, over 10–50 ns. **(b)**. The composite score, calculated as 200 × *pLDDT* − i_pAE − 62 × min_ipAE + 50 × min_ipSAE − 5 × binder_scRMSD_ca − 2 × ligand_scRMSD − 2 × ligand_scRMSD_aligned, using pLDDT on a 0–1 scale. Pearson r and Spearman ρ are reported in each plot. OLS regression lines are plotted."
+imageBackground: white
+layout: stack
+label: "Overview — Fig. 6"
+---
 
-- Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
-  Aliquam hendrerit mi posuere lectus. Vestibulum enim wisi,
-  viverra nec, fringilla in, laoreet vitae, risus.
-- Donec sit amet nisl. Aliquam semper ipsum sit amet velit.
-  Suspendisse id sem consectetuer libero luctus adipiscing.
+::
 
-List items may consist of multiple paragraphs. Each subsequent
-paragraph in a list item must be indented by either 4 spaces
-or one tab:
+For computational metrics, interface-related metrics in RFdiffusion3 branch showed agreement with the experimental results. In the Proteina-Complexa route, our custom composite score showed the strongest linear correlation with experimental results.
 
-1. This is a list item with two paragraphs. Lorem ipsum dolor
-   sit amet, consectetuer adipiscing elit. Aliquam hendrerit
-   mi posuere lectus. :br Vestibulum enim wisi, viverra nec, fringilla in, laoreet
-   vitae, risus. Donec sit amet nisl. Aliquam semper ipsum
-   sit amet velit.
-2. Suspendisse id sem consectetuer libero luctus adipiscing.
+MD provides complementary evidence, especially in RFdiffusion3 branch, where the three MD metrics all showed the expected trend. However, in Proteina-Complexa branch, inconsistency between Proteina-Complexa generation and RF3 evaluation may affect the predicted structures selected, causing ligand RMSD to partly reflect relaxation of the predicted pose and reducing its reliability. Incorporating another folding tool, such as AlphaFold, and carrying out more independent MD simulations on each binder would help verify this relationship.
 
-It looks nice if you indent every line of the subsequent
-paragraphs, but here again, Markdown will allow you to be
-lazy:
+Future work should emphasize testing more experimental candidates to verify the composite score and adjust the weights.
 
-- This is a list item with two paragraphs.
-  ```text
-    This is the second paragraph in the list item. You're
-  ```
-  : bronly required to indent the first line. Lorem ipsum dolor
-  sit amet, consectetuer adipiscing elit.
-- Another item in the same list.
 
-To put a blockquote within a list item, the blockquote's `>`--- Unknown node: hardBreak ---delimiters need to be indented: :fn-ref{#5}
+## **Transporter Binder**
 
-- A list item with a blockquote:
-  > This is a blockquote
-  > inside a list item.
+> This is a summary of documents under [Transporter Binder](/model/transporter-binder). If you are interested in the detailed modeling process, please view the full version.
+> 
+> 
+> 
+> 
+> 
+> 
+> 
+> 
 
-To put a code block within a list item, the code block needs
-to be indented *twice* -- 8 spaces or two tabs:
+::content-components-lightbox-image
+---
+src:
+  - https://static.igem.wiki/teams/6133/wiki/drylab/model/overview-fig7.avif
+alt:
+  - "The inward-facing transporter is analyzed to select an extracellular interface, followed by backbone generation, sequence design, co-folding, interface filtering, membrane simulation, and experimental selection."
+caption: "Fig. 7 | Schematic for transporter binder design workflow."
+imageBackground: white
+---
 
-- A list item with a code block:
-  ```text
-    <code goes here>
-  ```
+::
 
-### Code Blocks
+### Characterize
 
-Pre-formatted code blocks are used for writing about programming or
-markup source code. Rather than forming normal paragraphs, the lines
-of a code block are interpreted literally. Markdown wraps a code block
-in both `<pre>` and `<code>` tags.
+#### Problem Definition
 
-To produce a code block in Markdown, simply indent every line of the
-block by at least 4 spaces or 1 tab.
+We aim to design a protein to inhibit the PepT<sub>Sh</sub> transporter.
 
-This is a normal paragraph:
+#### Target Definition
 
-```text
-This is a code block.
-```
+PepT<sub>Sh</sub> is a proton-coupled oligopeptide transporter (POT) from *S. hominis* that imports Cys-Gly-3M3SH :fn-ref{#1}. We used the experimental inward-facing structure (PDB: 6EXS) as the receptor template, targeting the extracellularly exposed surface of PepT<sub>Sh</sub>. 
 
-Here is an example of AppleScript:
+#### Mechanism Analysis 
 
-```text
-tell application "Foo"
-    beep
-end tell
-```
+Molecular dynamics studies of PepT<sub>Sh</sub> indicated that the transition from the inward-facing to the outward-facing state is the rate-limiting step in its transport cycle. :fn-ref{#5} Therefore, the inward-facing conformation was selected for binding stabilization. Structural comparison of inward- and outward-facing models identified extracellular electrostatic interaction networks and hydrophobic surface patches that are specific to the inward-facing state. These features were subsequently used to define the target interface for binder design.  
 
-A code block continues until it reaches a line that is not indented
-(or the end of the article).
+::content-components-lightbox-panels
+---
+src:
+  - https://static.igem.wiki/teams/6133/wiki/drylab/model/overview-fig8a.avif
+  - https://static.igem.wiki/teams/6133/wiki/drylab/model/overview-fig8b.avif
+  - https://static.igem.wiki/teams/6133/wiki/drylab/model/overview-fig8c.avif
+  - https://static.igem.wiki/teams/6133/wiki/drylab/model/overview-fig8d.avif
+alt:
+  - ""
+  - ""
+  - ""
+  - ""
+caption: "Fig. 8 | **Structure and extracellular surface of PepT<sub>Sh</sub>.** **(a)** Inward-Facing conformation of PepT<sub>Sh</sub>(PDB 6EXS); **(b)** detailed view of the electrostatic interaction network identified in structural analysis. A close-up of the highlighted region in **(a)**; **(c)** Outward-Facing conformation of PepT<sub>Sh</sub>(homology modelled); **(d)** Broken electrostatic interaction in outward-facing PepT<sub>Sh</sub>, A close-up of the highlighted region in **(c)**. Green: C-terminal bundle; Blue: N-terminal bundle; Orange: TMA and TMB."
+imageBackground: white
+label: "Overview — Fig. 8"
+---
 
-Within a code block, ampersands (`&`) and angle brackets (`<` and `>`)
-are automatically converted into HTML entities. This makes it very
-easy to include example HTML source code using Markdown -- just paste
-it and indent it, and Markdown will handle the hassle of encoding the
-ampersands and angle brackets. For example, this:
+::
 
-```text
-<div class="footer">
-    &copy; 2004 Foo Corporation
-</div>
-```
+#### Design Specification
 
-Regular Markdown syntax is not processed within code blocks. E.g.,
-asterisks are just literal asterisks within a code block. This means
-it's also easy to use Markdown to write about Markdown's own syntax.
+PepT<sub>Sh</sub> characterization indicated that transition from the inward-facing to the outward-facing state is the rate-limiting step in its transport cycle. Comparison of the two conformational states identified accessible extracellular features specific to the inward-facing state, which were then used to determine the binding interface. Moreover, compact binder designs are favored to enhance accessibility through the Gram-positive cell wall.
 
-```text
-tell application "Foo"
-    beep
-end tell
-```
+::content-components-lightbox-panels
+---
+src:
+  - https://static.igem.wiki/teams/6133/wiki/drylab/model/overview-fig9a.avif
+  - https://static.igem.wiki/teams/6133/wiki/drylab/model/overview-fig9b.avif
+  - https://static.igem.wiki/teams/6133/wiki/drylab/model/overview-fig9c.avif
+alt:
+  - "A ribbon model highlights the selected extracellular helices in blue against the remaining transporter in gray."
+  - "A side view of the transporter marks the selected extracellular region in blue, with an arrow indicating the extracellular direction."
+  - "Orange hotspot residues border a green hydrophobic patch on the blue extracellular surface."
+caption: "Fig. 9 | **The target extracellular interface of PepT<sub>Sh</sub>** **(a)** highlight of target region (PDB 6EXS); **(b)** side-view of selected contig region, upward is the extracellular direction; **(c)** selected hotspots(orange) and hydrophobic patch between them(green)"
+imageBackground: white
+label: "Overview — Fig. 9"
+---
 
-## Span Elements
+::
 
-### Links
+### Design
 
-Markdown supports two style of links: *inline* and *reference*.
+Among the available design frameworks, we selected Rosetta Foundry for its unified suite of protein-design tools. 
 
-In both styles, the link text is delimited by [square brackets].
+The full design pipeline comprised RFD3 backbone generation, *ProteinMPNN* sequence design, and RF3 co-folding validation. Candidates were then filtered according to their predicted interface placement and ranked based on a custom composite score $\text{weighted score} = 0.50 \times \mathrm{normalized\ ranking\ score} + 0.25 \times \mathrm{normalized\ pLDDT} + 0.25 \times \mathrm{normalized\ inverse\ PAE}$, after which molecular dynamics simulations were performed on the top-ranked binders to prioritize candidates for experimental validation.
 
-To create an inline link, use a set of regular parentheses immediately
-after the link text's closing square bracket. Inside the parentheses,
-put the URL where you want the link to point, along with an *optional*
-title for the link, surrounded in quotes. For example:
+Selected candidates are tested experimentally in cycle2.
 
-This is [an example](http://example.com/) inline link.
+### Discussion
 
-[This link](http://example.net/) has no title attribute.
+::content-components-lightbox-image
+---
+src:
+  - https://static.igem.wiki/teams/6133/wiki/drylab/model/overview-fig10.avif
+alt:
+  - ""
+caption: "Fig. 10 | **Relationships between the custom composite score and experimental responses of PepT<sub>Sh</sub> transporter binders.** Each point represents one tested binder (n = 5), with A412 signal reduction calculated as 100 × (1 − mean binder A412/mean control A412), custom composite score calculated as 0.50 × normalized ranking score + 0.25 × normalized pLDDT + 0.25 × normalized inverse PAE; OLS regression lines are plotted."
+imageBackground: white
+---
 
-### Emphasis
+::
 
-Markdown treats asterisks (`*`) and underscores (`_`) as indicators of
-emphasis. Text wrapped with one `*` or `_` will be wrapped with an
-HTML `<em>` tag; double `*`'s or `_`'s will be wrapped with an HTML
-`<strong>` tag. E.g., this input:
+The findings suggest that in a filtered set of candidates, a single metric may have too little variation to support confident prediction of actual experimental performance. The custom composite score showed the strongest agreement with experimental ranking, but it needs further verification because the sample is too small. 
 
-*single asterisks*
+However, MD metrics do not show agreement with experimental results. Future evaluation should increase the number of independent MD simulations, and consider explicit entropy correction and an implicit membrane model in free energy calculation.
 
-*single underscores*
 
-**double asterisks**
+## CGTase
 
-**double underscores**
+> This is a summary of documents under [CGTase](/model/cgtase). If you are interested in the detailed modeling process, please view the [CGTase modeling details](/model/cgtase).
+> 
+> 
+> 
+> 
+> 
+> 
+> 
+> 
+> 
+> 
+> 
+> 
+> 
+> 
 
-### Code
+::content-components-lightbox-image
+---
+src:
+  - https://static.igem.wiki/teams/6133/wiki/drylab/model/overview-fig11.avif
+alt:
+  - "CGTase engineering proceeds from reaction characterization through docking and wild-type simulation to targeted mutations, mutant simulation, and experimental candidates."
+caption: "Fig. 11 | Schematic of CGTase design workflow."
+imageBackground: white
+---
 
-To indicate a span of code, wrap it with backtick quotes (`` ` ``).
-Unlike a pre-formatted code block, a code span indicates code within a
-normal paragraph. For example:
+::
 
-Use the `printf()` function.
+### Characterize
 
-## Foot Notes
+#### Problem Definition
 
-1. :ref-fn[[Reference ID 1](https://www.baidu.com/)]{#1}
-2. :ref-fn[[Reference ID 2](https://www.google.com/)]{#2}
-3. :ref-fn[Reference ID 3]{#3}
-4. :ref-fn[Reference ID 4]{#4}
-5. :ref-fn[Reference ID 5]{#5}
+We aim to find and engineer an enzyme to chemically modify Cys-Gly-3M3SH.
+
+#### Target Definition
+
+Cys-Gly-3M3SH contains three functional groups—the amino, carboxyl, and hydroxyl groups—that could serve as sites for enzyme-catalyzed conjugation to other moieties. 
+
+We evaluated possible enzyme-catalyzed reactions at each group according to their compatibility with our scenario: human skin, which is mildly acidic and lacks an external supply of high-energy cosubstrates or cofactors such as ATP or NADH.
+
+#### Mechanism Analysis 
+
+::content-components-lightbox-image
+---
+src:
+  - https://static.igem.wiki/teams/6133/wiki/drylab/model/overview-fig12.avif
+alt:
+  - "CGTase transfers a glycosyl group from a carbohydrate donor to the hydroxyl group of Cys-Gly-3M3SH."
+caption: "Fig. 12 | Glycosylation Reaction of Cys-Gly-3M3SH, catalysed by CGTase."
+imageBackground: white
+---
+
+::
+
+Among the three possible modification sites on Cys-Gly-3M3SH, hydroxyl-group glycosylation with CGTase (cyclodextrin glucanotransferase) provided the most suitable option in the intended reaction environment. 
+
+Previous structural and biochemical studies :fn-ref{#6} on CGTase have identified the active site and characterized the binding modes of native substrates, providing a structural basis for evaluating whether Cys-Gly-3M3SH could be accommodated by the enzyme.  We reverted the E257Q substitution in the 1CXL template to wild-type E257, then combined molecular docking with molecular dynamics simulation to characterize its interaction with wild-type CGTase. 
+
+[Molecular dynamics (MD) simulations](/model/cgtase/md-simulation) of the wild-type complex showed that the non-native substrate could remain stably accommodated within the catalytic pocket, supporting the feasibility of using CGTase for Cys-Gly-3M3SH modification. However, several suboptimal interactions indicate the imperfect fit between Cys-Gly-3M3SH and the wild-type binding pocket, which shows opportunities for subsequent protein engineering.
+
+::content-components-lightbox-panels
+---
+src:
+  - https://static.igem.wiki/teams/6133/wiki/drylab/model/overview-fig13a.avif
+  - https://static.igem.wiki/teams/6133/wiki/drylab/model/overview-fig13b.avif
+  - https://static.igem.wiki/teams/6133/wiki/drylab/model/overview-fig13c.avif
+alt:
+  - ""
+  - ""
+  - ""
+caption: "Fig. 13 | **Characterize process of CGTase.** **(a)** tree diagram of clustering docking poses. The dotted line represents the ligand RMSD threshold for clustering. **(b)** 9 representative docking poses **(c)** Proposed interaction between Cys-Gly-3M3SH and CGTase, derived from MD run. Green marks C1 of the Asp229-linked glycosyl–enzyme intermediate, the target of nucleophilic attack by the acceptor hydroxyl oxygen during transglycosylation."
+imageBackground: white
+label: "Overview — Fig. 13"
+---
+
+::
+
+#### Design Specification
+
+CGTase is selected for further design to fit into a new substrate. Docking and molecular dynamics showed that the precursor could remain accommodated within the wild-type CGTase pocket, while revealing incomplete interactions around its carboxylate group and hydrophobic tail.
+
+### Design
+
+Based on the interaction deficiencies identified in wild-type MD simulation, we adopted a [rational design](/model/cgtase/design) strategy, introducing targeted binding-pocket mutations intended to stabilize the simulated precursor-binding pose. 
+
+The nine resulting mutant candidates were subsequently evaluated by MD simulations to examine their effects on substrate binding and active-site interactions. Candidates showing improved and stable interactions with the target substrate were prioritized for experimental validation
+
+::content-components-lightbox-panels
+---
+src:
+  - https://static.igem.wiki/teams/6133/wiki/drylab/model/overview-fig14a.avif
+  - https://static.igem.wiki/teams/6133/wiki/drylab/model/overview-fig14b.avif
+  - https://static.igem.wiki/teams/6133/wiki/drylab/model/overview-fig14c.avif
+  - https://static.igem.wiki/teams/6133/wiki/drylab/model/overview-fig14d.avif
+alt:
+  - "The wild-type CGTase pocket places the precursor near D229; T370 lies beside the carboxylate, while F183 and F259 border the hydrophobic tail."
+  - "R370 approaches the precursor carboxylate in the CGTase pocket, with dashed lines marking proposed interactions."
+  - "K370 approaches the precursor carboxylate in the CGTase pocket, with dashed lines marking proposed interactions."
+  - "R370 contacts the carboxylate while W183 packs beside the precursor hydrophobic tail in the double-mutant pocket."
+caption: "Fig. 14 | Proposed interaction between Cys-Gly-3M3SH and CGTase. **(a)** wild type **(b)** T370R **(c)** T370K **(d)** T370R/F183W"
+imageBackground: white
+label: "Overview — Fig. 14"
+---
+
+::
+
+Three candidates showing improved interaction with the precursor were selected for experimental testing in cycle3; only T370R/F183W was successfully tested as designed.
+
+### Discussion
+
+::content-components-lightbox-image
+---
+src:
+  - https://static.igem.wiki/teams/6133/wiki/drylab/model/overview-fig15.avif
+alt:
+  - "Ellman's assay shows lower thiol content for CGTase T370L and T370R/F183W than the empty-vector control."
+caption: "Fig. 15 | Ellman's Assay of the CGTase; Error bars represent ± SD (n = 3); Asterisks indicate significant differences compared with the Empty Vector control; \\*\\*p < 0.01."
+imageBackground: white
+---
+
+::
+
+The characterize stage successfully identified CGTase as a functional starting enzyme for Cys-Gly-3M3SH chemical modification. The experimental assay showed activity of wild-type CGTase compared with the control, aligning with the characterization outcome, where docking and MD simulations support the feasibility of  glycosylation catalysed by CGTase. 
+
+However, in the experiment, the intended T370K mutant was unexpectedly obtained as T370L.
+
+Thus, feasibility of the rational design is not fully verified because of the limited dataset. Only T370R/F183W was successfully tested as designed. Comparing this double mutant with the unintended T370L variant provides limited evidence that the proposed design strategy deserves further evaluation.
+
+Future work should test more mutants, especially T370K, T370R, and combination mutants, with more experimental replicates.
+
+
+## Optimization
+
+> This is a summary of documents under [Optimize](/model/optimization). If you are interested in the detailed modeling process, please view the [Optimization modeling details](/model/optimization).
+> 
+> 
+> 
+> 
+> 
+> 
+> 
+> 
+
+### Design: CGTase Thermostability
+
+::content-components-lightbox-image
+---
+src:
+  - https://static.igem.wiki/teams/6133/wiki/drylab/model/overview-fig16.avif
+alt:
+  - "Conserved and functionally important positions are excluded, single mutations are scored, a pairwise graph guides diverse beam search, and multipoint designs proceed to testing."
+caption: "Fig. 16 | Schematic of thermal stability optimization workflow."
+imageBackground: white
+---
+
+::
+
+We aim to design successful CGTase mutants to meet industrial production requirements and address potential heat exposure during storage and transportation.  
+
+We design potentially more thermally stable CGTase mutants through a stepwise computational screening process. 
+
+We first identify and excludes residues that are highly conserved or important for ligand binding or calcium coordination. The remaining positions are evaluated with *SPURS*, an AI model that predicts how individual amino-acid changes affect protein stability, and only promising mutations are retained. To combine these mutations safely, the method follows the pairwise compatibility principle used by *FireProt*: pairs predicted to interfere with each other are rejected, while compatible pairs are gradually assembled into larger mutants through a beam-search algorithm that also maintains diversity among the designs. 
+
+Final candidates are selected based on predicted stability and diversity of design, then tested experimentally with progressively more mutations to determine how reliable the method is as design complexity increases.
+
+We aim to test whether AI can learn patterns that enable it to predict multipoint mutagenesis based on pairwise mutagenesis, and assess its reliability by introducing mutations two at a time.
+
+::content-components-lightbox-panels
+---
+src:
+  - https://static.igem.wiki/teams/6133/wiki/drylab/model/overview-fig17a.avif
+  - https://static.igem.wiki/teams/6133/wiki/drylab/model/overview-fig17b.avif
+alt:
+  - ""
+  - ""
+caption: "Fig. 17 | **SPURS-guided mutation optimization of T370K (top panel) and T370R/F183W (bottom panel).** The embedded plots (a–d) show: **(a)**, Single-mutation score distribution; **(b)**, Pairwise compatibility of the 40 top-ranked candidates. **(c)**, Selected multi-mutation scores across search depths; blue line represents lowest score per depth. **(d)**, Added-mutation score contributions; the dashed line represents the marginal threshold. Boxes show medians and interquartile ranges; whiskers indicate 1.5× interquartile range."
+imageBackground: white
+layout: stack
+label: "Overview — Fig. 17"
+autoLabels: false
+---
+
+::
+
+Mutants with 2, 4, 6, or 8 additional substitutions relative to each CGTase parent, along the same search route, were selected for testing in cycle4.
+
+### Design: Precursor Binder Affinity
+
+::content-components-lightbox-image
+---
+src:
+  - https://static.igem.wiki/teams/6133/wiki/drylab/model/overview-fig18.avif
+alt:
+  - "Selected precursor binders undergo complex preparation, pocket definition, single-position proofreading, conditional probability scoring, burial filtering, co-folding, and polar validation."
+caption: "Fig. 18 | Schematic for precursor binder affinity optimization workflow"
+imageBackground: white
+---
+
+::
+
+We aim to improve the affinity of BC7, BR8 and BR10 for Cys-Gly-(S)-3M3SH.
+
+We adapted the *LASErMPNN* neural proofreading strategy described by Fry et al. :fn-ref{#7} to identify mutations. The predicted complexes are minimized. Residues within 5 Å of the ligand are then evaluated.
+
+By adjusting decoding order, one position is allowed to vary while the remaining amino acids stay fixed. Probabilities are averaged across different decoding orders and *dropout* to reduce sensitivity to individual predictions.
+
+Candidate substitutions are ranked by ΔNLL, which compares how much the model favors the proposed amino acid over the original one. $ΔNLL = ln[P(a) / P(b)]$  Negative values indicate greater model support for the substitution. We prioritize candidates at buried, ligand-contacting positions, then predict and minimize their structures to filter any buried polar residues introduced without suitable hydrogen bond interactions.
+
+The following designs are selected for testing in cycle6.
+
+::content-components-captioned-table
+---
+caption: "Table 2 | **Selected candidates for precursor binder affinity design.** RMSD is calculated from Cα atoms to the minimized unmutated parent."
+---
+
+|Candidate|Substitutions|ΔNLL|Cα RMSD (Å)|
+|---|---|---|---|
+|BC7-M1|F18L|-1.9438|0.594|
+|BC7-M2|A73R|-1.9406|0.755|
+|BC7-M3|F18L + A73R|-1.9438 / -1.9406|0.698|
+|BR8-M1|M48R|-3.6877|0.703|
+|BR8-M2|K127L|-1.2490|0.649|
+|BR8-M3|M48R + K127L|-3.6877 / -1.2490|0.622|
+|BR10-M1|K60V|-1.4368|0.715|
+
+::
+
+### Discussion
+
+The measurement of the melting temperature of optimized CGTase was unsuccessful; thus, no conclusion can be drawn about the effectiveness of the design.
+
+Affinity measurements for optimized precursor binders are currently unavailable. We are still carrying out the experiments in cycle6; the results and analysis will be updated in the presentation video.
+
+
+## Overall Discussion
+
+### What Characterize Changed
+
+The Characterize stage in our project works as a critical step to determine our design specifications. Across the three design routes, it identified the targets, mechanisms and constraints relevant before the design stage. By translating understanding of biological systems into explicit design specifications, it ensures biological plausibility and provides a common framework for otherwise distinct engineering approaches.
+
+### AI and Physics-Based Evaluation
+
+AI enabled efficient exploration of the design space, while physics-based evaluation examined filtered designs under more explicit molecular assumptions. The integration of the two methods in our design-gated workflow prioritized the candidates supported by both methods for limited experimental resources.
+
+### Limitations
+
+The small experimental candidate set cannot establish statistically significant relationships between computational metrics and functional performance. Because of the limited variance of computational metrics in a filtered set of candidates, the results cannot concretely verify the usefulness of the single metrics and the weighted metrics we set.
+
+### Future Improvements
+
+Future work should strengthen experimental feedback. Specifically, larger experimental datasets would allow us to recalibrate weights and thresholds of each metric, revisit the mechanistic assumptions and design specifications, and optimize the decision-gated workflow by introducing or removing evaluation tools. With sufficient data, training or adapting a deep-learning model for the specific design purpose may become possible.

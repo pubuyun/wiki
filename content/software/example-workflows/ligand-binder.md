@@ -31,7 +31,7 @@ height: 32rem
 label: "Ligand Binder: text and figure 2"
 ---
 #left
-The **Ligand Input** node reads a ligand *PDB*. FoundryUI validates and standardizes the structure, then outputs a "Ligand".
+The **Ligand Input** node reads a ligand PDB. FoundryUI validates and standardizes the structure, then outputs a "Ligand".
 
 To reproduce the example, download [Cys-Gly-(S)-3M3SH.pdb](https://gitlab.igem.org/2026/software/greatbay-scie/foundryui/-/raw/main/example_inputs/Cys-Gly-%28S%29-3M3SH.pdb) and upload it in the **Ligand Input** node. For another project, replace it with the intended molecule.
 

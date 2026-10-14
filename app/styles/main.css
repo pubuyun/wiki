@@ -61,6 +61,65 @@
     container: reading / inline-size;
 }
 
+/* Wrap equations between KaTeX groups; scroll indivisible groups if needed. */
+.content .katex {
+    overflow-wrap: normal;
+}
+
+.content .katex .base {
+    display: inline-block;
+    white-space: nowrap;
+}
+
+.content .katex-display {
+    max-width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding-block: 0.25em;
+}
+
+.content .katex-display > .katex {
+    min-width: min-content;
+    white-space: normal;
+}
+
+.category-page {
+    container: category / inline-size;
+}
+
+/* Share an outer frame while keeping prose at its own readable measure. */
+.category-content-shell {
+    --reading-body-width: calc(75ch + 3rem);
+    --reading-toc-width: 16rem;
+    --reading-column-gap: clamp(2rem, 2vw, 3rem);
+    --category-gutter: 1rem;
+    width: calc(100% - 2 * var(--category-gutter));
+    max-width: calc(
+        var(--reading-body-width) + var(--reading-column-gap) +
+            var(--reading-toc-width)
+    );
+    margin-inline: auto;
+    font-family: var(--font-main);
+}
+
+@media (min-width: 40rem) {
+    .category-content-shell {
+        --category-gutter: 1.5rem;
+    }
+}
+
+@media (min-width: 64rem) {
+    .category-content-shell {
+        --category-gutter: 2rem;
+    }
+}
+
+@media (min-width: 80rem) {
+    .category-content-shell {
+        --category-gutter: 3rem;
+    }
+}
+
 .content-reading-layout {
     --reading-body-width: calc(75ch + 3rem);
     --reading-toc-width: 16rem;

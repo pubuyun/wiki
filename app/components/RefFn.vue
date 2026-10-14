@@ -8,10 +8,19 @@
     </span>
 
     <NuxtLink
-        :to="citationLink(id)"
-        class="ml-2 inline-flex rounded-sm align-baseline font-bold text-on-secondary no-underline hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-outline"
-        :aria-label="`Back to reference ${id} in the text`"
-        @click="scrollToHash($event, citationLink(id))"
+        v-for="citation in returnLinks"
+        :key="citation.to"
+        :to="citation.to"
+        class="ml-2 inline-flex rounded-sm align-baseline font-bold no-underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-outline"
+        :class="
+            isActiveCitation(citation.to)
+                ? 'bg-primary p-1 text-on-primary ring-2 ring-outline ring-offset-2 ring-offset-secondary'
+                : 'text-on-secondary hover:text-primary'
+        "
+        :title="`Return to ${citation.label}`"
+        :aria-label="`Back to reference ${id} in ${citation.label}`"
+        :aria-current="isActiveCitation(citation.to) ? 'location' : undefined"
+        @click="scrollToHash($event, citation.to)"
     >
         <Icon
             icon="mingcute:back-fill"
@@ -23,12 +32,39 @@
 
 <script setup lang="ts">
 import { Icon } from "@iconify/vue";
-defineProps({
+const props = defineProps({
     id: {
         type: String,
         required: true,
     },
 });
+const route = useRoute();
+const hasMounted = ref(false);
+const referenceHash = computed(() => `#fnref-${encodeURIComponent(props.id)}`);
+const isSelectedReference = computed(
+    () =>
+        route.hash === referenceHash.value ||
+        route.fullPath.endsWith(referenceHash.value),
+);
 const { scrollToHash } = useHashScroll();
-const { citationLink } = await useCategoryReferences();
+const { citationLink, citationLinks } = await useCategoryReferences();
+const activeCitationLink = computed(() => citationLink(props.id));
+const returnLinks = computed(() => {
+    const links = citationLinks(props.id);
+    return links.length
+        ? links
+        : [{ to: citationLink(props.id), label: "the text" }];
+});
+
+function isActiveCitation(to: string) {
+    return (
+        hasMounted.value &&
+        isSelectedReference.value &&
+        to === activeCitationLink.value
+    );
+}
+
+onMounted(() => {
+    hasMounted.value = true;
+});
 </script>

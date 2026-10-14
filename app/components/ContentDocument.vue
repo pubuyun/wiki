@@ -8,8 +8,17 @@ const props = defineProps({
     page: { type: Object, required: true },
 });
 
+// Navigation can refresh the same Nuxt Content record with new object identities.
+// Keep its render tree until the document's actual revision changes.
+const page = computed((previous) => {
+    const next = props.page;
+    return previous && JSON.stringify(previous) === JSON.stringify(next)
+        ? previous
+        : next;
+});
+
 useHead(() => ({
-    link: JSON.stringify(props.page.body ?? {}).includes("katex")
+    link: JSON.stringify(page.value.body ?? {}).includes("katex")
         ? [katexMainFont, katexMathFont, katexSizeFont].map((href) => ({
               rel: "preload",
               as: "font",
@@ -20,9 +29,9 @@ useHead(() => ({
         : [],
 }));
 
-const tocLinks = computed(() => contentTocLinks(props.page.body));
+const tocLinks = computed(() => contentTocLinks(page.value.body));
 const sections = computed(() => {
-    const children = bodyChildren(props.page.body);
+    const children = bodyChildren(page.value.body);
     const result = [];
     let currentSection = null;
 
@@ -60,7 +69,14 @@ const sections = computed(() => {
         currentSection.children.push(child);
     }
 
-    return result;
+    // Keep renderer values stable across route/parent updates. Recreating these
+    // objects makes ContentRenderer recreate its async component wrappers and
+    // briefly removes already-rendered sections from the document.
+    return result.map((section) => ({
+        ...section,
+        value: sectionValue(section.children),
+        headingValue: section.heading ? sectionValue([section.heading]) : null,
+    }));
 });
 
 function bodyChildren(body) {
@@ -77,10 +93,10 @@ function nodeProps(node) {
 
 function sectionValue(children) {
     return {
-        ...props.page,
-        body: props.page.body?.value
-            ? { ...props.page.body, value: children }
-            : { ...props.page.body, children },
+        ...page.value,
+        body: page.value.body?.value
+            ? { ...page.value.body, value: children }
+            : { ...page.value.body, children },
     };
 }
 </script>
@@ -95,17 +111,18 @@ function sectionValue(children) {
         >
             <ContentRenderer
                 v-if="section.collapsible"
-                :value="sectionValue(section.children)"
+                :key="page.path"
+                :value="section.value"
                 class="content min-w-0 flex-1 text-on-surface"
             />
             <ContentRenderer
                 v-if="section.heading && !section.collapsible"
-                :value="sectionValue([section.heading])"
+                :value="section.headingValue"
                 class="content overflow-wrap-anywhere min-w-0 flex-1 text-on-surface"
             />
             <div v-if="section.children.length && !section.collapsible">
                 <ContentRenderer
-                    :value="sectionValue(section.children)"
+                    :value="section.value"
                     class="content paragraph overflow-wrap-anywhere relative min-w-0 rounded-2xl bg-secondary p-4 text-on-secondary sm:rounded-3xl sm:p-5 lg:rounded-4xl lg:p-6"
                 />
             </div>

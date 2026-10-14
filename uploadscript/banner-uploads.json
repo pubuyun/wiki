@@ -1,0 +1,153 @@
+{
+    "team": 6133,
+    "folder": "general/banners",
+    "files": [
+        {
+            "localFile": "Attribution.png",
+            "category": "attributions",
+            "url": "https://static.igem.wiki/teams/6133/wiki/general/banners/attribution.avif",
+            "contentFile": "content/attributions/index.md",
+            "width": 3200,
+            "height": 1635,
+            "uploadedFile": ".cache/banner-png/Attribution.png"
+        },
+        {
+            "localFile": "Contribution.png",
+            "category": "contribution",
+            "url": "https://static.igem.wiki/teams/6133/wiki/general/banners/contribution.avif",
+            "contentFile": "content/contribution/index.md",
+            "width": 3508,
+            "height": 2480
+        },
+        {
+            "localFile": "Description.jpeg",
+            "category": "description",
+            "url": "https://static.igem.wiki/teams/6133/wiki/general/banners/description.avif",
+            "contentFile": "content/description/index.md",
+            "width": 3800,
+            "height": 1792
+        },
+        {
+            "localFile": "Engineering.jpeg",
+            "category": "engineering",
+            "url": "https://static.igem.wiki/teams/6133/wiki/general/banners/engineering.avif",
+            "contentFile": "content/engineering/index.md",
+            "width": 1920,
+            "height": 1080
+        },
+        {
+            "localFile": "Entrepreneurship.png",
+            "category": "entrepreneurship",
+            "url": "https://static.igem.wiki/teams/6133/wiki/general/banners/entrepreneurship.avif",
+            "contentFile": "content/entrepreneurship/index.md",
+            "width": 1707,
+            "height": 1280
+        },
+        {
+            "localFile": "Experiments.jpeg",
+            "category": "experiments",
+            "url": "https://static.igem.wiki/teams/6133/wiki/general/banners/experiments.avif",
+            "contentFile": "content/experiments/index.md",
+            "width": 1993,
+            "height": 1267
+        },
+        {
+            "localFile": "Hardware.png",
+            "category": "hardware",
+            "url": "https://static.igem.wiki/teams/6133/wiki/general/banners/hardware.avif",
+            "contentFile": "content/hardware/index.md",
+            "width": 3200,
+            "height": 1873,
+            "uploadedFile": ".cache/banner-png/Hardware.png"
+        },
+        {
+            "localFile": "Inclusivity.png",
+            "category": "inclusivity",
+            "url": "https://static.igem.wiki/teams/6133/wiki/general/banners/inclusivity.avif",
+            "contentFile": "content/inclusivity/index.md",
+            "width": 3200,
+            "height": 2064,
+            "uploadedFile": ".cache/banner-png/Inclusivity.png"
+        },
+        {
+            "localFile": "Measurements.jpeg",
+            "category": "measurement",
+            "url": "https://static.igem.wiki/teams/6133/wiki/general/banners/measurements.avif",
+            "contentFile": "content/measurement/index.md",
+            "width": 1836,
+            "height": 1378
+        },
+        {
+            "localFile": "Model.png",
+            "category": "model",
+            "url": "https://static.igem.wiki/teams/6133/wiki/general/banners/model.avif",
+            "contentFile": "content/model/index.md",
+            "width": 3600,
+            "height": 1400
+        },
+        {
+            "localFile": "Notebook.jpeg",
+            "category": "notebook",
+            "url": "https://static.igem.wiki/teams/6133/wiki/general/banners/notebook.avif",
+            "contentFile": "content/notebook/index.md",
+            "width": 1836,
+            "height": 1335
+        },
+        {
+            "localFile": "Parts.jpeg",
+            "category": "parts",
+            "url": "https://static.igem.wiki/teams/6133/wiki/general/banners/parts.avif",
+            "contentFile": "content/parts/index.md",
+            "width": 1348,
+            "height": 699
+        },
+        {
+            "localFile": "Protocols.jpeg",
+            "category": "protocols",
+            "url": "https://static.igem.wiki/teams/6133/wiki/general/banners/protocols.avif",
+            "contentFile": "content/protocols/index.md",
+            "width": 1880,
+            "height": 1056
+        },
+        {
+            "localFile": "Safety.jpeg",
+            "category": "safety-and-security",
+            "url": "https://static.igem.wiki/teams/6133/wiki/general/banners/safety.avif",
+            "contentFile": "content/safety-and-security/index.md",
+            "width": 2077,
+            "height": 1218
+        },
+        {
+            "localFile": "Software.png",
+            "category": "software",
+            "url": "https://static.igem.wiki/teams/6133/wiki/general/banners/software.avif",
+            "contentFile": "content/software/index.md",
+            "width": 2172,
+            "height": 724
+        },
+        {
+            "localFile": "Sustainability.jpeg",
+            "category": "sustainability",
+            "url": "https://static.igem.wiki/teams/6133/wiki/general/banners/sustainability.avif",
+            "contentFile": "content/sustainability/index.md",
+            "width": 1861,
+            "height": 1360
+        },
+        {
+            "localFile": "education.jpg",
+            "category": "education",
+            "url": "https://static.igem.wiki/teams/6133/wiki/general/banners/education.avif",
+            "contentFile": "content/education/index.md",
+            "width": 4096,
+            "height": 1904
+        },
+        {
+            "localFile": "iHP.jpeg",
+            "category": "human-practices",
+            "url": "https://static.igem.wiki/teams/6133/wiki/general/banners/ihp.avif",
+            "contentFile": "content/human-practices/index.md",
+            "width": 4896,
+            "height": 3672
+        }
+    ]
+}

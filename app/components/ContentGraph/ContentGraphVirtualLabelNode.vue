@@ -2,14 +2,34 @@
 defineProps<{
     data: {
         label?: string;
+        depth?: number;
     };
 }>();
 </script>
 
 <template>
     <div
-        class="virtual-label pointer-events-none w-max max-w-96 origin-top-left [transform:scale(var(--content-graph-label-scale,1))] rounded-br-xl bg-primary px-3 py-[0.45rem] font-belanosima text-xl leading-[1.15] whitespace-nowrap text-on-primary will-change-transform"
+        class="virtual-label pointer-events-none w-max rounded-full px-5 py-3 font-belanosima leading-[1.1]"
+        :class="{ 'virtual-label--nested': (data.depth ?? 0) > 0 }"
     >
         {{ data.label }}
     </div>
 </template>
+
+<style scoped>
+.virtual-label {
+    background: var(--graph-title);
+    color: var(--graph-title-text);
+    font-size: var(--graph-label-font-size);
+    max-width: inherit;
+    overflow-wrap: anywhere;
+}
+
+.virtual-label--nested {
+    background: var(--graph-title-nested);
+    color: var(--graph-title-nested-text);
+    font-size: calc(
+        var(--graph-label-font-size) * var(--graph-nested-label-scale, 0.89)
+    );
+}
+</style>

@@ -5,7 +5,7 @@ withDefaults(
     defineProps<{
         to?: string;
         title: string;
-        heading?: "h2" | "h3";
+        heading?: "h2" | "h3" | "h4";
     }>(),
     { heading: "h2" },
 );

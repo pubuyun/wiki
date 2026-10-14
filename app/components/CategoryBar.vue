@@ -149,14 +149,6 @@
                                             class="pointer-events-none absolute top-0 bottom-0 left-0 w-0.5 rounded-full bg-white/25"
                                             aria-hidden="true"
                                         />
-                                        <div
-                                            v-if="activeChildIndex(node) >= 0"
-                                            class="pointer-events-none absolute left-0 h-9 w-0.5 rounded-full bg-primary transition-transform duration-200 ease-out xl:h-10"
-                                            :style="
-                                                activeChildIndicatorStyle(node)
-                                            "
-                                            aria-hidden="true"
-                                        />
                                         <ul
                                             class="space-y-[var(--category-sidebar-child-item-gap)]"
                                         >
@@ -165,6 +157,11 @@
                                                 :key="child.id"
                                                 class="relative"
                                             >
+                                                <div
+                                                    v-if="child.active"
+                                                    class="pointer-events-none absolute inset-y-0 -left-2 w-0.5 rounded-full bg-primary"
+                                                    aria-hidden="true"
+                                                />
                                                 <NuxtLink
                                                     v-if="child.path"
                                                     :to="child.path"
@@ -307,7 +304,7 @@ function linkClass(depth: 0 | 1) {
 function linkTextClass(node: ContentNavNode, depth: 0 | 1) {
     return [
         "flex min-w-0 flex-1 items-center justify-start rounded-md px-3 text-left transition-[border-radius,color,background-color] duration-200 ease-out",
-        depth === 1 ? "h-9 py-0 xl:h-10" : "py-2",
+        depth === 1 ? "min-h-9 py-2 xl:min-h-10" : "py-2",
         node.path === props.activePath ? "font-bold" : "font-normal",
         itemStateClass(node),
     ];
@@ -323,16 +320,6 @@ function itemStateClass(node: ContentNavNode) {
         node.active &&
             "bg-[var(--category-sidebar-highlight)] text-[var(--category-sidebar-highlight-text)]",
     ];
-}
-
-function activeChildIndex(node: ContentNavNode) {
-    return node.children?.findIndex((child) => child.active) ?? -1;
-}
-
-function activeChildIndicatorStyle(node: ContentNavNode) {
-    return {
-        transform: `translateY(calc(${Math.max(activeChildIndex(node), 0)} * (var(--category-sidebar-child-item-height) + var(--category-sidebar-child-item-gap))))`,
-    };
 }
 
 function updateScrollGradients() {
@@ -525,14 +512,7 @@ onBeforeUnmount(() => {
 
 .category-sidebar-scroll-content {
     direction: ltr;
-    --category-sidebar-child-item-height: 2.25rem;
     --category-sidebar-child-item-gap: 0.25rem;
-}
-
-@media (width >= 80rem) {
-    .category-sidebar-scroll-content {
-        --category-sidebar-child-item-height: 2.5rem;
-    }
 }
 
 .category-sidebar-scroll::-webkit-scrollbar {

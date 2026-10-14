@@ -1,17 +1,15 @@
 <script setup lang="ts">
 import { SplitterGroup, SplitterPanel, SplitterResizeHandle } from "reka-ui";
-import { onBeforeUnmount, onMounted, onUpdated, ref, useId, watch } from "vue";
+import { onBeforeUnmount, onMounted, ref, useId } from "vue";
 
 const props = withDefaults(
     defineProps<{
         height?: string;
         label?: string;
-        autoLabels?: boolean;
     }>(),
     {
         height: "32rem",
         label: "Panel layout",
-        autoLabels: false,
     },
 );
 
@@ -19,117 +17,14 @@ const layoutId = `panel-layout-${useId()}`;
 const sides = ["left", "right"] as const;
 const container = ref<HTMLElement | null>(null);
 const columns = ref<InstanceType<typeof SplitterPanel>[]>([]);
-type ImageLabel = { text: string; left: string; top: string };
-const imageLabels = ref<Record<string, ImageLabel[]>>({});
-const observedImages = new Set<Element>();
-let labelFrame = 0;
 let manuallyResized = false;
 let disposed = false;
 let sizingFrame = 0;
 let resizeObserver: ResizeObserver | undefined;
 let contentObserver: MutationObserver | undefined;
 
-function alphabeticLabel(index: number) {
-    let text = "";
-    for (
-        let value = index + 1;
-        value > 0;
-        value = Math.floor((value - 1) / 26)
-    ) {
-        text = String.fromCharCode(97 + ((value - 1) % 26)) + text;
-    }
-    return `(${text})`;
-}
-
-function updateLabels() {
-    const root = container.value;
-    if (!root) return;
-    const images = props.autoLabels
-        ? Array.from(root.querySelectorAll<HTMLImageElement>("img")).filter(
-              (image) =>
-                  image.closest(".panel-layout") === root &&
-                  !image.closest(".panel-layout__measurement"),
-          )
-        : [];
-    const targets = new Set<Element>();
-    const positionedImages = images.flatMap((image) => {
-        const pane = image.closest<HTMLElement>(".panel-layout__pane");
-        if (!pane) return [];
-        targets.add(image);
-        targets.add(pane);
-        const rect = image.getBoundingClientRect();
-        if (!rect.width || !rect.height || !image.getClientRects().length)
-            return [];
-        const paneRect = pane.getBoundingClientRect();
-        return [
-            {
-                slot: pane.dataset.slot!,
-                // Use content coordinates so scrolling does not renumber images.
-                x: rect.left + pane.scrollLeft,
-                y: rect.top + pane.scrollTop,
-                left:
-                    rect.left -
-                    paneRect.left -
-                    pane.clientLeft +
-                    pane.scrollLeft,
-                top: rect.top - paneRect.top - pane.clientTop + pane.scrollTop,
-            },
-        ];
-    });
-    observedImages.forEach((target) => {
-        if (!targets.has(target)) {
-            resizeObserver?.unobserve(target);
-            observedImages.delete(target);
-        }
-    });
-    targets.forEach((target) => {
-        if (!observedImages.has(target)) {
-            resizeObserver?.observe(target);
-            observedImages.add(target);
-        }
-    });
-
-    // Group nearly aligned top edges into rows, then read each row left to right.
-    positionedImages.sort((a, b) => a.y - b.y || a.x - b.x);
-    const orderedImages: typeof positionedImages = [];
-    while (positionedImages.length) {
-        const top = positionedImages[0]!.y;
-        let count = 1;
-        while (
-            count < positionedImages.length &&
-            positionedImages[count]!.y - top <= 4
-        ) {
-            count++;
-        }
-        orderedImages.push(
-            ...positionedImages.splice(0, count).sort((a, b) => a.x - b.x),
-        );
-    }
-    const nextLabels: Record<string, ImageLabel[]> = {};
-    orderedImages.forEach((image, index) => {
-        (nextLabels[image.slot] ??= []).push({
-            text: alphabeticLabel(index),
-            left: `${image.left}px`,
-            top: `${image.top}px`,
-        });
-    });
-    // Label rendering must not trigger an endless update/measurement cycle.
-    if (JSON.stringify(nextLabels) !== JSON.stringify(imageLabels.value)) {
-        imageLabels.value = nextLabels;
-    }
-}
-
-function scheduleLabels() {
-    if (disposed || labelFrame) return;
-    labelFrame = requestAnimationFrame(() => {
-        labelFrame = 0;
-        updateLabels();
-    });
-}
-
 function contentChanged(records: MutationRecord[]) {
-    const generatedSelector =
-        ".panel-layout__measurement, .panel-layout__image-label";
+    const generatedSelector = ".panel-layout__measurement";
     const isGenerated = (node: Node) =>
         (node instanceof Element ? node : node.parentElement)?.closest(
             generatedSelector,
@@ -146,7 +41,6 @@ function contentChanged(records: MutationRecord[]) {
     )
         return;
     scheduleSizing();
-    scheduleLabels();
 }
 
 function preserveManualLayout(event: PointerEvent | KeyboardEvent) {
@@ -253,7 +147,6 @@ function scheduleSizing() {
     sizingFrame = requestAnimationFrame(() => {
         sizingFrame = 0;
         fitColumns();
-        scheduleLabels();
     });
 }
 
@@ -267,7 +160,6 @@ onMounted(() => {
             previousWidth = entry.contentRect.width;
             scheduleSizing();
         }
-        scheduleLabels();
     });
     resizeObserver.observe(root);
     contentObserver = new MutationObserver(contentChanged);
@@ -281,16 +173,11 @@ onMounted(() => {
     document.fonts.ready.then(scheduleSizing);
     document.fonts.addEventListener("loadingdone", scheduleSizing);
     scheduleSizing();
-    scheduleLabels();
 });
-
-watch(() => props.autoLabels, scheduleLabels, { flush: "post" });
-onUpdated(scheduleLabels);
 
 onBeforeUnmount(() => {
     disposed = true;
     cancelAnimationFrame(sizingFrame);
-    cancelAnimationFrame(labelFrame);
     resizeObserver?.disconnect();
     contentObserver?.disconnect();
     document.fonts.removeEventListener("loadingdone", scheduleSizing);
@@ -303,11 +190,7 @@ onBeforeUnmount(() => {
         class="panel-layout"
         :aria-label="label"
         role="group"
-        @load.capture="
-            scheduleSizing();
-            scheduleLabels();
-        "
-        @scroll.capture="scheduleLabels"
+        @load.capture="scheduleSizing"
     >
         <SplitterGroup
             :id="layoutId"
@@ -355,16 +238,6 @@ onBeforeUnmount(() => {
                         >
                             <div class="panel-layout__pane" :data-slot="side">
                                 <slot :name="side" />
-                                <span
-                                    v-for="imageLabel in imageLabels[side]"
-                                    :key="imageLabel.text"
-                                    class="panel-layout__image-label"
-                                    :style="{
-                                        left: imageLabel.left,
-                                        top: imageLabel.top,
-                                    }"
-                                    >{{ imageLabel.text }}</span
-                                >
                             </div>
                         </SplitterPanel>
                         <SplitterResizeHandle
@@ -386,33 +259,11 @@ onBeforeUnmount(() => {
                                 :data-slot="`${side}-bottom`"
                             >
                                 <slot :name="`${side}-bottom`" />
-                                <span
-                                    v-for="imageLabel in imageLabels[
-                                        `${side}-bottom`
-                                    ]"
-                                    :key="imageLabel.text"
-                                    class="panel-layout__image-label"
-                                    :style="{
-                                        left: imageLabel.left,
-                                        top: imageLabel.top,
-                                    }"
-                                    >{{ imageLabel.text }}</span
-                                >
                             </div>
                         </SplitterPanel>
                     </SplitterGroup>
                     <div v-else class="panel-layout__pane" :data-slot="side">
                         <slot :name="side" />
-                        <span
-                            v-for="imageLabel in imageLabels[side]"
-                            :key="imageLabel.text"
-                            class="panel-layout__image-label"
-                            :style="{
-                                left: imageLabel.left,
-                                top: imageLabel.top,
-                            }"
-                            >{{ imageLabel.text }}</span
-                        >
                     </div>
                 </SplitterPanel>
             </template>
@@ -465,21 +316,6 @@ onBeforeUnmount(() => {
     background: var(--secondary);
 }
 
-.panel-layout__image-label {
-    position: absolute;
-    z-index: 1;
-    margin: 0.4rem;
-    padding: 0.1rem 0.35rem;
-    border-radius: 0.25rem;
-    background: #fff;
-    color: #111;
-    font-family: Georgia, "Times New Roman", serif;
-    font-size: 1rem;
-    font-weight: 700;
-    line-height: 1.25;
-    pointer-events: none;
-}
-
 .panel-layout__pane :deep(> :first-child) {
     margin-block-start: 0;
 }
@@ -489,8 +325,7 @@ onBeforeUnmount(() => {
     padding-block-start: max(0px, calc((1lh - 1em) / 2));
 }
 
-.panel-layout__pane
-    :deep(> :nth-last-child(1 of :not(.panel-layout__image-label))) {
+.panel-layout__pane :deep(> :last-child) {
     margin-block-end: 0;
 }
 

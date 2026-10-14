@@ -2,6 +2,7 @@
 import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import tailwindcss from "@tailwindcss/vite";
+import { contentGraphLayouts } from "./app/utils/content-graph-layout";
 
 const isDevServer = process.env.NODE_ENV === "development";
 const contentGraphDirectory = fileURLToPath(
@@ -139,6 +140,9 @@ export default defineNuxtConfig({
             molstarBaseUrl:
                 "https://static.igem.wiki/teams/6133/wiki/molstar/4-0-1",
             contentGraphViews,
+            contentGraphLayouts: contentGraphLayouts(
+                contentGraphRegistry.graphs,
+            ),
         },
     },
     css: ["~/styles/main.css", "katex/dist/katex.min.css"],

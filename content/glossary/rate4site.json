@@ -1,0 +1,5 @@
+{
+    "term": "Rate4Site",
+    "detail": "An algorithm that estimates site-specific evolutionary rates from homologous sequences and a phylogenetic tree to identify conserved positions.",
+    "link": "https://consurfdb.tau.ac.il/documents/Rate4Site_2002.pdf"
+}

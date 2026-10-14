@@ -31,7 +31,7 @@ height: 32rem
 label: "Protein Binder: text and figure 2"
 ---
 #left
-The **Protein Input** node loads the target *PDB* and outputs a protein.
+The **Protein Input** node loads the target PDB and outputs a protein.
 
 To try the workflow, download [6EXS.pdb](https://gitlab.igem.org/2026/software/greatbay-scie/foundryui/-/raw/main/example_inputs/6EXS.pdb) and upload it in the **Protein Input** node. Inspect its chain identifiers and residue numbering before making selections.
 

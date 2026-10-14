@@ -7,7 +7,7 @@ order: 2
 
 ## Local Linux installation
 
-FoundryUI requires Linux, Git, `curl`, npm, and Node.js 20 or newer. Models require an NVIDIA GPU and compatible _CUDA_-enabled _PyTorch_. Model checkpoints require additional disk space of about 10 GB.
+FoundryUI requires Linux, Git, `curl`, npm, and Node.js 20 or newer. Models require an NVIDIA GPU and compatible CUDA-enabled _PyTorch_. Model checkpoints require additional disk space of about 10 GB.
 
 The automatic setup installs a local Python 3.12 environment, backend packages, _Foundry_, model checkpoints, and frontend dependencies:
 

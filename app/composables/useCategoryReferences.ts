@@ -21,7 +21,13 @@ export async function useCategoryReferences() {
                     .where("path", "=", categoryPath.value)
                     .where("path", "LIKE", `${categoryPath.value}/%`),
             )
-            .select("path", "hasReference", "referenceIds", "citationIds")
+            .select(
+                "path",
+                "title",
+                "hasReference",
+                "referenceIds",
+                "citationIds",
+            )
             .order("path", "ASC")
             .all(),
     );
@@ -39,12 +45,62 @@ export async function useCategoryReferences() {
             `${route.path}#ref-${encodeURIComponent(id)}`;
     }
 
+    function currentCitationLink(id: string) {
+        const from = route.query.from;
+        if (typeof from === "string") {
+            if (from.endsWith(`#ref-${encodeURIComponent(id)}`)) {
+                return from;
+            }
+        }
+        return (
+            citations.value[`${categoryPath.value}:${id}`] ??
+            citationDestination(pages.value ?? [], id)
+        );
+    }
+
+    function withCitationSource(destination: string, id: string) {
+        const [pathAndQuery, hash = ""] = destination.split("#", 2);
+        const source = `${route.path}#ref-${encodeURIComponent(id)}`;
+        const separator = pathAndQuery.includes("?") ? "&" : "?";
+        return `${pathAndQuery}${separator}from=${encodeURIComponent(source)}${
+            hash ? `#${hash}` : ""
+        }`;
+    }
+
     return {
         referenceLink: (id: string) =>
-            referenceDestination(pages.value ?? [], id),
-        citationLink: (id: string) =>
-            citations.value[`${categoryPath.value}:${id}`] ??
-            citationDestination(pages.value ?? [], id),
+            withCitationSource(referenceDestination(pages.value ?? [], id), id),
+        citationLink: currentCitationLink,
+        citationLinks: (id: string) =>
+            (pages.value ?? [])
+                .filter((page) => page.citationIds?.includes(id))
+                .map((page) => ({
+                    to: `${page.path}#ref-${encodeURIComponent(id)}`,
+                    label: [
+                        ...page.path
+                            .split("/")
+                            .filter(Boolean)
+                            .slice(1, -1)
+                            .map((part, index) => {
+                                const parentPath = `/${page.path
+                                    .split("/")
+                                    .filter(Boolean)
+                                    .slice(0, index + 2)
+                                    .join("/")}`;
+                                return (
+                                    pages.value?.find(
+                                        (parent) => parent.path === parentPath,
+                                    )?.title ||
+                                    part
+                                        .replace(/-/g, " ")
+                                        .replace(/\b\w/g, (letter) =>
+                                            letter.toUpperCase(),
+                                        )
+                                );
+                            }),
+                        page.title || page.path,
+                    ].join(" / "),
+                })),
         rememberCitation,
     };
 }

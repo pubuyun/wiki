@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, onBeforeUnmount, onMounted } from "vue";
 import {
+    MarkerType,
     Position,
     VueFlow,
     type DefaultEdgeOptions,
@@ -10,7 +11,10 @@ import {
     type ViewportTransform,
     type VueFlowStore,
 } from "@vue-flow/core";
+import { positionGraphNodes } from "~/utils/content-graph-positions";
+import { contentGraphTypography } from "~/utils/content-graph-typography";
 import ContentGraphPageNode from "./ContentGraphPageNode.vue";
+import ContentGraphEdge from "./ContentGraphEdge.vue";
 import ContentGraphVirtualLabelNode from "./ContentGraphVirtualLabelNode.vue";
 import ContentGraphVirtualNode from "./ContentGraphVirtualNode.vue";
 import "@vue-flow/core/dist/style.css";
@@ -88,12 +92,22 @@ const isLoading = ref(true);
 const flowInstance = shallowRef<VueFlowStore | null>(null);
 const figureElement = ref<HTMLElement | null>(null);
 const fullscreenButton = ref<HTMLButtonElement | null>(null);
-const figureWidth = ref(0);
 const isPortrait = ref(false);
 const mediaReady = ref(false);
 const isFullscreen = ref(false);
 const isScrollSnapActive = ref(false);
 const viewportZoom = ref(1);
+const isZoomingOut = ref(false);
+const frameWidth = ref(0);
+const rootFontSize = ref(16);
+const bodyFontSize = ref(16);
+const typography = computed(() =>
+    contentGraphTypography(
+        frameWidth.value,
+        rootFontSize.value,
+        bodyFontSize.value,
+    ),
+);
 const statusMessage = ref("");
 const baseURL = useRuntimeConfig().app.baseURL;
 const nodeTypes = {
@@ -102,26 +116,25 @@ const nodeTypes = {
     "virtual-label": markRaw(ContentGraphVirtualLabelNode),
 };
 const defaultEdgeOptions = {
+    type: "content-graph",
     style: {
-        stroke: "var(--outline)",
-        strokeOpacity: 0.8,
-        strokeWidth: 2,
+        stroke: "var(--graph-connector)",
+        strokeWidth: 6,
     },
 } satisfies DefaultEdgeOptions;
+const edgeTypes = { "content-graph": markRaw(ContentGraphEdge) };
 const toolbarButtonClass =
-    "grid size-8 cursor-pointer place-items-center rounded-lg text-xl leading-none font-[var(--font-main)] text-on-surface hover:bg-primary hover:text-on-primary focus-visible:bg-primary focus-visible:text-on-primary focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-outline";
-const defaultNodeFontClass =
-    "!font-belanosima !text-5xl !leading-[1.15] !text-on-surface";
-const maxLabelScale = 2.5;
-const defaultNodeMaxWidth = 600;
+    "content-graph__tool grid size-10 cursor-pointer place-items-center rounded-full text-xl leading-none font-[var(--font-main)]";
+const defaultNodeFontClass = "!font-belanosima !leading-[1.15]";
+const defaultNodeMaxWidth = 520;
 const defaultNodeLayoutSize: Size = {
     width: defaultNodeMaxWidth,
     height: 100,
 };
-const topBottomNodeGap = 30;
-const leftRightNodeGap = 40;
-const topBottomSubgraphPadding = 120;
-const subgraphPadding = 30;
+const graphNodeGap = 88;
+const graphVerticalGap = 48;
+const topBottomSubgraphPadding = 112;
+const subgraphPadding = 32;
 
 let mediaQuery: MediaQueryList | null = null;
 let resizeObserver: ResizeObserver | null = null;
@@ -155,10 +168,37 @@ watch(
         isScrollSnapActive.value = false;
         if (!element) return;
 
-        resizeObserver = new ResizeObserver(([entry]) => {
-            if (entry) figureWidth.value = entry.contentRect.width;
+        let previousHeight = 0;
+        resizeObserver = new ResizeObserver(() => {
+            const width = element.clientWidth;
+            const height = element.clientHeight;
+            const rem =
+                Number.parseFloat(
+                    getComputedStyle(document.documentElement).fontSize,
+                ) || 16;
+            const paragraph =
+                document.querySelector<HTMLElement>("main p.text-base");
+            const bodySize =
+                Number.parseFloat(
+                    getComputedStyle(paragraph ?? document.body).fontSize,
+                ) || rem;
+            if (
+                !width ||
+                !height ||
+                (width === frameWidth.value &&
+                    height === previousHeight &&
+                    rem === rootFontSize.value &&
+                    bodySize === bodyFontSize.value)
+            )
+                return;
+            previousHeight = height;
+            frameWidth.value = width;
+            rootFontSize.value = rem;
+            bodyFontSize.value = bodySize;
+            void resizeSubgraphsToContent();
         });
         resizeObserver.observe(element);
+        resizeObserver.observe(document.documentElement);
 
         intersectionObserver = new IntersectionObserver(
             ([entry]) => {
@@ -365,6 +405,11 @@ function appendGraphFrame(
         } = definition;
         const id = `${prefix}${localId}`;
         const renderedSize = size ?? defaultNodeLayoutSize;
+        const isParallelStage = graph.nodes.some(
+            (node) =>
+                node.id !== localId &&
+                Math.abs(node.position.x - horizontalPosition.x) <= 1,
+        );
         const position = leftToRight
             ? horizontalPosition
             : {
@@ -374,7 +419,7 @@ function appendGraphFrame(
                   y: topBottomY,
               };
         if (!leftToRight) {
-            topBottomY += renderedSize.height + topBottomNodeGap;
+            topBottomY += renderedSize.height + graphVerticalGap;
         }
         const renderedType =
             definition.type === "virtual"
@@ -390,13 +435,13 @@ function appendGraphFrame(
                   }
                 : size && renderedType === "virtual"
                   ? {
-                        minWidth: `${size.width}px`,
-                        minHeight: `${size.height}px`,
+                        minWidth: `${Math.min(size.width, 360)}px`,
+                        minHeight: `${Math.min(size.height, 240)}px`,
                     }
                   : renderedType === undefined
                     ? {
                           width: "max-content",
-                          maxWidth: `${defaultNodeMaxWidth}px`,
+                          maxWidth: `${mode === "top-bottom" && !isParallelStage ? 780 : defaultNodeMaxWidth}px`,
                           height: "auto",
                           whiteSpace: "normal",
                           overflowWrap: "anywhere",
@@ -417,9 +462,13 @@ function appendGraphFrame(
                 ...data,
                 label,
                 layout: mode,
-                layoutPosition: position,
+                layoutPosition: horizontalPosition,
+                depth,
             },
-            style: nodeStyle,
+            style: {
+                ...nodeStyle,
+                "--graph-group-fill": `var(--graph-group-${Math.min(depth, 2)})`,
+            },
             class: renderedClass,
             parentNode,
             extent: parentNode ? "parent" : undefined,
@@ -438,9 +487,10 @@ function appendGraphFrame(
             nodes.push({
                 id: `${id}::__title`,
                 type: "virtual-label",
-                position: { ...position },
+                position: { x: position.x + 40, y: position.y + 18 },
                 data: {
                     label,
+                    depth,
                 },
                 class: "graph-node-virtual-label",
                 parentNode,
@@ -476,6 +526,11 @@ function appendGraphFrame(
         }
 
         edges.push({
+            ...getEdgeAppearance(
+                depth,
+                graph.nodes.find((node) => node.id === edge.target)?.type ===
+                    "virtual",
+            ),
             ...edge,
             id: `${prefix}${edge.id}`,
             source: `${prefix}${edge.source}`,
@@ -490,6 +545,7 @@ function appendGraphFrame(
         const source = resolveCrossEdgeEndpoint(prefix, edge.source);
         const target = resolveCrossEdgeEndpoint(prefix, edge.target);
         crossEdges.push({
+            ...getEdgeAppearance(depth, false),
             ...edge,
             id: `${prefix}${edge.id}`,
             source,
@@ -501,73 +557,47 @@ function appendGraphFrame(
     }
 }
 
+function getEdgeAppearance(depth: number, targetsGroup: boolean) {
+    const color = depth === 0 ? "var(--graph-connector)" : "var(--graph-text)";
+    return {
+        style: { stroke: color, strokeWidth: depth === 0 ? 10 : 5 },
+        markerEnd: targetsGroup
+            ? undefined
+            : {
+                  type: MarkerType.ArrowClosed,
+                  color,
+                  width: 40,
+                  height: 40,
+                  markerUnits: "userSpaceOnUse",
+              },
+    };
+}
+
 function resolveCrossEdgeEndpoint(prefix: string, endpoint: string | string[]) {
     const path = Array.isArray(endpoint) ? endpoint.join("::") : endpoint;
     return `${prefix}${path}`;
 }
 
-const graphAspectRatio = computed(() => {
-    const graph = resolvedGraph.value;
-    if (!graph) return 1;
-
-    const visibleNodes = graph.nodes.filter(
-        (definition) =>
-            definition.type !== "virtual" ||
-            Boolean(
-                definition.data?.subgraph &&
-                graphRegistry.value?.graphs[definition.data.subgraph],
-            ),
-    );
-    let minX = Number.POSITIVE_INFINITY;
-    let minY = Number.POSITIVE_INFINITY;
-    let maxX = Number.NEGATIVE_INFINITY;
-    let maxY = Number.NEGATIVE_INFINITY;
-
-    for (const definition of visibleNodes) {
-        const position = definition.position;
-        const size = definition.size ?? defaultNodeLayoutSize;
-        minX = Math.min(minX, position.x);
-        minY = Math.min(minY, position.y);
-        maxX = Math.max(maxX, position.x + size.width);
-        maxY = Math.max(maxY, position.y + size.height);
-    }
-
-    const width = maxX - minX;
-    const height = maxY - minY;
-    return Number.isFinite(width) && Number.isFinite(height) && height > 0
-        ? Math.max(0.1, width / height)
-        : 1;
-});
-
-const graphHeight = computed(() => {
-    const configuredHeight = resolvedGraph.value?.height ?? 560;
-    const aspectHeight =
-        figureWidth.value > 0
-            ? figureWidth.value / graphAspectRatio.value + 80
-            : configuredHeight;
-    return `${Math.max(180, Math.min(configuredHeight, aspectHeight, 1000))}px`;
-});
-
 const canvasStyle = computed(() => ({
-    height:
-        props.fullHeight || isFullscreen.value
-            ? undefined
-            : `min(${graphHeight.value}, calc(100dvh - var(--content-graph-navigation-height) - 2rem - ${
-                  resolvedGraph.value?.title ? "3.5rem" : "0rem"
-              }))`,
-    "--content-graph-label-scale": Math.min(
-        maxLabelScale,
-        Math.max(1, 0.8 / viewportZoom.value),
-    ).toFixed(3),
+    "--graph-node-font-size": `${typography.value.fontSize}px`,
+    "--graph-label-font-size": `${typography.value.fontSize}px`,
+    "--graph-page-font-size": `${typography.value.fontSize}px`,
+    "--graph-nested-label-scale": typography.value.nestedLabelScale,
 }));
 
-watch(graphHeight, async () => {
+async function fitGraphToFrame(duration = 0) {
     await nextTick();
-    await flowInstance.value?.fitView({ padding: 0.04 });
-});
+    await nextAnimationFrame();
+    await flowInstance.value?.fitView({
+        padding: 0.04,
+        minZoom: typography.value.minZoom,
+        maxZoom: typography.value.minZoom,
+        duration,
+    });
+}
 
 function updateViewport(viewport: ViewportTransform) {
-    viewportZoom.value = Math.max(0.05, viewport.zoom);
+    viewportZoom.value = viewport.zoom;
 }
 
 function setFlowInstance(instance: VueFlowStore) {
@@ -595,9 +625,15 @@ function getMeasuredNodes(instance: VueFlowStore): GraphNode[] {
 }
 
 function getMeasuredNodeSize(node: GraphNode): Size {
+    // A parent can be resized earlier in the same measurement pass, before
+    // Vue Flow's ResizeObserver has published its new dimensions.
+    const style = typeof node.style === "object" ? node.style : {};
+    const width = Number.parseFloat(String(style.width ?? ""));
+    const height = Number.parseFloat(String(style.height ?? ""));
     return {
-        width: node.dimensions.width || defaultNodeLayoutSize.width,
-        height: node.dimensions.height || defaultNodeLayoutSize.height,
+        width: width || node.dimensions.width || defaultNodeLayoutSize.width,
+        height:
+            height || node.dimensions.height || defaultNodeLayoutSize.height,
     };
 }
 
@@ -613,7 +649,9 @@ function updateMeasuredNodePosition(
     instance.updateNode(node.id, { position });
 
     if (node.type === "virtual") {
-        instance.updateNode(`${node.id}::__title`, { position });
+        instance.updateNode(`${node.id}::__title`, {
+            position: { x: position.x + 40, y: position.y + 18 },
+        });
     }
 }
 
@@ -623,108 +661,31 @@ function layoutMeasuredNodes(
     layout: GraphDirection,
     insideSubgraph: boolean,
     minimumWidth = 0,
+    contentTop = topBottomSubgraphPadding,
 ): Size {
-    if (layout === "top-bottom") {
-        const orderedChildren = [...children].sort(
-            (a, b) =>
-                getLayoutPosition(a).y - getLayoutPosition(b).y ||
-                getLayoutPosition(a).x - getLayoutPosition(b).x,
-        );
-        const contentWidth = Math.max(
-            ...orderedChildren.map((child) => getMeasuredNodeSize(child).width),
-        );
-        const width = Math.max(
-            minimumWidth,
-            contentWidth + (insideSubgraph ? subgraphPadding * 2 : 0),
-        );
-        let y = insideSubgraph
-            ? topBottomSubgraphPadding
-            : Math.min(
-                  ...orderedChildren.map((child) => getLayoutPosition(child).y),
-              );
-
-        for (const child of orderedChildren) {
-            const childSize = getMeasuredNodeSize(child);
-            const position = {
-                x: insideSubgraph
-                    ? (width - childSize.width) / 2
-                    : getLayoutPosition(child).x,
-                y,
-            };
-            updateMeasuredNodePosition(instance, child, position);
-            y += childSize.height + topBottomNodeGap;
-        }
-
-        return {
-            width,
-            height:
-                y - topBottomNodeGap + (insideSubgraph ? subgraphPadding : 0),
-        };
-    }
-
-    const orderedChildren = [...children].sort(
-        (a, b) =>
-            getLayoutPosition(a).x - getLayoutPosition(b).x ||
-            getLayoutPosition(a).y - getLayoutPosition(b).y,
+    const result = positionGraphNodes(
+        children.map((child) => ({
+            id: child.id,
+            position: getLayoutPosition(child),
+            size: getMeasuredNodeSize(child),
+        })),
+        layout,
+        insideSubgraph ? subgraphPadding : 0,
+        insideSubgraph ? contentTop : 0,
+        minimumWidth,
+        {
+            stage: layout === "top-bottom" ? graphVerticalGap : graphNodeGap,
+            branch: layout === "left-right" ? graphVerticalGap : graphNodeGap,
+        },
     );
-    const columns: Array<{ sourceX: number; nodes: GraphNode[] }> = [];
-
-    for (const child of orderedChildren) {
-        const previousColumn = columns.at(-1);
-        if (
-            previousColumn &&
-            Math.abs(previousColumn.sourceX - getLayoutPosition(child).x) <= 1
-        ) {
-            previousColumn.nodes.push(child);
-        } else {
-            columns.push({
-                sourceX: getLayoutPosition(child).x,
-                nodes: [child],
-            });
-        }
-    }
-
-    let x = insideSubgraph
-        ? subgraphPadding
-        : Math.min(
-              ...orderedChildren.map((child) => getLayoutPosition(child).x),
-          );
-    let bottom = 0;
-
-    for (const column of columns) {
-        column.nodes.sort(
-            (a, b) => getLayoutPosition(a).y - getLayoutPosition(b).y,
+    for (const child of children) {
+        updateMeasuredNodePosition(
+            instance,
+            child,
+            result.positions.get(child.id)!,
         );
-        const columnWidth = Math.max(
-            ...column.nodes.map((child) => getMeasuredNodeSize(child).width),
-        );
-        let previousBottom = Number.NEGATIVE_INFINITY;
-
-        for (const child of column.nodes) {
-            const childSize = getMeasuredNodeSize(child);
-            const minimumY = Number.isFinite(previousBottom)
-                ? previousBottom + topBottomNodeGap
-                : getLayoutPosition(child).y;
-            const y = Math.max(getLayoutPosition(child).y, minimumY);
-            const position = {
-                x: x + (columnWidth - childSize.width) / 2,
-                y,
-            };
-            updateMeasuredNodePosition(instance, child, position);
-            previousBottom = y + childSize.height;
-            bottom = Math.max(bottom, previousBottom);
-        }
-
-        x += columnWidth + leftRightNodeGap;
     }
-
-    return {
-        width: Math.max(
-            minimumWidth,
-            x - leftRightNodeGap + (insideSubgraph ? subgraphPadding : 0),
-        ),
-        height: bottom + (insideSubgraph ? subgraphPadding : 0),
-    };
+    return { width: result.width, height: result.height };
 }
 
 async function resizeSubgraphsToContent() {
@@ -761,16 +722,25 @@ async function resizeSubgraphsToContent() {
                 GraphDirection | undefined;
             const parentStyle =
                 typeof parent.style === "object" ? parent.style : {};
-            const minimumWidth = Number.parseFloat(
-                String(parentStyle.minWidth ?? 0),
-            );
+            // Recompute from content so an earlier layout cannot retain empty space.
+            const minimumWidth =
+                Number.parseFloat(String(parentStyle.minWidth ?? 0)) || 0;
             const size = layoutMeasuredNodes(
                 instance,
                 children,
                 layout ?? "left-right",
                 true,
                 Number.isFinite(minimumWidth) ? minimumWidth : 0,
+                Math.max(
+                    topBottomSubgraphPadding,
+                    (measuredNodes.find(
+                        (node) => node.id === `${parent.id}::__title`,
+                    )?.dimensions.height ?? 0) + 30,
+                ),
             );
+            instance.updateNode(`${parent.id}::__title`, {
+                style: { maxWidth: `${Math.max(160, size.width - 80)}px` },
+            });
             instance.updateNode(parent.id, {
                 style: {
                     ...parentStyle,
@@ -792,7 +762,7 @@ async function resizeSubgraphsToContent() {
         if (run !== subgraphResizeRun) return;
     }
 
-    await instance.fitView({ padding: 0.04 });
+    await fitGraphToFrame();
 }
 
 function zoomGraphIn() {
@@ -800,13 +770,54 @@ function zoomGraphIn() {
     statusMessage.value = "Graph zoomed in";
 }
 
-function zoomGraphOut() {
-    void flowInstance.value?.zoomOut({ duration: 180 });
-    statusMessage.value = "Graph zoomed out";
+async function zoomGraphOut() {
+    const instance = flowInstance.value;
+    const canvas = figureElement.value?.querySelector(".content-graph__canvas");
+    if (!instance || !canvas || isZoomingOut.value) return;
+    const nodes = Array.from(canvas.querySelectorAll(".vue-flow__node"));
+    if (!nodes.length) return;
+
+    const frame = canvas.getBoundingClientRect();
+    const rects = nodes.map((node) => node.getBoundingClientRect());
+    const left = Math.min(...rects.map((rect) => rect.left));
+    const right = Math.max(...rects.map((rect) => rect.right));
+    const top = Math.min(...rects.map((rect) => rect.top));
+    const bottom = Math.max(...rects.map((rect) => rect.bottom));
+    if (
+        left >= frame.left - 1 &&
+        right <= frame.right + 1 &&
+        top >= frame.top - 1 &&
+        bottom <= frame.bottom + 1
+    ) {
+        statusMessage.value = "The entire graph is already visible";
+        return;
+    }
+
+    const zoom = instance.getViewport().zoom;
+    const fitZoom =
+        zoom *
+        Math.min(
+            frame.width / ((right - left) * 1.08),
+            frame.height / ((bottom - top) * 1.08),
+        );
+    // Manual zoom can go below body size, but stops once the graph fits.
+    const nextZoom = Math.min(zoom, Math.max(0.01, zoom / 1.2, fitZoom));
+    isZoomingOut.value = true;
+    try {
+        await instance.fitView({
+            minZoom: nextZoom,
+            maxZoom: nextZoom,
+            padding: 0.04,
+            duration: 180,
+        });
+        statusMessage.value = "Graph zoomed out";
+    } finally {
+        isZoomingOut.value = false;
+    }
 }
 
 function resetGraphView() {
-    void flowInstance.value?.fitView({ padding: 0.04, duration: 260 });
+    void fitGraphToFrame(260);
     statusMessage.value = "Graph view reset";
 }
 
@@ -815,9 +826,6 @@ function updateFullscreenState() {
     statusMessage.value = isFullscreen.value
         ? "Graph entered fullscreen"
         : "Graph exited fullscreen";
-    void nextTick(() =>
-        flowInstance.value?.fitView({ padding: 0.04, duration: 180 }),
-    );
     void nextTick(() => fullscreenButton.value?.focus());
 }
 
@@ -840,10 +848,10 @@ async function toggleFullscreen() {
 <template>
     <figure
         ref="figureElement"
-        class="content-graph overflow-hidden rounded-2xl border-2 border-outline bg-surface-elevated text-on-surface shadow-sm [--content-graph-navigation-height:3rem] sm:rounded-3xl sm:[--content-graph-navigation-height:2.5rem] lg:rounded-4xl lg:[--content-graph-navigation-height:2.75rem] xl:[--content-graph-navigation-height:3.5rem] [&_.graph-node-default]:pointer-events-none [&_.graph-node-default]:!bg-secondary [&_.graph-node-default]:text-4xl [&_.graph-node-default]:leading-[1.15] [&_.graph-node-page]:!pointer-events-auto [&_.graph-node-page]:!border-0 [&_.graph-node-page]:!bg-transparent [&_.graph-node-page]:!p-0 [&_.graph-node-page]:!shadow-none [&_.graph-node-virtual]:!pointer-events-auto [&_.graph-node-virtual]:cursor-pointer [&_.graph-node-virtual]:!overflow-visible [&_.graph-node-virtual]:!bg-[color-mix(in_srgb,var(--surface-elevated)_88%,transparent)] [&_.graph-node-virtual]:!p-0 [&_.graph-node-virtual-label]:pointer-events-none [&_.graph-node-virtual-label]:!w-max [&_.graph-node-virtual-label]:!border-0 [&_.graph-node-virtual-label]:!bg-transparent [&_.graph-node-virtual-label]:!p-0 [&_.graph-node-virtual-label]:!shadow-none [&_.graph-node-virtual.mask-active]:!z-[2147483647] [&_.graph-node-virtual.mask-active_.virtual-node\_\_mask]:pointer-events-auto [&_.graph-node-virtual.mask-active_.virtual-node\_\_mask]:opacity-100 [&_.graph-node-virtual:has(.virtual-node\_\_mask:focus-visible)]:!z-[2147483647] [&_.vue-flow\_\_pane]:cursor-grab [&_.vue-flow\_\_pane.dragging]:cursor-grabbing [&_:is(.graph-node-default,.graph-node-virtual)]:!rounded-[0.875rem] [&_:is(.graph-node-default,.graph-node-virtual)]:!border-2 [&_:is(.graph-node-default,.graph-node-virtual)]:!border-outline [&_:is(.graph-node-default,.graph-node-virtual)]:font-[var(--font-main)] [&_:is(.graph-node-default,.graph-node-virtual)]:text-on-secondary [&_:is(.graph-node-default,.graph-node-virtual)]:!shadow-[0_4px_12px_rgb(0_0_0_/_15%)]"
+        class="content-graph overflow-hidden rounded-2xl sm:rounded-3xl lg:rounded-4xl"
         :class="{
             'content-graph--full-height': fullHeight,
-            'flex h-dvh w-dvw max-w-none flex-col rounded-none border-0 bg-surface-elevated':
+            'flex h-dvh w-dvw max-w-none flex-col rounded-none border-0':
                 isFullscreen,
             'content-graph--snap-active': isScrollSnapActive,
         }"
@@ -853,13 +861,13 @@ async function toggleFullscreen() {
         @pointerleave="clearActiveMask"
     >
         <figcaption
-            class="shrink-0 border-b-2 border-outline bg-secondary px-4 py-3 font-belanosima text-xl text-on-secondary sm:px-5"
+            class="content-graph__caption h-14 shrink-0 truncate px-5 py-3 font-belanosima text-xl sm:px-6"
         >
             {{ resolvedGraph?.title || "Interactive graph" }}
         </figcaption>
 
         <div
-            class="content-graph__canvas relative min-h-0 w-full"
+            class="content-graph__canvas relative min-h-0 w-full flex-1"
             :class="{
                 '!h-auto min-h-0 flex-1': isFullscreen,
                 'flex-1': fullHeight,
@@ -879,6 +887,7 @@ async function toggleFullscreen() {
                 :nodes="flow.nodes"
                 :edges="flow.edges"
                 :node-types="nodeTypes"
+                :edge-types="edgeTypes"
                 :default-edge-options="defaultEdgeOptions"
                 :nodes-draggable="false"
                 :nodes-connectable="false"
@@ -887,7 +896,7 @@ async function toggleFullscreen() {
                 :edges-focusable="false"
                 :edges-updatable="false"
                 :connect-on-click="false"
-                :min-zoom="0.05"
+                :min-zoom="0.01"
                 :max-zoom="4"
                 pan-on-drag
                 :zoom-on-scroll="false"
@@ -902,7 +911,7 @@ async function toggleFullscreen() {
 
             <div
                 v-if="resolvedGraph"
-                class="content-graph__foreground-control absolute top-3 right-3 z-20 flex items-center gap-1 rounded-xl border-2 border-outline bg-[color-mix(in_srgb,var(--surface-elevated)_92%,transparent)] p-1 shadow-[0_4px_12px_rgb(0_0_0_/_15%)] backdrop-blur"
+                class="content-graph__toolbar content-graph__foreground-control absolute top-3 right-3 z-20 flex items-center gap-1 rounded-full p-1"
                 role="toolbar"
                 aria-label="Graph view controls"
                 @pointerdown.stop
@@ -917,7 +926,7 @@ async function toggleFullscreen() {
                     +
                 </button>
                 <span
-                    class="min-w-13 text-center text-xs font-[var(--font-main)] text-on-surface"
+                    class="min-w-12 text-center text-sm font-[var(--font-main)]"
                 >
                     {{ Math.round(viewportZoom * 100) }}%
                 </span>
@@ -945,7 +954,7 @@ async function toggleFullscreen() {
                 ref="fullscreenButton"
                 v-if="resolvedGraph"
                 type="button"
-                class="nodrag nopan content-graph__foreground-control absolute right-3 bottom-3 z-20 grid size-10 cursor-pointer place-items-center rounded-xl border-2 border-outline bg-accent text-on-accent shadow-[0_4px_12px_rgb(0_0_0/15%)] backdrop-blur hover:bg-primary hover:text-on-primary focus-visible:bg-primary focus-visible:text-on-primary focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-outline"
+                class="nodrag nopan content-graph__fullscreen content-graph__foreground-control absolute right-3 bottom-3 z-20 grid size-10 cursor-pointer place-items-center rounded-full"
                 :aria-label="
                     isFullscreen ? 'Exit fullscreen' : 'Enter fullscreen'
                 "
@@ -979,12 +988,179 @@ async function toggleFullscreen() {
 
 <style scoped>
 .content-graph {
+    --graph-canvas: var(--surface);
+    --graph-group-0: #d2e6f7;
+    --graph-group-1: #eff7ff;
+    --graph-group-2: #e2f0fc;
+    --graph-title: #2b6cbf;
+    --graph-title-nested: #c1dcf4;
+    --graph-title-text: #ffffff;
+    --graph-title-nested-text: #173d62;
+    --graph-text: #173d62;
+    --graph-connector: #58798c;
+    --graph-accent: var(--accent);
+    --graph-on-accent: var(--on-accent);
+    --graph-mask-text: #082033;
+    --graph-highlight: var(--primary);
+    --graph-node-font-size: 80px;
+    --graph-label-font-size: 80px;
+    --graph-page-font-size: 80px;
+    height: 100%;
     display: flex;
     flex-direction: column;
+    background: var(--graph-canvas);
+    color: var(--graph-text);
+    border: 2px solid var(--outline);
+}
+
+.content-graph__caption {
+    color: var(--graph-text);
+    border-bottom: 2px solid var(--outline);
+}
+
+.content-graph__toolbar {
+    background: var(--graph-group-0);
+    color: var(--graph-text);
+    border: 2px solid var(--outline);
+}
+
+.content-graph__tool:hover {
+    background: var(--graph-title);
+}
+
+.content-graph__fullscreen {
+    background: var(--graph-accent);
+    color: var(--graph-on-accent);
+    border: 2px solid var(--outline);
+}
+
+.content-graph__fullscreen:hover {
+    filter: brightness(1.08);
+}
+
+.content-graph__tool:focus-visible,
+.content-graph__fullscreen:focus-visible {
+    outline: 3px solid var(--graph-text);
+    outline-offset: 3px;
+}
+
+.content-graph :deep(.graph-node-default) {
+    font-size: var(--graph-node-font-size);
+    pointer-events: none;
+    padding: 12px 16px;
+    border: 2px solid var(--outline);
+    border-radius: 14px;
+    background: transparent;
+    color: var(--graph-text);
+    box-shadow: none;
+}
+
+.content-graph :deep(.graph-node-virtual) {
+    pointer-events: auto;
+    cursor: pointer;
+    overflow: visible;
+    padding: 0;
+    border: 2px solid var(--outline);
+    border-radius: 100px;
+    background: var(--graph-group-fill);
+    box-shadow: none;
+}
+
+.content-graph :deep(.graph-node-page),
+.content-graph :deep(.graph-node-virtual-label) {
+    padding: 0;
+    border: 0;
+    background: transparent;
+    box-shadow: none;
+}
+
+.content-graph :deep(.graph-node-page) {
+    pointer-events: auto;
+}
+
+.content-graph :deep(.graph-node-virtual-label) {
+    pointer-events: none;
+    width: max-content;
+}
+
+.content-graph :deep(.graph-node-virtual.mask-active),
+.content-graph
+    :deep(.graph-node-virtual:has(.virtual-node__mask:focus-visible)) {
+    z-index: 2147483647 !important;
+    /* The group is above its sibling child nodes while the mask is active.
+       Its solid fill must not hide them beneath the translucent overlay. */
+    background: transparent;
+}
+
+.content-graph :deep(.graph-node-virtual.mask-active .virtual-node__mask) {
+    pointer-events: auto;
+    opacity: 1;
+}
+
+.content-graph :deep(.vue-flow__handle) {
+    width: 2px;
+    height: 2px;
+    min-width: 2px;
+    min-height: 2px;
+    border: 0;
+    background: transparent;
+}
+
+.content-graph :deep(.vue-flow__edge-path) {
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.content-graph :deep(.vue-flow__pane) {
+    cursor: grab;
+}
+
+.content-graph :deep(.vue-flow__pane.dragging) {
+    cursor: grabbing;
+}
+
+:global(.dark .content-graph) {
+    --graph-canvas: var(--surface);
+    --graph-group-0: #104795;
+    --graph-group-1: #2e6dbf;
+    --graph-group-2: #2f73c8;
+    --graph-title: #2f73c8;
+    --graph-title-nested: #104795;
+    --graph-title-text: #f8ffff;
+    --graph-title-nested-text: #f8ffff;
+    --graph-text: #f8ffff;
+    --graph-connector: #4b8fe3;
+    --graph-mask-text: var(--on-primary);
+}
+
+:global(.high-contrast .content-graph) {
+    --graph-canvas: var(--surface);
+    --graph-group-0: var(--surface);
+    --graph-group-1: var(--surface);
+    --graph-group-2: var(--surface);
+    --graph-title: var(--primary);
+    --graph-title-nested: var(--primary);
+    --graph-title-text: var(--on-primary);
+    --graph-title-nested-text: var(--on-primary);
+    --graph-text: var(--on-surface);
+    --graph-connector: var(--outline);
+    --graph-accent: var(--accent);
+    --graph-on-accent: var(--on-accent);
+    --graph-mask-text: var(--on-primary);
+    --graph-highlight: var(--on-surface);
+}
+
+:global(.high-contrast .content-graph .graph-node-virtual) {
+    border: 3px solid var(--outline);
 }
 
 .content-graph--full-height:not(:fullscreen) {
     height: calc(100dvh - 5rem);
+}
+
+.content-graph:fullscreen {
+    border-radius: 0;
+    border: 0;
 }
 
 @media (orientation: portrait) {

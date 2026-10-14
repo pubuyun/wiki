@@ -1,6 +1,11 @@
 ---
 title: Safety
 description:
+banner: https://static.igem.wiki/teams/6133/wiki/general/banners/safety.avif
+bannerPosition: 50% 70%
+bannerWidth: 2077
+bannerHeight: 1218
+bannerMobilePosition: 50% 50%
 ---
 
 ## Overview

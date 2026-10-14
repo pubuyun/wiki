@@ -1,6 +1,11 @@
 ---
 title: Entrep
 description:
+banner: https://static.igem.wiki/teams/6133/wiki/general/banners/entrepreneurship.avif
+bannerPosition: 50% 55%
+bannerWidth: 1707
+bannerHeight: 1280
+bannerMobilePosition: 50% 45%
 ---
 
 ## Overview

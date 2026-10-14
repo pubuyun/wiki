@@ -1,10 +1,23 @@
 ---
-title: Design
-description: Configuration, RFdiffusion generation, redesign, folding, and ranking.
-order: 320
+title: "Design"
+description: "RFdiffusion3 generation, ProteinMPNN redesign, RF3 co-folding, interface filtering, and composite-score ranking of transporter binders."
+hasReference: false
+order: 2
 ---
 
-## RFdiffusion generation
+::content-components-collapsible-paragraph{title="Summary" id="summary" preview=true}
+
+Starting from the experimental inward-facing structure of *PepT<sub>Sh</sub>* (PDB: 6EXS) and the hotspot residues defined in our analysis, *RFdiffusion3* (RFD3) used atom-based diffusion to generate candidate binder backbones around the intended extracellular interface. :fn-ref{#1}  :fn-ref{#8} Each generated structure specifies a three-dimensional backbone conformation and a potential binding interface but does not specify the final amino acid sequence.
+
+*ProteinMPNN* :fn-ref{#19} subsequently designed sequences for each backbone using the backbone geometry of the designed complex as context. We then used *RosettaFold3* (RF3) to co-fold every sequence with the PepT<sub>Sh</sub> crystal structure and assess whether the intended complex structure was confidently recovered. Confidence and protein–protein interface metrics from these predictions were used to rank the candidates.
+
+::
+
+## Generation
+
+Conformation-selective protein binders targeting the inward-facing state of the peptide transporter PepT<sub>Sh</sub> were designed using the *Rosetta Foundry* workflow. The inward-facing PepT<sub>Sh</sub> structure (PDB: 6EXS) :fn-ref{#1} was used as the design target. 
+
+Hotspots were determined during the  [characterize stage](/model/transporter-binder/characterize). RFdiffusion3 :fn-ref{#8} was then used to generate a total of 1,000 candidate backbone structures with the following configuration.
 
 ::content-components-code-group
 ---
@@ -46,7 +59,44 @@ sync: peptsh-interface-design
 ```
 ::
 
-## Interface redesign
+For each generated backbone, two amino-acid sequences were designed using ProteinMPNN :fn-ref{#19}, resulting in 2,000 sequence–structure candidates.
+
+## Validation
+
+### Co-Folding
+
+ProteinMPNN-designed sequences were co-folded with the inward-facing PepT<sub>Sh</sub> structure using RosettaFold3. Three RF3 predictions were generated for each binder. 
+
+### Interface Filter
+
+Predicted structures were subsequently filtered according to whether the binder contacted the predefined extracellular interface of PepT<sub>Sh</sub>.
+
+A binder was considered to contact the intended interface when at least **three** target residues were located within **5 Å** of binder heavy atoms :fn-ref{#20} and at least **50%** of all contacted receptor residues belonged to the predefined extracellular regions.
+
+### Ranking
+
+Candidates that passed the interface filter were ranked using a normalized composite score.
+
+$$
+
+\text{weighted score} = 0.50 \times \mathrm{normalized\ ranking\ score} + 0.25 \times \mathrm{normalized\ pLDDT} + 0.25 \times \mathrm{normalized\ inverse\ PAE}.
+
+$$
+
+For each binder prediction, only the highest-scoring RF3 prediction was retained. The 20 highest-ranking transporter binders were selected for subsequent [molecular-dynamics analysis](/model/transporter-binder/md-simulation).
+
+### Parameter
+
+The selected transporter binders exhibited favorable RF3 confidence metrics and consistent binding to the predefined extracellular surface of PepT<sub>Sh</sub>.
+
+::content-components-model-transporter-binder-binders-heat-map
+::
+
+### Script
+
+#### Batch ProteinMPNN Interface Redesign
+
+This script processes RFD3-generated binder structures and redesigns their amino-acid sequences using ProteinMPNN.
 
 ::content-components-code-group{defaultValue="0" sync="mpnn-interface-redesign" label="Workflow and source code"}
 
@@ -296,7 +346,9 @@ if __name__ == "__main__":
 
 ::
 
-## Reference cofolding
+#### RF3 Cofolding
+
+This script collects ProteinMPNN-designed sequences and prepares batch inputs for RosettaFold3. Each binder sequence is co-folded with the experimental inward-facing PepT<sub>Sh</sub> structure.
 
 ::content-components-code-group{defaultValue="0" sync="rf3-reference-cofold" label="Workflow and source code"}
 
@@ -811,7 +863,9 @@ if __name__ == "__main__":
 
 ::
 
-## Binder ranking
+#### Interface Filtering and Candidate Ranking
+
+This script first checks interface-contact requirements, excluding all failed binders. For accepted candidates, weighted scores are calculated and the 20 highest-ranking binders are exported.
 
 ::content-components-code-group{defaultValue="0" sync="rf3-binder-ranking" label="Workflow and source code"}
 
@@ -2104,7 +2158,4 @@ if __name__ == "__main__":
     main()
 ```
 
-::
-
-::content-components-model-transporter-binder-binders-heat-map
 ::

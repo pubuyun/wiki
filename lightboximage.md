@@ -42,7 +42,7 @@ Replace the example URLs and descriptions with your own. `src` must be a list, e
 
 `alt` accepts a string shared by all images or a list matching the order of `src`. It is applied to both the default thumbnails and the enlarged images in the lightbox. Custom slot content must bind its own image's `alt`. An explicit empty string (`alt: ""`, or an empty list entry) is preserved; captions are not copied into `alt` automatically.
 
-For two to four panels of the same figure, use `content-components-lightbox-panels`. This wrapper uses one `LightboxImage` gallery and a `PanelLayout` with `autoLabels` enabled. PanelLayout supplies the `(a)`, `(b)`, and subsequent labels. A shared caption appears once below the panels. Supply `src` and `alt` in row order: upper left, upper right, lower left, lower right. `panelHeight` optionally controls the layout height and defaults to `32rem`.
+For two to four panels of the same figure, use `content-components-lightbox-panels`. This wrapper uses one `LightboxImage` gallery and a dedicated `ImagePanelLayout` with `autoLabels` enabled. Images keep their natural proportions and expand the grid height, without internal scrollbars. The gap is `0.75rem`. Supply `src` and `alt` in row order: upper left, upper right, lower left, lower right. With three images, the third spans the full bottom row. On narrow containers, images stack in the same reading order. Set `layout: stack` for a full-width, top-to-bottom comparison at every screen size, and describe its images as top/bottom in the caption. The grid supplies `(a)`, `(b)`, and subsequent labels; use `autoLabels: false` when labels are already embedded in the images. A shared caption appears once below the panels; bold panel markers with `**(a)**`, `**(b)**`, etc.
 
 ```markdown
 ::content-components-lightbox-panels
@@ -53,7 +53,7 @@ src:
 alt:
   - Description of the first panel
   - Description of the second panel
-caption: "Fig. 1 | (a) First panel. (b) Second panel."
+caption: "Fig. 1 | **(a)** First panel. **(b)** Second panel."
 ---
 
 ::

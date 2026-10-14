@@ -1,0 +1,8 @@
+{
+    "term": [
+        "OpenFF",
+        "Open Force Field"
+    ],
+    "detail": "An open-source initiative developing transferable molecular force fields and tools for assigning their parameters.",
+    "link": "https://github.com/openforcefield/openff-toolkit"
+}

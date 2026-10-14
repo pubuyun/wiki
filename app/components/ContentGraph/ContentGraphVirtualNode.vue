@@ -31,7 +31,7 @@ function openPage() {
 
 <template>
     <div
-        class="virtual-node relative h-full min-h-24 w-full min-w-40 touch-manipulation overflow-visible rounded-xl"
+        class="virtual-node relative h-full min-h-24 w-full min-w-40 touch-manipulation overflow-visible rounded-[100px]"
         @click.stop="openPage"
     >
         <Handle type="target" :position="targetPosition" :connectable="false" />
@@ -39,14 +39,14 @@ function openPage() {
         <NuxtLink
             v-if="data.path"
             :to="data.path"
-            class="virtual-node__mask pointer-events-none absolute inset-0 z-4 grid place-items-center rounded-[inherit] bg-[color-mix(in_srgb,var(--primary)_62%,transparent)] text-center font-belanosima text-xl text-on-primary no-underline opacity-0 transition-opacity duration-150 focus-visible:pointer-events-auto focus-visible:opacity-100 focus-visible:outline-3 focus-visible:-outline-offset-4 focus-visible:outline-outline"
+            class="virtual-node__mask pointer-events-none absolute inset-0 z-4 grid place-items-center rounded-[inherit] text-center font-belanosima text-3xl no-underline opacity-0 transition-opacity duration-150 focus-visible:pointer-events-auto focus-visible:opacity-100"
             draggable="false"
             :aria-label="`Open ${data.label || 'page'}`"
             @click.stop
             @dragstart.prevent
         >
             <span
-                class="virtual-node__mask-label inline-block max-w-[calc(100%/var(--content-graph-label-scale,1))] origin-center [transform:scale(var(--content-graph-label-scale,1))] [overflow-wrap:anywhere] whitespace-normal will-change-transform"
+                class="virtual-node__mask-label inline-block max-w-[90%] [overflow-wrap:anywhere] whitespace-normal"
             >
                 Open {{ data.label }} →
             </span>
@@ -55,3 +55,22 @@ function openPage() {
         <Handle type="source" :position="sourcePosition" :connectable="false" />
     </div>
 </template>
+
+<style scoped>
+.virtual-node__mask {
+    font-size: var(--graph-page-font-size);
+    background: color-mix(in srgb, var(--primary) 78%, transparent);
+    color: var(--graph-mask-text);
+}
+
+.virtual-node__mask:focus-visible {
+    outline: 5px solid var(--graph-highlight);
+    outline-offset: -8px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .virtual-node__mask {
+        transition: none;
+    }
+}
+</style>

@@ -5,7 +5,7 @@
                 <button
                     ref="triggerEl"
                     type="button"
-                    class="font-inherit inline cursor-help border-0 bg-transparent p-0 text-inherit not-italic underline decoration-accent decoration-2 underline-offset-4 transition-colors hover:text-outline-variant focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent dark:hover:text-surface-bright"
+                    class="font-inherit inline cursor-help border-0 bg-transparent p-0 text-inherit not-italic underline decoration-primary decoration-2 underline-offset-4 transition-colors hover:text-outline-variant focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent dark:hover:text-surface-bright"
                     @click="toggleTooltipForTouch"
                 >
                     <slot />
@@ -51,7 +51,14 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onBeforeUnmount, onMounted, ref, useSlots } from "vue";
+import {
+    computed,
+    onBeforeUnmount,
+    onMounted,
+    ref,
+    useSlots,
+    type VNode,
+} from "vue";
 import {
     TooltipArrow,
     TooltipContent,
@@ -76,9 +83,31 @@ const { data: glossaryTerms } = await useAsyncData("glossary-terms", () =>
     queryCollection("glossary").all(),
 );
 
-const slotText = computed(() =>
-    (slots.default?.()[0]?.children?.toString() ?? "").trim(),
-);
+function textFromNodes(nodes: VNode[]): string {
+    return nodes
+        .map((node) => {
+            if (typeof node.children === "string") return node.children;
+            if (Array.isArray(node.children)) {
+                return node.children
+                    .map((child) =>
+                        typeof child === "object" && child !== null
+                            ? textFromNodes([child as VNode])
+                            : String(child ?? ""),
+                    )
+                    .join("");
+            }
+            if (node.children && typeof node.children === "object") {
+                const nestedSlot = (
+                    node.children as { default?: () => VNode[] }
+                ).default;
+                return nestedSlot ? textFromNodes(nestedSlot()) : "";
+            }
+            return "";
+        })
+        .join("");
+}
+
+const slotText = computed(() => textFromNodes(slots.default?.() ?? []).trim());
 
 const matchedTerm = computed(() => {
     const normalizedSlotText = normalizeTerm(slotText.value);
@@ -97,7 +126,10 @@ const matchedTerm = computed(() => {
 });
 
 function normalizeTerm(term: string): string {
-    return term.trim().toLocaleLowerCase();
+    return term
+        .replace(/<\/?sub>/gi, "")
+        .trim()
+        .toLocaleLowerCase();
 }
 
 function isTouchTooltipInteraction() {

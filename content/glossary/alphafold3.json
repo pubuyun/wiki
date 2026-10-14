@@ -1,0 +1,8 @@
+{
+    "term": [
+        "AlphaFold 3",
+        "AlphaFold3"
+    ],
+    "detail": "A biomolecular structure prediction model that predicts complexes containing proteins, nucleic acids, small molecules, ions, and modified residues.",
+    "link": "https://github.com/google-deepmind/alphafold3"
+}

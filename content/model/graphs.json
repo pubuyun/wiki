@@ -7,19 +7,19 @@
             "nodes": [
                 {
                     "id": "overview",
-                    "label": "Overview",
+                    "label": "Characterize–DBTL",
                     "position": {
                         "x": 20,
                         "y": 1000
                     },
                     "data": {
-                        "path": "/model#overview"
+                        "path": "/model#characterizedbtl-framework",
+                        "scale": true
                     }
                 },
                 {
                     "id": "precursor-binder",
                     "label": "Precursor Binder",
-                    "type": "virtual",
                     "position": {
                         "x": 240,
                         "y": 20
@@ -28,15 +28,16 @@
                         "width": 2280,
                         "height": 730
                     },
+                    "type": "virtual",
                     "data": {
                         "path": "/model/precursor-binder",
-                        "subgraph": "model/precursor-binder/index"
+                        "subgraph": "model/precursor-binder/index",
+                        "direction": "left-right"
                     }
                 },
                 {
                     "id": "transporter-binder",
                     "label": "Transporter Binder",
-                    "type": "virtual",
                     "position": {
                         "x": 240,
                         "y": 780
@@ -45,15 +46,16 @@
                         "width": 1860,
                         "height": 620
                     },
+                    "type": "virtual",
                     "data": {
                         "path": "/model/transporter-binder",
-                        "subgraph": "model/transporter-binder/index"
+                        "subgraph": "model/transporter-binder/index",
+                        "direction": "left-right"
                     }
                 },
                 {
-                    "id": "enzyme",
-                    "label": "Enzyme",
-                    "type": "virtual",
+                    "id": "cgtase",
+                    "label": "CGTase",
                     "position": {
                         "x": 240,
                         "y": 1430
@@ -62,350 +64,113 @@
                         "width": 1860,
                         "height": 620
                     },
+                    "type": "virtual",
                     "data": {
-                        "path": "/model/enzyme",
-                        "subgraph": "model/enzyme/index"
+                        "path": "/model/cgtase",
+                        "subgraph": "model/cgtase/index",
+                        "direction": "left-right"
                     }
                 },
                 {
                     "id": "discussion",
-                    "label": "Discussion",
+                    "label": "Overall Discussion",
                     "position": {
                         "x": 2610,
                         "y": 1000
                     },
                     "data": {
-                        "path": "/model/discussion"
+                        "path": "/model#overall-discussion",
+                        "scale": true
                     }
                 }
             ],
             "edges": [
                 {
-                    "id": "overview-to-precursor",
+                    "id": "overview-to-precursor-binder",
                     "source": "overview",
                     "target": "precursor-binder"
                 },
                 {
-                    "id": "overview-to-transporter",
+                    "id": "overview-to-transporter-binder",
                     "source": "overview",
                     "target": "transporter-binder"
                 },
                 {
-                    "id": "overview-to-enzyme",
+                    "id": "overview-to-cgtase",
                     "source": "overview",
-                    "target": "enzyme"
+                    "target": "cgtase"
                 },
                 {
-                    "id": "precursor-to-discussion",
+                    "id": "precursor-binder-to-discussion",
                     "source": "precursor-binder",
                     "target": "discussion"
                 },
                 {
-                    "id": "transporter-to-discussion",
+                    "id": "transporter-binder-to-discussion",
                     "source": "transporter-binder",
                     "target": "discussion"
                 },
                 {
-                    "id": "enzyme-to-discussion",
-                    "source": "enzyme",
+                    "id": "cgtase-to-discussion",
+                    "source": "cgtase",
                     "target": "discussion"
                 }
             ]
         },
-        "model/enzyme/analysis": {
-            "title": "Analysis",
-            "height": 260,
+        "model/precursor-binder/characterize": {
+            "title": "Characterize",
+            "height": 240,
             "nodes": [
                 {
-                    "id": "catalytic-mechanism",
-                    "label": "Catalytic Mechanism",
+                    "id": "target",
+                    "label": "Sequester the Precursor",
                     "position": {
                         "x": 20,
-                        "y": 100
+                        "y": 90
                     }
                 },
                 {
-                    "id": "docking",
-                    "label": "Docking",
+                    "id": "stereoisomer",
+                    "label": "Select the (S) Stereoisomer",
                     "position": {
-                        "x": 190,
-                        "y": 100
+                        "x": 210,
+                        "y": 90
                     }
                 },
                 {
-                    "id": "pose-clustering",
-                    "label": "Pose Clustering",
+                    "id": "stereochemical-input",
+                    "label": "Chiral SMILES / SDF",
                     "position": {
-                        "x": 360,
-                        "y": 100
+                        "x": 400,
+                        "y": 90
                     }
                 },
                 {
-                    "id": "md-simulation",
-                    "label": "50ns MD Simulation",
-                    "position": {
-                        "x": 530,
-                        "y": 100
-                    }
-                },
-                {
-                    "id": "valid-pose",
-                    "label": "Valid Pose",
-                    "position": {
-                        "x": 700,
-                        "y": 100
-                    }
-                }
-            ],
-            "edges": [
-                {
-                    "id": "mechanism-docking",
-                    "source": "catalytic-mechanism",
-                    "target": "docking"
-                },
-                {
-                    "id": "docking-clustering",
-                    "source": "docking",
-                    "target": "pose-clustering"
-                },
-                {
-                    "id": "clustering-md",
-                    "source": "pose-clustering",
-                    "target": "md-simulation"
-                },
-                {
-                    "id": "md-valid-pose",
-                    "source": "md-simulation",
-                    "target": "valid-pose"
-                }
-            ]
-        },
-        "model/enzyme/index": {
-            "title": "Enzyme",
-            "height": 620,
-            "nodes": [
-                {
-                    "id": "cgtase",
-                    "label": "CGTase",
-                    "position": {
-                        "x": 30,
-                        "y": 280
-                    }
-                },
-                {
-                    "id": "analysis",
-                    "label": "Analysis",
-                    "type": "virtual",
-                    "position": {
-                        "x": 220,
-                        "y": 30
-                    },
-                    "size": {
-                        "width": 330,
-                        "height": 540
-                    },
-                    "data": {
-                        "path": "/model/enzyme/analysis",
-                        "direction": "top-bottom",
-                        "subgraph": "model/enzyme/analysis"
-                    }
-                },
-                {
-                    "id": "rational-design",
-                    "label": "Rational Design",
-                    "type": "virtual",
+                    "id": "chirality-check",
+                    "label": "Verify Predicted Chirality",
                     "position": {
                         "x": 590,
-                        "y": 30
-                    },
-                    "size": {
-                        "width": 330,
-                        "height": 540
-                    },
-                    "data": {
-                        "path": "/model/enzyme/rational-design",
-                        "direction": "top-bottom",
-                        "subgraph": "model/enzyme/rational design"
-                    }
-                },
-                {
-                    "id": "md-simulation",
-                    "label": "MD Simulation",
-                    "type": "virtual",
-                    "position": {
-                        "x": 960,
-                        "y": 30
-                    },
-                    "size": {
-                        "width": 330,
-                        "height": 540
-                    },
-                    "data": {
-                        "path": "/model/enzyme/mdsimulation",
-                        "direction": "top-bottom",
-                        "subgraph": "model/enzyme/mdsimulation"
-                    }
-                },
-                {
-                    "id": "result",
-                    "label": "Result",
-                    "position": {
-                        "x": 1530,
-                        "y": 220
-                    },
-                    "data": {
-                        "path": "/model/enzyme/result",
-                        "scale": false
+                        "y": 90
                     }
                 }
             ],
             "edges": [
                 {
-                    "id": "cgtase-to-analysis",
-                    "source": "cgtase",
-                    "target": "analysis"
+                    "id": "target-to-stereoisomer",
+                    "source": "target",
+                    "target": "stereoisomer"
                 },
                 {
-                    "id": "analysis-to-design",
-                    "source": "analysis",
-                    "target": "rational-design"
+                    "id": "stereoisomer-to-stereochemical-input",
+                    "source": "stereoisomer",
+                    "target": "stereochemical-input"
                 },
                 {
-                    "id": "design-to-md",
-                    "source": "rational-design",
-                    "target": "md-simulation"
-                },
-                {
-                    "id": "md-to-result",
-                    "source": "md-simulation",
-                    "target": "result"
+                    "id": "stereochemical-input-to-chirality-check",
+                    "source": "stereochemical-input",
+                    "target": "chirality-check"
                 }
             ]
-        },
-        "model/enzyme/mdsimulation": {
-            "title": "MD Simulation",
-            "height": 260,
-            "nodes": [
-                {
-                    "id": "restrict-covalent-ligand",
-                    "label": "Restrict Covalent Ligand",
-                    "position": {
-                        "x": 20,
-                        "y": 100
-                    }
-                },
-                {
-                    "id": "system-preparation",
-                    "label": "System Preparation",
-                    "position": {
-                        "x": 220,
-                        "y": 100
-                    }
-                },
-                {
-                    "id": "md-simulation",
-                    "label": "100ns MD Simulation",
-                    "position": {
-                        "x": 420,
-                        "y": 100
-                    }
-                },
-                {
-                    "id": "rmsd",
-                    "label": "RMSD Calculation",
-                    "position": {
-                        "x": 620,
-                        "y": 100
-                    }
-                },
-                {
-                    "id": "mutants-selected",
-                    "label": "3 Mutants Selected",
-                    "position": {
-                        "x": 820,
-                        "y": 100
-                    }
-                }
-            ],
-            "edges": [
-                {
-                    "id": "restrict-to-preparation",
-                    "source": "restrict-covalent-ligand",
-                    "target": "system-preparation"
-                },
-                {
-                    "id": "preparation-to-md",
-                    "source": "system-preparation",
-                    "target": "md-simulation"
-                },
-                {
-                    "id": "md-to-rmsd",
-                    "source": "md-simulation",
-                    "target": "rmsd"
-                },
-                {
-                    "id": "rmsd-to-mutants",
-                    "source": "rmsd",
-                    "target": "mutants-selected"
-                }
-            ]
-        },
-        "model/enzyme/rational design": {
-            "title": "Rational Design",
-            "height": 260,
-            "nodes": [
-                {
-                    "id": "wildtype-md",
-                    "label": "Wildtype MD",
-                    "position": {
-                        "x": 20,
-                        "y": 100
-                    }
-                },
-                {
-                    "id": "stablize-carboxyl",
-                    "label": "Stablize carboxyl group",
-                    "position": {
-                        "x": 190,
-                        "y": 100
-                    }
-                },
-                {
-                    "id": "stablize-tail",
-                    "label": "Stablize hydrophobic tail",
-                    "position": {
-                        "x": 360,
-                        "y": 100
-                    }
-                }
-            ],
-            "edges": [
-                {
-                    "id": "wildtype-carboxyl",
-                    "source": "wildtype-md",
-                    "target": "stablize-carboxyl"
-                },
-                {
-                    "id": "carboxyl-tail",
-                    "source": "stablize-carboxyl",
-                    "target": "stablize-tail"
-                }
-            ]
-        },
-        "model/enzyme/result": {
-            "title": "Result",
-            "height": 190,
-            "nodes": [
-                {
-                    "id": "experiment-result",
-                    "label": "Experiment Result",
-                    "position": {
-                        "x": 85,
-                        "y": 70
-                    }
-                }
-            ],
-            "edges": []
         },
         "model/precursor-binder/index": {
             "title": "Precursor Binder",
@@ -413,16 +178,19 @@
             "nodes": [
                 {
                     "id": "target",
-                    "label": "Cys-Gly-3M3SH",
+                    "label": "Cys-Gly-(S)-3M3SH",
                     "position": {
                         "x": 30,
                         "y": 280
+                    },
+                    "data": {
+                        "path": "/model/precursor-binder/characterize",
+                        "scale": false
                     }
                 },
                 {
                     "id": "rfd",
-                    "label": "RFDiffusion",
-                    "type": "virtual",
+                    "label": "RFdiffusion3",
                     "position": {
                         "x": 220,
                         "y": 20
@@ -431,16 +199,16 @@
                         "width": 780,
                         "height": 220
                     },
+                    "type": "virtual",
                     "data": {
-                        "path": "/model/precursor-binder/rfdiffusion",
-                        "direction": "left-right",
-                        "subgraph": "model/precursor-binder/rfdiffusion"
+                        "path": "/model/precursor-binder/design-rfdiffusion",
+                        "subgraph": "model/precursor-binder/design-rfdiffusion",
+                        "direction": "left-right"
                     }
                 },
                 {
                     "id": "pc",
-                    "label": "Proteina Complexa",
-                    "type": "virtual",
+                    "label": "Proteina-Complexa",
                     "position": {
                         "x": 220,
                         "y": 400
@@ -449,16 +217,16 @@
                         "width": 900,
                         "height": 300
                     },
+                    "type": "virtual",
                     "data": {
-                        "path": "/model/precursor-binder/proteinacomplexa",
-                        "direction": "left-right",
-                        "subgraph": "model/precursor-binder/proteinacomplexa"
+                        "path": "/model/precursor-binder/design-proteina-complexa",
+                        "subgraph": "model/precursor-binder/design-proteina-complexa",
+                        "direction": "left-right"
                     }
                 },
                 {
                     "id": "md-simulation",
                     "label": "MD Simulation",
-                    "type": "virtual",
                     "position": {
                         "x": 1380,
                         "y": 110
@@ -467,21 +235,34 @@
                         "width": 330,
                         "height": 500
                     },
+                    "type": "virtual",
                     "data": {
                         "path": "/model/precursor-binder/md-simulation",
-                        "direction": "top-bottom",
-                        "subgraph": "model/precursor-binder/md simulation"
+                        "subgraph": "model/precursor-binder/md-simulation",
+                        "direction": "top-bottom"
                     }
                 },
                 {
-                    "id": "result",
-                    "label": "Result",
+                    "id": "discussion",
+                    "label": "Discussion",
                     "position": {
                         "x": 1950,
                         "y": 275
                     },
                     "data": {
-                        "path": "/model/precursor-binder/result",
+                        "path": "/model/precursor-binder/discussion",
+                        "scale": false
+                    }
+                },
+                {
+                    "id": "affinity",
+                    "label": "Affinity",
+                    "position": {
+                        "x": 2170,
+                        "y": 275
+                    },
+                    "data": {
+                        "path": "/model/optimization/precursor-binder-affinity",
                         "scale": false
                     }
                 }
@@ -498,102 +279,102 @@
                     "target": "pc"
                 },
                 {
-                    "id": "rfd-to-md",
+                    "id": "rfd-to-md-simulation",
                     "source": "rfd",
                     "target": "md-simulation"
                 },
                 {
-                    "id": "pc-to-md",
+                    "id": "pc-to-md-simulation",
                     "source": "pc",
                     "target": "md-simulation"
                 },
                 {
-                    "id": "md-to-result",
+                    "id": "md-simulation-to-discussion",
                     "source": "md-simulation",
-                    "target": "result"
+                    "target": "discussion"
+                },
+                {
+                    "id": "discussion-to-affinity",
+                    "source": "discussion",
+                    "target": "affinity"
                 }
             ]
         },
-        "model/precursor-binder/md simulation": {
-            "title": "MD Simulation",
-            "height": 330,
+        "model/precursor-binder/design-rfdiffusion": {
+            "title": "Design: RFdiffusion3",
+            "height": 240,
             "nodes": [
                 {
-                    "id": "system-construction",
-                    "label": "System Construction",
+                    "id": "rfd-generation",
+                    "label": "RFdiffusion3",
                     "position": {
                         "x": 20,
-                        "y": 125
+                        "y": 90
                     }
                 },
                 {
-                    "id": "md-50ns",
-                    "label": "50ns MD Simulation",
+                    "id": "ligandmpnn",
+                    "label": "LigandMPNN",
                     "position": {
-                        "x": 220,
-                        "y": 125
+                        "x": 210,
+                        "y": 90
                     }
                 },
                 {
-                    "id": "mmpbsa",
-                    "label": "MMPBSA deltaG",
+                    "id": "rf3",
+                    "label": "RF3 Co-folding",
                     "position": {
-                        "x": 440,
-                        "y": 45
+                        "x": 400,
+                        "y": 90
                     }
                 },
                 {
-                    "id": "rmsd",
-                    "label": "RMSD",
+                    "id": "filter",
+                    "label": "Chirality + scRMSD",
                     "position": {
-                        "x": 440,
-                        "y": 205
+                        "x": 590,
+                        "y": 90
                     }
                 },
                 {
-                    "id": "each-top-6",
-                    "label": "Each Top 6",
+                    "id": "top40",
+                    "label": "Top 40: RF3 Score",
                     "position": {
-                        "x": 690,
-                        "y": 125
+                        "x": 780,
+                        "y": 90
                     }
                 }
             ],
             "edges": [
                 {
-                    "id": "construction-md",
-                    "source": "system-construction",
-                    "target": "md-50ns"
+                    "id": "rfd-generation-to-ligandmpnn",
+                    "source": "rfd-generation",
+                    "target": "ligandmpnn"
                 },
                 {
-                    "id": "md-mmpbsa",
-                    "source": "md-50ns",
-                    "target": "mmpbsa"
+                    "id": "ligandmpnn-to-rf3",
+                    "source": "ligandmpnn",
+                    "target": "rf3"
                 },
                 {
-                    "id": "md-rmsd",
-                    "source": "md-50ns",
-                    "target": "rmsd"
+                    "id": "rf3-to-filter",
+                    "source": "rf3",
+                    "target": "filter"
                 },
                 {
-                    "id": "mmpbsa-top6",
-                    "source": "mmpbsa",
-                    "target": "each-top-6"
-                },
-                {
-                    "id": "rmsd-top6",
-                    "source": "rmsd",
-                    "target": "each-top-6"
+                    "id": "filter-to-top40",
+                    "source": "filter",
+                    "target": "top40"
                 }
             ]
         },
-        "model/precursor-binder/proteinacomplexa": {
-            "title": "Proteina Complexa",
+        "model/precursor-binder/design-proteina-complexa": {
+            "title": "Design: Proteina-Complexa",
             "height": 330,
             "nodes": [
                 {
                     "id": "beam-search",
-                    "label": "Beam Search Generation",
+                    "label": "Beam Search",
                     "position": {
                         "x": 20,
                         "y": 125
@@ -608,36 +389,32 @@
                     }
                 },
                 {
-                    "id": "ligandmpnn-redesign",
-                    "label": "LigandMPNN Redesign",
+                    "id": "ligandmpnn",
+                    "label": "LigandMPNN",
                     "position": {
                         "x": 230,
                         "y": 205
                     }
                 },
                 {
-                    "id": "rf3-folding",
-                    "label": "RosettaFoldAA Folding",
+                    "id": "rf3",
+                    "label": "RF3 Co-folding",
                     "position": {
                         "x": 470,
                         "y": 125
                     }
                 },
                 {
-                    "id": "chirality-filter",
-                    "label": "Chirality Filter",
+                    "id": "filter",
+                    "label": "Quality + Chirality",
                     "position": {
                         "x": 700,
                         "y": 125
-                    },
-                    "data": {
-                        "path": "/model/precursor-binder/chirality-filter",
-                        "scale": false
                     }
                 },
                 {
-                    "id": "top20",
-                    "label": "Top20",
+                    "id": "top40",
+                    "label": "Top 40: Composite",
                     "position": {
                         "x": 930,
                         "y": 125
@@ -646,131 +423,177 @@
             ],
             "edges": [
                 {
-                    "id": "beam-self",
+                    "id": "beam-search-to-self-sequence",
                     "source": "beam-search",
                     "target": "self-sequence"
                 },
                 {
-                    "id": "beam-ligandmpnn",
+                    "id": "beam-search-to-ligandmpnn",
                     "source": "beam-search",
-                    "target": "ligandmpnn-redesign"
+                    "target": "ligandmpnn"
                 },
                 {
-                    "id": "self-rf3",
+                    "id": "self-sequence-to-rf3",
                     "source": "self-sequence",
-                    "target": "rf3-folding"
+                    "target": "rf3"
                 },
                 {
-                    "id": "ligandmpnn-rf3",
-                    "source": "ligandmpnn-redesign",
-                    "target": "rf3-folding"
+                    "id": "ligandmpnn-to-rf3",
+                    "source": "ligandmpnn",
+                    "target": "rf3"
                 },
                 {
-                    "id": "rf3-chirality-filter",
-                    "source": "rf3-folding",
-                    "target": "chirality-filter"
+                    "id": "rf3-to-filter",
+                    "source": "rf3",
+                    "target": "filter"
                 },
                 {
-                    "id": "chirality-filter-top20",
-                    "source": "chirality-filter",
-                    "target": "top20"
+                    "id": "filter-to-top40",
+                    "source": "filter",
+                    "target": "top40"
                 }
             ]
         },
-        "model/precursor-binder/result": {
-            "title": "Result",
-            "height": 190,
+        "model/precursor-binder/md-simulation": {
+            "title": "MD Simulation",
+            "height": 330,
             "nodes": [
                 {
-                    "id": "experiment-result",
-                    "label": "Experiment Result",
-                    "position": {
-                        "x": 85,
-                        "y": 70
-                    }
-                }
-            ],
-            "edges": []
-        },
-        "model/precursor-binder/rfdiffusion": {
-            "title": "RFDiffusion",
-            "height": 240,
-            "nodes": [
-                {
-                    "id": "rfd-generation",
-                    "label": "RFDiffution Generation",
+                    "id": "preparation",
+                    "label": "System Preparation",
                     "position": {
                         "x": 20,
-                        "y": 90
+                        "y": 125
                     }
                 },
                 {
-                    "id": "ligandmpnn-redesign",
-                    "label": "LigandMPNN Redesign",
+                    "id": "md-50ns",
+                    "label": "50 ns MD",
                     "position": {
-                        "x": 210,
-                        "y": 90
+                        "x": 220,
+                        "y": 125
                     }
                 },
                 {
-                    "id": "rf3-folding",
-                    "label": "RosettaFoldAA Folding",
+                    "id": "rmsd",
+                    "label": "RMSD Stability",
                     "position": {
-                        "x": 400,
-                        "y": 90
+                        "x": 440,
+                        "y": 45
                     }
                 },
                 {
-                    "id": "chirality-filter",
-                    "label": "Chirality Filter",
+                    "id": "mmpbsa",
+                    "label": "MM/PBSA ΔG",
                     "position": {
-                        "x": 590,
-                        "y": 90
-                    },
-                    "data": {
-                        "path": "/model/precursor-binder/chirality-filter",
-                        "scale": false
+                        "x": 440,
+                        "y": 205
                     }
                 },
                 {
-                    "id": "top20",
-                    "label": "Top20",
+                    "id": "selection",
+                    "label": "11 per Route",
                     "position": {
-                        "x": 780,
-                        "y": 90
+                        "x": 690,
+                        "y": 125
                     }
                 }
             ],
             "edges": [
                 {
-                    "id": "rfd-generation-ligandmpnn",
-                    "source": "rfd-generation",
-                    "target": "ligandmpnn-redesign"
+                    "id": "preparation-to-md-50ns",
+                    "source": "preparation",
+                    "target": "md-50ns"
                 },
                 {
-                    "id": "ligandmpnn-rf3",
-                    "source": "ligandmpnn-redesign",
-                    "target": "rf3-folding"
+                    "id": "md-50ns-to-rmsd",
+                    "source": "md-50ns",
+                    "target": "rmsd"
                 },
                 {
-                    "id": "rf3-chirality-filter",
-                    "source": "rf3-folding",
-                    "target": "chirality-filter"
+                    "id": "md-50ns-to-mmpbsa",
+                    "source": "md-50ns",
+                    "target": "mmpbsa"
                 },
                 {
-                    "id": "chirality-filter-top20",
-                    "source": "chirality-filter",
-                    "target": "top20"
+                    "id": "rmsd-to-selection",
+                    "source": "rmsd",
+                    "target": "selection"
+                },
+                {
+                    "id": "mmpbsa-to-selection",
+                    "source": "mmpbsa",
+                    "target": "selection"
                 }
             ]
         },
-        "model/transporter-binder/analysis": {
-            "title": "Analysis",
+        "model/precursor-binder/discussion": {
+            "title": "Discussion",
+            "height": 330,
+            "nodes": [
+                {
+                    "id": "testing",
+                    "label": "22 Planned / 9 Tested",
+                    "position": {
+                        "x": 20,
+                        "y": 125
+                    }
+                },
+                {
+                    "id": "rfd",
+                    "label": "RFdiffusion3: Interface + MD Metrics",
+                    "position": {
+                        "x": 240,
+                        "y": 45
+                    }
+                },
+                {
+                    "id": "pc",
+                    "label": "Proteina: Composite Score",
+                    "position": {
+                        "x": 240,
+                        "y": 205
+                    }
+                },
+                {
+                    "id": "feedback",
+                    "label": "Expand Testing + Recalibrate",
+                    "position": {
+                        "x": 480,
+                        "y": 125
+                    }
+                }
+            ],
+            "edges": [
+                {
+                    "id": "testing-to-rfd",
+                    "source": "testing",
+                    "target": "rfd"
+                },
+                {
+                    "id": "testing-to-pc",
+                    "source": "testing",
+                    "target": "pc"
+                },
+                {
+                    "id": "rfd-to-feedback",
+                    "source": "rfd",
+                    "target": "feedback"
+                },
+                {
+                    "id": "pc-to-feedback",
+                    "source": "pc",
+                    "target": "feedback"
+                }
+            ]
+        },
+        "model/transporter-binder/characterize": {
+            "title": "Characterize",
             "height": 240,
             "nodes": [
                 {
-                    "id": "transport-mechanism",
-                    "label": "Transport Mechanism",
+                    "id": "target-conformation",
+                    "label": "Inward-Facing 6EXS",
                     "position": {
                         "x": 20,
                         "y": 90
@@ -778,15 +601,15 @@
                 },
                 {
                     "id": "compare-structures",
-                    "label": "Compare OF and IF structure",
+                    "label": "Compare IF / OF",
                     "position": {
-                        "x": 230,
+                        "x": 240,
                         "y": 90
                     }
                 },
                 {
-                    "id": "binding-interface",
-                    "label": "Determine Binding Interface",
+                    "id": "requirements",
+                    "label": "Interface / 80–120 aa",
                     "position": {
                         "x": 460,
                         "y": 90
@@ -795,82 +618,14 @@
             ],
             "edges": [
                 {
-                    "id": "mechanism-compare",
-                    "source": "transport-mechanism",
+                    "id": "target-conformation-to-compare-structures",
+                    "source": "target-conformation",
                     "target": "compare-structures"
                 },
                 {
-                    "id": "compare-interface",
+                    "id": "compare-structures-to-requirements",
                     "source": "compare-structures",
-                    "target": "binding-interface"
-                }
-            ]
-        },
-        "model/transporter-binder/design": {
-            "title": "Design",
-            "height": 260,
-            "nodes": [
-                {
-                    "id": "write-config",
-                    "label": "Write Config",
-                    "position": {
-                        "x": 20,
-                        "y": 100
-                    }
-                },
-                {
-                    "id": "rfdiffusion",
-                    "label": "RFDiffusion Generation",
-                    "position": {
-                        "x": 190,
-                        "y": 100
-                    }
-                },
-                {
-                    "id": "proteinmpnn",
-                    "label": "ProteinMPNN Redesign",
-                    "position": {
-                        "x": 360,
-                        "y": 100
-                    }
-                },
-                {
-                    "id": "rf3-cofolding",
-                    "label": "RosettaFoldAA Co-folding",
-                    "position": {
-                        "x": 530,
-                        "y": 100
-                    }
-                },
-                {
-                    "id": "top20",
-                    "label": "Top20",
-                    "position": {
-                        "x": 700,
-                        "y": 100
-                    }
-                }
-            ],
-            "edges": [
-                {
-                    "id": "config-rfdiffusion",
-                    "source": "write-config",
-                    "target": "rfdiffusion"
-                },
-                {
-                    "id": "rfdiffusion-proteinmpnn",
-                    "source": "rfdiffusion",
-                    "target": "proteinmpnn"
-                },
-                {
-                    "id": "proteinmpnn-rf3",
-                    "source": "proteinmpnn",
-                    "target": "rf3-cofolding"
-                },
-                {
-                    "id": "rf3-top20",
-                    "source": "rf3-cofolding",
-                    "target": "top20"
+                    "target": "requirements"
                 }
             ]
         },
@@ -880,16 +635,15 @@
             "nodes": [
                 {
                     "id": "peptsh",
-                    "label": "PeptSh",
+                    "label": "PepTSh",
                     "position": {
                         "x": 30,
                         "y": 280
                     }
                 },
                 {
-                    "id": "analysis",
-                    "label": "Analysis",
-                    "type": "virtual",
+                    "id": "characterize",
+                    "label": "Characterize",
                     "position": {
                         "x": 220,
                         "y": 100
@@ -898,16 +652,16 @@
                         "width": 330,
                         "height": 400
                     },
+                    "type": "virtual",
                     "data": {
-                        "path": "/model/transporter-binder/analysis",
-                        "direction": "top-bottom",
-                        "subgraph": "model/transporter-binder/analysis"
+                        "path": "/model/transporter-binder/characterize",
+                        "subgraph": "model/transporter-binder/characterize",
+                        "direction": "top-bottom"
                     }
                 },
                 {
                     "id": "design",
                     "label": "Design",
-                    "type": "virtual",
                     "position": {
                         "x": 590,
                         "y": 30
@@ -916,16 +670,16 @@
                         "width": 330,
                         "height": 540
                     },
+                    "type": "virtual",
                     "data": {
                         "path": "/model/transporter-binder/design",
-                        "direction": "top-bottom",
-                        "subgraph": "model/transporter-binder/design"
+                        "subgraph": "model/transporter-binder/design",
+                        "direction": "top-bottom"
                     }
                 },
                 {
                     "id": "md-simulation",
-                    "label": "MD Simulation",
-                    "type": "virtual",
+                    "label": "Membrane MD",
                     "position": {
                         "x": 960,
                         "y": 50
@@ -934,87 +688,156 @@
                         "width": 330,
                         "height": 500
                     },
+                    "type": "virtual",
                     "data": {
                         "path": "/model/transporter-binder/md-simulation",
-                        "direction": "top-bottom",
-                        "subgraph": "model/transporter-binder/md simulation"
+                        "subgraph": "model/transporter-binder/md-simulation",
+                        "direction": "top-bottom"
                     }
                 },
                 {
-                    "id": "result",
-                    "label": "Result",
+                    "id": "discussion",
+                    "label": "Discussion",
                     "position": {
                         "x": 1530,
                         "y": 220
                     },
                     "data": {
-                        "path": "/model/transporter-binder/result",
+                        "path": "/model/transporter-binder/discussion",
                         "scale": false
                     }
                 }
             ],
             "edges": [
                 {
-                    "id": "peptsh-to-analysis",
+                    "id": "peptsh-to-characterize",
                     "source": "peptsh",
-                    "target": "analysis"
+                    "target": "characterize"
                 },
                 {
-                    "id": "analysis-to-design",
-                    "source": "analysis",
+                    "id": "characterize-to-design",
+                    "source": "characterize",
                     "target": "design"
                 },
                 {
-                    "id": "design-to-md",
+                    "id": "design-to-md-simulation",
                     "source": "design",
                     "target": "md-simulation"
                 },
                 {
-                    "id": "md-to-result",
+                    "id": "md-simulation-to-discussion",
                     "source": "md-simulation",
-                    "target": "result"
+                    "target": "discussion"
                 }
             ]
         },
-        "model/transporter-binder/md simulation": {
-            "title": "MD Simulation",
+        "model/transporter-binder/design": {
+            "title": "Design",
+            "height": 260,
+            "nodes": [
+                {
+                    "id": "inputs",
+                    "label": "6EXS + Hotspots",
+                    "position": {
+                        "x": 20,
+                        "y": 100
+                    }
+                },
+                {
+                    "id": "rfdiffusion",
+                    "label": "RFdiffusion3",
+                    "position": {
+                        "x": 190,
+                        "y": 100
+                    }
+                },
+                {
+                    "id": "proteinmpnn",
+                    "label": "ProteinMPNN",
+                    "position": {
+                        "x": 360,
+                        "y": 100
+                    }
+                },
+                {
+                    "id": "rf3",
+                    "label": "RF3 Co-folding",
+                    "position": {
+                        "x": 530,
+                        "y": 100
+                    }
+                },
+                {
+                    "id": "selection",
+                    "label": "Interface + Rank: Top 20",
+                    "position": {
+                        "x": 700,
+                        "y": 100
+                    }
+                }
+            ],
+            "edges": [
+                {
+                    "id": "inputs-to-rfdiffusion",
+                    "source": "inputs",
+                    "target": "rfdiffusion"
+                },
+                {
+                    "id": "rfdiffusion-to-proteinmpnn",
+                    "source": "rfdiffusion",
+                    "target": "proteinmpnn"
+                },
+                {
+                    "id": "proteinmpnn-to-rf3",
+                    "source": "proteinmpnn",
+                    "target": "rf3"
+                },
+                {
+                    "id": "rf3-to-selection",
+                    "source": "rf3",
+                    "target": "selection"
+                }
+            ]
+        },
+        "model/transporter-binder/md-simulation": {
+            "title": "Membrane MD Simulation",
             "height": 330,
             "nodes": [
                 {
-                    "id": "system-preparation",
-                    "label": "System Preparation",
+                    "id": "preparation",
+                    "label": "POPG Membrane System",
                     "position": {
                         "x": 20,
                         "y": 125
                     }
                 },
                 {
-                    "id": "md-simulation",
-                    "label": "100ns MD Simulation",
+                    "id": "md-100ns",
+                    "label": "100 ns MD",
                     "position": {
                         "x": 220,
                         "y": 125
                     }
                 },
                 {
-                    "id": "membrane-rmsd",
-                    "label": "Membrane Fit RMSD",
+                    "id": "rmsd",
+                    "label": "Transporter-Fit RMSD",
                     "position": {
                         "x": 430,
                         "y": 45
                     }
                 },
                 {
-                    "id": "mmpbsa",
-                    "label": "MMPBSA deltaG",
+                    "id": "mmgbsa",
+                    "label": "MM/GBSA ΔG",
                     "position": {
                         "x": 430,
                         "y": 205
                     }
                 },
                 {
-                    "id": "best-6",
-                    "label": "Best 6",
+                    "id": "selection",
+                    "label": "Wet-Lab Candidates",
                     "position": {
                         "x": 680,
                         "y": 125
@@ -1023,46 +846,718 @@
             ],
             "edges": [
                 {
-                    "id": "preparation-md",
-                    "source": "system-preparation",
-                    "target": "md-simulation"
+                    "id": "preparation-to-md-100ns",
+                    "source": "preparation",
+                    "target": "md-100ns"
                 },
                 {
-                    "id": "md-rmsd",
-                    "source": "md-simulation",
-                    "target": "membrane-rmsd"
+                    "id": "md-100ns-to-rmsd",
+                    "source": "md-100ns",
+                    "target": "rmsd"
                 },
                 {
-                    "id": "md-mmpbsa",
-                    "source": "md-simulation",
-                    "target": "mmpbsa"
+                    "id": "md-100ns-to-mmgbsa",
+                    "source": "md-100ns",
+                    "target": "mmgbsa"
                 },
                 {
-                    "id": "rmsd-best6",
-                    "source": "membrane-rmsd",
-                    "target": "best-6"
+                    "id": "rmsd-to-selection",
+                    "source": "rmsd",
+                    "target": "selection"
                 },
                 {
-                    "id": "mmpbsa-best6",
-                    "source": "mmpbsa",
-                    "target": "best-6"
+                    "id": "mmgbsa-to-selection",
+                    "source": "mmgbsa",
+                    "target": "selection"
                 }
             ]
         },
-        "model/transporter-binder/result": {
-            "title": "Result",
-            "height": 190,
+        "model/transporter-binder/discussion": {
+            "title": "Discussion",
+            "height": 240,
             "nodes": [
                 {
-                    "id": "experiment-result",
-                    "label": "Experiment Result",
+                    "id": "testing",
+                    "label": "5 Tested / 4 Reduced Odor",
                     "position": {
-                        "x": 85,
-                        "y": 70
+                        "x": 20,
+                        "y": 90
+                    }
+                },
+                {
+                    "id": "metrics",
+                    "label": "Compare Composite Score + MD",
+                    "position": {
+                        "x": 230,
+                        "y": 90
+                    }
+                },
+                {
+                    "id": "feedback",
+                    "label": "More Candidates + MD Replicates",
+                    "position": {
+                        "x": 440,
+                        "y": 90
                     }
                 }
             ],
-            "edges": []
+            "edges": [
+                {
+                    "id": "testing-to-metrics",
+                    "source": "testing",
+                    "target": "metrics"
+                },
+                {
+                    "id": "metrics-to-feedback",
+                    "source": "metrics",
+                    "target": "feedback"
+                }
+            ]
+        },
+        "model/cgtase/characterize": {
+            "title": "Characterize",
+            "height": 260,
+            "nodes": [
+                {
+                    "id": "reaction",
+                    "label": "Hydroxyl Glycosylation",
+                    "position": {
+                        "x": 20,
+                        "y": 100
+                    }
+                },
+                {
+                    "id": "docking",
+                    "label": "Glide: 86 Poses",
+                    "position": {
+                        "x": 190,
+                        "y": 100
+                    }
+                },
+                {
+                    "id": "clustering",
+                    "label": "9 Pose Clusters",
+                    "position": {
+                        "x": 360,
+                        "y": 100
+                    }
+                },
+                {
+                    "id": "wildtype-md",
+                    "label": "50 ns Wild-Type MD",
+                    "position": {
+                        "x": 530,
+                        "y": 100
+                    }
+                },
+                {
+                    "id": "reference-pose",
+                    "label": "Reference Binding Pose",
+                    "position": {
+                        "x": 700,
+                        "y": 100
+                    }
+                }
+            ],
+            "edges": [
+                {
+                    "id": "reaction-to-docking",
+                    "source": "reaction",
+                    "target": "docking"
+                },
+                {
+                    "id": "docking-to-clustering",
+                    "source": "docking",
+                    "target": "clustering"
+                },
+                {
+                    "id": "clustering-to-wildtype-md",
+                    "source": "clustering",
+                    "target": "wildtype-md"
+                },
+                {
+                    "id": "wildtype-md-to-reference-pose",
+                    "source": "wildtype-md",
+                    "target": "reference-pose"
+                }
+            ]
+        },
+        "model/cgtase/index": {
+            "title": "CGTase",
+            "height": 620,
+            "nodes": [
+                {
+                    "id": "cgtase",
+                    "label": "CGTase",
+                    "position": {
+                        "x": 30,
+                        "y": 280
+                    }
+                },
+                {
+                    "id": "characterize",
+                    "label": "Characterize",
+                    "position": {
+                        "x": 220,
+                        "y": 30
+                    },
+                    "size": {
+                        "width": 330,
+                        "height": 540
+                    },
+                    "type": "virtual",
+                    "data": {
+                        "path": "/model/cgtase/characterize",
+                        "subgraph": "model/cgtase/characterize",
+                        "direction": "top-bottom"
+                    }
+                },
+                {
+                    "id": "design",
+                    "label": "Rational Design",
+                    "position": {
+                        "x": 590,
+                        "y": 30
+                    },
+                    "size": {
+                        "width": 330,
+                        "height": 540
+                    },
+                    "type": "virtual",
+                    "data": {
+                        "path": "/model/cgtase/design",
+                        "subgraph": "model/cgtase/design",
+                        "direction": "top-bottom"
+                    }
+                },
+                {
+                    "id": "md-simulation",
+                    "label": "MD Simulation",
+                    "position": {
+                        "x": 960,
+                        "y": 30
+                    },
+                    "size": {
+                        "width": 330,
+                        "height": 540
+                    },
+                    "type": "virtual",
+                    "data": {
+                        "path": "/model/cgtase/md-simulation",
+                        "subgraph": "model/cgtase/md-simulation",
+                        "direction": "top-bottom"
+                    }
+                },
+                {
+                    "id": "discussion",
+                    "label": "Discussion",
+                    "position": {
+                        "x": 1530,
+                        "y": 220
+                    },
+                    "data": {
+                        "path": "/model/cgtase/discussion",
+                        "scale": false
+                    }
+                },
+                {
+                    "id": "thermostability",
+                    "label": "Thermostability",
+                    "position": {
+                        "x": 1530,
+                        "y": 420
+                    },
+                    "data": {
+                        "path": "/model/optimization/cgtase-thermostability",
+                        "scale": false
+                    }
+                }
+            ],
+            "edges": [
+                {
+                    "id": "cgtase-to-characterize",
+                    "source": "cgtase",
+                    "target": "characterize"
+                },
+                {
+                    "id": "characterize-to-design",
+                    "source": "characterize",
+                    "target": "design"
+                },
+                {
+                    "id": "design-to-md-simulation",
+                    "source": "design",
+                    "target": "md-simulation"
+                },
+                {
+                    "id": "md-simulation-to-discussion",
+                    "source": "md-simulation",
+                    "target": "discussion"
+                },
+                {
+                    "id": "md-simulation-to-thermostability",
+                    "source": "md-simulation",
+                    "target": "thermostability"
+                }
+            ]
+        },
+        "model/cgtase/design": {
+            "title": "Rational Design",
+            "height": 330,
+            "nodes": [
+                {
+                    "id": "reference",
+                    "label": "Wild-Type Binding Pose",
+                    "position": {
+                        "x": 20,
+                        "y": 125
+                    }
+                },
+                {
+                    "id": "carboxylate",
+                    "label": "Carboxylate: T370K/R/H",
+                    "position": {
+                        "x": 210,
+                        "y": 45
+                    }
+                },
+                {
+                    "id": "tail",
+                    "label": "Tail: F183W/F259W",
+                    "position": {
+                        "x": 210,
+                        "y": 205
+                    }
+                },
+                {
+                    "id": "mutants",
+                    "label": "9 Combined Mutants",
+                    "position": {
+                        "x": 430,
+                        "y": 125
+                    }
+                }
+            ],
+            "edges": [
+                {
+                    "id": "reference-to-carboxylate",
+                    "source": "reference",
+                    "target": "carboxylate"
+                },
+                {
+                    "id": "reference-to-tail",
+                    "source": "reference",
+                    "target": "tail"
+                },
+                {
+                    "id": "carboxylate-to-mutants",
+                    "source": "carboxylate",
+                    "target": "mutants"
+                },
+                {
+                    "id": "tail-to-mutants",
+                    "source": "tail",
+                    "target": "mutants"
+                }
+            ]
+        },
+        "model/cgtase/md-simulation": {
+            "title": "MD Simulation",
+            "height": 260,
+            "nodes": [
+                {
+                    "id": "intermediate",
+                    "label": "Glycosyl–D229 Restraints",
+                    "position": {
+                        "x": 20,
+                        "y": 100
+                    }
+                },
+                {
+                    "id": "preparation",
+                    "label": "System Preparation",
+                    "position": {
+                        "x": 220,
+                        "y": 100
+                    }
+                },
+                {
+                    "id": "md-100ns",
+                    "label": "100 ns MD",
+                    "position": {
+                        "x": 420,
+                        "y": 100
+                    }
+                },
+                {
+                    "id": "rmsd",
+                    "label": "Substrate RMSD",
+                    "position": {
+                        "x": 620,
+                        "y": 100
+                    }
+                },
+                {
+                    "id": "selection",
+                    "label": "3 Mutants + Wild Type",
+                    "position": {
+                        "x": 820,
+                        "y": 100
+                    }
+                }
+            ],
+            "edges": [
+                {
+                    "id": "intermediate-to-preparation",
+                    "source": "intermediate",
+                    "target": "preparation"
+                },
+                {
+                    "id": "preparation-to-md-100ns",
+                    "source": "preparation",
+                    "target": "md-100ns"
+                },
+                {
+                    "id": "md-100ns-to-rmsd",
+                    "source": "md-100ns",
+                    "target": "rmsd"
+                },
+                {
+                    "id": "rmsd-to-selection",
+                    "source": "rmsd",
+                    "target": "selection"
+                }
+            ]
+        },
+        "model/cgtase/discussion": {
+            "title": "Discussion",
+            "height": 240,
+            "nodes": [
+                {
+                    "id": "characterization",
+                    "label": "Wild-Type Activity Supported",
+                    "position": {
+                        "x": 20,
+                        "y": 90
+                    }
+                },
+                {
+                    "id": "identity",
+                    "label": "Intended T370K Was T370L",
+                    "position": {
+                        "x": 230,
+                        "y": 90
+                    }
+                },
+                {
+                    "id": "limitation",
+                    "label": "Rational Design Needs More Tests",
+                    "position": {
+                        "x": 440,
+                        "y": 90
+                    }
+                }
+            ],
+            "edges": [
+                {
+                    "id": "characterization-to-identity",
+                    "source": "characterization",
+                    "target": "identity"
+                },
+                {
+                    "id": "identity-to-limitation",
+                    "source": "identity",
+                    "target": "limitation"
+                }
+            ]
+        },
+        "model/optimization/index": {
+            "title": "Optimization",
+            "height": 730,
+            "nodes": [
+                {
+                    "id": "parents",
+                    "label": "Selected Parents",
+                    "position": {
+                        "x": 30,
+                        "y": 280
+                    }
+                },
+                {
+                    "id": "thermostability",
+                    "label": "CGTase Thermostability",
+                    "position": {
+                        "x": 220,
+                        "y": 20
+                    },
+                    "size": {
+                        "width": 900,
+                        "height": 300
+                    },
+                    "type": "virtual",
+                    "data": {
+                        "path": "/model/optimization/cgtase-thermostability",
+                        "subgraph": "model/optimization/cgtase-thermostability",
+                        "direction": "left-right"
+                    }
+                },
+                {
+                    "id": "affinity",
+                    "label": "Precursor Binder Affinity",
+                    "position": {
+                        "x": 220,
+                        "y": 400
+                    },
+                    "size": {
+                        "width": 900,
+                        "height": 300
+                    },
+                    "type": "virtual",
+                    "data": {
+                        "path": "/model/optimization/precursor-binder-affinity",
+                        "subgraph": "model/optimization/precursor-binder-affinity",
+                        "direction": "left-right"
+                    }
+                },
+                {
+                    "id": "discussion",
+                    "label": "Validation Pending",
+                    "position": {
+                        "x": 1380,
+                        "y": 280
+                    },
+                    "data": {
+                        "path": "/model/optimization/discussion",
+                        "scale": false
+                    }
+                }
+            ],
+            "edges": [
+                {
+                    "id": "parents-to-thermostability",
+                    "source": "parents",
+                    "target": "thermostability"
+                },
+                {
+                    "id": "parents-to-affinity",
+                    "source": "parents",
+                    "target": "affinity"
+                },
+                {
+                    "id": "thermostability-to-discussion",
+                    "source": "thermostability",
+                    "target": "discussion"
+                },
+                {
+                    "id": "affinity-to-discussion",
+                    "source": "affinity",
+                    "target": "discussion"
+                }
+            ]
+        },
+        "model/optimization/cgtase-thermostability": {
+            "title": "CGTase Thermostability",
+            "height": 260,
+            "nodes": [
+                {
+                    "id": "parents",
+                    "label": "T370K + T370R/F183W Parents",
+                    "position": {
+                        "x": 20,
+                        "y": 100
+                    }
+                },
+                {
+                    "id": "filter",
+                    "label": "Protect Conserved + Active Sites",
+                    "position": {
+                        "x": 210,
+                        "y": 100
+                    }
+                },
+                {
+                    "id": "spurs",
+                    "label": "SPURS Single-Mutation Scores",
+                    "position": {
+                        "x": 400,
+                        "y": 100
+                    }
+                },
+                {
+                    "id": "compatibility",
+                    "label": "Pairwise Compatibility Graph",
+                    "position": {
+                        "x": 590,
+                        "y": 100
+                    }
+                },
+                {
+                    "id": "search",
+                    "label": "Diverse Beam Search",
+                    "position": {
+                        "x": 780,
+                        "y": 100
+                    }
+                },
+                {
+                    "id": "selection",
+                    "label": "Add 2 / 4 / 6 / 8 Mutations",
+                    "position": {
+                        "x": 970,
+                        "y": 100
+                    }
+                }
+            ],
+            "edges": [
+                {
+                    "id": "parents-to-filter",
+                    "source": "parents",
+                    "target": "filter"
+                },
+                {
+                    "id": "filter-to-spurs",
+                    "source": "filter",
+                    "target": "spurs"
+                },
+                {
+                    "id": "spurs-to-compatibility",
+                    "source": "spurs",
+                    "target": "compatibility"
+                },
+                {
+                    "id": "compatibility-to-search",
+                    "source": "compatibility",
+                    "target": "search"
+                },
+                {
+                    "id": "search-to-selection",
+                    "source": "search",
+                    "target": "selection"
+                }
+            ]
+        },
+        "model/optimization/precursor-binder-affinity": {
+            "title": "Precursor Binder Affinity",
+            "height": 260,
+            "nodes": [
+                {
+                    "id": "parents",
+                    "label": "BC7 / BR8 / BR10: Minimize",
+                    "position": {
+                        "x": 20,
+                        "y": 100
+                    }
+                },
+                {
+                    "id": "pocket",
+                    "label": "Define the 5 Å Pocket",
+                    "position": {
+                        "x": 210,
+                        "y": 100
+                    }
+                },
+                {
+                    "id": "proofreading",
+                    "label": "LASErMPNN Proofreading",
+                    "position": {
+                        "x": 400,
+                        "y": 100
+                    }
+                },
+                {
+                    "id": "ranking",
+                    "label": "ΔNLL + Burial Filter",
+                    "position": {
+                        "x": 590,
+                        "y": 100
+                    }
+                },
+                {
+                    "id": "validation",
+                    "label": "Co-fold + Polar Validation",
+                    "position": {
+                        "x": 780,
+                        "y": 100
+                    }
+                },
+                {
+                    "id": "selection",
+                    "label": "7 Designs for Cycle 6",
+                    "position": {
+                        "x": 970,
+                        "y": 100
+                    }
+                }
+            ],
+            "edges": [
+                {
+                    "id": "parents-to-pocket",
+                    "source": "parents",
+                    "target": "pocket"
+                },
+                {
+                    "id": "pocket-to-proofreading",
+                    "source": "pocket",
+                    "target": "proofreading"
+                },
+                {
+                    "id": "proofreading-to-ranking",
+                    "source": "proofreading",
+                    "target": "ranking"
+                },
+                {
+                    "id": "ranking-to-validation",
+                    "source": "ranking",
+                    "target": "validation"
+                },
+                {
+                    "id": "validation-to-selection",
+                    "source": "validation",
+                    "target": "selection"
+                }
+            ]
+        },
+        "model/optimization/discussion": {
+            "title": "Validation Status",
+            "height": 330,
+            "nodes": [
+                {
+                    "id": "thermostability",
+                    "label": "CGTase: Melting Assay Unsuccessful",
+                    "position": {
+                        "x": 20,
+                        "y": 45
+                    }
+                },
+                {
+                    "id": "affinity",
+                    "label": "Binders: Affinity Results Pending",
+                    "position": {
+                        "x": 20,
+                        "y": 205
+                    }
+                },
+                {
+                    "id": "validation",
+                    "label": "Complete Experimental Validation",
+                    "position": {
+                        "x": 280,
+                        "y": 125
+                    }
+                }
+            ],
+            "edges": [
+                {
+                    "id": "thermostability-to-validation",
+                    "source": "thermostability",
+                    "target": "validation"
+                },
+                {
+                    "id": "affinity-to-validation",
+                    "source": "affinity",
+                    "target": "validation"
+                }
+            ]
         }
     }
 }

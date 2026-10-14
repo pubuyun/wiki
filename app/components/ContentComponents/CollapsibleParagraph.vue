@@ -4,24 +4,28 @@ import {
     CollapsibleRoot,
     CollapsibleTrigger,
 } from "reka-ui";
-import { onBeforeUnmount, onMounted, ref } from "vue";
+import { computed, onBeforeUnmount, onMounted, ref } from "vue";
 
 const props = defineProps<{
     title: string;
     id?: string;
+    preview?: boolean;
     blurPreview?: boolean;
     headingTag?: "h2" | "h3" | "h4";
 }>();
 
+const previewEnabled = computed(() => props.preview || props.blurPreview);
 const isOpen = ref(false);
-const contentCard = ref<HTMLElement | null>(null);
 const contentBody = ref<HTMLElement | null>(null);
 const expandedHeight = ref(0);
 let resizeObserver: ResizeObserver | undefined;
 
 function updateExpandedHeight() {
-    if (contentCard.value) {
-        expandedHeight.value = Math.ceil(contentCard.value.scrollHeight) + 1;
+    if (contentBody.value) {
+        // Measure the unconstrained body so shorter content can shrink the card.
+        expandedHeight.value = Math.ceil(
+            contentBody.value.getBoundingClientRect().height,
+        );
     }
 }
 
@@ -38,20 +42,6 @@ onBeforeUnmount(() => {
     resizeObserver?.disconnect();
     window.removeEventListener("resize", updateExpandedHeight);
 });
-
-function onContentClick(event: MouseEvent) {
-    if (!props.blurPreview || !isOpen.value) return;
-
-    const target = event.target;
-    if (
-        target instanceof Element &&
-        target.closest("a, button, input, select, textarea, [role='button']")
-    ) {
-        return;
-    }
-
-    isOpen.value = false;
-}
 </script>
 
 <template>
@@ -59,7 +49,7 @@ function onContentClick(event: MouseEvent) {
         v-model:open="isOpen"
         :unmount-on-hide="false"
         class="flex min-w-0 flex-col transition-[gap] duration-300 motion-reduce:transition-none"
-        :class="blurPreview || isOpen ? 'gap-4' : 'gap-0'"
+        :class="previewEnabled || isOpen ? 'gap-4' : 'gap-0'"
     >
         <component
             :is="headingTag || 'h2'"
@@ -70,7 +60,7 @@ function onContentClick(event: MouseEvent) {
                 class="group flex h-min max-w-full min-w-0 rounded-4xl bg-accent text-on-accent transition-colors hover:bg-accent/90 focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-outline"
             >
                 <span
-                    class="mx-3 my-1.5 flex min-w-0 items-center justify-center gap-2 p-2 text-center font-momo-trust-display text-3xl break-words sm:mx-6 sm:gap-3 sm:text-4xl"
+                    class="mx-3 my-1.5 flex min-w-0 items-center justify-center gap-2 p-2 text-center font-momo-trust-display text-3xl break-words sm:mx-6 sm:gap-3"
                 >
                     {{ title }}
                     <svg
@@ -93,16 +83,10 @@ function onContentClick(event: MouseEvent) {
             />
         </component>
 
-        <CollapsibleContent
-            force-mount
-            class="relative"
-            @click="onContentClick"
-        >
+        <CollapsibleContent force-mount class="relative">
             <div
-                ref="contentCard"
                 class="content paragraph collapsible-card overflow-wrap-anywhere relative min-w-0 rounded-2xl bg-secondary text-on-secondary sm:rounded-3xl lg:rounded-4xl"
-                :class="blurPreview && isOpen ? 'cursor-pointer' : ''"
-                :data-preview="blurPreview ? '' : undefined"
+                :data-preview="previewEnabled ? '' : undefined"
                 :data-state="isOpen ? 'open' : 'closed'"
                 :style="{ '--expanded-height': `${expandedHeight}px` }"
             >
@@ -111,7 +95,7 @@ function onContentClick(event: MouseEvent) {
                     class="p-4 transition-[filter] duration-300 motion-reduce:transition-none sm:p-5 lg:p-6"
                     :inert="!isOpen"
                     :class="
-                        blurPreview && !isOpen
+                        previewEnabled && !isOpen
                             ? 'pointer-events-none blur-sm select-none'
                             : ''
                     "
@@ -119,7 +103,7 @@ function onContentClick(event: MouseEvent) {
                     <slot />
                 </div>
                 <button
-                    v-if="blurPreview && !isOpen"
+                    v-if="previewEnabled && !isOpen"
                     type="button"
                     class="absolute inset-0 w-full cursor-pointer rounded-[inherit] focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-outline"
                     :aria-label="`Expand ${title}`"

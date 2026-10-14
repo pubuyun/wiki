@@ -8,7 +8,9 @@ definePageMeta({
 const route = useRoute();
 const runtimeConfig = useRuntimeConfig();
 const category = computed(() => String(route.params.category ?? ""));
-const activePath = computed(() => normalizeContentPath(route.path));
+// This page is keyed by the route. Keep the outgoing document intact while
+// Nuxt prepares the next page inside Suspense.
+const activePath = ref(normalizeContentPath(route.path));
 
 const { data: page } = await useContentPageData(activePath);
 const contentGraphViews = new Set(runtimeConfig.public.contentGraphViews);

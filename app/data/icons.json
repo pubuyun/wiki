@@ -60,18 +60,6 @@
         }
     },
     {
-        "prefix": "line-md",
-        "lastModified": 1767255360,
-        "aliases": {},
-        "width": 24,
-        "height": 24,
-        "icons": {
-            "arrow-right": {
-                "body": "<g fill=\"none\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\"><path stroke-dasharray=\"20\" d=\"M3 12h17.5\"><animate fill=\"freeze\" attributeName=\"stroke-dashoffset\" dur=\"0.3s\" values=\"20;0\"/></path><path stroke-dasharray=\"12\" stroke-dashoffset=\"12\" d=\"M21 12l-7 7M21 12l-7 -7\"><animate fill=\"freeze\" attributeName=\"stroke-dashoffset\" begin=\"0.3s\" dur=\"0.2s\" to=\"0\"/></path></g>"
-            }
-        }
-    },
-    {
         "prefix": "lineicons",
         "lastModified": 1754899780,
         "aliases": {},
@@ -86,7 +74,7 @@
     },
     {
         "prefix": "lucide",
-        "lastModified": 1790785452,
+        "lastModified": 1791785319,
         "aliases": {},
         "width": 24,
         "height": 24,
@@ -240,7 +228,7 @@
     },
     {
         "prefix": "material-symbols",
-        "lastModified": 1790080274,
+        "lastModified": 1791524209,
         "aliases": {},
         "width": 24,
         "height": 24,
@@ -295,7 +283,7 @@
     },
     {
         "prefix": "simple-icons",
-        "lastModified": 1790606520,
+        "lastModified": 1791785520,
         "aliases": {},
         "width": 24,
         "height": 24,
@@ -349,14 +337,11 @@
     },
     {
         "prefix": "tabler",
-        "lastModified": 1790606575,
+        "lastModified": 1791401203,
         "aliases": {},
         "width": 24,
         "height": 24,
         "icons": {
-            "files": {
-                "body": "<g fill=\"none\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\"><path d=\"M15 3v4a1 1 0 0 0 1 1h4\"/><path d=\"M18 17h-7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4l5 5v7a2 2 0 0 1-2 2\"/><path d=\"M16 17v2a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h2\"/></g>"
-            },
             "notebook": {
                 "body": "<path fill=\"none\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M6 4h11a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H6a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1m3 0v18m4-14h2m-2 4h2\"/>"
             }

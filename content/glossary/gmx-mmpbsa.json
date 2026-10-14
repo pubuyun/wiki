@@ -1,0 +1,5 @@
+{
+    "term": "gmx_MMPBSA",
+    "detail": "A tool for estimating end-state binding free energies with molecular mechanics and Poisson–Boltzmann or generalized Born solvation models from GROMACS trajectories.",
+    "link": "https://github.com/Valdes-Tresanco-MS/gmx_MMPBSA"
+}

@@ -1,0 +1,5 @@
+{
+    "term": "CHARMM-GUI-Auto",
+    "detail": "A Python tool that automates interactions with CHARMM-GUI to prepare molecular dynamics simulation inputs.",
+    "link": "https://github.com/AmandaStange/CharmmGuiAuto"
+}
