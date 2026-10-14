@@ -1,6 +1,6 @@
 ---
-title: "Marketing"
-description: "Marketing values of choice, respect, and transparency and strategies for advertising, sampling, retail visibility, and roadshows."
+title: Marketing
+description: Marketing values of choice, respect, and transparency and strategies for advertising, sampling, retail visibility, and roadshows.
 hasReference: false
 order: 3
 ---
@@ -41,4 +41,4 @@ Expelliodor would therefore aim for eye-level or “golden zone” shelf placeme
 
 Roadshows bring several parts of the strategy together. They allow us to demonstrate the product, distribute samples, explain the science, and answer questions directly.
 
-They also give us space to communicate the idea behind **“Expell Your Way”**: body odor is a normal biological characteristic, while choosing whether and how to manage it remains a personal decision.
+They also give us space to communicate the idea behind “Expell Your Wa&#x79;**”**: body odor is a normal biological characteristic, while choosing whether and how to manage it remains a personal decision.

@@ -1,6 +1,6 @@
 ---
-title: "Negative"
-description: "Potential safety, stability, consumer-perception, manufacturing, and regulatory risks and proposed management strategies."
+title: Negative
+description: Potential safety, stability, consumer-perception, manufacturing, and regulatory risks and proposed management strategies.
 hasReference: false
 order: 2
 ---

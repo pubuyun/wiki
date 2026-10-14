@@ -1,6 +1,6 @@
 ---
-title: "Lean Canvas"
-description: "Expelliodor’s partners, activities, resources, value propositions, customers, distribution channels, costs, and revenue streams."
+title: Lean Canvas
+description: Expelliodor’s partners, activities, resources, value propositions, customers, distribution channels, costs, and revenue streams.
 hasReference: false
 order: 1
 ---
@@ -11,13 +11,20 @@ To provide a concise overview of our business models, we developed the following
 ---
 src:
   - https://static.igem.wiki/teams/6133/wiki/hp/entrepreneurship/development-plans-lean-canvas-fig13.avif
-alt: "Business model covering partners, activities, resources, value propositions, customer relationships and segments, channels, costs, and revenue. Proposed unit prices are CNY 48 retail and CNY 35 wholesale. A text version follows."
-caption: "Fig. 13 | Lean canvas of Expelliodor"
+alt: Business model covering partners, activities, resources, value
+  propositions, customer relationships and segments, channels, costs, and
+  revenue. Proposed unit prices are CNY 48 retail and CNY 35 wholesale. A text
+  version follows.
+caption: Fig. 13 | Lean canvas of Expelliodor
 ---
-
 ::
 
-::content-components-collapsible-paragraph{title="Lean Canvas text version" id="lean-canvas-text" preview=true}
+::content-components-collapsible-paragraph
+---
+id: lean-canvas-text
+preview: "true"
+title: Lean Canvas text version
+---
 ### Key Partners
 
 - **Link Spider:** Lab provision, mentorship, and mass-production agency.

@@ -1,6 +1,6 @@
 ---
-title: "Unmet Needs Identification"
-description: "Customer needs for effective, affordable, comfortable, accessible, and sustainable deodorant products."
+title: Unmet Needs Identification
+description: Customer needs for effective, affordable, comfortable, accessible, and sustainable deodorant products.
 hasReference: false
 order: 2
 ---
@@ -31,7 +31,7 @@ From users expressing different preferences for roll-ons, sprays and creams, and
 
 From international potential customer Mr. Islam and online product reviews examined early in the project, which highlighted concerns about clothing stains and residue.
 
-## Fast, hygienic odor management in shared facilities
+## Fast, hygienic odor management
 
 From the gym owner, who prioritized quick action and convenient shared use, and the hotel manager, who preferred affordable, replaceable single-use products.
 

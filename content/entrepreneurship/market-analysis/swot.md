@@ -1,25 +1,34 @@
 ---
-title: "SWOT"
-description: "Strengths, weaknesses, opportunities, and threats affecting Expelliodor’s commercial potential."
+title: SWOT
+citationIds:
+  - "7"
+  - "8"
+  - "9"
+description: Strengths, weaknesses, opportunities, and threats affecting Expelliodor’s commercial potential.
 hasReference: false
 order: 2
 ---
 
-To evaluate Expelliodor’s commercial potential, we conducted a *SWOT* analysis to identify our key strengths and weaknesses, as well as the external opportunities and threats that may influence our development.
+To evaluate Expelliodor’s commercial potential, we conducted a *SWOT* analysis to identify our key strengths and weaknesses, as well as the external opportunities and threats that may influence our development. :fn-ref{#7} :fn-ref{#8} :fn-ref{#9}
 
 ::content-components-lightbox-image
 ---
 src:
   - https://static.igem.wiki/teams/6133/wiki/hp/entrepreneurship/market-analysis-swot-fig11.avif
-alt: "Four-quadrant SWOT analysis. Strengths include targeted odor control and accessible packaging; weaknesses include saturation, cost, variable performance, and limited validation; opportunities include microbiome-friendly care and biotechnology growth; threats include established competitors, consumer hesitation, and regulatory costs. The complete text follows."
-caption: "Fig. 11 | SWOT analysis of Expelliodor"
+alt: Four-quadrant SWOT analysis. Strengths include targeted odor control and
+  accessible packaging; weaknesses include saturation, cost, variable
+  performance, and limited validation; opportunities include microbiome-friendly
+  care and biotechnology growth; threats include established competitors,
+  consumer hesitation, and regulatory costs. The complete text follows.
+caption: Fig. 11 | SWOT analysis of Expelliodor
 ---
-
 ::
 
-:fn-ref{#7} :fn-ref{#8} :fn-ref{#9}
-
-::content-components-panel-layout{height="48rem" label="SWOT analysis of Expelliodor"}
+::content-components-panel-layout
+---
+height: 48rem
+label: SWOT analysis of Expelliodor
+---
 #left
 ## Strengths
 

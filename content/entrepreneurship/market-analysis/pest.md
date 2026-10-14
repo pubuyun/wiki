@@ -1,6 +1,15 @@
 ---
-title: "PEST"
-description: "Political, economic, social, and technological opportunities and challenges in Expelliodor’s market-entry context."
+title: PEST
+citationIds:
+  - "10"
+  - "11"
+  - "12"
+  - "13"
+  - "14"
+  - "15"
+  - "16"
+  - "17"
+description: Political, economic, social, and technological opportunities and challenges in Expelliodor’s market-entry context.
 hasReference: false
 order: 3
 ---
@@ -11,13 +20,11 @@ Our *PEST* analysis examines the political, economic, social, and technological 
 ---
 src:
   - https://static.igem.wiki/teams/6133/wiki/hp/entrepreneurship/market-analysis-pest-fig12.avif
-alt: "Four-column PEST diagram covering political, economic, social, and technological opportunities and challenges. The complete analysis follows."
-caption: "Fig. 12 | PEST analysis of Expelliodor"
+alt: Four-column PEST diagram covering political, economic, social, and
+  technological opportunities and challenges. The complete analysis follows.
+caption: Fig. 12 | PEST analysis of Expelliodor
 ---
-
 ::
-
-<!-- Source instruction: 跳转后文案 -->
 
 ## Political
 
@@ -69,10 +76,8 @@ Advances in protein engineering, synthetic biology, and bioactive cosmetic ingre
 
 ### Opportunity 2 — Digital Technologies Accelerating Product Development and Commercialization
 
-AI-assisted R&D, digital regulation, and e-commerce infrastructure can shorten development cycles and improve consumer access across Asia-Pacific. For instance, the engineered proteins we used were designed using an AI-assisted workflow, which reduced research costs during the project's initial phase.
+AI-assisted R\&D, digital regulation, and e-commerce infrastructure can shorten development cycles and improve consumer access across Asia-Pacific. For instance, the engineered proteins we used were designed using an AI-assisted workflow, which reduced research costs during the project's initial phase.
 
 ### Challenge 1 — Stability and Large-scale Manufacturing of Bioactive Ingredients
 
 Protein-based active ingredients may face challenges in stability, shelf life, and large-scale manufacturing, potentially increasing formulation complexity and production costs compared with conventional deodorants.
-
-<!-- Incomplete source-list placeholder in the export: Source / 10. -->
