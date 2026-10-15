@@ -5,7 +5,7 @@ hasReference: false
 order: 3
 ---
 
-The uptake of the odor precursor relies on *PepT<sub>Sh</sub>*, a transporter protein of *S. hominis*. We set out to engineer a compact protein binder that could limit this uptake through blocking the transporter. 
+The uptake of the odor precursor relies on *PepT<sub>Sh</sub>*, a transporter protein of *S. hominis*. We set out to engineer a compact protein binder that could limit this uptake by blocking the transporter.
 
 ::content-components-lightbox-image
 ---

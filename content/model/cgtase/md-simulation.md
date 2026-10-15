@@ -22,7 +22,7 @@ The E257Q substitution in the 1CXL template was reverted to wild-type E257. The 
 
 ### Simulation Protocol
 
-Each system was subjected to the standard MD simulation workflow, including energy minimization, restrained equilibration, and production molecular dynamics simulation using GROMACS :fn-ref{#15}. Configs are the same as [MD simulation of precursor binder](/model/precursor-binder/md-simulation), except that the duration was increased to 100 ns.
+Each system was subjected to the standard MD simulation workflow, including energy minimization, restrained equilibration, and production molecular dynamics simulation using GROMACS :fn-ref{#15}. The configurations are the same as those for [MD simulation of precursor binders](/model/precursor-binder/md-simulation), except that the duration was increased to 100 ns.
 
 ## Analysis
 
@@ -37,7 +37,7 @@ Several mutants showed improved substrate stability compared with the wild type,
 
 ## Final Decision
 
-Three mutants—F183W/T370R, T370K, and T370R—were selected for experimental validation alongside the wild-type enzyme, with priority given to carboxyl-group stabilization. Only F183W/T370R was successfully tested as designed; sequencing identified the intended T370K variant as T370L. 
+Three mutants—F183W/T370R, T370K, and T370R—were selected for experimental validation alongside the wild-type enzyme, with priority given to carboxyl-group stabilization. Only F183W/T370R was successfully tested as designed; sequencing identified the intended T370K variant as T370L.
 
 ::content-components-lightbox-panels
 ---
@@ -51,7 +51,7 @@ alt:
   - "R370 approaches the precursor carboxylate in the CGTase pocket, with dashed lines marking proposed interactions."
   - "K370 approaches the precursor carboxylate in the CGTase pocket, with dashed lines marking proposed interactions."
   - "R370 contacts the carboxylate while W183 packs beside the precursor hydrophobic tail in the double-mutant pocket."
-caption: "Fig. 1 | Proposed interaction between Cys-Gly-3M3SH and CGTase. **(a)** wild type **(b)** T370R **(c)** T370K **(d)** T370R/F183W"
+caption: "Fig. 1 | Proposed interaction between Cys-Gly-3M3SH and CGTase. **(a)** Wild type; **(b)** T370R; **(c)** T370K; **(d)** T370R/F183W."
 imageBackground: white
 label: "MD Simulation — Fig. 1"
 ---

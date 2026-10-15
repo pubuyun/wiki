@@ -14,7 +14,7 @@ id: summary
 preview: "true"
 title: Summary
 ---
-While a predicted protein-ligand complex is a good static representation of the protein-ligand interaction, in reality the complex is constantly moving and experiences various modes of vibration. We therefore performed 50 ns molecular dynamics (MD) simulations in *GROMACS*  to test whether the binder-Cys-Gly-3M3SH complex can remain stable and retain the dipeptide over time.
+While a predicted protein-ligand complex is a good static representation of the protein-ligand interaction, in reality the complex is constantly moving and experiences various modes of vibration. We therefore performed 50-ns molecular dynamics (MD) simulations in *GROMACS* to test whether the binder-Cys-Gly-3M3SH complex can remain stable and retain the dipeptide over time.
 
 :fn-ref{#15}
 ::
@@ -197,11 +197,11 @@ Each production MD frame was least-squares fitted to the initial protein Cα coo
 
 ### MM/PBSA Free Energy
 
-Binding free energies were estimated using the **MM/PBSA** :fn-ref{#16} approach for the last 80 frames (10-50 ns) to evaluate the energetic favorability of protein–ligand interactions. Candidates with calculated binding free energies **below −20 kcal/mol** were considered to exhibit favorable predicted binding stability.
+Binding free energies were estimated using the **MM/PBSA** :fn-ref{#16} approach for the last 80 frames (10–50 ns) to evaluate the energetic favorability of protein–ligand interactions. Candidates with calculated binding free energies **below −20 kcal/mol** were considered to exhibit favorable predicted binding stability.
 
 ### Binder Selection
 
-Candidates satisfying both RMSD stability criteria and MM/PBSA free energy threshold were selected as final designs for experimental validation. Following MD-based filtering, 22 binders (11 from each design route) were selected for planned testing in cycle1; 9 were successfully tested (4 RFdiffusion3 and 5 Proteina-Complexa).
+Candidates satisfying both RMSD stability criteria and the MM/PBSA free energy threshold were selected as final designs for experimental validation. Following MD-based filtering, 22 binders (11 from each design route) were selected for planned testing in cycle 1; 9 were successfully tested (4 RFdiffusion3 and 5 Proteina-Complexa).
 
 :content-components-model-document-rmsd-xvg-chart{collection="precursor-binder"}
 

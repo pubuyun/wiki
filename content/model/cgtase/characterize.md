@@ -7,7 +7,7 @@ order: 1
 
 ::content-components-collapsible-paragraph{title="Summary" id="summary" preview=true}
 
-Our objective is to modify the precursor, or connect it to a larger molecule, to reduce its compatibility with PepT-mediated transport :fn-ref{#1}. We chose the hydroxyl-group glycosylation with CGTase (cyclodextrin glucanotransferase) as it provided the most suitable option in the intended reaction environment. 
+Our objective is to modify the precursor, or connect it to a larger molecule, to reduce its compatibility with PepT-mediated transport :fn-ref{#1}. We chose the hydroxyl-group glycosylation with CGTase (cyclodextrin glucanotransferase) as it provided the most suitable option in the intended reaction environment.
 
 We combined molecular docking with molecular dynamics simulations to identify a stable precursor-binding pose and guide binding-pocket optimization.
 
@@ -15,7 +15,7 @@ We combined molecular docking with molecular dynamics simulations to identify a 
 
 ## Modifying the Precursor
 
-To function under axillary conditions, the donor molecule should be readily available and stable in aqueous solutions at RTP. High-energy donors like acyl-CoA and ATP are inappropriate. The enzyme must be stable at RTP, work in acidic pH :fn-ref{#23}, and must not require complex cofactors.
+To function under axillary conditions, the donor molecule should be readily available and stable in aqueous solutions at RTP. High-energy donors like acyl-CoA and ATP are inappropriate. The enzyme must be stable at RTP, work at acidic pH :fn-ref{#23}, and not require complex cofactors.
 
 ::content-components-lightbox-image
 ---
@@ -23,7 +23,7 @@ src:
   - https://static.igem.wiki/teams/6133/wiki/drylab/model/cgtase-characterize-fig1.avif
 alt:
   - ""
-caption: "Fig. 1 | Potential functional groups for modification on Cys-Gly-3M3SH; Hydroxyl (green), Amino (blue), Carboxyl (red)"
+caption: "Fig. 1 | Potential functional groups for modification on Cys-Gly-3M3SH: hydroxyl (green), amino (blue), carboxyl (red)."
 imageBackground: white
 ---
 
@@ -31,7 +31,7 @@ imageBackground: white
 
 ### Modifying Amine
 
-An enzyme MTGase (microbial transglutaminase) catalyzes the crosslinking of  the ε-amino group of lysine to the amide side chain of glutamine to form an amide, releasing ammonia. We considered using it to connect the amino group of the precursor to Cbz-Gln-Gly, a commonly used testing substrate for MTGase :fn-ref{#24}. However, it generally requires a sufficiently long, unbranched carbon chain adjacent to the primary amine for efficient substrate recognition. :fn-ref{#25}. Structural analysis suggested that adapting MTGase to the shorter amine substrate would likely require more extensive redesign than simple modification of the substrate-binding pocket.
+The enzyme MTGase (microbial transglutaminase) catalyzes the crosslinking of the ε-amino group of lysine to the amide side chain of glutamine to form an amide, releasing ammonia. We considered using it to connect the amino group of the precursor to Cbz-Gln-Gly, a commonly used testing substrate for MTGase :fn-ref{#24}. However, it generally requires a sufficiently long, unbranched carbon chain adjacent to the primary amine for efficient substrate recognition :fn-ref{#25}. Structural analysis suggested that adapting MTGase to the shorter amine substrate would likely require more extensive redesign than simple modification of the substrate-binding pocket.
 
 ::content-components-lightbox-image
 ---
@@ -51,7 +51,7 @@ Forming an amide or ester bond directly from a carboxylate is thermodynamically 
 
 ### Modifying Hydroxyl
 
-An enzyme CGTase (cyclodextrin glucanotransferase) conjugates alcohol and polysaccharide to form alkyl polyglycosides :fn-ref{#26}. The precursor Cys-Gly-3M3SH contains a hydrophobic moiety containing a hydroxyl group. We reasoned that it is possible to be recognized as a substrate for CGTase. The product, an O-glycosylated derivative of Cys–Gly-3M3SH, is expected to fall outside the substrate profile of PepT. 
+The enzyme CGTase (cyclodextrin glucanotransferase) conjugates alcohol and polysaccharide to form alkyl polyglycosides :fn-ref{#26}. The precursor Cys-Gly-3M3SH contains a hydrophobic moiety containing a hydroxyl group. We reasoned that it could be recognized as a substrate for CGTase. The product, an O-glycosylated derivative of Cys-Gly-3M3SH, is expected to fall outside the substrate profile of PepT.
 
 ::content-components-lightbox-image
 ---
@@ -69,7 +69,7 @@ imageBackground: white
 
 Previous structural and biochemical studies have characterized the CGTase active site and the binding modes of its native substrates :fn-ref{#6}, providing a structural basis for evaluating whether Cys-Gly-3M3SH could be accommodated as a non-native acceptor.
 
-The CGTase structure (PDB: 1CXL :fn-ref{#6}) was used as the docking template. Its E257Q substitution was reverted to wild-type E257 before docking and MD simulation. A distance constraint of <3.5 Å was applied between the glycosyl C1 atom and the oxygen atom of the precursor’s hydroxyl group to maintain a potential catalytic geometry. 
+The CGTase structure (PDB: 1CXL :fn-ref{#6}) was used as the docking template. Its E257Q substitution was reverted to wild-type E257 before docking and MD simulation. A distance constraint of <3.5 Å was applied between the glycosyl C1 atom and the oxygen atom of the precursor’s hydroxyl group to maintain a potential catalytic geometry.
 
 *Glide* :fn-ref{#27} generated 86 docking poses, which were clustered into nine groups based on the ligand RMSD. One representative pose from each cluster was selected for molecular dynamics simulation to evaluate whether the proposed binding modes remained stable under dynamic conditions.
 
@@ -85,7 +85,7 @@ alt:
   - ""
   - ""
   - ""
-caption: "Fig. 4 | **Characterize process of CGTase.** **(a)** tree diagram of clustering docking poses. The dotted line represents the ligand RMSD threshold for clustering. **(b)** 9 representative docking poses **(c)** Proposed interaction between Cys-Gly-3M3SH and CGTase, derived from MD run. Green marks C1 of the Asp229-linked glycosyl–enzyme intermediate, the target of nucleophilic attack by the acceptor hydroxyl oxygen during transglycosylation."
+caption: "Fig. 4 | **Characterization process of CGTase.** **(a)** Tree diagram of clustered docking poses. The dotted line represents the ligand RMSD threshold for clustering. **(b)** 9 representative docking poses. **(c)** Proposed interaction between Cys-Gly-3M3SH and CGTase, derived from an MD run. Green marks C1 of the Asp229-linked glycosyl–enzyme intermediate, the target of nucleophilic attack by the acceptor hydroxyl oxygen during transglycosylation."
 imageBackground: white
 label: "Characterize — Fig. 4"
 ---

@@ -15,7 +15,7 @@ Characterization of the wild-type complex suggested two potential targets for op
 
 The MD trajectory showed that the precursor’s carboxylate group was unstable and interacted with the surrounding solvent. Wild-type CGTase lacked residues that could form stabilizing interactions with this group.
 
-To stabilize the precursor’s negatively charged carboxylate group, we proposed replacing T370 with Lys, Arg, or His to enable salt-bridge formation
+To stabilize the precursor’s negatively charged carboxylate group, we proposed replacing T370 with Lys, Arg, or His to enable salt-bridge formation.
 
 ::content-components-lightbox-image
 ---
@@ -23,7 +23,7 @@ src:
   - https://static.igem.wiki/teams/6133/wiki/drylab/model/cgtase-design-fig1.avif
 alt:
   - "T370 is shown beside the solvent-exposed carboxylate group of the bound precursor in the wild-type CGTase pocket."
-caption: "Fig. 1 | **Structural environment of the precursor carboxylate in wild-type CGTase.** The reference binding pose indicates that the carboxylate positions near T370 (magenta). The precursor is shown with cyan carbons within the grey enzyme cartoon; the carboxylate carbon is highlighted in green."
+caption: "Fig. 1 | **Structural environment of the precursor carboxylate in wild-type CGTase.** The reference binding pose indicates that the carboxylate is positioned near T370 (magenta). The precursor is shown with cyan carbons within the grey enzyme cartoon; the carboxylate carbon is highlighted in green."
 imageBackground: white
 ---
 
@@ -56,10 +56,10 @@ Candidate mutants were designed by combining T370H, T370R, or T370K with F183W a
 caption: "Table 1 | 9 combined mutations for MD simulation evaluation."
 ---
 
-| **T370 Substitution** | **Single** | **with F183W** | **with F183W and F259W** |
-| :--- | :--- | :--- | :--- |
-| K | T370K | T370K/F183W | T370K/F183W/F259W |
-| R | T370R | T370R/F183W | T370R/F183W/F259W |
-| H | T370H | T370H/F183W | T370H/F183W/F259W |
+| **T370 Substitution** | **Single** | **With F183W** | **With F183W and F259W** |
+| :-------------------- | :--------- | :------------- | :----------------------- |
+| K                     | T370K      | T370K/F183W    | T370K/F183W/F259W        |
+| R                     | T370R      | T370R/F183W    | T370R/F183W/F259W        |
+| H                     | T370H      | T370H/F183W    | T370H/F183W/F259W        |
 
 ::

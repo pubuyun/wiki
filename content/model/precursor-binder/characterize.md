@@ -19,7 +19,7 @@ Because our objective is to reduce characteristic axillary malodor, we selected 
 
 ## Stereochemistry of Precursor
 
-Cys-Gly-3M3SH exists as two stereoisomers, Cys-Gly-(S)-3M3SH and Cys-Gly-(R)-3M3SH, which are metabolized into the corresponding 3M3SH enantiomers. (S)-3M3SH has a sweat- and onion-like odor, whereas (R)-3M3SH is described as fruity and grapefruit-like. :fn-ref{#3}
+Cys-Gly-3M3SH exists as two stereoisomers, Cys-Gly-(S)-3M3SH and Cys-Gly-(R)-3M3SH, which are metabolized into the corresponding 3M3SH enantiomers. (S)-3M3SH has a sweat- and onion-like odor, whereas (R)-3M3SH is described as fruity and grapefruit-like :fn-ref{#3}.
 
 ::content-components-lightbox-image
 ---
@@ -28,20 +28,20 @@ alt:
 src:
   - https://static.igem.wiki/teams/6133/wiki/drylab/model/precursor-binder-characterize-fig1.avif
 caption: Fig. 1 | Structure diagrams for Cys-Gly-(S)-3M3SH and Cys-Gly-(R)-3M3SH
-  precursor, and their corresponding 3M3SH molecule's smell.
+  precursors and the smells of their corresponding 3M3SH molecules.
 imageBackground: white
 ---
 ::
 
 ## Stereochemical Constraint
 
-Protein–ligand recognition is highly dependent on three-dimensional ligand geometry, making correct stereochemistry essential for designing a stereochemically appropriate binding pocket. However, diffusion-based all-atom structure models can occasionally introduce stereochemical errors in small-molecule coordinates, even when the correct stereochemical information is provided in the input. :fn-ref{#4}
+Protein–ligand recognition is highly dependent on three-dimensional ligand geometry, making correct stereochemistry essential for designing a stereochemically appropriate binding pocket. However, diffusion-based all-atom structure models can occasionally introduce stereochemical errors in small-molecule coordinates, even when the correct stereochemical information is provided in the input :fn-ref{#4}.
 
-We therefore explicitly specified Cys-Gly-(S)-3M3SH using a stereochemically defined SMILES representation and a SDF file with correct chirality in both computational design pipelines. A post-folding chirality filter also checked the ligand and retained only candidates containing the required Cys-Gly-(S)-3M3SH configuration for downstream analysis.
+We therefore explicitly specified Cys-Gly-(S)-3M3SH using a stereochemically defined SMILES representation and an SDF file with correct chirality in both computational design pipelines. A post-folding chirality filter also checked the ligand and retained only candidates containing the required Cys-Gly-(S)-3M3SH configuration for downstream analysis.
 
 ## Design Requirements
 
 To preserve the required ligand configuration throughout the workflow, we:
 
 - used the stereochemically specified SMILES and correct SDF of Cys-Gly-(S)-3M3SH as the input for [*RF3*](/model/precursor-binder/design-rfdiffusion#validation) [co-folding](/model/precursor-binder/design-rfdiffusion#validation) and [*Proteina-Complexa*](/model/precursor-binder/design-proteina-complexa#generation) [generation](/model/precursor-binder/design-proteina-complexa#generation);
-- wrote a script to verify the chirality of Cys-Gly-3M3SH in each predicted structure from RF3 and Proteina-Complexa;
+- wrote a script to verify the chirality of Cys-Gly-3M3SH in each predicted structure from RF3 and Proteina-Complexa.

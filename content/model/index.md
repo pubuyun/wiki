@@ -20,10 +20,10 @@ bannerPosition: 50% 10%
 bannerMobilePosition: 50% 10%
 ---
 
-## Key success
+## Key Successes
 
-- Among 9 tested **precursor binders** designed by *RFdiffusion3* and *Proteina-Complexa*, 4 displayed significant reduction in 3M3SH production compared to the control group.
-- Among 5 designed **transporter binders** aiming to restrict conformational change, 4 showed significant reduction in 3M3SH production, with a maximum reduction of 21%
+- Among 9 tested **precursor binders** designed by *RFdiffusion3* and *Proteina-Complexa*, 4 displayed a significant reduction in 3M3SH production compared to the control group.
+- Among 5 designed **transporter binders** aiming to restrict conformational change, 4 showed a significant reduction in 3M3SH production, with a maximum reduction of 21%.
 - We identified wild-type **CGTase** as a functional starting enzyme for Cys-Gly-3M3SH modification, supported by experimental activity relative to control.
 - We developed a **Characterize–DBTL framework** that translates understanding of biological mechanisms into explicit design requirements.
 - We compared **RFdiffusion3** and **Proteina-Complexa** for designing Cys-Gly-(S)-3M3SH binders, examining how computational metrics relate to experimental responses.
@@ -31,7 +31,7 @@ bannerMobilePosition: 50% 10%
 
 ## Abstract
 
-Axillary odor arises when *Staphylococcus hominis* imports and metabolizes the odorless precursor Cys-Gly-3M3SH. To reduce precursor availability or uptake, we developed three solution strategies: a *de novo* small-molecule binding protein that sequesters the precursor Cys-Gly-3M3SH, a *de novo* protein-binding protein that inhibits the conformational changes of the transporter *PepT*Sh, and an enzyme that chemically modifies the precursor to make it unrecognizable to the transporter. We also carried out thermostability optimizations for the enzyme.
+Axillary odor arises when *Staphylococcus hominis* imports and metabolizes the odorless precursor Cys-Gly-3M3SH. To reduce precursor availability or uptake, we developed three solution strategies: a *de novo* small-molecule binding protein that sequesters the precursor Cys-Gly-3M3SH, a *de novo* protein-binding protein that inhibits the conformational changes of the transporter *PepT<sub>Sh</sub>*, and an enzyme that chemically modifies the precursor to make it unrecognizable to the transporter. We also carried out thermostability optimizations for the enzyme.
 
 We introduced a Characterize stage before the conventional DBTL cycle to translate biological mechanisms and application conditions into explicit design requirements. For computational design pipelines (precursor binder, transporter binder, optimizations), we developed a decision-gated workflow. It progressively filters candidates using outputs from each computational evaluation, prioritizing the most reliable candidates for wet-lab testing.
 
@@ -41,7 +41,7 @@ Together, our workflow and automated scripts provide a reusable framework for fu
 
 ## Introduction
 
-Since Cys-Gly-3M3SH first needs to be imported into the *S. hominis* cytoplasm via a peptide transporter (PepTSh), we hypothesized that preventing Cys-Gly-3M3SH uptake could prevent odor formation, while aiming to avoid broadly suppressing the resident skin microbiota. :fn-ref{#1} We developed three protein-engineering strategies to reduce odor-precursor availability or uptake through distinct mechanisms.
+Since Cys-Gly-3M3SH first needs to be imported into the *S. hominis* cytoplasm via a peptide transporter (PepT<sub>Sh</sub>), we hypothesized that preventing Cys-Gly-3M3SH uptake could prevent odor formation, while aiming to avoid broadly suppressing the resident skin microbiota :fn-ref{#1}. We developed three protein-engineering strategies to reduce odor-precursor availability or uptake through distinct mechanisms.
 
 ::content-components-lightbox-image
 ---
@@ -49,26 +49,26 @@ alt:
   - ""
 src:
   - https://static.igem.wiki/teams/6133/wiki/drylab/model/overview-fig1.avif
-caption: Fig. 1 | Schematic for the three solutions. Precursor binder sequesters
-  the precursor, preventing the uptake by PepT<sub>Sh</sub> transporter;
-  Transporter binder binds to PepT<sub>Sh</sub> transporter directly, preventing
+caption: Fig. 1 | Schematic for the three solutions. The precursor binder sequesters
+  the precursor, preventing uptake by the PepT<sub>Sh</sub> transporter;
+  the transporter binder binds to the PepT<sub>Sh</sub> transporter directly, preventing
   the uptake; CGTase chemically modifies the precursor by adding an additional
-  group, making it unrecognizable for PepT<sub>Sh</sub>
+  group, making it unrecognizable to PepT<sub>Sh</sub>.
 imageBackground: white
 ---
 ::
 
-- **Precursor Binder:** selective protein binders for Cys-Gly-3M3SH designed using two different deep-learning based design tools.
-  - **Precursor Binder Affinity Optimization:** precursor binders that displayed binding ability were selected for further affinity optimization
-- **Transporter Binder:** a protein binder that could limit this uptake through blocking the transporter.
-- **CGTase:** an enzyme that we characterized could covalently modify the precursor, attaching an additional group to the precursor before bacterial uptake. 
-  - **CGTase Thermal Stability Optimization:** Two CGTase mutants were selected for further thermal stability optimization for industrial production.
+- **Precursor Binder:** selective protein binders for Cys-Gly-3M3SH designed using two different deep-learning-based design tools.
+  - **Precursor Binder Affinity Optimization:** precursor binders that displayed binding ability were selected for further affinity optimization.
+- **Transporter Binder:** a protein binder that could limit this uptake by blocking the transporter.
+- **CGTase:** an enzyme that we characterized as capable of covalently modifying the precursor, attaching an additional group to the precursor before bacterial uptake.
+  - **CGTase Thermal Stability Optimization:** two CGTase mutants were selected for further thermal stability optimization for industrial production.
 
 ## Characterize–DBTL Framework
 
 ### Why Characterize
 
-As systems-level and mechanistic understanding of biological systems continues to advance, synthetic biology design is expanding beyond the design of genetic sequences toward the development of context-specific solutions based on biological mechanisms. :fn-ref{#2}
+As systems-level and mechanistic understanding of biological systems continues to advance, synthetic biology design is expanding beyond the design of genetic sequences toward the development of context-specific solutions based on biological mechanisms :fn-ref{#2}.
 
 We therefore introduced a **Characterize** stage before the conventional DBTL cycle. By analysing the biological mechanism, target, structural context, and application environment, this stage translates biological understanding into explicit design specifications that define what should be designed and which constraints the resulting solution must satisfy.
 
@@ -79,10 +79,10 @@ alt:
     design specification lead into the Design–Build–Test–Learn cycle.
 src:
   - https://static.igem.wiki/teams/6133/wiki/drylab/model/overview-fig2.avif
-caption: Fig. 2 | **Schematic for Characterize stage and its four substages**,
+caption: Fig. 2 | **Schematic for the Characterize stage and its four substages**,
   showing the progression from problem definition to design specification, and
-  finally to conventional DBTL cycle. Characterize stage directly connects to
-  design stage by outputting design specifications.
+  finally to the conventional DBTL cycle. The Characterize stage directly connects to
+  the Design stage by outputting design specifications.
 imageBackground: white
 ---
 ::
@@ -99,7 +99,7 @@ Define the biological problem, intended outcome, application context, and potent
 
 #### **2. Target Definition**
 
-**Specify the biological entity to be engineered**
+**Specify the biological entity to be engineered.**
 
 This may be a molecule, protein, conformational state, interaction interface, or biochemical reaction. Relevant boundaries are also defined.
 
@@ -113,18 +113,18 @@ Available experimental, structural, and computational evidence is used to assess
 
 **Translate characterization findings into explicit design requirements.**
 
-This produces the output directly for design, for example, a molecule to bind, an interface to bind, or a site to modify. This substage connects Characterize and Design stages, and should be the main outcome of characterize stage.
+This produces the output directly for design, for example, a molecule to bind, an interface to bind, or a site to modify. This substage connects the Characterize and Design stages and should be the main outcome of the Characterize stage.
 
 ### Project Application
 
 ::content-components-captioned-table
 ---
-caption: Table 1 | The application of characterize stage in our project.
+caption: Table 1 | The application of the Characterize stage in our project.
 ---
 | **Strategy**       | **Approach**                     | **Target**             | **Design Specification**                                                                                                                                                      |
 | :----------------- | :------------------------------- | :--------------------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Precursor binder   | Bind the precursor.              | Cys-Gly-3M3SH          | Use Cys-Gly-(S)-3M3SH and reject structures with wrong chirality.                                                                                                             |
-| Transporter binder | Inhibit the transporter.         | PepTSh                 | Target extracellular features of inward-facing 6EXS with an 80–120-residue binder.                                                                                            |
+| Transporter binder | Inhibit the transporter.         | PepT<sub>Sh</sub>      | Target extracellular features of inward-facing 6EXS with an 80–120-residue binder.                                                                                            |
 | CGTase             | Chemically modify the precursor. | CGTase & Cys-Gly-3M3SH | Choose the transglycosylation reaction of the precursor catalysed by CGTase. Preserve the catalytic pose and optimize interactions with the carboxylate and hydrophobic tail. |
 ::
 
@@ -167,14 +167,14 @@ alt:
   - A yellow RFdiffusion3 binder surrounds a green small-molecule ligand in a
     central pocket.
   - RFdiffusion3 and Proteina-Complexa routes converge on chirality filtering,
-    ranking, 50-ns molecular dynamics, and in-vitro candidate selection.
+    ranking, 50-ns molecular dynamics, and in vitro candidate selection.
 src:
   - https://static.igem.wiki/teams/6133/wiki/drylab/model/overview-fig4a.avif
   - https://static.igem.wiki/teams/6133/wiki/drylab/model/overview-fig4b.avif
   - https://static.igem.wiki/teams/6133/wiki/drylab/model/overview-fig4c.avif
 caption: Fig. 4 | **Sample precursor binder designs and the design process.**
-  **(a)** precursor binder designed by Proteina-Complexa **(b)** precursor
-  binder designed by RFdiffusion3 **(c)** Schematic for precursor binder design
+  **(a)** Precursor binder designed by Proteina-Complexa; **(b)** precursor
+  binder designed by RFdiffusion3; **(c)** schematic for precursor binder design
   workflow.
 imageBackground: white
 label: Overview — Fig. 4
@@ -201,22 +201,22 @@ alt:
 src:
   - https://static.igem.wiki/teams/6133/wiki/drylab/model/overview-fig5.avif
 caption: Fig. 5 | **Structure diagrams for Cys-Gly-(S)-3M3SH and
-  Cys-Gly-(R)-3M3SH precursor, and their corresponding 3M3SH molecule's smell.**
+  Cys-Gly-(R)-3M3SH precursors and the smells of their corresponding 3M3SH molecules.**
 imageBackground: white
 ---
 ::
 
-3M3SH exists as two stereoisomers with distinct smells. We selected **Cys-Gly-(S)-3M3SH**, which is associated with the sweat- and onion-like odor of axillary odor, as the target molecule for binder design :fn-ref{#3}. We investigated that protein–ligand recognition is stereochemistry-dependent, while deep-learning models often introduce stereochemical errors :fn-ref{#4}. We then adjusted our design specifications accordingly.
+3M3SH exists as two stereoisomers with distinct smells. We selected **Cys-Gly-(S)-3M3SH**, which is associated with the sweat- and onion-like odor of axillary odor, as the target molecule for binder design :fn-ref{#3}. We noted that protein–ligand recognition is stereochemistry-dependent, while deep-learning models often introduce stereochemical errors :fn-ref{#4}. We then adjusted our design specifications accordingly.
 
 #### Design Specification
 
-Cys-Gly-(S)-3M3SH was identified as the odor-relevant stereoisomer and therefore selected as the target for binder design. A ligand representation with explicitly-defined stereochemistry should be used as input for both design pipelines, and ligand chirality should be verified after structure generation before candidates proceed to further evaluation.
+Cys-Gly-(S)-3M3SH was identified as the odor-relevant stereoisomer and therefore selected as the target for binder design. A ligand representation with explicitly defined stereochemistry should be used as input for both design pipelines, and ligand chirality should be verified after structure generation before candidates proceed to further evaluation.
 
 ### Design
 
-Small-molecule-binding proteins targeting Cys-Gly-3M3SH were designed using the *[Rosetta Foundry](/model/precursor-binder/design-rfdiffusion)* and [Proteina-Complexa](/model/precursor-binder/design-proteina-complexa) separately. The full design pipeline includes backbone scaffold generation, sequence redesign and folding validation. RFdiffusion3 binders are ranked based on the ranking\_score outputted by *RF3*, while Proteina-Complexa binders are ranked based on a custom composite score. Then, a [molecular dynamics simulation](/model/precursor-binder/md-simulation) is performed on selected top binders from each pipeline to determine the set of candidates for *in vitro* testing.
+Small-molecule-binding proteins targeting Cys-Gly-3M3SH were designed using *[Rosetta Foundry](/model/precursor-binder/design-rfdiffusion)* and [Proteina-Complexa](/model/precursor-binder/design-proteina-complexa) separately. The full design pipeline includes backbone scaffold generation, sequence redesign and folding validation. RFdiffusion3 binders are ranked based on the ranking\_score outputted by *RF3*, while Proteina-Complexa binders are ranked based on a custom composite score. Then, a [molecular dynamics simulation](/model/precursor-binder/md-simulation) is performed on selected top binders from each pipeline to determine the set of candidates for *in vitro* testing.
 
-22 binders (11 from each design tool) were planned for experimental testing in cycle1. Nine were successfully tested: 4 from RFdiffusion3 and 5 from Proteina-Complexa.
+22 binders (11 from each design tool) were planned for experimental testing in cycle 1. Nine were successfully tested: 4 from RFdiffusion3 and 5 from Proteina-Complexa.
 
 ### Discussion
 
@@ -233,9 +233,9 @@ caption: Fig. 6 | **Relationships between computational metrics and experimental
   Proteina-Complexa.** Each point represents one tested binder (n = 4 for
   RFdiffusion3 in the top panel **(a)**; n = 5 for Proteina-Complexa in the
   bottom panel **(b)**), with A412 signal reduction calculated as 100 × (1 −
-  mean binder A412/mean control A412). **(a)**. MD Metrics of 4 RFdiffusion3
+  mean binder A412/mean control A412). **(a)** MD metrics of 4 RFdiffusion3
   branch binders, including **(G)** estimated binding free energy (ΔG) from
-  MM/PBSA (**H-I)** the mean and SD of MD ligand RMSD, over 10–50 ns. **(b)**.
+  MM/PBSA; **(H–I)** the mean and SD of MD ligand RMSD, over 10–50 ns. **(b)**
   The composite score, calculated as 200 × *pLDDT* − i_pAE − 62 × min_ipAE + 50
   × min_ipSAE − 5 × binder_scRMSD_ca − 2 × ligand_scRMSD − 2 ×
   ligand_scRMSD_aligned, using pLDDT on a 0–1 scale. Pearson r and Spearman ρ
@@ -246,9 +246,9 @@ layout: stack
 ---
 ::
 
-For computational metrics, interface-related metrics in RFdiffusion3 branch showed agreement with the experimental results. In the Proteina-Complexa route, our custom composite score showed the strongest linear correlation with experimental results.
+For computational metrics, interface-related metrics in the RFdiffusion3 branch showed agreement with the experimental results. In the Proteina-Complexa route, our custom composite score showed the strongest linear correlation with experimental results.
 
-MD provides complementary evidence, especially in RFdiffusion3 branch, where the three MD metrics all showed the expected trend. However, in Proteina-Complexa branch, inconsistency between Proteina-Complexa generation and RF3 evaluation may affect the predicted structures selected, causing ligand RMSD to partly reflect relaxation of the predicted pose and reducing its reliability. Incorporating another folding tool, such as AlphaFold, and carrying out more independent MD simulations on each binder would help verify this relationship.
+MD provides complementary evidence, especially in the RFdiffusion3 branch, where the three MD metrics all showed the expected trend. However, in the Proteina-Complexa branch, inconsistency between Proteina-Complexa generation and RF3 evaluation may affect the predicted structures selected, causing ligand RMSD to partly reflect relaxation of the predicted pose and reducing its reliability. Incorporating another folding tool, such as AlphaFold, and carrying out more independent MD simulations on each binder would help verify this relationship.
 
 Future work should emphasize testing more experimental candidates to verify the composite score and adjust the weights.
 
@@ -273,15 +273,15 @@ imageBackground: white
 
 #### Problem Definition
 
-We aim to design a protein to inhibit the PepTSh transporter.
+We aim to design a protein to inhibit the PepT<sub>Sh</sub> transporter.
 
 #### Target Definition
 
-PepTSh is a proton-coupled oligopeptide transporter (POT) from *S. hominis* that imports Cys-Gly-3M3SH :fn-ref{#1}. We used the experimental inward-facing structure (PDB: 6EXS) as the receptor template.
+PepT<sub>Sh</sub> is a proton-coupled oligopeptide transporter (POT) from *S. hominis* that imports Cys-Gly-3M3SH :fn-ref{#1}. We used the experimental inward-facing structure (PDB: 6EXS) as the receptor template.
 
 #### Mechanism Analysis
 
-Molecular dynamics studies of PepTSh indicated that the transition from the inward-facing to the outward-facing state is the rate-limiting step in its transport cycle. :fn-ref{#5} Therefore, the inward-facing conformation was selected for binding stabilization. Structural comparison of inward- and outward-facing models identified extracellular electrostatic interaction networks and hydrophobic surface patches that are specific to the inward-facing state. These features were subsequently used to define the target interface for binder design.
+Molecular dynamics studies of PepT<sub>Sh</sub> indicated that the transition from the inward-facing to the outward-facing state is the rate-limiting step in its transport cycle :fn-ref{#5}. Therefore, the inward-facing conformation was selected for binding stabilization. Structural comparison of inward- and outward-facing models identified extracellular electrostatic interaction networks and hydrophobic surface patches that are specific to the inward-facing state. These features were subsequently used to define the target interface for binder design.
 
 ::content-components-lightbox-panels
 ---
@@ -296,13 +296,13 @@ src:
   - https://static.igem.wiki/teams/6133/wiki/drylab/model/overview-fig8c.avif
   - https://static.igem.wiki/teams/6133/wiki/drylab/model/overview-fig8d.avif
 caption: "Fig. 8 | **Structure and extracellular surface of PepT<sub>Sh</sub>.**
-  **(a)** Inward-Facing conformation of PepT<sub>Sh</sub>(PDB 6EXS); **(b)**
+  **(a)** Inward-facing conformation of PepT<sub>Sh</sub> (PDB 6EXS); **(b)**
   detailed view of the electrostatic interaction network identified in
   structural analysis. A close-up of the highlighted region in **(a)**; **(c)**
-  Outward-Facing conformation of PepT<sub>Sh</sub>(homology modelled); **(d)**
-  Broken electrostatic interaction in outward-facing PepT<sub>Sh</sub>, A
-  close-up of the highlighted region in **(c)**. Green: C-terminal bundle; Blue:
-  N-terminal bundle; Orange: TMA and TMB."
+  outward-facing conformation of PepT<sub>Sh</sub> (homology modelled); **(d)**
+  broken electrostatic interaction in outward-facing PepT<sub>Sh</sub>, a
+  close-up of the highlighted region in **(c)**. Green: C-terminal bundle; blue:
+  N-terminal bundle; orange: TMA and TMB."
 imageBackground: white
 label: Overview — Fig. 8
 ---
@@ -310,9 +310,7 @@ label: Overview — Fig. 8
 
 #### Design Specification
 
-Stablize the inward-facing conformation by a protein binder targeting the extracellular interface containing features specific to the inward-facing state. Moreover, compact binder designs are favored to enhance accessibility through the Gram-positive cell wall.
-
-[]{.lark-record-clipboard}
+Stabilize the inward-facing conformation by a protein binder targeting the extracellular interface containing features specific to the inward-facing state. Moreover, compact binder designs are favored to enhance accessibility through the Gram-positive cell wall.
 
 ::content-components-lightbox-panels
 ---
@@ -327,10 +325,10 @@ src:
   - https://static.igem.wiki/teams/6133/wiki/drylab/model/overview-fig9a.avif
   - https://static.igem.wiki/teams/6133/wiki/drylab/model/overview-fig9b.avif
   - https://static.igem.wiki/teams/6133/wiki/drylab/model/overview-fig9c.avif
-caption: Fig. 9 | **The target extracellular interface of PepT<sub>Sh</sub>**
-  **(a)** highlight of target region (PDB 6EXS); **(b)** side-view of selected
-  contig region, upward is the extracellular direction; **(c)** selected
-  hotspots(orange) and hydrophobic patch between them(green)
+caption: Fig. 9 | **The target extracellular interface of PepT<sub>Sh</sub>.**
+  **(a)** Highlight of the target region (PDB 6EXS); **(b)** side view of the selected
+  contig region; upward is the extracellular direction; **(c)** selected
+  hotspots (orange) and the hydrophobic patch between them (green).
 imageBackground: white
 label: Overview — Fig. 9
 ---
@@ -340,9 +338,9 @@ label: Overview — Fig. 9
 
 Among the available design frameworks, we selected Rosetta Foundry for its unified suite of protein-design tools.
 
-The full design pipeline comprised RFD3 backbone generation, *ProteinMPNN* sequence design, and RF3 co-folding validation. Candidates were then filtered according to their predicted interface placement and ranked based on a custom composite score \[\[]{.katex-mathml}\[\[\[]{.strut style="height:0.8889em;vertical-align:-0.1944em;"}\[\[weighted score]{.mord}]{.mord.text} []{.mspace style="margin-right:0.2778em;"}[=]{.mrel}[]{.mspace style="margin-right:0.2778em;"} ]{.base}\[\[]{.strut style="height:0.7278em;vertical-align:-0.0833em;"} [0.50]{.mord}[]{.mspace style="margin-right:0.2222em;"}[×]{.mbin}[]{.mspace style="margin-right:0.2222em;"} ]{.base}\[\[]{.strut style="height:0.8889em;vertical-align:-0.1944em;"}\[\[normalized]{.mord.mathrm} [ ]{.mspace}[ranking]{.mord.mathrm style="margin-right:0.0139em;"}[ ]{.mspace}[score]{.mord.mathrm} ]{.mord} []{.mspace style="margin-right:0.2222em;"}[+]{.mbin}[]{.mspace style="margin-right:0.2222em;"} ]{.base}\[\[]{.strut style="height:0.7278em;vertical-align:-0.0833em;"} [0.25]{.mord}[]{.mspace style="margin-right:0.2222em;"}[×]{.mbin}[]{.mspace style="margin-right:0.2222em;"} ]{.base}\[\[]{.strut style="height:0.8889em;vertical-align:-0.1944em;"}\[\[normalized]{.mord.mathrm} [ ]{.mspace}[pLDDT]{.mord.mathrm} ]{.mord} []{.mspace style="margin-right:0.2222em;"}[+]{.mbin}[]{.mspace style="margin-right:0.2222em;"} ]{.base}\[\[]{.strut style="height:0.7278em;vertical-align:-0.0833em;"} [0.25]{.mord}[]{.mspace style="margin-right:0.2222em;"}[×]{.mbin}[]{.mspace style="margin-right:0.2222em;"} ]{.base}\[\[]{.strut style="height:0.6944em;"}\[\[normalized]{.mord.mathrm} [ ]{.mspace}[inverse]{.mord.mathrm}[ ]{.mspace}[PAE]{.mord.mathrm} ]{.mord}]{.base}]{.katex-html ariaHidden="true"}]{.katex}, after which molecular dynamics simulations were performed on the top-ranked binders to prioritize candidates for experimental validation.
+The full design pipeline comprised RFD3 backbone generation, *ProteinMPNN* sequence design, and RF3 co-folding validation. Candidates were then filtered according to their predicted interface placement and ranked based on a custom composite score $\text{weighted score} = 0.50 \times \mathrm{normalized\ ranking\ score} + 0.25 \times \mathrm{normalized\ pLDDT} + 0.25 \times \mathrm{normalized\ inverse\ PAE}$, after which molecular dynamics simulations were performed on the top-ranked binders to prioritize candidates for experimental validation.
 
-Selected candidates are tested experimentally in cycle2.
+Selected candidates are tested experimentally in cycle 2.
 
 ### Discussion
 
@@ -425,10 +423,10 @@ src:
   - https://static.igem.wiki/teams/6133/wiki/drylab/model/overview-fig13a.avif
   - https://static.igem.wiki/teams/6133/wiki/drylab/model/overview-fig13b.avif
   - https://static.igem.wiki/teams/6133/wiki/drylab/model/overview-fig13c.avif
-caption: Fig. 13 | **Characterize process of CGTase.** **(a)** tree diagram of
-  clustering docking poses. The dotted line represents the ligand RMSD threshold
-  for clustering. **(b)** 9 representative docking poses **(c)** Proposed
-  interaction between Cys-Gly-3M3SH and CGTase, derived from MD run. Green marks
+caption: Fig. 13 | **Characterization process of CGTase.** **(a)** Tree diagram of
+  clustered docking poses. The dotted line represents the ligand RMSD threshold
+  for clustering. **(b)** 9 representative docking poses. **(c)** Proposed
+  interaction between Cys-Gly-3M3SH and CGTase, derived from an MD run. Green marks
   C1 of the Asp229-linked glycosyl–enzyme intermediate, the target of
   nucleophilic attack by the acceptor hydroxyl oxygen during transglycosylation.
 imageBackground: white
@@ -438,15 +436,13 @@ label: Overview — Fig. 13
 
 #### Design Specification
 
-CGTase is selected for further design to fit into a new substrate. Optimizing the incomplete interactions around the ligand's carboxylate group and hydrophobic tail should be the target of design.
-
-[]{.lark-record-clipboard}
+CGTase is selected for further design to fit a new substrate. Optimizing the incomplete interactions around the ligand's carboxylate group and hydrophobic tail should be the target of design.
 
 ### Design
 
 Based on the interaction deficiencies identified in wild-type MD simulation, we adopted a [rational design](/model/cgtase/design) strategy, introducing targeted binding-pocket mutations intended to stabilize the simulated precursor-binding pose.
 
-The nine resulting mutant candidates were subsequently evaluated by MD simulations to examine their effects on substrate binding and active-site interactions. Candidates showing improved and stable interactions with the target substrate were prioritized for experimental validation
+The nine resulting mutant candidates were subsequently evaluated by MD simulations to examine their effects on substrate binding and active-site interactions. Candidates showing improved and stable interactions with the target substrate were prioritized for experimental validation.
 
 ::content-components-lightbox-panels
 ---
@@ -465,13 +461,13 @@ src:
   - https://static.igem.wiki/teams/6133/wiki/drylab/model/overview-fig14c.avif
   - https://static.igem.wiki/teams/6133/wiki/drylab/model/overview-fig14d.avif
 caption: Fig. 14 | Proposed interaction between Cys-Gly-3M3SH and CGTase.
-  **(a)** wild type **(b)** T370R **(c)** T370K **(d)** T370R/F183W
+  **(a)** Wild type; **(b)** T370R; **(c)** T370K; **(d)** T370R/F183W.
 imageBackground: white
 label: Overview — Fig. 14
 ---
 ::
 
-Three candidates showing improved interaction with the precursor were selected for experimental testing in cycle3; only T370R/F183W was successfully tested as designed.
+Three candidates showing improved interaction with the precursor were selected for experimental testing in cycle 3; only T370R/F183W was successfully tested as designed.
 
 ### Discussion
 
@@ -482,18 +478,18 @@ alt:
     than the empty-vector control.
 src:
   - https://static.igem.wiki/teams/6133/wiki/drylab/model/overview-fig15.avif
-caption: Fig. 15 | Ellman's Assay of the CGTase; Error bars represent ± SD (n =
-  3); Asterisks indicate significant differences compared with the Empty Vector
+caption: Fig. 15 | Ellman's assay of CGTase. Error bars represent ± SD (n =
+  3). Asterisks indicate significant differences compared with the empty-vector
   control; \*\*p < 0.01.
 imageBackground: white
 ---
 ::
 
-The characterize stage successfully identified CGTase as a functional starting enzyme for Cys-Gly-3M3SH chemical modification. The experimental assay showed activity of wild-type CGTase compared with the control, aligning with the characterization outcome, where docking and MD simulations support the feasibility of glycosylation catalyzed by CGTase.
+The Characterize stage successfully identified CGTase as a functional starting enzyme for Cys-Gly-3M3SH chemical modification. The experimental assay showed activity of wild-type CGTase compared with the control, aligning with the characterization outcome, where docking and MD simulations support the feasibility of glycosylation catalyzed by CGTase.
 
 However, in the experiment, the intended T370K mutant was unexpectedly obtained as T370L.
 
-Thus, feasibility of the rational design is not fully verified because of the limited dataset. Only T370R/F183W was successfully tested as designed. Comparing this double mutant with the unintended T370L variant provides limited evidence that the proposed design strategy deserves further evaluation.
+Thus, the feasibility of the rational design is not fully verified because of the limited dataset. Only T370R/F183W was successfully tested as designed. Comparing this double mutant with the unintended T370L variant provides limited evidence that the proposed design strategy deserves further evaluation.
 
 Future work should test more mutants, especially T370K, T370R, and combination mutants, with more experimental replicates.
 
@@ -536,10 +532,10 @@ src:
   - https://static.igem.wiki/teams/6133/wiki/drylab/model/overview-fig17a.avif
   - https://static.igem.wiki/teams/6133/wiki/drylab/model/overview-fig17b.avif
 caption: "Fig. 17 | **SPURS-guided mutation optimization of T370K (top panel)
-  and T370R/F183W (bottom panel).** The embedded plots (a–d) show: **(a)**,
-  Single-mutation score distribution; **(b)**, Pairwise compatibility of the 40
-  top-ranked candidates. **(c)**, Selected multi-mutation scores across search
-  depths; blue line represents lowest score per depth. **(d)**, Added-mutation
+  and T370R/F183W (bottom panel).** The embedded plots (a–d) show: **(a)**
+  single-mutation score distribution; **(b)** pairwise compatibility of the 40
+  top-ranked candidates; **(c)** selected multi-mutation scores across search
+  depths; the blue line represents the lowest score per depth. **(d)** Added-mutation
   score contributions; the dashed line represents the marginal threshold. Boxes
   show medians and interquartile ranges; whiskers indicate 1.5× interquartile
   range."
@@ -549,7 +545,7 @@ layout: stack
 ---
 ::
 
-Mutants with 2, 4, 6, or 8 additional substitutions relative to each CGTase parent, along the same search route, were selected for testing in cycle4.
+Mutants with 2, 4, 6, or 8 additional substitutions relative to each CGTase parent, along the same search route, were selected for testing in cycle 4.
 
 ### Design: Precursor Binder Affinity
 
@@ -561,7 +557,7 @@ alt:
     filtering, co-folding, and polar validation.
 src:
   - https://static.igem.wiki/teams/6133/wiki/drylab/model/overview-fig18.avif
-caption: Fig. 18 | Schematic for precursor binder affinity optimization workflow
+caption: Fig. 18 | Schematic for precursor binder affinity optimization workflow.
 imageBackground: white
 ---
 ::
@@ -572,9 +568,9 @@ We adapted the *LASErMPNN* neural proofreading strategy described by Fry et al. 
 
 By adjusting decoding order, one position is allowed to vary while the remaining amino acids stay fixed. Probabilities are averaged across different decoding orders and *dropout* to reduce sensitivity to individual predictions.
 
-Candidate substitutions are ranked by ΔNLL, which compares how much the model favors the proposed amino acid over the original one. \[\[]{.katex-mathml}\[\[\[]{.strut style="height:0.6833em;"} [Δ]{.mord}[N]{.mord.mathnormal style="margin-right:0.109em;"}[LL]{.mord.mathnormal}[]{.mspace style="margin-right:0.2778em;"}[=]{.mrel}[]{.mspace style="margin-right:0.2778em;"} ]{.base}\[\[]{.strut style="height:1em;vertical-align:-0.25em;"} [l]{.mord.mathnormal style="margin-right:0.0197em;"}[n]{.mord.mathnormal}[\[]{.mopen}[P]{.mord.mathnormal style="margin-right:0.1389em;"}[(]{.mopen}[a]{.mord.mathnormal}[)]{.mclose}[/]{.mord}[P]{.mord.mathnormal style="margin-right:0.1389em;"}[(]{.mopen}[b]{.mord.mathnormal}[)] ]{.mclose}]{.base}]{.katex-html ariaHidden="true"}]{.katex} Negative values indicate greater model support for the substitution. We prioritize candidates at buried, ligand-contacting positions, then predict and minimize their structures to filter any buried polar residues introduced without suitable hydrogen bond interactions.
+Candidate substitutions are ranked by ΔNLL, which compares how much the model favors the proposed amino acid over the original one. $\Delta NLL = \ln[P(a) / P(b)]$. Negative values indicate greater model support for the substitution. We prioritize candidates at buried, ligand-contacting positions, then predict and minimize their structures to filter any buried polar residues introduced without suitable hydrogen bond interactions.
 
-The following designs are selected for testing in cycle6.
+The following designs are selected for testing in cycle 6.
 
 ::content-components-captioned-table
 ---
@@ -596,7 +592,7 @@ caption: Table 2 | **Selected candidates for precursor binder affinity design.**
 
 The measurement of the melting temperature of optimized CGTase was unsuccessful; thus, no conclusion can be drawn about the effectiveness of the design.
 
-Affinity measurements for optimized precursor binders are currently unavailable. We are still carrying out the experiments in cycle6; the results and analysis will be updated in the presentation video.
+Affinity measurements for optimized precursor binders are currently unavailable. We are still carrying out the experiments in cycle 6; the results and analysis will be updated in the presentation video.
 
 ## Overall Discussion
 

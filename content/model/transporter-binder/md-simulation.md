@@ -7,9 +7,9 @@ order: 3
 
 ::content-components-collapsible-paragraph{title="Summary" id="summary" preview=true}
 
-While a co-folded model provides a useful static representation of the *PepT<sub>Sh</sub>*–binder interaction, it does not capture the dynamic stability of the complex in a membrane environment. We therefore embedded the selected complexes in POPG bilayers using *CHARMM-GUI* Membrane Builder and performed molecular dynamics simulations with *GROMACS*. :fn-ref{#15}  :fn-ref{#21}
+While a co-folded model provides a useful static representation of the *PepT<sub>Sh</sub>*–binder interaction, it does not capture the dynamic stability of the complex in a membrane environment. We therefore embedded the selected complexes in POPG bilayers using *CHARMM-GUI* Membrane Builder and performed molecular dynamics simulations with *GROMACS* :fn-ref{#15} :fn-ref{#21}.
 
-Each system underwent energy minimization and restrained equilibration before the production simulation. We then monitored the Cα RMSD of the membrane transporter, binder, and complete transporter–binder complex, and estimated binding free energy using *gmx_MMPBSA*. :fn-ref{#16} These metrics were used to compare the candidates and determine whether they retained their predicted binding configurations over time.
+Each system underwent energy minimization and restrained equilibration before the production simulation. We then monitored the Cα RMSD of the membrane transporter, binder, and complete transporter–binder complex, and estimated binding free energy using *gmx_MMPBSA* :fn-ref{#16}. These metrics were used to compare the candidates and determine whether they retained their predicted binding configurations over time.
 
 ::
 
@@ -21,7 +21,7 @@ The selected PepT<sub>Sh</sub>–binder complexes were prepared for membrane mol
 
 The transporter–binder complexes were oriented by aligning the principal molecular axis with the membrane normal and were embedded in a symmetric POPG lipid bilayer. The membrane system was constructed with an XY dimension of approximately 90 Å, solvated, neutralized, and supplemented with 0.15 M NaCl.
 
-Protonation states were assigned for a system pH of 6.0. Glu33 and Glu418 in the transporter were protonated as GLUP, while the remaining residues were retained in their standard protonation states according to the IF protonation state :fn-ref{#5}. 
+Protonation states were assigned for a system pH of 6.0. Glu33 and Glu418 in the transporter were protonated as GLUP, while the remaining residues were retained in their standard protonation states according to the IF protonation state :fn-ref{#5}.
 
 The complete CHARMM-GUI-Auto configuration used for system preparation is provided below.
 
@@ -115,7 +115,7 @@ The membrane transporter and binder were defined as separate receptor and ligand
 
 ### Binder Selection
 
-Candidates were selected for subsequent wet-lab validation if their binder Cα RMSD remained stable over the 100-ns MD simulation after membrane-protein fitting and their calculated binding free energies were below −15 kcal/mol. 
+Candidates were selected for subsequent wet-lab validation if their binder Cα RMSD remained stable over the 100-ns MD simulation after membrane-protein fitting and their calculated binding free energies were below −15 kcal/mol.
 
 ## Script
 

@@ -7,15 +7,15 @@ order: 2
 
 ::content-components-collapsible-paragraph{title="Summary" id="summary" preview=true}
 
-Starting from the three-dimensional structure of Cys-Gly-3M3SH, *RFdiffusion3* :fn-ref{#8}(RFD3) used atom-based diffusion to generate candidate protein backbones around the ligand. Each generated structure specifies a three-dimensional backbone conformation and a potential binding pocket but does not specify the final amino acid sequence.
+Starting from the three-dimensional structure of Cys-Gly-3M3SH, *RFdiffusion3* :fn-ref{#8} (RFD3) used atom-based diffusion to generate candidate protein backbones around the ligand. Each generated structure specifies a three-dimensional backbone conformation and a potential binding pocket but does not specify the final amino acid sequence.
 
-*LigandMPNN* :fn-ref{#9} subsequently designed sequences for each backbone  using the local chemical environment (protein Cα atoms and ligand) as context. We then used *RoseTTAFold3* (RF3) to refold every sequence with Cys-Gly-3M3SH and assess whether the intended complex structure is confidently recovered. Confidence and protein–ligand interface metrics from these predictions were used to rank the candidates.
+*LigandMPNN* :fn-ref{#9} subsequently designed sequences for each backbone using the local chemical environment (protein Cα atoms and ligand) as context. We then used *RoseTTAFold3* (RF3) to refold every sequence with Cys-Gly-3M3SH and assess whether the intended complex structure was confidently recovered. Confidence and protein–ligand interface metrics from these predictions were used to rank the candidates.
 
 ::
 
 ## Generation
 
-Small-molecule-binding proteins targeting Cys-Gly-3M3SH were designed using the *Rosetta Foundry* workflow. 
+Small-molecule-binding proteins targeting Cys-Gly-3M3SH were designed using the *Rosetta Foundry* workflow.
 
 ::content-components-code-group
 ---
@@ -49,7 +49,7 @@ Candidate backbones were generated using the atom-based diffusion model RFD3 wit
 
 The designed sequences were subsequently co-folded with the target ligand using RoseTTAFold3 :fn-ref{#10}.
 
-To prioritize candidates with both favorable predicted binding performance and the correct ligand stereoisomer, we ranked the designs using the **ranking score** reported by RF3. Only predictions containing the required (S)-Cys-Gly-3M3SH stereoisomer and configuration were retained.  From this filtered set, the 40 designs with Cα RMSD to the backbone < 2 Å and highest RF3 ranking score were selected for subsequent analysis.
+To prioritize candidates with both favorable predicted binding performance and the correct ligand stereoisomer, we ranked the designs using the **ranking score** reported by RF3. Only predictions containing the required (S)-Cys-Gly-3M3SH stereoisomer and configuration were retained. From this filtered set, the 40 designs with Cα RMSD to the backbone < 2 Å and highest RF3 ranking score were selected for subsequent analysis.
 
 ### Parameter
 
@@ -185,7 +185,7 @@ if __name__ == "__main__":
 
 ### Batch RF3 Input Preparation
 
-This script collects the sequences from LigandMPNN and prepares input files for RF3
+This script collects the sequences from LigandMPNN and prepares input files for RF3.
 
 ::content-components-code-group
 ---
@@ -309,7 +309,7 @@ if __name__ == "__main__":
 
 ### Rank and Extract Top Candidates
 
-This script [checks chirality of C1 atom](/model/precursor-binder/characterize#stereochemical-constraint), extracts confidence outputs and ranks structures. The top 40 structures with the highest RF3 ranking scores are extracted. Their parameters are saved to a CSV file.
+This script [checks the chirality of the C1 atom](/model/precursor-binder/characterize#stereochemical-constraint), extracts confidence outputs and ranks structures. The top 40 structures with the highest RF3 ranking scores are extracted. Their parameters are saved to a CSV file.
 
 ::content-components-code-group
 ---

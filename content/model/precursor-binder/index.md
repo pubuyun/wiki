@@ -11,7 +11,7 @@ Binder proteins can sequester Cys-Gly-3M3SH before uptake. After an interview wi
 ---
 alt:
   - RFdiffusion3 and Proteina-Complexa routes converge on chirality filtering,
-    ranking, molecular dynamics, and selection for in-vitro testing.
+    ranking, molecular dynamics, and selection for in vitro testing.
 src:
   - https://static.igem.wiki/teams/6133/wiki/drylab/model/precursor-binder-fig1.avif
 caption: Fig. 1 | Schematic of Cys-Gly-3M3SH binder design workflow.
