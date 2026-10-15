@@ -1,11 +1,8 @@
 <script setup lang="ts">
 import { gsap } from "gsap";
 import { paintedFrame } from "~/utils/home-painted-wave";
-import {
-    isHomeScrollRestoring,
-    readHomeScroll,
-    HOME_SCROLL_RESTORE_END,
-} from "~/utils/home-scroll";
+import { isHomeScrollRestoring, readHomeScroll } from "~/utils/home-scroll";
+import { HOME_SCROLL_RESTORE_END } from "~/utils/home-scroll-events";
 
 const props = withDefaults(
     defineProps<{

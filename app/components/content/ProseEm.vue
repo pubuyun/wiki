@@ -67,20 +67,29 @@ import {
     TooltipRoot,
     TooltipTrigger,
 } from "reka-ui";
-
-type GlossaryTerm = {
-    term: string | string[];
-    detail: string;
-    link?: string;
-};
+import { glossaryIndex } from "~/data/glossary";
+import { createGlossaryIndex, normalizeGlossaryTerm } from "~/utils/glossary";
 
 const slots = useSlots();
 const tooltipOpen = ref(false);
 const triggerEl = ref<HTMLElement | null>(null);
 const contentEl = ref<HTMLElement | null>(null);
 
-const { data: glossaryTerms } = await useAsyncData("glossary-terms", () =>
-    queryCollection("glossary").all(),
+// Studio sets import.meta.preview; retain live database queries while editing.
+const glossaryTerms =
+    import.meta.dev || import.meta.preview
+        ? (
+              await useAsyncData("glossary-terms", () =>
+                  queryCollection("glossary")
+                      .select("term", "detail", "link")
+                      .all(),
+              )
+          ).data
+        : null;
+const termIndex = computed(() =>
+    glossaryTerms
+        ? createGlossaryIndex(glossaryTerms.value ?? [])
+        : glossaryIndex,
 );
 
 function textFromNodes(nodes: VNode[]): string {
@@ -110,27 +119,8 @@ function textFromNodes(nodes: VNode[]): string {
 const slotText = computed(() => textFromNodes(slots.default?.() ?? []).trim());
 
 const matchedTerm = computed(() => {
-    const normalizedSlotText = normalizeTerm(slotText.value);
-
-    if (!normalizedSlotText) {
-        return null;
-    }
-
-    return (
-        ((glossaryTerms.value ?? []) as GlossaryTerm[]).find((item) =>
-            (Array.isArray(item.term) ? item.term : [item.term]).some(
-                (term) => normalizeTerm(term) === normalizedSlotText,
-            ),
-        ) ?? null
-    );
+    return termIndex.value.get(normalizeGlossaryTerm(slotText.value)) ?? null;
 });
-
-function normalizeTerm(term: string): string {
-    return term
-        .replace(/<\/?sub>/gi, "")
-        .trim()
-        .toLocaleLowerCase();
-}
 
 function isTouchTooltipInteraction() {
     if (typeof window === "undefined") return false;

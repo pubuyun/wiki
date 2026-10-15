@@ -6,7 +6,7 @@ import { siteNavGroups } from "~/utils/site-navigation";
 import {
     HOME_SCROLL_LOCK_CHANGE,
     type HomeScrollLockChange,
-} from "~/utils/home-scroll";
+} from "~/utils/home-scroll-events";
 
 const navHidden = useState<boolean>("navigation-bar-hidden", () => false);
 const lastScrollY = ref(0);

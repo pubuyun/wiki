@@ -3,7 +3,7 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { onMounted, onUnmounted, ref } from "vue";
 
-import { HOME_SCROLL_REFRESH_END } from "~/utils/home-scroll";
+import { HOME_SCROLL_REFRESH_END } from "~/utils/home-scroll-events";
 import {
     HOME_CHAPTERS,
     homeChapterActivationLabel,

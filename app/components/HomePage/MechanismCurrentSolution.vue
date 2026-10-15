@@ -12,9 +12,9 @@ import {
     HOME_SCROLL_REFRESH_END,
     HOME_SCROLL_REFRESH_START,
     HOME_SCROLL_RESTORE_END,
-    isHomeScrollRestoring,
     type HomeScrollLockChange,
-} from "~/utils/home-scroll";
+} from "~/utils/home-scroll-events";
+import { isHomeScrollRestoring } from "~/utils/home-scroll";
 
 import CurrentSolution from "./CurrentSolution.vue";
 import Mechanism from "./Mechanism.vue";

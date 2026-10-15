@@ -25,6 +25,7 @@
                 class="min-h-72 flex-1"
                 :option="option"
                 :theme="chartTheme"
+                :init-options="{ renderer: 'canvas' }"
                 autoresize
             />
             <details class="mt-4 rounded-lg border border-outline p-3">
@@ -101,6 +102,10 @@
 </template>
 
 <script setup lang="ts">
+import "~/utils/echarts/base";
+import "~/utils/echarts/line";
+import "~/utils/echarts/zoom";
+import "~/utils/echarts/canvas";
 import type { EChartsOption } from "echarts";
 import { parseXvg } from "~/utils/xvg";
 

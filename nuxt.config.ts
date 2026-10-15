@@ -3,6 +3,7 @@ import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import tailwindcss from "@tailwindcss/vite";
 import { contentGraphLayouts } from "./app/utils/content-graph-layout";
+import { markdownDocumentsPlugin } from "./app/utils/build/markdown-documents";
 
 const isDevServer = process.env.NODE_ENV === "development";
 const contentGraphDirectory = fileURLToPath(
@@ -72,6 +73,7 @@ export default defineNuxtConfig({
         },
         plugins: [
             tailwindcss(),
+            markdownDocumentsPlugin(),
             {
                 name: "katex-fonts",
                 enforce: "pre",
@@ -115,17 +117,10 @@ export default defineNuxtConfig({
         ],
     },
     echarts: {
-        renderer: ["svg", "canvas"],
-        charts: ["LineChart", "BarChart", "HeatmapChart", "CustomChart"],
-        components: [
-            "TitleComponent",
-            "TooltipComponent",
-            "GridComponent",
-            "LegendComponent",
-            "VisualMapComponent",
-            "AriaComponent",
-            "DataZoomComponent",
-        ],
+        // Keep the VChart component, with features registered by each consumer.
+        renderer: [],
+        charts: [],
+        components: [],
     },
     studio: {
         repository: {

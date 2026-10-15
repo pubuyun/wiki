@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import "#build/echarts.mjs";
-import * as echarts from "echarts/core";
+import { graphic } from "echarts/core";
 import type { EChartsOption } from "echarts";
 import VChart from "vue-echarts";
 import { parseEchartsOption } from "~/utils/echarts-option";
+import { loadEchartsFeatures } from "~/utils/echarts-features";
 
 const props = withDefaults(
     defineProps<{
@@ -24,7 +24,7 @@ const renderError = ref("");
 const chartTheme = useWikiChartTheme();
 const parsed = computed(() => {
     try {
-        const option = parseEchartsOption(props.option, echarts);
+        const option = parseEchartsOption(props.option, { graphic });
         return {
             option: {
                 ...option,
@@ -52,9 +52,36 @@ const parsed = computed(() => {
     }
 });
 
-watch(parsed, () => {
-    renderError.value = "";
-});
+const readyOption = shallowRef<EChartsOption | null>(null);
+const chartRenderer = ref(props.renderer);
+let loadGeneration = 0;
+
+watch(
+    [() => parsed.value.option, () => props.renderer],
+    async ([option, renderer]) => {
+        const generation = ++loadGeneration;
+        renderError.value = "";
+        if (!option) {
+            readyOption.value = null;
+            return;
+        }
+
+        try {
+            await loadEchartsFeatures(option, renderer);
+            if (generation !== loadGeneration) return;
+            chartRenderer.value = renderer;
+            readyOption.value = option;
+        } catch (error) {
+            if (generation !== loadGeneration) return;
+            renderError.value =
+                error instanceof Error
+                    ? error.message
+                    : "Unable to load chart.";
+        }
+    },
+    { immediate: true },
+);
+onBeforeUnmount(() => loadGeneration++);
 onErrorCaptured((error) => {
     renderError.value = error.message;
     return false;
@@ -72,13 +99,22 @@ const chartHeight = computed(() =>
         Unable to render chart: {{ parsed.error || renderError }}
     </p>
     <VChart
-        v-else-if="parsed.option"
+        v-else-if="readyOption"
+        :key="chartRenderer"
         :theme="chartTheme"
-        :option="parsed.option"
-        :init-options="{ renderer }"
+        :option="readyOption"
+        :init-options="{ renderer: chartRenderer }"
         :update-options="{ notMerge: true }"
         :style="{ height: chartHeight, width: '100%' }"
         :aria-label="label"
         autoresize
     />
+    <p
+        v-else
+        role="status"
+        class="flex items-center justify-center"
+        :style="{ height: chartHeight }"
+    >
+        Loading chart...
+    </p>
 </template>

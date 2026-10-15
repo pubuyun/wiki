@@ -32,7 +32,7 @@
             ref="scrollElement"
             :tabindex="isScrollable ? 0 : undefined"
             class="prose-scroll-region m-0 overflow-x-auto p-4 text-sm leading-6"
-        ><slot /></pre>
+            >{{ props.code }}</pre>
     </div>
     <pre
         v-else

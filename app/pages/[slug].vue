@@ -25,7 +25,7 @@ const graphView = computed(() => {
     return contentGraphViews.has(candidate) ? candidate : null;
 });
 
-const { data: allPages } = await useContentNavigationData();
+const { data: allPages } = await useContentNavigationData(slug);
 
 const pages = computed(() => allPages.value ?? []);
 const children = computed(() => categoryPages(pages.value, slug.value));
@@ -67,7 +67,7 @@ function navDescription(path?: string) {
 
 function navIcon(path?: string) {
     const contentPage = children.value.find((item) => item.path === path);
-    const icon = contentPage?.meta?.icon ?? contentPage?.icon;
+    const icon = contentPage?.icon;
 
     return typeof icon === "string" && icon.trim()
         ? icon.trim()

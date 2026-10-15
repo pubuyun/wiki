@@ -35,6 +35,7 @@
                         class="h-full w-full"
                         :option="chartOption"
                         :theme="chartTheme"
+                        :init-options="{ renderer: 'canvas' }"
                         autoresize
                     />
                 </div>
@@ -115,6 +116,11 @@
 </template>
 
 <script setup lang="ts">
+import "~/utils/echarts/base";
+import "~/utils/echarts/heatmap";
+import "~/utils/echarts/custom";
+import "~/utils/echarts/visual-map";
+import "~/utils/echarts/canvas";
 const chartTheme = useWikiChartTheme();
 import type { CustomSeriesRenderItem, EChartsOption } from "echarts";
 

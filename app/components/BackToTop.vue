@@ -69,34 +69,21 @@
 
 <script setup>
 import { ref, onMounted, onUnmounted } from "vue";
-import { gsap } from "gsap";
 
 const visible = ref(false);
-const scrollPosition = { y: 0 };
-let scrollTween;
 
 function onScroll() {
     visible.value = window.scrollY > 200;
 }
 
 function scrollToTop() {
-    scrollTween?.kill();
-
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-        window.scrollTo(0, 0);
-        return;
-    }
-
-    scrollPosition.y = window.scrollY;
-    scrollTween = gsap.to(scrollPosition, {
-        y: 0,
-        duration: 0.3,
-        ease: "power2.out",
-        overwrite: true,
-        onUpdate: () => window.scrollTo(0, scrollPosition.y),
-        onComplete: () => {
-            scrollTween = undefined;
-        },
+    const reduceMotion = window.matchMedia(
+        "(prefers-reduced-motion: reduce)",
+    ).matches;
+    window.scrollTo({
+        top: 0,
+        left: window.scrollX,
+        behavior: reduceMotion ? "instant" : "smooth",
     });
 }
 
@@ -106,7 +93,6 @@ onMounted(() => {
 });
 
 onUnmounted(() => {
-    scrollTween?.kill();
     window.removeEventListener("scroll", onScroll);
 });
 </script>

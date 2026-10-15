@@ -12,9 +12,9 @@ import {
     HOME_SCROLL_REFRESH_END,
     HOME_SCROLL_REFRESH_START,
     HOME_SCROLL_RESTORE_END,
-    isHomeScrollRestoring,
     type HomeScrollLockChange,
-} from "~/utils/home-scroll";
+} from "~/utils/home-scroll-events";
+import { isHomeScrollRestoring } from "~/utils/home-scroll";
 import { HOME_SCROLL_CONTROLLER } from "~/utils/home-scroll-controller";
 
 import MoreAboutUs from "./MoreAboutUs.vue";
@@ -729,7 +729,10 @@ function buildSequence() {
                     // The footer has returned to document flow, so counter its
                     // movement until the user intentionally leaves this scene.
                     pinHomeFooterWaveToViewport();
-                    if (self.direction < 0 && self.scroll() <= reverseBoundary) {
+                    if (
+                        self.direction < 0 &&
+                        self.scroll() <= reverseBoundary
+                    ) {
                         startAutomaticTransition("solution");
                     }
                     return;

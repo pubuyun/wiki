@@ -3,6 +3,7 @@ import { parseMarkdown } from "@nuxtjs/mdc/runtime";
 import { slug } from "github-slugger";
 import { fromHast } from "minimark/hast";
 import { transformReferenceTree } from "./content-references";
+import { optimizeCodeTree } from "./content-code";
 
 export function transformReferenceMarkdown(markdown: string) {
     let headingReferenceIndex = 0;
@@ -83,6 +84,8 @@ export default defineTransformer({
         );
 
         const references = transformReferenceTree(parsed.body);
+        optimizeCodeTree(parsed.body);
+        if (parsed.excerpt) optimizeCodeTree(parsed.excerpt);
 
         if (options.compress) {
             return {

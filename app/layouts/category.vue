@@ -7,7 +7,7 @@ const categoryPath = computed(() => `/${category.value}`);
 const activePath = categoryPath;
 
 const { data: contentPage } = await useContentPageData(categoryPath);
-const { data: allPages } = await useContentNavigationData();
+const { data: allPages } = await useContentNavigationData(category);
 
 const pages = computed(() => allPages.value ?? []);
 const children = computed(() => categoryPages(pages.value, category.value));

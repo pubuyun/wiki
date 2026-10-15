@@ -9,7 +9,7 @@ import TransporterAnim from "./Mechanism/TransporterAnim.vue";
 import {
     HOME_SCROLL_REFRESH_END,
     HOME_SCROLL_REFRESH_START,
-} from "~/utils/home-scroll";
+} from "~/utils/home-scroll-events";
 import {
     HOME_CHAPTERS,
     homeChapterActivationLabel,

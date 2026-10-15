@@ -7,13 +7,15 @@ import { nextTick, onBeforeUnmount, onMounted, provide, ref, watch } from "vue";
 
 import {
     captureHomeScroll,
+    restoreHomeScroll,
+    type HomeScrollSnapshot,
+} from "~/utils/home-scroll";
+import {
     HOME_SCROLL_LOCK_CHANGE,
     HOME_SCROLL_REFRESH_END,
     HOME_SCROLL_REFRESH_START,
-    restoreHomeScroll,
     type HomeScrollLockChange,
-    type HomeScrollSnapshot,
-} from "~/utils/home-scroll";
+} from "~/utils/home-scroll-events";
 import { HOME_SCROLL_CONTROLLER } from "~/utils/home-scroll-controller";
 
 gsap.registerPlugin(ScrollTrigger);

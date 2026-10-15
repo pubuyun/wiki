@@ -252,7 +252,7 @@
 
 <script setup lang="ts">
 import { Icon } from "@iconify/vue";
-import { parseMarkdown } from "@nuxtjs/mdc/runtime";
+import type { MarkdownDocument } from "~/types/markdown-document";
 import modelData from "~/data/inlcusivity/models.json";
 import {
     SplitterGroup,
@@ -284,17 +284,12 @@ type InclusivityModel = {
     modelUrl: string;
 };
 
-type ParsedMarkdownDocument = Awaited<ReturnType<typeof parseMarkdown>> & {
-    id: string;
-    title?: string;
-};
-
-const markdownModules = import.meta.glob<string>(
+const markdownModules = import.meta.glob<MarkdownDocument>(
     ["../../../data/inlcusivity/*.md", "../../../data/inclusivity/*.md"],
     {
         eager: true,
         import: "default",
-        query: "?raw",
+        query: "?compiled-markdown",
     },
 );
 
@@ -323,7 +318,9 @@ const modelViewerMeshoptDecoderLocation =
 
 const models = buildModels();
 const firstModel = models[0];
-const markdownDocuments = await buildMarkdownDocuments();
+const markdownDocuments = Object.fromEntries(
+    Object.values(markdownModules).map((document) => [document.id, document]),
+);
 
 const selectedModel = computed(() => {
     const modelId = catchallSegments().at(0);
@@ -357,37 +354,6 @@ function buildModels() {
 
     return [...modelMap.values()].sort((a, b) =>
         a.title.localeCompare(b.title),
-    );
-}
-
-async function buildMarkdownDocuments() {
-    const documents: Record<string, ParsedMarkdownDocument> = {};
-
-    await Promise.all(
-        Object.entries(markdownModules).map(async ([path, markdown]) => {
-            const id = fileStem(path);
-            const parsed = await parseMarkdown(markdown);
-            documents[id] = {
-                ...parsed,
-                body: {
-                    ...parsed.body,
-                    toc: parsed.toc,
-                },
-                id,
-                title: parsed.data?.title || titleizeSlug(id),
-            };
-        }),
-    );
-
-    return documents;
-}
-
-function fileStem(path: string) {
-    return (
-        path
-            .split("/")
-            .pop()
-            ?.replace(/\.[^.]+$/i, "") ?? path
     );
 }
 

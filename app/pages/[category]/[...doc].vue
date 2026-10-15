@@ -8,10 +8,10 @@ definePageMeta({
 
 const route = useRoute();
 const runtimeConfig = useRuntimeConfig();
-const category = computed(() => String(route.params.category ?? ""));
 // This page is keyed by the route. Keep the outgoing document intact while
 // Nuxt prepares the next page inside Suspense.
 const activePath = ref(normalizeContentPath(route.path));
+const category = computed(() => activePath.value.split("/")[1] ?? "");
 
 const { data: page } = await useContentPageData(activePath);
 const tocLinks = computed(() => contentTocLinks(page.value?.body));
@@ -24,7 +24,7 @@ const graphView = computed(() => {
     return contentGraphViews.has(candidate) ? candidate : null;
 });
 
-const { data: allPages } = await useContentNavigationData();
+const { data: allPages } = await useContentNavigationData(category);
 
 const pages = computed(() => allPages.value ?? []);
 const children = computed(() => categoryPages(pages.value, category.value));

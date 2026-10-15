@@ -7,7 +7,7 @@ import {
     HOME_CHAPTERS,
     homeChapterActivationLabel,
 } from "~/utils/home-chapters";
-import { HOME_SCROLL_REFRESH_END } from "~/utils/home-scroll";
+import { HOME_SCROLL_REFRESH_END } from "~/utils/home-scroll-events";
 
 import TransporterAnim from "./Mechanism/TransporterAnim.vue";
 import BinderAnim from "./Solution/BinderAnim.vue";
