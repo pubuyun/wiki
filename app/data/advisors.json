@@ -36,9 +36,18 @@
         "photoPosition": "50% 50%"
     },
     {
+        "id": "lucas",
+        "name": "Lucas",
+        "introduction": "Hi! I’m Lucas~ I’m excited to be back as an advisor and to support the team on its journey!\n\nFavorite saying: “All the surprises and good luck in the world are the accumulation of your character and kindness.”",
+        "photoUrl": "https://static.igem.wiki/teams/6133/wiki/teamphoto/advisor-lucas.avif",
+        "photoWidth": 1200,
+        "photoHeight": 900,
+        "photoPosition": "50% 50%"
+    },
+    {
         "id": "jeremy",
         "name": "Jeremy",
-        "introduction": "Hi, here is Jeremy, an 18-year-old male Homo sapiens sapiens, Animalia, Chordata, Vertebrata, Mammalia, Theria, Primates, Haplorhini, Simiiformes, Hominoidea, Hominidae, Homininae, Hominini, Homo. As an igemer of GB25, I'm glab to back this year as a advisor. All the best for GreatBay-SCIE 2026!!!",
+        "introduction": "Hi, here is Jeremy, an 18-year-old male Homo sapiens sapiens, Animalia, Chordata, Vertebrata, Mammalia, Theria, Primates, Haplorhini, Simiiformes, Hominoidea, Hominidae, Homininae, Hominini, Homo. As an igemer of GB25, I'm glad to back this year as a advisor. All the best for GreatBay-SCIE 2026!!!",
         "photoUrl": "https://static.igem.wiki/teams/6133/wiki/teamphoto/advisor-jeremy.avif",
         "photoWidth": 1200,
         "photoHeight": 900,
@@ -60,15 +69,6 @@
         "photoUrl": "https://static.igem.wiki/teams/6133/wiki/teamphoto/advisor-murphy.avif",
         "photoWidth": 432,
         "photoHeight": 324,
-        "photoPosition": "50% 50%"
-    },
-    {
-        "id": "lucas",
-        "name": "Lucas",
-        "introduction": "Hi! I’m Lucas~ I’m excited to be back as an advisor and to support the team on its journey!\n\nFavorite saying: “All the surprises and good luck in the world are the accumulation of your character and kindness.”",
-        "photoUrl": "https://static.igem.wiki/teams/6133/wiki/teamphoto/advisor-lucas.avif",
-        "photoWidth": 1200,
-        "photoHeight": 900,
         "photoPosition": "50% 50%"
     },
     {

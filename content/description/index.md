@@ -3,8 +3,8 @@ title: Description
 banner: https://static.igem.wiki/teams/6133/wiki/general/banners/description.avif
 bannerPosition: 45% 45%
 description: this is the description page
-bannerWidth: 3800
-bannerHeight: 1792
+bannerWidth: 2053
+bannerHeight: 1232
 bannerMobilePosition: 65% 40%
 ---
 

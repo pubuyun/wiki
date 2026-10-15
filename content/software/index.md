@@ -9,8 +9,8 @@ hasReference: false
 order: 0
 banner: https://static.igem.wiki/teams/6133/wiki/general/banners/software.avif
 bannerPosition: 100% 15%
-bannerWidth: 2172
-bannerHeight: 724
+bannerWidth: 1983
+bannerHeight: 793
 bannerMobilePosition: 100% 30%
 bannerFit: raised
 bannerBackground: "#063568"

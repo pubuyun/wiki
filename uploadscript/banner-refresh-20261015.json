@@ -1,0 +1,199 @@
+{
+    "source": "https://bcnm82co7gq9.feishu.cn/wiki/GvN2wZm8GiOZ7lki3d8cgyQbnTe",
+    "selection": "First image under each category heading",
+    "team": 6133,
+    "folder": "general/banners",
+    "overwrite": true,
+    "files": [
+        {
+            "heading": "Attribution",
+            "category": "attributions",
+            "file": "assets/Wiki Banner/2026-10-15/attribution.png",
+            "width": 3200,
+            "height": 1635,
+            "uploadBytes": 4857923,
+            "url": "https://static.igem.wiki/teams/6133/wiki/general/banners/attribution.avif",
+            "storedBytes": 274929,
+            "lastModified": "2026-10-15T11:48:05.000Z"
+        },
+        {
+            "heading": "Description",
+            "category": "description",
+            "file": "assets/Wiki Banner/2026-10-15/description.png",
+            "width": 2053,
+            "height": 1232,
+            "uploadBytes": 1975679,
+            "url": "https://static.igem.wiki/teams/6133/wiki/general/banners/description.avif",
+            "storedBytes": 171993,
+            "lastModified": "2026-10-15T11:48:13.000Z"
+        },
+        {
+            "heading": "Contribution",
+            "category": "contribution",
+            "file": "assets/Wiki Banner/2026-10-15/contribution.png",
+            "width": 2053,
+            "height": 1232,
+            "uploadBytes": 564139,
+            "url": "https://static.igem.wiki/teams/6133/wiki/general/banners/contribution.avif",
+            "storedBytes": 48178,
+            "lastModified": "2026-10-15T11:48:18.000Z"
+        },
+        {
+            "heading": "Engineering",
+            "category": "engineering",
+            "file": "assets/Wiki Banner/2026-10-15/engineering.png",
+            "width": 2053,
+            "height": 1232,
+            "uploadBytes": 3351156,
+            "url": "https://static.igem.wiki/teams/6133/wiki/general/banners/engineering.avif",
+            "storedBytes": 360889,
+            "lastModified": "2026-10-15T11:48:24.000Z"
+        },
+        {
+            "heading": "Parts",
+            "category": "parts",
+            "file": "assets/Wiki Banner/2026-10-15/parts.png",
+            "width": 1335,
+            "height": 801,
+            "uploadBytes": 119693,
+            "url": "https://static.igem.wiki/teams/6133/wiki/general/banners/parts.avif",
+            "storedBytes": 19209,
+            "lastModified": "2026-10-15T11:48:27.000Z"
+        },
+        {
+            "heading": "Protocols",
+            "category": "protocols",
+            "file": "assets/Wiki Banner/2026-10-15/protocols.png",
+            "width": 1097,
+            "height": 658,
+            "uploadBytes": 1009448,
+            "url": "https://static.igem.wiki/teams/6133/wiki/general/banners/protocols.avif",
+            "storedBytes": 111397,
+            "lastModified": "2026-10-15T11:48:30.000Z"
+        },
+        {
+            "heading": "Measurements",
+            "category": "measurement",
+            "file": "assets/Wiki Banner/2026-10-15/measurements.png",
+            "width": 1834,
+            "height": 1100,
+            "uploadBytes": 2265015,
+            "url": "https://static.igem.wiki/teams/6133/wiki/general/banners/measurements.avif",
+            "storedBytes": 301186,
+            "lastModified": "2026-10-15T11:48:35.000Z"
+        },
+        {
+            "heading": "Notebook",
+            "category": "notebook",
+            "file": "assets/Wiki Banner/2026-10-15/notebook.png",
+            "width": 2052,
+            "height": 1232,
+            "uploadBytes": 3370242,
+            "url": "https://static.igem.wiki/teams/6133/wiki/general/banners/notebook.avif",
+            "storedBytes": 306581,
+            "lastModified": "2026-10-15T11:48:44.000Z"
+        },
+        {
+            "heading": "Safety",
+            "category": "safety-and-security",
+            "file": "assets/Wiki Banner/2026-10-15/safety.png",
+            "width": 2077,
+            "height": 1218,
+            "uploadBytes": 3304934,
+            "url": "https://static.igem.wiki/teams/6133/wiki/general/banners/safety.avif",
+            "storedBytes": 150549,
+            "lastModified": "2026-10-15T11:48:51.000Z"
+        },
+        {
+            "heading": "Model",
+            "category": "model",
+            "file": "assets/Wiki Banner/2026-10-15/model.png",
+            "width": 3600,
+            "height": 1600,
+            "uploadBytes": 4807264,
+            "url": "https://static.igem.wiki/teams/6133/wiki/general/banners/model.avif",
+            "storedBytes": 263531,
+            "lastModified": "2026-10-15T11:49:01.000Z"
+        },
+        {
+            "heading": "Software",
+            "category": "software",
+            "file": "assets/Wiki Banner/2026-10-15/software.png",
+            "width": 1983,
+            "height": 793,
+            "uploadBytes": 997390,
+            "url": "https://static.igem.wiki/teams/6133/wiki/general/banners/software.avif",
+            "storedBytes": 153273,
+            "lastModified": "2026-10-15T11:49:13.000Z"
+        },
+        {
+            "heading": "Hardware",
+            "category": "hardware",
+            "file": "assets/Wiki Banner/2026-10-15/hardware.png",
+            "width": 2122,
+            "height": 1191,
+            "uploadBytes": 2177802,
+            "url": "https://static.igem.wiki/teams/6133/wiki/general/banners/hardware.avif",
+            "storedBytes": 131612,
+            "lastModified": "2026-10-15T11:49:19.000Z"
+        },
+        {
+            "heading": "iHP",
+            "category": "human-practices",
+            "file": "assets/Wiki Banner/2026-10-15/ihp.png",
+            "width": 2052,
+            "height": 1231,
+            "uploadBytes": 3383166,
+            "url": "https://static.igem.wiki/teams/6133/wiki/general/banners/ihp.avif",
+            "storedBytes": 272130,
+            "lastModified": "2026-10-15T11:49:23.000Z"
+        },
+        {
+            "heading": "Education",
+            "category": "education",
+            "file": "assets/Wiki Banner/2026-10-15/education.png",
+            "width": 2053,
+            "height": 1232,
+            "uploadBytes": 2779012,
+            "url": "https://static.igem.wiki/teams/6133/wiki/general/banners/education.avif",
+            "storedBytes": 227858,
+            "lastModified": "2026-10-15T11:49:28.000Z"
+        },
+        {
+            "heading": "Inclusivity",
+            "category": "inclusivity",
+            "file": "assets/Wiki Banner/2026-10-15/inclusivity.png",
+            "width": 2053,
+            "height": 1232,
+            "uploadBytes": 2546932,
+            "url": "https://static.igem.wiki/teams/6133/wiki/general/banners/inclusivity.avif",
+            "storedBytes": 156934,
+            "lastModified": "2026-10-15T11:49:33.000Z"
+        },
+        {
+            "heading": "Entrepreneurship",
+            "category": "entrepreneurship",
+            "file": "assets/Wiki Banner/2026-10-15/entrepreneurship.png",
+            "width": 1707,
+            "height": 1024,
+            "uploadBytes": 1645937,
+            "url": "https://static.igem.wiki/teams/6133/wiki/general/banners/entrepreneurship.avif",
+            "storedBytes": 193943,
+            "lastModified": "2026-10-15T11:49:37.000Z"
+        },
+        {
+            "heading": "Sustainability",
+            "category": "sustainability",
+            "file": "assets/Wiki Banner/2026-10-15/sustainability.png",
+            "width": 1859,
+            "height": 1115,
+            "uploadBytes": 1474738,
+            "url": "https://static.igem.wiki/teams/6133/wiki/general/banners/sustainability.avif",
+            "storedBytes": 87339,
+            "lastModified": "2026-10-15T11:49:41.000Z"
+        }
+    ],
+    "unchangedCategories": [
+        "experiments"
+    ]
+}

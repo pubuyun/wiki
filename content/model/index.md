@@ -13,7 +13,7 @@ hasReference: false
 order: 1
 banner: https://static.igem.wiki/teams/6133/wiki/general/banners/model.avif
 bannerWidth: 3600
-bannerHeight: 1400
+bannerHeight: 1600
 bannerFit: raised
 bannerBackground: "#14274e"
 bannerPosition: 50% 10%

@@ -3,8 +3,8 @@ title: Contribution
 description:
 banner: https://static.igem.wiki/teams/6133/wiki/general/banners/contribution.avif
 bannerPosition: 65% 60%
-bannerWidth: 3508
-bannerHeight: 2480
+bannerWidth: 2053
+bannerHeight: 1232
 bannerMobilePosition: 65% 45%
 ---
 

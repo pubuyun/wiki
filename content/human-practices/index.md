@@ -3,8 +3,8 @@ title: iHP
 description:
 banner: https://static.igem.wiki/teams/6133/wiki/general/banners/ihp.avif
 bannerPosition: 50% 65%
-bannerWidth: 4896
-bannerHeight: 3672
+bannerWidth: 2052
+bannerHeight: 1231
 bannerMobilePosition: 55% 45%
 ---
 

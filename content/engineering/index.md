@@ -3,8 +3,8 @@ title: Engineering
 description:
 banner: https://static.igem.wiki/teams/6133/wiki/general/banners/engineering.avif
 bannerPosition: 50% 10%
-bannerWidth: 1920
-bannerHeight: 1080
+bannerWidth: 2053
+bannerHeight: 1232
 bannerMobilePosition: 50% 10%
 bannerFit: raised
 bannerBackground: "#090909"

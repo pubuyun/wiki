@@ -6,7 +6,7 @@ order: 1
 banner: https://static.igem.wiki/teams/6133/wiki/general/banners/entrepreneurship.avif
 bannerPosition: 50% 55%
 bannerWidth: 1707
-bannerHeight: 1280
+bannerHeight: 1024
 bannerMobilePosition: 50% 45%
 ---
 
