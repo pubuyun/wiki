@@ -39,7 +39,7 @@ src:
   - https://static.igem.wiki/teams/6133/wiki/drylab/model/cgtase-characterize-fig2.avif
 alt:
   - "Microbial transglutaminase is proposed to crosslink the precursor amino group with a glutamine-containing donor, releasing ammonia."
-caption: "Fig. 2 | Proposed crosslinking reaction of Cys-Gly-3M3SH and Cbz-Gln-Gly catalysed by MTGase;"
+caption: "Fig. 2 | **Proposed microbial transglutaminase-mediated conjugation of the precursor.** The reaction scheme represents coupling of the primary amino group of Cys-Gly-3M3SH to the glutamine side-chain amide of Cbz-Gln-Gly, with release of ammonia (NH₃). Blue highlighting marks the reacting groups and the resulting amide linkage. MTGase, microbial transglutaminase; Cbz, benzyloxycarbonyl protecting group."
 imageBackground: white
 ---
 
@@ -59,7 +59,7 @@ src:
   - https://static.igem.wiki/teams/6133/wiki/drylab/model/cgtase-characterize-fig3.avif
 alt:
   - "CGTase is proposed to glycosylate the hydroxyl group of Cys-Gly-3M3SH using a carbohydrate donor."
-caption: "Fig. 3 | Proposed glycosylation reaction of Cys-Gly-3M3SH catalysed by CGTase;"
+caption: "Fig. 3 | **Proposed O-glycosylation of Cys-Gly-3M3SH by cyclodextrin glucanotransferase (CGTase).** The reaction scheme represents transfer of a glycosyl group from a carbohydrate donor to the precursor hydroxyl oxygen, forming an O-glycosidic linkage."
 imageBackground: white
 ---
 

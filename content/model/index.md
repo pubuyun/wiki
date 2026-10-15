@@ -404,7 +404,7 @@ alt:
     group of Cys-Gly-3M3SH.
 src:
   - https://static.igem.wiki/teams/6133/wiki/drylab/model/overview-fig12.avif
-caption: Fig. 12 | Glycosylation Reaction of Cys-Gly-3M3SH, catalysed by CGTase.
+caption: "Fig. 12 | **Proposed O-glycosylation of Cys-Gly-3M3SH by cyclodextrin glucanotransferase (CGTase).** The reaction scheme depicts transfer of a glycosyl group from a carbohydrate donor to the precursor hydroxyl oxygen, forming an O-glycosidic linkage."
 imageBackground: white
 ---
 ::

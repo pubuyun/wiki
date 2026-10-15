@@ -23,7 +23,7 @@ src:
   - https://static.igem.wiki/teams/6133/wiki/drylab/model/cgtase-design-fig1.avif
 alt:
   - "T370 is shown beside the solvent-exposed carboxylate group of the bound precursor in the wild-type CGTase pocket."
-caption: "Fig. 1 | T370 and the carboxylate group of Cys-Gly-3M3SH"
+caption: "Fig. 1 | **Structural environment of the precursor carboxylate in wild-type CGTase.** The reference binding pose indicates that the carboxylate positions near T370 (magenta). The precursor is shown with cyan carbons within the grey enzyme cartoon; the carboxylate carbon is highlighted in green."
 imageBackground: white
 ---
 
@@ -41,7 +41,7 @@ src:
   - https://static.igem.wiki/teams/6133/wiki/drylab/model/cgtase-design-fig2.avif
 alt:
   - "The precursor hydrophobic tail lies between F183 and F259; the tail is highlighted in orange."
-caption: "Fig. 2 | Hydrophobic tail of Cys-Gly-3M3SH and the hydrophobic residues of CGTase."
+caption: "Fig. 2 | **Hydrophobic-tail environment in the CGTase precursor-binding pocket.** F183 and F259 (magenta) interact with the hydroxyalkyl tail of Cys-Gly-3M3SH (orange). The remaining precursor carbons are cyan, the enzyme backbone is a grey cartoon and the Asp229-linked glycosyl moiety has yellow carbons."
 imageBackground: white
 ---
 
