@@ -132,7 +132,7 @@ caption: Table 1 | The application of characterize stage in our project.
 
 ### Computational Approach
 
-Many conventional protein-discovery approaches use large physical libraries and repeated experimental screening. As a high-school team, we largely applied a deep-learning-guided protein design strategy, which explores large sequence-and-structure spaces computationally and significantly reduces the wet-lab effort needed to create successful binder designs.
+Many conventional protein engineering approaches use large physical libraries and repeated experimental screening. As a high-school team, we largely applied a deep-learning-guided protein design strategy, which explores large sequence-and-structure spaces computationally and significantly reduces the wet-lab effort needed to create successful binder designs.
 
 ### Decision-Gated Workflow
 
@@ -153,7 +153,7 @@ imageBackground: white
 ---
 ::
 
-In our project, a large number of designs are generated, enabling rapid exploration of binding structures. The following co-folding then assesses and filters the candidates. A smaller set of candidates subsequently proceeds to physics-based molecular dynamics simulation and finally experimental testing.
+In our project, a large number of designs are generated, enabling rapid exploration of potential binding structures. The designs are then co-folded with the target, with indicators of structure validity used to assess and filter the candidates. A smaller set of candidates subsequently proceeds to physics-based molecular dynamics simulation and finally experimental testing.
 
 ## Precursor Binder
 
@@ -214,7 +214,7 @@ Cys-Gly-(S)-3M3SH was identified as the odor-relevant stereoisomer and therefore
 
 ### Design
 
-Small-molecule-binding proteins targeting Cys-Gly-3M3SH were designed using the [*Rosetta Foundry*](/model/precursor-binder/design-rfdiffusion) and [Proteina-Complexa](/model/precursor-binder/design-proteina-complexa) separately. The full design pipeline includes backbone scaffold generation, sequence redesign and folding validation. RFdiffusion3 binders are ranked based on the ranking\_score outputted by *RF3*, while Proteina-Complexa binders are ranked based on a custom composite score. Then, a [molecular dynamics simulation](/model/precursor-binder/md-simulation) is performed on selected top binders from each pipeline to determine the set of candidates for *in vitro* testing.
+Small-molecule-binding proteins targeting Cys-Gly-3M3SH were designed using the *[Rosetta Foundry](/model/precursor-binder/design-rfdiffusion)* and [Proteina-Complexa](/model/precursor-binder/design-proteina-complexa) separately. The full design pipeline includes backbone scaffold generation, sequence redesign and folding validation. RFdiffusion3 binders are ranked based on the ranking\_score outputted by *RF3*, while Proteina-Complexa binders are ranked based on a custom composite score. Then, a [molecular dynamics simulation](/model/precursor-binder/md-simulation) is performed on selected top binders from each pipeline to determine the set of candidates for *in vitro* testing.
 
 22 binders (11 from each design tool) were planned for experimental testing in cycle1. Nine were successfully tested: 4 from RFdiffusion3 and 5 from Proteina-Complexa.
 
@@ -248,7 +248,7 @@ layout: stack
 
 For computational metrics, interface-related metrics in RFdiffusion3 branch showed agreement with the experimental results. In the Proteina-Complexa route, our custom composite score showed the strongest linear correlation with experimental results.
 
-MD provides complementary evidence, especially in RFdiffusion3 branch, where the three MD metrics all showed the expected trend. However, in Proteina-Complexa branch, inconsistency between Proteina-Complexa generation and RF3 evaluation may affect the predicted structures selected, causing ligand RMSD to partly reflect relaxation of the predicted pose and reducing its reliability. Incorporating another folding tool, such as AlphaFold, and carrying out more independent MD simulations on each binder would help verify this relationship.
+MD provides complementary evidence, especially in RFdiffusion3 branch, where the three MD metrics all showed the expected trend. However, in Proteina-Complexa branch, inconsistency between Proteina-Complexa generation and RF3 evaluation may affect the predicted structures selected, causing ligand RMSD to partly reflect relaxation of the predicted pose and reduce its reliability. Incorporating another folding tool, such as AlphaFold, and carrying out more independent MD simulations on each binder would help verify this relationship.
 
 Future work should emphasize testing more experimental candidates to verify the composite score and adjust the weights.
 
@@ -277,7 +277,7 @@ We aim to design a protein to inhibit the PepTSh transporter.
 
 #### Target Definition
 
-PepTSh is a proton-coupled oligopeptide transporter (POT) from *S. hominis* that imports Cys-Gly-3M3SH :fn-ref{#1}. We used the experimental inward-facing structure (PDB: 6EXS) as the receptor template, targeting the extracellularly exposed surface of PepTSh.
+PepTSh is a proton-coupled oligopeptide transporter (POT) from *S. hominis* that imports Cys-Gly-3M3SH :fn-ref{#1}. We used the inward-facing crystal structure (PDB: 6EXS) as the receptor template, targeting the extracellularly exposed surface of PepTSh.
 
 #### Mechanism Analysis
 
