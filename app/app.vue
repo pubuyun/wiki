@@ -42,7 +42,7 @@ const highContrastMode = useState<boolean>(
     () => savedHighContrastMode.value,
 );
 const savedDarkMode = useCookie<boolean>(DARK_MODE_COOKIE, {
-    default: () => true,
+    default: () => false,
     maxAge: 60 * 60 * 24 * 365,
     sameSite: "lax",
 });

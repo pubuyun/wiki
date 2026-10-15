@@ -27,7 +27,9 @@ const graphView = computed(() => {
 const { data: allPages } = await useContentNavigationData(category);
 
 const pages = computed(() => allPages.value ?? []);
-const children = computed(() => categoryPages(pages.value, category.value));
+const children = computed(() =>
+    categoryPagesInNavigationOrder(pages.value, category.value),
+);
 const currentPageIndex = computed(() =>
     children.value.findIndex((item) => item.path === activePath.value),
 );

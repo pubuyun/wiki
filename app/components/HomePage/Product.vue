@@ -559,7 +559,7 @@ onBeforeUnmount(() => {
                         aria-hidden="true"
                     />
                     <span
-                        class="product-feature__image-circle absolute rounded-full bg-surface"
+                        class="product-feature__image-circle absolute rounded-full bg-[#03316d]"
                         aria-hidden="true"
                     />
                     <img

@@ -231,7 +231,7 @@ onBeforeUnmount(() => {
 
 <template>
     <div
-        class="home-layout relative z-0 min-h-screen"
+        class="home-layout dark relative z-0 min-h-screen"
         :data-intro-covered="!homeIntroSettled"
     >
         <SkipToContent />

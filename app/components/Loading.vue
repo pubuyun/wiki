@@ -92,6 +92,8 @@ let loaderSequenceReady = false;
 let loaderExitStarted = false;
 let isUnmounted = false;
 let loadingImage: HTMLImageElement | undefined;
+let loadingImageIdleCallback: number | undefined;
+let loadingImageTimeout: number | undefined;
 
 function updateProgress(value: number) {
     displayedProgress.value = Math.min(100, Math.round(value));
@@ -254,7 +256,7 @@ function handleLoadingImageError() {
 }
 
 function preloadRouteLoadingImage() {
-    if (isLoadingImageSettled.value || loadingImage) return;
+    if (isUnmounted || isLoadingImageSettled.value || loadingImage) return;
     const image = new Image();
     loadingImage = image;
     image.decoding = "async";
@@ -293,14 +295,31 @@ onMounted(async () => {
     await router.isReady();
     canShowRouteLoading.value = true;
     onNuxtReady(() => {
+        if (isUnmounted) return;
         isInitialPageReady.value = true;
         finishInitialLoading();
+        if (typeof window.requestIdleCallback === "function") {
+            loadingImageIdleCallback = window.requestIdleCallback(
+                preloadRouteLoadingImage,
+            );
+        } else {
+            loadingImageTimeout = window.setTimeout(
+                preloadRouteLoadingImage,
+                1000,
+            );
+        }
     });
 });
 
 onBeforeUnmount(() => {
     isUnmounted = true;
     loaderTimeline?.kill();
+    if (loadingImageIdleCallback !== undefined) {
+        window.cancelIdleCallback(loadingImageIdleCallback);
+    }
+    if (loadingImageTimeout !== undefined) {
+        window.clearTimeout(loadingImageTimeout);
+    }
     if (loadingImage) {
         loadingImage.onload = null;
         loadingImage.onerror = null;

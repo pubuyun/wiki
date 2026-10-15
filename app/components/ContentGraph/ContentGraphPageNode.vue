@@ -9,6 +9,8 @@ interface PageNodeData {
 }
 
 const props = defineProps<{
+    // Consume Vue Flow's internal ID so it cannot shadow a document anchor.
+    id: string;
     data: PageNodeData;
     sourcePosition?: Position;
     targetPosition?: Position;

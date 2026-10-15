@@ -173,6 +173,8 @@ let resizeResumeFrame = 0;
 let restoreResumeFrame = 0;
 let scrollLocked = false;
 let lockedScrollY = 0;
+let downwardScrollInput = false;
+let touchScrollY: number | undefined;
 // This phase is the single authority for both the automatic timeline and scroll handoff.
 type SolutionMorePhase = "solution" | "revealing" | "more" | "hiding";
 let solutionMorePhase: SolutionMorePhase = "solution";
@@ -224,6 +226,42 @@ function promoteChapterLabels(
             parent.addLabel(label, startTime + time);
         }
     });
+}
+
+function handleWheelIntent(event: WheelEvent) {
+    if (event.ctrlKey || !event.deltaY) return;
+    downwardScrollInput = event.deltaY > 0;
+}
+
+function resetScrollIntent() {
+    downwardScrollInput = false;
+}
+
+function handleTouchStart(event: TouchEvent) {
+    resetScrollIntent();
+    touchScrollY = event.touches[0]?.clientY;
+}
+
+function handleTouchMove(event: TouchEvent) {
+    const nextY = event.touches[0]?.clientY;
+    if (nextY === undefined) return;
+    if (touchScrollY !== undefined && nextY !== touchScrollY) {
+        downwardScrollInput = nextY < touchScrollY;
+    }
+    touchScrollY = nextY;
+}
+
+function handleScrollKeyIntent(event: KeyboardEvent) {
+    if (!TRANSITION_SCROLL_KEYS.has(event.key)) return;
+    const target = event.target as HTMLElement | null;
+    if (target?.closest("input, textarea, select, [contenteditable='true']")) {
+        return;
+    }
+    downwardScrollInput =
+        event.key === "ArrowDown" ||
+        event.key === "PageDown" ||
+        event.key === "End" ||
+        (event.key === " " && !event.shiftKey);
 }
 
 function preventTransitionScroll(event: Event) {
@@ -730,6 +768,9 @@ function buildSequence() {
                     // movement until the user intentionally leaves this scene.
                     pinHomeFooterWaveToViewport();
                     if (
+                        // Clamping/smooth-scroll corrections can move upward
+                        // even while the user is still scrolling down.
+                        !downwardScrollInput &&
                         self.direction < 0 &&
                         self.scroll() <= reverseBoundary
                     ) {
@@ -1118,6 +1159,20 @@ function buildSequence() {
 }
 
 onMounted(() => {
+    window.addEventListener("wheel", handleWheelIntent, {
+        passive: true,
+        capture: true,
+    });
+    window.addEventListener("pointerdown", resetScrollIntent, true);
+    window.addEventListener("touchstart", handleTouchStart, {
+        passive: true,
+        capture: true,
+    });
+    window.addEventListener("touchmove", handleTouchMove, {
+        passive: true,
+        capture: true,
+    });
+    window.addEventListener("keydown", handleScrollKeyIntent, true);
     window.addEventListener(
         HOME_SCROLL_REFRESH_START,
         handleLayoutRefreshStart,
@@ -1127,6 +1182,11 @@ onMounted(() => {
 });
 
 onBeforeUnmount(() => {
+    window.removeEventListener("wheel", handleWheelIntent, true);
+    window.removeEventListener("pointerdown", resetScrollIntent, true);
+    window.removeEventListener("touchstart", handleTouchStart, true);
+    window.removeEventListener("touchmove", handleTouchMove, true);
+    window.removeEventListener("keydown", handleScrollKeyIntent, true);
     cancelAnimationFrame(buildFrame);
     cancelAnimationFrame(resizeResumeFrame);
     cancelAnimationFrame(restoreResumeFrame);

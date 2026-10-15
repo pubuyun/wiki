@@ -58,11 +58,11 @@ imageBackground: white
 ---
 ::
 
-- **Precursor Binder:**&#x73;elective protein binders for Cys-Gly-3M3SH designed using two different deep-learning based design tools.
+- **Precursor Binder:** selective protein binders for Cys-Gly-3M3SH designed using two different deep-learning based design tools.
   - **Precursor Binder Affinity Optimization:** precursor binders that displayed binding ability were selected for further affinity optimization
 - **Transporter Binder:** a protein binder that could limit this uptake through blocking the transporter.
-- **CGTase**: an enzyme that we characterized could covalently modify the precursor, attaching an additional group to the precursor before bacterial uptake.
-  - **CGTase Thermal Stability Optimization:** Two computationally designed CGTase parents (T370K and T370R/F183W) were selected for further thermal stability optimization. Sequencing identified the intended experimental T370K variant as T370L, which is labeled T370L in the experimental result plots.
+- **CGTase:** an enzyme that we characterized could covalently modify the precursor, attaching an additional group to the precursor before bacterial uptake. 
+  - **CGTase Thermal Stability Optimization:** Two CGTase mutants were selected for further thermal stability optimization for industrial production.
 
 ## Characterize–DBTL Framework
 

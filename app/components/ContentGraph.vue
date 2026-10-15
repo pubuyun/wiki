@@ -39,7 +39,7 @@ const frameStyle = computed(() => ({
 
                     <template #fallback>
                         <figure
-                            class="grid w-full place-items-center overflow-hidden rounded-2xl border-2 border-outline bg-surface-elevated text-sm text-on-surface shadow-sm sm:rounded-3xl lg:rounded-4xl portrait:hidden"
+                            class="grid w-full place-items-center overflow-hidden rounded-2xl border-2 border-outline bg-surface text-sm text-on-surface shadow-sm sm:rounded-3xl lg:rounded-4xl portrait:hidden"
                             style="height: 100%"
                             aria-label="Interactive graph"
                             aria-busy="true"
@@ -51,7 +51,7 @@ const frameStyle = computed(() => ({
 
                 <template #fallback>
                     <figure
-                        class="grid w-full place-items-center overflow-hidden rounded-2xl border-2 border-outline bg-surface-elevated text-sm text-on-surface shadow-sm sm:rounded-3xl lg:rounded-4xl portrait:hidden"
+                        class="grid w-full place-items-center overflow-hidden rounded-2xl border-2 border-outline bg-surface text-sm text-on-surface shadow-sm sm:rounded-3xl lg:rounded-4xl portrait:hidden"
                         style="height: 100%"
                         aria-label="Interactive graph"
                         aria-busy="true"

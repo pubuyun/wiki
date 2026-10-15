@@ -15,10 +15,40 @@ const active = ref<string | null>(null);
 const turns = ref(0);
 const uid = useId();
 let closeTimer: ReturnType<typeof setTimeout> | undefined;
+const groupStyles: Record<string, Record<string, string>> = {
+    customers: {
+        "--group-color": "var(--primary)",
+        "--title-color": "var(--on-primary)",
+        "--node-color": "var(--secondary)",
+        "--node-text-color": "var(--on-secondary)",
+        "--edge-color": "var(--on-primary)",
+    },
+    experts: {
+        "--group-color": "var(--surface-elevated)",
+        "--title-color": "var(--on-surface)",
+        "--node-color": "var(--primary)",
+        "--node-text-color": "var(--on-primary)",
+        "--edge-color": "var(--on-surface)",
+    },
+    community: {
+        "--group-color": "var(--accent)",
+        "--title-color": "var(--on-accent)",
+        "--node-color": "var(--secondary)",
+        "--node-text-color": "var(--on-secondary)",
+        "--edge-color": "var(--on-accent)",
+    },
+    industry: {
+        "--group-color": "var(--secondary)",
+        "--title-color": "var(--on-secondary)",
+        "--node-color": "var(--primary)",
+        "--node-text-color": "var(--on-primary)",
+        "--edge-color": "var(--on-secondary)",
+    },
+};
 const nodes = data.groups.flatMap((group) =>
     group.nodes.map((node) => ({
         ...node,
-        edgeColor: group.nodeColor,
+        edgeColor: groupStyles[group.id]?.["--edge-color"],
         groupId: group.id,
         groupBox: group.position,
     })),
@@ -297,11 +327,7 @@ const edges = nodes.map((node) => {
                     v-for="group in data.groups"
                     :key="group.id"
                     class="stakeholder-group"
-                    :style="{
-                        '--group-color': group.color,
-                        '--node-color': group.nodeColor,
-                        '--title-color': group.titleColor,
-                    }"
+                    :style="groupStyles[group.id]"
                     :aria-labelledby="`${uid}-${group.id}`"
                 >
                     <div
@@ -487,8 +513,8 @@ const edges = nodes.map((node) => {
 .stakeholders-panel {
     width: min(100%, calc((100dvh - 5rem) * 1.48));
     margin-inline: auto;
-    background: #08346a;
-    color: #08346a;
+    background: var(--surface);
+    color: var(--on-surface);
     container-type: inline-size;
     border-radius: 1.5rem;
 }
@@ -588,7 +614,8 @@ const edges = nodes.map((node) => {
     place-items: center;
     transform: translate(-50%, -50%);
     border-radius: 1.65cqi;
-    background: #fbfff4;
+    background: var(--primary);
+    color: var(--on-primary);
     font-size: 2.9cqi;
     z-index: 2;
 }
@@ -598,6 +625,7 @@ const edges = nodes.map((node) => {
     place-items: center;
     transform: translate(-50%, -50%);
     background: var(--node-color);
+    color: var(--node-text-color);
     border: 2px solid transparent;
     border-radius: 2.65cqi;
     padding: 0.25em 0.55em;
@@ -622,14 +650,14 @@ const edges = nodes.map((node) => {
 }
 .stakeholder-node:hover,
 .stakeholder-node[data-state="open"] {
-    background: #fffef0;
-    box-shadow: 0 4px 0 #08346a55;
+    border-color: var(--node-text-color);
+    box-shadow: 0 4px 0 color-mix(in srgb, var(--on-surface) 33%, transparent);
 }
 .stakeholder-node:focus-visible,
 .switch-button:focus-visible {
-    outline: 3px solid #fff;
+    outline: 3px solid var(--outline);
     outline-offset: 3px;
-    box-shadow: 0 0 0 6px #08346a;
+    box-shadow: 0 0 0 6px var(--surface);
 }
 .graph-switch {
     display: flex;
@@ -645,7 +673,7 @@ const edges = nodes.map((node) => {
     height: 5cqi;
     min-width: 32px;
     min-height: 32px;
-    color: #fff;
+    color: var(--primary);
     border-radius: 50%;
     cursor: pointer;
 }
@@ -677,15 +705,18 @@ const edges = nodes.map((node) => {
         box-shadow 0.65s;
 }
 .mode-card-incoming {
-    background: #65d7bd;
+    background: var(--primary);
+    color: var(--on-primary);
 }
 .mode-card-outgoing {
-    background: #56b4df;
+    background: var(--accent);
+    color: var(--on-accent);
 }
 .mode-card-active {
     transform: translateY(-0.3cqi);
     z-index: 1;
-    box-shadow: 0 10px 18px #08346a44;
+    box-shadow: 0 10px 18px
+        color-mix(in srgb, var(--on-surface) 27%, transparent);
 }
 /* These are real DOM layers inside the portal, just like ProseEm. */
 .stakeholder-detail {

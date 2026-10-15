@@ -8,6 +8,8 @@ interface VirtualNodeData {
 }
 
 const props = defineProps<{
+    // Consume Vue Flow's internal ID so it cannot shadow a document anchor.
+    id: string;
     data: VirtualNodeData;
     sourcePosition?: Position;
     targetPosition?: Position;

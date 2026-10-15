@@ -3,6 +3,8 @@ import { Handle, Position } from "@vue-flow/core";
 import type { FlowchartNodeData } from "~/utils/flowchart-layout";
 
 const props = defineProps<{
+    // Consume Vue Flow's internal ID so it cannot shadow a document anchor.
+    id: string;
     data: FlowchartNodeData;
 }>();
 

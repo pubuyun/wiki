@@ -89,6 +89,7 @@ const graphRegistry = useState<GraphRegistry | null>(
 );
 const resolvedGraph = shallowRef<GraphDefinition | null>(null);
 const isLoading = ref(true);
+const isLayoutReady = ref(false);
 const flowInstance = shallowRef<VueFlowStore | null>(null);
 const figureElement = ref<HTMLElement | null>(null);
 const fullscreenButton = ref<HTMLButtonElement | null>(null);
@@ -141,16 +142,23 @@ let resizeObserver: ResizeObserver | null = null;
 let intersectionObserver: IntersectionObserver | null = null;
 let activeMaskElement: HTMLElement | null = null;
 let subgraphResizeRun = 0;
+let isDisposed = false;
 
-onMounted(() => {
+onMounted(async () => {
     mediaQuery = window.matchMedia("(orientation: portrait)");
     updatePortraitState(mediaQuery);
-    mediaReady.value = true;
     mediaQuery.addEventListener("change", updatePortraitState);
     document.addEventListener("fullscreenchange", updateFullscreenState);
+
+    // Measure with the final font on both cold loads and cached navigation.
+    await document.fonts.load('80px "Belanosima"').catch(() => undefined);
+    if (!isDisposed) mediaReady.value = true;
 });
 
 onBeforeUnmount(() => {
+    isDisposed = true;
+    subgraphResizeRun += 1;
+    flowInstance.value = null;
     mediaQuery?.removeEventListener("change", updatePortraitState);
     document.removeEventListener("fullscreenchange", updateFullscreenState);
     resizeObserver?.disconnect();
@@ -301,6 +309,9 @@ watch(
     async ([view, ready, portrait], _, onCleanup) => {
         const controller = new AbortController();
         onCleanup(() => controller.abort());
+        subgraphResizeRun += 1;
+        flowInstance.value = null;
+        isLayoutReady.value = false;
         resolvedGraph.value = null;
         isLoading.value = true;
 
@@ -411,7 +422,7 @@ function appendGraphFrame(
                 Math.abs(node.position.x - horizontalPosition.x) <= 1,
         );
         const position = leftToRight
-            ? horizontalPosition
+            ? { ...horizontalPosition }
             : {
                   x:
                       subgraphPadding +
@@ -462,7 +473,7 @@ function appendGraphFrame(
                 ...data,
                 label,
                 layout: mode,
-                layoutPosition: horizontalPosition,
+                layoutPosition: { ...horizontalPosition },
                 depth,
             },
             style: {
@@ -586,12 +597,16 @@ const canvasStyle = computed(() => ({
 }));
 
 async function fitGraphToFrame(duration = 0) {
+    const instance = flowInstance.value;
+    const run = subgraphResizeRun;
     await nextTick();
     await nextAnimationFrame();
-    await flowInstance.value?.fitView({
+    if (run !== subgraphResizeRun || instance !== flowInstance.value) return;
+    // Let the measured graph bounds determine the largest zoom that fits.
+    await instance?.fitView({
         padding: 0.04,
-        minZoom: typography.value.minZoom,
-        maxZoom: typography.value.minZoom,
+        minZoom: 0.01,
+        maxZoom: 4,
         duration,
     });
 }
@@ -690,6 +705,7 @@ function layoutMeasuredNodes(
 
 async function resizeSubgraphsToContent() {
     const run = ++subgraphResizeRun;
+    isLayoutReady.value = false;
     await nextTick();
     await nextAnimationFrame();
     if (run !== subgraphResizeRun) return;
@@ -697,7 +713,16 @@ async function resizeSubgraphsToContent() {
     const instance = flowInstance.value;
     if (!instance) return;
 
-    const virtualNodes = getMeasuredNodes(instance)
+    const nodes = getMeasuredNodes(instance);
+    // The init event can precede Vue Flow's first node measurements.
+    // nodes-initialized starts a fresh run once every node has its actual size.
+    if (
+        !nodes.length ||
+        nodes.some((node) => !node.dimensions.width || !node.dimensions.height)
+    )
+        return;
+
+    const virtualNodes = nodes
         .filter((node) => node.type === "virtual")
         .sort((a, b) => b.id.split("::").length - a.id.split("::").length);
 
@@ -763,6 +788,9 @@ async function resizeSubgraphsToContent() {
     }
 
     await fitGraphToFrame();
+    if (run === subgraphResizeRun && instance === flowInstance.value) {
+        isLayoutReady.value = true;
+    }
 }
 
 function zoomGraphIn() {
@@ -856,7 +884,7 @@ async function toggleFullscreen() {
             'content-graph--snap-active': isScrollSnapActive,
         }"
         :aria-label="resolvedGraph?.title || 'Interactive graph'"
-        :aria-busy="isLoading"
+        :aria-busy="isLoading || !isLayoutReady"
         @pointermove.capture="updateActiveMask"
         @pointerleave="clearActiveMask"
     >
@@ -875,7 +903,7 @@ async function toggleFullscreen() {
             :style="canvasStyle"
         >
             <div
-                v-if="isLoading"
+                v-if="isLoading || (resolvedGraph && !isLayoutReady)"
                 class="absolute inset-0 grid place-items-center text-sm text-on-surface"
                 role="status"
             >
@@ -883,7 +911,11 @@ async function toggleFullscreen() {
             </div>
 
             <VueFlow
-                v-else-if="resolvedGraph"
+                v-if="resolvedGraph"
+                :key="view"
+                :class="{ 'pointer-events-none opacity-0': !isLayoutReady }"
+                :aria-hidden="!isLayoutReady"
+                :inert="!isLayoutReady"
                 :nodes="flow.nodes"
                 :edges="flow.edges"
                 :node-types="nodeTypes"
@@ -910,7 +942,7 @@ async function toggleFullscreen() {
             />
 
             <div
-                v-if="resolvedGraph"
+                v-if="resolvedGraph && isLayoutReady"
                 class="content-graph__toolbar content-graph__foreground-control absolute top-3 right-3 z-20 flex items-center gap-1 rounded-full p-1"
                 role="toolbar"
                 aria-label="Graph view controls"
@@ -952,7 +984,7 @@ async function toggleFullscreen() {
 
             <button
                 ref="fullscreenButton"
-                v-if="resolvedGraph"
+                v-if="resolvedGraph && isLayoutReady"
                 type="button"
                 class="nodrag nopan content-graph__fullscreen content-graph__foreground-control absolute right-3 bottom-3 z-20 grid size-10 cursor-pointer place-items-center rounded-full"
                 :aria-label="

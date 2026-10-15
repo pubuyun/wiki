@@ -122,6 +122,24 @@ export function buildCategorySidebarNodes(
     ];
 }
 
+export function categoryPagesInNavigationOrder(
+    pages: ContentPageLike[],
+    categorySlug: string,
+): ContentPageLike[] {
+    const children = categoryPages(pages, categorySlug);
+    const pagesByPath = new Map(children.map((page) => [page.path, page]));
+
+    // Follow the sidebar depth-first: a folder page precedes its documents.
+    function flatten(nodes: ContentNavNode[]): ContentPageLike[] {
+        return nodes.flatMap((node) => {
+            const page = node.path ? pagesByPath.get(node.path) : undefined;
+            return [...(page ? [page] : []), ...flatten(node.children ?? [])];
+        });
+    }
+
+    return flatten(buildCategoryNavTree(children, categorySlug, ""));
+}
+
 function markActiveFolders(nodes: ContentNavNode[]) {
     for (const node of nodes) {
         if (!node.children?.length) continue;

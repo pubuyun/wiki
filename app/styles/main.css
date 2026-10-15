@@ -91,7 +91,7 @@
 .category-content-shell {
     --reading-body-width: calc(75ch + 3rem);
     --reading-toc-width: 16rem;
-    --reading-column-gap: clamp(2rem, 2vw, 3rem);
+    --reading-column-gap: clamp(2rem, 4vw, 4rem);
     --category-gutter: 1rem;
     width: calc(100% - 2 * var(--category-gutter));
     max-width: calc(
@@ -122,9 +122,10 @@
 
 .content-reading-layout {
     --reading-body-width: calc(75ch + 3rem);
-    --reading-toc-width: 16rem;
-    --reading-column-gap: clamp(2rem, 3cqi, 4rem);
+    --reading-toc-width: 12rem;
+    --reading-column-gap: clamp(2rem, 4vw, 4rem);
     display: flex;
+    justify-content: center;
     width: 100%;
     max-width: var(--reading-body-width);
     min-width: 0;
@@ -140,7 +141,9 @@
     display: block;
 }
 
-@container reading (width >= 60rem) {
+/* Leave room for prose beside a compact TOC on landscape tablets, even
+   when the category navigation occupies the left side of the viewport. */
+@container reading (width >= 42rem) {
     .content-reading-layout--with-toc {
         display: grid;
         grid-template-columns: minmax(0, var(--reading-body-width)) var(
@@ -159,6 +162,12 @@
 
     .content-bar-mobile {
         display: none;
+    }
+}
+
+@container reading (width >= 52rem) {
+    .content-reading-layout {
+        --reading-toc-width: 16rem;
     }
 }
 

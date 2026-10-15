@@ -22,6 +22,9 @@ const page = computed(() => {
         body: { children: [], toc: { links: [] } },
     };
 });
+const showCategorySidebar = computed(() =>
+    Boolean(page.value && children.value.length),
+);
 const categoryTitle = computed(() => titleizeSlug(category.value));
 const categoryNavNodes = computed(() =>
     buildCategorySidebarNodes(children.value, category.value, activePath.value),
@@ -53,7 +56,7 @@ watchEffect(() => {
             class="flex flex-1 bg-surface text-on-surface"
         >
             <CategoryBar
-                v-if="page"
+                v-if="showCategorySidebar"
                 class="hidden lg:flex"
                 :title="categoryTitle"
                 :title-to="categoryPath"
@@ -83,7 +86,10 @@ watchEffect(() => {
             </div>
         </main>
 
-        <LazyFooter hydrate-on-visible has-category-sidebar />
+        <LazyFooter
+            hydrate-on-visible
+            :has-category-sidebar="showCategorySidebar"
+        />
 
         <aside aria-label="Page utilities">
             <AccessibilityMenu />
