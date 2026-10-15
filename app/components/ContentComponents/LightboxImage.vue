@@ -5,14 +5,17 @@ import DocumentCaption from "./DocumentCaption.vue";
 const LightboxImageOverlay = defineAsyncComponent(
     () => import("./LightBox/LightboxImageOverlay.client.vue"),
 );
-const props = defineProps<{
-    src: string[];
-    alt?: string | string[];
-    caption?: string | string[];
-    imageBackground?: string;
-    width?: number | string;
-    height?: number | string;
-}>();
+const props = withDefaults(
+    defineProps<{
+        src: string[];
+        alt?: string | string[];
+        caption?: string | string[];
+        imageBackground?: string;
+        width?: number | string;
+        height?: number | string;
+    }>(),
+    { imageBackground: "#fff" },
+);
 
 const visible = ref(false);
 const hasOpened = ref(false);
