@@ -132,7 +132,7 @@ caption: Table 1 | The application of characterize stage in our project.
 
 ### Computational Approach
 
-Many conventional protein engineering approaches use large physical libraries and repeated experimental screening. As a high-school team, we largely applied a deep-learning-guided protein design strategy, which explores large sequence-and-structure spaces computationally and significantly reduces the wet-lab effort needed to create successful binder designs.
+Many conventional protein-discovery approaches use large physical libraries and repeated experimental screening. As a high-school team, we largely applied a deep-learning-guided protein design strategy, which explores large sequence-and-structure spaces computationally and significantly reduces the wet-lab effort needed to create successful binder designs.
 
 ### Decision-Gated Workflow
 
@@ -153,7 +153,7 @@ imageBackground: white
 ---
 ::
 
-In our project, a large number of designs are generated, enabling rapid exploration of potential binding structures. The designs are then co-folded with the target, with indicators of structure validity used to assess and filter the candidates. A smaller set of candidates subsequently proceeds to physics-based molecular dynamics simulation and finally experimental testing.
+In our project, a large number of designs are generated, enabling rapid exploration of binding structures. The following co-folding then assesses and filters the candidates. A smaller set of candidates subsequently proceeds to physics-based molecular dynamics simulation and finally experimental testing.
 
 ## Precursor Binder
 
@@ -248,7 +248,7 @@ layout: stack
 
 For computational metrics, interface-related metrics in RFdiffusion3 branch showed agreement with the experimental results. In the Proteina-Complexa route, our custom composite score showed the strongest linear correlation with experimental results.
 
-MD provides complementary evidence, especially in RFdiffusion3 branch, where the three MD metrics all showed the expected trend. However, in Proteina-Complexa branch, inconsistency between Proteina-Complexa generation and RF3 evaluation may affect the predicted structures selected, causing ligand RMSD to partly reflect relaxation of the predicted pose and reduce its reliability. Incorporating another folding tool, such as AlphaFold, and carrying out more independent MD simulations on each binder would help verify this relationship.
+MD provides complementary evidence, especially in RFdiffusion3 branch, where the three MD metrics all showed the expected trend. However, in Proteina-Complexa branch, inconsistency between Proteina-Complexa generation and RF3 evaluation may affect the predicted structures selected, causing ligand RMSD to partly reflect relaxation of the predicted pose and reducing its reliability. Incorporating another folding tool, such as AlphaFold, and carrying out more independent MD simulations on each binder would help verify this relationship.
 
 Future work should emphasize testing more experimental candidates to verify the composite score and adjust the weights.
 
@@ -277,7 +277,7 @@ We aim to design a protein to inhibit the PepTSh transporter.
 
 #### Target Definition
 
-PepTSh is a proton-coupled oligopeptide transporter (POT) from *S. hominis* that imports Cys-Gly-3M3SH :fn-ref{#1}. We used the inward-facing crystal structure (PDB: 6EXS) as the receptor template, targeting the extracellularly exposed surface of PepTSh.
+PepTSh is a proton-coupled oligopeptide transporter (POT) from *S. hominis* that imports Cys-Gly-3M3SH :fn-ref{#1}. We used the experimental inward-facing structure (PDB: 6EXS) as the receptor template.
 
 #### Mechanism Analysis
 
@@ -310,7 +310,9 @@ label: Overview — Fig. 8
 
 #### Design Specification
 
-PepTSh characterization indicated that transition from the inward-facing to the outward-facing state is the rate-limiting step in its transport cycle. Comparison of the two conformational states identified accessible extracellular features specific to the inward-facing state, which were then used to determine the binding interface. Moreover, compact binder designs are favored to enhance accessibility through the Gram-positive cell wall.
+Stablize the inward-facing conformation by a protein binder targeting the extracellular interface containing features specific to the inward-facing state. Moreover, compact binder designs are favored to enhance accessibility through the Gram-positive cell wall.
+
+[]{.lark-record-clipboard}
 
 ::content-components-lightbox-panels
 ---
@@ -436,7 +438,9 @@ label: Overview — Fig. 13
 
 #### Design Specification
 
-CGTase is selected for further design to fit into a new substrate. Docking and molecular dynamics showed that the precursor could remain accommodated within the wild-type CGTase pocket, while revealing incomplete interactions around its carboxylate group and hydrophobic tail.
+CGTase is selected for further design to fit into a new substrate. Optimizing the incomplete interactions around the ligand's carboxylate group and hydrophobic tail should be the target of design.
+
+[]{.lark-record-clipboard}
 
 ### Design
 
@@ -485,7 +489,7 @@ imageBackground: white
 ---
 ::
 
-The characterize stage successfully identified CGTase as a functional starting enzyme for Cys-Gly-3M3SH chemical modification. The experimental assay showed activity of wild-type CGTase compared with the control, aligning with the characterization outcome, where docking and MD simulations support the feasibility of glycosylation catalysed by CGTase.
+The characterize stage successfully identified CGTase as a functional starting enzyme for Cys-Gly-3M3SH chemical modification. The experimental assay showed activity of wild-type CGTase compared with the control, aligning with the characterization outcome, where docking and MD simulations support the feasibility of glycosylation catalyzed by CGTase.
 
 However, in the experiment, the intended T370K mutant was unexpectedly obtained as T370L.
 
@@ -516,7 +520,7 @@ We aim to design successful CGTase mutants to meet industrial production require
 
 We design potentially more thermally stable CGTase mutants through a stepwise computational screening process.
 
-We first identify and excludes residues that are highly conserved or important for ligand binding or calcium coordination. The remaining positions are evaluated with *SPURS*, an AI model that predicts how individual amino-acid changes affect protein stability, and only promising mutations are retained. To combine these mutations safely, the method follows the pairwise compatibility principle used by *FireProt*: pairs predicted to interfere with each other are rejected, while compatible pairs are gradually assembled into larger mutants through a beam-search algorithm that also maintains diversity among the designs.
+We first identify and exclude residues that are highly conserved or important for ligand binding or calcium coordination. The remaining positions are evaluated with *SPURS*, an AI model that predicts how individual amino-acid changes affect protein stability, and only promising mutations are retained. To combine these mutations safely, the method follows the pairwise compatibility principle used by *FireProt*: pairs predicted to interfere with each other are rejected, while compatible pairs are gradually assembled into larger mutants through a beam-search algorithm that also maintains diversity among the designs.
 
 Final candidates are selected based on predicted stability and diversity of design, then tested experimentally with progressively more mutations to determine how reliable the method is as design complexity increases.
 
