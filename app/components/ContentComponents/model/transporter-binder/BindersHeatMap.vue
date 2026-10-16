@@ -31,13 +31,23 @@
                         height: `${chartHeight}px`,
                     }"
                 >
-                    <VChart
-                        class="h-full w-full"
-                        :option="chartOption"
-                        :theme="chartTheme"
-                        :init-options="{ renderer: 'canvas' }"
-                        autoresize
-                    />
+                    <ClientOnly>
+                        <VChart
+                            class="h-full w-full"
+                            :option="chartOption"
+                            :theme="chartTheme"
+                            :init-options="{ renderer: 'canvas' }"
+                            autoresize
+                        />
+                        <template #fallback>
+                            <p
+                                role="status"
+                                class="m-0 flex h-full items-center justify-center"
+                            >
+                                Loading binder heatmap...
+                            </p>
+                        </template>
+                    </ClientOnly>
                 </div>
             </div>
             <details class="mt-4 rounded-lg border border-outline p-3">

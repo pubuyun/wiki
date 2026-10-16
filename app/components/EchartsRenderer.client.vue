@@ -95,7 +95,12 @@ const chartHeight = computed(() =>
 </script>
 
 <template>
-    <p v-if="parsed.error || renderError" role="alert" class="m-0 p-4 text-sm">
+    <p
+        v-if="parsed.error || renderError"
+        role="alert"
+        class="m-0 p-4 text-sm"
+        :style="{ height: chartHeight }"
+    >
         Unable to render chart: {{ parsed.error || renderError }}
     </p>
     <VChart
@@ -112,7 +117,7 @@ const chartHeight = computed(() =>
     <p
         v-else
         role="status"
-        class="flex items-center justify-center"
+        class="m-0 flex items-center justify-center"
         :style="{ height: chartHeight }"
     >
         Loading chart...

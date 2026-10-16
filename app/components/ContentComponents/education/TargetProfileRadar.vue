@@ -41,20 +41,22 @@ const parsed = computed(() => {
             Unable to render target profile: {{ parsed.error }}
         </p>
         <template v-else>
-            <ClientOnly>
-                <LazyContentComponentsEducationRadarChart
-                    :dimensions="parsed.dimensions"
-                    :label="title"
-                />
-                <template #fallback>
-                    <p
-                        role="status"
-                        class="m-0 flex min-h-80 items-center justify-center"
-                    >
-                        Loading target profile chart…
-                    </p>
-                </template>
-            </ClientOnly>
+            <ContentComponentsEducationRadarFrame>
+                <ClientOnly>
+                    <LazyContentComponentsEducationRadarChart
+                        :dimensions="parsed.dimensions"
+                        :label="title"
+                    />
+                    <template #fallback>
+                        <p
+                            role="status"
+                            class="m-0 flex h-full items-center justify-center"
+                        >
+                            Loading target profile chart…
+                        </p>
+                    </template>
+                </ClientOnly>
+            </ContentComponentsEducationRadarFrame>
 
             <ContentComponentsEducationRadarTextAlternative
                 :dimensions="parsed.dimensions"

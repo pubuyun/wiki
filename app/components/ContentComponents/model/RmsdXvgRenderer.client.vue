@@ -21,13 +21,16 @@
             Loading RMSD data...
         </div>
         <template v-else>
-            <VChart
-                class="min-h-72 flex-1"
-                :option="option"
-                :theme="chartTheme"
-                :init-options="{ renderer: 'canvas' }"
-                autoresize
-            />
+            <div class="relative min-h-64 flex-1">
+                <VChart
+                    class="h-full w-full"
+                    style="position: absolute; inset: 0"
+                    :option="option"
+                    :theme="chartTheme"
+                    :init-options="{ renderer: 'canvas' }"
+                    autoresize
+                />
+            </div>
             <details class="mt-4 rounded-lg border border-outline p-3">
                 <summary class="cursor-pointer font-semibold">
                     View chart data
@@ -122,7 +125,7 @@ const props = withDefaults(
     }>(),
     {
         title: "",
-        heightClass: "min-h-80",
+        heightClass: "min-h-[24rem]",
     },
 );
 

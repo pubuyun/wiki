@@ -55,6 +55,7 @@ let timeline: gsap.core.Timeline | undefined;
 let observer: ResizeObserver | undefined;
 let intersection: IntersectionObserver | undefined;
 let motion: MediaQueryList | undefined;
+let initialFrame: number | undefined;
 let paths: SVGPathElement[] = [];
 let visible = true;
 let started = false;
@@ -243,6 +244,7 @@ function finish() {
 function start() {
     if (
         started ||
+        initialFrame !== undefined ||
         !root.value ||
         !loadingComplete.value ||
         isHomeScrollRestoring()
@@ -415,37 +417,50 @@ onMounted(() => {
         );
         render();
     };
-    measure();
-    observer = new ResizeObserver(measure);
-    observer.observe(root.value!);
-    intersection = new IntersectionObserver(([entry]) => {
-        visible = entry?.isIntersecting ?? false;
-        syncPlayback();
-    });
-    intersection.observe(root.value!);
     motion.addEventListener("change", motionChanged);
     document.addEventListener("visibilitychange", syncPlayback);
     window.addEventListener(HOME_SCROLL_RESTORE_END, start);
     window.addEventListener("keydown", intent, true);
     window.addEventListener("wheel", intent, { passive: true });
     window.addEventListener("touchmove", intent, { passive: true });
-    if (import.meta.dev) {
-        const frame = new URLSearchParams(window.location.search).get(
-            "intro-frame",
-        );
-        if (frame !== null && Number.isFinite(Number(frame))) {
-            devHold = true;
-            started = true;
-            paintingStarted = true;
-            settled.value = false;
-            state.progress = Math.max(0, Math.min(1, Number(frame)));
-            state.phase = 0.3 * state.progress;
-            render();
+
+    // Let Vue finish the hydration pass before changing SVG attributes or
+    // conditionally revealing the pause control. The SSR markup uses the
+    // stable 1600x900 viewBox; measuring in the same tick can make the client
+    // DOM diverge while hydration is still comparing nodes.
+    initialFrame = window.requestAnimationFrame(() => {
+        initialFrame = undefined;
+        measure();
+        observer = new ResizeObserver(measure);
+        observer.observe(root.value!);
+        intersection = new IntersectionObserver(([entry]) => {
+            visible = entry?.isIntersecting ?? false;
+            syncPlayback();
+        });
+        intersection.observe(root.value!);
+
+        if (import.meta.dev) {
+            const frame = new URLSearchParams(window.location.search).get(
+                "intro-frame",
+            );
+            if (frame !== null && Number.isFinite(Number(frame))) {
+                devHold = true;
+                started = true;
+                paintingStarted = true;
+                settled.value = false;
+                state.progress = Math.max(0, Math.min(1, Number(frame)));
+                state.phase = 0.3 * state.progress;
+                render();
+            }
         }
-    }
-    if (!devHold) start();
+        if (!devHold) start();
+    });
 });
 onBeforeUnmount(() => {
+    if (initialFrame !== undefined) {
+        window.cancelAnimationFrame(initialFrame);
+        initialFrame = undefined;
+    }
     timeline?.kill();
     gsap.ticker.remove(tick);
     observer?.disconnect();

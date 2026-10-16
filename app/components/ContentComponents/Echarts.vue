@@ -33,42 +33,42 @@ export default defineComponent({
         description: String,
     },
     setup(props, { slots }) {
-        return () =>
-            h(
+        return () => {
+            const height =
+                typeof props.height === "number" || /^\d+$/.test(props.height)
+                    ? `${props.height}px`
+                    : props.height;
+
+            return h(
                 "figure",
                 {
                     class: "not-prose my-6 min-w-0 rounded-xl border border-outline bg-secondary p-4 text-on-secondary",
                 },
                 [
-                    h(ClientOnly, null, {
-                        default: () =>
-                            h(LazyEchartsRenderer, {
-                                option:
-                                    props.option ??
-                                    props.code ??
-                                    readSource(slots.default?.()),
-                                height: props.height,
-                                renderer: props.renderer,
-                                label: props.label,
-                                description: props.description,
-                            }),
-                        fallback: () =>
-                            h(
-                                "p",
-                                {
-                                    role: "status",
-                                    class: "flex items-center justify-center",
-                                    style: {
-                                        height:
-                                            typeof props.height === "number" ||
-                                            /^\d+$/.test(props.height)
-                                                ? `${props.height}px`
-                                                : props.height,
+                    h("div", { class: "min-w-0", style: { height } }, [
+                        h(ClientOnly, null, {
+                            default: () =>
+                                h(LazyEchartsRenderer, {
+                                    option:
+                                        props.option ??
+                                        props.code ??
+                                        readSource(slots.default?.()),
+                                    height: "100%",
+                                    renderer: props.renderer,
+                                    label: props.label,
+                                    description: props.description,
+                                }),
+                            fallback: () =>
+                                h(
+                                    "p",
+                                    {
+                                        role: "status",
+                                        class: "m-0 flex h-full items-center justify-center",
                                     },
-                                },
-                                "Loading chart...",
-                            ),
-                    }),
+                                    "Loading chart...",
+                                ),
+                        }),
+                    ]),
                     props.description
                         ? h(
                               "figcaption",
@@ -80,6 +80,7 @@ export default defineComponent({
                         : null,
                 ],
             );
+        };
     },
 });
 </script>

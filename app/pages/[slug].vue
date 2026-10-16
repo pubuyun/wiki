@@ -52,16 +52,24 @@ useSeoMeta({
     title: () => categoryTitle.value,
     description: () => pageDescription(displayPage.value),
 });
-
 </script>
 
 <template>
     <article v-if="displayPage" class="flex min-w-0 flex-1 flex-col pt-2">
         <div
-            v-if="slug === 'human-practices' || graphView"
+            v-if="
+                slug === 'education' || slug === 'human-practices' || graphView
+            "
             class="min-w-0 px-4 sm:px-6 lg:px-8 xl:px-12"
         >
-            <StakeholdersGraph v-if="slug === 'human-practices'" class="mb-8" />
+            <ContentComponentsEducationActivityGraph
+                v-if="slug === 'education'"
+                class="mb-8 w-full"
+            />
+            <StakeholdersGraph
+                v-else-if="slug === 'human-practices'"
+                class="mb-8"
+            />
             <ContentGraph
                 v-else-if="graphView"
                 :view="graphView"

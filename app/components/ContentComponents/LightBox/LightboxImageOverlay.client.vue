@@ -167,6 +167,13 @@ watch(
     background-color: var(--lightbox-image-background, transparent);
 }
 
+/* vue-easy-lightbox ships a later `.vel-img` rule with a black background.
+ * Keep the content-provided background authoritative in production bundles,
+ * where the library stylesheet is loaded after this component's styles. */
+:global(.vel-modal .vel-img) {
+    background-color: var(--lightbox-image-background, #fff) !important;
+}
+
 :global(.vel-fade-enter-active) {
     transition-duration: 0s;
 }

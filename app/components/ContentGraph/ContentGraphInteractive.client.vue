@@ -1037,6 +1037,7 @@ async function toggleFullscreen() {
     --graph-node-font-size: 80px;
     --graph-label-font-size: 80px;
     --graph-page-font-size: 80px;
+    --graph-node-radius: 100px;
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -1081,7 +1082,7 @@ async function toggleFullscreen() {
     pointer-events: none;
     padding: 12px 16px;
     border: 2px solid var(--outline);
-    border-radius: 14px;
+    border-radius: var(--graph-node-radius);
     background: transparent;
     color: var(--graph-text);
     box-shadow: none;
@@ -1093,7 +1094,7 @@ async function toggleFullscreen() {
     overflow: visible;
     padding: 0;
     border: 2px solid var(--outline);
-    border-radius: 100px;
+    border-radius: var(--graph-node-radius);
     background: var(--graph-group-fill);
     box-shadow: none;
 }

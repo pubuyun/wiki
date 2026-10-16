@@ -47,21 +47,23 @@ const parsed = computed(() => {
             Unable to render education impact: {{ parsed.error }}
         </p>
         <template v-else>
-            <ClientOnly>
-                <LazyContentComponentsEducationRadarChart
-                    :dimensions="parsed.dimensions"
-                    :before-dimensions="parsed.beforeDimensions"
-                    :label="title"
-                />
-                <template #fallback>
-                    <p
-                        role="status"
-                        class="m-0 flex min-h-80 items-center justify-center"
-                    >
-                        Loading education impact chart…
-                    </p>
-                </template>
-            </ClientOnly>
+            <ContentComponentsEducationRadarFrame comparison>
+                <ClientOnly>
+                    <LazyContentComponentsEducationRadarChart
+                        :dimensions="parsed.dimensions"
+                        :before-dimensions="parsed.beforeDimensions"
+                        :label="title"
+                    />
+                    <template #fallback>
+                        <p
+                            role="status"
+                            class="m-0 flex h-full items-center justify-center"
+                        >
+                            Loading education impact chart…
+                        </p>
+                    </template>
+                </ClientOnly>
+            </ContentComponentsEducationRadarFrame>
             <ContentComponentsEducationRadarTextAlternative
                 :dimensions="parsed.dimensions"
                 :before-dimensions="parsed.beforeDimensions"

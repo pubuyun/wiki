@@ -84,25 +84,15 @@ watch(charts, (items) => {
                 :value="item.value"
                 class="min-w-0 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-outline"
             >
-                <ClientOnly>
-                    <ContentComponentsModelRmsdXvgChart
-                        v-if="selected === item.value"
-                        :key="item.sources.join('|')"
-                        :src="item.sources"
-                        :series-name="item.seriesNames"
-                        title="RMSD"
-                        embedded
-                        height-class="min-h-[24rem] sm:min-h-[28rem]"
-                    />
-                    <template #fallback>
-                        <p
-                            role="status"
-                            class="flex min-h-96 items-center justify-center"
-                        >
-                            Loading RMSD chart...
-                        </p>
-                    </template>
-                </ClientOnly>
+                <ContentComponentsModelRmsdXvgChart
+                    v-if="selected === item.value"
+                    :key="item.sources.join('|')"
+                    :src="item.sources"
+                    :series-name="item.seriesNames"
+                    title="RMSD"
+                    embedded
+                    height-class="min-h-[24rem] sm:min-h-[28rem]"
+                />
                 <p class="px-4 py-3 text-right text-sm leading-relaxed">
                     The RMSD chart is plotted from the
                     <a

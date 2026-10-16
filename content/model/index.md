@@ -157,7 +157,7 @@ In our project, a large number of designs are generated, enabling rapid explorat
 
 ## Precursor Binder
 
-> This is a summary of documents under [Precursor Binder](/model/precursor-binder). If you are interested in the detailed modeling process, please view the full version.
+> This is a summary of documents under [Precursor Binder](/model/precursor-binder). If you are interested in the detailed modeling process, please view the detailed documents.
 
 ::content-components-lightbox-panels
 ---
@@ -254,7 +254,7 @@ Future work should emphasize testing more experimental candidates to verify the 
 
 ## **Transporter Binder**
 
-> This is a summary of documents under [Transporter Binder](/model/transporter-binder). If you are interested in the detailed modeling process, please view the full version.
+> This is a summary of documents under [Transporter Binder](/model/transporter-binder). If you are interested in the detailed modeling process, please view the detailed documents.
 
 ::content-components-lightbox-image
 ---
@@ -366,7 +366,7 @@ However, MD metrics do not show agreement with experimental results. Future eval
 
 ## CGTase
 
-> This is a summary of documents under [CGTase](/model/cgtase). If you are interested in the detailed modeling process, please view the [CGTase modeling details](/model/cgtase).
+> This is a summary of documents under [CGTase](/model/cgtase). If you are interested in the detailed modeling process, please view the detailed documents.
 
 ::content-components-lightbox-image
 ---
@@ -495,7 +495,7 @@ Future work should test more mutants, especially T370K, T370R, and combination m
 
 ## Optimization
 
-> This is a summary of documents under [Optimize](/model/optimization). If you are interested in the detailed modeling process, please view the [Optimization modeling details](/model/optimization).
+> This is a summary of documents under [Optimize](/model/optimization). If you are interested in the detailed modeling process, please view the detailed documents.
 
 ### Design: CGTase Thermostability
 

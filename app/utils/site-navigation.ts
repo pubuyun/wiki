@@ -62,11 +62,6 @@ export const siteNavGroups: SiteNavGroup[] = [
                 icon: "lineicons:gears-3",
             },
             {
-                to: "/experiments",
-                label: "Experiments",
-                icon: "icon-park-outline:experiment-one",
-            },
-            {
                 to: "/parts",
                 label: "Parts",
                 icon: "streamline-plump:dna-solid",

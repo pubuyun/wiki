@@ -33,7 +33,7 @@ function openPage() {
 
 <template>
     <div
-        class="virtual-node relative h-full min-h-24 w-full min-w-40 touch-manipulation overflow-visible rounded-[100px]"
+        class="virtual-node relative h-full min-h-24 w-full min-w-40 touch-manipulation overflow-visible rounded-[var(--graph-node-radius)]"
         @click.stop="openPage"
     >
         <Handle type="target" :position="targetPosition" :connectable="false" />

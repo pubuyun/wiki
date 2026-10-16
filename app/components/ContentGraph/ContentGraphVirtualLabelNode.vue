@@ -11,7 +11,7 @@ defineProps<{
 
 <template>
     <div
-        class="virtual-label pointer-events-none w-max rounded-full px-5 py-3 font-belanosima leading-[1.1]"
+        class="virtual-label pointer-events-none w-max px-5 py-3 font-belanosima leading-[1.1]"
         :class="{ 'virtual-label--nested': (data.depth ?? 0) > 0 }"
     >
         {{ data.label }}
@@ -20,6 +20,7 @@ defineProps<{
 
 <style scoped>
 .virtual-label {
+    border-radius: var(--graph-node-radius);
     background: var(--graph-title);
     color: var(--graph-title-text);
     font-size: var(--graph-label-font-size);

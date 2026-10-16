@@ -56,7 +56,7 @@ const targetPosition = computed(
 <style scoped>
 .page-node__button {
     border: 2px solid var(--outline);
-    border-radius: 40px;
+    border-radius: var(--graph-node-radius);
     background: var(--graph-accent);
     color: var(--graph-on-accent);
     text-decoration: none;
