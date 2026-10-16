@@ -281,7 +281,7 @@ PepT<sub>Sh</sub> is a proton-coupled oligopeptide transporter (POT) from *S. ho
 
 #### Mechanism Analysis
 
-Molecular dynamics studies of PepT<sub>Sh</sub> indicated that the transition from the inward-facing to the outward-facing state is the rate-limiting step in its transport cycle :fn-ref{#5}. Therefore, the inward-facing conformation was selected for binding stabilization. Structural comparison of inward- and outward-facing models identified extracellular electrostatic interaction networks and hydrophobic surface patches that are specific to the inward-facing state. These features were subsequently used to define the target interface for binder design.
+Molecular dynamics studies of PepT<sub>Sh</sub> indicated that the transition from the inward-facing to the outward-facing state is the rate-limiting step in its transport cycle :fn-ref{#5}. Therefore, the inward-facing conformation was selected for binding stabilization to resist conformational change. Structural comparison of inward- and outward-facing models identified extracellular electrostatic interaction networks and hydrophobic surface patches that are specific to the inward-facing state. These features were subsequently used to define the target interface for binder design.
 
 ::content-components-lightbox-panels
 ---
@@ -310,7 +310,7 @@ label: Overview — Fig. 8
 
 #### Design Specification
 
-Stabilize the inward-facing conformation by a protein binder targeting the extracellular interface containing features specific to the inward-facing state. Moreover, compact binder designs are favored to enhance accessibility through the Gram-positive cell wall.
+We aim to stabilize the inward-facing conformation by a protein binder targeting the extracellular interface containing features specific to the inward-facing state. Moreover, compact binder designs are favored to enhance accessibility through the Gram-positive cell wall.
 
 ::content-components-lightbox-panels
 ---
