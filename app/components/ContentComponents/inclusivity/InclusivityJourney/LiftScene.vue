@@ -510,7 +510,7 @@ onBeforeUnmount(() => media?.revert());
 .lift-flag text {
     fill: white;
     font:
-        700 43px/1 var(--font-belanosima),
+        700 34px/1 var(--font-belanosima),
         sans-serif;
 }
 .second-flag {
