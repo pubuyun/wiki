@@ -2,8 +2,10 @@
 import { onBeforeUnmount, onMounted, ref } from "vue";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import balloonImage from "../../../../../assets/inclu/ballon.png";
 import { cloudShapes } from "./cloud-shapes";
+
+const balloonImage =
+    "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/animation/ballon.avif";
 
 const props = defineProps<{ scroller: HTMLElement }>();
 const root = ref<HTMLElement>();

@@ -3,13 +3,21 @@ import { nextTick, onMounted, onUnmounted, ref } from "vue";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Icon } from "@iconify/vue";
-import wandaImage from "../../../../../assets/inclu/1.png";
-import templeImage from "../../../../../assets/inclu/2.png";
-import derekImage from "../../../../../assets/inclu/3.png";
-import gabrielImage from "../../../../../assets/inclu/4.png";
-import craigImage from "../../../../../assets/inclu/5.png";
-import jiaImage from "../../../../../assets/inclu/6.png";
-import guideImage from "../../../../../assets/inclu/cartoon.png";
+
+const wandaImage =
+    "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/animation/1.avif";
+const templeImage =
+    "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/animation/2.avif";
+const derekImage =
+    "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/animation/3.avif";
+const gabrielImage =
+    "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/animation/4.avif";
+const craigImage =
+    "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/animation/5.avif";
+const jiaImage =
+    "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/animation/6.avif";
+const guideImage =
+    "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/animation/cartoon.avif";
 
 const props = defineProps<{ scroller: HTMLElement }>();
 const scene = ref<HTMLElement | null>(null);

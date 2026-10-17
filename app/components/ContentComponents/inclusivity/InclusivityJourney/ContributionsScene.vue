@@ -3,12 +3,19 @@ import { nextTick, onBeforeUnmount, onMounted, ref } from "vue";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { contributionCopy } from "./contribution-copy";
-import autismImage from "../../../../../assets/inclu/autism.png";
-import blindImage from "../../../../../assets/inclu/blind.png";
-import deafImage from "../../../../../assets/inclu/deaf.png";
-import lowIncomeImage from "../../../../../assets/inclu/lowincome.png";
-import modelingImage from "../../../../../assets/inclu/code.png";
-import olderAdultsImage from "../../../../../assets/inclu/undereducated.png";
+
+const autismImage =
+    "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/animation/autism.avif";
+const blindImage =
+    "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/animation/blind.avif";
+const deafImage =
+    "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/animation/deaf.avif";
+const lowIncomeImage =
+    "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/animation/lowincome.avif";
+const modelingImage =
+    "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/animation/code.avif";
+const olderAdultsImage =
+    "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/animation/undereducated.avif";
 
 const props = defineProps<{ scroller: HTMLElement }>();
 const emit = defineEmits<{ navigate: [destination: string]; close: [] }>();

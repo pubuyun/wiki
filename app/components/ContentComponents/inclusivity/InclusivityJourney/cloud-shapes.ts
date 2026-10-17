@@ -1,11 +1,3 @@
-/**
- * Vector silhouettes from assets/inclu/cloud{1,2,3}.png.
- * PNG silhouettes traced from alpha >= 128. The low-resolution wide cloud
- * uses 19 fitted cubic Bezier segments to remove pixel stair steps; the round
- * cloud uses simplified quadratic joins. Maximum source-pixel deviation:
- * wide 1.4286px; round 0.9052px.
- * cloud2 is already SVG: its original path and viewBox are preserved exactly.
- */
 export const cloudShapes = {
     wide: {
         viewBox: "0 0 186 97",
