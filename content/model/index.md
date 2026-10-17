@@ -167,7 +167,8 @@ alt:
     ranking, 50-ns molecular dynamics, and in vitro candidate selection.
 src:
   - https://static.igem.wiki/teams/6133/wiki/drylab/model/overview-fig4c.avif
-caption: Fig. 4 | **Schematic for precursor binder design workflow.** Binders
+caption: >-
+  Fig. 4 | **Schematic for precursor binder design workflow.** Binders
   targeting Cys-Gly-(S)-3M3SH are designed independently through two routes:
   RFdiffusion3 and Proteina-Complexa. Top-ranked binders from each route are
   evaluated by 50-ns molecular dynamics simulations using ligand RMSD and
@@ -239,7 +240,7 @@ src:
 titles:
   - "GreatBay-SCIE: VMD of precursor binder designed by rfd3 (2026)"
   - "GreatBay-SCIE: VMD of Precursor Binder Designed by Proteina-Complexa (2026)"
-  caption: "Video 1 | MD trajectories show precursor–binder motion for designs from **(a)** RFdiffusion3 and **(b)** Proteina-Complexa :fn-ref{#34}."
+caption: "Video 1 | MD trajectories show precursor–binder motion for designs from **(a)** RFdiffusion3 and **(b)** Proteina-Complexa :fn-ref{#34}."
 label: Precursor binder MD trajectories
 portrait: true
 ---
