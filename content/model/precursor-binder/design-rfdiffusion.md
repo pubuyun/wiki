@@ -7,9 +7,9 @@ order: 2
 
 ::content-components-collapsible-paragraph{title="Summary" id="summary" preview=true}
 
-Starting from the three-dimensional structure of Cys-Gly-3M3SH, *RFdiffusion3* :fn-ref{#8} (RFD3) used atom-based diffusion to generate candidate protein backbones around the ligand. Each generated structure specifies a three-dimensional backbone conformation and a potential binding pocket but does not specify the final amino acid sequence.
+Starting from the three-dimensional structure of Cys-Gly-3M3SH, *RFdiffusion3* :fn-ref{#9} (RFD3) used atom-based diffusion to generate candidate protein backbones around the ligand. Each generated structure specifies a three-dimensional backbone conformation and a potential binding pocket but does not specify the final amino acid sequence.
 
-*LigandMPNN* :fn-ref{#9} subsequently designed sequences for each backbone using the local chemical environment (protein Cα atoms and ligand) as context. We then used *RoseTTAFold3* (RF3) to refold every sequence with Cys-Gly-3M3SH and assess whether the intended complex structure was confidently recovered. Confidence and protein–ligand interface metrics from these predictions were used to rank the candidates.
+*LigandMPNN* :fn-ref{#10} subsequently designed sequences for each backbone using the local chemical environment (protein Cα atoms and ligand) as context. We then used *RoseTTAFold3* (RF3) :fn-ref{#11} to refold every sequence with Cys-Gly-3M3SH and assess whether the intended complex structure was confidently recovered. Confidence and protein–ligand interface metrics from these predictions were used to rank the candidates.
 
 ::
 
@@ -47,7 +47,7 @@ Candidate backbones were generated using the atom-based diffusion model RFD3 wit
 
 ### Process
 
-The designed sequences were subsequently co-folded with the target ligand using RoseTTAFold3 :fn-ref{#10}.
+The designed sequences were subsequently co-folded with the target ligand using RoseTTAFold3 :fn-ref{#11}.
 
 To prioritize candidates with both favorable predicted binding performance and the correct ligand stereoisomer, we ranked the designs using the **ranking score** reported by RF3. Only predictions containing the required (S)-Cys-Gly-3M3SH stereoisomer and configuration were retained. From this filtered set, the 40 designs with Cα RMSD to the backbone < 2 Å and highest RF3 ranking score were selected for subsequent analysis.
 

@@ -15,7 +15,7 @@ src:
 alt:
   - ""
   - ""
-caption: "Fig. 1 | Relationships between computational metrics and experimental responses of precursor binders designed by *RFdiffusion3* and *Proteina-Complexa*. Top: RFdiffusion3 designs (n = 4). Bottom: Proteina-Complexa designs (n = 5). Each point represents one tested binder, with A412 signal reduction calculated as 100 × (1 − mean binder A412/mean control A412). (A/J) *pLDDT*; (B/K) interface PAE; (C/L) ipTM; (D/M) aligned ligand scRMSD; (E/N) *RF3* confidence ranking score; (F/O) *pTM*; (G/P) estimated binding free energy (ΔG) from MM/PBSA; (H–I/Q–R) the mean and SD of MD ligand RMSD, over 10–50 ns. Pearson r and Spearman ρ are reported in each plot. OLS regression lines are plotted when |r| > 0.50; the blue line indicates an anticipated trend, while orange lines indicate trends not expected."
+caption: "Fig. 1 | Relationships between computational metrics and experimental responses of precursor binders designed by *RFdiffusion3* and *Proteina-Complexa*. Top: RFdiffusion3 designs (n = 4). Bottom: Proteina-Complexa designs (n = 5). Each point represents one tested binder, with A412 signal (an indicator of 3M3SH concentration, with lower values indicating lower odorant concentrations) reduction calculated as 100 × (1 − mean binder A412/mean control A412). (A/J) *pLDDT*; (B/K) interface PAE; (C/L) ipTM; (D/M) aligned ligand scRMSD; (E/N) *RF3* confidence ranking score; (F/O) *pTM*; (G/P) estimated binding free energy (ΔG) from MM/PBSA; (H–I/Q–R) the mean and SD of MD ligand RMSD, over 10–50 ns. Pearson r and Spearman ρ are reported in each plot. OLS regression lines are plotted when |r| > 0.50; the blue line indicates an anticipated trend, while orange lines indicate trends not expected."
 imageBackground: white
 layout: stack
 label: "Discussion — Fig. 1"
@@ -66,7 +66,7 @@ src:
   - https://static.igem.wiki/teams/6133/wiki/drylab/model/precursor-binder-discussion-fig2.avif
 alt:
   - ""
-caption: "Fig. 2 | **Relationship between the custom composite score and experimental responses of Proteina-Complexa-designed precursor binders.** Each point represents one tested binder (n = 5), with A412 signal reduction calculated as 100 × (1 − mean binder A412/mean control A412). The composite score was calculated as 200 × pLDDT − i_pAE − 62 × min_ipAE + 50 × min_ipSAE − 5 × binder_scRMSD_ca − 2 × ligand_scRMSD − 2 × ligand_scRMSD_aligned, using pLDDT on a 0–1 scale. Pearson r = 0.76 and Spearman ρ = 0.60 are reported. An OLS regression line is plotted."
+caption: "Fig. 2 | **Relationship between the custom composite score and experimental responses of Proteina-Complexa-designed precursor binders.** Each point represents one tested binder (n = 5), with A412 signal (an indicator of 3M3SH concentration, with lower values indicating lower odorant concentrations) reduction calculated as 100 × (1 − mean binder A412/mean control A412). The composite score was calculated as 200 × pLDDT − i_pAE − 62 × min_ipAE + 50 × min_ipSAE − 5 × binder_scRMSD_ca − 2 × ligand_scRMSD − 2 × ligand_scRMSD_aligned, using pLDDT on a 0–1 scale. Pearson r = 0.76 and Spearman ρ = 0.60 are reported. An OLS regression line is plotted."
 imageBackground: white
 ---
 
@@ -94,6 +94,6 @@ An omission analysis showed that removing the aligned ligand scRMSD penalty repr
 
 The computational metrics showed route-dependent agreement with experimental results. Interface-related metrics in the RFdiffusion3 branch showed agreement with the experimental results.
 
-MD provides complementary evidence, especially in the RFdiffusion3 branch. In the Proteina-Complexa branch, inconsistency between Proteina-Complexa generation and RF3 evaluation may affect the predicted structures selected, causing ligand RMSD to partly reflect relaxation of the predicted pose and reducing its reliability. Incorporating another folding tool, such as AlphaFold, and carrying out more independent MD simulations on each binder would help verify this relationship.
+MD provides complementary evidence, especially in the RFdiffusion3 branch. In the Proteina-Complexa branch, the MD metrics did not agree with the experimental results. Differences between the model architectures of Proteina-Complexa (partially latent flow matching) and RFdiffusion3 (a diffusion model, as in RoseTTAFold3) may reduce the accuracy of RF3 predictions for Proteina-Complexa. Consequently, ligand RMSD may partly reflect relaxation of the predicted pose, reducing its reliability. Incorporating another folding tool, such as AlphaFold, and carrying out more independent MD simulations on each binder would help verify this relationship.
 
 Future work should emphasize testing more experimental candidates to verify the composite score and adjust the weights.

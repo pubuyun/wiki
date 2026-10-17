@@ -17,34 +17,36 @@ const uid = useId();
 let closeTimer: ReturnType<typeof setTimeout> | undefined;
 const groupStyles: Record<string, Record<string, string>> = {
     customers: {
-        "--group-color": "var(--primary)",
-        "--title-color": "var(--on-primary)",
-        "--node-color": "var(--secondary)",
-        "--node-text-color": "var(--on-secondary)",
-        "--edge-color": "var(--on-primary)",
+        "--group-color": "color-mix(in srgb, #56b4df 92%, var(--surface))",
+        "--title-color": "#ffffff",
+        "--node-color": "#dff3ee",
+        "--node-text-color": "#08346a",
+        "--edge-color": "#dff3ee",
     },
     experts: {
-        "--group-color": "var(--surface-elevated)",
-        "--title-color": "var(--on-surface)",
-        "--node-color": "var(--primary)",
-        "--node-text-color": "var(--on-primary)",
-        "--edge-color": "var(--on-surface)",
+        "--group-color": "color-mix(in srgb, #ffe071 92%, var(--surface))",
+        "--title-color": "#08346a",
+        "--node-color": "#fff3c6",
+        "--node-text-color": "#08346a",
+        "--edge-color": "#fff3c6",
     },
     community: {
-        "--group-color": "var(--accent)",
-        "--title-color": "var(--on-accent)",
-        "--node-color": "var(--secondary)",
-        "--node-text-color": "var(--on-secondary)",
-        "--edge-color": "var(--on-accent)",
+        "--group-color": "color-mix(in srgb, #ffa51d 92%, var(--surface))",
+        "--title-color": "#08346a",
+        "--node-color": "#ffe8a8",
+        "--node-text-color": "#08346a",
+        "--edge-color": "#fff3c6",
     },
     industry: {
-        "--group-color": "var(--secondary)",
-        "--title-color": "var(--on-secondary)",
-        "--node-color": "var(--primary)",
-        "--node-text-color": "var(--on-primary)",
-        "--edge-color": "var(--on-secondary)",
+        "--group-color": "color-mix(in srgb, #377cd0 92%, var(--surface))",
+        "--title-color": "#ffffff",
+        "--node-color": "#91d7ff",
+        "--node-text-color": "#08346a",
+        "--edge-color": "#91d7ff",
     },
 };
+const impactClass = (title: string) =>
+    `impact-${title.toLowerCase().replace(/[^a-z]+/g, "-")}`;
 const nodes = data.groups.flatMap((group) =>
     group.nodes.map((node) => ({
         ...node,
@@ -401,10 +403,23 @@ const edges = nodes.map((node) => {
                             >
                                 <div class="stakeholder-detail">
                                     <div
-                                        class="detail-backplate"
-                                        aria-hidden="true"
-                                    />
-                                    <div class="detail-surface">
+                                        class="detail-surface"
+                                        :class="{
+                                            'detail-surface--has-image':
+                                                node.imageUrl,
+                                        }"
+                                    >
+                                        <div
+                                            v-if="node.imageUrl"
+                                            class="detail-media"
+                                        >
+                                            <img
+                                                class="detail-image"
+                                                :src="node.imageUrl"
+                                                :alt="`${node.name} stakeholder image`"
+                                                loading="lazy"
+                                            />
+                                        </div>
                                         <div class="detail-top">
                                             <span class="detail-eyebrow">{{
                                                 mode === "incoming"
@@ -446,7 +461,13 @@ const edges = nodes.map((node) => {
                                                             ]"
                                                             :key="item.title"
                                                         >
-                                                            <dt>
+                                                            <dt
+                                                                :class="
+                                                                    impactClass(
+                                                                        item.title,
+                                                                    )
+                                                                "
+                                                            >
                                                                 {{ item.title }}
                                                             </dt>
                                                             <dd>
@@ -513,7 +534,6 @@ const edges = nodes.map((node) => {
 .stakeholders-panel {
     width: min(100%, calc((100dvh - 5rem) * 1.48));
     margin-inline: auto;
-    background: var(--surface);
     color: var(--on-surface);
     container-type: inline-size;
     border-radius: 1.5rem;
@@ -614,8 +634,8 @@ const edges = nodes.map((node) => {
     place-items: center;
     transform: translate(-50%, -50%);
     border-radius: 1.65cqi;
-    background: var(--primary);
-    color: var(--on-primary);
+    background: #dff3ee;
+    color: #08346a;
     font-size: 2.9cqi;
     z-index: 2;
 }
@@ -673,7 +693,7 @@ const edges = nodes.map((node) => {
     height: 5cqi;
     min-width: 32px;
     min-height: 32px;
-    color: var(--primary);
+    color: #08346a;
     border-radius: 50%;
     cursor: pointer;
 }
@@ -705,41 +725,30 @@ const edges = nodes.map((node) => {
         box-shadow 0.65s;
 }
 .mode-card-incoming {
-    background: var(--primary);
-    color: var(--on-primary);
+    background: #dff3ee;
+    color: #08346a;
 }
 .mode-card-outgoing {
-    background: var(--accent);
-    color: var(--on-accent);
+    background: #56b4df;
+    color: #08346a;
 }
 .mode-card-active {
     transform: translateY(-0.3cqi);
     z-index: 1;
-    box-shadow: 0 10px 18px
-        color-mix(in srgb, var(--on-surface) 27%, transparent);
+    box-shadow: 0 10px 18px color-mix(in srgb, #08346a 32%, transparent);
 }
 /* These are real DOM layers inside the portal, just like ProseEm. */
 .stakeholder-detail {
     position: relative;
     isolation: isolate;
-    color: var(--on-surface);
-}
-.detail-backplate {
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-    transform: translate(6px, 6px);
-    border-radius: 1rem;
-    background: var(--primary);
-    pointer-events: none;
+    color: #ffffff;
 }
 .detail-surface {
-    border: 1px solid color-mix(in srgb, var(--outline) 25%, transparent);
     position: relative;
-    z-index: 1;
     border-radius: 1rem;
-    background: var(--surface-elevated);
+    background: #08346a;
     padding: 1.2rem;
+    min-height: 15.5rem;
     max-height: min(
         560px,
         calc(var(--reka-popover-content-available-height, 80dvh) - 8px)
@@ -753,17 +762,20 @@ const edges = nodes.map((node) => {
     align-items: center;
     justify-content: space-between;
     gap: 0.5rem;
+    min-height: 2rem;
     font-size: 0.75rem;
     font-weight: 700;
 }
 .detail-close {
     display: grid;
     place-items: center;
-    min-width: 32px;
-    height: 32px;
+    position: relative;
+    z-index: 2;
+    min-width: 28px;
+    height: 28px;
     border-radius: 50%;
-    background: var(--secondary);
-    color: var(--on-secondary);
+    background: #dff3ee;
+    color: #08346a;
     font-size: 1.4rem;
     cursor: pointer;
 }
@@ -774,7 +786,14 @@ const edges = nodes.map((node) => {
 .stakeholder-detail h3 {
     font-size: 1.5rem;
     line-height: 1.2;
-    margin: 0.6rem 0;
+    margin: 0.9rem 0 0.55rem;
+}
+.detail-surface--has-image .detail-top,
+.detail-surface--has-image h3 {
+    padding-right: 7.3rem;
+}
+.detail-surface--has-image h3 {
+    max-width: calc(100% - 7rem);
 }
 .detail-names,
 .detail-pending {
@@ -782,14 +801,32 @@ const edges = nodes.map((node) => {
     line-height: 1.6;
 }
 .detail-eyebrow {
-    color: var(--on-secondary);
-    background: var(--secondary);
+    color: #ffffff;
+    background: #0a4296;
     padding: 0.35rem 0.65rem;
     border-radius: 0.65rem;
 }
 .detail-close:hover {
-    background: var(--primary);
-    color: var(--on-primary);
+    background: #ffe071;
+    color: #08346a;
+}
+.detail-media {
+    position: absolute;
+    top: 1.2rem;
+    right: 1.2rem;
+    width: 6.6rem;
+    height: 5.35rem;
+    overflow: hidden;
+    border-radius: 0.85rem;
+}
+.detail-image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.stakeholder-detail dl {
+    margin-top: 1.1rem;
 }
 .stakeholder-detail dl > div + div {
     margin-top: 0.8rem;
@@ -797,12 +834,41 @@ const edges = nodes.map((node) => {
 .stakeholder-detail dt {
     font-size: 0.8rem;
     font-weight: 750;
-    color: var(--on-surface);
+    color: var(--impact-color, #dff3ee);
+    letter-spacing: 0.01em;
 }
 .stakeholder-detail dd {
     margin: 0.2rem 0 0;
     font-size: 0.9rem;
     line-height: 1.6;
+}
+.impact-experiential {
+    --impact-color: #ffd166;
+}
+.impact-technical {
+    --impact-color: #61dfc7;
+}
+.impact-applicational {
+    --impact-color: #9ed3f3;
+}
+.impact-ethical {
+    --impact-color: #ffad2f;
+}
+.impact-treatment {
+    --impact-color: #9ed3f3;
+}
+.impact-psychosocial {
+    --impact-color: #ff8c42;
+}
+.impact-social {
+    --impact-color: #ffd166;
+}
+:global(.dark) .stakeholder-detail .detail-surface {
+    background: #062b65;
+}
+:global(.high-contrast) .stakeholder-detail .detail-surface {
+    background: var(--primary);
+    color: var(--on-primary);
 }
 .detail-enter-active,
 .detail-leave-active {

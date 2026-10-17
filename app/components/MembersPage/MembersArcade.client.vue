@@ -3,7 +3,6 @@ import { Icon } from "@iconify/vue";
 import { gsap } from "gsap";
 import Lenis from "lenis";
 import hamsterUrl from "~~/public/hamster.svg?url";
-import completionHitUrl from "../../../assets/hit.webp";
 import membersData from "../../data/members.json";
 import MemberProfileCard from "./MemberProfileCard.vue";
 
@@ -11,6 +10,8 @@ const hammerUrl =
     "https://static.igem.wiki/teams/6133/wiki/teamphoto/hammer.avif";
 const completionObjectUrl =
     "https://static.igem.wiki/teams/6133/wiki/homepage/3m3sh.avif";
+const completionHitUrl =
+    "https://static.igem.wiki/teams/6133/wiki/homepage/hit.webp";
 
 interface Member {
     id: string;

@@ -325,7 +325,14 @@ onBeforeUnmount(() => media?.revert());
                             y="62"
                             text-anchor="middle"
                         >
-                            {{ cloud.letter }}
+                            {{ cloud.letter }}<tspan
+                                v-if="
+                                    cloud.key === 'intervene' ||
+                                    cloud.key === 'feedback'
+                                "
+                                dy="2"
+                                font-size="60%"
+                            >{{ index + 1 }}</tspan>
                         </text>
                     </svg>
                 </div>

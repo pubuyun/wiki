@@ -7,9 +7,9 @@ order: 2
 
 ::content-components-collapsible-paragraph{title="Summary" id="summary" preview=true}
 
-Starting from the experimental inward-facing structure of *PepT<sub>Sh</sub>* (PDB: 6EXS) and the hotspot residues defined in our analysis, *RFdiffusion3* (RFD3) used atom-based diffusion to generate candidate binder backbones around the intended extracellular interface :fn-ref{#1} :fn-ref{#8}. Each generated structure specifies a three-dimensional backbone conformation and a potential binding interface but does not specify the final amino acid sequence.
+Starting from the experimental inward-facing structure of *PepT<sub>Sh</sub>* (PDB: 6EXS) and the hotspot residues defined in our analysis, *RFdiffusion3* (RFD3) used atom-based diffusion to generate candidate binder backbones around the intended extracellular interface :fn-ref{#1} :fn-ref{#9}. Each generated structure specifies a three-dimensional backbone conformation and a potential binding interface but does not specify the final amino acid sequence.
 
-*ProteinMPNN* :fn-ref{#19} subsequently designed sequences for each backbone using the backbone geometry of the designed complex as context. We then used *RoseTTAFold3* (RF3) to co-fold every sequence with the PepT<sub>Sh</sub> crystal structure and assess whether the intended complex structure was confidently recovered. Confidence and protein–protein interface metrics from these predictions were used to rank the candidates.
+*ProteinMPNN* :fn-ref{#20} subsequently designed sequences for each backbone using the backbone geometry of the designed complex as context. We then used *RoseTTAFold3* (RF3) :fn-ref{#11} to co-fold every sequence with the PepT<sub>Sh</sub> crystal structure and assess whether the intended complex structure was confidently recovered. Confidence and protein–protein interface metrics from these predictions were used to rank the candidates.
 
 ::
 
@@ -17,7 +17,7 @@ Starting from the experimental inward-facing structure of *PepT<sub>Sh</sub>* (P
 
 Conformation-selective protein binders targeting the inward-facing state of the peptide transporter PepT<sub>Sh</sub> were designed using the *Rosetta Foundry* workflow. The inward-facing PepT<sub>Sh</sub> structure (PDB: 6EXS) :fn-ref{#1} was used as the design target.
 
-Hotspots were determined during the [characterize stage](/model/transporter-binder/characterize). RFdiffusion3 :fn-ref{#8} was then used to generate a total of 1,000 candidate backbone structures with the following configuration.
+Hotspots were determined during the [characterize stage](/model/transporter-binder/characterize). RFdiffusion3 :fn-ref{#9} was then used to generate a total of 1,000 candidate backbone structures with the following configuration.
 
 ::content-components-code-group
 ---
@@ -59,7 +59,7 @@ sync: peptsh-interface-design
 ```
 ::
 
-For each generated backbone, two amino-acid sequences were designed using ProteinMPNN :fn-ref{#19}, resulting in 2,000 sequence–structure candidates.
+For each generated backbone, two amino-acid sequences were designed using ProteinMPNN :fn-ref{#20}, resulting in 2,000 sequence–structure candidates.
 
 ## Validation
 
@@ -71,7 +71,7 @@ ProteinMPNN-designed sequences were co-folded with the inward-facing PepT<sub>Sh
 
 Predicted structures were subsequently filtered according to whether the binder contacted the predefined extracellular interface of PepT<sub>Sh</sub>.
 
-A binder was considered to contact the intended interface when at least **three** target residues were located within **5 Å** of binder heavy atoms :fn-ref{#20} and at least **50%** of all contacted receptor residues belonged to the predefined extracellular regions.
+A binder was considered to contact the intended interface when at least **three** target residues were located within **5 Å** of binder heavy atoms :fn-ref{#21} and at least **50%** of all contacted receptor residues belonged to the predefined extracellular regions.
 
 ### Ranking
 

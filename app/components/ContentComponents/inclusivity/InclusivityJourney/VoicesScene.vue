@@ -35,7 +35,6 @@ const sourceArrowIcon = {
 const voices = [
     {
         name: "Wanda Díaz Merced",
-        group: "Blind community",
         image: wandaImage,
         field: "A blind astrophysicist",
         description: "Pioneering new ways to hear astronomical data.",
@@ -48,7 +47,6 @@ const voices = [
     },
     {
         name: "Temple Grandin",
-        group: "Children on the autism spectrum",
         image: templeImage,
         field: "An animal scientist on the autism spectrum",
         description: "Transforming livestock handling and animal welfare.",
@@ -61,7 +59,6 @@ const voices = [
     },
     {
         name: "Derek Braun",
-        group: "Deaf community",
         image: derekImage,
         field: "A deaf geneticist",
         description:
@@ -76,7 +73,6 @@ const voices = [
     },
     {
         name: "Gabriel Reyes",
-        group: "Low socio-economic backgrounds",
         image: gabrielImage,
         field: "A neuroscientist & founder of FLi Sci",
         description:
@@ -90,7 +86,6 @@ const voices = [
     },
     {
         name: "Craig Venter",
-        group: "Modeling beginners",
         image: craigImage,
         field: "A genomics pioneer",
         description:
@@ -105,7 +100,6 @@ const voices = [
     },
     {
         name: "Jia Lanpo",
-        group: "Older adults with limited formal education",
         image: jiaImage,
         field: "A pioneering paleoanthropologist",
         description:
@@ -195,8 +189,6 @@ onMounted(async () => {
             const bridge = root.querySelector<HTMLElement>(".voices-bridge")!;
             const guide = root.querySelector<HTMLElement>(".voices-guide")!;
             const speech = root.querySelectorAll<HTMLElement>(".guide-line");
-            const gallery =
-                root.querySelector<HTMLElement>(".portrait-gallery")!;
             gsap.set(panels, { autoAlpha: 0, y: 20 });
             gsap.set(panels[0]!, { autoAlpha: 1, y: 0 });
             gsap.set(bridge, { autoAlpha: 0 });
@@ -263,7 +255,6 @@ onMounted(async () => {
                 );
             });
             timeline
-                .to(gallery, { autoAlpha: 0, y: -25, duration: 0.35 }, 8.05)
                 .set(bridge, { autoAlpha: 1 }, 8.4)
                 .to(
                     guide,
@@ -426,9 +417,6 @@ onUnmounted(() => {
                                 class="voice-face voice-back"
                                 :aria-hidden="!isTurned(index)"
                             >
-                                <span class="card-eyebrow">{{
-                                    voice.group
-                                }}</span>
                                 <strong class="data-stat">{{
                                     voice.stat
                                 }}</strong>
@@ -590,10 +578,6 @@ onUnmounted(() => {
     transform: rotateY(180deg);
     background: #e1eee9;
     box-shadow: 0 7px 0 #a0c4bb;
-}
-.card-eyebrow {
-    font-size: 1rem;
-    color: #2d5a8b;
 }
 .quote-mark {
     font-family: var(--font-righteous), "Righteous", sans-serif;

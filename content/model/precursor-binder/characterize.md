@@ -28,7 +28,7 @@ alt:
 src:
   - https://static.igem.wiki/teams/6133/wiki/drylab/model/precursor-binder-characterize-fig1.avif
 caption: Fig. 1 | Structure diagrams for Cys-Gly-(S)-3M3SH and Cys-Gly-(R)-3M3SH
-  precursors and the smells of their corresponding 3M3SH molecules.
+  precursors and the smells of their corresponding 3M3SH molecules :fn-ref{#3}.
 imageBackground: white
 ---
 ::

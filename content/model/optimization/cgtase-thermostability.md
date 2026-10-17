@@ -11,7 +11,12 @@ src:
   - https://static.igem.wiki/teams/6133/wiki/drylab/model/optimization-cgtase-thermostability-fig1.avif
 alt:
   - "Conserved and functionally important positions are excluded, single mutations are scored, a pairwise graph guides diverse beam search, and multipoint designs proceed to testing."
-caption: "Fig. 1 | Schematic of thermal stability optimization workflow."
+caption: "Fig. 1 | **Schematic of thermal stability optimization workflow.**
+  Starting from T370K and T370R/F183W parent enzymes, important residues are
+  excluded from mutation. Remaining positions are screened with SPURS for
+  favorable single substitutions. Pairwise compatibility analysis and a diverse
+  beam search construct multi-point mutants, which are selected for experimental
+  testing at increasing mutation counts :fn-ref{#32} :fn-ref{#33}."
 imageBackground: white
 ---
 
@@ -19,9 +24,9 @@ imageBackground: white
 
 ## Filtering
 
-The design begins with PDB 1CXI :fn-ref{#28}. The following are excluded from mutation:
+The design begins with PDB 1CXI :fn-ref{#29}. The following are excluded from mutation:
 
-- Highly conserved residues, evaluated using *Rate4Site* :fn-ref{#29} and *ConSurf* :fn-ref{#30};
+- Highly conserved residues, evaluated using *Rate4Site* :fn-ref{#30} and *ConSurf* :fn-ref{#31};
 
 - residues within 6 Å of ligand heavy atoms;
 
@@ -34,13 +39,13 @@ The design begins with PDB 1CXI :fn-ref{#28}. The following are excluded from mu
 
 ## Single-Point Mutagenesis
 
-The remaining positions are screened with [*SPURS*](https://github.com/luo-group/SPURS) :fn-ref{#31} using the T370K and T370R/F183W mutated sequences and their predicted structures from *AlphaFold 3*. For each mutant, single mutations with ΔΔG below -0.5 kcal/mol are retained, as instructed in the paper.
+The remaining positions are screened with [*SPURS*](https://github.com/luo-group/SPURS) :fn-ref{#32} using the T370K and T370R/F183W mutated sequences and their predicted structures from *AlphaFold 3*. For each mutant, single mutations with ΔΔG below -0.5 kcal/mol are retained, as instructed in the paper.
 
 ## Multi-Point Mutagenesis
 
 ### Pairwise Compatibility Graph
 
-Because SPURS is trained primarily on single- and double-mutation data, its predictions for multipoint mutants may be less reliable. Inspired by *FireProt* :fn-ref{#32}, we built a pairwise compatibility graph where each node represents a single mutation and each edge is classified with the mutation pair's predicted stability and epistasis.
+Because SPURS is trained primarily on single- and double-mutation data, its predictions for multipoint mutants may be less reliable. Inspired by *FireProt* :fn-ref{#33}, we built a pairwise compatibility graph where each node represents a single mutation and each edge is classified with the mutation pair's predicted stability and epistasis.
 
 For mutations $i$ and $j$, the epistatic effect is defined as $\varepsilon_{ij}=\Delta\Delta G(i,j)-\Delta\Delta G(i)-\Delta\Delta G(j)$.
 

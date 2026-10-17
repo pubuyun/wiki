@@ -23,7 +23,7 @@ We therefore used the experimentally determined structure (PDB: 6EXS) as the des
 
 The conformational changes of PepT<sub>Sh</sub> are driven by protonation-dependent rearrangements of key salt bridges involving transmembrane helices (TMs) 1, 4, 7, and 10 :fn-ref{#5}. However, these residues are buried within the transporter and are unlikely to be directly accessible to an extracellular binder.
 
-A homology model of the OF state of PepT<sub>Sh</sub> is derived from an MD-predicted PepTSo structure reported in the literature :fn-ref{#17}. By comparing the experimental IF structure of PepT<sub>Sh</sub> (PDB: 6EXS) :fn-ref{#1} with the OF model, we identified accessible extracellular regions and selected hotspot residues for binder generation.
+A homology model of the OF state of PepT<sub>Sh</sub> is derived from an MD-predicted PepTSo structure reported in the literature :fn-ref{#18}. By comparing the experimental IF structure of PepT<sub>Sh</sub> (PDB: 6EXS) :fn-ref{#1} with the OF model, we identified accessible extracellular regions and selected hotspot residues for binder generation.
 
 Two extracellular electrostatic networks were of particular interest:
 
@@ -43,7 +43,7 @@ alt:
   - ""
   - ""
   - ""
-caption: "Fig. 1 | **Structure and extracellular surface of PepT<sub>Sh</sub>.** **(a)** Inward-facing conformation of PepT<sub>Sh</sub> (PDB 6EXS); **(b)** detailed view of the electrostatic interaction network identified in structural analysis. A close-up of the highlighted region in **(a)**; **(c)** outward-facing conformation of PepT<sub>Sh</sub> (homology modelled); **(d)** broken electrostatic interaction in outward-facing PepT<sub>Sh</sub>, a close-up of the highlighted region in **(c)**. Green: C-terminal bundle; blue: N-terminal bundle; orange: TMA and TMB."
+caption: "Fig. 1 | **Structure and extracellular surface of PepT<sub>Sh</sub>.** **(a)** Inward-facing conformation of PepT<sub>Sh</sub> (PDB 6EXS); **(b)** detailed view of the electrostatic interaction network identified in structural analysis. A close-up of the highlighted region in **(a)**; **(c)** outward-facing conformation of PepT<sub>Sh</sub> (homology modelled by SWISS-MODEL :fn-ref{#8}); **(d)** broken electrostatic interaction in outward-facing PepT<sub>Sh</sub>, a close-up of the highlighted region in **(c)**. Green: C-terminal bundle; blue: N-terminal bundle; orange: TMA and TMB."
 imageBackground: white
 label: "Characterize — Fig. 1"
 ---
@@ -70,7 +70,7 @@ alt:
   - "A ribbon model highlights the selected extracellular helices in blue against the remaining transporter in gray."
   - "A side view of the transporter marks the selected extracellular region in blue, with an arrow indicating the extracellular direction."
   - "Orange hotspot residues border a green hydrophobic patch on the blue extracellular surface."
-caption: "Fig. 2 | **The target extracellular interface of PepT<sub>Sh</sub>.** **(a)** Highlight of the target region (PDB 6EXS); **(b)** side view of the selected contig region; upward is the extracellular direction; **(c)** selected hotspots (orange) and the hydrophobic patch between them (green)."
+caption: "Fig. 2 | **The target extracellular interface of PepT<sub>Sh</sub>.** **(a)** Highlight of the target region (PDB 6EXS); **(b)** side view of the selected target region; upward is the extracellular direction; **(c)** selected hotspots (orange) and the hydrophobic patch between them (green)."
 imageBackground: white
 label: "Characterize — Fig. 2"
 ---
@@ -79,7 +79,7 @@ label: "Characterize — Fig. 2"
 
 ## Binder Size
 
-*S. hominis* is a Gram-positive bacterium surrounded by a thick peptidoglycan cell wall. A study of bacterial cell-wall permeability estimated that globular proteins of approximately 25 kDa or less can diffuse through the peptidoglycan meshwork :fn-ref{#18}.
+*S. hominis* is a Gram-positive bacterium surrounded by a thick peptidoglycan cell wall. A study of bacterial cell-wall permeability estimated that globular proteins of approximately 25 kDa or less can diffuse through the peptidoglycan meshwork :fn-ref{#19}.
 
 After generating testing rounds and inspecting their structures, we designed compact, predominantly α-helical binders of 80–120 amino acids. This size range is well below 25 kDa while structurally still providing sufficient surface area to engage and stabilize the IF extracellular face, thereby stabilizing the IF conformation.
 

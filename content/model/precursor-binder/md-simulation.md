@@ -1,8 +1,8 @@
 ---
 title: MD Simulation
 citationIds:
-  - "15"
   - "16"
+  - "17"
 description: GROMACS simulations, RMSD analysis, and MM/PBSA estimates evaluate precursor-binder stability and support candidate selection.
 hasReference: false
 order: 4
@@ -16,14 +16,14 @@ title: Summary
 ---
 While a predicted protein-ligand complex is a good static representation of the protein-ligand interaction, in reality the complex is constantly moving and experiences various modes of vibration. We therefore performed 50-ns molecular dynamics (MD) simulations in *GROMACS* to test whether the binder-Cys-Gly-3M3SH complex can remain stable and retain the dipeptide over time.
 
-:fn-ref{#15}
+:fn-ref{#16}
 ::
 
 ## Molecular Dynamics Simulation
 
 ### System Preparation
 
-Each system underwent energy minimization, ion equilibration, constant-volume, constant-temperature (NVT) equilibration, and constant-pressure, constant-temperature (NPT) equilibration before the production simulation. We then evaluated protein and ligand root-mean-square deviation (RMSD) and estimated binding free energy using *gmx\_MMPBSA*. These metrics were used to compare candidates from the *RFdiffusion3* and *Proteina-Complexa* routes.
+Each system underwent energy minimization, ion equilibration, constant-volume, constant-temperature (NVT) equilibration, and constant-pressure, constant-temperature (NPT) equilibration before the production simulation. We then evaluated protein and ligand root-mean-square deviation (RMSD) and estimated binding free energy using *gmx\_MMPBSA* :fn-ref{#17}. These metrics were used to compare candidates from the *RFdiffusion3* and *Proteina-Complexa* routes.
 
 **Ion Equilibration (ION)**
 Counterions and solvent conditions were introduced to neutralize the system and establish the desired axillary environment.
@@ -199,7 +199,7 @@ src:
 titles:
   - "GreatBay-SCIE: VMD of precursor binder designed by rfd3 (2026)"
   - "GreatBay-SCIE: VMD of Precursor Binder Designed by Proteina-Complexa (2026)"
-caption: "Video 1 | MD trajectories show precursor–binder motion for designs from **(a)** RFdiffusion3 and **(b)** Proteina-Complexa."
+caption: "Video 1 | MD trajectories show precursor–binder motion for designs from **(a)** RFdiffusion3 and **(b)** Proteina-Complexa :fn-ref{#34}."
 label: Precursor binder MD trajectories
 portrait: true
 ---
@@ -211,7 +211,7 @@ Each production MD frame was least-squares fitted to the initial protein Cα coo
 
 ### MM/PBSA Free Energy
 
-Binding free energies were estimated using the **MM/PBSA** :fn-ref{#16} approach for the last 80 frames (10–50 ns) to evaluate the energetic favorability of protein–ligand interactions. Candidates with calculated binding free energies **below −20 kcal/mol** were considered to exhibit favorable predicted binding stability.
+Binding free energies were estimated using the **MM/PBSA** :fn-ref{#17} approach for the last 80 frames (10–50 ns) to evaluate the energetic favorability of protein–ligand interactions. Candidates with calculated binding free energies **below −20 kcal/mol** were considered to exhibit favorable predicted binding stability.
 
 ### Binder Selection
 

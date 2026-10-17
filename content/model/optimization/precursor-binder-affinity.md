@@ -11,7 +11,11 @@ src:
   - https://static.igem.wiki/teams/6133/wiki/drylab/model/optimization-precursor-binder-affinity-fig1.avif
 alt:
   - "Selected precursor binders undergo complex preparation, pocket definition, single-position proofreading, conditional probability scoring, burial filtering, co-folding, and polar validation."
-caption: "Fig. 1 | Schematic for binder affinity optimization workflow."
+caption: "Fig. 1 | **Schematic for precursor binder affinity optimization
+  workflow.** Predicted structures of experimentally selected binders are
+  minimized and prepared. LASErMPNN neural proofreading is used to rank
+  substitutions at ligand-pocket positions. Mutations that pass the subsequent
+  filters are selected for wet-lab testing :fn-ref{#7}."
 imageBackground: white
 ---
 
@@ -21,15 +25,15 @@ We adapted a workflow following methods by [Benjamin Fry](https://www.nature.com
 
 ## Input Preparation
 
-Among precursor binders, BC7, BR8 and BR10 displayed reliable experimental reduction and are therefore selected for optimization. The predicted binder structures from *RoseTTAFold3* are used as the initial structures. The ligands are set in the NH₃⁺/COO⁻ state according to pKa and axillary pH :fn-ref{#23}.
+Among precursor binders, BC7, BR8 and BR10 displayed reliable experimental reduction and are therefore selected for optimization. The predicted binder structures from *RoseTTAFold3* are used as the initial structures. The ligands are set in the NH₃⁺/COO⁻ state according to pKa and axillary pH :fn-ref{#24}.
 
-Following the paper’s *Amber14*/*SMIRNOFF* preparation, complexes underwent unrestrained *OpenMM* minimization. We specified *OpenFF* 2.3.0, pH 6 hydrogens, no added solvent and the default NoCutoff method.
+Following the paper’s *Amber14*/*SMIRNOFF* preparation :fn-ref{#7}, complexes underwent unrestrained *OpenMM* minimization. We specified *OpenFF* 2.3.0, pH 6 hydrogens, no added solvent and the default NoCutoff method.
 
 ## Neural Proofreading
 
 ### Single-Position Proofreading
 
-Following the procedure in the paper, we defined the pocket as residues with any heavy atom within 5 Å of a ligand heavy atom.
+Following the procedure in the paper :fn-ref{#7}, we defined the pocket as residues with any heavy atom within 5 Å of a ligand heavy atom.
 
 For each evaluation, we released one position and fixed all other amino-acid identities. The target position was decoded last. With *dropout* active, we averaged probabilities of each amino acid in the target position over 10 dropout calls and 10 decoding orders per call, then normalized. Each position therefore had 100 probability samples of 20 amino acids.
 

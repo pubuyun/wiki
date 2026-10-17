@@ -7,9 +7,9 @@ order: 3
 
 ::content-components-collapsible-paragraph{title="Summary" id="summary" preview=true}
 
-While a co-folded model provides a useful static representation of the *PepT<sub>Sh</sub>*–binder interaction, it does not capture the dynamic stability of the complex in a membrane environment. We therefore embedded the selected complexes in POPG bilayers using *CHARMM-GUI* Membrane Builder and performed molecular dynamics simulations with *GROMACS* :fn-ref{#15} :fn-ref{#21}.
+While a co-folded model provides a useful static representation of the *PepT<sub>Sh</sub>*–binder interaction, it does not capture the dynamic stability of the complex in a membrane environment. We therefore embedded the selected complexes in POPG bilayers using *CHARMM-GUI* Membrane Builder and performed molecular dynamics simulations with *GROMACS* :fn-ref{#16} :fn-ref{#22}.
 
-Each system underwent energy minimization and restrained equilibration before the production simulation. We then monitored the Cα RMSD of the membrane transporter, binder, and complete transporter–binder complex, and estimated binding free energy using *gmx_MMPBSA* :fn-ref{#16}. These metrics were used to compare the candidates and determine whether they retained their predicted binding configurations over time.
+Each system underwent energy minimization and restrained equilibration before the production simulation. We then monitored the Cα RMSD of the membrane transporter, binder, and complete transporter–binder complex, and estimated binding free energy using *gmx_MMPBSA* :fn-ref{#17}. These metrics were used to compare the candidates and determine whether they retained their predicted binding configurations over time.
 
 ::
 
@@ -17,7 +17,7 @@ Each system underwent energy minimization and restrained equilibration before th
 
 ### System Preparation
 
-The selected PepT<sub>Sh</sub>–binder complexes were prepared for membrane molecular dynamics simulations using CHARMM-GUI Membrane Builder :fn-ref{#21} together with the automated *CHARMM-GUI-Auto* :fn-ref{#22} workflow.
+The selected PepT<sub>Sh</sub>–binder complexes were prepared for membrane molecular dynamics simulations using CHARMM-GUI Membrane Builder :fn-ref{#22} together with the automated *CHARMM-GUI-Auto* :fn-ref{#23} workflow :fn-ref{#35} :fn-ref{#36} :fn-ref{#37}.
 
 The transporter–binder complexes were oriented by aligning the principal molecular axis with the membrane normal and were embedded in a symmetric POPG lipid bilayer. The membrane system was constructed with an XY dimension of approximately 90 Å, solvated, neutralized, and supplemented with 0.15 M NaCl.
 
@@ -93,7 +93,7 @@ sync: transporter-binder-membrane-system
 
 ### Simulation Protocol
 
-Each membrane system was subjected to the standard CHARMM-GUI output simulation workflow, including energy minimization, restrained equilibration, and 100 ns of production molecular dynamics simulation using GROMACS :fn-ref{#15}.
+Each membrane system was subjected to the standard CHARMM-GUI output simulation workflow, including energy minimization, restrained equilibration, and 100 ns of production molecular dynamics simulation using GROMACS :fn-ref{#16}.
 
 ## Analysis
 
@@ -122,7 +122,7 @@ The transporter RMSD was used to monitor the stability of the membrane protein, 
 
 ### Binding Free Energy
 
-Binding free energies between PepT<sub>Sh</sub> and the designed binders were estimated using `gmx_MMPBSA` :fn-ref{#16}.
+Binding free energies between PepT<sub>Sh</sub> and the designed binders were estimated using `gmx_MMPBSA` :fn-ref{#17}.
 
 The membrane transporter and binder were defined as separate receptor and ligand groups, respectively, and the trajectories were analyzed using the generalized Born model with `igb = 5` and a salt concentration of 0.15 M. We did not set an explicit configurational entropy correction or an implicit membrane model. Given these approximations, **MM/GBSA** estimates were interpreted alongside RMSD stability to prioritize experimental candidates.
 

@@ -31,7 +31,7 @@ imageBackground: white
 
 ## Hydrophobic Tail Stabilization
 
-Although CGTase already contains a hydrophobic pocket that accommodates alcohol substrates for glycosylation, we aimed to improve its affinity for the precursor’s distinctive 3-methyl-3-sulfanylhexan-1-ol-derived moiety.
+Although CGTase already contains a hydrophobic pocket that accommodates alcohol substrates for glycosylation :fn-ref{#6} :fn-ref{#27}, we aimed to improve its affinity for the precursor’s distinctive 3-methyl-3-sulfanylhexan-1-ol-derived moiety.
 
 To better accommodate the precursor’s side chain, we proposed replacing F183 and F259 with Trp to increase packing around the hydrophobic tail.
 

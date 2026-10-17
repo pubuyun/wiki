@@ -7,7 +7,7 @@ order: 3
 
 ::content-components-collapsible-paragraph{title="Summary" id="summary" preview=true}
 
-To assess whether the designed mutations improved the stability of precursor binding to CGTase, we performed molecular dynamics simulations of nine candidate mutant–precursor complexes in *GROMACS* :fn-ref{#15}. Restraints based on the experimental structure :fn-ref{#6} were applied to maintain the geometry of the covalent glycosyl–enzyme intermediate.
+To assess whether the designed mutations improved the stability of precursor binding to CGTase, we performed molecular dynamics simulations of nine candidate mutant–precursor complexes in *GROMACS* :fn-ref{#16}. Restraints based on the experimental structure :fn-ref{#6} were applied to maintain the geometry of the covalent glycosyl–enzyme intermediate.
 
 Each system underwent energy minimization and restrained equilibration before production simulation. RMSD profiles were then compared to evaluate stability and support mutant selection. Three mutants—F183W/T370R, T370K, and T370R—were selected for experimental validation alongside the wild-type enzyme; only F183W/T370R was successfully tested as designed.
 
@@ -22,7 +22,7 @@ The E257Q substitution in the 1CXL template was reverted to wild-type E257. The 
 
 ### Simulation Protocol
 
-Each system was subjected to the standard MD simulation workflow, including energy minimization, restrained equilibration, and production molecular dynamics simulation using GROMACS :fn-ref{#15}. The configurations are the same as those for [MD simulation of precursor binders](/model/precursor-binder/md-simulation), except that the duration was increased to 100 ns.
+Each system was subjected to the standard MD simulation workflow, including energy minimization, restrained equilibration, and production molecular dynamics simulation using GROMACS :fn-ref{#16}. The configurations are the same as those for [MD simulation of precursor binders](/model/precursor-binder/md-simulation), except that the duration was increased to 100 ns.
 
 ## Analysis
 
