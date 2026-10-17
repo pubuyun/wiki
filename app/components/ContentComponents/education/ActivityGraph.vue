@@ -757,6 +757,10 @@ onBeforeUnmount(() => {
     width: min(10rem, 20%);
     transform: translateY(-50%);
 }
+.activity-graph__label-leaders {
+    /* Keep connectors visible across overlapping bubbles (node layers 0–2). */
+    z-index: 3;
+}
 .activity-graph__label-leaders line {
     stroke: var(--on-surface);
     stroke-width: 1;
@@ -801,13 +805,16 @@ onBeforeUnmount(() => {
 .activity-graph__label {
     position: absolute;
     z-index: 1;
+    min-width: min-content;
     padding: 0.25rem 0.35rem;
     border-radius: 0.4rem;
     font-size: 1rem;
     font-weight: 500;
     line-height: 1.25;
     text-align: center;
-    overflow-wrap: anywhere;
+    overflow-wrap: normal;
+    word-break: normal;
+    hyphens: none;
 }
 .activity-graph__label[data-placement="outside"] {
     background: var(--surface);

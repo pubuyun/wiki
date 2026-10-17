@@ -97,6 +97,19 @@ Each membrane system was subjected to the standard CHARMM-GUI output simulation 
 
 ## Analysis
 
+::content-components-video-panels
+---
+src:
+  - https://video.igem.org/videos/embed/sbgujDE7Lq6eKGHkeoeFXh
+  - https://video.igem.org/videos/embed/t1vqUKhw4yTzM9HiTEmzRf
+titles:
+  - "GreatBay-SCIE: Transporter Binder Interface (2026)"
+  - "GreatBay-SCIE: Transporter Binder Full (2026)"
+caption: "Video 1 | MD trajectories show the transporter–binder complex through **(a)** a close-up of the binding interface and **(b)** a full-system view."
+label: Transporter binder MD trajectories
+---
+::
+
 ### RMSD Analysis
 
 ::content-components-model-document-rmsd-xvg-chart{collection="transporter-binder"}

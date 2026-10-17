@@ -3,6 +3,8 @@ import { Icon } from "@iconify/vue";
 import { gsap } from "gsap";
 import Lenis from "lenis";
 import hamsterUrl from "~~/public/hamster.svg?url";
+import completionObjectUrl from "../../../assets/3m3sh.png";
+import completionHitUrl from "../../../assets/hit.webp";
 import membersData from "../../data/members.json";
 import MemberProfileCard from "./MemberProfileCard.vue";
 
@@ -153,6 +155,12 @@ const canScrollGalleryRight = ref(false);
 const isPortrait = ref(false);
 const activeMobilePanel = ref<"game" | "members">("game");
 const howToPlayButton = ref<HTMLButtonElement>();
+const completionAnimationVisible = ref(false);
+const completionAnimationPlayed = ref(false);
+const completionHitVisible = ref(false);
+const completionHitSource = ref(completionHitUrl);
+const completionObject = ref<SVGGElement>();
+const completionHit = ref<HTMLImageElement>();
 
 const unlockedSet = computed(() => new Set(unlockedIds.value));
 const failedAnimalSet = computed(() => new Set(failedAnimalIds.value));
@@ -210,6 +218,7 @@ let hammerYTo: ReturnType<typeof gsap.quickTo> | undefined;
 let hammerSwingTimeline: gsap.core.Timeline | undefined;
 let hamsterTimeline: gsap.core.Timeline | undefined;
 let lightTimeline: gsap.core.Timeline | undefined;
+let completionTimeline: gsap.core.Timeline | undefined;
 let profileFlipTween: gsap.core.Tween | undefined;
 let panelSlideTimeline: gsap.core.Timeline | undefined;
 let profileRotation = 0;
@@ -231,6 +240,10 @@ function setHamsterRef(element: unknown, index: number) {
 
 function setLightRef(element: unknown, index: number) {
     lightElements[index] = (element as SVGGElement | null) ?? undefined;
+}
+
+function setCompletionObjectRef(element: unknown) {
+    completionObject.value = (element as SVGGElement | null) ?? undefined;
 }
 
 function isUnlocked(memberId: string) {
@@ -348,6 +361,100 @@ function hideAllHamsters() {
     });
 }
 
+function resetCompletionAnimation() {
+    completionTimeline?.kill();
+    completionTimeline = undefined;
+    completionAnimationVisible.value = false;
+    completionHitVisible.value = false;
+    completionAnimationPlayed.value = false;
+}
+
+async function playCompletionAnimation() {
+    if (completionAnimationPlayed.value) return;
+    completionAnimationPlayed.value = true;
+    // The CLEAR marquee and live message provide the same result without motion.
+    if (reducedMotion.value) return;
+
+    completionAnimationVisible.value = true;
+    completionHitVisible.value = false;
+    // A distinct image resource restarts the looping WebP for each new game.
+    completionHitSource.value = `${completionHitUrl}${completionHitUrl.includes("?") ? "&" : "?"}clear=${Date.now()}`;
+    const returnToGame = isPortrait.value && activeMobilePanel.value !== "game";
+    if (returnToGame) {
+        switchMobilePanel("game");
+    }
+    await nextTick();
+    if (returnToGame) {
+        arcadeRoot.value
+            ?.querySelector<HTMLButtonElement>(".cabinet-button-play")
+            ?.focus({ preventScroll: true });
+    }
+
+    const object = completionObject.value;
+    if (!object || !completionAnimationVisible.value) return;
+
+    completionTimeline?.kill();
+    gsap.set(object, {
+        y: 260,
+        scaleX: 0.85,
+        scaleY: 0.8,
+        autoAlpha: 1,
+        svgOrigin: "495 735",
+    });
+    completionTimeline = gsap.timeline({
+        onComplete: () => {
+            completionHitVisible.value = true;
+        },
+    });
+    completionTimeline.to(object, {
+        y: 0,
+        scaleX: 1,
+        scaleY: 1,
+        duration: 0.5,
+        ease: "back.out(1.5)",
+    });
+}
+
+function playCompletionStrike() {
+    const object = completionObject.value;
+    const hit = completionHit.value;
+    if (!object || !hit || !completionAnimationVisible.value) return;
+
+    completionTimeline?.kill();
+    completionTimeline = gsap.timeline({
+        onComplete: () => {
+            completionAnimationVisible.value = false;
+            completionHitVisible.value = false;
+        },
+    });
+    // WebP frame 5 starts at 600ms: sink the target as its hammer lands.
+    completionTimeline
+        .addLabel("impact", 0.6)
+        .to(
+            object,
+            {
+                y: 30,
+                scaleX: 1.12,
+                scaleY: 0.65,
+                duration: 0.07,
+                ease: "power3.in",
+            },
+            "impact",
+        )
+        .to(object, {
+            y: 260,
+            scaleX: 0.8,
+            scaleY: 0.65,
+            duration: 0.25,
+            ease: "power3.in",
+        })
+        .to(hit, { autoAlpha: 0, duration: 0.08 }, "impact+=0.01");
+}
+
+watch(reducedMotion, (reduced) => {
+    if (reduced && completionAnimationVisible.value) resetCompletionAnimation();
+});
+
 function saveUnlocks() {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(unlockedIds.value));
 }
@@ -432,6 +539,7 @@ function finishHamsterTurn(holeIndex: number) {
         gamePhase.value = "complete";
         clearGameTimers();
         liveMessage.value = "Collection complete. All members are revealed.";
+        void playCompletionAnimation();
         return;
     }
 
@@ -483,6 +591,7 @@ function spawnHamster() {
     if (!member) {
         gamePhase.value = "complete";
         liveMessage.value = "Collection complete. All members are revealed.";
+        void playCompletionAnimation();
         return;
     }
     preparedMemberId = null;
@@ -560,6 +669,7 @@ function restartGame() {
     activeMemberId.value = null;
     preparedMemberId = null;
     unlockedIds.value = [];
+    resetCompletionAnimation();
     selectedMemberId.value = null;
     frontMemberId.value = null;
     backMemberId.value = null;
@@ -594,6 +704,7 @@ function skipGame() {
         return;
     }
 
+    if (howToPlayOpen.value) void closeHowToPlay();
     clearGameTimers();
     hamsterTimeline?.kill();
     hamsterTimelinePausedByHelp = false;
@@ -605,6 +716,7 @@ function skipGame() {
     manuallyPaused.value = false;
     hideAllHamsters();
     saveUnlocks();
+    void playCompletionAnimation();
 
     const firstMember = galleryMembers[0];
     if (firstMember) void showProfile(firstMember.id);
@@ -1253,6 +1365,7 @@ function switchMobilePanel(panel: "game" | "members") {
 
 onMounted(async () => {
     window.addEventListener("keydown", handleSkipCodeKeydown);
+    preloadImage(completionObjectUrl);
     restoreUnlocks();
     await nextTick();
     if (!arcadeRoot.value || !gameStage.value || !hammer.value) return;
@@ -1343,6 +1456,7 @@ onMounted(async () => {
 
 onBeforeUnmount(() => {
     clearGameTimers();
+    resetCompletionAnimation();
     if (skipCodeResetTimer) clearTimeout(skipCodeResetTimer);
     window.removeEventListener("keydown", handleSkipCodeKeydown);
     resizeObserver?.disconnect();
@@ -1375,7 +1489,10 @@ onBeforeUnmount(() => {
             >
                 <div
                     class="game-cabinet"
-                    :class="{ 'is-help-open': howToPlayOpen }"
+                    :class="{
+                        'is-help-open': howToPlayOpen,
+                        'is-celebrating': completionAnimationVisible,
+                    }"
                     @keydown.esc.stop="closeHowToPlay"
                 >
                     <div
@@ -1501,6 +1618,11 @@ onBeforeUnmount(() => {
                                 >
                                     <path
                                         :d="`M ${hole.x - GAME_TUNING.hamsterClipHalfWidth} ${hole.y - GAME_TUNING.hamsterClipTopOffset} H ${hole.x + GAME_TUNING.hamsterClipHalfWidth} V ${hole.y + 3} H ${hole.x + 105} Q ${hole.x} ${hole.y + 74} ${hole.x - 105} ${hole.y + 3} H ${hole.x - GAME_TUNING.hamsterClipHalfWidth} Z`"
+                                    />
+                                </clipPath>
+                                <clipPath id="completion-object-clip">
+                                    <path
+                                        d="M 369 475 H 621 V 738 H 600 Q 495 809 390 738 H 369 Z"
                                     />
                                 </clipPath>
                             </defs>
@@ -1652,6 +1774,28 @@ onBeforeUnmount(() => {
                                         />
                                     </g>
                                 </g>
+                                <g
+                                    v-if="
+                                        index === 5 &&
+                                        completionAnimationVisible
+                                    "
+                                    clip-path="url(#completion-object-clip)"
+                                    aria-hidden="true"
+                                    class="completion-object-clip"
+                                >
+                                    <g
+                                        :ref="setCompletionObjectRef"
+                                        class="completion-object"
+                                    >
+                                        <image
+                                            :href="completionObjectUrl"
+                                            :x="hole.x - 220"
+                                            :y="hole.y - 322"
+                                            width="440"
+                                            height="440"
+                                        />
+                                    </g>
+                                </g>
                                 <path
                                     :d="`M ${hole.x - 105} ${hole.y + 3} Q ${hole.x} ${hole.y + 74} ${hole.x + 105} ${hole.y + 3} Q ${hole.x} ${hole.y + 44} ${hole.x - 105} ${hole.y + 3} Z`"
                                     fill="#ffb347"
@@ -1678,6 +1822,20 @@ onBeforeUnmount(() => {
                             {{ liveMessage }}
                         </p>
                     </div>
+
+                    <img
+                        v-if="completionHitVisible"
+                        ref="completionHit"
+                        :src="completionHitSource"
+                        alt=""
+                        class="completion-hit"
+                        width="1593"
+                        height="2105"
+                        aria-hidden="true"
+                        draggable="false"
+                        @load="playCompletionStrike"
+                        @error="resetCompletionAnimation"
+                    />
 
                     <img
                         ref="hammer"
@@ -2122,6 +2280,30 @@ onBeforeUnmount(() => {
     opacity: 0;
     transform-box: fill-box;
     transform-origin: 50% 100%;
+}
+
+.completion-object-clip {
+    pointer-events: none;
+}
+
+.completion-object {
+    visibility: hidden;
+    will-change: transform;
+}
+
+.completion-hit {
+    position: absolute;
+    z-index: 11;
+    top: 11%;
+    left: 34%;
+    width: 90%;
+    max-width: none;
+    height: auto;
+    pointer-events: none;
+}
+
+.game-cabinet.is-celebrating .hammer {
+    visibility: hidden !important;
 }
 
 .hammer {
@@ -3107,6 +3289,12 @@ onBeforeUnmount(() => {
 
     .game-stage {
         width: 100%;
+    }
+
+    .completion-hit {
+        /* Mirror the strike so the body stays inside the portrait cabinet. */
+        left: 17.4%;
+        transform: scaleX(-1);
     }
 
     .how-to-play {

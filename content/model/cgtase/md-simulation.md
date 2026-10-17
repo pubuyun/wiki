@@ -26,6 +26,18 @@ Each system was subjected to the standard MD simulation workflow, including ener
 
 ## Analysis
 
+::content-components-video-panels
+---
+src:
+  - https://video.igem.org/videos/embed/3xEFyz5QCbiaVRcPsk8wbu
+titles:
+  - "GreatBay-SCIE: MD of CGTase and the Precursor (2026)"
+caption: "Video 1 | The MD trajectory illustrates the motion of CGTase and the bound Cys-Gly-3M3SH precursor."
+label: CGTase and precursor MD trajectory
+portrait: true
+---
+::
+
 ### RMSD Analysis
 
 Substrate RMSD was calculated using the initial catalytically relevant binding pose as the reference. Lower and more stable RMSD values indicate better retention of this binding geometry during the simulation.

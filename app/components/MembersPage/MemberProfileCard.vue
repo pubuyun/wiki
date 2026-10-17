@@ -33,6 +33,20 @@ const emit = defineEmits<{
     animalError: [memberId: string];
 }>();
 
+const introductionParts = computed(() => {
+    const introduction = props.member?.introduction ?? "";
+    const quoteStart = introduction.lastIndexOf("\n\n*");
+
+    if (quoteStart === -1 || !introduction.endsWith("*")) {
+        return { body: introduction, quote: "" };
+    }
+
+    return {
+        body: introduction.slice(0, quoteStart),
+        quote: introduction.slice(quoteStart + 3, -1),
+    };
+});
+
 function memberInitials(name: string) {
     return name
         .split(/\s+/)
@@ -105,7 +119,12 @@ function memberInitials(name: string) {
         <div class="profile-sheet">
             <div class="profile-copy">
                 <p v-if="member.introduction" class="member-introduction">
-                    {{ member.introduction }}
+                    <template v-if="introductionParts.quote">
+                        <span>{{ introductionParts.body }}</span>
+                        <br /><br />
+                        <em>{{ introductionParts.quote }}</em>
+                    </template>
+                    <template v-else>{{ introductionParts.body }}</template>
                 </p>
             </div>
 

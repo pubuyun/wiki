@@ -216,6 +216,20 @@ Cys-Gly-(S)-3M3SH was identified as the odor-relevant stereoisomer and therefore
 
 Small-molecule-binding proteins targeting Cys-Gly-3M3SH were designed using *[Rosetta Foundry](/model/precursor-binder/design-rfdiffusion)* and [Proteina-Complexa](/model/precursor-binder/design-proteina-complexa) separately. The full design pipeline includes backbone scaffold generation, sequence redesign and folding validation. RFdiffusion3 binders are ranked based on the ranking\_score outputted by *RF3*, while Proteina-Complexa binders are ranked based on a custom composite score. Then, a [molecular dynamics simulation](/model/precursor-binder/md-simulation) is performed on selected top binders from each pipeline to determine the set of candidates for *in vitro* testing.
 
+::content-components-video-panels
+---
+src:
+  - https://video.igem.org/videos/embed/7xxkZgCe6RR2Vc5Q5Jx45m
+  - https://video.igem.org/videos/embed/n3d9hccnPsExex4B8oYURA
+titles:
+  - "GreatBay-SCIE: VMD of precursor binder designed by rfd3 (2026)"
+  - "GreatBay-SCIE: VMD of Precursor Binder Designed by Proteina-Complexa (2026)"
+caption: "Video 1 | MD trajectories show precursor–binder motion for designs from **(a)** RFdiffusion3 and **(b)** Proteina-Complexa."
+label: Precursor binder MD trajectories
+portrait: true
+---
+::
+
 22 binders (11 from each design tool) were planned for experimental testing in cycle 1. Nine were successfully tested: 4 from RFdiffusion3 and 5 from Proteina-Complexa.
 
 ### Discussion
@@ -340,6 +354,19 @@ Among the available design frameworks, we selected Rosetta Foundry for its unifi
 
 The full design pipeline comprised RFD3 backbone generation, *ProteinMPNN* sequence design, and RF3 co-folding validation. Candidates were then filtered according to their predicted interface placement and ranked based on a custom composite score $\text{weighted score} = 0.50 \times \mathrm{normalized\ ranking\ score} + 0.25 \times \mathrm{normalized\ pLDDT} + 0.25 \times \mathrm{normalized\ inverse\ PAE}$, after which molecular dynamics simulations were performed on the top-ranked binders to prioritize candidates for experimental validation.
 
+::content-components-video-panels
+---
+src:
+  - https://video.igem.org/videos/embed/sbgujDE7Lq6eKGHkeoeFXh
+  - https://video.igem.org/videos/embed/t1vqUKhw4yTzM9HiTEmzRf
+titles:
+  - "GreatBay-SCIE: Transporter Binder Interface (2026)"
+  - "GreatBay-SCIE: Transporter Binder Full (2026)"
+caption: "Video 2 | MD trajectories show the transporter–binder complex through **(a)** a close-up of the binding interface and **(b)** a full-system view."
+label: Transporter binder MD trajectories
+---
+::
+
 Selected candidates are tested experimentally in cycle 2.
 
 ### Discussion
@@ -431,6 +458,18 @@ caption: Fig. 13 | **Characterization process of CGTase.** **(a)** Tree diagram 
   nucleophilic attack by the acceptor hydroxyl oxygen during transglycosylation.
 imageBackground: white
 label: Overview — Fig. 13
+---
+::
+
+::content-components-video-panels
+---
+src:
+  - https://video.igem.org/videos/embed/3xEFyz5QCbiaVRcPsk8wbu
+titles:
+  - "GreatBay-SCIE: MD of CGTase and the Precursor (2026)"
+caption: "Video 3 | The MD trajectory illustrates the motion of CGTase and the bound Cys-Gly-3M3SH precursor."
+label: CGTase and precursor MD trajectory
+portrait: true
 ---
 ::
 

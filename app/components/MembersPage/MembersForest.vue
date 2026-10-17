@@ -518,7 +518,6 @@ onBeforeUnmount(() => cleanup?.());
 
 <style scoped>
 .members-forest {
-    --forest-nav-clearance: 3.5rem;
     position: fixed;
     inset: 0;
     z-index: -1;
@@ -529,12 +528,12 @@ onBeforeUnmount(() => cleanup?.());
 
 .members-forest :deep(svg) {
     position: absolute;
-    top: var(--forest-nav-clearance);
+    top: 0;
     right: -9%;
     bottom: 0;
     left: -9%;
     width: 118%;
-    height: calc(116% - var(--forest-nav-clearance));
+    height: 116%;
     display: block;
 }
 

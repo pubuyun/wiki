@@ -9,6 +9,10 @@ import {
 } from "~/utils/home-scroll-events";
 
 const navHidden = useState<boolean>("navigation-bar-hidden", () => false);
+const route = useRoute();
+const navigationBarAlwaysVisible = computed(
+    () => route.meta.navigationBarAlwaysVisible === true,
+);
 const lastScrollY = ref(0);
 const scrollDirectionThreshold = 6;
 const hideAfterScrollY = 80;
@@ -21,6 +25,12 @@ let progressObserver: ResizeObserver | undefined;
 function updateNavVisibility() {
     const scrollY = Math.max(window.scrollY, 0);
     const scrollDelta = scrollY - lastScrollY.value;
+
+    if (navigationBarAlwaysVisible.value) {
+        navHidden.value = false;
+        lastScrollY.value = scrollY;
+        return;
+    }
 
     if (visibilityLocked) {
         lastScrollY.value = scrollY;
@@ -48,7 +58,9 @@ function updateNavVisibility() {
 }
 
 const navVisibilityClass = computed(() =>
-    navHidden.value ? "pointer-events-none -translate-y-full" : "translate-y-0",
+    navigationBarAlwaysVisible.value || !navHidden.value
+        ? "translate-y-0"
+        : "pointer-events-none -translate-y-full",
 );
 
 const progress = ref(0);
@@ -84,6 +96,10 @@ function handleScrollLockChange(event: Event) {
 
     visibilityLocked = locked;
     lastScrollY.value = Math.max(window.scrollY, 0);
+    if (navigationBarAlwaysVisible.value) {
+        navHidden.value = false;
+        return;
+    }
     if (locked && direction) {
         navHidden.value = direction === "down";
     }

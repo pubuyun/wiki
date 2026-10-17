@@ -1,0 +1,295 @@
+{
+    "ageGroups": [
+        {
+            "id": "children",
+            "label": ["Children"],
+            "color": "#f97316",
+            "x": 12,
+            "width": 142
+        },
+        {
+            "id": "primary",
+            "label": ["Primary", "students"],
+            "color": "#fb923c",
+            "x": 162,
+            "width": 144
+        },
+        {
+            "id": "secondary",
+            "label": ["Secondary", "students"],
+            "color": "#facc15",
+            "x": 306,
+            "width": 156
+        },
+        {
+            "id": "high-school",
+            "label": ["High school", "students"],
+            "color": "#fde047",
+            "x": 462,
+            "width": 168
+        },
+        {
+            "id": "young-adults",
+            "label": ["Young", "adults"],
+            "color": "#367fd0",
+            "x": 638,
+            "width": 124
+        },
+        {
+            "id": "middle-ages",
+            "label": ["Middle", "ages"],
+            "color": "#55b5e2",
+            "x": 770,
+            "width": 122
+        },
+        {
+            "id": "elderly",
+            "label": ["Elderly"],
+            "color": "#a8d9f9",
+            "x": 900,
+            "width": 128
+        },
+        {
+            "id": "public",
+            "label": ["Public"],
+            "color": "#45dfc7",
+            "x": 12,
+            "width": 1016
+        }
+    ],
+    "activities": [
+        {
+            "id": "clay-kit",
+            "label": ["Bacteria-Fungi", "Clay Kit"],
+            "x": 140,
+            "y": 56,
+            "width": 132,
+            "height": 38,
+            "solid": ["children"],
+            "dashed": ["primary", "secondary", "high-school", "public"],
+            "href": ""
+        },
+        {
+            "id": "geranio-lab",
+            "label": ["Geranio Lab session"],
+            "x": 474,
+            "y": 36,
+            "width": 164,
+            "height": 30,
+            "solid": ["high-school"],
+            "dashed": [],
+            "href": ""
+        },
+        {
+            "id": "collaboration-fair",
+            "label": ["SynBio Collaboration Fair"],
+            "x": 210,
+            "y": 101,
+            "width": 174,
+            "height": 30,
+            "solid": ["children"],
+            "dashed": [
+                "primary",
+                "secondary",
+                "high-school",
+                "young-adults",
+                "middle-ages",
+                "elderly"
+            ],
+            "href": ""
+        },
+        {
+            "id": "igem-club",
+            "label": ["iGEM Club"],
+            "x": 500,
+            "y": 96,
+            "width": 104,
+            "height": 30,
+            "solid": ["high-school"],
+            "dashed": [],
+            "href": ""
+        },
+        {
+            "id": "online-discussion",
+            "label": ["Online", "Discussion Group"],
+            "x": 650,
+            "y": 84,
+            "width": 124,
+            "height": 40,
+            "solid": ["high-school"],
+            "dashed": [],
+            "href": ""
+        },
+        {
+            "id": "fuse-beads",
+            "label": ["Bacteria-Fungi", "Fuse Beads Kit"],
+            "x": 790,
+            "y": 51,
+            "width": 132,
+            "height": 38,
+            "solid": ["young-adults"],
+            "dashed": [
+                "children",
+                "primary",
+                "secondary",
+                "high-school",
+                "public"
+            ],
+            "href": ""
+        },
+        {
+            "id": "senior-community",
+            "label": ["Senior Living", "Community"],
+            "x": 961,
+            "y": 132,
+            "width": 130,
+            "height": 40,
+            "solid": ["elderly"],
+            "dashed": [],
+            "href": ""
+        },
+        {
+            "id": "middle-school-workshop",
+            "label": ["Middle School SynBio Intro", "Workshops"],
+            "x": 350,
+            "y": 165,
+            "width": 186,
+            "height": 40,
+            "solid": ["secondary"],
+            "dashed": ["high-school"],
+            "href": ""
+        },
+        {
+            "id": "song",
+            "label": ["Song of SynBio"],
+            "x": 500,
+            "y": 166,
+            "width": 112,
+            "height": 30,
+            "solid": ["secondary"],
+            "dashed": ["primary", "high-school", "young-adults", "public"],
+            "href": ""
+        },
+        {
+            "id": "protein-design",
+            "label": ["Protein Design", "Lecture"],
+            "x": 650,
+            "y": 165,
+            "width": 142,
+            "height": 38,
+            "solid": ["high-school"],
+            "dashed": [],
+            "href": ""
+        },
+        {
+            "id": "career-lecture",
+            "label": ["Synbio Market and Career", "Analysis Lecture"],
+            "x": 400,
+            "y": 221,
+            "width": 200,
+            "height": 40,
+            "solid": ["high-school"],
+            "dashed": [],
+            "href": ""
+        },
+        {
+            "id": "jubensha",
+            "label": ["Lab-themed", "Jubensha"],
+            "x": 560,
+            "y": 232,
+            "width": 100,
+            "height": 38,
+            "solid": ["high-school", "young-adults"],
+            "dashed": [],
+            "href": ""
+        },
+        {
+            "id": "central-dogma",
+            "label": ["Dance of Central", "Dogma"],
+            "x": 690,
+            "y": 246,
+            "width": 118,
+            "height": 40,
+            "solid": ["high-school"],
+            "dashed": ["secondary", "young-adults", "public"],
+            "href": ""
+        },
+        {
+            "id": "vocab-seminar",
+            "label": ["SynBio-vocab", "Seminar"],
+            "x": 833,
+            "y": 233,
+            "width": 114,
+            "height": 40,
+            "solid": ["middle-ages"],
+            "dashed": ["primary", "secondary", "high-school"],
+            "href": ""
+        },
+        {
+            "id": "primary-school-workshop",
+            "label": ["Primary School SynBio Intro", "Workshop"],
+            "x": 220,
+            "y": 280,
+            "width": 200,
+            "height": 38,
+            "solid": ["primary"],
+            "dashed": ["children", "secondary"],
+            "href": ""
+        },
+        {
+            "id": "intro-lecture",
+            "label": ["SynBio", "Intro Lecture"],
+            "x": 450,
+            "y": 277,
+            "width": 124,
+            "height": 40,
+            "solid": ["high-school"],
+            "dashed": ["primary", "secondary"],
+            "href": ""
+        },
+        {
+            "id": "ethics-debate",
+            "label": ["SynBio Ethics", "Debate"],
+            "x": 580,
+            "y": 301,
+            "width": 102,
+            "height": 40,
+            "solid": ["high-school"],
+            "dashed": ["secondary"],
+            "href": ""
+        },
+        {
+            "id": "infographics",
+            "label": ["Infographics"],
+            "x": 360,
+            "y": 555,
+            "width": 108,
+            "height": 28,
+            "solid": ["public"],
+            "dashed": [],
+            "href": ""
+        },
+        {
+            "id": "short-videos",
+            "label": ["Short Videos"],
+            "x": 503,
+            "y": 555,
+            "width": 108,
+            "height": 28,
+            "solid": ["public"],
+            "dashed": [],
+            "href": ""
+        },
+        {
+            "id": "long-videos",
+            "label": ["Long Videos"],
+            "x": 653,
+            "y": 555,
+            "width": 96,
+            "height": 28,
+            "solid": ["public"],
+            "dashed": [],
+            "href": ""
+        }
+    ]
+}

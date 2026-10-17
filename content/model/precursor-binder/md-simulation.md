@@ -191,6 +191,20 @@ gen_vel                 = no
 
 ## Trajectory Analysis
 
+::content-components-video-panels
+---
+src:
+  - https://video.igem.org/videos/embed/7xxkZgCe6RR2Vc5Q5Jx45m
+  - https://video.igem.org/videos/embed/n3d9hccnPsExex4B8oYURA
+titles:
+  - "GreatBay-SCIE: VMD of precursor binder designed by rfd3 (2026)"
+  - "GreatBay-SCIE: VMD of Precursor Binder Designed by Proteina-Complexa (2026)"
+caption: "Video 1 | MD trajectories show precursor–binder motion for designs from **(a)** RFdiffusion3 and **(b)** Proteina-Complexa."
+label: Precursor binder MD trajectories
+portrait: true
+---
+::
+
 ### RMSD Analysis
 
 Each production MD frame was least-squares fitted to the initial protein Cα coordinates before calculating ligand heavy-atom RMSD; the ligand was not independently fitted. **Protein Cα RMSD** was calculated using the same protein fit. These RMSD values were used to evaluate binder structural stability and ligand-binding pose retention. Candidates exhibiting protein structural stability (protein Cα RMSD < 2 Å) and retained ligand-binding poses (**ligand RMSD < 4 Å**) were retained for further evaluation.

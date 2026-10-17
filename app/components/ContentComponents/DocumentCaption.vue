@@ -18,9 +18,8 @@ withDefaults(
                 v-if="body"
                 :body="body"
                 :prose="false"
-                :components="{ em: ProseEm, strong: ProseStrong }"
+                :components="{ em: ProseEm, strong: ProseStrong, p: 'span' }"
                 tag="span"
-                unwrap="p"
             />
         </MDC>
     </component>

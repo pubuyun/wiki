@@ -8,6 +8,7 @@ import { MembersPageMembersArcade as MembersArcade } from "#components";
 useSeoMeta({ title: "Members" });
 definePageMeta({
     layout: "static",
+    navigationBarAlwaysVisible: true,
 });
 
 let lenis: Lenis | undefined;

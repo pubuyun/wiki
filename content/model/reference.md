@@ -11,7 +11,7 @@ order: 6
 
 2. Kim N, De Carluccio G, Zhang K, Collins JJ. Generative AI for synthetic biology: designing biological parts, circuits, and genomes. Cell Syst. 2026;17(2):101533. doi: [10.1016/j.cels.2026.101533](https://doi.org/10.1016/j.cels.2026.101533).
 
-3. Troccaz M, Starkenmann C, Niclass Y, van de Waal M, Clark AJ. 3-Methyl-3-sulfanylhexan-1-ol as a major descriptor for the human axilla-sweat odour profile. Chem Biodivers. 2004;1(7):1022–35. doi: [10.1002/cbdv.200490077](https://doi.org/10.1002/cbdv.200490077).
+3. Troccaz M, Starkenmann C, Niclass Y, van de Waal M, Clark AJ. 3-Methyl-3-sulfanylhexan-1-ol as a major descriptor for the human axilla-sweat odour profile. Chem Biodivers. 2004;1(7):1022–35. doi: [10.1002/cbdv.200490077](https://doi.org/10.1002/cbdv.200490077).
 
 4. Ishitani R, Moriwaki Y. Improving stereochemical limitations in protein-ligand complex structure prediction [preprint]. bioRxiv. 2025 Mar 28. doi: [10.1101/2025.03.25.645362](https://doi.org/10.1101/2025.03.25.645362).
 

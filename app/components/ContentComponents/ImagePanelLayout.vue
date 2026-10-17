@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
+import VideoPanel from "./VideoPanel.vue";
 
 const props = withDefaults(
     defineProps<{
@@ -9,8 +10,16 @@ const props = withDefaults(
         imageBackground?: string;
         autoLabels?: boolean;
         layout?: "grid" | "stack";
+        mediaType?: "image" | "video";
+        videoAspectRatio?: "16 / 9" | "4 / 5";
     }>(),
-    { autoLabels: true, label: "Figure panels", layout: "grid" },
+    {
+        autoLabels: true,
+        label: "Figure panels",
+        layout: "grid",
+        mediaType: "image",
+        videoAspectRatio: "16 / 9",
+    },
 );
 
 const emit = defineEmits<{ open: [index: number] }>();
@@ -52,43 +61,61 @@ function recordAspectRatio(src: string, image: HTMLImageElement | null) {
                         .join(' '),
                 }"
             >
-                <button
+                <template
                     v-for="{ src: imageSrc, index } in row"
                     :key="`${imageSrc}-${index}`"
-                    type="button"
-                    class="image-panels__panel cursor-zoom-in rounded-2xl focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-outline"
-                    :aria-label="`Open image ${index + 1} of ${src.length}${imageAlt(index) ? `: ${imageAlt(index)}` : ''}`"
-                    @click="emit('open', index)"
                 >
-                    <img
-                        :ref="
-                            (el) =>
+                    <VideoPanel
+                        v-if="mediaType === 'video'"
+                        :src="imageSrc"
+                        :title="imageAlt(index) || `Video ${index + 1}`"
+                        :aspect-ratio="videoAspectRatio"
+                    >
+                        <span
+                            v-if="autoLabels"
+                            class="image-panels__label"
+                            aria-hidden="true"
+                        >
+                            ({{ String.fromCharCode(97 + index) }})
+                        </span>
+                    </VideoPanel>
+                    <button
+                        v-else
+                        type="button"
+                        class="image-panels__panel cursor-zoom-in rounded-2xl focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-outline"
+                        :aria-label="`Open image ${index + 1} of ${src.length}${imageAlt(index) ? `: ${imageAlt(index)}` : ''}`"
+                        @click="emit('open', index)"
+                    >
+                        <img
+                            :ref="
+                                (el) =>
+                                    recordAspectRatio(
+                                        imageSrc,
+                                        el as HTMLImageElement | null,
+                                    )
+                            "
+                            :src="imageSrc"
+                            :alt="imageAlt(index)"
+                            :style="{ backgroundColor: imageBackground }"
+                            class="rounded-2xl"
+                            loading="lazy"
+                            decoding="async"
+                            @load="
                                 recordAspectRatio(
                                     imageSrc,
-                                    el as HTMLImageElement | null,
+                                    $event.currentTarget as HTMLImageElement,
                                 )
-                        "
-                        :src="imageSrc"
-                        :alt="imageAlt(index)"
-                        :style="{ backgroundColor: imageBackground }"
-                        class="rounded-2xl"
-                        loading="lazy"
-                        decoding="async"
-                        @load="
-                            recordAspectRatio(
-                                imageSrc,
-                                $event.currentTarget as HTMLImageElement,
-                            )
-                        "
-                    />
-                    <span
-                        v-if="autoLabels"
-                        class="image-panels__label"
-                        aria-hidden="true"
-                    >
-                        ({{ String.fromCharCode(97 + index) }})
-                    </span>
-                </button>
+                            "
+                        />
+                        <span
+                            v-if="autoLabels"
+                            class="image-panels__label"
+                            aria-hidden="true"
+                        >
+                            ({{ String.fromCharCode(97 + index) }})
+                        </span>
+                    </button>
+                </template>
             </div>
         </div>
     </div>
