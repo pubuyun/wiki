@@ -10,4 +10,3 @@ content/model/optimization/index.md: [experimental validation of CGTase] — tar
 content/model/optimization/index.md: [experimental validation of precursor binder] — target /engineering/cycle1 has not been uploaded.
 content/model/optimization/cgtase-thermostability.md: [cycle4] — target /engineering/cycle4 has not been uploaded.
 content/model/optimization/discussion.md: [cycle6] — target /engineering/cycle6 has not been uploaded.
-content/entrepreneurship/development-plans/business-plan.md: [businessplan.pdf iframe] — the business plan PDF was not included in the source attachments.

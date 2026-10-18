@@ -8,7 +8,7 @@ Use the iGEM Teams browser tab I attach to this message and the existing logged-
 - Destination folder: REPLACE WITH A PATH RELATIVE TO THE WIKI STORAGE ROOT, for example `project/results`. Write `Root` for the root folder.
 - Team ID: `6133` (GreatBay-SCIE), unless I specify a different team.
 - Overwrite existing files: No, unless I explicitly request replacement.
-- Document attachments: Follow [DocumentConvert.md](../DocumentConvert.md) to convert DOCX to PDF before uploading and compress any PDF larger than 10 MiB (10,485,760 bytes) with PyMuPDF 1.28.2 using `D:\MiniConda\python.exe`. Preserve the originals, verify the final PDF, and update document links to its actual stored PDF CDN URL.
+- Document attachments: Follow [DocumentConvert.md](DocumentConvert.md) to convert DOCX to PDF before uploading and compress any PDF larger than 10 MiB (10,485,760 bytes) with PyMuPDF 1.28.2 using `D:\MiniConda\python.exe`. Preserve the originals, verify the final PDF, and update document links to its actual stored PDF CDN URL.
 
 Ask for any missing file paths or destination folder before uploading. The examples below describe usage; they are not instructions to upload the old test image again.
 

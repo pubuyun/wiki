@@ -60,16 +60,16 @@ const voices = [
     {
         name: "Derek Braun",
         image: derekImage,
-        field: "A deaf geneticist",
+        field: "A Deaf geneticist",
         description:
             "Establishing Gallaudet University's first molecular genetics laboratory.",
-        quote: "I originally thought I’d probably run into another deaf scientist there because it was such a large conference, but I didn’t.",
+        quote: "I originally thought I’d probably run into another Deaf scientist there because it was such a large conference, but I didn’t.",
         source: "https://gallaudet.edu/science-technology-accessibility-mathematics-public-health/department-of-science-technology-and-mathematics-works-to-narrow-gap-for-deaf-students-in-stem-fields/",
         stat: "80%",
-        data: "Around 80% of school-age deaf children in low- and middle-income countries are out of school (2026).",
+        data: "Around 80% of school-age Deaf children in low- and middle-income countries are out of school (2026).",
         dataSource:
             "https://www.disabilityworld.org/articles/state-of-deaf-education-access/",
-        dataCredit: "State of deaf education access",
+        dataCredit: "State of Deaf education access",
     },
     {
         name: "Gabriel Reyes",
@@ -455,7 +455,7 @@ onUnmounted(() => {
                             {{
                                 isTurned(index)
                                     ? "Back to the voice"
-                                    : "Turn the quote. See the barriers."
+                                    : "Flip the voice. Face the reality."
                             }}
                             <span aria-hidden="true">↻</span>
                         </button>
@@ -475,7 +475,7 @@ onUnmounted(() => {
                     :aria-hidden="animated && active !== 6 ? true : undefined"
                     :inert="animated && active !== 6 ? true : undefined"
                 >
-                    We wanted to ensure that the voices we heard would not
+                    We wanted to ensure that the voices reaching us would not
                     simply be acknowledged, but answered through
                     <strong>meaningful action</strong>—and that more voices,
                     too, would find their way into science.
@@ -591,7 +591,8 @@ blockquote {
     font-family: inherit;
     font-size: clamp(1.65rem, 2.3vw, 2.9rem);
     line-height: 1.4;
-    font-weight: 600;
+    font-weight: 750;
+    font-style: italic;
 }
 blockquote.quote-long {
     font-size: clamp(1.25rem, 1.77vw, 2.15rem);

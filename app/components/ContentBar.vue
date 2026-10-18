@@ -101,10 +101,10 @@ function revealActiveLink() {
     const link = contentList.value?.querySelector<HTMLElement>(
         '[aria-current="location"]',
     );
-    if (link) revealLink(link);
+    if (link) revealLink(link, true);
 }
 
-function revealLink(link: HTMLElement) {
+function revealLink(link: HTMLElement, center = false) {
     const viewport = contentScroll.value;
     if (!viewport) return;
 
@@ -120,12 +120,14 @@ function revealLink(link: HTMLElement) {
         viewport.clientTop +
         viewport.clientHeight -
         (Number.parseFloat(viewportStyle.scrollPaddingBottom) || 0);
-    const offset =
-        linkBounds.top < visibleTop
-            ? linkBounds.top - visibleTop
-            : linkBounds.bottom > visibleBottom
-              ? linkBounds.bottom - visibleBottom
-              : 0;
+    const offset = center
+        ? (linkBounds.top + linkBounds.bottom) / 2 -
+          (visibleTop + visibleBottom) / 2
+        : linkBounds.top < visibleTop
+          ? linkBounds.top - visibleTop
+          : linkBounds.bottom > visibleBottom
+            ? linkBounds.bottom - visibleBottom
+            : 0;
 
     // Reveal the link inside the TOC without scrolling its page ancestors.
     if (offset) {

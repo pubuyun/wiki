@@ -739,14 +739,29 @@ const edges = nodes.map((node) => {
 }
 /* These are real DOM layers inside the portal, just like ProseEm. */
 .stakeholder-detail {
+    --detail-background: var(--surface-bright);
+    --detail-foreground: var(--on-surface);
+    --detail-label-background: var(--surface-elevated);
+    --detail-label-foreground: var(--on-surface);
+    --detail-close-background: var(--surface-elevated);
+    --detail-close-foreground: var(--on-surface);
+    --detail-close-hover-background: var(--primary);
+    --detail-close-hover-foreground: var(--on-primary);
+    --impact-experiential: #805000;
+    --impact-technical: #006b59;
+    --impact-applicational: #135c8a;
+    --impact-ethical: #914b00;
+    --impact-treatment: #135c8a;
+    --impact-psychosocial: #a33e00;
+    --impact-social: #805000;
     position: relative;
     isolation: isolate;
-    color: #ffffff;
+    color: var(--detail-foreground);
 }
 .detail-surface {
     position: relative;
     border-radius: 1rem;
-    background: #08346a;
+    background: var(--detail-background);
     padding: 1.2rem;
     min-height: 15.5rem;
     max-height: min(
@@ -774,8 +789,8 @@ const edges = nodes.map((node) => {
     min-width: 28px;
     height: 28px;
     border-radius: 50%;
-    background: #dff3ee;
-    color: #08346a;
+    background: var(--detail-close-background);
+    color: var(--detail-close-foreground);
     font-size: 1.4rem;
     cursor: pointer;
 }
@@ -801,14 +816,14 @@ const edges = nodes.map((node) => {
     line-height: 1.6;
 }
 .detail-eyebrow {
-    color: #ffffff;
-    background: #0a4296;
+    color: var(--detail-label-foreground);
+    background: var(--detail-label-background);
     padding: 0.35rem 0.65rem;
     border-radius: 0.65rem;
 }
 .detail-close:hover {
-    background: #ffe071;
-    color: #08346a;
+    background: var(--detail-close-hover-background);
+    color: var(--detail-close-hover-foreground);
 }
 .detail-media {
     position: absolute;
@@ -834,7 +849,7 @@ const edges = nodes.map((node) => {
 .stakeholder-detail dt {
     font-size: 0.8rem;
     font-weight: 750;
-    color: var(--impact-color, #dff3ee);
+    color: var(--impact-color, var(--detail-foreground));
     letter-spacing: 0.01em;
 }
 .stakeholder-detail dd {
@@ -843,32 +858,59 @@ const edges = nodes.map((node) => {
     line-height: 1.6;
 }
 .impact-experiential {
-    --impact-color: #ffd166;
+    --impact-color: var(--impact-experiential);
 }
 .impact-technical {
-    --impact-color: #61dfc7;
+    --impact-color: var(--impact-technical);
 }
 .impact-applicational {
-    --impact-color: #9ed3f3;
+    --impact-color: var(--impact-applicational);
 }
 .impact-ethical {
-    --impact-color: #ffad2f;
+    --impact-color: var(--impact-ethical);
 }
 .impact-treatment {
-    --impact-color: #9ed3f3;
+    --impact-color: var(--impact-treatment);
 }
 .impact-psychosocial {
-    --impact-color: #ff8c42;
+    --impact-color: var(--impact-psychosocial);
 }
 .impact-social {
-    --impact-color: #ffd166;
+    --impact-color: var(--impact-social);
 }
-:global(.dark) .stakeholder-detail .detail-surface {
-    background: #062b65;
+:global(.dark .stakeholder-detail) {
+    --detail-background: #062b65;
+    --detail-foreground: #ffffff;
+    --detail-label-background: #0a4296;
+    --detail-label-foreground: #ffffff;
+    --detail-close-background: #dff3ee;
+    --detail-close-foreground: #08346a;
+    --detail-close-hover-background: #ffe071;
+    --detail-close-hover-foreground: #08346a;
+    --impact-experiential: #ffd166;
+    --impact-technical: #61dfc7;
+    --impact-applicational: #9ed3f3;
+    --impact-ethical: #ffad2f;
+    --impact-treatment: #9ed3f3;
+    --impact-psychosocial: #ff8c42;
+    --impact-social: #ffd166;
 }
-:global(.high-contrast) .stakeholder-detail .detail-surface {
-    background: var(--primary);
-    color: var(--on-primary);
+:global(.high-contrast .stakeholder-detail) {
+    --detail-background: var(--primary);
+    --detail-foreground: var(--on-primary);
+    --detail-label-background: var(--secondary);
+    --detail-label-foreground: var(--on-secondary);
+    --detail-close-background: var(--secondary);
+    --detail-close-foreground: var(--on-secondary);
+    --detail-close-hover-background: var(--accent);
+    --detail-close-hover-foreground: var(--on-accent);
+    --impact-experiential: var(--on-primary);
+    --impact-technical: var(--on-primary);
+    --impact-applicational: var(--on-primary);
+    --impact-ethical: var(--on-primary);
+    --impact-treatment: var(--on-primary);
+    --impact-psychosocial: var(--on-primary);
+    --impact-social: var(--on-primary);
 }
 .detail-enter-active,
 .detail-leave-active {

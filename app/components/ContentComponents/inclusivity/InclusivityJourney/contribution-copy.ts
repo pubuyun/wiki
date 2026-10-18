@@ -1,7 +1,12 @@
 export type ContributionItem = {
     title: string;
     intro?: string;
-    points?: { label?: string; text: string; children?: string[] }[];
+    points?: {
+        label?: string;
+        text: string;
+        italicPrefix?: string;
+        children?: string[];
+    }[];
 };
 
 export const contributionCopy: Record<
@@ -51,13 +56,13 @@ export const contributionCopy: Record<
     ],
     autism: [
         {
-            title: "4 Multi-Sensory Science Teaching Kits",
+            title: "4 Superb Course Teaching Kits",
             intro: "Covering 4 topics:",
             points: [
-                { text: "Plants Growth Investigation" },
-                { text: "Animals Classification" },
+                { text: "Plants" },
+                { text: "Animals" },
                 { text: "Bacteria" },
-                { text: "Human Body Recognition" },
+                { text: "Humans Body" },
             ],
         },
     ],
@@ -85,6 +90,7 @@ export const contributionCopy: Record<
             points: [
                 {
                     text: "De novo Binder Design using:",
+                    italicPrefix: "De novo",
                     children: [
                         "Proteina-Complexa",
                         "Rosetta Foundry (RFDiffusion, LigandMPNN, RosettaFold)",
@@ -109,7 +115,7 @@ export const contributionCopy: Record<
             title: "1 Community-Based Science Engagement Approach",
             points: [
                 {
-                    text: "Designed and organized a hands-on sachet-making activity linking traditional crafts with synthetic biology.",
+                    text: "Designed and organized a sachet-making activity linking traditional crafts with synthetic biology.",
                 },
                 {
                     text: "Created science education posters to communicate scientific knowledge and address common misconceptions about GM food.",

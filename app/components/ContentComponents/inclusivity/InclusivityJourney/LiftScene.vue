@@ -31,7 +31,7 @@ const clouds = [
         shape: "round",
         color: "#58b8dc",
         points: [
-            "Future plans for further development and impact beyond the scope of our project that could not be completed within the iGEM competition timeline",
+            "Future plans for further development and impact beyond the scope of the iGEM competition",
         ],
     },
     {
@@ -42,7 +42,7 @@ const clouds = [
         color: "#65d6bc",
         points: [
             "How we made our outputs replicable and adaptable by others",
-            "What we have done to expand our impact, and carry our values forward",
+            "What we have done to expand our impact and carry our values forward",
         ],
     },
     {
@@ -322,17 +322,21 @@ onBeforeUnmount(() => media?.revert());
                                     ? 76
                                     : 44
                             "
-                            y="62"
+                            y="44"
                             text-anchor="middle"
+                            dominant-baseline="central"
                         >
-                            {{ cloud.letter }}<tspan
+                            {{ cloud.letter }}
+                            <tspan
                                 v-if="
                                     cloud.key === 'intervene' ||
                                     cloud.key === 'feedback'
                                 "
                                 dy="2"
                                 font-size="60%"
-                            >{{ index + 1 }}</tspan>
+                            >
+                                {{ index + 1 }}
+                            </tspan>
                         </text>
                     </svg>
                 </div>
@@ -451,8 +455,8 @@ onBeforeUnmount(() => media?.revert());
     content: "• ";
 }
 .lift-cloud-beyond {
-    --title-top: 12%;
-    --body-top: 30%;
+    --title-top: 22%;
+    --body-top: 42%;
     --body-bottom: 14%;
     left: 5.5%;
     top: 5.5%;
@@ -513,14 +517,27 @@ onBeforeUnmount(() => media?.revert());
         700 34px/1 var(--font-belanosima),
         sans-serif;
 }
+.lift-cloud-learn .lift-flag text,
+.lift-cloud-beyond .lift-flag text {
+    transform-box: fill-box;
+    transform-origin: center;
+    font-family: var(--journey-body, system-ui, sans-serif);
+}
+.lift-cloud-learn .lift-flag text {
+    rotate: 14deg;
+}
+.lift-cloud-beyond .lift-flag text {
+    font-size: 46px;
+    rotate: -21deg;
+}
 .second-flag {
     translate: 60% 13%;
     rotate: 8deg;
     scale: 0.8;
 }
 .lift-cloud-beyond .lift-flags {
-    right: -4%;
-    top: 9%;
+    right: -5%;
+    top: -8%;
     rotate: 21deg;
 }
 .lift-cloud-transfer .lift-flags {

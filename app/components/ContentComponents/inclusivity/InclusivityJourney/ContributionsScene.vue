@@ -58,7 +58,7 @@ const groups = [
         color: "#86dbbf",
     },
     {
-        name: "Children on the Autism Spectrum",
+        name: "Children On The Autism Spectrum",
         shortName: "Different ways to discover",
         image: autismImage,
         imageWidth: 3000,
@@ -72,7 +72,7 @@ const groups = [
         color: "#ffcc62",
     },
     {
-        name: "Individuals from Low Socio-economic Backgrounds",
+        name: "Individuals From Low Socioeconomic Backgrounds",
         shortName: "Big discoveries, everyday materials",
         image: lowIncomeImage,
         imageWidth: 3000,
@@ -100,7 +100,7 @@ const groups = [
         color: "#beb5ee",
     },
     {
-        name: "Older Adults with Limited Formal Education",
+        name: "Older Adults With Limited Formal Education",
         shortName: "Curiosity has no age limit",
         image: olderAdultsImage,
         imageWidth: 2250,
@@ -328,12 +328,13 @@ onBeforeUnmount(() => {
             <p class="intro-copy">
                 Guided by our LIFT+ framework, we began with six target groups
                 we could reach in China who often face barriers to accessing
-                synthetic biology and broader science: the blind community, the
-                deaf community, children on the autism spectrum, individuals
-                from low socio-economic backgrounds, modeling beginners, and
-                older adults with limited formal education. Hover over each
-                illustration below to preview our contributions, then click to
-                trace our inclusion journey.
+                synthetic biology and broader science: the
+                <strong>blind community</strong>, the
+                <strong>Deaf community</strong>,
+                <strong>children on the autism spectrum</strong>,
+                <strong>individuals from low socioeconomic backgrounds</strong>,
+                <strong>modeling beginners</strong>, and
+                <strong>older adults with limited formal education</strong>.
             </p>
         </div>
 
@@ -427,7 +428,22 @@ onBeforeUnmount(() => {
                                                                 point.label
                                                             }}
                                                             — </strong
-                                                        >{{ point.text }}
+                                                        ><em
+                                                            v-if="
+                                                                point.italicPrefix
+                                                            "
+                                                            >{{
+                                                                point.italicPrefix
+                                                            }}</em
+                                                        >{{
+                                                            point.italicPrefix
+                                                                ? point.text.slice(
+                                                                      point
+                                                                          .italicPrefix
+                                                                          .length,
+                                                                  )
+                                                                : point.text
+                                                        }}
                                                         <ul
                                                             v-if="
                                                                 point.children
@@ -542,6 +558,12 @@ onBeforeUnmount(() => {
     font-size: clamp(19px, 1.7vw, 26px);
     line-height: 1.65;
     color: #eef5ff;
+}
+.intro-copy strong {
+    font-weight: 800;
+}
+.contribution-result em {
+    font-style: italic;
 }
 .intro-scroll {
     display: flex;

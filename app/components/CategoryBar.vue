@@ -21,34 +21,31 @@
         </NuxtLink>
         <header
             v-if="contentRendered"
-            class="mx-6 flex shrink-0 flex-col gap-2 border-b border-outline-variant/50 pb-4 text-on-surface"
+            class="mx-6 shrink-0 pb-3 text-on-surface"
             :class="contentClass"
         >
-            <h2
-                class="font-belanosima text-xs text-on-surface/80"
-            >
-                Documents
+            <h2 class="min-w-0 font-normal">
+                <NuxtLink
+                    :to="titleTo"
+                    class="inline-flex w-full min-w-0 justify-start overflow-visible rounded-md py-0.5 text-left text-2xl leading-tight whitespace-nowrap transition-colors hover:text-primary focus-visible:ring-2 focus-visible:ring-outline focus-visible:outline-none"
+                    :style="titleStyle"
+                    :aria-label="`Go to ${title}`"
+                    :aria-current="titleTo === activePath ? 'page' : undefined"
+                >
+                    <span
+                        class="inline-block shrink-0 [font-size:calc(1em*var(--category-sidebar-title-font-scale,1))]"
+                    >
+                        {{ title }}
+                    </span>
+                    <span
+                        ref="titleMeasure"
+                        class="pointer-events-none invisible absolute w-max"
+                        aria-hidden="true"
+                    >
+                        {{ title }}
+                    </span>
+                </NuxtLink>
             </h2>
-            <NuxtLink
-                :to="titleTo"
-                class="inline-flex w-full min-w-0 justify-start overflow-visible rounded-md py-1 text-left text-2xl leading-tight whitespace-nowrap transition-colors hover:text-primary focus-visible:ring-2 focus-visible:ring-outline focus-visible:outline-none"
-                :style="titleStyle"
-                :aria-label="`Go to ${title}`"
-                :aria-current="titleTo === activePath ? 'page' : undefined"
-            >
-                <span
-                    class="inline-block shrink-0 [font-size:calc(1em*var(--category-sidebar-title-font-scale,1))]"
-                >
-                    {{ title }}
-                </span>
-                <span
-                    ref="titleMeasure"
-                    class="pointer-events-none invisible absolute w-max"
-                    aria-hidden="true"
-                >
-                    {{ title }}
-                </span>
-            </NuxtLink>
         </header>
 
         <div
@@ -56,6 +53,11 @@
             class="mt-3 flex min-h-0 w-full flex-1 flex-col"
             :class="contentClass"
         >
+            <p
+                class="mx-6 mb-1 shrink-0 font-belanosima text-xs leading-5 tracking-wide text-on-surface/70"
+            >
+                Documents
+            </p>
             <div class="relative min-h-0 flex-1">
                 <div
                     v-if="contentVisible && canScrollUp"
@@ -202,7 +204,8 @@
         </div>
         <button
             type="button"
-            class="mt-auto flex h-11 w-full shrink-0 items-center justify-center border-t border-outline-variant/50 bg-surface-sidebar text-on-surface/75 transition-colors hover:bg-secondary hover:text-on-secondary focus-visible:ring-2 focus-visible:ring-outline focus-visible:outline-none focus-visible:ring-inset"
+            class="flex w-full shrink-0 cursor-pointer items-center justify-center bg-surface-sidebar text-on-surface/75 transition-colors hover:bg-secondary hover:text-on-secondary focus-visible:ring-2 focus-visible:ring-outline focus-visible:outline-none focus-visible:ring-inset"
+            :class="collapsed ? 'h-full' : 'mt-auto h-11'"
             :aria-controls="contentRendered ? contentId : undefined"
             :aria-expanded="!collapsed"
             :aria-label="
@@ -267,7 +270,7 @@ let contentRevealTimer: ReturnType<typeof setTimeout> | undefined;
 let titleResizeObserver: ResizeObserver | undefined;
 
 const sidebarClass = computed(() => [
-    "category-sidebar sticky top-0 h-screen max-h-screen flex-col overflow-hidden border-r border-outline-variant/50 bg-surface-sidebar font-momo-trust-display font-normal text-on-surface transition-[width,height,padding,translate] duration-200 ease-out",
+    "category-sidebar sticky top-0 h-screen max-h-screen flex-col overflow-hidden bg-surface-sidebar font-momo-trust-display font-normal text-on-surface transition-[width,height,padding,translate] duration-200 ease-out",
     collapsed.value ? "w-12" : "w-66 pt-16 xl:pt-20",
     "translate-x-0",
 ]);
@@ -320,7 +323,7 @@ function linkTextClass(node: ContentNavNode, depth: 0 | 1) {
 
 function itemStateClass(node: ContentNavNode) {
     if (node.path === props.activePath) {
-        return "bg-[var(--category-sidebar-highlight)] text-[var(--category-sidebar-active-text)] hover:bg-[var(--category-sidebar-hover)] hover:text-[var(--category-sidebar-active-text)] group-hover:bg-[var(--category-sidebar-hover)] group-hover:text-[var(--category-sidebar-active-text)]";
+        return "bg-[var(--category-sidebar-highlight)] text-[var(--category-sidebar-active-text)] hover:bg-[var(--category-sidebar-highlight-hover)] hover:text-[var(--category-sidebar-active-text)] group-hover:bg-[var(--category-sidebar-highlight-hover)] group-hover:text-[var(--category-sidebar-active-text)]";
     }
 
     return [
@@ -480,9 +483,26 @@ onBeforeUnmount(() => {
     );
     --category-sidebar-highlight-text: var(--on-surface);
     --category-sidebar-hover: var(--category-sidebar-highlight);
+    --category-sidebar-highlight-hover: var(--category-sidebar-hover);
 }
 
 .dark .category-sidebar {
+    --category-sidebar-highlight: color-mix(
+        in srgb,
+        var(--surface-sidebar) 78%,
+        var(--primary)
+    );
+    --category-sidebar-highlight-hover: color-mix(
+        in srgb,
+        var(--surface-sidebar) 74%,
+        var(--primary)
+    );
+    --category-sidebar-active-text: color-mix(
+        in srgb,
+        var(--on-surface) 60%,
+        var(--primary)
+    );
+    --category-sidebar-highlight-text: var(--on-surface);
     --category-sidebar-hover: color-mix(
         in srgb,
         var(--surface-sidebar) 88%,
@@ -490,15 +510,12 @@ onBeforeUnmount(() => {
     );
 }
 
-.dark .category-sidebar,
 .high-contrast .category-sidebar {
     --category-sidebar-highlight: var(--secondary);
     --category-sidebar-active-text: var(--on-secondary);
     --category-sidebar-highlight-text: var(--on-secondary);
-}
-
-.high-contrast .category-sidebar {
     --category-sidebar-hover: var(--secondary);
+    --category-sidebar-highlight-hover: var(--secondary);
 }
 
 .category-sidebar-scroll {
@@ -532,22 +549,18 @@ onBeforeUnmount(() => {
 @keyframes category-sidebar-slide-down {
     from {
         height: 0;
-        border-bottom-width: 2px;
     }
     to {
         height: var(--reka-accordion-content-height);
-        border-bottom-width: 0px;
     }
 }
 
 @keyframes category-sidebar-slide-up {
     from {
         height: var(--reka-accordion-content-height);
-        border-bottom-width: 2px;
     }
     to {
         height: 0;
-        border-bottom-width: 0px;
     }
 }
 </style>
