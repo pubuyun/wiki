@@ -1,0 +1,8 @@
+{
+    "term": [
+        "NetMHCIIpan-4.3",
+        "NetMHCIIpan"
+    ],
+    "detail": "A neural-network method that predicts peptide binding and antigen presentation by MHC class II molecules from peptide and MHC sequence information.",
+    "link": "https://services.healthtech.dtu.dk/services/NetMHCIIpan-4.3/"
+}

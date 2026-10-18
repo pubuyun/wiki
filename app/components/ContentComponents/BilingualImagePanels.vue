@@ -46,14 +46,14 @@ const versions = computed(() => [
     <TabsRoot :default-value="defaultLanguage" class="my-6 max-w-full min-w-0">
         <TabsList
             :aria-label="label"
-            class="not-prose flex w-fit max-w-full gap-1 rounded-xl border border-outline bg-secondary p-1"
+            class="bilingual-image-tabs__list not-prose"
         >
             <TabsTrigger
                 v-for="version in versions"
                 :key="version.value"
                 :value="version.value"
                 :lang="version.lang"
-                class="min-h-11 cursor-pointer rounded-lg px-4 py-2 text-sm text-on-secondary outline-none hover:bg-accent/20 focus-visible:ring-2 focus-visible:ring-outline data-[state=active]:bg-accent data-[state=active]:font-bold data-[state=active]:text-on-accent"
+                class="bilingual-image-tabs__trigger"
             >
                 {{ version.name }}
             </TabsTrigger>
@@ -86,3 +86,52 @@ const versions = computed(() => [
         </TabsContent>
     </TabsRoot>
 </template>
+
+<style scoped>
+.bilingual-image-tabs__list {
+    display: flex;
+    gap: 1.75rem;
+    max-width: 100%;
+    border-bottom: 1px solid color-mix(in srgb, var(--outline) 25%, transparent);
+}
+
+.bilingual-image-tabs__trigger {
+    flex-shrink: 0;
+    min-height: 2.75rem;
+    margin-bottom: -1px;
+    border: 0;
+    border-bottom: 2px solid transparent;
+    padding: 0.5rem 0.125rem 0.75rem;
+    background: transparent;
+    color: color-mix(in srgb, var(--on-surface) 60%, transparent);
+    font-family: var(--font-main);
+    font-size: 0.875rem;
+    font-weight: 500;
+    line-height: 1.5;
+    letter-spacing: 0.025em;
+    cursor: pointer;
+    transition:
+        color 180ms ease,
+        border-color 180ms ease;
+}
+
+.bilingual-image-tabs__trigger:hover,
+.bilingual-image-tabs__trigger[data-state="active"] {
+    color: var(--accent);
+}
+
+.bilingual-image-tabs__trigger[data-state="active"] {
+    border-bottom-color: currentColor;
+}
+
+.bilingual-image-tabs__trigger:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .bilingual-image-tabs__trigger {
+        transition: none;
+    }
+}
+</style>
