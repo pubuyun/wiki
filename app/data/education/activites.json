@@ -42,14 +42,14 @@
         },
         {
             "id": "social-media",
-            "label": "Social media",
+            "label": "Social Media",
             "color": "#42e8be"
         }
     ],
     "activities": [
         {
             "id": "synbio-intro-lecture",
-            "title": "SynBio intro lecture",
+            "title": "High School SynBio Intro Lecture",
             "info": "Nanning No. 3 High School, Guangxi",
             "description": "We delivered an introductory session on synthetic biology for Grade 10 and 11 students. The session covered gene circuits and protein design, introducing how biology, engineering, and computation come together in synthetic biology.",
             "image": "https://static.igem.wiki/teams/6133/wiki/hp/education/activitygraph/img-4136.avif",
@@ -66,7 +66,7 @@
         },
         {
             "id": "protein-design-lecture",
-            "title": "Protein Design lecture",
+            "title": "High School Protein Design Lecture",
             "info": "Nanning No.3 High School",
             "description": "We introduced rational and AI-assisted protein design through published examples and our own project. The lecture explained how researchers use protein structures to guide mutations and develop new designs through repeated testing and improvement.",
             "image": "https://static.igem.wiki/teams/6133/wiki/hp/education/activitygraph/0f86fb1b6d2fbd7fd55bfcc8476dfa46.avif",
@@ -83,7 +83,7 @@
         },
         {
             "id": "online-market-analysis",
-            "title": "SynBio market and career analysis lecture",
+            "title": "High School SynBio Market and Career Analysis Lecture",
             "info": "Nanning No. 3 High School",
             "description": "This online session explored the synthetic biology industry and related career opportunities. Using industry data and company examples, we introduced different job roles and discussed how research becomes commercial products, helping students considering further study in the field.",
             "image": "https://static.igem.wiki/teams/6133/wiki/hp/education/activitygraph/image-5.avif",
@@ -100,7 +100,7 @@
         },
         {
             "id": "primary-school-workshop",
-            "title": "Primary school SynBio intro Workshop",
+            "title": "Primary School SynBio Intro Workshop",
             "info": "Shenzhen Keyuan Primary School",
             "description": "We introduced synthetic biology to Grade 5 students through familiar examples and practical activities. Students made clay models of organisms they imagined creating, extracted DNA from strawberries, and took part in a team quiz to review what they had learned.",
             "image": "https://static.igem.wiki/teams/6133/wiki/hp/education/activitygraph/untitled.avif",
@@ -117,7 +117,7 @@
         },
         {
             "id": "geranio-lab-session",
-            "title": "Geranio lab session",
+            "title": "Geraniol Lab Session",
             "info": "Shenzhen College of International Education (SCIE)",
             "description": "During this two-day workshop, students carried out a series of experiments to produce geraniol. One team member guided each group of three through transformation, colony PCR, gel electrophoresis, and induction, explaining the science and safety practices along the way.",
             "image": "https://static.igem.wiki/teams/6133/wiki/hp/education/activitygraph/wechat-20261006145941-262-3.avif",
@@ -134,7 +134,7 @@
         },
         {
             "id": "middle-school-workshop",
-            "title": "Middle school SynBio intro workshops",
+            "title": "Middle School SynBio Intro Workshops",
             "info": "Nanshan Foreign Language Middle School & Nanning No. 3 Middle School",
             "description": "Students at two middle schools explored basic synthetic biology concepts and carried out strawberry DNA extraction activity. One workshop included an ethical debate on using gene editing to create superheroes, while the other featured an English reading activity on the benefits and risks of synthetic biology.",
             "image": "https://static.igem.wiki/teams/6133/wiki/hp/education/activitygraph/8a9e3ba4b670316a6ebba910ff88141c.avif",
@@ -151,7 +151,7 @@
         },
         {
             "id": "online-chat-group",
-            "title": "Online discussion group",
+            "title": "Online Discussion Group",
             "info": "QQ, WeChat",
             "description": "We kept an online group open after our lectures so students could ask further questions and share ideas. Discussions covered protein modeling, synthetic biology applications, industry challenges, and university choices, with our team providing resources and individual support when needed.",
             "image": "https://static.igem.wiki/teams/6133/wiki/hp/education/activitygraph/9162642d-12d4-4f0d-a607-d34b58bfa53a.avif",
@@ -168,7 +168,7 @@
         },
         {
             "id": "offline-igem-club",
-            "title": "iGEM club",
+            "title": "iGEM Club",
             "info": "Shenzhen College of International Education (SCIE)",
             "description": "Our school club introduced students to synthetic biology and the iGEM competition. Sessions covered topics from the central dogma to DNA assembly, alongside laboratory activities, mystery games, and debates that gave members different ways to explore the subject.",
             "image": "https://static.igem.wiki/teams/6133/wiki/hp/education/activitygraph/b202d27f4495233f7e584b6cd9170857.avif",
@@ -185,7 +185,7 @@
         },
         {
             "id": "ethical-debate",
-            "title": "SynBio ethics debate",
+            "title": "SynBio Ethics Debate",
             "info": "Shenzhen College of International Education (SCIE)",
             "description": "Eight student debaters discussed whether synthetic biology should prioritize improving human functions or preserving the original state of human life. Preparing for and attending the debate gave students an opportunity to learn about the science and consider its ethical implications.",
             "image": "https://static.igem.wiki/teams/6133/wiki/hp/education/activitygraph/image-1.avif",
@@ -202,7 +202,7 @@
         },
         {
             "id": "collaboration-fair",
-            "title": "SynBio collaboration fair",
+            "title": "SynBio Collaboration Fair",
             "info": "Honey park",
             "description": "Together with the SMS and Yucai SZ iGEM teams, we held a synthetic biology fair for park visitors and families. Participants built microbial clay models, explored everyday applications through posters, and learned signs for scientific terms in a sign language challenge.",
             "image": "https://static.igem.wiki/teams/6133/wiki/hp/education/activitygraph/19fd280beb5ae93d494bb0c6de36a5ca.avif",
@@ -219,7 +219,7 @@
         },
         {
             "id": "english-learning-seminar",
-            "title": "SynBio-vocab seminar",
+            "title": "SynBio-Vocab Seminar",
             "info": "Xiang'an community",
             "description": "Families joined us to discuss difficulties with learning English and share useful learning strategies. We also introduced a bilingual biology vocabulary booklet that explained scientific terms through word roots, suffixes, diagrams, and short quizzes.",
             "image": "https://static.igem.wiki/teams/6133/wiki/hp/education/activitygraph/da035bdd7e289be01cd38f9d03d33573.avif",
@@ -254,7 +254,7 @@
         },
         {
             "id": "fuse-beads-kit",
-            "title": "Bacteria-Fungi Fuse beeds Kit",
+            "title": "Bacteria-Fungi Fuse Beads Kit",
             "info": "",
             "description": "We shared free microbial fuse-bead patterns online for participants to use at home. The patterns included labels and short explanations of cell structures, their functions, and the microorganisms’ everyday applications, combining a craft activity with biology learning.",
             "image": "https://static.igem.wiki/teams/6133/wiki/hp/education/activitygraph/image-4.avif",
@@ -266,13 +266,17 @@
             "labelFont": 11,
             "labelAbove": false,
             "nodeId": "fuse-beads-kit",
+<<<<<<< HEAD
             "labelLines": ["Bacteria-Fungi", "Fuse beeds Kit"],
+=======
+            "labelLines": ["Bacteria-Fungi", "Fuse Beads Kit"],
+>>>>>>> 08d6f67 (fix: edu overview graph capitalisation)
             "imageWidth": 1280,
             "imageHeight": 720
         },
         {
             "id": "murder-mystery-game",
-            "title": "Lab-themed Jubensha",
+            "title": "Lab-Themed Jubensha Mystery Game",
             "info": "",
             "description": "Students first practised PCR and gel electrophoresis, then took part in a mystery game about a failed experiment. Working from gel images, reagent records, and PCR settings, they discussed the evidence and applied what they had learned to identify the experimental error.",
             "image": "https://static.igem.wiki/teams/6133/wiki/hp/education/activitygraph/9fdd52ef6699f49ae60691280f184251.avif",
@@ -306,7 +310,7 @@
         },
         {
             "id": "central-dogma-dance",
-            "title": "Dance of central dogma",
+            "title": "Dance of Central Dogma",
             "info": "",
             "description": "Students acted out transcription and translation in a dance, taking on roles such as nucleotides, tRNA, and amino acids. Their movements showed how the different components work together, making the flow of genetic information easier to visualize.",
             "image": "https://static.igem.wiki/teams/6133/wiki/hp/education/activitygraph/image.avif",
@@ -323,7 +327,7 @@
         },
         {
             "id": "long-videos",
-            "title": "Long videos",
+            "title": "Long Videos",
             "info": "",
             "description": "We made a video about Craig Venter and the Human Genome Project, combining scientific explanations with storytelling, humor, and archival materials. It introduced whole-genome shotgun sequencing and explored questions about public and private access to genomic information.",
             "image": "https://static.igem.wiki/teams/6133/wiki/hp/education/activitygraph/edbed2c5fffef6c4d64780a1950459eb.avif",
@@ -340,7 +344,7 @@
         },
         {
             "id": "short-videos",
-            "title": "Short videos",
+            "title": "Short Videos",
             "info": "",
             "description": "Our short videos used humor and familiar laboratory situations to introduce experimental procedures and safety practices. Topics included cultivation, protective equipment, and keeping food and drinks out of the lab, offering an accessible introduction for viewers without laboratory experience.",
             "image": "https://static.igem.wiki/teams/6133/wiki/hp/education/activitygraph/9f0c2712918142cdce50d311105329c8.avif",

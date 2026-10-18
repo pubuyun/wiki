@@ -402,22 +402,22 @@ onBeforeUnmount(() => {
                     <span
                         class="activity-graph__axis-label axis-top"
                         aria-hidden="true"
-                        >More<br />interactive</span
+                        >More<br />Interactive</span
                     >
                     <span
                         class="activity-graph__axis-label axis-bottom"
                         aria-hidden="true"
-                        >Less<br />interactive</span
+                        >Less<br />Interactive</span
                     >
                     <span
                         class="activity-graph__axis-label axis-left"
                         aria-hidden="true"
-                        >Beginner-<br />friendly</span
+                        >Beginner-<br />Friendly</span
                     >
                     <span
                         class="activity-graph__axis-label axis-right"
                         aria-hidden="true"
-                        >Prior knowledge<br />needed</span
+                        >Prior Knowledge<br />Needed</span
                     >
                     <svg
                         class="activity-graph__label-leaders"
@@ -836,7 +836,7 @@ onBeforeUnmount(() => {
     .activity-graph__dot {
     visibility: hidden;
 }
-.activity-graph__node[aria-label="Short videos"] {
+.activity-graph__node[aria-label="Short Videos"] {
     z-index: 0;
 }
 .activity-graph__node--kit {
