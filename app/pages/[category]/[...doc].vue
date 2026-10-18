@@ -15,18 +15,22 @@ const category = computed(() => activePath.value.split("/")[1] ?? "");
 
 const { data: page } = await useContentPageData(activePath);
 const tocLinks = computed(() => contentTocLinks(page.value?.body));
+const { data: allPages } = await useContentNavigationData(category);
+
+const pages = computed(() => allPages.value ?? []);
+const hasChildDocuments = computed(() =>
+    pages.value.some((item) => item.path.startsWith(`${activePath.value}/`)),
+);
 const contentGraphViews = new Set(runtimeConfig.public.contentGraphViews);
 const graphView = computed(() => {
+    if (!hasChildDocuments.value) return null;
+
     const candidate = page.value?.stem
         ? page.value.stem
         : activePath.value.replace(/^\//, "");
 
     return contentGraphViews.has(candidate) ? candidate : null;
 });
-
-const { data: allPages } = await useContentNavigationData(category);
-
-const pages = computed(() => allPages.value ?? []);
 const children = computed(() =>
     categoryPagesInNavigationOrder(pages.value, category.value),
 );
@@ -75,11 +79,10 @@ useSeoMeta({
         v-if="page"
         class="flex w-full min-w-0 flex-1 flex-col gap-4 overflow-x-visible px-4 sm:gap-6 sm:px-6 lg:px-0"
     >
-        <h1 class="sr-only">
-            {{ pageTitle(page) }}
-        </h1>
-
-        <ContentGraph v-if="graphView" :view="graphView" />
+        <!-- Keep the first element stable as folder graphs appear or disappear. -->
+        <div class="contents">
+            <ContentGraph v-if="graphView" :view="graphView" />
+        </div>
 
         <div
             class="content-reading-layout"
@@ -88,7 +91,7 @@ useSeoMeta({
             <div
                 class="flex w-full min-w-0 flex-1 flex-col gap-4 sm:gap-6 lg:max-w-[calc(75ch+3rem)]"
             >
-                <ContentDocument :page="page" />
+                <ContentDocument :page="page" :navigation-pages="pages" />
                 <section
                     v-if="currentFolderCards.length"
                     class="grid max-w-full min-w-0 gap-4 sm:grid-cols-2 xl:grid-cols-3"

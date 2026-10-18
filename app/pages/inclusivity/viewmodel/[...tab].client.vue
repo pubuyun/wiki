@@ -113,8 +113,8 @@
                         <ClientOnly>
                             <component
                                 :is="'model-viewer'"
-                                ref="modelViewerElement"
                                 v-if="selectedModel && isModelViewerReady"
+                                :key="selectedModel.id"
                                 class="educational-model-viewer block size-full bg-secondary outline-none"
                                 :src="selectedModel.modelUrl"
                                 :alt="`${selectedModel.title} 3D model`"
@@ -301,10 +301,10 @@ const isWideViewport = ref(true);
 const prefersReducedMotion = ref(false);
 const isModelLoaded = ref(false);
 const isModelViewerReady = ref(false);
+const modelLoadError = ref("");
 const hasUserTakenViewerControl = ref(false);
 let viewportQuery: MediaQueryList | undefined;
 let reducedMotionQuery: MediaQueryList | undefined;
-let previousRouteModelId: string | undefined;
 
 const tabValues = ["description-en", "description-cn"] as const;
 type TabValue = (typeof tabValues)[number];
@@ -423,6 +423,7 @@ function handleCameraChange(event: Event) {
 
 async function handleModelLoad(event: Event) {
     isModelLoaded.value = true;
+    modelLoadError.value = "";
 
     const viewer = event.currentTarget;
     if (!(viewer instanceof HTMLElement)) return;
@@ -465,6 +466,12 @@ async function handleModelLoad(event: Event) {
     }
 }
 
+function handleModelError() {
+    isModelLoaded.value = false;
+    modelLoadError.value =
+        "Unable to load the 3D model. Please refresh to try again.";
+}
+
 function syncRouteState() {
     if (!firstModel) return;
 
@@ -490,17 +497,17 @@ function updateViewportPreferences() {
 }
 
 watch(
-    () => route.fullPath,
+    () => selectedModel.value?.id,
     () => {
-        const routeModelId = catchallSegments().at(0);
-        if (routeModelId !== previousRouteModelId) {
-            isModelLoaded.value = false;
-            previousRouteModelId = routeModelId;
-        }
-        syncRouteState();
+        isModelLoaded.value = false;
+        modelLoadError.value = "";
+        hasUserTakenViewerControl.value = false;
     },
-    { immediate: true },
 );
+
+// Nuxt must finish mounting the page before an entry URL is canonicalised.
+// Redirecting during setup can interrupt the initial viewer mount.
+watch(() => route.fullPath, syncRouteState);
 
 watch(activeTab, (tab) => {
     const model = selectedModel.value;
@@ -511,6 +518,7 @@ watch(activeTab, (tab) => {
 });
 
 onMounted(async () => {
+    syncRouteState();
     configureModelViewerDecoders();
 
     try {
@@ -519,6 +527,8 @@ onMounted(async () => {
             modelViewerMeshoptDecoderLocation;
         isModelViewerReady.value = true;
     } catch (error) {
+        modelLoadError.value =
+            "Unable to initialise the 3D model viewer. Please refresh to try again.";
         console.error(
             "Unable to initialise the educational 3D model viewer",
             error,

@@ -6,6 +6,9 @@ import katexSizeFont from "katex/dist/fonts/KaTeX_Size2-Regular.woff2?url";
 
 const props = defineProps({
     page: { type: Object, required: true },
+    showHeader: { type: Boolean, default: true },
+    headingLevel: { type: Number, default: 1 },
+    navigationPages: { type: Array, default: () => [] },
 });
 
 // Navigation can refresh the same Nuxt Content record with new object identities.
@@ -15,6 +18,26 @@ const page = computed((previous) => {
     return previous && JSON.stringify(previous) === JSON.stringify(next)
         ? previous
         : next;
+});
+
+const breadcrumbs = computed(() => {
+    const segments = page.value.path.split("/").filter(Boolean);
+    const items = [
+        { label: titleizeSlug(segments[0]), path: `/${segments[0]}` },
+    ];
+
+    for (let index = 1; index < segments.length - 1; index++) {
+        const path = `/${segments.slice(0, index + 1).join("/")}`;
+        const ancestor = props.navigationPages.find(
+            (item) => item.path === path,
+        );
+        items.push({
+            label: ancestor?.title || titleizeSlug(segments[index]),
+            path: ancestor?.path,
+        });
+    }
+
+    return [...items, { label: pageTitle(page.value), current: true }];
 });
 
 useHead(() => ({
@@ -103,6 +126,45 @@ function sectionValue(children) {
 
 <template>
     <div class="flex w-full max-w-full min-w-0 flex-col gap-4 sm:gap-6">
+        <header
+            v-if="showHeader"
+            class="mb-2 flex w-full min-w-0 flex-col gap-3 self-center pt-2 pb-4 lg:max-w-[calc(75ch+3rem)]"
+        >
+            <nav aria-label="Breadcrumb" class="font-belanosima text-base">
+                <ol class="flex flex-wrap items-center gap-x-2 gap-y-1">
+                    <template
+                        v-for="(crumb, index) in breadcrumbs"
+                        :key="index"
+                    >
+                        <li
+                            v-if="index"
+                            aria-hidden="true"
+                            class="text-on-surface/50"
+                        >
+                            /
+                        </li>
+                        <li :aria-current="crumb.current ? 'page' : undefined">
+                            <NuxtLink
+                                v-if="crumb.path"
+                                :to="crumb.path"
+                                class="rounded-sm text-on-surface/80 transition-colors hover:text-primary hover:underline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-outline"
+                            >
+                                {{ crumb.label }}
+                            </NuxtLink>
+                            <span v-else class="text-on-surface">{{
+                                crumb.label
+                            }}</span>
+                        </li>
+                    </template>
+                </ol>
+            </nav>
+            <component
+                :is="`h${headingLevel}`"
+                class="font-momo-trust-display text-3xl leading-tight wrap-anywhere text-on-surface sm:text-4xl"
+            >
+                {{ pageTitle(page) }}
+            </component>
+        </header>
         <MobileContentBar v-if="tocLinks.length" :toc="tocLinks" />
         <section
             v-for="section in sections"

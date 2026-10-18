@@ -198,7 +198,7 @@ alt:
     their corresponding thioalcohols.
 src:
   - https://static.igem.wiki/teams/6133/wiki/drylab/model/overview-fig5.avif
-caption: Fig. 6 | **Structure diagrams for Cys-Gly-(S)-3M3SH and
+caption: Fig. 5 | **Structure diagrams for Cys-Gly-(S)-3M3SH and
   Cys-Gly-(R)-3M3SH precursors and the smells of their corresponding 3M3SH molecules.** :fn-ref{#3}
 imageBackground: white
 ---
@@ -224,11 +224,11 @@ alt:
 src:
   - https://static.igem.wiki/teams/6133/wiki/drylab/model/overview-fig4a.avif
   - https://static.igem.wiki/teams/6133/wiki/drylab/model/overview-fig4b.avif
-caption: Fig. 5 | **Sample precursor binder designs.**
+caption: Fig. 6 | **Sample precursor binder designs.**
   **(a)** Precursor binder designed by Proteina-Complexa; **(b)** precursor
   binder designed by RFdiffusion3.
 imageBackground: white
-label: Overview — Fig. 5
+label: Overview — Fig. 6
 ---
 ::
 

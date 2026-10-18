@@ -2,9 +2,8 @@
     <nav
         :class="sidebarClass"
         :data-category-sidebar-collapsed="collapsed"
-        aria-labelledby="category-sidebar-title"
+        :aria-label="`${title} documents`"
     >
-        <h2 class="sr-only" id="category-sidebar-title">Category navigation</h2>
         <NuxtLink
             v-if="!collapsed"
             :inert="!navigationBarHidden"
@@ -20,14 +19,19 @@
                 Expelliodor
             </span>
         </NuxtLink>
-        <div
+        <header
             v-if="contentRendered"
-            class="absolute top-16 right-3 left-3 z-10 flex min-h-9 items-center justify-center gap-2 text-on-surface xl:top-20"
+            class="mx-6 flex shrink-0 flex-col gap-2 border-b border-outline-variant/50 pb-4 text-on-surface"
             :class="contentClass"
         >
+            <h2
+                class="font-belanosima text-xs text-on-surface/80"
+            >
+                Documents
+            </h2>
             <NuxtLink
                 :to="titleTo"
-                class="inline-flex min-w-0 flex-1 justify-center overflow-visible rounded-md px-2 py-1 text-center text-xl leading-[1.1] font-semibold whitespace-nowrap transition-colors hover:bg-secondary hover:text-on-secondary focus-visible:ring-2 focus-visible:ring-outline focus-visible:outline-none xl:text-2xl"
+                class="inline-flex w-full min-w-0 justify-start overflow-visible rounded-md py-1 text-left text-2xl leading-tight whitespace-nowrap transition-colors hover:text-primary focus-visible:ring-2 focus-visible:ring-outline focus-visible:outline-none"
                 :style="titleStyle"
                 :aria-label="`Go to ${title}`"
                 :aria-current="titleTo === activePath ? 'page' : undefined"
@@ -45,179 +49,184 @@
                     {{ title }}
                 </span>
             </NuxtLink>
-            <button
-                type="button"
-                :class="titleCollapseButtonClass"
-                :aria-controls="contentId"
-                :aria-expanded="!collapsed"
-                aria-label="Collapse category navigation"
-                @click="collapsed = true"
-            >
-                <svg
-                    viewBox="0 0 24 24"
-                    class="size-8 xl:size-10"
-                    aria-hidden="true"
+        </header>
+
+        <div
+            v-if="contentRendered"
+            class="mt-3 flex min-h-0 w-full flex-1 flex-col"
+            :class="contentClass"
+        >
+            <div class="relative min-h-0 flex-1">
+                <div
+                    v-if="contentVisible && canScrollUp"
+                    class="pointer-events-none absolute top-0 z-10 h-8 w-full bg-linear-to-b from-surface-sidebar to-transparent"
+                />
+                <div
+                    :id="contentId"
+                    ref="contentScroll"
+                    class="category-sidebar-scroll h-full max-h-full w-full overflow-y-auto px-3 pb-4"
+                    :aria-hidden="!contentVisible"
+                    @scroll="updateScrollGradients"
                 >
-                    <path
-                        d="M16.5 5.8C16.5 4.7 15.2 4.1 14.3 4.8L6.6 10.9C5.8 11.5 5.8 12.5 6.6 13.1L14.3 19.2C15.2 19.9 16.5 19.3 16.5 18.2V5.8Z"
-                        fill="currentColor"
-                    />
-                </svg>
-            </button>
+                    <AccordionRoot
+                        v-model="expandedItems"
+                        type="multiple"
+                        class="category-sidebar-scroll-content w-full"
+                    >
+                        <ul class="space-y-1">
+                            <li v-for="node in nodes" :key="node.id">
+                                <AccordionItem
+                                    v-if="node.children?.length"
+                                    :value="node.id"
+                                    class="overflow-hidden text-on-surface"
+                                >
+                                    <div class="flex h-min gap-0">
+                                        <div :class="folderClass(node)">
+                                            <NuxtLink
+                                                v-if="node.path"
+                                                :to="node.path"
+                                                :class="folderTextClass(node)"
+                                                :aria-current="
+                                                    node.path === activePath
+                                                        ? 'page'
+                                                        : undefined
+                                                "
+                                            >
+                                                <Icon
+                                                    icon="lucide:file-text"
+                                                    class="mr-2 size-3.5 shrink-0"
+                                                    aria-hidden="true"
+                                                />
+                                                {{ node.label }}
+                                            </NuxtLink>
+                                            <span
+                                                v-else
+                                                :class="folderTextClass(node)"
+                                            >
+                                                {{ node.label }}
+                                            </span>
+                                            <AccordionTrigger
+                                                :class="folderToggleClass(node)"
+                                                :aria-label="`Expand or collapse ${node.label}`"
+                                            >
+                                                <span
+                                                    class="transition-transform duration-300 group-data-[state=open]:rotate-90"
+                                                    aria-hidden="true"
+                                                >
+                                                    &#9656;
+                                                </span>
+                                            </AccordionTrigger>
+                                        </div>
+                                    </div>
+                                    <AccordionContent
+                                        class="category-sidebar-accordion-content overflow-hidden data-[state=closed]:animate-[category-sidebar-slide-up_200ms_ease-in] data-[state=open]:animate-[category-sidebar-slide-down_200ms_ease-out]"
+                                    >
+                                        <div class="relative ml-4 pl-2">
+                                            <div
+                                                class="pointer-events-none absolute top-0 bottom-0 left-0 w-0.5 rounded-full bg-white/25"
+                                                aria-hidden="true"
+                                            />
+                                            <ul
+                                                class="space-y-[var(--category-sidebar-child-item-gap)]"
+                                            >
+                                                <li
+                                                    v-for="child in node.children"
+                                                    :key="child.id"
+                                                    class="relative"
+                                                >
+                                                    <div
+                                                        v-if="child.active"
+                                                        class="pointer-events-none absolute inset-y-0 -left-2 w-0.5 rounded-full bg-primary"
+                                                        aria-hidden="true"
+                                                    />
+                                                    <NuxtLink
+                                                        v-if="child.path"
+                                                        :to="child.path"
+                                                        :class="linkClass(1)"
+                                                        :aria-current="
+                                                            child.path ===
+                                                            activePath
+                                                                ? 'page'
+                                                                : undefined
+                                                        "
+                                                    >
+                                                        <span
+                                                            :class="
+                                                                linkTextClass(
+                                                                    child,
+                                                                    1,
+                                                                )
+                                                            "
+                                                        >
+                                                            <Icon
+                                                                icon="lucide:file-text"
+                                                                class="mr-2 size-3.5 shrink-0"
+                                                                aria-hidden="true"
+                                                            />
+                                                            {{ child.label }}
+                                                        </span>
+                                                    </NuxtLink>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </AccordionContent>
+                                </AccordionItem>
+                                <NuxtLink
+                                    v-else-if="node.path"
+                                    :to="node.path"
+                                    :class="linkClass(0)"
+                                    :aria-current="
+                                        node.path === activePath
+                                            ? 'page'
+                                            : undefined
+                                    "
+                                >
+                                    <span :class="linkTextClass(node, 0)">
+                                        <Icon
+                                            icon="lucide:file-text"
+                                            class="mr-2 size-3.5 shrink-0"
+                                            aria-hidden="true"
+                                        />
+                                        {{ node.label }}
+                                    </span>
+                                </NuxtLink>
+                            </li>
+                        </ul>
+                    </AccordionRoot>
+                </div>
+                <div
+                    v-if="contentVisible && canScrollDown"
+                    class="pointer-events-none absolute bottom-0 z-10 h-8 w-full bg-linear-to-t from-surface-sidebar to-transparent"
+                />
+            </div>
         </div>
         <button
-            v-if="collapsed"
             type="button"
-            :class="collapseButtonClass"
-            :aria-controls="contentId"
+            class="mt-auto flex h-11 w-full shrink-0 items-center justify-center border-t border-outline-variant/50 bg-surface-sidebar text-on-surface/75 transition-colors hover:bg-secondary hover:text-on-secondary focus-visible:ring-2 focus-visible:ring-outline focus-visible:outline-none focus-visible:ring-inset"
+            :aria-controls="contentRendered ? contentId : undefined"
             :aria-expanded="!collapsed"
             :aria-label="
                 collapsed
                     ? 'Expand category navigation'
                     : 'Collapse category navigation'
             "
-            @click="collapsed = false"
+            :title="collapsed ? 'Expand sidebar' : 'Collapse sidebar'"
+            @click="collapsed = !collapsed"
         >
-            <svg viewBox="0 0 24 24" class="size-10" aria-hidden="true">
-                <path
-                    d="M7.5 5.8C7.5 4.7 8.8 4.1 9.7 4.8L17.4 10.9C18.2 11.5 18.2 12.5 17.4 13.1L9.7 19.2C8.8 19.9 7.5 19.3 7.5 18.2V5.8Z"
-                    fill="currentColor"
-                />
+            <svg
+                viewBox="0 0 24 24"
+                class="size-5 transition-transform duration-200"
+                :class="{ 'rotate-180': collapsed }"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+            >
+                <path d="m11 6-6 6 6 6m8-12-6 6 6 6" />
             </svg>
         </button>
-
-        <div
-            v-if="contentRendered"
-            class="relative mt-28 min-h-0 w-full flex-1 xl:mt-32"
-            :class="contentClass"
-        >
-            <div
-                v-if="contentVisible && canScrollUp"
-                class="pointer-events-none absolute top-0 z-10 h-8 w-full bg-linear-to-b from-surface-sidebar to-transparent"
-            />
-            <div
-                :id="contentId"
-                ref="contentScroll"
-                class="category-sidebar-scroll h-full max-h-full w-full overflow-y-auto px-3 pb-4"
-                :aria-hidden="!contentVisible"
-                @scroll="updateScrollGradients"
-            >
-                <AccordionRoot
-                    v-model="expandedItems"
-                    type="multiple"
-                    class="category-sidebar-scroll-content w-full"
-                >
-                    <ul class="space-y-1">
-                        <li v-for="node in nodes" :key="node.id">
-                            <AccordionItem
-                                v-if="node.children?.length"
-                                :value="node.id"
-                                class="overflow-hidden text-on-surface"
-                            >
-                                <div class="flex h-min gap-0">
-                                    <div :class="folderClass(node)">
-                                        <NuxtLink
-                                            v-if="node.path"
-                                            :to="node.path"
-                                            :class="folderTextClass(node)"
-                                            :aria-current="
-                                                node.path === activePath
-                                                    ? 'page'
-                                                    : undefined
-                                            "
-                                        >
-                                            {{ node.label }}
-                                        </NuxtLink>
-                                        <span
-                                            v-else
-                                            :class="folderTextClass(node)"
-                                        >
-                                            {{ node.label }}
-                                        </span>
-                                        <AccordionTrigger
-                                            :class="folderToggleClass(node)"
-                                            :aria-label="`Expand or collapse ${node.label}`"
-                                        >
-                                            <span
-                                                class="transition-transform duration-300 group-data-[state=open]:rotate-90"
-                                                aria-hidden="true"
-                                            >
-                                                &#9656;
-                                            </span>
-                                        </AccordionTrigger>
-                                    </div>
-                                </div>
-                                <AccordionContent
-                                    class="category-sidebar-accordion-content overflow-hidden data-[state=closed]:animate-[category-sidebar-slide-up_200ms_ease-in] data-[state=open]:animate-[category-sidebar-slide-down_200ms_ease-out]"
-                                >
-                                    <div class="relative ml-4 pl-2">
-                                        <div
-                                            class="pointer-events-none absolute top-0 bottom-0 left-0 w-0.5 rounded-full bg-white/25"
-                                            aria-hidden="true"
-                                        />
-                                        <ul
-                                            class="space-y-[var(--category-sidebar-child-item-gap)]"
-                                        >
-                                            <li
-                                                v-for="child in node.children"
-                                                :key="child.id"
-                                                class="relative"
-                                            >
-                                                <div
-                                                    v-if="child.active"
-                                                    class="pointer-events-none absolute inset-y-0 -left-2 w-0.5 rounded-full bg-primary"
-                                                    aria-hidden="true"
-                                                />
-                                                <NuxtLink
-                                                    v-if="child.path"
-                                                    :to="child.path"
-                                                    :class="linkClass(1)"
-                                                    :aria-current="
-                                                        child.path ===
-                                                        activePath
-                                                            ? 'page'
-                                                            : undefined
-                                                    "
-                                                >
-                                                    <span
-                                                        :class="
-                                                            linkTextClass(
-                                                                child,
-                                                                1,
-                                                            )
-                                                        "
-                                                    >
-                                                        {{ child.label }}
-                                                    </span>
-                                                </NuxtLink>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </AccordionContent>
-                            </AccordionItem>
-                            <NuxtLink
-                                v-else-if="node.path"
-                                :to="node.path"
-                                :class="linkClass(0)"
-                                :aria-current="
-                                    node.path === activePath
-                                        ? 'page'
-                                        : undefined
-                                "
-                            >
-                                <span :class="linkTextClass(node, 0)">
-                                    {{ node.label }}
-                                </span>
-                            </NuxtLink>
-                        </li>
-                    </ul>
-                </AccordionRoot>
-            </div>
-            <div
-                v-if="contentVisible && canScrollDown"
-                class="pointer-events-none absolute bottom-0 z-10 h-8 w-full bg-linear-to-t from-surface-sidebar to-transparent"
-            />
-        </div>
     </nav>
 </template>
 
@@ -229,6 +238,7 @@ import {
     AccordionTrigger,
 } from "reka-ui";
 import type { ContentNavNode } from "~/utils/content-pages";
+import { Icon } from "@iconify/vue";
 
 const props = defineProps<{
     title: string;
@@ -257,17 +267,10 @@ let contentRevealTimer: ReturnType<typeof setTimeout> | undefined;
 let titleResizeObserver: ResizeObserver | undefined;
 
 const sidebarClass = computed(() => [
-    "category-sidebar sticky top-0 h-screen max-h-screen flex-col overflow-hidden bg-surface-sidebar font-momo-trust-display font-normal text-on-surface transition-[width,height,padding,translate] duration-200 ease-out",
-    collapsed.value ? "w-12 py-6" : "w-66 pt-4",
+    "category-sidebar sticky top-0 h-screen max-h-screen flex-col overflow-hidden border-r border-outline-variant/50 bg-surface-sidebar font-momo-trust-display font-normal text-on-surface transition-[width,height,padding,translate] duration-200 ease-out",
+    collapsed.value ? "w-12" : "w-66 pt-16 xl:pt-20",
     "translate-x-0",
 ]);
-
-const collapseButtonClass = computed(() => [
-    "absolute inset-0 z-20 flex w-full items-center justify-center text-2xl text-on-surface transition-colors duration-200 hover:bg-secondary hover:text-on-secondary focus-visible:ring-2 focus-visible:ring-outline focus-visible:outline-none",
-]);
-
-const titleCollapseButtonClass =
-    "flex size-10 shrink-0 items-center justify-center rounded-full text-xl leading-none text-on-surface transition-colors duration-200 hover:bg-secondary hover:text-on-secondary focus-visible:ring-2 focus-visible:ring-outline focus-visible:outline-none xl:size-12 xl:text-2xl";
 
 const contentClass = computed(() => [
     "transition-opacity duration-200 ease-out",
@@ -280,7 +283,7 @@ const titleStyle = computed(() => ({
 
 function folderClass(node: ContentNavNode) {
     return [
-        "group my-0.5 flex w-full items-stretch text-base focus-visible:ring-2 focus-visible:ring-outline focus-visible:outline-none xl:text-lg",
+        "group my-0.5 flex w-full items-stretch text-base focus-visible:ring-2 focus-visible:ring-outline focus-visible:outline-none",
     ];
 }
 
@@ -301,7 +304,7 @@ function folderToggleClass(node: ContentNavNode) {
 
 function linkClass(depth: 0 | 1) {
     return [
-        "group my-0.5 flex w-full items-stretch text-base focus-visible:ring-2 focus-visible:ring-outline focus-visible:outline-none xl:text-lg",
+        "group my-0.5 flex w-full items-stretch text-base focus-visible:ring-2 focus-visible:ring-outline focus-visible:outline-none",
         depth === 1 && "font-belanosima text-sm xl:text-base",
     ];
 }
@@ -317,13 +320,12 @@ function linkTextClass(node: ContentNavNode, depth: 0 | 1) {
 
 function itemStateClass(node: ContentNavNode) {
     if (node.path === props.activePath) {
-        return "bg-transparent text-primary hover:bg-[var(--category-sidebar-hover)] hover:text-primary group-hover:bg-[var(--category-sidebar-hover)] group-hover:text-primary";
+        return "bg-[var(--category-sidebar-highlight)] text-[var(--category-sidebar-active-text)] hover:bg-[var(--category-sidebar-hover)] hover:text-[var(--category-sidebar-active-text)] group-hover:bg-[var(--category-sidebar-hover)] group-hover:text-[var(--category-sidebar-active-text)]";
     }
 
     return [
         "hover:bg-[var(--category-sidebar-hover)] hover:text-[var(--category-sidebar-highlight-text)] group-hover:bg-[var(--category-sidebar-hover)] group-hover:text-[var(--category-sidebar-highlight-text)]",
-        node.active &&
-            "bg-[var(--category-sidebar-highlight)] text-[var(--category-sidebar-highlight-text)]",
+        node.active && "text-[var(--category-sidebar-active-text)]",
     ];
 }
 
@@ -471,6 +473,11 @@ onBeforeUnmount(() => {
 <style>
 .category-sidebar {
     --category-sidebar-highlight: #d5e7f3;
+    --category-sidebar-active-text: color-mix(
+        in srgb,
+        var(--primary) 75%,
+        var(--on-surface)
+    );
     --category-sidebar-highlight-text: var(--on-surface);
     --category-sidebar-hover: var(--category-sidebar-highlight);
 }
@@ -486,6 +493,7 @@ onBeforeUnmount(() => {
 .dark .category-sidebar,
 .high-contrast .category-sidebar {
     --category-sidebar-highlight: var(--secondary);
+    --category-sidebar-active-text: var(--on-secondary);
     --category-sidebar-highlight-text: var(--on-secondary);
 }
 

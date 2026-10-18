@@ -88,6 +88,9 @@ useSeoMeta({
             >
                 <ContentDocument
                     :page="page"
+                    :navigation-pages="pages"
+                    :show-header="children.length > 0"
+                    :heading-level="2"
                     class="flex-1"
                     :class="{
                         'category-overview-content--expanded': !tocLinks.length,

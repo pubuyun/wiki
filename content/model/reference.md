@@ -73,8 +73,6 @@ order: 6
 
 33. Musil M, Stourac J, Bendl J, Brezovsky J, Prokop Z, Zendulka J, et al. FireProt: web server for automated design of thermostable proteins. Nucleic Acids Res. 2017;45(W1):W393–9. doi: [10.1093/nar/gkx285](https://doi.org/10.1093/nar/gkx285).
 
-### Further Reading
-
 34. Humphrey W, Dalke A, Schulten K. VMD: visual molecular dynamics. J Mol Graph. 1996;14(1):33–8. doi: [10.1016/0263-7855(96)00018-5](https://doi.org/10.1016/0263-7855(96)00018-5).
 
 35. Jo S, Kim T, Iyer VG, Im W. CHARMM-GUI: a web-based graphical user interface for CHARMM. J Comput Chem. 2008;29:1859–65.
