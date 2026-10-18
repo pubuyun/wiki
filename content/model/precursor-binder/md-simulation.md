@@ -215,7 +215,7 @@ Binding free energies were estimated using the **MM/PBSA** :fn-ref{#17} approach
 
 ### Binder Selection
 
-Candidates satisfying both RMSD stability criteria and the MM/PBSA free energy threshold were selected as final designs for experimental validation. Following MD-based filtering, 22 binders (11 from each design route) were selected for planned testing in cycle 1; 9 were successfully tested (4 RFdiffusion3 and 5 Proteina-Complexa).
+Candidates satisfying both RMSD stability criteria and the MM/PBSA free energy threshold were selected as final designs for experimental validation. Following MD-based filtering, 22 binders (11 from each design route) were selected for planned testing in [Precursor Binder Cycle 1]; 9 were successfully tested (4 RFdiffusion3 and 5 Proteina-Complexa).
 
 :content-components-model-document-rmsd-xvg-chart{collection="precursor-binder"}
 

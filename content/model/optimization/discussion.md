@@ -9,4 +9,4 @@ order: 3
 
 The measurement of the melting temperature of optimized CGTase was unsuccessful; thus, no conclusion can be drawn about the effectiveness of the design.
 
-Affinity measurements for optimized precursor binders are currently unavailable. We are still carrying out the experiments in cycle 6; the results and analysis will be updated in the presentation video.
+Affinity measurements for optimized precursor binders are currently unavailable. We are still carrying out the experiments in [Precursor Binder Cycle 2]; the results and analysis will be updated in the presentation video.

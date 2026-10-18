@@ -246,7 +246,7 @@ portrait: true
 ---
 ::
 
-22 binders (11 from each design tool) were planned for experimental testing in cycle 1. Nine were successfully tested: 4 from RFdiffusion3 and 5 from Proteina-Complexa.
+22 binders (11 from each design tool) were planned for experimental testing in [Precursor Binder Cycle 1]. Nine were successfully tested: 4 from RFdiffusion3 and 5 from Proteina-Complexa.
 
 ### Discussion
 
@@ -388,7 +388,7 @@ label: Transporter binder MD trajectories
 ---
 ::
 
-Selected candidates are tested experimentally in our wet lab efforts [cycle 2]().
+Selected candidates are tested experimentally in our wet lab efforts [Transporter Binder Cycle 1].
 
 ### Discussion
 
@@ -532,7 +532,7 @@ label: Overview — Fig. 15
 ---
 ::
 
-Three candidates showing improved interaction with the precursor were selected for experimental testing in cycle 3; only T370R/F183W was successfully tested as designed.
+Three candidates showing improved interaction with the precursor were selected for experimental testing in [CGTase Cycle1]; only T370R/F183W was successfully tested as designed.
 
 ### Discussion
 
@@ -615,7 +615,7 @@ layout: stack
 ---
 ::
 
-Mutants with 2, 4, 6, or 8 additional substitutions relative to each CGTase parent, along the same search route, were selected for testing in cycle 4.
+Mutants with 2, 4, 6, or 8 additional substitutions relative to each CGTase parent, along the same search route, were selected for testing in [CGTase Cycle 2].
 
 ### Design: Precursor Binder Affinity
 
@@ -644,7 +644,7 @@ By adjusting decoding order, one position is allowed to vary while the remaining
 
 Candidate substitutions are ranked by ΔNLL, which compares how much the model favors the proposed amino acid over the original one. $\Delta NLL = \ln[P(a) / P(b)]$. Negative values indicate greater model support for the substitution. We prioritize candidates at buried, ligand-contacting positions, then predict and minimize their structures to filter any buried polar residues introduced without suitable hydrogen bond interactions.
 
-The following designs are selected for testing in cycle 6.
+The following designs are selected for testing in [Precursor Binder Cycle 2].
 
 ::content-components-captioned-table
 ---
@@ -666,7 +666,7 @@ caption: Table 2 | **Selected candidates for precursor binder affinity design.**
 
 The measurement of the melting temperature of optimized CGTase was unsuccessful; thus, no conclusion can be drawn about the effectiveness of the design.
 
-Affinity measurements for optimized precursor binders are currently unavailable. We are still carrying out the experiments in cycle 6; the results and analysis will be updated in the presentation video.
+Affinity measurements for optimized precursor binders are currently unavailable. We are still carrying out the experiments in [Precursor Binder Cycle 2]; the results and analysis will be updated in the presentation video.
 
 ## Overall Discussion
 
