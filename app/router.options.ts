@@ -1,8 +1,9 @@
 import type { RouterConfig } from "@nuxt/schema";
+import { nextTick } from "vue";
 import { waitForHashTarget } from "./utils/hash-scroll-target";
 
 export default <RouterConfig>{
-    scrollBehavior(to, from, savedPosition) {
+    async scrollBehavior(to, from, savedPosition) {
         if (savedPosition) {
             return savedPosition;
         }
@@ -14,47 +15,36 @@ export default <RouterConfig>{
                 to.path !== from.path &&
                 /^#(?:fnref|ref)-/.test(to.hash)
             ) {
-                const nuxtApp = useNuxtApp();
                 const router = useRouter();
                 const isCurrent = () =>
                     router.currentRoute.value.fullPath === to.fullPath;
-                return new Promise((resolve) => {
-                    nuxtApp.hooks.hookOnce("page:loading:end", async () => {
-                        const target = await waitForHashTarget(
-                            to.hash,
-                            isCurrent,
-                        );
-                        if (!target) {
-                            resolve(false);
-                            return;
-                        }
-                        requestAnimationFrame(() => {
-                            if (!isCurrent() || !target.isConnected) {
-                                resolve(false);
-                                return;
-                            }
-                            window.dispatchEvent(
-                                new CustomEvent("wiki:hash-scroll", {
-                                    detail: { id: target.id },
-                                }),
-                            );
-                            target.focus({ preventScroll: true });
-                            resolve({
-                                top: Math.max(
-                                    0,
-                                    target.getBoundingClientRect().top +
-                                        window.scrollY -
-                                        getScrollPaddingTop() -
-                                        (Number.parseFloat(
-                                            getComputedStyle(target)
-                                                .scrollMarginTop,
-                                        ) || 0),
-                                ),
-                                behavior: "instant",
-                            });
-                        });
-                    });
-                });
+                // Wait for the new page to render directly. Registering a
+                // `page:loading:end` hook here can miss the hook when Nuxt
+                // skips its loading UI for same-category navigation, leaving
+                // the browser at the top until the fallback hash scroll runs.
+                await nextTick();
+                const target = await waitForHashTarget(to.hash, isCurrent);
+                if (!target || !isCurrent() || !target.isConnected) {
+                    return false;
+                }
+                window.dispatchEvent(
+                    new CustomEvent("wiki:hash-scroll", {
+                        detail: { id: target.id },
+                    }),
+                );
+                target.focus({ preventScroll: true });
+                return {
+                    top: Math.max(
+                        0,
+                        target.getBoundingClientRect().top +
+                            window.scrollY -
+                            getScrollPaddingTop() -
+                            (Number.parseFloat(
+                                getComputedStyle(target).scrollMarginTop,
+                            ) || 0),
+                    ),
+                    behavior: "instant",
+                };
             }
             return {
                 el: to.hash,

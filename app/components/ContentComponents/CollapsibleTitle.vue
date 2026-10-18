@@ -19,10 +19,10 @@ const contentId = `collapsible-title-${useId()}`;
 
 // Match the corresponding ProseH3–ProseH6 typography and spacing.
 const headingClasses = {
-    h3: "mt-8 mb-3 scroll-mt-24 font-main text-2xl leading-snug font-bold text-balance wrap-anywhere text-on-surface sm:mt-10 sm:text-[1.75rem]",
-    h4: "mt-7 mb-3 scroll-mt-24 font-main text-xl leading-snug font-semibold text-balance wrap-anywhere text-on-surface sm:mt-8 sm:text-2xl",
-    h5: "mt-6 mb-2 scroll-mt-24 font-main text-lg leading-snug font-semibold text-balance wrap-anywhere text-on-surface sm:mt-7 sm:text-xl",
-    h6: "mt-6 mb-2 scroll-mt-24 font-belanosima text-base leading-snug font-semibold tracking-wide uppercase",
+    h3: "mt-8 mb-3 scroll-mt-24 font-main text-xl leading-snug font-bold text-balance wrap-anywhere text-on-surface sm:mt-10 sm:text-[1.375rem] dark:text-primary",
+    h4: "mt-7 mb-3 scroll-mt-24 font-main text-lg leading-snug font-bold text-balance wrap-anywhere text-on-surface sm:mt-8 dark:text-primary",
+    h5: "mt-6 mb-2 scroll-mt-24 font-main text-base leading-snug font-bold text-balance wrap-anywhere text-on-surface sm:mt-7 dark:text-primary",
+    h6: "mt-6 mb-2 scroll-mt-24 font-main text-sm leading-snug font-bold text-balance wrap-anywhere text-on-surface dark:text-primary",
 };
 </script>
 
@@ -40,7 +40,6 @@ const headingClasses = {
             <CollapsibleTrigger
                 :aria-controls="contentId"
                 class="group flex w-full min-w-0 items-start gap-2 rounded-sm text-left text-inherit focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
-                :class="{ uppercase: headingTag === 'h6' }"
             >
                 <svg
                     class="mt-[0.5em] size-3 shrink-0 text-primary transition-transform duration-200 group-data-[state=open]:rotate-90 motion-reduce:transition-none"

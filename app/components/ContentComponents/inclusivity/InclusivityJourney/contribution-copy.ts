@@ -62,7 +62,7 @@ export const contributionCopy: Record<
                 { text: "Plants" },
                 { text: "Animals" },
                 { text: "Bacteria" },
-                { text: "Humans Body" },
+                { text: "Human Body" },
             ],
         },
     ],

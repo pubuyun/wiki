@@ -14,6 +14,7 @@ const isFullscreen = ref(false);
 const supportsFullscreen = ref(false);
 const statusMessage = ref("");
 let observer: IntersectionObserver | undefined;
+let scrollBeforeFullscreen: { left: number; top: number } | undefined;
 
 const embedUrl = computed(() => {
     // Preserve the video address and configure only the embedded player UI.
@@ -40,9 +41,32 @@ function loadVideo() {
 function updateFullscreen() {
     const wasFullscreen = isFullscreen.value;
     isFullscreen.value = document.fullscreenElement === panel.value;
-    if (wasFullscreen || isFullscreen.value) {
-        void nextTick(() => fullscreenButton.value?.focus());
+
+    if (wasFullscreen && !isFullscreen.value) {
+        const position = scrollBeforeFullscreen;
+        scrollBeforeFullscreen = undefined;
+        if (position) restoreScrollPosition(position);
     }
+
+    if (wasFullscreen || isFullscreen.value) {
+        void nextTick(() =>
+            fullscreenButton.value?.focus({ preventScroll: true }),
+        );
+    }
+}
+
+function restoreScrollPosition(position: { left: number; top: number }) {
+    const restore = () =>
+        window.scrollTo({
+            left: position.left,
+            top: position.top,
+            behavior: "auto",
+        });
+
+    // Fullscreen styles are removed after the fullscreenchange event. Restore
+    // once immediately and once after that layout pass has settled.
+    restore();
+    requestAnimationFrame(restore);
 }
 
 async function toggleFullscreen() {
@@ -52,10 +76,15 @@ async function toggleFullscreen() {
         if (document.fullscreenElement === panel.value) {
             await document.exitFullscreen();
         } else {
+            scrollBeforeFullscreen = {
+                left: window.scrollX,
+                top: window.scrollY,
+            };
             await panel.value.requestFullscreen();
         }
         statusMessage.value = "";
     } catch {
+        scrollBeforeFullscreen = undefined;
         statusMessage.value = "Fullscreen is unavailable in this browser.";
     }
 }

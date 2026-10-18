@@ -1,10 +1,15 @@
 <script setup lang="ts">
 import { inject } from "vue";
+import { scrollTableByKey } from "~/utils/scroll-table";
 
 const captionId = inject<string | undefined>(
     "wiki-table-caption-id",
     undefined,
 );
+const protocolTableLabel = inject<(() => string) | undefined>(
+    "wiki-protocol-table-label",
+    undefined,
+)?.();
 </script>
 
 <template>
@@ -12,16 +17,23 @@ const captionId = inject<string | undefined>(
         class="max-w-full overflow-x-auto rounded-lg border border-outline focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-outline"
         :class="{ 'my-8': !captionId }"
         role="region"
-        :aria-label="captionId ? undefined : 'Scrollable data table'"
+        :aria-label="
+            captionId
+                ? undefined
+                : protocolTableLabel || 'Scrollable data table'
+        "
         :aria-labelledby="captionId"
         tabindex="0"
+        @keydown.self="protocolTableLabel && scrollTableByKey($event)"
     >
         <table
             class="w-full border-collapse text-left text-sm shadow-sm"
             :aria-labelledby="captionId"
         >
             <caption v-if="!captionId" class="sr-only">
-                Data table
+                {{
+                    protocolTableLabel || "Data table"
+                }}
             </caption>
             <slot />
         </table>

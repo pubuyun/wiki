@@ -217,8 +217,14 @@ const activeIndicatorStyle = computed(() => ({
 function linkClass(link: ToCLink) {
     return [
         "block h-7 truncate py-1.5 pr-3 leading-4 transition-colors duration-200 ease-out hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-outline",
-        link.depth === 3 ? "pl-9 text-sm" : "pl-4 text-base",
-        activeId.value === link.id ? "text-primary" : "text-on-surface",
+        link.depth === 3
+            ? "pl-9 text-sm font-normal"
+            : "pl-4 text-base font-semibold",
+        activeId.value === link.id
+            ? "text-primary"
+            : link.depth === 3
+              ? "text-on-surface/70"
+              : "text-on-surface",
     ];
 }
 

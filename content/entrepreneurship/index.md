@@ -1,8 +1,40 @@
 ---
 title: Overview
+citationIds:
+  - "1"
+  - "2"
+  - "3"
+  - "4"
+  - "5"
+  - "6"
+  - "10"
+  - "11"
+  - "12"
+  - "13"
+  - "14"
+  - "15"
+  - "16"
 description: Expelliodor's entrepreneurship strategy, customer discovery, ecosystem mapping, market analysis, development plans, and long-term impacts.
-hasReference: false
+hasReference: true
 order: 1
+referenceIds:
+  - "1"
+  - "2"
+  - "3"
+  - "4"
+  - "5"
+  - "6"
+  - "7"
+  - "8"
+  - "9"
+  - "10"
+  - "11"
+  - "12"
+  - "13"
+  - "14"
+  - "15"
+  - "16"
+  - "17"
 banner: https://static.igem.wiki/teams/6133/wiki/general/banners/entrepreneurship.avif
 bannerPosition: 50% 55%
 bannerWidth: 1707
@@ -16,8 +48,9 @@ bannerMobilePosition: 50% 45%
 ---
 src:
   - https://static.igem.wiki/teams/6133/wiki/hp/entrepreneurship/entrepreneurship-index-fig1.avif
-alt: "Flowchart linking Overview, Customer Discovery, Ecosystem Mapping, Market Analysis, Development Plans, and Long-term Impacts, with their subtopics."
-caption: "Fig. 1 | The outline of the Entrepreneurship section"
+alt: Flowchart linking Overview, Customer Discovery, Ecosystem Mapping, Market
+  Analysis, Development Plans, and Long-term Impacts, with their subtopics.
+caption: Fig. 1 | The outline of the Entrepreneurship section
 ---
 ::
 
@@ -32,9 +65,7 @@ Beyond physical discomfort, severe axillary odor may lead to **embarrassment**, 
 Expelliodor is a protein-based deodorant designed to tackle underarm odor before it forms. Underarm odor develops when *Staphylococcus hominis*, a bacterium naturally found on the skin, absorbs the odorless sweat precursor **Cys-Gly-3M3SH** and converts it into the strong-smelling compound **3M3SH**. Instead of broadly killing skin bacteria, Expelliodor targets this specific process through three complementary strategies:
 
 - **Precursor Binder:** Captures the odor precursor on the skin surface, reducing the amount available for bacterial uptake.
-
-- **Transporter Binder:** Blocks the bacterial transporter ***PepT<sub>Sh</sub>***, which is responsible for carrying the precursor into the bacterial cell.
-
+- **Transporter Binder:** Blocks the bacterial transporter ***PepT***&#x53;h, which is responsible for carrying the precursor into the bacterial cell.
 - **CGTase:** Continuously modifies newly secreted precursor molecules, making them more difficult for the transporter to recognize and absorb.
 
 Together, these strategies address both existing and newly secreted odor precursors, providing more targeted and sustained odor control while minimizing unnecessary disruption to the natural skin microbiome.
@@ -43,14 +74,17 @@ Together, these strategies address both existing and newly secreted odor precurs
 ---
 src:
   - https://static.igem.wiki/teams/6133/wiki/hp/entrepreneurship/entrepreneurship-index-fig2.avif
-alt: "Cys-Gly-3M3SH enters Staphylococcus hominis through PepTSh and is converted to 3M3SH. CGTase modifies the precursor, the precursor binder captures it, and the transporter binder blocks uptake."
-caption: "Fig. 2 | Overview of Expelliodor’s three complementary strategies for targeted underarm odor control"
+alt: Cys-Gly-3M3SH enters Staphylococcus hominis through PepTSh and is converted
+  to 3M3SH. CGTase modifies the precursor, the precursor binder captures it, and
+  the transporter binder blocks uptake.
+caption: Fig. 2 | Overview of Expelliodor’s three complementary strategies for
+  targeted underarm odor control
 ---
 ::
 
 ### Patent
 
-As part of Expelliodor’s commercialization planning, GreatBay-SCIE 2026 has filed a **patent application** covering key technical components of our deodorization system, including the engineered precursor binder, PepT<sub>Sh</sub> transporter binder, and CGTase-based modification of Cys-Gly-3M3SH.
+As part of Expelliodor’s commercialization planning, GreatBay-SCIE 2026 has filed a **patent application** covering key technical components of our deodorization system, including the engineered precursor binder, PepTSh transporter binder, and CGTase-based modification of Cys-Gly-3M3SH.
 
 :iframe{height="720" loading="lazy" src="https://static.igem.wiki/teams/6133/wiki/hp/entrepreneurship/entrepreneurship-index-patent-english-translation.pdf#page=1&view=Fit" title="Patent application English translation (PDF)" width="100%"}
 
@@ -67,9 +101,7 @@ Based on our investigations and interviews with some potential customers during 
 Expelliodor primarily targets the following three types of customers:
 
 - **Individuals allergic to conventional deodorants**: sensitized to common allergens including fragrance blends (hydroxycitronellal) and aluminum‑zirconium complexes, unable to use standard deodorants safely
-
 - **Individuals restricted from axillary osmidrosis surgery by clinical guidelines**: adolescents (incomplete gland development, high recurrence risk) and pregnant individuals (fetal safety concerns)
-
 - **Users valuing underarm skin health and aesthetics**: wish to avoid dryness, flaking and pigmentation from traditional deodorants, as well as surgical scarring
 
 Given that these users value direct product access and personalised consumer experience, we adopt both *B2B* (through offline retail) and *B2C* (through e-commerce) models to serve our primary customers.
@@ -79,15 +111,10 @@ Given that these users value direct product access and personalised consumer exp
 Expelliodor features a broad group of **secondary end‑users**, largely individuals **frequently exposed to socially demanding venues** such as:
 
 - Beauty and personal care practitioners and clients
-
 - Sports‑fitness venue staff and members
-
 - Hospitality staff and guests
-
 - Travel passengers and transport service crews
-
 - Retail employees and shoppers
-
 - Corporate office employees
 
 These secondary end-users are not our direct customers. As they are spread across a wide range of public and commercial settings, we target the **organisations**that operate these venues as our **B2B customers**.
@@ -148,38 +175,36 @@ At the beginning of the project, we established five departments—Sales & Marke
 
 ::content-components-captioned-table
 ---
-caption: "Table 1 | Skills and department allocation of our team"
+caption: Table 1 | Skills and department allocation of our team
 ---
-
-|Name|Department|Skills description|
-|---|---|---|
-|Mark Ma|Finance|Financial analysis and quantitative reasoning; experience in business and economics competitions.|
-|Alina Lin|Product Development|Leadership in scientific research; experience in writing research proposals and organizing experimental data.|
-|Ion Wu|Human Resources|Recruitment and interpersonal communication; ability to recruit and coordinate team members.|
-|Emma Wang|Facilities & Procurement|Resource organization and logistical coordination; inventory monitoring awareness.|
-|Michelle Chen|Facilities & Procurement|Experience in purchasing resources for specific activities.|
-|Nina Wu|Sales & Marketing|Video filming and editing; advertising caption writing.|
-|Coco Zhu|Sales & Marketing|Experience in developing business pitches; oral presentation.|
-|Riley Cai|Sales & Marketing|On-site field sales.|
-|Michelle Li|Product Development|Experience in scientific research.|
-|Leila Lin|Product Development|Packaging design; experience in literature review.|
-|Roxanne Mei|Sales & Marketing|Storytelling and negotiation.|
-|Cici Huang|Facilities & Procurement|Price negotiation.|
-|Michelle Yao|Sales & Marketing|Digital marketing experience.|
-|June Zhang|Human Resources|Team coordination; experience in talent recruitment.|
-|Cici Deng|Sales & Marketing|Packaging design and refinement.|
-|Sisi Sun|Sales & Marketing|Social-media account management; e-commerce operation.|
-|Willes Zhang|Product Development|Modeling; effectiveness validation.|
-|Willow Wu|Human Resources|External outreach.|
-|Ivy Chen|Facilities & Procurement|Logistics experience.|
-|Cristina Zhou|Human Resources|Team building.|
-|Juan Zhang|Product Development|Experience in experimental design; ability to evaluate experiments.|
-|Cindy Pan|Sales & Marketing|Commercials design.|
-|Sarah Lin|Product Development|Experience in packaging design.|
-|Susie Wang|Sales & Marketing|Experience in commercials development.|
-|Lucy Wang|Finance|Cost and revenue calculation; budget tracking.|
-|Derek Li|Human Resources|Team coordination.|
-
+| Name          | Department               | Skills description                                                                                            |
+| ------------- | ------------------------ | ------------------------------------------------------------------------------------------------------------- |
+| Mark Ma       | Finance                  | Financial analysis and quantitative reasoning; experience in business and economics competitions.             |
+| Alina Lin     | Product Development      | Leadership in scientific research; experience in writing research proposals and organizing experimental data. |
+| Ion Wu        | Human Resources          | Recruitment and interpersonal communication; ability to recruit and coordinate team members.                  |
+| Emma Wang     | Facilities & Procurement | Resource organization and logistical coordination; inventory monitoring awareness.                            |
+| Michelle Chen | Facilities & Procurement | Experience in purchasing resources for specific activities.                                                   |
+| Nina Wu       | Sales & Marketing        | Video filming and editing; advertising caption writing.                                                       |
+| Coco Zhu      | Sales & Marketing        | Experience in developing business pitches; oral presentation.                                                 |
+| Riley Cai     | Sales & Marketing        | On-site field sales.                                                                                          |
+| Michelle Li   | Product Development      | Experience in scientific research.                                                                            |
+| Leila Lin     | Product Development      | Packaging design; experience in literature review.                                                            |
+| Roxanne Mei   | Sales & Marketing        | Storytelling and negotiation.                                                                                 |
+| Cici Huang    | Facilities & Procurement | Price negotiation.                                                                                            |
+| Michelle Yao  | Sales & Marketing        | Digital marketing experience.                                                                                 |
+| June Zhang    | Human Resources          | Team coordination; experience in talent recruitment.                                                          |
+| Cici Deng     | Sales & Marketing        | Packaging design and refinement.                                                                              |
+| Sisi Sun      | Sales & Marketing        | Social-media account management; e-commerce operation.                                                        |
+| Willes Zhang  | Product Development      | Modeling; effectiveness validation.                                                                           |
+| Willow Wu     | Human Resources          | External outreach.                                                                                            |
+| Ivy Chen      | Facilities & Procurement | Logistics experience.                                                                                         |
+| Cristina Zhou | Human Resources          | Team building.                                                                                                |
+| Juan Zhang    | Product Development      | Experience in experimental design; ability to evaluate experiments.                                           |
+| Cindy Pan     | Sales & Marketing        | Commercials design.                                                                                           |
+| Sarah Lin     | Product Development      | Experience in packaging design.                                                                               |
+| Susie Wang    | Sales & Marketing        | Experience in commercials development.                                                                        |
+| Lucy Wang     | Finance                  | Cost and revenue calculation; budget tracking.                                                                |
+| Derek Li      | Human Resources          | Team coordination.                                                                                            |
 ::
 
 After gathering information on each member’s skills, we conducted a holistic skill gap analysis using headcount to identify areas where our current team capacity may be insufficient relative to our organizational needs.
@@ -188,8 +213,10 @@ After gathering information on each member’s skills, we conducted a holistic s
 ---
 src:
   - https://static.igem.wiki/teams/6133/wiki/hp/entrepreneurship/entrepreneurship-index-fig3.avif
-alt: "Radar chart comparing current and desired team headcounts across Sales and Marketing, Product Development, Human Resources, Finance, and Facilities and Procurement."
-caption: "Fig. 3 | Skill gap analysis of our team"
+alt: Radar chart comparing current and desired team headcounts across Sales and
+  Marketing, Product Development, Human Resources, Finance, and Facilities and
+  Procurement.
+caption: Fig. 3 | Skill gap analysis of our team
 ---
 ::
 
@@ -219,8 +246,10 @@ The psychiatrist, anthropologist, sociologist and counselors we consulted deepen
 ---
 src:
   - https://static.igem.wiki/teams/6133/wiki/hp/entrepreneurship/entrepreneurship-index-fig4.avif
-alt: "Mendelow matrix positioning 34 stakeholders by interest and influence, grouped as Users and Beneficiaries, Experts and Professionals, Companies and Industry, and Society and Community."
-caption: "Fig. 4 | Mendelow's matrix showing our stakeholders"
+alt: Mendelow matrix positioning 34 stakeholders by interest and influence,
+  grouped as Users and Beneficiaries, Experts and Professionals, Companies and
+  Industry, and Society and Community.
+caption: Fig. 4 | Mendelow's matrix showing our stakeholders
 ---
 ::
 
@@ -230,8 +259,9 @@ caption: "Fig. 4 | Mendelow's matrix showing our stakeholders"
 ---
 src:
   - https://static.igem.wiki/teams/6133/wiki/hp/entrepreneurship/entrepreneurship-index-fig5.avif
-alt: "Advisory panel portraits of Angelos Melatos, Lu Haoran, Wang Boxiang, Han Zhifei, and Su Rongsheng, with their affiliations and areas of advice."
-caption: "Fig. 5 | Advisory panel of Expelliodor"
+alt: Advisory panel portraits of Angelos Melatos, Lu Haoran, Wang Boxiang, Han
+  Zhifei, and Su Rongsheng, with their affiliations and areas of advice.
+caption: Fig. 5 | Advisory panel of Expelliodor
 ---
 ::
 
@@ -242,7 +272,7 @@ caption: "Fig. 5 | Advisory panel of Expelliodor"
 src:
   - https://static.igem.wiki/teams/6133/wiki/hp/entrepreneurship/entrepreneurship-index-fig6.avif
 alt: ""
-caption: "Fig. 6 | Business plan review and feedback session with Angelos Melatos"
+caption: Fig. 6 | Business plan review and feedback session with Angelos Melatos
 ---
 ::
 
@@ -255,7 +285,7 @@ We invited Mr. Melatos to review our business plan from a business mentor perspe
 src:
   - https://static.igem.wiki/teams/6133/wiki/hp/entrepreneurship/entrepreneurship-index-fig7.avif
 alt: ""
-caption: "Fig. 7 | In-person consultation with Lu Haoran on industrialization"
+caption: Fig. 7 | In-person consultation with Lu Haoran on industrialization
 ---
 ::
 
@@ -268,7 +298,8 @@ We consulted Mr. Lu regarding the industrialization of our proposed product. Our
 src:
   - https://static.igem.wiki/teams/6133/wiki/hp/entrepreneurship/entrepreneurship-index-fig8.avif
 alt: ""
-caption: "Fig. 8 | Online consultation with Wang Boxiang on financial projections and patent protection"
+caption: Fig. 8 | Online consultation with Wang Boxiang on financial projections
+  and patent protection
 ---
 ::
 
@@ -281,7 +312,8 @@ Dr. Wang reviewed our two-year cash flow projections and the assumptions behind 
 src:
   - https://static.igem.wiki/teams/6133/wiki/hp/entrepreneurship/entrepreneurship-index-fig9.avif
 alt: ""
-caption: "Fig. 9 | Online discussion with Han Zhifei on entrepreneurship planning and wiki presentation"
+caption: Fig. 9 | Online discussion with Han Zhifei on entrepreneurship planning
+  and wiki presentation
 ---
 ::
 
@@ -294,7 +326,7 @@ Han provided constructive advice on the structure of our wiki presentation of En
 src:
   - https://static.igem.wiki/teams/6133/wiki/hp/entrepreneurship/entrepreneurship-index-fig10.avif
 alt: ""
-caption: "Fig. 10 | Online consultation with Su Rongsheng on risk management"
+caption: Fig. 10 | Online consultation with Su Rongsheng on risk management
 ---
 ::
 
@@ -308,8 +340,9 @@ We shared our product design with Mr. Su, who highlighted key considerations for
 ---
 src:
   - https://static.igem.wiki/teams/6133/wiki/hp/entrepreneurship/entrepreneurship-index-fig11.avif
-alt: "Nested market-size diagram showing TAM of USD 51.75 billion, SAM of USD 33.64 billion, and SOM of USD 0.27 billion, with regional SAM estimates."
-caption: "Fig. 11 | TAM, SAM, SOM of Expelliodor"
+alt: Nested market-size diagram showing TAM of USD 51.75 billion, SAM of USD
+  33.64 billion, and SOM of USD 0.27 billion, with regional SAM estimates.
+caption: Fig. 11 | TAM, SAM, SOM of Expelliodor
 ---
 ::
 
@@ -317,82 +350,96 @@ caption: "Fig. 11 | TAM, SAM, SOM of Expelliodor"
 
 We define our TAM on a global scale, representing the entire potential consumer base for our product. The estimated TAM is **USD 51.75 billion**.
 
-::content-components-collapsible-title{title="More Details" heading-tag="h5" id="tam-details"}
+::content-components-collapsible-title
+---
+heading-tag: h5
+id: tam-details
+title: More Details
+---
 We estimated our TAM using the following formula: :fn-ref{#1}
 
-$\begin{aligned}\mathrm{TAM}&=\text{Total Number of Potential Consumers}\\&\quad\times\text{Annual Revenue per Consumer}\end{aligned}$
+\[\[]{.katex-mathml}\[\[\[]{.strut style="height:2.7em;vertical-align:-1.1em;"}\[\[\[\[\[\[\[\[]{.pstrut style="height:3em;"}\[\[\[TAM]{.mord.mathrm}]{.mord}]{.mord}]{style="top:-3.76em;"}\[\[]{.pstrut style="height:3em;"} []{.mord} ]{style="top:-2.26em;"}]{.vlist style="height:1.6em;"} [​]{.vlist-s} ]{.vlist-r}\[\[\[]]{.vlist style="height:1.1em;"}]{.vlist-r}]{.vlist-t.vlist-t2}]{.col-align-r}\[\[\[\[\[\[]{.pstrut style="height:3em;"}\[\[]{.mord} []{.mspace style="margin-right:0.2778em;"}[=]{.mrel}[]{.mspace style="margin-right:0.2778em;"} \[\[Total Number of Potential Consumers]{.mord}]{.mord.text}]{.mord}]{style="top:-3.76em;"}\[\[]{.pstrut style="height:3em;"}\[\[]{.mord} []{.mspace style="margin-right:1em;"}[]{.mspace style="margin-right:0.2222em;"}[×]{.mbin}[]{.mspace style="margin-right:0.2222em;"} \[\[Annual Revenue per Consumer]{.mord}]{.mord.text}]{.mord}]{style="top:-2.26em;"}]{.vlist style="height:1.6em;"} [​]{.vlist-s} ]{.vlist-r}\[\[\[]]{.vlist style="height:1.1em;"}]{.vlist-r}]{.vlist-t.vlist-t2}]{.col-align-l}]{.mtable}]{.mord}]{.base}]{.katex-html ariaHidden="true"}]{.katex}
 
 To estimate the annual revenue per consumer, we calculated the annual consumer spending on deodorant products based on the average retail price and the average number of deodorant products purchased per year.
 
-$\begin{aligned}\text{Annual Spending per Consumer}&=\text{Average Retail Price}\\&\quad\times\text{Number of Units Purchased Annually}\end{aligned}$
+\[\[]{.katex-mathml}\[\[\[]{.strut style="height:2.7em;vertical-align:-1.1em;"}\[\[\[\[\[\[\[\[]{.pstrut style="height:3em;"}\[\[\[Annual Spending per Consumer]{.mord}]{.mord.text}]{.mord}]{style="top:-3.76em;"}\[\[]{.pstrut style="height:3em;"} []{.mord} ]{style="top:-2.26em;"}]{.vlist style="height:1.6em;"} [​]{.vlist-s} ]{.vlist-r}\[\[\[]]{.vlist style="height:1.1em;"}]{.vlist-r}]{.vlist-t.vlist-t2}]{.col-align-r}\[\[\[\[\[\[]{.pstrut style="height:3em;"}\[\[]{.mord} []{.mspace style="margin-right:0.2778em;"}[=]{.mrel}[]{.mspace style="margin-right:0.2778em;"} \[\[Average Retail Price]{.mord}]{.mord.text}]{.mord}]{style="top:-3.76em;"}\[\[]{.pstrut style="height:3em;"}\[\[]{.mord} []{.mspace style="margin-right:1em;"}[]{.mspace style="margin-right:0.2222em;"}[×]{.mbin}[]{.mspace style="margin-right:0.2222em;"} \[\[Number of Units Purchased Annually]{.mord}]{.mord.text}]{.mord}]{style="top:-2.26em;"}]{.vlist style="height:1.6em;"} [​]{.vlist-s} ]{.vlist-r}\[\[\[]]{.vlist style="height:1.1em;"}]{.vlist-r}]{.vlist-t.vlist-t2}]{.col-align-l}]{.mtable}]{.mord}]{.base}]{.katex-html ariaHidden="true"}]{.katex}
 
 The estimated average price for a deodorant stick was **USD 4.50**. :fn-ref{#2} Based on consumer usage estimates, an individual purchases approximately **4–6 deodorant products per year**. :fn-ref{#3} Therefore:
 
-$\text{Annual Spending per Consumer}=4.50\times\frac{4+6}{2}=\text{USD }22.50/\text{year}$
+\[\[]{.katex-mathml}\[\[\[]{.strut style="height:0.8889em;vertical-align:-0.1944em;"}\[\[Annual Spending per Consumer]{.mord}]{.mord.text} []{.mspace style="margin-right:0.2778em;"}[=]{.mrel}[]{.mspace style="margin-right:0.2778em;"} ]{.base}\[\[]{.strut style="height:0.7278em;vertical-align:-0.0833em;"} [4.50]{.mord}[]{.mspace style="margin-right:0.2222em;"}[×]{.mbin}[]{.mspace style="margin-right:0.2222em;"} ]{.base}\[\[]{.strut style="height:1.1901em;vertical-align:-0.345em;"}\[\[]{.mopen.nulldelimiter}\[\[\[\[\[\[]{.pstrut style="height:3em;"}\[\[\[2]{.mord.mtight}]{.mord.mtight}]{.sizing.reset-size6.size3.mtight}]{style="top:-2.655em;"}\[\[]{.pstrut style="height:3em;"} []{.frac-line style="border-bottom-width:0.04em;"} ]{style="top:-3.23em;"}\[\[]{.pstrut style="height:3em;"}\[\[\[4]{.mord.mtight} [+]{.mbin.mtight}[6]{.mord.mtight} ]{.mord.mtight}]{.sizing.reset-size6.size3.mtight}]{style="top:-3.394em;"}]{.vlist style="height:0.8451em;"} [​]{.vlist-s} ]{.vlist-r}\[\[\[]]{.vlist style="height:0.345em;"}]{.vlist-r}]{.vlist-t.vlist-t2}]{.mfrac} []{.mclose.nulldelimiter} ]{.mord} []{.mspace style="margin-right:0.2778em;"}[=]{.mrel}[]{.mspace style="margin-right:0.2778em;"} ]{.base}\[\[]{.strut style="height:1em;vertical-align:-0.25em;"}\[\[USD ]{.mord}]{.mord.text} [22.50/]{.mord} \[\[year]{.mord}]{.mord.text}]{.base}]{.katex-html ariaHidden="true"}]{.katex}
 
 Based on our research, over 2.3 billion individuals worldwide were estimated to use deodorant regularly in 2024. :fn-ref{#4} As the deodorant market continues to grow, we use this latest available estimate as a conservative approximation of the global deodorant consumer base in 2026.
 
-$\mathrm{TAM}=2.3\,\text{billion}\times22.50=\text{USD }51.75\,\text{billion}$
-
+\[\[]{.katex-mathml}\[\[\[]{.strut style="height:0.6833em;"}\[\[TAM]{.mord.mathrm}]{.mord} []{.mspace style="margin-right:0.2778em;"}[=]{.mrel}[]{.mspace style="margin-right:0.2778em;"} ]{.base}\[\[]{.strut style="height:0.7778em;vertical-align:-0.0833em;"} [2.3]{.mord}[]{.mspace style="margin-right:0.1667em;"} \[\[billion]{.mord}]{.mord.text} []{.mspace style="margin-right:0.2222em;"}[×]{.mbin}[]{.mspace style="margin-right:0.2222em;"} ]{.base}\[\[]{.strut style="height:0.6444em;"} [22.50]{.mord}[]{.mspace style="margin-right:0.2778em;"}[=]{.mrel}[]{.mspace style="margin-right:0.2778em;"} ]{.base}\[\[]{.strut style="height:0.6944em;"}\[\[USD ]{.mord}]{.mord.text} [51.75]{.mord}[]{.mspace style="margin-right:0.1667em;"} \[\[billion]{.mord}]{.mord.text}]{.base}]{.katex-html ariaHidden="true"}]{.katex}
 ::
 
 #### Serviceable Available Market (SAM)
 
 We addressed our SAM based on the market conditions in Europe, the Asia Pacific and North America, with an estimation of **USD 33.64 billion** in total.
 
-::content-components-collapsible-title{title="More Details" heading-tag="h5" id="sam-details"}
+::content-components-collapsible-title
+---
+heading-tag: h5
+id: sam-details
+title: More Details
+---
 Market conditions are reviewed from the base year 2025.
 
-:::content-components-lightbox-image
----
-src:
-  - https://static.igem.wiki/teams/6133/wiki/hp/entrepreneurship/entrepreneurship-index-fig12.avif
-alt: "Comparison table of Europe, North America, and Asia-Pacific market size, global share, projected growth, key drivers, and market barriers."
-caption: "Fig. 12 | Regional market overview of Europe, North America, and the Asia-Pacific for SAM evaluation"
----
-:::
+  :::content-components-lightbox-image
+  ---
+  src:
+    - https://static.igem.wiki/teams/6133/wiki/hp/entrepreneurship/entrepreneurship-index-fig12.avif
+  alt: Comparison table of Europe, North America, and Asia-Pacific market size,
+    global share, projected growth, key drivers, and market barriers.
+  caption: Fig. 12 | Regional market overview of Europe, North America, and the
+    Asia-Pacific for SAM evaluation
+  ---
+  :::
 
 To evaluate our SAM, we selected Europe, North America, and the Asia Pacific as our target regions. These three regions dominate the global deodorant market, based on their global market share, *CAGR* and regulatory requirements. Europe represented the largest market among the three, with a 33.9% global market share in 2025. North America followed with a 27.1% share. Although the Asia-Pacific had a smaller market share of 25.1%, it had the highest projected CAGR of 6.76%, indicating stronger projected market growth. :fn-ref{#5}
 
 Our formula for SAM is derived from the same source as our TAM calculation: :fn-ref{#1}
 
-$\begin{aligned}\mathrm{SAM}&=\mathrm{TAM}\times\text{Target Segment Percentage}\\&\quad(\text{Global Market Share}\times\text{Open to SynBio})\end{aligned}$
+\[\[]{.katex-mathml}\[\[\[]{.strut style="height:2.7em;vertical-align:-1.1em;"}\[\[\[\[\[\[\[\[]{.pstrut style="height:3em;"}\[\[\[SAM]{.mord.mathrm}]{.mord}]{.mord}]{style="top:-3.76em;"}\[\[]{.pstrut style="height:3em;"} []{.mord} ]{style="top:-2.26em;"}]{.vlist style="height:1.6em;"} [​]{.vlist-s} ]{.vlist-r}\[\[\[]]{.vlist style="height:1.1em;"}]{.vlist-r}]{.vlist-t.vlist-t2}]{.col-align-r}\[\[\[\[\[\[]{.pstrut style="height:3em;"}\[\[]{.mord} []{.mspace style="margin-right:0.2778em;"}[=]{.mrel}[]{.mspace style="margin-right:0.2778em;"} \[\[TAM]{.mord.mathrm}]{.mord} []{.mspace style="margin-right:0.2222em;"}[×]{.mbin}[]{.mspace style="margin-right:0.2222em;"} \[\[Target Segment Percentage]{.mord}]{.mord.text}]{.mord}]{style="top:-3.76em;"}\[\[]{.pstrut style="height:3em;"}\[\[]{.mord} []{.mspace style="margin-right:1em;"}[(]{.mopen} \[\[Global Market Share]{.mord}]{.mord.text} []{.mspace style="margin-right:0.2222em;"}[×]{.mbin}[]{.mspace style="margin-right:0.2222em;"} \[\[Open to SynBio]{.mord}]{.mord.text} [)]{.mclose} ]{.mord}]{style="top:-2.26em;"}]{.vlist style="height:1.6em;"} [​]{.vlist-s} ]{.vlist-r}\[\[\[]]{.vlist style="height:1.1em;"}]{.vlist-r}]{.vlist-t.vlist-t2}]{.col-align-l}]{.mtable}]{.mord}]{.base}]{.katex-html ariaHidden="true"}]{.katex}
 
-$\text{Europe}=33.9\%$
+\[\[]{.katex-mathml}\[\[\[]{.strut style="height:0.8778em;vertical-align:-0.1944em;"}\[\[Europe]{.mord}]{.mord.text} []{.mspace style="margin-right:0.2778em;"}[=]{.mrel}[]{.mspace style="margin-right:0.2778em;"} ]{.base}\[\[]{.strut style="height:0.8056em;vertical-align:-0.0556em;"} [33.9%]{.mord} ]{.base}]{.katex-html ariaHidden="true"}]{.katex}
 
-$\text{Open to SynBio (from survey)}=80\%$
+\[\[]{.katex-mathml}\[\[\[]{.strut style="height:1em;vertical-align:-0.25em;"}\[\[Open to SynBio (from survey)]{.mord}]{.mord.text} []{.mspace style="margin-right:0.2778em;"}[=]{.mrel}[]{.mspace style="margin-right:0.2778em;"} ]{.base}\[\[]{.strut style="height:0.8056em;vertical-align:-0.0556em;"} [80%]{.mord} ]{.base}]{.katex-html ariaHidden="true"}]{.katex}
 
-$\mathrm{SAM}=51.75\times33.9\%\times80\%=\text{USD }14.03\,\text{billion}$
+\[\[]{.katex-mathml}\[\[\[]{.strut style="height:0.6833em;"}\[\[SAM]{.mord.mathrm}]{.mord} []{.mspace style="margin-right:0.2778em;"}[=]{.mrel}[]{.mspace style="margin-right:0.2778em;"} ]{.base}\[\[]{.strut style="height:0.7278em;vertical-align:-0.0833em;"} [51.75]{.mord}[]{.mspace style="margin-right:0.2222em;"}[×]{.mbin}[]{.mspace style="margin-right:0.2222em;"} ]{.base}\[\[]{.strut style="height:0.8333em;vertical-align:-0.0833em;"} [33.9%]{.mord}[]{.mspace style="margin-right:0.2222em;"}[×]{.mbin}[]{.mspace style="margin-right:0.2222em;"} ]{.base}\[\[]{.strut style="height:0.8056em;vertical-align:-0.0556em;"} [80%]{.mord}[]{.mspace style="margin-right:0.2778em;"}[=]{.mrel}[]{.mspace style="margin-right:0.2778em;"} ]{.base}\[\[]{.strut style="height:0.6944em;"}\[\[USD ]{.mord}]{.mord.text} [14.03]{.mord}[]{.mspace style="margin-right:0.1667em;"} \[\[billion]{.mord}]{.mord.text}]{.base}]{.katex-html ariaHidden="true"}]{.katex}
 
-$\text{North America}=27.1\%$
+\[\[]{.katex-mathml}\[\[\[]{.strut style="height:0.6944em;"}\[\[North America]{.mord}]{.mord.text} []{.mspace style="margin-right:0.2778em;"}[=]{.mrel}[]{.mspace style="margin-right:0.2778em;"} ]{.base}\[\[]{.strut style="height:0.8056em;vertical-align:-0.0556em;"} [27.1%]{.mord} ]{.base}]{.katex-html ariaHidden="true"}]{.katex}
 
-$\text{Open to SynBio (from survey)}=75\%$
+\[\[]{.katex-mathml}\[\[\[]{.strut style="height:1em;vertical-align:-0.25em;"}\[\[Open to SynBio (from survey)]{.mord}]{.mord.text} []{.mspace style="margin-right:0.2778em;"}[=]{.mrel}[]{.mspace style="margin-right:0.2778em;"} ]{.base}\[\[]{.strut style="height:0.8056em;vertical-align:-0.0556em;"} [75%]{.mord} ]{.base}]{.katex-html ariaHidden="true"}]{.katex}
 
-$\mathrm{SAM}=51.75\times27.1\%\times75\%=\text{USD }10.52\,\text{billion}$
+\[\[]{.katex-mathml}\[\[\[]{.strut style="height:0.6833em;"}\[\[SAM]{.mord.mathrm}]{.mord} []{.mspace style="margin-right:0.2778em;"}[=]{.mrel}[]{.mspace style="margin-right:0.2778em;"} ]{.base}\[\[]{.strut style="height:0.7278em;vertical-align:-0.0833em;"} [51.75]{.mord}[]{.mspace style="margin-right:0.2222em;"}[×]{.mbin}[]{.mspace style="margin-right:0.2222em;"} ]{.base}\[\[]{.strut style="height:0.8333em;vertical-align:-0.0833em;"} [27.1%]{.mord}[]{.mspace style="margin-right:0.2222em;"}[×]{.mbin}[]{.mspace style="margin-right:0.2222em;"} ]{.base}\[\[]{.strut style="height:0.8056em;vertical-align:-0.0556em;"} [75%]{.mord}[]{.mspace style="margin-right:0.2778em;"}[=]{.mrel}[]{.mspace style="margin-right:0.2778em;"} ]{.base}\[\[]{.strut style="height:0.6944em;"}\[\[USD ]{.mord}]{.mord.text} [10.52]{.mord}[]{.mspace style="margin-right:0.1667em;"} \[\[billion]{.mord}]{.mord.text}]{.base}]{.katex-html ariaHidden="true"}]{.katex}
 
-$\text{The Asia-Pacific}=25.1\%$
+\[\[]{.katex-mathml}\[\[\[]{.strut style="height:0.6944em;"}\[\[The Asia-Pacific]{.mord}]{.mord.text} []{.mspace style="margin-right:0.2778em;"}[=]{.mrel}[]{.mspace style="margin-right:0.2778em;"} ]{.base}\[\[]{.strut style="height:0.8056em;vertical-align:-0.0556em;"} [25.1%]{.mord} ]{.base}]{.katex-html ariaHidden="true"}]{.katex}
 
-$\text{Open to SynBio (from survey)}=70\%$
+\[\[]{.katex-mathml}\[\[\[]{.strut style="height:1em;vertical-align:-0.25em;"}\[\[Open to SynBio (from survey)]{.mord}]{.mord.text} []{.mspace style="margin-right:0.2778em;"}[=]{.mrel}[]{.mspace style="margin-right:0.2778em;"} ]{.base}\[\[]{.strut style="height:0.8056em;vertical-align:-0.0556em;"} [70%]{.mord} ]{.base}]{.katex-html ariaHidden="true"}]{.katex}
 
-$\mathrm{SAM}=51.75\times25.1\%\times70\%=\text{USD }9.09\,\text{billion}$
+\[\[]{.katex-mathml}\[\[\[]{.strut style="height:0.6833em;"}\[\[SAM]{.mord.mathrm}]{.mord} []{.mspace style="margin-right:0.2778em;"}[=]{.mrel}[]{.mspace style="margin-right:0.2778em;"} ]{.base}\[\[]{.strut style="height:0.7278em;vertical-align:-0.0833em;"} [51.75]{.mord}[]{.mspace style="margin-right:0.2222em;"}[×]{.mbin}[]{.mspace style="margin-right:0.2222em;"} ]{.base}\[\[]{.strut style="height:0.8333em;vertical-align:-0.0833em;"} [25.1%]{.mord}[]{.mspace style="margin-right:0.2222em;"}[×]{.mbin}[]{.mspace style="margin-right:0.2222em;"} ]{.base}\[\[]{.strut style="height:0.8056em;vertical-align:-0.0556em;"} [70%]{.mord}[]{.mspace style="margin-right:0.2778em;"}[=]{.mrel}[]{.mspace style="margin-right:0.2778em;"} ]{.base}\[\[]{.strut style="height:0.6944em;"}\[\[USD ]{.mord}]{.mord.text} [9.09]{.mord}[]{.mspace style="margin-right:0.1667em;"} \[\[billion]{.mord}]{.mord.text}]{.base}]{.katex-html ariaHidden="true"}]{.katex}
 
-$\text{Total SAM}=14.03+10.52+9.09=\text{USD }33.64\,\text{billion}$
-
+\[\[]{.katex-mathml}\[\[\[]{.strut style="height:0.6944em;"}\[\[Total SAM]{.mord}]{.mord.text} []{.mspace style="margin-right:0.2778em;"}[=]{.mrel}[]{.mspace style="margin-right:0.2778em;"} ]{.base}\[\[]{.strut style="height:0.7278em;vertical-align:-0.0833em;"} [14.03]{.mord}[]{.mspace style="margin-right:0.2222em;"}[+]{.mbin}[]{.mspace style="margin-right:0.2222em;"} ]{.base}\[\[]{.strut style="height:0.7278em;vertical-align:-0.0833em;"} [10.52]{.mord}[]{.mspace style="margin-right:0.2222em;"}[+]{.mbin}[]{.mspace style="margin-right:0.2222em;"} ]{.base}\[\[]{.strut style="height:0.6444em;"} [9.09]{.mord}[]{.mspace style="margin-right:0.2778em;"}[=]{.mrel}[]{.mspace style="margin-right:0.2778em;"} ]{.base}\[\[]{.strut style="height:0.6944em;"}\[\[USD ]{.mord}]{.mord.text} [33.64]{.mord}[]{.mspace style="margin-right:0.1667em;"} \[\[billion]{.mord}]{.mord.text}]{.base}]{.katex-html ariaHidden="true"}]{.katex}
 ::
 
 #### Serviceable Obtainable Market (SOM)
 
 Based on the market conditions of different regions, we identified the expected obtainable market share of the Asia Pacific as our SOM, with an estimated **USD 0.27 billion**.
 
-::content-components-collapsible-title{title="More Details" heading-tag="h5" id="som-details"}
+::content-components-collapsible-title
+---
+heading-tag: h5
+id: som-details
+title: More Details
+---
 Our methodology uses the equation: :fn-ref{#1}
 
-$\mathrm{SOM}=\text{SAM of the Asia Pacific}\times\text{Expected Market Share Percentage}.$
+\[\[]{.katex-mathml}\[\[\[]{.strut style="height:0.6833em;"}\[\[SOM]{.mord.mathrm}]{.mord} []{.mspace style="margin-right:0.2778em;"}[=]{.mrel}[]{.mspace style="margin-right:0.2778em;"} ]{.base}\[\[]{.strut style="height:0.7778em;vertical-align:-0.0833em;"}\[\[SAM of the Asia Pacific]{.mord}]{.mord.text} []{.mspace style="margin-right:0.2222em;"}[×]{.mbin}[]{.mspace style="margin-right:0.2222em;"} ]{.base}\[\[]{.strut style="height:0.8889em;vertical-align:-0.1944em;"}\[\[Expected Market Share Percentage]{.mord}]{.mord.text} [.]{.mord} ]{.base}]{.katex-html ariaHidden="true"}]{.katex}
 
 As the expected market share for an early-stage startup typically ranges from 1% to 5%, we adopted the midpoint of this range, 3%, for our estimation. :fn-ref{#6}
 
-$\mathrm{SOM}=9.09\times3\%=\text{USD }0.27\,\text{billion}$
-
+\[\[]{.katex-mathml}\[\[\[]{.strut style="height:0.6833em;"}\[\[SOM]{.mord.mathrm}]{.mord} []{.mspace style="margin-right:0.2778em;"}[=]{.mrel}[]{.mspace style="margin-right:0.2778em;"} ]{.base}\[\[]{.strut style="height:0.7278em;vertical-align:-0.0833em;"} [9.09]{.mord}[]{.mspace style="margin-right:0.2222em;"}[×]{.mbin}[]{.mspace style="margin-right:0.2222em;"} ]{.base}\[\[]{.strut style="height:0.8056em;vertical-align:-0.0556em;"} [3%]{.mord}[]{.mspace style="margin-right:0.2778em;"}[=]{.mrel}[]{.mspace style="margin-right:0.2778em;"} ]{.base}\[\[]{.strut style="height:0.6944em;"}\[\[USD ]{.mord}]{.mord.text} [0.27]{.mord}[]{.mspace style="margin-right:0.1667em;"} \[\[billion]{.mord}]{.mord.text}]{.base}]{.katex-html ariaHidden="true"}]{.katex}
 ::
 
 ### SWOT
@@ -403,8 +450,14 @@ To evaluate Expelliodor’s commercial potential, we conducted a *SWOT* analysis
 ---
 src:
   - https://static.igem.wiki/teams/6133/wiki/hp/entrepreneurship/entrepreneurship-index-fig13.avif
-alt: "Four-quadrant SWOT chart summarizing targeted odor control and biodegradability as strengths, early-stage evidence and production costs as weaknesses, growing demand as an opportunity, and competition and regulation as threats."
-caption: "Fig. 13 | SWOT analysis of Expelliodor  <sup><a id=\"ref-7\" href=\"#fnref-7\" aria-label=\"Go to reference 7\">7</a></sup> <sup><a id=\"ref-8\" href=\"#fnref-8\" aria-label=\"Go to reference 8\">8</a></sup> <sup><a id=\"ref-9\" href=\"#fnref-9\" aria-label=\"Go to reference 9\">9</a></sup>"
+alt: Four-quadrant SWOT chart summarizing targeted odor control and
+  biodegradability as strengths, early-stage evidence and production costs as
+  weaknesses, growing demand as an opportunity, and competition and regulation
+  as threats.
+caption: Fig. 13 | SWOT analysis of Expelliodor  <sup><a id="ref-7"
+  href="#fnref-7" aria-label="Go to reference 7">7</a></sup> <sup><a id="ref-8"
+  href="#fnref-8" aria-label="Go to reference 8">8</a></sup> <sup><a id="ref-9"
+  href="#fnref-9" aria-label="Go to reference 9">9</a></sup>
 ---
 ::
 
@@ -416,8 +469,9 @@ Our *PEST* analysis examines the political, economic, social, and technological 
 ---
 src:
   - https://static.igem.wiki/teams/6133/wiki/hp/entrepreneurship/entrepreneurship-index-fig14.avif
-alt: "PEST chart organizing market opportunities and challenges into political, economic, social, and technological factors, expanded in the following text."
-caption: "Fig. 14 | PEST analysis of Expelliodor"
+alt: PEST chart organizing market opportunities and challenges into political,
+  economic, social, and technological factors, expanded in the following text.
+caption: Fig. 14 | PEST analysis of Expelliodor
 ---
 ::
 
@@ -467,11 +521,11 @@ Body odor is a socially sensitive and sometimes stigmatized topic across many As
 
 ##### Opportunity 1 — Advances in Biotechnology Enabling Targeted Odor Control
 
-Advances in protein engineering, synthetic biology, and bioactive cosmetic ingredients create opportunities to develop deodorants that act on specific odor-producing pathways rather than simply masking odor. The axillary odor-producing pathway we are targeting has only been elucidated relatively recently, with PepV identified in 2024 as a key enzyme in this pathway.  :fn-ref{#15} :fn-ref{#16} This creates a potential first-mover advantage for our project, as, to our knowledge, there are currently no deodorant products specifically developed to target this pathway.
+Advances in protein engineering, synthetic biology, and bioactive cosmetic ingredients create opportunities to develop deodorants that act on specific odor-producing pathways rather than simply masking odor. The axillary odor-producing pathway we are targeting has only been elucidated relatively recently, with PepV identified in 2024 as a key enzyme in this pathway. :fn-ref{#15} :fn-ref{#16} This creates a potential first-mover advantage for our project, as, to our knowledge, there are currently no deodorant products specifically developed to target this pathway.
 
 ##### Opportunity 2 — Digital Technologies Accelerating Product Development and Commercialization
 
-AI-assisted R&D, digital regulation, and e-commerce infrastructure can shorten development cycles and improve consumer access across the Asia-Pacific. For instance, the engineered proteins we used were designed using an AI-assisted workflow, which reduced research costs during the project's initial phase.
+AI-assisted R\&D, digital regulation, and e-commerce infrastructure can shorten development cycles and improve consumer access across the Asia-Pacific. For instance, the engineered proteins we used were designed using an AI-assisted workflow, which reduced research costs during the project's initial phase.
 
 ##### Challenge 1 — Stability and Large-Scale Manufacturing of Bioactive Ingredients
 
@@ -487,8 +541,10 @@ To provide a concise overview of our business models, we developed the following
 ---
 src:
   - https://static.igem.wiki/teams/6133/wiki/hp/entrepreneurship/entrepreneurship-index-fig15.avif
-alt: "Lean Canvas covering key partners, activities, resources, value propositions, customer relationships and segments, distribution channels, cost structure, and revenue streams."
-caption: "Fig. 15 | Lean canvas of Expelliodor"
+alt: Lean Canvas covering key partners, activities, resources, value
+  propositions, customer relationships and segments, distribution channels, cost
+  structure, and revenue streams.
+caption: Fig. 15 | Lean canvas of Expelliodor
 ---
 ::
 
@@ -498,8 +554,10 @@ caption: "Fig. 15 | Lean canvas of Expelliodor"
 ---
 src:
   - https://static.igem.wiki/teams/6133/wiki/hp/entrepreneurship/entrepreneurship-index-fig16.avif
-alt: "Timeline spanning 2026 to 2028, with milestones for market research, development, effectiveness validation, intellectual property, launch, scale-up, business expansion, and collaboration."
-caption: "Fig. 16 | Milestones and timeline of Expelliodor"
+alt: Timeline spanning 2026 to 2028, with milestones for market research,
+  development, effectiveness validation, intellectual property, launch,
+  scale-up, business expansion, and collaboration.
+caption: Fig. 16 | Milestones and timeline of Expelliodor
 ---
 ::
 
@@ -647,36 +705,20 @@ We will seek early regulatory guidance, confirm ingredient status and the approp
 
 ## Reference
 
-1. ZoomInfo. How to calculate total addressable market \[Internet\] \[cited 2026 Oct 14\]. Available from: [pipeline.zoominfo.com](https://pipeline.zoominfo.com/marketing/how-to-calculate-total-addressable-market)
-
-2. LatestCost. Deodorant cost \[Internet\] \[cited 2026 Oct 14\]. Available from: [latestcost.com](https://latestcost.com/deodorant-cost/)
-
-3. Cleo & Coco. How many Americans use deodorant and antiperspirant each year \[Internet\] \[cited 2026 Oct 14\]. Available from: [cleoandcoco.com](https://cleoandcoco.com/blogs/news/how-many-americans-use-deodorant-and-antiperspirant-each-year)
-
-4. Market Growth Reports. Deodorants market \[Internet\] \[cited 2026 Oct 14\]. Available from: [marketgrowthreports.com](https://www.marketgrowthreports.com/market-reports/deodorants-market-110974)
-
-5. Cognitive Market Research. Deodorant market report \[Internet\] \[cited 2026 Oct 14\]. Available from: [cognitivemarketresearch.com](https://www.cognitivemarketresearch.com/deodorant-market-report)
-
-6. Startup Project. Market sizing \[Internet\] \[cited 2026 Oct 14\]. Available from: [startupproject.org](https://startupproject.org/tools/market-sizing/)
-
-7. Santos YR, Andréo-Filho N, Lopes PS, Leite-Silva VR. A review of skin microbiome and new challenges to cosmetic microbiome-friendly formulations. Int J Cosmet Sci. 2026;00:1–18. doi: [10.1111/ics.70073](https://doi.org/10.1111/ics.70073).
-
-8. Dreno B, Araviiskaia E, Berardesca E, Bieber T, Hawk J, Sanchez Viera M, et al. The changing landscape of cosmetic dermatology: microbiome and beyond. J Eur Acad Dermatol Venereol. 2020;34(3):473–481. doi: [10.1111/jdv.16060](https://doi.org/10.1111/jdv.16060).
-
-9. Grand View Research. Synthetic biology market size, share & trends analysis report, 2026–2033 \[Internet\]. Grand View Research; 2026 \[cited 2026 Oct 14\]. Available from: [Grand View Research](https://www.grandviewresearch.com/industry-analysis/synthetic-biology-market)
-
-10. Asia-Pacific Economic Cooperation (APEC). China unveils APEC 2026 theme and priorities in Shenzhen \[Internet\]. Singapore: APEC Secretariat; 2025 Dec 12 \[cited 2026 Oct 14\]. Available from: [APEC official website](https://www.apec.org/press/news-releases/2025/china-unveils-apec-2026-theme-and-priorities-in-shenzhen)
-
-11. APEC China 2026. About APEC China 2026 \[Internet\]. \[cited 2026 Oct 14\]. Available from: [APEC China 2026 official website](https://www.apec2026.cn/)
-
-12. National Medical Products Administration (NMPA). NMPA’s opinions on deepening the reform of cosmetics regulation and promoting high-quality industry development \[Internet\]. Beijing: NMPA; 2025 Nov 17 \[cited 2026 Oct 14\]. Available from: [NMPA official website](https://english.nmpa.gov.cn/2025-12/22/c_1156415.htm)
-
-13. Silvia D, Putri KAA, Segita NE, Nuryadin RN, Saputra RD, Nur YL. Review article: comparison of cosmetic regulatory policies in various countries toward consumer protection. J Halal Sci Res. 2024;5(2):86–98. doi: [10.12928/jhsr.v5i2.8923](https://doi.org/10.12928/jhsr.v5i2.8923).
-
-14. Statista Market Insights. Beauty & personal care – APAC \[Internet\]. \[place unknown\]: Statista; \[cited 2026 Oct 14\]. Available from: [Statista Market Insights](https://www.statista.com/outlook/cmo/beauty-personal-care/apac/)
-
-15. Rudden M, Herman R, Rose M, Bawdon D, Cox DS, Dodson E, et al. The molecular basis of thioalcohol production in human body odour. Sci Rep. 2020;10:12500. doi: [10.1038/s41598-020-68860-z](https://doi.org/10.1038/s41598-020-68860-z).
-
-16. Herman R, Kinniment-Williams B, Rudden M, James AG, Wilkinson AJ, Murphy B, et al. Identification of a staphylococcal dipeptidase involved in the production of human body odor. J Biol Chem. 2024;300(12):107928. doi: [10.1016/j.jbc.2024.107928](https://doi.org/10.1016/j.jbc.2024.107928).
-
-17. Fortune Business Insights. Deodorant market size, share & industry analysis, by product type (spray, roll-on, stick, and others), by packaging material (metal, plastic, and others), by end-user (men and women), and regional forecast, 2026–2034 \[Internet\]. \[place unknown\]: Fortune Business Insights; 2026 Sep 28 \[cited 2026 Oct 14\]. Available from: [Fortune Business Insights](https://www.fortunebusinessinsights.com/deodorant-market-102687)
+1. :ref-fn[ZoomInfo. How to calculate total addressable market \[Internet\] \[cited 2026 Oct 14\]. Available from: [pipeline.zoominfo.com](https://pipeline.zoominfo.com/marketing/how-to-calculate-total-addressable-market)]{#1}
+2. :ref-fn[LatestCost. Deodorant cost \[Internet\] \[cited 2026 Oct 14\]. Available from: [latestcost.com](https://latestcost.com/deodorant-cost/)]{#2}
+3. :ref-fn[Cleo & Coco. How many Americans use deodorant and antiperspirant each year \[Internet\] \[cited 2026 Oct 14\]. Available from: [cleoandcoco.com](https://cleoandcoco.com/blogs/news/how-many-americans-use-deodorant-and-antiperspirant-each-year)]{#3}
+4. :ref-fn[Market Growth Reports. Deodorants market \[Internet\] \[cited 2026 Oct 14\]. Available from: [marketgrowthreports.com](https://www.marketgrowthreports.com/market-reports/deodorants-market-110974)]{#4}
+5. :ref-fn[Cognitive Market Research. Deodorant market report \[Internet\] \[cited 2026 Oct 14\]. Available from: [cognitivemarketresearch.com](https://www.cognitivemarketresearch.com/deodorant-market-report)]{#5}
+6. :ref-fn[Startup Project. Market sizing \[Internet\] \[cited 2026 Oct 14\]. Available from: [startupproject.org](https://startupproject.org/tools/market-sizing/)]{#6}
+7. :ref-fn[Santos YR, Andréo-Filho N, Lopes PS, Leite-Silva VR. A review of skin microbiome and new challenges to cosmetic microbiome-friendly formulations. Int J Cosmet Sci. 2026;00:1–18. doi: [10.1111/ics.70073](https://doi.org/10.1111/ics.70073).]{#7}
+8. :ref-fn[Dreno B, Araviiskaia E, Berardesca E, Bieber T, Hawk J, Sanchez Viera M, et al. The changing landscape of cosmetic dermatology: microbiome and beyond. J Eur Acad Dermatol Venereol. 2020;34(3):473–481. doi: [10.1111/jdv.16060](https://doi.org/10.1111/jdv.16060).]{#8}
+9. :ref-fn[Grand View Research. Synthetic biology market size, share & trends analysis report, 2026–2033 \[Internet\]. Grand View Research; 2026 \[cited 2026 Oct 14\]. Available from: [Grand View Research](https://www.grandviewresearch.com/industry-analysis/synthetic-biology-market)]{#9}
+10. :ref-fn[Asia-Pacific Economic Cooperation (APEC). China unveils APEC 2026 theme and priorities in Shenzhen \[Internet\]. Singapore: APEC Secretariat; 2025 Dec 12 \[cited 2026 Oct 14\]. Available from: [APEC official website](https://www.apec.org/press/news-releases/2025/china-unveils-apec-2026-theme-and-priorities-in-shenzhen)]{#10}
+11. :ref-fn[APEC China 2026. About APEC China 2026 \[Internet\]. \[cited 2026 Oct 14\]. Available from: [APEC China 2026 official website](https://www.apec2026.cn/)]{#11}
+12. :ref-fn[National Medical Products Administration (NMPA). NMPA’s opinions on deepening the reform of cosmetics regulation and promoting high-quality industry development \[Internet\]. Beijing: NMPA; 2025 Nov 17 \[cited 2026 Oct 14\]. Available from: [NMPA official website](https://english.nmpa.gov.cn/2025-12/22/c_1156415.htm)]{#12}
+13. :ref-fn[Silvia D, Putri KAA, Segita NE, Nuryadin RN, Saputra RD, Nur YL. Review article: comparison of cosmetic regulatory policies in various countries toward consumer protection. J Halal Sci Res. 2024;5(2):86–98. doi: [10.12928/jhsr.v5i2.8923](https://doi.org/10.12928/jhsr.v5i2.8923).]{#13}
+14. :ref-fn[Statista Market Insights. Beauty & personal care – APAC \[Internet\]. \[place unknown\]: Statista; \[cited 2026 Oct 14\]. Available from: [Statista Market Insights](https://www.statista.com/outlook/cmo/beauty-personal-care/apac/)]{#14}
+15. :ref-fn[Rudden M, Herman R, Rose M, Bawdon D, Cox DS, Dodson E, et al. The molecular basis of thioalcohol production in human body odour. Sci Rep. 2020;10:12500. doi: [10.1038/s41598-020-68860-z](https://doi.org/10.1038/s41598-020-68860-z).]{#15}
+16. :ref-fn[Herman R, Kinniment-Williams B, Rudden M, James AG, Wilkinson AJ, Murphy B, et al. Identification of a staphylococcal dipeptidase involved in the production of human body odor. J Biol Chem. 2024;300(12):107928. doi: [10.1016/j.jbc.2024.107928](https://doi.org/10.1016/j.jbc.2024.107928).]{#16}
+17. :ref-fn[Fortune Business Insights. Deodorant market size, share & industry analysis, by product type (spray, roll-on, stick, and others), by packaging material (metal, plastic, and others), by end-user (men and women), and regional forecast, 2026–2034 \[Internet\]. \[place unknown\]: Fortune Business Insights; 2026 Sep 28 \[cited 2026 Oct 14\]. Available from: [Fortune Business Insights](https://www.fortunebusinessinsights.com/deodorant-market-102687)]{#17}

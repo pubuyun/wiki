@@ -248,7 +248,7 @@
             "labelFont": 14,
             "labelAbove": false,
             "nodeId": "bacterial-fungi-kit",
-            "labelLines": ["Bacteria-", "Fungi Clay", "Kit"],
+            "labelLines": ["Bacteria-Fungi", "Clay Kit"],
             "imageWidth": 4032,
             "imageHeight": 3024
         },
@@ -266,7 +266,7 @@
             "labelFont": 11,
             "labelAbove": false,
             "nodeId": "fuse-beads-kit",
-            "labelLines": ["Bacteria-", "Fungi Fuse", "beeds Kit"],
+            "labelLines": ["Bacteria-Fungi", "Fuse beeds Kit"],
             "imageWidth": 1280,
             "imageHeight": 720
         },
