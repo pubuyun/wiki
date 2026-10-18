@@ -25,7 +25,7 @@ We adapted a workflow following methods by [Benjamin Fry](https://www.nature.com
 
 ## Input Preparation
 
-Among precursor binders, BC7, BR8 and BR10 displayed reliable experimental reduction and are therefore selected for optimization. The predicted binder structures from *RoseTTAFold3* are used as the initial structures. The ligands are set in the NH₃⁺/COO⁻ state according to pKa and axillary pH :fn-ref{#24}.
+Among precursor binders, BC7, BR8 and BR10 displayed reliable experimental reduction and were therefore selected for optimization. The predicted binder structures from *RoseTTAFold3* were used as the initial structures. The ligands were set in the NH₃⁺/COO⁻ state according to pKa and axillary pH :fn-ref{#24}.
 
 Following the paper’s *Amber14*/*SMIRNOFF* preparation :fn-ref{#7}, complexes underwent unrestrained *OpenMM* minimization. We specified *OpenFF* 2.3.0, pH 6 hydrogens, no added solvent and the default NoCutoff method.
 
@@ -57,7 +57,7 @@ For BC7, the initially higher-scoring N113A/V114D pair failed polar-satisfaction
 
 ## Design Results
 
-We select three BC7 mutants, three BR8 mutants and one BR10 mutant, as listed below.
+We selected three BC7 mutants, three BR8 mutants and one BR10 mutant, as listed below.
 
 ::content-components-captioned-table
 ---

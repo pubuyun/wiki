@@ -65,7 +65,7 @@ The multi-point mutations are generated using a diverse beam search.
 
 For a combination containing $t$ mutations, its high-confidence edge ratio is calculated as $q(S)=|E_{\mathrm{high}}(S)|/\binom{t}{2}$. Combinations with $q(S)>0.70$ are assigned to the high-confidence pool. Others are assigned to the intermediate pool.
 
-At each depth, 50% of the beam is selected from the high-confidence pool and 50% from the intermediate pool. Intermediate candidates will fill any unused high-confidence capacity.  
+At each depth, 50% of the beam is selected from the high-confidence pool and 50% from the intermediate pool. Intermediate candidates fill any unused high-confidence capacity.  
 
 Starting from compatible double mutants, the algorithm iteratively expands each combination $S$ with a candidate mutation $m$ only if:
 

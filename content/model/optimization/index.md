@@ -24,7 +24,7 @@ imageBackground: white
 
 ::
 
-After experimental validation of precursor binders, BC7, BR8 and BR10 are selected for further affinity optimization.
+After experimental validation of precursor binders, BC7, BR8 and BR10 were selected for further affinity optimization.
 
 ::content-components-lightbox-image
 ---

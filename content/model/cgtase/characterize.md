@@ -7,7 +7,7 @@ order: 1
 
 ::content-components-collapsible-paragraph{title="Summary" id="summary" preview=true}
 
-Our objective is to modify the precursor, or connect it to a larger molecule, to reduce its compatibility with PepT-mediated transport :fn-ref{#1}. We chose the hydroxyl-group glycosylation with CGTase (cyclodextrin glucanotransferase) as it provided the most suitable option in the intended reaction environment.
+Our objective was to modify the precursor, or connect it to a larger molecule, to reduce its compatibility with PepT-mediated transport :fn-ref{#1}. We chose the hydroxyl-group glycosylation with CGTase (cyclodextrin glucanotransferase) as it provided the most suitable option in the intended reaction environment.
 
 We combined molecular docking with molecular dynamics simulations to identify a stable precursor-binding pose and guide binding-pocket optimization.
 

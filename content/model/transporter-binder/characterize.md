@@ -23,7 +23,7 @@ We therefore used the experimentally determined structure (PDB: 6EXS) as the des
 
 The conformational changes of PepT<sub>Sh</sub> are driven by protonation-dependent rearrangements of key salt bridges involving transmembrane helices (TMs) 1, 4, 7, and 10 :fn-ref{#5}. However, these residues are buried within the transporter and are unlikely to be directly accessible to an extracellular binder.
 
-A homology model of the OF state of PepT<sub>Sh</sub> is derived from an MD-predicted PepTSo structure reported in the literature :fn-ref{#18}. By comparing the experimental IF structure of PepT<sub>Sh</sub> (PDB: 6EXS) :fn-ref{#1} with the OF model, we identified accessible extracellular regions and selected hotspot residues for binder generation.
+A homology model of the OF state of PepT<sub>Sh</sub> was derived from an MD-predicted PepTSo structure reported in the literature :fn-ref{#18}. By comparing the experimental IF structure of PepT<sub>Sh</sub> (PDB: 6EXS) :fn-ref{#1} with the OF model, we identified accessible extracellular regions and selected hotspot residues for binder generation.
 
 Two extracellular electrostatic networks were of particular interest:
 

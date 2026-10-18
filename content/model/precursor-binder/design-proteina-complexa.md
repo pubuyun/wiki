@@ -109,7 +109,7 @@ Filtered candidates were ranked using a composite score. The coefficients were c
 
 Score = 200 × *pLDDT* − 1 × i_pAE − 62 × min_ipAE + 50 × min_ipSAE − 5 × binder_scRMSD_ca − 2 × ligand_scRMSD − 2 × ligand_scRMSD_aligned
 
-The search result contains only 30–40 filtered binders, all with similar scores.
+The search result contained only 30–40 filtered binders, all with similar scores.
 
 Candidates containing a ligand with wrong chirality were filtered. The 40 highest-ranking valid designs were selected for subsequent [molecular-dynamics analysis](/model/precursor-binder/md-simulation).
 

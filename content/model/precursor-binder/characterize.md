@@ -14,7 +14,7 @@ id: summary
 preview: "true"
 title: Summary
 ---
-Because our objective is to reduce characteristic axillary malodor, we selected **Cys-Gly-(S)-3M3SH** as the target stereoisomer for binder design. This stereochemical definition was therefore treated as a design constraint throughout the computational workflow.
+Because our objective was to reduce characteristic axillary malodor, we selected **Cys-Gly-(S)-3M3SH** as the target stereoisomer for binder design. This stereochemical definition was therefore treated as a design constraint throughout the computational workflow.
 ::
 
 ## Stereochemistry of Precursor

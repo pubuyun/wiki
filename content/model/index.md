@@ -23,7 +23,7 @@ bannerMobilePosition: 50% 10%
 
 ## Key Successes
 
-- Among 9 tested **precursor binders** designed by *RFdiffusion3* and *Proteina-Complexa*, 4 are shown to be able to significantly reduce 3M3SH production compared to negative control.
+- Among 9 tested **precursor binders** designed by *RFdiffusion3* and *Proteina-Complexa*, 4 were shown to be able to significantly reduce 3M3SH production compared to negative control.
 - Among 5 designed **transporter binders** aiming to restrict conformational change, 4 showed a significant reduction in 3M3SH production, with a maximum reduction of 21%.
 - We identified wild-type **CGTase** as a functional starting enzyme for Cys-Gly-3M3SH modification, supported by experimental activity relative to control.
 - We developed a **Characterize–DBTL framework** that translates understanding of biological mechanisms into explicit design requirements.
@@ -388,7 +388,7 @@ label: Transporter binder MD trajectories
 ---
 ::
 
-Selected candidates are tested experimentally in our wet lab efforts [Transporter Binder Cycle 1].
+Selected candidates were tested experimentally in our wet lab efforts [Transporter Binder Cycle 1].
 
 ### Discussion
 
@@ -409,7 +409,7 @@ imageBackground: white
 
 The findings suggest that in a filtered set of candidates, a single metric may have too little variation to support confident prediction of actual experimental performance. The custom composite score showed the strongest agreement with experimental ranking, but it needs further verification because the sample is too small.
 
-However, MD metrics do not show agreement with experimental results. Future evaluation should increase the number of independent MD simulations, and consider explicit entropy correction and an implicit membrane model in free energy calculation.
+However, MD metrics did not show agreement with experimental results. Future evaluation should increase the number of independent MD simulations, and consider explicit entropy correction and an implicit membrane model in free energy calculation.
 
 ## CGTase
 
@@ -501,7 +501,7 @@ portrait: true
 
 #### Design Specification
 
-CGTase is selected for further design to fit a new substrate. Optimizing the incomplete interactions around the ligand's carboxylate group and hydrophobic tail should be the target of design.
+CGTase was selected for further design to fit a new substrate. Optimizing the incomplete interactions around the ligand's carboxylate group and hydrophobic tail should be the target of design.
 
 ### Design
 
@@ -644,7 +644,7 @@ By adjusting decoding order, one position is allowed to vary while the remaining
 
 Candidate substitutions are ranked by ΔNLL, which compares how much the model favors the proposed amino acid over the original one. $\Delta NLL = \ln[P(a) / P(b)]$. Negative values indicate greater model support for the substitution. We prioritize candidates at buried, ligand-contacting positions, then predict and minimize their structures to filter any buried polar residues introduced without suitable hydrogen bond interactions.
 
-The following designs are selected for testing in [Precursor Binder Cycle 2].
+The following designs were selected for testing in [Precursor Binder Cycle 2].
 
 ::content-components-captioned-table
 ---
