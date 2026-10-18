@@ -145,9 +145,18 @@ onBeforeUnmount(() => {
 
 <style scoped>
 .inclusion-dialog {
-    --journey-blue: #03316d;
-    --journey-mint: #a8d9f9;
-    --journey-yellow: #ffe45c;
+    --journey-background: var(--surface);
+    --journey-text: var(--on-surface);
+    --journey-card: var(--secondary);
+    --journey-card-text: var(--on-secondary);
+    --journey-muted: color-mix(in srgb, var(--on-surface) 85%, var(--surface));
+    --journey-card-muted: color-mix(
+        in srgb,
+        var(--on-secondary) 85%,
+        var(--secondary)
+    );
+    --journey-border: var(--outline-variant);
+    --journey-highlight: var(--primary);
     --journey-body: system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
     position: fixed;
     inset: 0;
@@ -158,13 +167,13 @@ onBeforeUnmount(() => {
     margin: 0;
     padding: 0;
     border: 0;
-    background: var(--journey-blue);
-    color: #fff;
+    background: var(--journey-background);
+    color: var(--journey-text);
     overflow: hidden;
     font-family: var(--font-belanosima), sans-serif;
 }
 .inclusion-dialog::backdrop {
-    background: #03316d;
+    background: var(--surface);
 }
 .journey-close {
     position: absolute;
@@ -175,10 +184,10 @@ onBeforeUnmount(() => {
     align-items: center;
     gap: 0.7rem;
     padding: 0.55rem 1.15rem;
-    border: 2px solid #a8d9f9;
+    border: 2px solid var(--journey-border);
     border-radius: 2rem;
-    background: #03316df2;
-    color: #fff;
+    background: var(--journey-card);
+    color: var(--journey-card-text);
     font:
         400 1.05rem var(--font-belanosima),
         sans-serif;
@@ -191,11 +200,12 @@ onBeforeUnmount(() => {
     font: 400 1.7rem/1 sans-serif;
 }
 .journey-close:hover {
-    background: #104995;
+    background: var(--surface-elevated);
+    color: var(--on-surface);
     transform: translateY(-2px);
 }
 .journey-close:focus-visible {
-    outline: 3px solid #ffe45c;
+    outline: 3px solid var(--journey-highlight);
     outline-offset: 4px;
 }
 .journey-scroller {
@@ -214,7 +224,7 @@ onBeforeUnmount(() => {
     min-height: 100%;
 }
 .journey-scroller:focus-visible {
-    outline: 3px solid #a8d9f9;
+    outline: 3px solid var(--journey-highlight);
     outline-offset: -3px;
 }
 @media (prefers-reduced-motion: reduce) {

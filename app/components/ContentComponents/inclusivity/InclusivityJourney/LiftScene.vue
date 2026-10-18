@@ -385,8 +385,8 @@ onBeforeUnmount(() => media?.revert());
     height: 100dvh;
     min-height: 560px;
     overflow: hidden;
-    background: #03316d;
-    color: #03316d;
+    background: var(--journey-background);
+    color: var(--journey-card-text);
     font-family: var(--journey-body, system-ui, sans-serif);
     font-weight: 600;
 }
@@ -415,7 +415,7 @@ onBeforeUnmount(() => media?.revert());
     inset: 0;
     width: 100%;
     height: 100%;
-    fill: #fff;
+    fill: var(--journey-card);
     overflow: visible;
 }
 .lift-cloud-copy {
@@ -430,7 +430,7 @@ onBeforeUnmount(() => media?.revert());
     left: 15%;
     width: 70%;
     margin: 0;
-    color: var(--cloud-color);
+    color: color-mix(in srgb, var(--journey-card-text) 65%, var(--cloud-color));
     font:
         400 min(2.5cqw, 3.8cqh)/1.1 var(--font-righteous),
         sans-serif;
@@ -512,7 +512,7 @@ onBeforeUnmount(() => media?.revert());
     display: block;
 }
 .lift-flag text {
-    fill: white;
+    fill: #03316d;
     font:
         700 34px/1 var(--font-belanosima),
         sans-serif;
@@ -574,7 +574,7 @@ onBeforeUnmount(() => media?.revert());
     inset: 0;
     width: 100%;
     height: 100%;
-    fill: white;
+    fill: var(--journey-card);
 }
 .lift-iteration p {
     position: relative;

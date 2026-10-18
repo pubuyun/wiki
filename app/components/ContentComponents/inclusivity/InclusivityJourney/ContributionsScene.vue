@@ -41,7 +41,7 @@ const groups = [
         statistic: "Illustration: 8.92 million blind people in China, 2026.",
         destination: "/inclusivity/blind-community",
         contributions: contributionCopy.blind,
-        color: "#8fd8ee",
+        colorKey: "blind",
     },
     {
         name: "Deaf Community",
@@ -55,7 +55,7 @@ const groups = [
             "Illustration: 7.39 million people with complete hearing loss in China, 2022.",
         destination: "/inclusivity#deaf-community",
         contributions: contributionCopy.deaf,
-        color: "#86dbbf",
+        colorKey: "deaf",
     },
     {
         name: "Children On The Autism Spectrum",
@@ -69,7 +69,7 @@ const groups = [
             "Illustration: 13+ million people on the autism spectrum in China, 2026.",
         destination: "/inclusivity#autism-spectrum",
         contributions: contributionCopy.autism,
-        color: "#ffcc62",
+        colorKey: "autism",
     },
     {
         name: "Individuals From Low Socioeconomic Backgrounds",
@@ -83,7 +83,7 @@ const groups = [
             "Illustration: 281 million people in China had annual disposable income of approximately US$1,420 per person or less, 2025.",
         destination: "/inclusivity#low-socio-economic-backgrounds",
         contributions: contributionCopy.lowIncome,
-        color: "#f9b7ab",
+        colorKey: "income",
     },
     {
         name: "Modeling Beginners",
@@ -97,7 +97,7 @@ const groups = [
             "Illustration: 92.9% of internet users aged 10–19 in China could not proficiently write computer programs, 2025.",
         destination: "/inclusivity#modeling-beginners",
         contributions: contributionCopy.modeling,
-        color: "#beb5ee",
+        colorKey: "modeling",
     },
     {
         name: "Older Adults With Limited Formal Education",
@@ -111,7 +111,7 @@ const groups = [
             "Illustration: 15.87% of people aged 65 and above in China had a college education or higher, 2026.",
         destination: "/inclusivity#older-adults",
         contributions: contributionCopy.olderAdults,
-        color: "#f4d385",
+        colorKey: "older",
     },
 ];
 
@@ -329,12 +329,24 @@ onBeforeUnmount(() => {
                 Guided by our LIFT+ framework, we began with six target groups
                 we could reach in China who often face barriers to accessing
                 synthetic biology and broader science: the
-                <strong>blind community</strong>, the
-                <strong>Deaf community</strong>,
-                <strong>children on the autism spectrum</strong>,
-                <strong>individuals from low socioeconomic backgrounds</strong>,
-                <strong>modeling beginners</strong>, and
-                <strong>older adults with limited formal education</strong>.
+                <strong class="group-name group-name--blind"
+                    >blind community</strong
+                >, the
+                <strong class="group-name group-name--deaf"
+                    >Deaf community</strong
+                >,
+                <strong class="group-name group-name--autism"
+                    >children on the autism spectrum</strong
+                >,
+                <strong class="group-name group-name--income"
+                    >individuals from low socioeconomic backgrounds</strong
+                >,
+                <strong class="group-name group-name--modeling"
+                    >modeling beginners</strong
+                >, and
+                <strong class="group-name group-name--older"
+                    >older adults with limited formal education</strong
+                >.
             </p>
         </div>
 
@@ -348,9 +360,12 @@ onBeforeUnmount(() => {
                     v-for="(group, index) in groups"
                     :key="group.destination"
                     class="contribution-card"
-                    :class="{ 'is-flipped': isFlipped(index) }"
+                    :class="[
+                        `contribution-card--${group.colorKey}`,
+                        { 'is-flipped': isFlipped(index) },
+                    ]"
                     :style="{
-                        '--card-accent': group.color,
+                        '--card-accent': `var(--group-${group.colorKey})`,
                         '--art-ratio': `${group.visibleWidth} / ${group.imageHeight}`,
                         '--art-width': `${(group.imageWidth / group.visibleWidth) * 100}%`,
                         '--art-left': `${(-group.left / group.visibleWidth) * 100}%`,
@@ -422,12 +437,13 @@ onBeforeUnmount(() => {
                                                         v-for="point in item.points"
                                                         :key="point.text"
                                                     >
-                                                        <strong
+                                                        <span
+                                                            class="point-label"
                                                             v-if="point.label"
                                                             >{{
                                                                 point.label
                                                             }}
-                                                            — </strong
+                                                            — </span
                                                         ><em
                                                             v-if="
                                                                 point.italicPrefix
@@ -515,14 +531,28 @@ onBeforeUnmount(() => {
 
 <style scoped>
 .contributions-scene {
-    --ink: #03316d;
+    --ink: var(--journey-card-text);
+    --group-blind: #14649a;
+    --group-deaf: #126b58;
+    --group-autism: #8a4f00;
+    --group-income: #a32252;
+    --group-modeling: #604aa3;
+    --group-older: #7b4a00;
     position: relative;
     isolation: isolate;
-    background: var(--ink);
-    color: #fffbed;
+    background: var(--journey-background);
+    color: var(--journey-text);
     font-family: var(--journey-body, system-ui, sans-serif);
     font-weight: 600;
     overflow: clip;
+}
+:global(.dark) .contributions-scene {
+    --group-blind: #b0e5fd;
+    --group-deaf: #86dbbf;
+    --group-autism: #ffc56e;
+    --group-income: #ffa6c4;
+    --group-modeling: #c9c0ff;
+    --group-older: #efb74f;
 }
 .contributions-intro {
     position: relative;
@@ -536,7 +566,7 @@ onBeforeUnmount(() => {
     isolation: isolate;
 }
 .scene-eyebrow {
-    color: #a8d9f9;
+    color: var(--journey-highlight);
     font-size: 15px;
     letter-spacing: 0.12em;
     margin: 0 0 24px;
@@ -547,20 +577,45 @@ onBeforeUnmount(() => {
     font-weight: 400;
     line-height: 1.15;
     margin: 0 0 34px;
-    color: #fffbed;
+    color: var(--journey-text);
 }
 .contributions-intro h2 span {
-    color: #ffe45c;
+    color: var(--journey-highlight);
 }
 .intro-copy {
     max-width: 970px;
     margin: 0;
     font-size: clamp(19px, 1.7vw, 26px);
     line-height: 1.65;
-    color: #eef5ff;
+    color: var(--journey-text);
+    font-weight: 400;
 }
 .intro-copy strong {
     font-weight: 800;
+}
+.intro-copy .group-name {
+    display: inline;
+    padding: 0;
+    background: none;
+    text-decoration: none;
+}
+.intro-copy .group-name--blind {
+    color: var(--group-blind);
+}
+.intro-copy .group-name--deaf {
+    color: var(--group-deaf);
+}
+.intro-copy .group-name--autism {
+    color: var(--group-autism);
+}
+.intro-copy .group-name--income {
+    color: var(--group-income);
+}
+.intro-copy .group-name--modeling {
+    color: var(--group-modeling);
+}
+.intro-copy .group-name--older {
+    color: var(--group-older);
 }
 .contribution-result em {
     font-style: italic;
@@ -569,7 +624,7 @@ onBeforeUnmount(() => {
     display: flex;
     align-items: center;
     gap: 20px;
-    color: #ffe45c;
+    color: var(--journey-highlight);
     font-size: 18px;
     margin: 45px 0 0;
 }
@@ -579,7 +634,7 @@ onBeforeUnmount(() => {
     justify-content: center;
     height: 40px;
     width: 40px;
-    border: 2px solid #ffe45c;
+    border: 2px solid currentColor;
     border-radius: 50%;
     font-size: 24px;
 }
@@ -648,14 +703,14 @@ onBeforeUnmount(() => {
     font-size: clamp(34px, 4vw, 58px);
     line-height: 1.15;
     margin: 0;
-    color: #fffbed;
+    color: var(--journey-text);
 }
 .stage-heading h3 span {
-    color: #ffe45c;
+    color: var(--journey-highlight);
 }
 .stage-instruction {
     margin: 14px 0 0;
-    color: #c8dff8;
+    color: var(--journey-muted);
     font-size: 16px;
 }
 .stage-bubbles span:nth-child(1) {
@@ -715,12 +770,13 @@ onBeforeUnmount(() => {
 .photo-frame {
     position: relative;
     padding: 15px 15px 0;
-    background: #fffbed;
-    border: 3px solid #fffbed;
+    background: var(--journey-card);
+    border: 3px solid var(--journey-card);
     border-radius: 25px;
     box-shadow:
-        0 15px 0 #001f4d,
-        0 26px 40px #00193380;
+        0 15px 0 var(--journey-border),
+        0 26px 40px
+            color-mix(in srgb, var(--journey-card-text) 15%, transparent);
     transform: rotate(var(--frame-rotation));
 }
 .photo-tape {
@@ -729,7 +785,7 @@ onBeforeUnmount(() => {
     top: -14px;
     width: 80px;
     height: 30px;
-    background: #ffe45cd6;
+    background: color-mix(in srgb, var(--accent) 85%, transparent);
     transform: rotate(-6deg);
     z-index: 3;
     border-radius: 4px;
@@ -784,8 +840,9 @@ onBeforeUnmount(() => {
     text-align: left;
     padding: clamp(20px, 2.4vw, 35px);
     transform: rotateY(180deg);
-    background: #165195;
-    color: #fffbed;
+    background: var(--journey-card);
+    color: var(--journey-card-text);
+    font-weight: 400;
 }
 .back-scroll {
     flex: 1;
@@ -793,12 +850,12 @@ onBeforeUnmount(() => {
     overflow-y: auto;
     overscroll-behavior: contain;
     scrollbar-width: thin;
-    scrollbar-color: #a8d9f9 #165195;
+    scrollbar-color: var(--journey-border) var(--journey-card);
     padding-right: 12px;
     overflow-wrap: anywhere;
 }
 .back-scroll:focus-visible {
-    outline: 3px solid #ffe45c;
+    outline: 3px solid var(--journey-highlight);
     outline-offset: -3px;
 }
 .contribution-result ul {
@@ -814,14 +871,14 @@ onBeforeUnmount(() => {
 .contribution-result ul ul {
     margin-top: 0.4em;
 }
-.contribution-result li strong {
-    font-weight: 750;
+.point-label {
+    font-weight: 400;
 }
 .back-eyebrow {
     font-family: "Righteous", cursive;
     font-size: 16px;
     letter-spacing: 0.08em;
-    color: #ffe45c;
+    color: var(--journey-highlight);
     margin: 0 0 15px;
 }
 .card-back h4 {
@@ -830,7 +887,7 @@ onBeforeUnmount(() => {
     font-size: clamp(21px, 2.2vw, 30px);
     line-height: 1.2;
     margin: 0 0 23px;
-    color: #fffbed;
+    color: var(--card-accent);
 }
 .contribution-list {
     display: grid;
@@ -850,20 +907,21 @@ onBeforeUnmount(() => {
     margin: 9px 0 0;
     font-size: clamp(16px, 1.3vw, 18px);
     line-height: 1.45;
-    color: #d8edff;
+    color: var(--journey-card-muted);
 }
 .back-explore {
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 10px;
-    border-top: 2px dashed #a8d9f966;
+    border-top: 2px dashed var(--journey-border);
     padding-top: 13px;
     margin-top: 16px;
     flex: none;
     text-decoration: none;
     font-size: 16px;
-    color: #a8d9f9;
+    color: var(--journey-highlight);
+    font-weight: 400;
 }
 .back-explore > span {
     font-size: 28px;
@@ -880,7 +938,7 @@ onBeforeUnmount(() => {
     font-family: "Righteous", cursive;
     font-size: 16px;
     white-space: nowrap;
-    color: #23629a;
+    color: var(--journey-highlight);
 }
 .photo-caption > p {
     flex: 1;
@@ -902,10 +960,10 @@ onBeforeUnmount(() => {
     margin-top: 28px;
     min-height: 43px;
     padding: 9px 22px;
-    border: 2px solid #a8d9f9;
+    border: 2px solid var(--journey-border);
     border-radius: 99px;
-    background: #03316d;
-    color: #fffbed;
+    background: var(--journey-card);
+    color: var(--journey-card-text);
     font: inherit;
     font-size: 16px;
     cursor: pointer;
@@ -916,13 +974,17 @@ onBeforeUnmount(() => {
     line-height: 1;
 }
 .preview-button:hover {
-    background: #165195;
+    background: color-mix(
+        in srgb,
+        var(--journey-card) 90%,
+        var(--journey-highlight)
+    );
 }
 .card-front:focus-visible,
 .back-explore:focus-visible,
 .preview-button:focus-visible,
 .explore-journey:focus-visible {
-    outline: 4px solid #ffe45c;
+    outline: 4px solid var(--journey-highlight);
     outline-offset: 6px;
 }
 .photo-progress {
@@ -993,14 +1055,14 @@ onBeforeUnmount(() => {
     width: 10px;
     height: 10px;
     border-radius: 50%;
-    background: #4770a2;
+    background: var(--journey-border);
 }
 .photo-progress > span.active {
-    background: #ffe45c;
+    background: var(--journey-highlight);
     transform: scale(1.3);
 }
 .photo-progress > strong {
-    color: #c5ddf8;
+    color: var(--journey-muted);
     font-weight: 400;
     font-size: 16px;
     margin-left: 12px;
@@ -1023,7 +1085,7 @@ onBeforeUnmount(() => {
     margin: 25px 0 35px;
 }
 .contributions-outro > p > span {
-    color: #a8d9f9;
+    color: var(--journey-highlight);
 }
 .explore-journey {
     display: inline-flex;
@@ -1032,11 +1094,11 @@ onBeforeUnmount(() => {
     gap: 26px;
     min-height: 58px;
     padding: 14px 27px;
-    border: 3px solid #ffe45c;
+    border: 3px solid var(--accent);
     border-radius: 99px;
-    background: #ffe45c;
-    box-shadow: 0 7px 0 #ffb145;
-    color: #03316d;
+    background: var(--accent);
+    box-shadow: 0 7px 0 color-mix(in srgb, var(--accent) 75%, var(--on-accent));
+    color: var(--on-accent);
     font: inherit;
     font-size: 21px;
     cursor: pointer;

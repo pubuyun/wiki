@@ -104,6 +104,13 @@ useSeoMeta({
                     <ContentBar :toc="tocLinks" />
                 </aside>
             </div>
+            <CategoryExplore
+                v-if="children.length > 1"
+                :pages="children"
+                :category-slug="slug"
+                :category-title="categoryTitle"
+                class="mt-10 sm:mt-14"
+            />
         </div>
     </article>
 </template>

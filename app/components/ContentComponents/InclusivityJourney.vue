@@ -49,16 +49,14 @@ watch(
 
 <template>
     <div class="inclusivity-replay">
-        <div>
-            <p>Every voice can move science forward.</p>
-        </div>
+        <p>Every voice can move science forward.</p>
         <button
             ref="replay"
             type="button"
             aria-haspopup="dialog"
             @click="open = true"
         >
-            Explore our inclusion journey <span aria-hidden="true">↗</span>
+            Click to explore the animation <span aria-hidden="true">↗</span>
         </button>
         <ClientOnly>
             <JourneyOverlay
@@ -73,49 +71,59 @@ watch(
 <style scoped>
 .inclusivity-replay {
     display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 1.5rem;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: clamp(1.5rem, 3vw, 2.5rem);
     margin: 1.5rem 0 2.5rem;
-    padding: 1.75rem;
-    background: #03316d;
-    color: #fff;
-    border: 2px solid #a8d9f9;
-    border-radius: 2rem;
+    padding: clamp(1.5rem, 4.5vw, 3.5rem);
+    background: var(--secondary);
+    color: var(--on-secondary);
+    border: 2px solid var(--outline-variant);
+    border-radius: clamp(1.5rem, 3vw, 3rem);
     font-family: var(--font-belanosima), sans-serif;
 }
-.replay-eyebrow {
-    color: #a8d9f9;
-    font-size: 0.67rem;
-    font-weight: 700;
-    letter-spacing: 0.17em;
-}
 .inclusivity-replay p {
-    margin: 0.55rem 0 0;
-    font-size: 1.4rem;
+    margin: 0;
+    color: inherit;
+    font-size: clamp(1.5rem, 3vw, 2.5rem);
     font-family: var(--font-righteous), sans-serif;
     line-height: 1.3;
 }
 .inclusivity-replay button {
-    display: flex;
+    display: inline-flex;
     gap: 1.25rem;
     align-items: center;
     border: 0;
-    border-radius: 2rem;
-    padding: 0.9rem 1.25rem;
-    background: #ffe45c;
-    color: #03316d;
+    justify-content: center;
+    max-width: 100%;
+    min-height: 3.5rem;
+    border-radius: 999px;
+    padding: 1rem 1.75rem;
+    background: var(--accent);
+    color: var(--on-accent);
     cursor: pointer;
     font: inherit;
-    font-size: 0.85rem;
+    font-size: clamp(1rem, 1.5vw, 1.25rem);
     font-weight: 700;
+    line-height: 1.35;
+    text-align: left;
+    transition: background 0.2s;
 }
 .inclusivity-replay button:hover {
-    background: #ffb145;
+    background: color-mix(in srgb, var(--accent) 90%, var(--on-accent));
 }
 .inclusivity-replay button:focus-visible {
-    outline: 3px solid #fff;
+    outline: 3px solid var(--primary);
     outline-offset: 5px;
+}
+.inclusivity-replay button span {
+    flex-shrink: 0;
+    font-size: 1.5em;
+    line-height: 1;
+}
+@media (prefers-reduced-motion: reduce) {
+    .inclusivity-replay button {
+        transition: none;
+    }
 }
 </style>

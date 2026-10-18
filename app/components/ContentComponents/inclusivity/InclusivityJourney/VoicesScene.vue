@@ -501,15 +501,15 @@ onUnmounted(() => {
 
 <style scoped>
 .voices-scene {
-    --ink: #03316d;
-    --paper: #fffff8;
-    --sun: #ffe45c;
-    --mint: #a8d9f9;
+    --ink: var(--journey-card-text);
+    --paper: var(--journey-card);
+    --sun: var(--accent);
+    --mint: var(--journey-highlight);
     position: relative;
     isolation: isolate;
     padding: 5rem 5vw 4rem;
-    color: var(--paper);
-    background: #03316d;
+    color: var(--journey-text);
+    background: var(--journey-background);
     overflow: hidden;
     font-family: var(--journey-body, system-ui, sans-serif);
     font-weight: 600;
@@ -557,7 +557,7 @@ onUnmounted(() => {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    box-shadow: 0 7px 0 #a8d9f9;
+    box-shadow: 0 7px 0 var(--journey-border);
     position: relative;
     overflow: visible;
 }
@@ -576,22 +576,28 @@ onUnmounted(() => {
 }
 .voice-back {
     transform: rotateY(180deg);
-    background: #e1eee9;
-    box-shadow: 0 7px 0 #a0c4bb;
+    background: color-mix(in srgb, var(--paper) 94%, var(--journey-highlight));
+    box-shadow: 0 7px 0 var(--journey-border);
 }
 .quote-mark {
     font-family: var(--font-righteous), "Righteous", sans-serif;
     font-size: 4rem;
     height: 2.6rem;
     line-height: 1;
-    color: #3f8be1;
+    color: var(--journey-highlight);
 }
 blockquote {
     margin: 0;
-    font-family: inherit;
+    font-family:
+        ui-rounded,
+        system-ui,
+        -apple-system,
+        "Segoe UI",
+        Arial,
+        sans-serif;
     font-size: clamp(1.65rem, 2.3vw, 2.9rem);
     line-height: 1.4;
-    font-weight: 750;
+    font-weight: 700;
     font-style: italic;
 }
 blockquote.quote-long {
@@ -610,13 +616,13 @@ blockquote.quote-long {
 .voice-attribution strong {
     font-size: 1.1rem;
     font-weight: 700;
-    color: #1454a4;
+    color: var(--journey-highlight);
 }
 .voice-attribution span {
     font-size: 1rem;
 }
 .voice-attribution small {
-    color: #48688e;
+    color: var(--journey-card-muted);
     font-size: 1rem;
     line-height: 1.35;
     max-width: 28rem;
@@ -652,19 +658,19 @@ blockquote.quote-long {
     height: 1em;
 }
 .voice-source:hover {
-    color: #216ec3;
+    color: var(--journey-highlight);
     opacity: 1;
 }
 .voice-flip:hover .voice-front,
 .voice-flip:focus-within .voice-front {
     box-shadow:
-        0 9px 0 #a8d9f9,
-        0 0 0 3px #a8d9f966;
+        0 9px 0 var(--journey-border),
+        0 0 0 3px color-mix(in srgb, var(--journey-border) 40%, transparent);
 }
 .voice-source:focus-visible,
 .flip-control:focus-visible,
 .portrait-choice:focus-visible {
-    outline: 3px solid #f363ab;
+    outline: 3px solid var(--journey-highlight);
     outline-offset: 5px;
 }
 .data-stat {
@@ -693,7 +699,7 @@ blockquote.quote-long {
     padding: 0.45rem 0.2rem;
     background: transparent;
     border: 0;
-    color: #e4f0fa;
+    color: var(--journey-text);
     font: inherit;
     font-size: 1rem;
     cursor: pointer;
@@ -765,10 +771,10 @@ blockquote.quote-long {
 }
 .guide-line strong {
     font-weight: 400;
-    color: #216ec3;
+    color: var(--journey-highlight);
 }
 .guide-line .lift-word {
-    color: #03316d;
+    color: var(--on-accent);
     background: var(--sun);
     box-decoration-break: clone;
     padding: 0 0.15em;
@@ -800,7 +806,7 @@ blockquote.quote-long {
     border: 0;
     padding: 0;
     background: transparent;
-    color: #e5f0fa;
+    color: var(--journey-text);
     font: inherit;
     width: clamp(145px, 17vw, 260px);
     cursor: pointer;
