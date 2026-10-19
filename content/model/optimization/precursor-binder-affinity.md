@@ -21,13 +21,13 @@ imageBackground: white
 
 ::
 
-We adapted a workflow following methods by [Benjamin Fry](https://www.nature.com/articles/s41586-026-10670-w#auth-Benjamin-Fry-Aff1-Aff2-Aff3) et al. (2026) to introduce mutations in small-molecule binders to improve affinity, using *LASErMPNN* :fn-ref{#7}.
+We adapted a workflow following methods by [Benjamin Fry et al. (2026)](https://www.nature.com/articles/s41586-026-10670-w) to introduce mutations in small-molecule binders to improve affinity, using *LASErMPNN* :fn-ref{#7}.
 
 ## Input Preparation
 
 Among precursor binders, BC7, BR8 and BR10 displayed reliable experimental reduction and were therefore selected for optimization. The predicted binder structures from *RoseTTAFold3* were used as the initial structures. The ligands were set in the NH₃⁺/COO⁻ state according to pKa and axillary pH :fn-ref{#24}.
 
-Following the paper’s *Amber14*/*SMIRNOFF* preparation :fn-ref{#7}, complexes underwent unrestrained *OpenMM* minimization. We specified *OpenFF* 2.3.0, pH 6 hydrogens, no added solvent and the default NoCutoff method.
+The system was prepared using *Amber14*/*SMIRNOFF* following the paper’s method :fn-ref{#7}, complexes underwent unrestrained *OpenMM* minimization. We used the *OpenFF* 2.3.0 forcefield and set up the system with pH 6 hydrogens, no added solvent; production MD was carried out with the default NoCutoff method.
 
 ## Neural Proofreading
 

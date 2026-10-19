@@ -81,7 +81,7 @@ label: "Characterize — Fig. 2"
 
 *S. hominis* is a Gram-positive bacterium surrounded by a thick peptidoglycan cell wall. A study of bacterial cell-wall permeability estimated that globular proteins of approximately 25 kDa or less can diffuse through the peptidoglycan meshwork :fn-ref{#19}.
 
-After generating testing rounds and inspecting their structures, we designed compact, predominantly α-helical binders of 80–120 amino acids. This size range is well below 25 kDa while structurally still providing sufficient surface area to engage and stabilize the IF extracellular face, thereby stabilizing the IF conformation.
+After generating testing rounds and inspecting their structures, we chose to design compact, predominantly α-helical binders of 80–120 amino acids. This size range is well below 25 kDa while structurally still providing sufficient surface area to engage and stabilize the IF extracellular face, thereby stabilizing the IF conformation.
 
 ## Design Requirements
 
@@ -91,4 +91,4 @@ Characterization of PepT<sub>Sh</sub> established three design constraints for s
 
 - **Interface:** focus binder generation on accessible extracellular regions associated with IF-specific structural features and the surrounding hydrophobic surface.
 
-- **Size:** restrict designs to compact 80–120-residue proteins to improve accessibility through the Gram-positive cell wall.
+- **Size:** limit designs to 80-120 amino acids to ensure penetration through the Gram-positive cell wall

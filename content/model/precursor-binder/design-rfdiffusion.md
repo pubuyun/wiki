@@ -60,7 +60,7 @@ To prioritize candidates with both favorable predicted binding performance and t
 
 ### Parameter
 
-The top 40 selected designs exhibited consistently favorable confidence and interface-quality metrics.
+the top 40 selected designs consistently exhibited favorable confidence and interface quality metrics
 
 :content-components-model-precursor-binder-binders-heat-map{binders="rosetta"}
 

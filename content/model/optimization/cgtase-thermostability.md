@@ -34,9 +34,6 @@ The design begins with PDB 1CXI :fn-ref{#29}. The following are excluded from mu
 
 - disulfide-forming cysteines;
 
-- positions 370 and 183.
-
-
 ## Single-Point Mutagenesis
 
 The remaining positions are screened with [*SPURS*](https://github.com/luo-group/SPURS) :fn-ref{#32} using the T370K and T370R/F183W mutated sequences and their predicted structures from *AlphaFold 3*. For each mutant, single mutations with ΔΔG below -0.5 kcal/mol are retained, as instructed in the paper.

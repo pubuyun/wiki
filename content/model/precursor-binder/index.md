@@ -5,7 +5,7 @@ hasReference: false
 order: 2
 ---
 
-Binder proteins can sequester Cys-Gly-3M3SH before uptake. After an interview with a model specialist to assess the plausibility of the approach, our primary objective was therefore to engineer a selective protein binder for Cys-Gly-3M3SH that could reduce its availability for bacterial uptake.
+Binder proteins can sequester Cys-Gly-3M3SH before uptake. After an interview with a model specialist proved the plausibility of our approach, we chose the design of a selective protein binder for Cys-Gly-3M3SH as our primary objective that could reduce its availability for bacterial uptake.
 
 ::content-components-lightbox-image
 ---
