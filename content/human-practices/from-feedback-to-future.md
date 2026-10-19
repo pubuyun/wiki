@@ -125,8 +125,6 @@ defaultLanguage: "en"
 ---
 ::
 
-*(english translation)*
-
 ## Society & Community:
 
 ::content-components-lightbox-panels

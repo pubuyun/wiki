@@ -47,7 +47,7 @@ const documentPage = computed(
         page.value,
 );
 
-// Keep the stakeholder graph at its Markdown marker while giving it the full shell width.
+// Extract the stakeholder graph and timeline to show them before the document.
 const humanPracticesOverview = computed(() => {
     if (slug.value !== "human-practices" || !page.value) return null;
     const body = numberDocumentFigures(page.value.body) as {
@@ -69,7 +69,7 @@ const humanPracticesOverview = computed(() => {
     });
     return {
         main: withNodes(nodes.slice(0, index)),
-        remainder: withNodes(nodes.slice(index + 1)),
+        timeline: withNodes(nodes.slice(index + 1)),
     };
 });
 
@@ -133,6 +133,16 @@ useSeoMeta({
         <div
             class="category-content-shell content-reading-container flex min-w-0 flex-col"
         >
+            <template v-if="humanPracticesOverview">
+                <StakeholdersGraph class="my-8" />
+                <ContentDocument
+                    :page="humanPracticesOverview.timeline"
+                    :navigation-pages="pages"
+                    :show-header="false"
+                    :number-figures="false"
+                    :heading-level="2"
+                />
+            </template>
             <div
                 v-if="page"
                 class="category-overview-layout content-reading-layout"
@@ -156,16 +166,6 @@ useSeoMeta({
                     <ContentBar :toc="tocLinks" />
                 </aside>
             </div>
-            <template v-if="humanPracticesOverview">
-                <StakeholdersGraph class="my-8" />
-                <ContentDocument
-                    :page="humanPracticesOverview.remainder"
-                    :navigation-pages="pages"
-                    :show-header="false"
-                    :number-figures="false"
-                    :heading-level="2"
-                />
-            </template>
             <CategoryExplore
                 v-if="children.length > 1"
                 :pages="children"
