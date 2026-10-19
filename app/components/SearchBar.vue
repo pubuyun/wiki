@@ -127,12 +127,7 @@
                                             <NuxtLink
                                                 :to="documentGroup.key"
                                                 class="site-search-result group flex min-h-12 min-w-0 items-center gap-2 rounded border border-transparent bg-secondary px-3 py-2 text-on-secondary transition-colors duration-150 hover:bg-accent hover:text-on-accent focus-visible:bg-accent focus-visible:text-on-accent focus-visible:outline-3 focus-visible:outline-on-accent"
-                                                @click="
-                                                    handleDocumentClick(
-                                                        $event,
-                                                        documentGroup.key,
-                                                    )
-                                                "
+                                                @click="closeSearch"
                                             >
                                                 <Icon
                                                     icon="lucide:file-text"
@@ -163,12 +158,7 @@
                                                     <NuxtLink
                                                         :to="link.id"
                                                         class="site-search-result group flex min-w-0 items-center gap-2 rounded border border-transparent bg-secondary px-3 py-2 text-on-secondary transition-colors duration-150 hover:bg-accent hover:text-on-accent focus-visible:bg-accent focus-visible:text-on-accent focus-visible:outline-3 focus-visible:outline-on-accent"
-                                                        @click="
-                                                            handleResultClick(
-                                                                $event,
-                                                                link,
-                                                            )
-                                                        "
+                                                        @click="closeSearch"
                                                     >
                                                         <svg
                                                             class="ml-5 h-9 w-5 shrink-0 text-on-secondary/80 group-hover:text-on-accent group-focus-visible:text-on-accent sm:ml-7"
@@ -308,7 +298,6 @@ const props = defineProps({
 const searchId = `site-search-${useId()}`;
 const isSearchOpen = ref(false);
 const searchInput = ref(null);
-const { scrollToHash } = useHashScroll();
 
 const query = ref("");
 const result = ref([]);
@@ -487,13 +476,10 @@ function groupSearchResults(links) {
     const categoryLookup = new Map();
 
     for (const link of links) {
-        const target = parseSearchTarget(link.id);
-        if (!target) continue;
+        const path = searchDocumentPath(link.id);
+        if (!path) continue;
 
-        const pathSegments = target.pathWithQuery
-            .split("?")[0]
-            .split("/")
-            .filter(Boolean);
+        const pathSegments = path.split("/").filter(Boolean);
         const categorySlug = pathSegments[0] ?? "";
         const categoryPath = categorySlug ? `/${categorySlug}` : "/";
         const categoryKey = categoryPath;
@@ -560,60 +546,18 @@ function safeDecode(value) {
     }
 }
 
-async function handleResultClick(event, link) {
-    const target = parseSearchTarget(link.id);
-    if (!target) return;
-
-    event.preventDefault();
-    closeSearch();
-
-    await navigateTo(target.fullPath);
-    if (!target.hash) return;
-
-    await scrollToSearchTarget(event, target.hash);
-}
-
-async function handleDocumentClick(event, path) {
-    event.preventDefault();
-    closeSearch();
-
-    await navigateTo(path);
-}
-
 function closeSearch() {
     query.value = "";
     isSearchOpen.value = false;
 }
 
-function parseSearchTarget(id) {
-    if (!id) return null;
+function searchDocumentPath(id) {
+    if (!id) return "";
 
     try {
-        const url = new URL(id, window.location.href);
-        return {
-            fullPath: `${url.pathname}${url.search}${url.hash}`,
-            pathWithQuery: `${url.pathname}${url.search}`,
-            hash: url.hash ? safeDecode(url.hash.slice(1)) : "",
-        };
+        return new URL(id, window.location.href).pathname;
     } catch {
-        const [pathWithQuery, hash = ""] = id.split("#");
-        return {
-            fullPath: id,
-            pathWithQuery,
-            hash: safeDecode(hash),
-        };
-    }
-}
-
-async function scrollToSearchTarget(event, hash) {
-    for (let attempt = 0; attempt < 10; attempt += 1) {
-        await nextTick();
-
-        if (scrollToHash(event, hash)) {
-            return;
-        }
-
-        await new Promise((resolve) => window.setTimeout(resolve, 50));
+        return id.split(/[?#]/)[0];
     }
 }
 

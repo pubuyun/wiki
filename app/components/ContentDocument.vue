@@ -1,5 +1,6 @@
 <script setup>
 import { contentTocLinks, isCollapsibleParagraph } from "~/utils/content-toc";
+import { numberDocumentFigures } from "~/utils/document-figures";
 import katexMainFont from "katex/dist/fonts/KaTeX_Main-Regular.woff2?url";
 import katexMathFont from "katex/dist/fonts/KaTeX_Math-Italic.woff2?url";
 import katexSizeFont from "katex/dist/fonts/KaTeX_Size2-Regular.woff2?url";
@@ -53,8 +54,11 @@ useHead(() => ({
 }));
 
 const tocLinks = computed(() => contentTocLinks(page.value.body));
+const numberedBody = computed(() =>
+    numberDocumentFigures(page.value.body ?? {}),
+);
 const sections = computed(() => {
-    const children = bodyChildren(page.value.body);
+    const children = bodyChildren(numberedBody.value);
     const result = [];
     let currentSection = null;
 

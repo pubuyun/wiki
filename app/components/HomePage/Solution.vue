@@ -21,6 +21,8 @@ const props = withDefaults(defineProps<{ embedded?: boolean }>(), {
     embedded: false,
 });
 
+const outroBlend = ref<HTMLElement>();
+
 const emit = defineEmits<{
     timelineReady: [
         payload: {
@@ -410,6 +412,7 @@ onMounted(() => {
 
     if (
         !scene.value ||
+        !outroBlend.value ||
         !wheelAnchor.value ||
         !wheelScaler.value ||
         !wheelRotor.value ||
@@ -603,6 +606,7 @@ onMounted(() => {
                 },
             );
             gsap.set(attachedPlug.value, { autoAlpha: 0 });
+            gsap.set(outroBlend.value!, { autoAlpha: 0 });
 
             transporterRefs.value.forEach((transporter) => {
                 transporter?.getTimeline()?.pause(0);
@@ -985,7 +989,17 @@ onMounted(() => {
                 .addLabel("solution3", "solution3Handoff+=0.35")
                 .addLabel(HOME_CHAPTERS.cgtase, "solution3");
 
-            master.to(scene.value, { duration: reduceMotion ? 0.8 : 0.7 });
+            // Keep the final reading pause, softening the cropped membrane only
+            // at the end so the earlier solution scenes stay crisp.
+            master.to(scene.value, { duration: reduceMotion ? 0.8 : 0.7 }).to(
+                outroBlend.value!,
+                {
+                    autoAlpha: 1,
+                    duration: reduceMotion ? 0.01 : 0.7,
+                    ease: "sine.inOut",
+                },
+                "<",
+            );
 
             if (props.embedded) {
                 emit("timelineReady", {
@@ -1228,6 +1242,12 @@ onUnmounted(() => {
             }"
         />
 
+        <div
+            ref="outroBlend"
+            class="solution-scene__outro-blend"
+            aria-hidden="true"
+        />
+
         <p class="sr-only">
             Three approaches prevent the odor precursor from entering the
             bacterial transporter: capturing it with a precursor binder,
@@ -1245,7 +1265,27 @@ onUnmounted(() => {
             rgb(48 116 190 / 34%),
             transparent 28%
         ),
-        linear-gradient(180deg, #07366f 0%, #06326b 100%);
+        #07366f;
+}
+
+.solution-scene__outro-blend {
+    position: absolute;
+    z-index: 40;
+    right: 0;
+    bottom: -1px;
+    left: 0;
+    height: 38%;
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+    background: linear-gradient(
+        to bottom,
+        rgb(7 54 111 / 0%) 0%,
+        rgb(7 54 111 / 18%) 24%,
+        rgb(7 54 111 / 64%) 52%,
+        rgb(7 54 111 / 94%) 78%,
+        #07366f 100%
+    );
 }
 
 .solution-wheel__ring {

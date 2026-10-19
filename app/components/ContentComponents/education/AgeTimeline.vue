@@ -70,94 +70,99 @@ function toggleGroup(id: string) {
         tabindex="0"
         @keydown.esc="clearSelection"
     >
-        <div class="age-timeline__board">
-            <svg
-                class="age-timeline__connections"
-                viewBox="0 0 1040 590"
-                aria-hidden="true"
-            >
-                <path
-                    v-for="connection in connections"
-                    :key="connection.id"
-                    :d="connection.path"
-                    :stroke="groupFor(activeGroup!).color"
+        <h2 class="age-timeline__title">Activities and Related Age Groups</h2>
+        <div class="age-timeline__viewport">
+            <div class="age-timeline__board">
+                <svg
+                    class="age-timeline__connections"
+                    viewBox="0 0 1040 590"
+                    aria-hidden="true"
+                >
+                    <path
+                        v-for="connection in connections"
+                        :key="connection.id"
+                        :d="connection.path"
+                        :stroke="groupFor(activeGroup!).color"
+                        :class="[
+                            'age-timeline__connection',
+                            connection.dashed
+                                ? 'age-timeline__connection--dashed'
+                                : 'age-timeline__connection--solid',
+                        ]"
+                    />
+                    <path
+                        class="age-timeline__arrow"
+                        d="M 8 463 H 1030 M 1016 449 L 1032 463 L 1016 477"
+                    />
+                </svg>
+
+                <component
+                    :is="activity.href ? NuxtLink : 'span'"
+                    v-for="activity in activities"
+                    :key="activity.id"
+                    :to="activity.href || undefined"
+                    class="age-timeline__activity"
+                    :class="{
+                        'is-solid-connected': solidConnected(activity),
+                        'is-dashed-connected': dashedConnected(activity),
+                        'is-muted': activeGroup && !connected(activity),
+                    }"
+                    :style="{
+                        left: `${activity.x / 10.4}%`,
+                        top: `${activity.y / 5.9}%`,
+                        width: `${activity.width / 10.4}%`,
+                        minHeight: `${activity.height / 5.9}%`,
+                        '--activity-color': activityColor(activity),
+                    }"
+                >
+                    <span
+                        v-for="(line, index) in activity.label"
+                        :key="index"
+                        >{{ line }}</span
+                    >
+                </component>
+
+                <button
+                    v-for="group in groups"
+                    :key="group.id"
+                    type="button"
+                    class="age-timeline__group"
                     :class="[
-                        'age-timeline__connection',
-                        connection.dashed
-                            ? 'age-timeline__connection--dashed'
-                            : 'age-timeline__connection--solid',
+                        `age-timeline__group--${group.id}`,
+                        { 'is-active': activeGroup === group.id },
                     ]"
-                />
-                <path
-                    class="age-timeline__arrow"
-                    d="M 8 463 H 1030 M 1016 449 L 1032 463 L 1016 477"
-                />
-            </svg>
-
-            <component
-                :is="activity.href ? NuxtLink : 'span'"
-                v-for="activity in activities"
-                :key="activity.id"
-                :to="activity.href || undefined"
-                class="age-timeline__activity"
-                :class="{
-                    'is-solid-connected': solidConnected(activity),
-                    'is-dashed-connected': dashedConnected(activity),
-                    'is-muted': activeGroup && !connected(activity),
-                }"
-                :style="{
-                    left: `${activity.x / 10.4}%`,
-                    top: `${activity.y / 5.9}%`,
-                    width: `${activity.width / 10.4}%`,
-                    minHeight: `${activity.height / 5.9}%`,
-                    '--activity-color': activityColor(activity),
-                }"
-            >
-                <span v-for="(line, index) in activity.label" :key="index">{{
-                    line
-                }}</span>
-            </component>
-
-            <button
-                v-for="group in groups"
-                :key="group.id"
-                type="button"
-                class="age-timeline__group"
-                :class="[
-                    `age-timeline__group--${group.id}`,
-                    { 'is-active': activeGroup === group.id },
-                ]"
-                :style="{
-                    left: `${group.x / 10.4}%`,
-                    width: `${group.width / 10.4}%`,
-                    '--group-color': group.color,
-                }"
-                :aria-label="group.label.join(' ')"
-                :aria-pressed="selectedGroup === group.id"
-                @mouseenter="hoveredGroup = group.id"
-                @mouseleave="hoveredGroup = null"
-                @focus="focusedGroup = group.id"
-                @blur="focusedGroup = null"
-                @click="toggleGroup(group.id)"
-            >
-                <span v-for="(line, index) in group.label" :key="index">{{
-                    line
-                }}</span>
-            </button>
-            <p
-                class="age-timeline__sr-only"
-                aria-live="polite"
-                aria-atomic="true"
-            >
-                {{
-                    activeGroup
-                        ? `${groupFor(activeGroup).label.join(" ")}: ${activities
-                              .filter(connected)
-                              .map((activity) => activity.label.join(" "))
-                              .join("; ")}.`
-                        : ""
-                }}
-            </p>
+                    :style="{
+                        left: `${group.x / 10.4}%`,
+                        width: `${group.width / 10.4}%`,
+                        '--group-color': group.color,
+                    }"
+                    :aria-label="group.label.join(' ')"
+                    :aria-pressed="selectedGroup === group.id"
+                    @mouseenter="hoveredGroup = group.id"
+                    @mouseleave="hoveredGroup = null"
+                    @focus="focusedGroup = group.id"
+                    @blur="focusedGroup = null"
+                    @click="toggleGroup(group.id)"
+                >
+                    <span v-for="(line, index) in group.label" :key="index">{{
+                        line
+                    }}</span>
+                </button>
+                <p
+                    class="age-timeline__sr-only"
+                    aria-live="polite"
+                    aria-atomic="true"
+                >
+                    {{
+                        activeGroup
+                            ? `${groupFor(activeGroup).label.join(" ")}: ${activities
+                                  .filter(connected)
+                                  .map((activity) => activity.label.join(" "))
+                                  .join("; ")}.`
+                            : ""
+                    }}
+                </p>
+            </div>
         </div>
         <div class="age-timeline__legend" aria-label="Connection legend">
             <span class="age-timeline__legend-item">
@@ -180,22 +185,42 @@ function toggleGroup(id: string) {
 
 <style scoped>
 .age-timeline {
+    display: grid;
+    grid-template-rows: auto minmax(0, 1fr) auto;
+    box-sizing: border-box;
+    height: calc(100dvh - var(--category-header-height, 3rem) - 2rem);
     max-width: 100%;
-    overflow-x: auto;
-    overscroll-behavior-x: contain;
-    scrollbar-width: thin;
-    scrollbar-color: var(--primary) transparent;
     border-radius: 1.25rem;
     background: var(--surface);
     margin-block: 1rem;
     padding: 0.75rem 0.25rem;
     font-family: var(--font-belanosima);
 }
+.age-timeline__title {
+    margin: 0 0 1rem;
+    padding-inline: 0.75rem;
+    color: var(--on-surface);
+    font-size: clamp(1.25rem, 2.5vw, 2rem);
+    font-weight: 400;
+    line-height: 1.2;
+    text-align: center;
+}
+.age-timeline__viewport {
+    min-height: 0;
+    min-width: 0;
+    container-type: size;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scrollbar-width: thin;
+    scrollbar-color: var(--primary) transparent;
+}
 .age-timeline__board {
     position: relative;
     isolation: isolate;
     container-type: inline-size;
-    min-width: 46rem;
+    width: min(100%, calc(100cqh * 1040 / 590));
+    min-width: min(46rem, calc(100cqh * 1040 / 590));
+    margin-inline: auto;
     aspect-ratio: 1040 / 590;
 }
 .age-timeline__connections {

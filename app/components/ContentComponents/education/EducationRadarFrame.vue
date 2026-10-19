@@ -57,7 +57,7 @@ const darkMode = useState<boolean>("dark-mode", () => true);
 }
 .radar-plot {
     position: relative;
-    height: clamp(25rem, 90cqi, 37rem);
+    height: clamp(21.25rem, 76.5cqi, 31.45rem);
     max-width: 48rem;
     margin-inline: auto;
 }

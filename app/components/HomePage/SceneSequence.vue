@@ -39,6 +39,7 @@ const emit = defineEmits<{
     sceneLoaded: [sceneIndex: number];
 }>();
 
+const route = useRoute();
 const navigation = import.meta.client
     ? (window.performance.getEntriesByType("navigation")[0] as
           PerformanceNavigationTiming | undefined)
@@ -129,9 +130,7 @@ function scrollToHashScene(sceneIndex: number) {
 
     void nextTick(() => {
         const hash = decodeURIComponent(window.location.hash.slice(1));
-        document
-            .getElementById(hash || props.scenes[sceneIndex]?.id || "")
-            ?.scrollIntoView();
+        if (hash) document.getElementById(hash)?.scrollIntoView();
     });
 }
 
@@ -258,12 +257,13 @@ function handleHashChange() {
     }
 }
 
+watch(() => route.hash, handleHashChange);
+
 onMounted(() => {
     if (restoreThroughIndex >= 0) preloadThrough(restoreThroughIndex);
     else if (canPredictivelyPreload()) preloadScene(0);
 
     handleHashChange();
-    window.addEventListener("hashchange", handleHashChange);
     window.addEventListener("pagehide", saveHomeScroll);
     window.addEventListener("beforeunload", saveHomeScroll);
 
@@ -274,7 +274,6 @@ onMounted(() => {
 });
 
 onBeforeUnmount(() => {
-    window.removeEventListener("hashchange", handleHashChange);
     window.removeEventListener("pagehide", saveHomeScroll);
     window.removeEventListener("beforeunload", saveHomeScroll);
     sceneLoadWaiters.forEach((waiters) =>

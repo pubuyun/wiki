@@ -1,28 +1,13 @@
 <script setup lang="ts">
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { inject, onBeforeUnmount, onMounted, ref } from "vue";
-
-import {
-    HOME_CHAPTERS,
-    homeChapterActivationLabel,
-} from "~/utils/home-chapters";
-import {
-    HOME_SCROLL_LOCK_CHANGE,
-    HOME_SCROLL_REFRESH_END,
-    HOME_SCROLL_REFRESH_START,
-    HOME_SCROLL_RESTORE_END,
-    type HomeScrollLockChange,
-} from "~/utils/home-scroll-events";
-import { isHomeScrollRestoring } from "~/utils/home-scroll";
-import { HOME_SCROLL_CONTROLLER } from "~/utils/home-scroll-controller";
+import { onBeforeUnmount, ref } from "vue";
 
 import MoreAboutUs from "./MoreAboutUs.vue";
 import Product from "./Product.vue";
 import ProductIntro from "./ProductIntro.vue";
 import ProductWaveTransition from "./ProductWaveTransition.vue";
 import Solution from "./Solution.vue";
-import SolutionSmokeTransition from "./SolutionSmokeTransition.vue";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -121,18 +106,6 @@ const WAVE_EXIT_LAYERS = [
     },
 ] as const;
 
-const SOLUTION_MORE_AUTOMATIC_DURATION = 3.7;
-const MORE_ABOUT_US_REVERSE_BUFFER_VIEWPORT_RATIO = 0.65;
-const TRANSITION_SCROLL_KEYS = new Set([
-    "ArrowDown",
-    "ArrowUp",
-    "End",
-    "Home",
-    "PageDown",
-    "PageUp",
-    " ",
-]);
-
 type ProductTimelinePayload = {
     timeline: gsap.core.Timeline;
     scene: HTMLElement;
@@ -153,35 +126,16 @@ type SolutionTimelinePayload = {
 };
 
 type ProductIntroTimelinePayload = SolutionTimelinePayload;
-type MoreAboutUsTimelinePayload = SolutionTimelinePayload;
 
 const sequence = ref<HTMLElement | null>(null);
 const productIntroLayer = ref<HTMLElement | null>(null);
 const waveTransition = ref<HTMLElement | null>(null);
-const smokeTransition = ref<HTMLElement | null>(null);
 
 let productPayload: ProductTimelinePayload | undefined;
 let productIntroPayload: ProductIntroTimelinePayload | undefined;
 let solutionPayload: SolutionTimelinePayload | undefined;
-let moreAboutUsPayload: MoreAboutUsTimelinePayload | undefined;
 let master: gsap.core.Timeline | undefined;
-let automaticSolutionMore: gsap.core.Timeline | undefined;
-let homeFooter: HTMLElement | undefined;
-let homeFooterWave: HTMLElement | undefined;
 let buildFrame = 0;
-let resizeResumeFrame = 0;
-let restoreResumeFrame = 0;
-let scrollLocked = false;
-let lockedScrollY = 0;
-let downwardScrollInput = false;
-let touchScrollY: number | undefined;
-// This phase is the single authority for both the automatic timeline and scroll handoff.
-type SolutionMorePhase = "solution" | "revealing" | "more" | "hiding";
-let solutionMorePhase: SolutionMorePhase = "solution";
-let isLayoutRefreshing = false;
-let interruptedTransition:
-    { progress: number; phase: "revealing" | "hiding" } | undefined;
-const scrollController = inject(HOME_SCROLL_CONTROLLER, null);
 
 function handleProductReady(payload: ProductTimelinePayload) {
     productPayload = payload;
@@ -195,11 +149,6 @@ function handleProductIntroReady(payload: ProductIntroTimelinePayload) {
 
 function handleSolutionReady(payload: SolutionTimelinePayload) {
     solutionPayload = payload;
-    scheduleBuild();
-}
-
-function handleMoreAboutUsReady(payload: MoreAboutUsTimelinePayload) {
-    moreAboutUsPayload = payload;
     scheduleBuild();
 }
 
@@ -228,264 +177,14 @@ function promoteChapterLabels(
     });
 }
 
-function handleWheelIntent(event: WheelEvent) {
-    if (event.ctrlKey || !event.deltaY) return;
-    downwardScrollInput = event.deltaY > 0;
-}
-
-function resetScrollIntent() {
-    downwardScrollInput = false;
-}
-
-function handleTouchStart(event: TouchEvent) {
-    resetScrollIntent();
-    touchScrollY = event.touches[0]?.clientY;
-}
-
-function handleTouchMove(event: TouchEvent) {
-    const nextY = event.touches[0]?.clientY;
-    if (nextY === undefined) return;
-    if (touchScrollY !== undefined && nextY !== touchScrollY) {
-        downwardScrollInput = nextY < touchScrollY;
-    }
-    touchScrollY = nextY;
-}
-
-function handleScrollKeyIntent(event: KeyboardEvent) {
-    if (!TRANSITION_SCROLL_KEYS.has(event.key)) return;
-    const target = event.target as HTMLElement | null;
-    if (target?.closest("input, textarea, select, [contenteditable='true']")) {
-        return;
-    }
-    downwardScrollInput =
-        event.key === "ArrowDown" ||
-        event.key === "PageDown" ||
-        event.key === "End" ||
-        (event.key === " " && !event.shiftKey);
-}
-
-function preventTransitionScroll(event: Event) {
-    event.preventDefault();
-    event.stopImmediatePropagation();
-}
-
-function preventTransitionScrollKey(event: KeyboardEvent) {
-    if (!TRANSITION_SCROLL_KEYS.has(event.key)) return;
-    const target = event.target as HTMLElement | null;
-    if (target?.closest("input, textarea, select, [contenteditable='true']")) {
-        return;
-    }
-    event.preventDefault();
-    event.stopImmediatePropagation();
-}
-
-function clampTransitionScroll() {
-    if (scrollLocked && Math.abs(window.scrollY - lockedScrollY) > 1) {
-        if (scrollController) scrollController.jumpTo(lockedScrollY);
-        else window.scrollTo(0, lockedScrollY);
-    }
-}
-
-function dispatchScrollLockChange(detail: HomeScrollLockChange) {
-    window.dispatchEvent(
-        new CustomEvent<HomeScrollLockChange>(HOME_SCROLL_LOCK_CHANGE, {
-            detail,
-        }),
-    );
-}
-
-function lockTransitionScroll(position: number, direction: "up" | "down") {
-    lockedScrollY = position;
-    if (scrollLocked) return;
-
-    scrollController?.cancel();
-    scrollLocked = true;
-    dispatchScrollLockChange({ locked: true, direction });
-    window.addEventListener("wheel", preventTransitionScroll, {
-        passive: false,
-        capture: true,
-    });
-    window.addEventListener("touchmove", preventTransitionScroll, {
-        passive: false,
-        capture: true,
-    });
-    window.addEventListener("keydown", preventTransitionScrollKey, true);
-    window.addEventListener("scroll", clampTransitionScroll, {
-        passive: true,
-    });
-}
-
-function moveTransitionScroll(position: number) {
-    const maxScroll = Math.max(
-        document.documentElement.scrollHeight - window.innerHeight,
-        0,
-    );
-    const clampedPosition = gsap.utils.clamp(0, maxScroll, position);
-
-    lockedScrollY = clampedPosition;
-    if (scrollController) scrollController.jumpTo(clampedPosition);
-    else window.scrollTo(0, clampedPosition);
-    ScrollTrigger.update();
-}
-
-function unlockTransitionScroll() {
-    if (!scrollLocked) return;
-
-    scrollLocked = false;
-    dispatchScrollLockChange({ locked: false });
-    window.removeEventListener("wheel", preventTransitionScroll, true);
-    window.removeEventListener("touchmove", preventTransitionScroll, true);
-    window.removeEventListener("keydown", preventTransitionScrollKey, true);
-    window.removeEventListener("scroll", clampTransitionScroll);
-}
-
-function resetHomeFooter() {
-    if (!homeFooter) return;
-
-    gsap.set(homeFooter, {
-        clearProps: "transform,opacity,visibility,willChange",
-    });
-    homeFooter = undefined;
-    homeFooterWave = undefined;
-}
-
-function homeFooterRevealOffset() {
-    if (!homeFooter || !homeFooterWave) return 0;
-
-    const renderedY = Number(gsap.getProperty(homeFooter, "y")) || 0;
-    const naturalTop = homeFooter.getBoundingClientRect().top - renderedY;
-    const revealTop = window.innerHeight - homeFooterWave.offsetHeight;
-
-    return Math.min(0, revealTop - naturalTop);
-}
-
-function pinHomeFooterWaveToViewport() {
-    if (!homeFooter) return;
-
-    gsap.set(homeFooter, {
-        autoAlpha: 1,
-        y: homeFooterRevealOffset(),
-    });
-}
-
-function handoffHomeFooterToDocument() {
-    if (!homeFooter || !homeFooterWave) return false;
-
-    gsap.set(homeFooter, { autoAlpha: 1, y: 0 });
-    const naturalTop = homeFooter.getBoundingClientRect().top;
-    const revealTop = window.innerHeight - homeFooterWave.offsetHeight;
-    const footerDocumentTop = window.scrollY + naturalTop;
-
-    moveTransitionScroll(footerDocumentTop - revealTop);
-    return true;
-}
-
-function solutionMoreAnchor(target: "solution" | "more") {
-    const trigger = master?.scrollTrigger;
-    const threshold = master?.labels.solutionSmokeThreshold;
-    if (!trigger || typeof threshold !== "number" || !master) {
-        return window.scrollY;
-    }
-
-    const thresholdProgress = threshold / Math.max(master.duration(), 0.001);
-    const thresholdScroll =
-        trigger.start + thresholdProgress * (trigger.end - trigger.start);
-    return thresholdScroll + (target === "more" ? 1 : -1);
-}
-
-function syncTransitionToRestoredScroll() {
-    if (!master || !automaticSolutionMore) return;
-
-    const threshold = master.labels.solutionSmokeThreshold;
-    const revealed =
-        typeof threshold === "number" && master.time() >= threshold;
-
-    solutionMorePhase = revealed ? "more" : "solution";
-    automaticSolutionMore
-        .pause()
-        .invalidate()
-        .progress(revealed ? 1 : 0, true)
-        .pause();
-    if (revealed) {
-        const footerIsInDocumentFlow =
-            !!master.scrollTrigger &&
-            window.scrollY >= master.scrollTrigger.end - 1;
-        if (footerIsInDocumentFlow) {
-            gsap.set(homeFooter, { autoAlpha: 1, y: 0 });
-        } else {
-            pinHomeFooterWaveToViewport();
-        }
-    }
-    unlockTransitionScroll();
-}
-
-function handleScrollRestoreEnd() {
-    cancelAnimationFrame(restoreResumeFrame);
-    restoreResumeFrame = requestAnimationFrame(() => {
-        if (isHomeScrollRestoring() || interruptedTransition) return;
-        syncTransitionToRestoredScroll();
-    });
-}
-
-function handleLayoutRefreshStart() {
-    isLayoutRefreshing = true;
-    cancelAnimationFrame(resizeResumeFrame);
-
-    if (
-        scrollLocked &&
-        automaticSolutionMore &&
-        (solutionMorePhase === "revealing" || solutionMorePhase === "hiding")
-    ) {
-        interruptedTransition = {
-            progress: automaticSolutionMore.progress(),
-            phase: solutionMorePhase,
-        };
-        automaticSolutionMore.pause();
-        unlockTransitionScroll();
-    }
-}
-
-function handleLayoutRefreshEnd() {
-    cancelAnimationFrame(resizeResumeFrame);
-    resizeResumeFrame = requestAnimationFrame(() => {
-        resizeResumeFrame = requestAnimationFrame(() => {
-            const transition = interruptedTransition;
-            interruptedTransition = undefined;
-            isLayoutRefreshing = false;
-
-            if (!transition || !automaticSolutionMore) return;
-
-            solutionMorePhase = transition.phase;
-            automaticSolutionMore
-                .pause()
-                .progress(0, true)
-                .invalidate()
-                .progress(transition.progress, true)
-                .pause();
-            const target =
-                transition.phase === "revealing" ? "more" : "solution";
-            const anchor = solutionMoreAnchor(target);
-            lockTransitionScroll(anchor, target === "more" ? "down" : "up");
-            moveTransitionScroll(anchor);
-            if (transition.phase === "hiding") {
-                automaticSolutionMore.reverse();
-            } else {
-                automaticSolutionMore.play();
-            }
-        });
-    });
-}
-
 function buildSequence() {
     if (
         !sequence.value ||
         !productIntroLayer.value ||
         !waveTransition.value ||
-        !smokeTransition.value ||
         !productPayload ||
         !productIntroPayload ||
-        !solutionPayload ||
-        !moreAboutUsPayload
+        !solutionPayload
     ) {
         return;
     }
@@ -493,16 +192,6 @@ function buildSequence() {
     const product = productPayload;
     const productIntro = productIntroPayload;
     const solution = solutionPayload;
-    const moreAboutUs = moreAboutUsPayload;
-    const footer = document.querySelector<HTMLElement>("[data-home-footer]");
-    const footerWave = footer?.querySelector<HTMLElement>(
-        "[data-home-footer-wave]",
-    );
-    const smokeClouds = Array.from(
-        smokeTransition.value.querySelectorAll<SVGGElement>(
-            "[data-solution-smoke-cloud]",
-        ),
-    );
     const waveMasks = WAVE_REVEAL_LAYERS.map((layer) => {
         const exitLayer = WAVE_EXIT_LAYERS.find(({ id }) => id === layer.id)!;
 
@@ -542,9 +231,6 @@ function buildSequence() {
             [solid, edge, exitEdge].some((element) => !element),
         ) ||
         !productBackground ||
-        !footer ||
-        !footerWave ||
-        smokeClouds.length !== 2 ||
         solutionMarkers.length !== 3 ||
         solutionLabels.length !== 3 ||
         solutionPaintTargets.some((targets) => targets.length !== 3)
@@ -554,16 +240,10 @@ function buildSequence() {
     }
 
     ScrollTrigger.getById("product-solution-story")?.kill(true);
-    unlockTransitionScroll();
-    automaticSolutionMore?.kill();
-    resetHomeFooter();
-    homeFooter = footer;
-    homeFooterWave = footerWave;
     master?.kill();
     detachTimeline(productIntro.timeline);
     detachTimeline(product.timeline);
     detachTimeline(solution.timeline);
-    detachTimeline(moreAboutUs.timeline);
 
     const reduceMotion = window.matchMedia(
         "(prefers-reduced-motion: reduce)",
@@ -621,12 +301,9 @@ function buildSequence() {
     }));
 
     gsap.set(product.scene, { autoAlpha: 1, zIndex: 2 });
-    gsap.set(moreAboutUs.scene, { autoAlpha: 1, zIndex: 0 });
     gsap.set(solution.scene, {
         autoAlpha: 1,
         zIndex: 1,
-        clipPath: "inset(0% 0% 0% 0%)",
-        WebkitClipPath: "inset(0% 0% 0% 0%)",
     });
     gsap.set(productBackground, { autoAlpha: 1 });
     gsap.set(productIntroLayer.value, { autoAlpha: 1 });
@@ -636,24 +313,6 @@ function buildSequence() {
         yPercent: 0,
         zIndex: 4,
         force3D: true,
-    });
-    gsap.set(smokeTransition.value, {
-        autoAlpha: 1,
-        yPercent: 118,
-        zIndex: 4,
-        force3D: true,
-    });
-    gsap.set(smokeClouds, {
-        x: 0,
-        scale: reduceMotion ? 1 : 0.92,
-        transformOrigin: "50% 100%",
-        force3D: true,
-    });
-    gsap.set(homeFooter, {
-        autoAlpha: 0,
-        y: 0,
-        force3D: true,
-        willChange: "transform",
     });
     waveMasks.forEach(({ solid, edge, exitEdge }) => {
         gsap.set(solid!, {
@@ -693,49 +352,8 @@ function buildSequence() {
     productIntro.timeline.paused(false);
     product.timeline.paused(false);
     solution.timeline.paused(false);
-    moreAboutUs.timeline.pause(0);
 
-    let timeline: gsap.core.Timeline;
-    const moveToLabel = (label: string) => {
-        const trigger = timeline.scrollTrigger;
-        const labelTime = timeline.labels[label];
-        if (!trigger || typeof labelTime !== "number") return;
-
-        const progress = labelTime / Math.max(timeline.duration(), 0.001);
-        moveTransitionScroll(
-            trigger.start + progress * (trigger.end - trigger.start),
-        );
-        timeline.time(labelTime, true);
-    };
-    const startAutomaticTransition = (target: "solution" | "more") => {
-        if (
-            isLayoutRefreshing ||
-            isHomeScrollRestoring() ||
-            !automaticSolutionMore
-        ) {
-            return;
-        }
-
-        if (target === "more") {
-            if (solutionMorePhase !== "solution") return;
-            solutionMorePhase = "revealing";
-        } else {
-            if (solutionMorePhase !== "more") return;
-            solutionMorePhase = "hiding";
-        }
-
-        const anchor = solutionMoreAnchor(target);
-        lockTransitionScroll(anchor, target === "more" ? "down" : "up");
-        moveTransitionScroll(anchor);
-        if (target === "more") {
-            automaticSolutionMore.invalidate().play();
-        } else {
-            pinHomeFooterWaveToViewport();
-            automaticSolutionMore.reverse();
-        }
-    };
-
-    timeline = gsap.timeline({
+    master = gsap.timeline({
         defaults: { ease: "none" },
         scrollTrigger: {
             id: "product-solution-story",
@@ -748,53 +366,8 @@ function buildSequence() {
             pinSpacing: true,
             anticipatePin: 1,
             invalidateOnRefresh: true,
-            onUpdate: (self) => {
-                if (
-                    solutionMorePhase === "revealing" ||
-                    solutionMorePhase === "hiding"
-                ) {
-                    return;
-                }
-
-                if (solutionMorePhase === "more") {
-                    const reverseBoundary = Math.max(
-                        self.start,
-                        self.end -
-                            window.innerHeight *
-                                MORE_ABOUT_US_REVERSE_BUFFER_VIEWPORT_RATIO,
-                    );
-
-                    // The footer has returned to document flow, so counter its
-                    // movement until the user intentionally leaves this scene.
-                    pinHomeFooterWaveToViewport();
-                    if (
-                        // Clamping/smooth-scroll corrections can move upward
-                        // even while the user is still scrolling down.
-                        !downwardScrollInput &&
-                        self.direction < 0 &&
-                        self.scroll() <= reverseBoundary
-                    ) {
-                        startAutomaticTransition("solution");
-                    }
-                    return;
-                }
-
-                const threshold = timeline.labels.solutionSmokeThreshold;
-                const thresholdProgress =
-                    typeof threshold === "number"
-                        ? threshold / Math.max(timeline.duration(), 0.001)
-                        : undefined;
-                if (
-                    self.direction > 0 &&
-                    typeof thresholdProgress === "number" &&
-                    self.progress >= thresholdProgress
-                ) {
-                    startAutomaticTransition("more");
-                }
-            },
         },
     });
-    master = timeline;
 
     master
         .addLabel("productIntroStory", 0)
@@ -1032,176 +605,14 @@ function buildSequence() {
 
     promoteChapterLabels(master, solution.timeline, "solutionStory");
 
-    const smokeArrivalDuration = reduceMotion ? 0.04 : 0.58;
-    const smokeWipeDuration = reduceMotion ? 0.08 : 1.16;
-    const smokeSeparateDuration = reduceMotion ? 0.01 : 0.32;
-
-    master
-        .addLabel("solutionStoryComplete")
-        .to(sequence.value, { duration: reduceMotion ? 0.02 : 0.18 })
-        .addLabel("solutionSmokeThreshold")
-        .to(sequence.value, { duration: reduceMotion ? 0.02 : 0.16 })
-        .addLabel("moreAboutUsStory")
-        .to(sequence.value, { duration: reduceMotion ? 0.08 : 0.5 });
-
-    master.addLabel(HOME_CHAPTERS.moreAboutUs, master.labels.moreAboutUsStory);
-    master.addLabel(
-        homeChapterActivationLabel(HOME_CHAPTERS.moreAboutUs),
-        master.labels.moreAboutUsStory,
-    );
-
-    automaticSolutionMore = gsap
-        .timeline({ paused: true, defaults: { ease: "none" } })
-        .set(homeFooter, { autoAlpha: 0, y: 0 }, 0)
-        .set(smokeTransition.value, { autoAlpha: 1 }, 0)
-        .to(
-            smokeTransition.value,
-            {
-                yPercent: 78,
-                duration: smokeArrivalDuration,
-                ease: reduceMotion ? "none" : "back.out(1.08)",
-            },
-            0,
-        )
-        .to(
-            smokeClouds,
-            {
-                scale: 1,
-                duration: smokeArrivalDuration,
-                ease: reduceMotion ? "none" : "back.out(1.2)",
-            },
-            0,
-        )
-        .addLabel("smokeWipe")
-        .to(
-            solution.scene,
-            {
-                clipPath: "inset(0% 0% 100% 0%)",
-                WebkitClipPath: "inset(0% 0% 100% 0%)",
-                duration: smokeWipeDuration,
-                ease: reduceMotion ? "none" : "power2.inOut",
-            },
-            "smokeWipe",
-        )
-        .to(
-            smokeTransition.value,
-            {
-                yPercent: -103,
-                duration: smokeWipeDuration,
-                ease: reduceMotion ? "none" : "power2.inOut",
-            },
-            "smokeWipe",
-        )
-        .to(
-            smokeClouds,
-            {
-                x: (index) => (index === 0 ? -180 : 180),
-                duration: smokeSeparateDuration,
-                ease: reduceMotion ? "none" : "power2.out",
-            },
-            `smokeWipe+=${Math.max(
-                smokeWipeDuration - smokeSeparateDuration,
-                0,
-            )}`,
-        )
-        .set(solution.scene, { autoAlpha: 0 })
-        .set(moreAboutUs.scene, { zIndex: 5 })
-        .addLabel("moreAboutUsIntro")
-        .set(homeFooter, { autoAlpha: 1 }, "moreAboutUsIntro")
-        .to(
-            homeFooter,
-            {
-                y: homeFooterRevealOffset,
-                duration: moreAboutUs.timeline.duration(),
-                ease: reduceMotion ? "none" : "power2.out",
-            },
-            "moreAboutUsIntro",
-        )
-        .to(
-            moreAboutUs.timeline,
-            {
-                progress: 1,
-                duration: moreAboutUs.timeline.duration(),
-                ease: "none",
-            },
-            "moreAboutUsIntro",
-        )
-        .to(sequence.value, { duration: reduceMotion ? 0.02 : 0.18 });
-
-    automaticSolutionMore.duration(
-        reduceMotion
-            ? automaticSolutionMore.duration()
-            : SOLUTION_MORE_AUTOMATIC_DURATION,
-    );
-    automaticSolutionMore.eventCallback("onComplete", () => {
-        if (solutionMorePhase !== "revealing") return;
-        solutionMorePhase = "more";
-        if (!handoffHomeFooterToDocument()) {
-            moveToLabel("moreAboutUsStory");
-        }
-        unlockTransitionScroll();
-    });
-    automaticSolutionMore.eventCallback("onReverseComplete", () => {
-        if (solutionMorePhase !== "hiding") return;
-        solutionMorePhase = "solution";
-        gsap.set(homeFooter, { autoAlpha: 0, y: 0 });
-        moveToLabel("solutionStoryComplete");
-        unlockTransitionScroll();
-    });
-    automaticSolutionMore.progress(0, true).pause();
-    solutionMorePhase = "solution";
-
     ScrollTrigger.refresh();
-    requestAnimationFrame(() => {
-        ScrollTrigger.refresh();
-        if (!isHomeScrollRestoring()) syncTransitionToRestoredScroll();
-    });
+    requestAnimationFrame(() => ScrollTrigger.refresh());
 }
 
-onMounted(() => {
-    window.addEventListener("wheel", handleWheelIntent, {
-        passive: true,
-        capture: true,
-    });
-    window.addEventListener("pointerdown", resetScrollIntent, true);
-    window.addEventListener("touchstart", handleTouchStart, {
-        passive: true,
-        capture: true,
-    });
-    window.addEventListener("touchmove", handleTouchMove, {
-        passive: true,
-        capture: true,
-    });
-    window.addEventListener("keydown", handleScrollKeyIntent, true);
-    window.addEventListener(
-        HOME_SCROLL_REFRESH_START,
-        handleLayoutRefreshStart,
-    );
-    window.addEventListener(HOME_SCROLL_REFRESH_END, handleLayoutRefreshEnd);
-    window.addEventListener(HOME_SCROLL_RESTORE_END, handleScrollRestoreEnd);
-});
-
 onBeforeUnmount(() => {
-    window.removeEventListener("wheel", handleWheelIntent, true);
-    window.removeEventListener("pointerdown", resetScrollIntent, true);
-    window.removeEventListener("touchstart", handleTouchStart, true);
-    window.removeEventListener("touchmove", handleTouchMove, true);
-    window.removeEventListener("keydown", handleScrollKeyIntent, true);
     cancelAnimationFrame(buildFrame);
-    cancelAnimationFrame(resizeResumeFrame);
-    cancelAnimationFrame(restoreResumeFrame);
-    window.removeEventListener(
-        HOME_SCROLL_REFRESH_START,
-        handleLayoutRefreshStart,
-    );
-    window.removeEventListener(HOME_SCROLL_REFRESH_END, handleLayoutRefreshEnd);
-    window.removeEventListener(HOME_SCROLL_RESTORE_END, handleScrollRestoreEnd);
-    unlockTransitionScroll();
-    automaticSolutionMore?.kill();
-    resetHomeFooter();
     master?.scrollTrigger?.kill(true);
     master?.kill();
-    ScrollTrigger.getById("product-solution-story")?.kill(true);
 });
 </script>
 
@@ -1211,7 +622,6 @@ onBeforeUnmount(() => {
         class="product-solution-sequence relative h-svh min-h-screen overflow-hidden bg-[#07366f]"
         aria-label="Expelliodor product and solutions"
     >
-        <MoreAboutUs embedded @timeline-ready="handleMoreAboutUsReady" />
         <Solution embedded @timeline-ready="handleSolutionReady" />
         <Product embedded @timeline-ready="handleProductReady" />
         <div ref="productIntroLayer" class="product-intro-layer">
@@ -1223,14 +633,8 @@ onBeforeUnmount(() => {
         >
             <ProductWaveTransition />
         </div>
-        <div
-            ref="smokeTransition"
-            class="solution-smoke-layer pointer-events-none absolute inset-0"
-            aria-hidden="true"
-        >
-            <SolutionSmokeTransition />
-        </div>
     </section>
+    <MoreAboutUs />
 </template>
 
 <style scoped>
@@ -1239,17 +643,11 @@ onBeforeUnmount(() => {
 }
 
 .product-solution-sequence :deep(.solution-scene),
-.product-solution-sequence :deep(.product-scene),
-.product-solution-sequence :deep(.more-about-us) {
+.product-solution-sequence :deep(.product-scene) {
     position: absolute;
     inset: 0;
     width: 100%;
     min-height: 100%;
-}
-
-.product-solution-sequence :deep(.more-about-us) {
-    z-index: 0;
-    background: transparent;
 }
 
 .product-solution-sequence :deep(.solution-scene) {

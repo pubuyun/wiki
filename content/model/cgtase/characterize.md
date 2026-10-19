@@ -69,7 +69,15 @@ imageBackground: white
 
 Previous structural and biochemical studies have characterized the CGTase active site and the binding modes of its native substrates :fn-ref{#6}, providing a structural basis for evaluating whether Cys-Gly-3M3SH could be accommodated as a non-native acceptor.
 
+### Molecular Docking
+
 The CGTase structure (PDB: 1CXL :fn-ref{#6}) was used as the docking template. Its E257Q substitution was reverted to wild-type E257 before docking and MD simulation. A distance constraint of <3.5 Å was applied between the glycosyl C1 atom and the oxygen atom of the precursor’s hydroxyl group to maintain a potential catalytic geometry.
+
+::content-components-collapsible-title{title="Detailed Docking Process" heading-tag="h4" id="detailed-docking-process"}
+
+The CGTase receptor was prepared as a Glide receptor grid using the OPLS_2005 force field. The grid center was `(45.7770, 81.0818, 41.4328) Å`, with inner and outer box dimensions of `10 × 10 × 10 Å` and `29 × 29 × 29 Å`, respectively. A positional constraint `Ccat` (the glycosyl C1 atom) was defined at `(42.7500, 82.8800, 44.1200) Å` with a radius of `3.5 Å`. Cys-Gly-3M3SH was subsequently docked into this grid using Glide Standard Precision (SP) with the peptide option enabled.
+
+::
 
 *Glide* :fn-ref{#28} generated 86 docking poses, which were clustered into nine groups based on the ligand RMSD. One representative pose from each cluster was selected for molecular dynamics simulation to evaluate whether the proposed binding modes remained stable under dynamic conditions.
 

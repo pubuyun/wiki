@@ -1,4 +1,6 @@
 export function useHashScroll() {
+    const router = useRouter();
+
     function scrollToHash(
         event: MouseEvent,
         hashOrId?: string | null,
@@ -20,23 +22,13 @@ export function useHashScroll() {
 
         event.preventDefault();
 
-        const oldUrl = window.location.href;
-        const hash = `#${encodeURIComponent(id)}`;
-        const newUrl = `${window.location.pathname}${window.location.search}${hash}`;
-        window.history.pushState(null, "", newUrl);
-        window.dispatchEvent(
-            new CustomEvent("wiki:hash-scroll", { detail: { id } }),
-        );
-        scrollToTarget(target);
-        if (options.focus) {
-            focusTarget(target);
-        }
-        window.dispatchEvent(
-            new HashChangeEvent("hashchange", {
-                oldURL: oldUrl,
-                newURL: window.location.href,
-            }),
-        );
+        // Let the router preserve the current entry's scroll position and
+        // perform the anchor scroll once through scrollBehavior.
+        void router
+            .push({ hash: `#${id}`, query: router.currentRoute.value.query })
+            .then(() => {
+                if (options.focus && target.isConnected) focusTarget(target);
+            });
 
         return true;
     }
@@ -77,22 +69,6 @@ function decodeHash(value: string) {
     } catch {
         return value;
     }
-}
-
-function scrollToTarget(target: HTMLElement) {
-    const scrollPaddingTop =
-        Number.parseFloat(
-            getComputedStyle(document.documentElement).scrollPaddingTop,
-        ) || 0;
-    const scrollMarginTop =
-        Number.parseFloat(getComputedStyle(target).scrollMarginTop) || 0;
-    const top =
-        target.getBoundingClientRect().top +
-        window.scrollY -
-        scrollPaddingTop -
-        scrollMarginTop;
-
-    window.scrollTo({ top, behavior: "auto" });
 }
 
 function focusTarget(target: HTMLElement) {

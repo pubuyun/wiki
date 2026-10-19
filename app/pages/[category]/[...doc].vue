@@ -3,7 +3,7 @@ import { Icon } from "@iconify/vue";
 import { contentTocLinks } from "~/utils/content-toc";
 definePageMeta({
     layout: "doc",
-    key: (route) => route.fullPath,
+    key: (route) => route.path,
 });
 
 const route = useRoute();

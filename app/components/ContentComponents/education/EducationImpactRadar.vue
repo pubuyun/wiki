@@ -33,6 +33,14 @@ const parsed = computed(() => {
         };
     }
 });
+const textAlternative = computed(() => ({
+    dimensions: parsed.value.dimensions.filter(
+        (dimension) => dimension.developable,
+    ),
+    beforeDimensions: parsed.value.beforeDimensions.filter(
+        (dimension) => dimension.developable,
+    ),
+}));
 </script>
 
 <template>
@@ -65,8 +73,8 @@ const parsed = computed(() => {
                 </ClientOnly>
             </ContentComponentsEducationRadarFrame>
             <ContentComponentsEducationRadarTextAlternative
-                :dimensions="parsed.dimensions"
-                :before-dimensions="parsed.beforeDimensions"
+                :dimensions="textAlternative.dimensions"
+                :before-dimensions="textAlternative.beforeDimensions"
                 :explanation="explanation"
             />
         </template>

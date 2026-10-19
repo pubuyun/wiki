@@ -124,6 +124,7 @@ const artwork = ref<HTMLElement | null>(null);
 const animationPlane = ref<HTMLElement | null>(null);
 const molecule = ref<HTMLElement | null>(null);
 const precursorVisual = ref<HTMLElement | null>(null);
+const precursorLabel = ref<HTMLElement | null>(null);
 const gly = ref<HTMLImageElement | null>(null);
 const cys3m3sh = ref<HTMLImageElement | null>(null);
 const product = ref<HTMLImageElement | null>(null);
@@ -222,6 +223,7 @@ onMounted(() => {
         !animationPlane.value ||
         !molecule.value ||
         !precursorVisual.value ||
+        !precursorLabel.value ||
         !gly.value ||
         !cys3m3sh.value ||
         !product.value ||
@@ -254,6 +256,7 @@ onMounted(() => {
         peptTimeline?.pause(0);
 
         setMoleculeStartState();
+        gsap.set(precursorLabel.value, { autoAlpha: 0, scale: 0.92 });
         gsap.set(precursorVisual.value, {
             rotation: PRECURSOR_ANIMATION.initialRotation,
             scale: 1,
@@ -328,6 +331,26 @@ onMounted(() => {
                 molecule.value,
                 { ...pointVars(PATH_POINTS.transporter), duration: 1 },
                 "transport",
+            )
+            .to(
+                precursorLabel.value,
+                {
+                    autoAlpha: 1,
+                    scale: 1,
+                    duration: 0.2,
+                    ease: "power2.out",
+                },
+                "transport",
+            )
+            .to(
+                precursorLabel.value,
+                {
+                    autoAlpha: 0,
+                    scale: 0.96,
+                    duration: 0.2,
+                    ease: "power2.in",
+                },
+                "transport+=0.55",
             );
 
         if (peptTimeline) {
@@ -683,6 +706,16 @@ onUnmounted(() => {
                                 decoding="async"
                                 draggable="false"
                             />
+                        </div>
+                        <div
+                            ref="precursorLabel"
+                            class="mechanism-scene__precursor-label invisible absolute inset-0 opacity-0 portrait:rotate-90"
+                        >
+                            <span
+                                class="absolute top-full left-1/2 mt-1 -translate-x-1/2 rounded-md bg-[#b6fbf1]/95 px-2 py-1 font-belanosima text-[clamp(0.7rem,1.65svh,1.05rem)] leading-none font-bold whitespace-nowrap text-[#124c96]"
+                            >
+                                Cys-Gly-3M3SH
+                            </span>
                         </div>
                         <img
                             ref="product"

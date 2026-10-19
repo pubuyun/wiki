@@ -88,7 +88,6 @@ function handleScrollLockChange(event: Event) {
 
 provide(HOME_SCROLL_CONTROLLER, {
     scrollTo: scrollToChapter,
-    jumpTo: scrollImmediately,
     cancel: cancelChapterScroll,
 });
 
@@ -244,7 +243,7 @@ onBeforeUnmount(() => {
                 <main id="main-content" tabindex="-1" class="flex-1">
                     <slot />
                 </main>
-                <LazyFooter home-overlap hydrate-on-visible />
+                <LazyFooter hydrate-on-visible />
             </div>
         </div>
     </div>

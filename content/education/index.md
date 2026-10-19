@@ -20,6 +20,17 @@ Inspo,
 
 ### Core Values
 
+::content-components-lightbox-image
+---
+alt:
+  - Adaptive, Reflective, Mutual Learning, and Creative are the four core values
+    guiding our synthetic biology education.
+src:
+  - https://static.igem.wiki/teams/6133/wiki/hp/education/core-values.avif
+caption: Fig. 1 | **Core values guiding our synthetic biology education**
+---
+::
+
 Adaptive
 
 Reflective
@@ -41,7 +52,7 @@ alt:
     Feedback, and Reflection."
 src:
   - https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig1-a.avif
-caption: Fig. 1 | **Teaching framework**
+caption: Fig. 2 | **Teaching framework**
 ---
 ::
 
@@ -138,7 +149,7 @@ src:
   - https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig2-a.avif
   - https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig2-b.avif
   - https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig2-c.avif
-caption: Fig. 2 | **(a)** Group photo of participants and team members **(b)**
+caption: Fig. 3 | **(a)** Group photo of participants and team members **(b)**
   Team member introducing our project to curious students after the lecture
   **(c)** Team member delivering a lecture introducing a fluorescent gene
   circuit to participants
@@ -161,9 +172,9 @@ srcEn:
   - https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig3-en.avif
 srcZh:
   - https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig3-zh.avif
-caption: Fig. 3 | **Handwritten feedback notes from students after the synthetic
+caption: Fig. 4 | **Handwritten feedback notes from students after the synthetic
   biology class**
-label: Figure 3 image language
+label: Figure 4 image language
 layout: grid
 ---
 ::
@@ -184,8 +195,8 @@ srcEn:
 srcZh:
   - https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig4-a-zh.avif
   - https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig4-b-zh.avif
-caption: Fig. 4 | **(a-b)** genetic circuits designed by students during class activity
-label: Figure 4 image language
+caption: Fig. 5 | **(a-b)** genetic circuits designed by students during class activity
+label: Figure 5 image language
 layout: stack
 ---
 ::
@@ -228,13 +239,13 @@ heading-tag: h4
 id: synbio-intro-lecture-documentation
 title: Documentation
 ---
-[Introductory Synthetic Biology Lesson Plan (Chinese Version).pdf](https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-introductory-synthetic-biology-lesson-plan-chinese-version.pdf)
+:content-components-pdf-embed{src="https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-introductory-synthetic-biology-lesson-plan-chinese-version.pdf" title="Introductory Synthetic Biology Lesson Plan (Chinese Version)"}
 
-[Introductory Synthetic Biology Lesson Plan (English Version).pdf](https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-introductory-synthetic-biology-lesson-plan-english-version.pdf)
+:content-components-pdf-embed{src="https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-introductory-synthetic-biology-lesson-plan-english-version.pdf" title="Introductory Synthetic Biology Lesson Plan (English Version)"}
 
-[Introductory Synthetic Biology Slides (Chinese Version).pdf](https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-introductory-synthetic-biology-slides-chinese-version.pdf)
+:content-components-pdf-embed{src="https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-introductory-synthetic-biology-slides-chinese-version.pdf" title="Introductory Synthetic Biology Slides (Chinese Version)"}
 
-[Introductory Synthetic Biology Slides (English Version).pdf](https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-introductory-synthetic-biology-slides-english-version.pdf)
+:content-components-pdf-embed{src="https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-introductory-synthetic-biology-slides-english-version.pdf" title="Introductory Synthetic Biology Slides (English Version)"}
 ::
 
 ### Protein Design Lecture
@@ -294,7 +305,7 @@ src:
   - https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig5-b.avif
   - https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig5-c.avif
   - https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig5-d.avif
-caption: Fig. 5 | **Protein design high school lecture** **(a)** Team member
+caption: Fig. 6 | **Protein design high school lecture** **(a)** Team member
   explaining DBTL cycle to high school students **(b)** Students taking part in
   a classroom activity **(c)** Team member introducing further content to
   curious students after the lecture  **(d)** Group photo after the protein
@@ -335,8 +346,8 @@ srcZh:
   - https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig6-b-zh.avif
   - https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig6-c-zh.avif
   - https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig6-d-zh.avif
-caption: Fig. 6 | **(a-d) Handwritten feedback notes from students after the lecture**
-label: Figure 6 image language
+caption: Fig. 7 | **(a-d) Handwritten feedback notes from students after the lecture**
+label: Figure 7 image language
 layout: grid
 ---
 ::
@@ -377,13 +388,13 @@ heading-tag: h4
 id: protein-design-lecture-documentation
 title: Documentation
 ---
-[protein design poster.pdf](https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-protein-design-poster.pdf)
+:content-components-pdf-embed{src="https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-protein-design-poster.pdf" title="protein design poster"}
 
-[Protein Design Lesson Plan (English Version).pdf](https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-protein-design-lesson-plan-english-version.pdf)
+:content-components-pdf-embed{src="https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-protein-design-lesson-plan-english-version.pdf" title="Protein Design Lesson Plan (English Version)"}
 
-[protein design lesson plan (Chinese version).pdf](https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-protein-design-lesson-plan-chinese-version.pdf)
+:content-components-pdf-embed{src="https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-protein-design-lesson-plan-chinese-version.pdf" title="protein design lesson plan (Chinese version)"}
 
-[Protein Design Slides (English Version).pdf](https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-protein-design-slides-english-version.pdf)
+:content-components-pdf-embed{src="https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-protein-design-slides-english-version.pdf" title="Protein Design Slides (English Version)"}
 ::
 
 ### Online SynBio Market And Career Analysis Lecture
@@ -438,7 +449,7 @@ alt:
 src:
   - https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig7-a.avif
   - https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig7-b.avif
-caption: Fig. 7 | **The online lecture discussing regional synthetic biology
+caption: Fig. 8 | **The online lecture discussing regional synthetic biology
   markets** **(a)** Member explaining global synthetic biology market size
   **(b)** participants list
 layout: stack
@@ -460,9 +471,9 @@ srcEn:
   - https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig8-en.avif
 srcZh:
   - https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig8-zh.avif
-caption: Fig. 8 | Screenshot of team online discussion about synthetic biology
+caption: Fig. 9 | Screenshot of team online discussion about synthetic biology
   companies and the artemisinin production case.
-label: Figure 8 image language
+label: Figure 9 image language
 layout: grid
 ---
 ::
@@ -505,13 +516,13 @@ heading-tag: h4
 id: online-synbio-market-and-career-analysis-lecture-documentation
 title: Documentation
 ---
-[Synthetic Biology Industry Analysis Lesson Plan (English Version).pdf](https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-synthetic-biology-industry-analysis-lesson-plan-english-version.pdf)
+:content-components-pdf-embed{src="https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-synthetic-biology-industry-analysis-lesson-plan-english-version.pdf" title="Synthetic Biology Industry Analysis Lesson Plan (English Version)"}
 
-[Synthetic Biology Industry Analysis Lesson Plan (Chinese Version).pdf](https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-synthetic-biology-industry-analysis-lesson-plan-chinese-version.pdf)
+:content-components-pdf-embed{src="https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-synthetic-biology-industry-analysis-lesson-plan-chinese-version.pdf" title="Synthetic Biology Industry Analysis Lesson Plan (Chinese Version)"}
 
-[Synthetic Biology Industry Analysis Slides (Chinese Version).pdf](https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-synthetic-biology-industry-analysis-slides-chinese-version.pdf)
+:content-components-pdf-embed{src="https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-synthetic-biology-industry-analysis-slides-chinese-version.pdf" title="Synthetic Biology Industry Analysis Slides (Chinese Version)"}
 
-[Synthetic Biology Industry Analysis Slides (English Version).pdf](https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-synthetic-biology-industry-analysis-slides-english-version.pdf)
+:content-components-pdf-embed{src="https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-synthetic-biology-industry-analysis-slides-english-version.pdf" title="Synthetic Biology Industry Analysis Slides (English Version)"}
 ::
 
 ## Workshop
@@ -570,7 +581,7 @@ src:
   - https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig9-b.avif
   - https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig9-c.avif
   - https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig9-d.avif
-caption: Fig. 9 | **(a)** Students holding the answers during interactive quiz
+caption: Fig. 10 | **(a)** Students holding the answers during interactive quiz
   session **(b)** Group photo after the synthetic biology intro workshop at
   Nanshan Keyuan Primary School. **(c)** Team member introducing cell
   structures. **(d)** Students conducting their DNA extraction experiment
@@ -594,7 +605,7 @@ src:
   - https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig10-a.avif
   - https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig10-b.avif
   - https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig10-c.avif
-caption: Fig. 10 | **Clay artifacts made by students** **(a)** A pig-snake
+caption: Fig. 11 | **Clay artifacts made by students** **(a)** A pig-snake
   combined creature made by student  **(b)** A centipede chicken created by
   student **(c)** Clay models of imaginary organisms created by students
 layout: grid
@@ -639,13 +650,13 @@ heading-tag: h4
 id: primary-school-synbio-intro-workshop-documentation
 title: Documentation
 ---
-[Primary School Synthetic Biology Workshop Slides (English Version).pdf](https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-primary-school-synthetic-biology-workshop-slides-english-version.pdf)
+:content-components-pdf-embed{src="https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-primary-school-synthetic-biology-workshop-slides-english-version.pdf" title="Primary School Synthetic Biology Workshop Slides (English Version)"}
 
-[Primary School Synthetic Biology Workshop Slides (Chinese Version).pdf](https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-primary-school-synthetic-biology-workshop-slides-chinese-version.pdf)
+:content-components-pdf-embed{src="https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-primary-school-synthetic-biology-workshop-slides-chinese-version.pdf" title="Primary School Synthetic Biology Workshop Slides (Chinese Version)"}
 
-[Primary School Synthetic Biology Workshop Lesson Plan (Chinese Version).pdf](https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-primary-school-synthetic-biology-workshop-lesson-plan-chinese-version.pdf)
+:content-components-pdf-embed{src="https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-primary-school-synthetic-biology-workshop-lesson-plan-chinese-version.pdf" title="Primary School Synthetic Biology Workshop Lesson Plan (Chinese Version)"}
 
-[Primary School Synthetic Biology Workshop Lesson Plan (English Version).pdf](https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-primary-school-synthetic-biology-workshop-lesson-plan-english-version.pdf)
+:content-components-pdf-embed{src="https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-primary-school-synthetic-biology-workshop-lesson-plan-english-version.pdf" title="Primary School Synthetic Biology Workshop Lesson Plan (English Version)"}
 ::
 
 ### Geraniol Lab Session
@@ -703,7 +714,7 @@ src:
   - https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig11-a.avif
   - https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig11-b.avif
   - https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig11-c.avif
-caption: Fig. 11 | **(a–b) Students doing experiments during Geraniol lab
+caption: Fig. 12 | **(a–b) Students doing experiments during Geraniol lab
   session** **(c)** Full team group photo in the synthetic biology laboratory.
 layout: grid
 ---
@@ -754,17 +765,17 @@ heading-tag: h4
 id: geraniol-lab-session-documentation
 title: Documentation
 ---
-[Laboratory Safety Protocol (English Version).pdf](https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-laboratory-safety-protocol-english-version.pdf)
+:content-components-pdf-embed{src="https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-laboratory-safety-protocol-english-version.pdf" title="Laboratory Safety Protocol (English Version)"}
 
-[Geraniol Synthesis Experimental Logic Workbook (English Version).pdf](https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-geraniol-synthesis-experimental-logic-workbook-english-version.pdf)
+:content-components-pdf-embed{src="https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-geraniol-synthesis-experimental-logic-workbook-english-version.pdf" title="Geraniol Synthesis Experimental Logic Workbook (English Version)"}
 
-[Geraniol Synthesis Workbook Answer Key (English Version).pdf](https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-geraniol-synthesis-workbook-answer-key-english-version.pdf)
+:content-components-pdf-embed{src="https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-geraniol-synthesis-workbook-answer-key-english-version.pdf" title="Geraniol Synthesis Workbook Answer Key (English Version)"}
 
-[Terpene Experiment Workshop Protocol (English Version).pdf](https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-terpene-experiment-workshop-protocol-english-version.pdf)
+:content-components-pdf-embed{src="https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-terpene-experiment-workshop-protocol-english-version.pdf" title="Terpene Experiment Workshop Protocol (English Version)"}
 
-[Science Week Staff Checklist (English Version).pdf](https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-science-week-staff-checklist-english-version.pdf)
+:content-components-pdf-embed{src="https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-science-week-staff-checklist-english-version.pdf" title="Science Week Staff Checklist (English Version)"}
 
-[Geraniol Laboratory Session Plan (English Version).pdf](https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-geraniol-laboratory-session-plan-english-version.pdf)
+:content-components-pdf-embed{src="https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-geraniol-laboratory-session-plan-english-version.pdf" title="Geraniol Laboratory Session Plan (English Version)"}
 ::
 
 ### Middle School SynBio Intro Workshop
@@ -826,7 +837,7 @@ src:
   - https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig12-a.avif
   - https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig12-b.avif
   - https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig12-c.avif
-caption: Fig. 12 | **(a)** A team member explaining plasmid to students **(b)**
+caption: Fig. 13 | **(a)** A team member explaining plasmid to students **(b)**
   A team member helping students with a hands-on activity **(c)** group photo of
   team members and the teacher
 layout: grid
@@ -846,9 +857,9 @@ srcEn:
   - https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig13-en.avif
 srcZh:
   - https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig13-zh.avif
-caption: Fig. 13 | students' response on whether we should edit human genes
+caption: Fig. 14 | students' response on whether we should edit human genes
   written on sticky notes
-label: Figure 13 image language
+label: Figure 14 image language
 layout: grid
 ---
 ::
@@ -900,7 +911,7 @@ src:
   - https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig14-a.avif
   - https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig14-b.avif
   - https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig14-c.avif
-caption: Fig. 14 | **(a)** A team member explaining the definition of SynBio
+caption: Fig. 15 | **(a)** A team member explaining the definition of SynBio
   during the session **(b)** A team member supporting students’ classroom work
   **(c)** Students attending the middle school synthetic biology workshop
 layout: grid
@@ -928,10 +939,10 @@ srcZh:
   - https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig15-a-zh.avif
   - https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig15-b-zh.avif
   - https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig15-c-zh.avif
-caption: Fig. 15 | **(a)** A student’s completed synthetic biology activity
+caption: Fig. 16 | **(a)** A student’s completed synthetic biology activity
   sheet **(b)** A student’s gene circuit design on the activity sheet **(c)** A
   completed post-workshop questionnaire
-label: Figure 15 image language
+label: Figure 16 image language
 layout: grid
 ---
 ::
@@ -980,19 +991,19 @@ heading-tag: h4
 id: middle-school-synbio-intro-workshop-documentation
 title: Documentation
 ---
-[SynBio Intro ws mid school, eng ver..pdf.pdf](https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-SynBio-intro-ws-mid-school-eng-ver.pdf)
+:content-components-pdf-embed{src="https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-synbio-intro-ws-mid-school-eng-ver.pdf" title="SynBio Intro ws mid school, eng ver."}
 
-[SynBio intro ws Mid school, Chi. ver..pdf](https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-SynBio-intro-ws-mid-school-chi-ver.pdf)
+:content-components-pdf-embed{src="https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-synbio-intro-ws-mid-school-chi-ver.pdf" title="SynBio intro ws Mid school, Chi. ver."}
 
-[Mid school reading material, eng ver. only.pdf](https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-mid-school-reading-material-eng-ver-only.pdf)
+:content-components-pdf-embed{src="https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-mid-school-reading-material-eng-ver-only.pdf" title="Mid school reading material, eng ver. only"}
 
-[SynBio Lesson Plan English.pdf](https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-SynBio-lesson-plan-english.pdf)
+:content-components-pdf-embed{src="https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-synbio-lesson-plan-english.pdf" title="SynBio Lesson Plan English"}
 
-[SynBio Lesson Plan Chinese.pdf](https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-SynBio-lesson-plan-chinese.pdf)
+:content-components-pdf-embed{src="https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-synbio-lesson-plan-chinese.pdf" title="SynBio Lesson Plan Chinese"}
 
-[Mid School Worksheet English.pdf](https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-mid-school-worksheet-english.pdf)
+:content-components-pdf-embed{src="https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-mid-school-worksheet-english.pdf" title="Mid School Worksheet English"}
 
-[Mid school worksheet, Chi. ver..pdf](https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-mid-school-worksheet-chi-ver.pdf)
+:content-components-pdf-embed{src="https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-mid-school-worksheet-chi-ver.pdf" title="Mid school worksheet, Chi. ver."}
 ::
 
 ## Community
@@ -1050,7 +1061,7 @@ src:
   - https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig16-a.avif
   - https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig16-b.avif
   - https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig16-c.avif
-caption: Fig. 16 | **(a) Group photo of club members.** **(b)** Club members
+caption: Fig. 17 | **(a) Group photo of club members.** **(b)** Club members
   listen attentively during one lecture **(c)** Members giving lessons for the
   club
 layout: top
@@ -1097,19 +1108,19 @@ heading-tag: h4
 id: igem-club-documentation
 title: Documentation
 ---
-[iGEM Club Session 1 Slides (English Version).pdf](https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-igem-club-session-1-slides-english-version.pdf)
+:content-components-pdf-embed{src="https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-igem-club-session-1-slides-english-version.pdf" title="iGEM Club Session 1 Slides (English Version)"}
 
-[iGEM Club Session 1 Slides (Chinese Version).pdf](https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-igem-club-session-1-slides-chinese-version.pdf)
+:content-components-pdf-embed{src="https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-igem-club-session-1-slides-chinese-version.pdf" title="iGEM Club Session 1 Slides (Chinese Version)"}
 
-[iGEM Club Session 2 Slides (English Version).pdf](https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-igem-club-session-2-slides-english-version.pdf)
+:content-components-pdf-embed{src="https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-igem-club-session-2-slides-english-version.pdf" title="iGEM Club Session 2 Slides (English Version)"}
 
-[iGEM Club Session 2 Slides (Chinese Version).pdf](https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-igem-club-session-2-slides-chinese-version.pdf)
+:content-components-pdf-embed{src="https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-igem-club-session-2-slides-chinese-version.pdf" title="iGEM Club Session 2 Slides (Chinese Version)"}
 
-[iGEM Club Modeling Slides (Chinese Version).pdf](https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-igem-club-modeling-slides-chinese-version.pdf)
+:content-components-pdf-embed{src="https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-igem-club-modeling-slides-chinese-version.pdf" title="iGEM Club Modeling Slides (Chinese Version)"}
 
-[iGEM Club Modeling Slides (English Version).pdf](https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-igem-club-modeling-slides-english-version.pdf)
+:content-components-pdf-embed{src="https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-igem-club-modeling-slides-english-version.pdf" title="iGEM Club Modeling Slides (English Version)"}
 
-[Terpene Experiment Steps Explained.pdf](https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-terpene-experiment-steps-explained.pdf)
+:content-components-pdf-embed{src="https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-terpene-experiment-steps-explained.pdf" title="Terpene Experiment Steps Explained"}
 ::
 
 ### Online Chat Group
@@ -1174,9 +1185,9 @@ srcEn:
 srcZh:
   - https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig17-a-zh.avif
   - https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig17-b-zh.avif
-caption: Fig. 17 | **(a-b)** Screenshot of discussion about the ethical
+caption: Fig. 18 | **(a-b)** Screenshot of discussion about the ethical
   constraints, application sectors and current limitations of synthetic biology
-label: Figure 17 image language
+label: Figure 18 image language
 layout: grid
 ---
 ::
@@ -1196,10 +1207,10 @@ srcEn:
 srcZh:
   - https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig18-a-zh.avif
   - https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig18-b-zh.avif
-caption: Fig. 18 | **(a)** students asking for help with protein design in chat
+caption: Fig. 19 | **(a)** students asking for help with protein design in chat
   group **(b)** one of our members discussing protein modeling with the students
   who sought for help in the chat group
-label: Figure 18 image language
+label: Figure 19 image language
 layout: grid
 ---
 ::
@@ -1220,8 +1231,8 @@ srcEn:
 srcZh:
   - https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig19-a-zh.avif
   - https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig19-b-zh.avif
-caption: Fig. 19 | **(a-b)** students' feedback and request for career information
-label: Figure 19 image language
+caption: Fig. 20 | **(a-b)** students' feedback and request for career information
+label: Figure 20 image language
 layout: grid
 ---
 ::
@@ -1311,7 +1322,7 @@ src:
   - https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig20-b.avif
   - https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig20-c.avif
   - https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig20-d.avif
-caption: Fig. 20 | **(a) Group photo after the synthetic biology ethics
+caption: Fig. 21 | **(a) Group photo after the synthetic biology ethics
   debate.** **(b–c)** participants delivering a speech during the synthetic
   biology ethics debate. **(d)** The ethical debate taking place on stage
 layout: grid
@@ -1362,7 +1373,7 @@ heading-tag: h4
 id: ethical-debate-documentation
 title: Documentation
 ---
-[debate poster(Eng\&Chi ver.).pdf](https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-debate-poster-eng-chi-ver.pdf)
+:content-components-pdf-embed{src="https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-debate-poster-eng-chi-ver.pdf" title="debate poster(Eng&Chi ver.)"}
 ::
 
 ## Fair
@@ -1418,7 +1429,7 @@ src:
   - https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig21-b.avif
   - https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig21-c.avif
   - https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig21-d.avif
-caption: Fig. 21 | **(a) group photo of participating teams in SynBio fair at
+caption: Fig. 22 | **(a) group photo of participating teams in SynBio fair at
   Honey Park** **(b)** A team member teaching a visitor American Sign Language
   of SynBio vocabulary **(c)** Children building bacterial clay at the booth
   **(d)** the overview of team booths in SynBio fair at Honey Park
@@ -1442,10 +1453,10 @@ srcEn:
 srcZh:
   - https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig22-a-zh.avif
   - https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig22-b-zh.avif
-caption: Fig. 22 | **(a)** A promotional poster introducing the team’s project
+caption: Fig. 23 | **(a)** A promotional poster introducing the team’s project
   **(b)** A poster introducing real life applications of SynBio used in the
   SynBio Fair
-label: Figure 22 image language
+label: Figure 23 image language
 layout: grid
 ---
 ::
@@ -1544,7 +1555,7 @@ src:
   - https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig23-b.avif
   - https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig23-c.avif
   - https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig23-d.avif
-caption: Fig. 23 | **(a) Participants giving suggestions for the booklet**
+caption: Fig. 24 | **(a) Participants giving suggestions for the booklet**
   **(b)** A young participant reading the biology booklet **(c)** Participants
   following the seminar with their booklets **(d)** Participants sharing their
   thoughts during the seminar
@@ -1574,7 +1585,7 @@ src:
   - https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig24-b.avif
   - https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig24-c.avif
   - https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig24-d.avif
-caption: Fig. 24 | **(a-b)**results of self-assessment of biological vocab level
+caption: Fig. 25 | **(a-b)**results of self-assessment of biological vocab level
   of participants in the intro part of the booklet, before the session
   **(c-d)**results of self-assessment of biological vocab level of participants
   in the the last part of the booklet, after the session
@@ -1619,7 +1630,7 @@ heading-tag: h4
 id: synbio-vocab-learning-seminar-documentation
 title: Documentation
 ---
-[SynBio-vocab booklet(Eng-Chi ver.).pdf](https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-SynBio-vocab-booklet-eng-chi-ver.pdf)
+:content-components-pdf-embed{src="https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-synbio-vocab-booklet-eng-chi-ver.pdf" title="SynBio-vocab booklet(Eng-Chi ver.)"}
 ::
 
 ## Entertainment
@@ -1678,7 +1689,7 @@ src:
   - https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig25-a.avif
   - https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig25-b.avif
   - https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig25-c.avif
-caption: Fig. 25 | **(a) clay model B. subtilis in Bacteria-Fungi Clay Kit**
+caption: Fig. 26 | **(a) clay model B. subtilis in Bacteria-Fungi Clay Kit**
   **(b)** clay model S. cerevisiae in Bacteria-Fungi Clay Kit **(c)** clay model
   E. coli in Bacteria-Fungi Clay Kit
 layout: grid
@@ -1699,7 +1710,7 @@ src:
   - https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig26-a.avif
   - https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig26-b.avif
   - https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig26-c.avif
-caption: Fig. 26 | **(a–b) participants demonstrating their model clay
+caption: Fig. 27 | **(a–b) participants demonstrating their model clay
   bacteria** **(c)** A student making a clay bacterial cell model
 layout: grid
 ---
@@ -1744,39 +1755,39 @@ title: Documentation
 ---
 1. 大肠杆菌
 
-[Clay kit E.coli Chi. ver..pdf](https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-clay-kit-e-coli-chi-ver.pdf)
+:content-components-pdf-embed{src="https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-clay-kit-e-coli-chi-ver.pdf" title="Clay kit E.coli Chi. ver."}
 
-[clay kit-E.coli eng. ver.pdf](https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-clay-kit-e-coli-eng-ver.pdf)
+:content-components-pdf-embed{src="https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-clay-kit-e-coli-eng-ver.pdf" title="clay kit-E.coli eng. ver"}
 
 2. 乳酸杆菌
 
-[Clay kit-L.plantarum, Chi. ver.pdf](https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-clay-kit-l-plantarum-chi-ver.pdf)
+:content-components-pdf-embed{src="https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-clay-kit-l-plantarum-chi-ver.pdf" title="Clay kit-L.plantarum, Chi. ver"}
 
-[Lactiplantibacillus plantarum\_English.pdf](https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-lactiplantibacillus-plantarum-english.pdf)
+:content-components-pdf-embed{src="https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-lactiplantibacillus-plantarum-english.pdf" title="Lactiplantibacillus plantarum_English"}
 
 3. 枯草芽孢杆菌
 
-[Bacillus subtilis\_Chinese.pdf](https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-bacillus-subtilis-chinese.pdf)
+:content-components-pdf-embed{src="https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-bacillus-subtilis-chinese.pdf" title="Bacillus subtilis_Chinese"}
 
-[Bacillus subtilis\_English.pdf](https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-bacillus-subtilis-english.pdf)
+:content-components-pdf-embed{src="https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-bacillus-subtilis-english.pdf" title="Bacillus subtilis_English"}
 
 4. 酿酒酵母
 
-[Saccharomyces cerevisiae\_Chinese.pdf](https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-saccharomyces-cerevisiae-chinese.pdf)
+:content-components-pdf-embed{src="https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-saccharomyces-cerevisiae-chinese.pdf" title="Saccharomyces cerevisiae_Chinese"}
 
-[Saccharomyces cerevisiae\_English.pdf](https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-saccharomyces-cerevisiae-english.pdf)
+:content-components-pdf-embed{src="https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-saccharomyces-cerevisiae-english.pdf" title="Saccharomyces cerevisiae_English"}
 
 5. 毕赤酵母
 
-[Komagataella phaffii\_English.pdf](https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-komagataella-phaffii-english.pdf)
+:content-components-pdf-embed{src="https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-komagataella-phaffii-english.pdf" title="Komagataella phaffii_English"}
 
-[Komagataella phaffii\_Chinese.pdf](https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-komagataella-phaffii-chinese.pdf)
+:content-components-pdf-embed{src="https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-komagataella-phaffii-chinese.pdf" title="Komagataella phaffii_Chinese"}
 
 6. 葡萄球菌
 
-[Staphylococcus epidermidis\_Chinese.pdf](https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-staphylococcus-epidermidis-chinese.pdf)
+:content-components-pdf-embed{src="https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-staphylococcus-epidermidis-chinese.pdf" title="Staphylococcus epidermidis_Chinese"}
 
-[Staphylococcus epidermidis\_English.pdf](https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-staphylococcus-epidermidis-english.pdf)
+:content-components-pdf-embed{src="https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-staphylococcus-epidermidis-english.pdf" title="Staphylococcus epidermidis_English"}
 ::
 
 ### Fuse Beads
@@ -1839,10 +1850,10 @@ srcEn:
 srcZh:
   - https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig27-a-zh.avif
   - https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig27-b-zh.avif
-caption: Fig. 27 | **(a) Bacteria perler bead pattern.** **(b)** A completed
+caption: Fig. 28 | **(a) Bacteria perler bead pattern.** **(b)** A completed
   bacterial cell model made with fuse beads sent by an online participant in the
   comments on our post on Rednote
-label: Figure 27 image language
+label: Figure 28 image language
 layout: grid
 ---
 ::
@@ -1940,7 +1951,7 @@ src:
   - https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig28-a.avif
   - https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig28-b.avif
   - https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig28-c.avif
-caption: Fig. 28 | **(a) Club members carrying out laboratory experiments during
+caption: Fig. 29 | **(a) Club members carrying out laboratory experiments during
   Lab-Themed Jubensha session** **(b)** Club members playing Murder Mystery
   Game. **(c)** Participants discussing clues during the laboratory mystery game
 layout: grid
@@ -1961,7 +1972,7 @@ alt:
 src:
   - https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig29-a.avif
   - https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig29-b.avif
-caption: Fig. 29 | **(a)** Pre-activity survey results on laboratory safety and
+caption: Fig. 30 | **(a)** Pre-activity survey results on laboratory safety and
   PCR knowledge **(b)** Post-activity survey results on laboratory safety and
   PCR knowledge
 layout: grid
@@ -2007,18 +2018,18 @@ heading-tag: h4
 id: lab-themed-murder-mystery-game-documentation
 title: Documentation
 ---
-[Laboratory Mystery Game Slides (English Version).pdf](https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-laboratory-mystery-game-slides-english-version.pdf)
+:content-components-pdf-embed{src="https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-laboratory-mystery-game-slides-english-version.pdf" title="Laboratory Mystery Game Slides (English Version)"}
 
-[Laboratory Mystery Game Slides (Chinese Version).pdf](https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-laboratory-mystery-game-slides-chinese-version.pdf)
+:content-components-pdf-embed{src="https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-laboratory-mystery-game-slides-chinese-version.pdf" title="Laboratory Mystery Game Slides (Chinese Version)"}
 
-[Laboratory Mystery Game Lesson Plan (English Version).pdf](https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-laboratory-mystery-game-lesson-plan-english-version.pdf)
+:content-components-pdf-embed{src="https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-laboratory-mystery-game-lesson-plan-english-version.pdf" title="Laboratory Mystery Game Lesson Plan (English Version)"}
 
-[Laboratory Mystery Game Materials (English Version).pdf](https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-laboratory-mystery-game-materials-english-version.pdf)
+:content-components-pdf-embed{src="https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-laboratory-mystery-game-materials-english-version.pdf" title="Laboratory Mystery Game Materials (English Version)"}
 ::
 
 ## Performing Arts
 
-### Song Of SynBio
+### Song of SynBio
 
 We wrote a song to the melody of “Do-Re-Mi” to help students review molecular biology and genetic engineering. Its three verses covered concepts such as codons and base pairing, and techniques including PCR, gel electrophoresis, and transformation.
 
@@ -2051,7 +2062,7 @@ profile:
   Engagement with synbio:
     - 1.3
     - Students generally had limited prior engagement with SynBio.
-title: Song Of SynBio — Before the session
+title: Song of SynBio — Before the session
 ---
 ::
 
@@ -2072,7 +2083,7 @@ src:
   - https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig30-a.avif
   - https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig30-b.avif
   - https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig30-c.avif
-caption: Fig. 30 | **(a) The screenshot of Song of SynBio published on NetEase
+caption: Fig. 31 | **(a) The screenshot of Song of SynBio published on NetEase
   Cloud Music** **(b–c)** Some frames in the mv of Song of SynBio, published on
   Rednote
 layout: grid
@@ -2111,7 +2122,7 @@ impact:
     - 2
     - Greater familiarity with SynBio may make students more receptive to its
       applications and products.
-title: Song Of SynBio — Before and after
+title: Song of SynBio — Before and after
 ---
 ::
 
@@ -2121,7 +2132,7 @@ heading-tag: h4
 id: song-of-synbio-documentation
 title: Documentation
 ---
-[Song Of SynBio Lyrics (English Version).pdf](https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-song-of-SynBio-lyrics-english-version.pdf)
+:content-components-pdf-embed{src="https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-song-of-synbio-lyrics-english-version.pdf" title="Song of SynBio Lyrics (English Version)"}
 ::
 
 ### Dance Of Central Dogma
@@ -2177,7 +2188,7 @@ alt:
     translation through a ribosome with tRNA, and protein folding.
 src:
   - https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig31.avif
-caption: Fig. 31 | **Overview of our central dogma dance**
+caption: Fig. 32 | **Overview of our central dogma dance**
 ---
 ::
 
@@ -2223,9 +2234,9 @@ heading-tag: h4
 id: dance-of-central-dogma-documentation
 title: Documentation
 ---
-[dance outline Chinese ver..pdf](https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-dance-outline-chinese-ver.pdf)
+:content-components-pdf-embed{src="https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-dance-outline-chinese-ver.pdf" title="dance outline Chinese ver."}
 
-[Dance Outline eng. ver..pdf](https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-dance-outline-eng-ver.pdf)
+:content-components-pdf-embed{src="https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-dance-outline-eng-ver.pdf" title="Dance Outline eng. ver."}
 ::
 
 ## Social Media
@@ -2285,7 +2296,7 @@ src:
   - https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig32-a.avif
   - https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig32-b.avif
   - https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig32-c.avif
-caption: Fig. 32 | **(a)** Screenshots of long videos we published on social
+caption: Fig. 33 | **(a)** Screenshots of long videos we published on social
   media Bilibili **(b)** Screenshot from "The Life of the 'Mad Scientist'
   Venter" **(c)** screenshot from 'Intro to software'.
 layout: left
@@ -2377,7 +2388,7 @@ alt:
     introduce cultivation, laboratory techniques, and safety.
 src:
   - https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig33.avif
-caption: Fig. 33 | screenshots of short videos we published on Rednote
+caption: Fig. 34 | screenshots of short videos we published on Rednote
 ---
 ::
 
@@ -2391,7 +2402,7 @@ alt:
   - ""
 src:
   - https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig34.avif
-caption: Fig. 34 | Analytics panel showing 471k impressions (+6839%) and 338.5k
+caption: Fig. 35 | Analytics panel showing 471k impressions (+6839%) and 338.5k
   views (+22695%).
 ---
 ::
@@ -2483,7 +2494,7 @@ alt:
     biology, fragrance biosynthesis, and protein design.
 src:
   - https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig35.avif
-caption: Fig. 35 | mobile phone screenshots displaying a series of popular
+caption: Fig. 36 | mobile phone screenshots displaying a series of popular
   science social media posts created by the team.
 ---
 ::
@@ -2525,11 +2536,7 @@ title: Infographics — Before and after
 ---
 ::
 
-## Reference
-
-1. :ref-fn[Science. About the annual Science/AAAS Dance Your Ph.D. contest [Internet]. Washington (DC): American Association for the Advancement of Science; [cited 2026 Oct 19]. Available from: <https://www.science.org/content/page/about-annual-science-aaas-dance-your-ph-d-contest>]{#1}
-
-:content-components-education-age-timeline
+## Conclusion
 
 ::content-components-lightbox-image
 ---
@@ -2540,7 +2547,13 @@ alt:
     SynBio.
 src:
   - https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig36.avif
-caption: Fig. 36 | Expanding the Reach of SynBio Education from local community
+caption: Fig. 37 | Expanding the Reach of SynBio Education from local community
   to city, country and worldwide
 ---
 ::
+
+## Reference
+
+1. :ref-fn[Science. About the annual Science/AAAS Dance Your Ph.D. contest [Internet]. Washington (DC): American Association for the Advancement of Science; [cited 2026 Oct 19]. Available from: <https://www.science.org/content/page/about-annual-science-aaas-dance-your-ph-d-contest>]{#1}
+
+:content-components-education-age-timeline

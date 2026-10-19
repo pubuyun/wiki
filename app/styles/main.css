@@ -60,6 +60,7 @@
 
 .content-reading-container {
     container: reading / inline-size;
+    overflow-anchor: none;
 }
 
 /* Wrap equations between KaTeX groups; scroll indivisible groups if needed. */
@@ -314,7 +315,7 @@ input[type="submit"],
     /* --accent: #2b6cbf;
     --on-accent: #ffffff; */
     --accent: #efaf62;
-    --accent-text: #9C5700;
+    --accent-text: #9c5700;
     --on-accent: #3f2500;
 
     --secondary: #f7fafc;

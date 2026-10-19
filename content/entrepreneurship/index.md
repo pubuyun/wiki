@@ -86,7 +86,7 @@ caption: Fig. 2 | Overview of Expelliodor’s three complementary strategies for
 
 As part of Expelliodor’s commercialization planning, GreatBay-SCIE 2026 has filed a **patent application** covering key technical components of our deodorization system, including the engineered precursor binder, PepTSh transporter binder, and CGTase-based modification of Cys-Gly-3M3SH.
 
-:iframe{height="720" loading="lazy" src="https://static.igem.wiki/teams/6133/wiki/hp/entrepreneurship/entrepreneurship-index-patent-english-translation.pdf#page=1&view=Fit" title="Patent application English translation (PDF)" width="100%"}
+:content-components-pdf-embed{src="https://static.igem.wiki/teams/6133/wiki/hp/entrepreneurship/entrepreneurship-index-patent-english-translation.pdf#page=1&view=Fit" title="Patent application English translation"}
 
 [Read or download the patent application English translation (PDF)](https://static.igem.wiki/teams/6133/wiki/hp/entrepreneurship/entrepreneurship-index-patent-english-translation.pdf)
 
@@ -605,7 +605,7 @@ They also give us space to communicate the idea behind **“Expell Your Way”**
 
 We prepared a business plan that consolidates our entrepreneurial ideas, allowing potential investors and customers to quickly understand our business concepts.
 
-:iframe{height="720" loading="lazy" src="https://static.igem.wiki/teams/6133/wiki/hp/entrepreneurship/expelliodor-business-plan.pdf#page=1&view=Fit" title="Expelliodor business plan (PDF)" width="100%"}
+:content-components-pdf-embed{src="https://static.igem.wiki/teams/6133/wiki/hp/entrepreneurship/expelliodor-business-plan.pdf#page=1&view=Fit" title="Expelliodor business plan"}
 
 [Read or download the Expelliodor business plan (PDF)](https://static.igem.wiki/teams/6133/wiki/hp/entrepreneurship/expelliodor-business-plan.pdf)
 

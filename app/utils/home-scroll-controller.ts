@@ -7,7 +7,6 @@ export type HomeScrollOptions = {
 
 export type HomeScrollController = {
     scrollTo: (position: number, options?: HomeScrollOptions) => void;
-    jumpTo: (position: number) => void;
     cancel: () => void;
 };
 

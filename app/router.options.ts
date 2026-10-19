@@ -4,67 +4,41 @@ import { waitForHashTarget } from "./utils/hash-scroll-target";
 
 export default <RouterConfig>{
     async scrollBehavior(to, from, savedPosition) {
-        if (savedPosition) {
-            return savedPosition;
+        // Keep native initial-load restoration, including URL fragments.
+        if (!from.matched.length) return savedPosition ?? false;
+
+        const nuxtApp = useNuxtApp();
+        const router = useRouter();
+        if (to.path !== from.path && useRoute().path !== to.path) {
+            await new Promise<void>((resolve) => {
+                nuxtApp.hooks.hookOnce("page:finish", () => resolve());
+            });
         }
+        await nextTick();
+
+        const isCurrent = () =>
+            router.currentRoute.value.fullPath === to.fullPath;
+        if (!isCurrent()) return false;
+        if (savedPosition) return savedPosition;
 
         if (to.hash) {
-            if (
-                import.meta.client &&
-                from.matched.length &&
-                to.path !== from.path &&
-                /^#(?:fnref|ref)-/.test(to.hash)
-            ) {
-                const router = useRouter();
-                const isCurrent = () =>
-                    router.currentRoute.value.fullPath === to.fullPath;
-                // Wait for the new page to render directly. Registering a
-                // `page:loading:end` hook here can miss the hook when Nuxt
-                // skips its loading UI for same-category navigation, leaving
-                // the browser at the top until the fallback hash scroll runs.
-                await nextTick();
-                const target = await waitForHashTarget(to.hash, isCurrent);
-                if (!target || !isCurrent() || !target.isConnected) {
-                    return false;
-                }
-                window.dispatchEvent(
-                    new CustomEvent("wiki:hash-scroll", {
-                        detail: { id: target.id },
-                    }),
-                );
-                target.focus({ preventScroll: true });
-                return {
-                    top: Math.max(
-                        0,
-                        target.getBoundingClientRect().top +
-                            window.scrollY -
-                            getScrollPaddingTop() -
-                            (Number.parseFloat(
-                                getComputedStyle(target).scrollMarginTop,
-                            ) || 0),
-                    ),
-                    behavior: "instant",
-                };
-            }
-            return {
-                el: to.hash,
-                top: getScrollPaddingTop(),
-            };
-        }
+            const target = await waitForHashTarget(to.hash, isCurrent);
+            if (!target || !isCurrent() || !target.isConnected) return false;
 
-        if (import.meta.client && !from.matched.length && window.scrollY > 0) {
+            window.dispatchEvent(
+                new CustomEvent("wiki:hash-scroll", {
+                    detail: { id: target.id },
+                }),
+            );
+            // Native anchor scrolling respects CSS scroll-padding and
+            // scroll-margin without a second coordinate correction.
+            target.scrollIntoView({ behavior: "instant", block: "start" });
+            if (to.path !== from.path && /^#(?:fnref|ref)-/.test(to.hash)) {
+                target.focus({ preventScroll: true });
+            }
             return false;
         }
 
-        return { top: 0 };
+        return to.path === from.path ? false : { left: 0, top: 0 };
     },
 };
-
-function getScrollPaddingTop() {
-    if (!import.meta.client) {
-        return 0;
-    }
-
-    const value = getComputedStyle(document.documentElement).scrollPaddingTop;
-    return Number.parseFloat(value) || 0;
-}

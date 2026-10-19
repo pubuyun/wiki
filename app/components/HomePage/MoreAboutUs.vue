@@ -1,36 +1,17 @@
 <script setup lang="ts">
 import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { nextTick, onBeforeUnmount, onMounted, ref } from "vue";
+import { onBeforeUnmount, ref } from "vue";
 
 import descriptionSvg from "./MoreAboutUs/description.svg?raw";
 import engineeringSvg from "./MoreAboutUs/engineering.svg?raw";
 import ihpSvg from "./MoreAboutUs/ihp.svg?raw";
 import membersSvg from "./MoreAboutUs/members.svg?raw";
 import modelSvg from "./MoreAboutUs/model.svg?raw";
-import {
-    HOME_CHAPTERS,
-    homeChapterActivationLabel,
-} from "~/utils/home-chapters";
+import { HOME_CHAPTERS } from "~/utils/home-chapters";
 import { siteNavGroups } from "~/utils/site-navigation";
-
-gsap.registerPlugin(ScrollTrigger);
-
-const props = withDefaults(defineProps<{ embedded?: boolean }>(), {
-    embedded: false,
-});
-const emit = defineEmits<{
-    timelineReady: [
-        payload: {
-            timeline: gsap.core.Timeline;
-            scene: HTMLElement;
-        },
-    ];
-}>();
 
 const scene = ref<HTMLElement>();
 const hoverTimelines = new WeakMap<HTMLElement, gsap.core.Timeline>();
-let media: gsap.MatchMedia | undefined;
 
 function navigationLink(to: string) {
     const link = siteNavGroups
@@ -146,132 +127,17 @@ function handleIconLeave(event: Event) {
     });
 }
 
-function refreshScrollTrigger() {
-    ScrollTrigger.refresh();
-}
-
-onMounted(async () => {
-    await nextTick();
-    const root = scene.value;
-    if (!root) return;
-
-    const geometry = iconGeometry(root);
-    const fills = root.querySelectorAll<SVGElement>("[data-fill]");
-    const photo = root.querySelector<HTMLElement>("[data-photo]");
-    const title = root.querySelector<HTMLElement>("[data-title]");
-    const links = root.querySelectorAll<HTMLElement>("[data-feature-link]");
-    const decorations = root.querySelectorAll<HTMLElement>("[data-decoration]");
-
-    media = gsap.matchMedia();
-    media.add(
-        {
-            reduceMotion: "(prefers-reduced-motion: reduce)",
-            allowMotion: "(prefers-reduced-motion: no-preference)",
-        },
-        (context) => {
-            const reduceMotion = Boolean(context.conditions?.reduceMotion);
-
-            if (!reduceMotion) {
-                geometry.forEach((element) => {
-                    const length = geometryLength(element) + 1;
-                    gsap.set(element, {
-                        strokeDasharray: length,
-                        strokeDashoffset: length,
-                    });
-                });
-            }
-
-            const timeline = gsap.timeline({
-                paused: props.embedded,
-                defaults: { ease: "power3.out" },
-                scrollTrigger: props.embedded
-                    ? undefined
-                    : {
-                          id: "more-about-us-intro",
-                          trigger: root,
-                          start: "top 72%",
-                          once: true,
-                      },
-            });
-
-            timeline
-                .addLabel(
-                    homeChapterActivationLabel(HOME_CHAPTERS.moreAboutUs),
-                    0,
-                )
-                .addLabel(HOME_CHAPTERS.moreAboutUs, 0)
-                .from(
-                    decorations,
-                    {
-                        autoAlpha: 0,
-                        scale: reduceMotion ? 1 : 0.35,
-                        duration: reduceMotion ? 0.01 : 0.8,
-                        stagger: reduceMotion ? 0 : 0.06,
-                    },
-                    0,
-                )
-                .from(
-                    photo,
-                    {
-                        autoAlpha: 0,
-                        x: reduceMotion ? 0 : -72,
-                        rotation: reduceMotion ? 0 : -1.5,
-                        duration: reduceMotion ? 0.01 : 0.95,
-                    },
-                    0.05,
-                )
-                .from(
-                    title,
-                    {
-                        autoAlpha: 0,
-                        y: reduceMotion ? 0 : 42,
-                        duration: reduceMotion ? 0.01 : 0.72,
-                    },
-                    0.13,
-                )
-                .from(
-                    links,
-                    {
-                        autoAlpha: 0,
-                        y: reduceMotion ? 0 : 46,
-                        scale: reduceMotion ? 1 : 0.88,
-                        duration: reduceMotion ? 0.01 : 0.68,
-                        stagger: reduceMotion ? 0 : 0.09,
-                    },
-                    0.22,
-                )
-                .to(
-                    geometry,
-                    {
-                        strokeDashoffset: 0,
-                        duration: reduceMotion ? 0.01 : 1.08,
-                        ease: "power2.inOut",
-                        stagger: reduceMotion ? 0 : 0.018,
-                    },
-                    0.28,
-                )
-                .fromTo(
-                    fills,
-                    { fillOpacity: 0 },
-                    {
-                        fillOpacity: 1,
-                        duration: reduceMotion ? 0.01 : 0.52,
-                        stagger: reduceMotion ? 0 : 0.025,
-                    },
-                    0.58,
-                );
-
-            if (props.embedded) {
-                emit("timelineReady", { timeline, scene: root });
-            }
-        },
-        root,
-    );
-});
-
 onBeforeUnmount(() => {
-    media?.revert();
-    ScrollTrigger.getById("more-about-us-intro")?.kill();
+    scene.value
+        ?.querySelectorAll<HTMLElement>("[data-feature-link]")
+        .forEach((link) => {
+            hoverTimelines.get(link)?.kill();
+            gsap.killTweensOf([
+                link,
+                ...iconGeometry(link),
+                ...link.querySelectorAll("[data-fill]"),
+            ]);
+        });
 });
 </script>
 
@@ -287,26 +153,25 @@ onBeforeUnmount(() => {
             class="more-about-us__bubbles more-about-us__bubbles--right"
             aria-hidden="true"
         >
-            <i data-decoration />
-            <i data-decoration />
-            <i data-decoration />
-            <i data-decoration />
+            <i />
+            <i />
+            <i />
+            <i />
         </div>
 
         <div class="more-about-us__layout">
-            <figure data-photo class="more-about-us__photo-frame">
+            <figure class="more-about-us__photo-frame">
                 <img
                     src="https://static.igem.wiki/teams/6133/wiki/homepage/moreaboutus.avif"
                     alt="Expelliodor mascot holding three fluffy companions"
                     class="more-about-us__photo"
                     loading="lazy"
                     decoding="async"
-                    @load="refreshScrollTrigger"
                 />
             </figure>
 
             <div class="more-about-us__content">
-                <h2 id="more-about-us-title" data-title>More About Us</h2>
+                <h2 id="more-about-us-title">More About Us</h2>
 
                 <nav
                     class="more-about-us__links"
@@ -316,7 +181,7 @@ onBeforeUnmount(() => {
                         v-for="feature in featureLinks"
                         :key="feature.key"
                         :to="feature.to"
-                        :class="`more-about-us__link more-about-us__link--${feature.key}`"
+                        class="more-about-us__link"
                         data-feature-link
                         :aria-label="`Visit ${feature.label}`"
                         @mouseenter="handleIconEnter"
@@ -345,7 +210,11 @@ onBeforeUnmount(() => {
     position: relative;
     min-height: 100svh;
     overflow: hidden;
-    background: #07366f;
+    background: linear-gradient(
+        to bottom,
+        #07366f 70%,
+        var(--surface, #03316d) 100%
+    );
     color: #fff;
     isolation: isolate;
 }
@@ -483,11 +352,10 @@ onBeforeUnmount(() => {
     position: absolute;
     display: block;
     border-radius: 50%;
-    transform-origin: center;
 }
 
 .more-about-us__bubbles--right {
-    top: -4rem;
+    top: 8rem;
     right: -5rem;
     width: 18rem;
     height: 32rem;

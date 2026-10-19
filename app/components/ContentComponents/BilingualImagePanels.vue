@@ -22,7 +22,7 @@ const props = withDefaults(
         label: "Image language",
         imageBackground: "#fff",
         autoLabels: undefined,
-        defaultLanguage: "en",
+        defaultLanguage: "zh",
     },
 );
 
@@ -30,18 +30,18 @@ const language = ref(props.defaultLanguage);
 
 const versions = computed(() => [
     {
-        value: "en",
-        lang: "en",
-        name: "English",
-        src: Array.isArray(props.srcEn) ? props.srcEn : [props.srcEn],
-        alt: props.altEn,
-    },
-    {
         value: "zh",
         lang: "zh-CN",
         name: "中文",
         src: Array.isArray(props.srcZh) ? props.srcZh : [props.srcZh],
         alt: props.altZh,
+    },
+    {
+        value: "en",
+        lang: "en",
+        name: "English",
+        src: Array.isArray(props.srcEn) ? props.srcEn : [props.srcEn],
+        alt: props.altEn,
     },
 ]);
 </script>
