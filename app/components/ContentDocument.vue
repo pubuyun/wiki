@@ -10,6 +10,7 @@ const props = defineProps({
     showHeader: { type: Boolean, default: true },
     headingLevel: { type: Number, default: 1 },
     navigationPages: { type: Array, default: () => [] },
+    numberFigures: { type: Boolean, default: true },
 });
 
 // Navigation can refresh the same Nuxt Content record with new object identities.
@@ -20,6 +21,12 @@ const page = computed((previous) => {
         ? previous
         : next;
 });
+
+const stageTitle = computed(() =>
+    page.value.path?.startsWith("/human-practices/stage-")
+        ? pageTitle(page.value).match(/^(Stage \d+)\s+(.+)$/)
+        : null,
+);
 
 const breadcrumbs = computed(() => {
     const segments = page.value.path.split("/").filter(Boolean);
@@ -55,7 +62,9 @@ useHead(() => ({
 
 const tocLinks = computed(() => contentTocLinks(page.value.body));
 const numberedBody = computed(() =>
-    numberDocumentFigures(page.value.body ?? {}),
+    props.numberFigures
+        ? numberDocumentFigures(page.value.body ?? {})
+        : (page.value.body ?? {}),
 );
 const sections = computed(() => {
     const children = bodyChildren(numberedBody.value);
@@ -166,7 +175,10 @@ function sectionValue(children) {
                 :is="`h${headingLevel}`"
                 class="font-momo-trust-display text-3xl leading-tight wrap-anywhere text-on-surface sm:text-4xl"
             >
-                {{ pageTitle(page) }}
+                <template v-if="stageTitle"
+                    >{{ stageTitle[1] }}<br />{{ stageTitle[2] }}</template
+                >
+                <template v-else>{{ pageTitle(page) }}</template>
             </component>
         </header>
         <MobileContentBar v-if="tocLinks.length" :toc="tocLinks" />

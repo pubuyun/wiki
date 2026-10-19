@@ -32,20 +32,27 @@ export function useContentNavigationData(category: MaybeRefOrGetter<string>) {
         },
         {
             transform: (pages) =>
-                pages.map((page) => ({
-                    path: page.path,
-                    title: page.title,
-                    order: page.order,
-                    description:
-                        page.description ||
-                        (typeof page.meta?.description === "string"
-                            ? page.meta.description
-                            : ""),
-                    ...(typeof page.meta?.icon === "string" &&
-                    page.meta.icon.trim()
-                        ? { icon: page.meta.icon.trim() }
-                        : {}),
-                })),
+                pages
+                    .filter(
+                        (page) =>
+                            !page.path.startsWith(
+                                "/human-practices/transcript/",
+                            ),
+                    )
+                    .map((page) => ({
+                        path: page.path,
+                        title: page.title,
+                        order: page.order,
+                        description:
+                            page.description ||
+                            (typeof page.meta?.description === "string"
+                                ? page.meta.description
+                                : ""),
+                        ...(typeof page.meta?.icon === "string" &&
+                        page.meta.icon.trim()
+                            ? { icon: page.meta.icon.trim() }
+                            : {}),
+                    })),
         },
     );
 }

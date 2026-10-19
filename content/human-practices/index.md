@@ -1,6 +1,8 @@
 ---
-title: iHP
-description:
+title: "Overview"
+description: "Our Integrated Human Practices framework, five stages, ODOR cycles, stakeholder relationships, and timeline."
+hasReference: false
+order: 1
 banner: https://static.igem.wiki/teams/6133/wiki/general/banners/ihp.avif
 bannerPosition: 50% 65%
 bannerWidth: 2052
@@ -8,69 +10,229 @@ bannerHeight: 1231
 bannerMobilePosition: 55% 45%
 ---
 
-## Overview
+This document introduces our **Integrated Human Practices work**, encompassing local and international surveys, potential customer interviews, expert discussions, industry meetings, written proposals, community seminars, and educational resource development. The **Overview** outlines our stage and cycle framework, classifies stakeholders into four groups based on how they affect us and how we affect them, and maps our activities along thematic timelines. **Stages 1–5**, presented across five separate sections, document our stakeholder interactions and outcomes. **Feedback to Future** elucidates how we evaluated which stakeholder feedback to prioritize, revisited stakeholders to reflect on our work, and developed future plans.
 
-### Bilingual Image Examples
+## Introduction
 
-These examples reuse the first two figures from the [Model overview](/model) as placeholders for the English and Chinese image versions. Replace each language's sources with the corresponding translated images when adding real content.
+**How can we "Expel" the odor?**
 
-#### Single Image
+This was the question that started our project.
 
-::content-components-bilingual-image-panels
+At first, we thought we knew what the answer would look like: understand the mechanism, develop a solution, and make it work. But as we stepped outside the lab and engaged with the world our science was meant to serve, we realized that there was much more to **"solve"** than the odor itself.
+
+Across **five stages and 23 cycles**, we discovered that addressing underarm odor required more than any single discipline could offer. Medical experts clarified the limitations of existing treatments. Skincare specialists challenged our assumptions about product format and manufacturing. Immunologists introduced us to *in silico* protein safety screening. Psychiatrists and mental health counsellors illuminated the stigma surrounding odor and the need for educational resources. Anthropologists revealed how cultural norms and advertising shape perceptions of underarm odor.
+
+Eventually, even our slogan became something to reconsider.
+
+When we first chose **"Expelliodor"** and the slogan **"Expel Your Odor,"** we were focused on the function of our product. But through our Integrated Human Practices work, we began to question what "Expel" might imply beyond its technical meaning. Did we want to suggest that odor was something everyone should eliminate? Was our messaging reinforcing the very stigma we hoped to address? Who were we to define what was "normal"?
+
+This led us to **"Expel Your Way"**
+
+For us, this change encapsulates our philosophy of Human Practices. Rather than simply collecting opinions and continuing with our original plan, we truly **integrated** them, letting what we encountered shape the project itself. Each interaction opened another question, and each question brought us somewhere we had not expected to go.
+
+What started with understanding the biology of underarm odor gradually became a process of rethinking not only what we wanted to build, but also **why** we were building it, **who** we were building it for, and **how** we wanted to communicate it. For us, that is what Human Practices means: not simply developing something that works, but continuously questioning whether what we are creating is **good and responsible for the world.**
+
+## Stage Description
+
+These questions became the thread guiding us throughout our Human Practices journey. Across **five stages**, we moved from exploring the problem and identifying unmet needs to developing and optimizing our solution, before expanding our focus to its broader impact.
+
+### Stage 1: Exploring the Problem
+
+::content-components-panel-layout{height="none" label="Human Practices illustration and description"}
+#left
+
+:::content-components-lightbox-image
 ---
-srcEn: https://static.igem.wiki/teams/6133/wiki/drylab/model/overview-fig1.avif
-srcZh: https://static.igem.wiki/teams/6133/wiki/drylab/model/overview-fig2.avif
-altEn: Three strategies to prevent precursor uptake using a precursor binder, a transporter binder, and CGTase.
-altZh: 从问题定义、目标定义、机制表征到设计规范，再进入设计、构建、测试、学习循环的流程图。
-label: Single image language
-caption: Single-image language switch using two Model figures as placeholders.
+src:
+  - "https://static.igem.wiki/teams/6133/wiki/hp/ihp/human-practices-index-fig1.avif"
+alt:
+  - "Stage 1 explores the problem through a public survey and interviews with dermatology, surgery, and Traditional Chinese Medicine specialists."
+caption: "Fig. 1 | Our mission in stage 1"
 ---
+:::
+
+#right
+
+Beginning with a team member's experience of underarm odor, we explored the context of the issue and the status quo of current solutions. Through a local survey and interviews with a dermatologist, an axillary surgeon, and a Traditional Chinese Medicine specialist, we identified several gaps in existing solutions. This shaped our initial goal of developing an effective and accessible deodorant that also considers skin comfort and safety. At the same time, these conversations pointed us toward several potential user groups: regular deodorant users, people who have undergone surgery, and institution owners who could make bulk purchases.
+
 ::
 
-#### Four-Panel Grid
+### Stage 2: Identifying Unmet Needs
 
-::content-components-bilingual-image-panels
+::content-components-panel-layout{height="none" label="Human Practices illustration and description"}
+#left
+
+:::content-components-lightbox-image
 ---
-srcEn:
-  - https://static.igem.wiki/teams/6133/wiki/drylab/model/overview-fig1.avif
-  - https://static.igem.wiki/teams/6133/wiki/drylab/model/overview-fig2.avif
-  - https://static.igem.wiki/teams/6133/wiki/drylab/model/overview-fig1.avif
-  - https://static.igem.wiki/teams/6133/wiki/drylab/model/overview-fig2.avif
-srcZh:
-  - https://static.igem.wiki/teams/6133/wiki/drylab/model/overview-fig2.avif
-  - https://static.igem.wiki/teams/6133/wiki/drylab/model/overview-fig1.avif
-  - https://static.igem.wiki/teams/6133/wiki/drylab/model/overview-fig2.avif
-  - https://static.igem.wiki/teams/6133/wiki/drylab/model/overview-fig1.avif
-altEn:
-  - Three strategies to prevent precursor uptake.
-  - The Characterize stage connects problem definition to the DBTL cycle.
-  - Three strategies to prevent precursor uptake, repeated for the grid example.
-  - The Characterize stage and DBTL cycle, repeated for the grid example.
-altZh:
-  - 表征阶段连接问题定义与设计、构建、测试、学习循环。
-  - 通过前体结合蛋白、转运蛋白结合蛋白及 CGTase 阻止前体摄取的三种策略。
-  - 表征阶段与设计、构建、测试、学习循环，重复用于四宫格示例。
-  - 阻止前体摄取的三种策略，重复用于四宫格示例。
-label: Four-panel image language
-caption: Four-panel language switch reusing the same two Model figures.
+src:
+  - "https://static.igem.wiki/teams/6133/wiki/hp/ihp/human-practices-index-fig2.avif"
+alt:
+  - "Stage 2 gathers unmet needs from deodorant users, a former surgery patient, and gym and hotel owners."
+caption: "Fig. 2 | Our mission in stage 2"
 ---
+:::
+
+#right
+
+Guided by insights from stage one, we focused on these potential customers and looked more closely at what existing solutions failed to fulfill. We thus interviewed a teenage deodorant user, two regular deodorant users, a former surgical patient, a gym owner, and a hotel owner. Their experiences helped us identify safety as the primary need we aimed to address, as well as comfort, rapid and lasting effect, convenience and affordability.
+
 ::
 
-### Interviews
+### Stage 3: Developing a Solution
 
-::content-components-human-practices-interview-script{src="human-practices/potential costumer sun.md"}
+::content-components-panel-layout{height="none" label="Human Practices illustration and description"}
+#left
+
+:::content-components-lightbox-image
+---
+src:
+  - "https://static.igem.wiki/teams/6133/wiki/hp/ihp/human-practices-index-fig3.avif"
+alt:
+  - "Stage 3 develops solutions with a modeling expert, KleanK, and a synthetic biology expert."
+caption: "Fig. 3 | Our mission in stage 3"
+---
+:::
+
+#right
+
+With these unmet needs in mind, we began developing our novel, mechanism-based approach to underarm odor control. Interviews with a protein modeling specialist and a synbio expert as well as inspiration from the GreatBay-SCIE 2025 team helped us refine our binder designs, explore a complementary enzyme strategy, and overcome challenges in experimental validation. Meanwhile, KleanK, an established deodorant brand with a strong presence in China's e-commerce market reached out to us for further discussion, offering industry-level recognition of the potential of our mechanism-based approach.
+
 ::
 
-This is the main page displaying Markdown located at [content/index.md](https://github.com/nuxt/starter/blob/content/content/index.md).
+### Stage 4: Optimising our Solution
 
-### Manage your Contents
+::content-components-panel-layout{height="none" label="Human Practices illustration and description"}
+#left
 
-Create new pages or modify the existing ones in `content/` directory.
+:::content-components-lightbox-image
+---
+src:
+  - "https://static.igem.wiki/teams/6133/wiki/hp/ihp/human-practices-index-fig4.avif"
+alt:
+  - "Stage 4 refines the product with industry, formulation, immunology, patent, and AI for Science experts."
+caption: "Fig. 4 | Our mission in stage 4"
+---
+:::
 
-### Query & Render Pages
+#right
 
-You can find an example of querying contents and rendering them in a [catch-all page](https://github.com/nuxt/starter/blob/content/app/pages/%5B...slug%5D.vue)
+As our experiments began to show promising results, we started shifting our focus towards optimizing our product for practical use. Through consultations with a skincare product expert, a cosmetic formulation expert, an immunologist and a second meeting with KleanK, we explored formulation stability, usability and product safety. As we moved toward potential commercialization, we also interviewed a patent expert to explore strategies for protecting our engineered proteins. This discussion then raised questions about fairness and accountability in patent protection for AI-designed proteins, leading us to discuss gaps in current protections for AI-driven innovation with an *AI4S* expert.
 
-### Integrate Vue Component
+::
 
-Checkout out the [documentation](https://content.nuxt.com/docs/getting-started) to learn more.
+### Stage 5: Expanding our Impact
+
+::content-components-panel-layout{height="none" label="Human Practices illustration and description"}
+#left
+
+:::content-components-lightbox-image
+---
+src:
+  - "https://static.igem.wiki/teams/6133/wiki/hp/ihp/human-practices-index-fig5.avif"
+alt:
+  - "Stage 5 connects eight cycles covering mental wellbeing, education, international markets, sustainability, social attitudes, and inclusive packaging."
+caption: "Fig. 5 | Our mission in stage 5"
+---
+:::
+
+#right
+
+Reflecting on these ethical considerations led us to look beyond AI and technical development, considering the broader social, environmental, and accessibility impacts of Expelliodor. Interviews with dermatologists, a psychiatrist, a sociologist and an anthropologist helped us understand how stigma, cultural expectations, and advertising can affect mental wellbeing and personal choice. These discussions then motivated us to take action by organizing a community seminar and creating a bilingual mental health handbook to address misconceptions and encourage respectful communication. Meanwhile, international surveys, school teachers, Amcor and consultations with materials, air pollution control, marine microplastics and monitoring center experts helped us explore diverse user needs and more sustainable practices, while our inclusive design research guided the development of more accessible packaging for people with disabilities and older adults.
+
+::
+
+## Cycles Description
+
+We organized our Human Practices work into iterative **ODOR cycles**, each centered around **one stakeholder interaction or a small group of closely related interactions.** This structure traces how we moved from an initial observation to further investigation, new insights then to concrete changes to our project.
+
+Our ODOR Cycle consists of **four interconnected stages:**
+
+::content-components-panel-layout{height="none" label="Human Practices illustration and description"}
+#left
+
+:::content-components-lightbox-image
+---
+src:
+  - "https://static.igem.wiki/teams/6133/wiki/hp/ihp/human-practices-index-fig6.avif"
+alt:
+  - "The ODOR cycle proceeds from Observe to Determine, Outcome, and Refine, then repeats."
+caption: "Fig. 6 | Visual representation of our iterative ODOR cycle"
+---
+:::
+
+#right
+
+- **Observe:** Identifying emerging needs, questions, or challenges, usually from our previous work and stakeholder feedback.
+
+- **Determine:** Taking concrete action and planning how to gather relevant insights.
+
+- **Outcome:** Analyzing the findings from stakeholder interactions to identify key insights and areas for improvement.
+
+- **Refine:** Incorporating these insights to inform our decisions, adjust our project, shape future plans, and reflect on our progress.
+
+Using this **iterative structure**, we ensure that stakeholder engagement is a two-way exchange, allowing their perspectives to shape our project while ensuring that our work responds to their needs.
+
+::
+
+## Stakeholder Analysis:
+
+> “*Human Practices is the study of how your work affects the world, and how the world affects your work*.”
+>
+> ——Peter Carr
+>
+>
+
+*Peter Carr **'** s description of the reciprocal relationship between a project and the world in Human Practices*
+
+As iGEM defines it, "*Human Practices is the study of how your work affects the world, and how the world affects your work."* Inspired by this principle, we examine **how our stakeholders affect Expelliodor and how our project may, in turn, affect them and the wider world.**
+
+### Stakeholder Classification:
+
+We grouped our stakeholders into **four categories** based on their relationship with Expelliodor:
+
+1. **Users & Beneficiaries:** Individuals who may purchase Expelliodor and give feedback on their wants, needs, and preferences
+
+2. **Experts & Professionals:** Professionals who contribute field-specific expertise to guide our project's development
+
+3. **Industry & Market:** Industry representatives who advise us on adapting Expelliodor for practical commercial use
+
+4. **Society & Community:** Members of society who help ensure our project is good and responsible for world
+
+### How the world affects your work:
+
+Guided by the following questions, we analysed **how stakeholders affected Expelliodor** through four areas:
+
+1. **Experiential contribution:** What firsthand experiences and personal needs did stakeholders share with us?
+
+2. **Technical contribution:** What specialised knowledge did stakeholders provide to address our scientific and technical challenges?
+
+3. **Ethical contribution:** What ethical concerns and responsibilities did stakeholders help us identify?
+
+4. **Applicational contribution:** How did stakeholders help us evaluate Expelliodor's real-world feasibility and potential?
+
+### How your work affects the world:
+
+Guided by the following questions, we analysed **how Expelliodor affects our stakeholders** through three areas:
+
+1. **Treatment impact:** How could Expelliodor address stakeholders’ unmet needs and preferences for deodorant products?
+
+2. **Psychosocial impact:** How could our project influence perceptions of underarm odor and reduce associated stigma?
+
+3. **Technical impact:** How could our project’s technical innovations and resources benefit stakeholders and contribute to future applications?
+
+---
+
+::content-components-human-practices-stakeholders-graph
+::
+
+## Timeline
+
+::content-components-lightbox-image
+---
+src:
+  - "https://static.igem.wiki/teams/6133/wiki/hp/ihp/human-practices-index-fig7.avif"
+alt:
+  - "A timeline connects stakeholder activities across five stages to safety, technology, entrepreneurship, sustainability, education, society, and inclusivity."
+caption: "Fig. 7 | Timeline linking the five stages of our Human Practices work with safety, technology, entrepreneurship, sustainability, education, society and inclusivity."
+---
+::

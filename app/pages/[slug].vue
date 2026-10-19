@@ -5,6 +5,7 @@ definePageMeta({
 
 import StakeholdersGraph from "~/components/ContentComponents/human-practices/StakeholdersGraph.vue";
 import { contentTocLinks } from "~/utils/content-toc";
+import { numberDocumentFigures } from "~/utils/document-figures";
 
 const route = useRoute();
 const runtimeConfig = useRuntimeConfig();
@@ -40,8 +41,37 @@ const educationConclusion = computed(() => {
     };
 });
 const documentPage = computed(
-    () => educationConclusion.value?.main ?? page.value,
+    () =>
+        humanPracticesOverview.value?.main ??
+        educationConclusion.value?.main ??
+        page.value,
 );
+
+// Keep the stakeholder graph at its Markdown marker while giving it the full shell width.
+const humanPracticesOverview = computed(() => {
+    if (slug.value !== "human-practices" || !page.value) return null;
+    const body = numberDocumentFigures(page.value.body) as {
+        children?: unknown[];
+        value?: unknown[];
+    };
+    const nodes = body?.children ?? body?.value ?? [];
+    const index = nodes.findIndex(
+        (node) =>
+            (Array.isArray(node)
+                ? node[0]
+                : (node as { tag?: string })?.tag) ===
+            "content-components-human-practices-stakeholders-graph",
+    );
+    if (index < 0) return null;
+    const withNodes = (children: unknown[]) => ({
+        ...page.value!,
+        body: body.value ? { ...body, value: children } : { ...body, children },
+    });
+    return {
+        main: withNodes(nodes.slice(0, index)),
+        remainder: withNodes(nodes.slice(index + 1)),
+    };
+});
 
 const contentGraphViews = new Set(runtimeConfig.public.contentGraphViews);
 const graphView = computed(() => {
@@ -85,18 +115,12 @@ useSeoMeta({
 <template>
     <article v-if="displayPage" class="flex min-w-0 flex-1 flex-col pt-2">
         <div
-            v-if="
-                slug === 'education' || slug === 'human-practices' || graphView
-            "
+            v-if="slug === 'education' || graphView"
             class="min-w-0 px-4 sm:px-6 lg:px-8 xl:px-12"
         >
             <ContentComponentsEducationActivityGraph
                 v-if="slug === 'education'"
                 class="mb-8 w-full"
-            />
-            <StakeholdersGraph
-                v-else-if="slug === 'human-practices'"
-                class="mb-8"
             />
             <ContentGraph
                 v-else-if="graphView"
@@ -132,6 +156,16 @@ useSeoMeta({
                     <ContentBar :toc="tocLinks" />
                 </aside>
             </div>
+            <template v-if="humanPracticesOverview">
+                <StakeholdersGraph class="my-8" />
+                <ContentDocument
+                    :page="humanPracticesOverview.remainder"
+                    :navigation-pages="pages"
+                    :show-header="false"
+                    :number-figures="false"
+                    :heading-level="2"
+                />
+            </template>
             <CategoryExplore
                 v-if="children.length > 1"
                 :pages="children"

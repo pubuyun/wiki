@@ -24,6 +24,7 @@ const groupStyles: Record<string, Record<string, string>> = {
         "--edge-color": "#dff3ee",
     },
     experts: {
+        "--node-font-size": "1.05cqi",
         "--group-color": "color-mix(in srgb, #ffe071 92%, var(--surface))",
         "--title-color": "#08346a",
         "--node-color": "#fff3c6",
@@ -31,6 +32,7 @@ const groupStyles: Record<string, Record<string, string>> = {
         "--edge-color": "#fff3c6",
     },
     community: {
+        "--node-font-size": "1.3cqi",
         "--group-color": "color-mix(in srgb, #ffa51d 92%, var(--surface))",
         "--title-color": "#08346a",
         "--node-color": "#ffe8a8",
@@ -47,7 +49,54 @@ const groupStyles: Record<string, Record<string, string>> = {
 };
 const impactClass = (title: string) =>
     `impact-${title.toLowerCase().replace(/[^a-z]+/g, "-")}`;
-const nodes = data.groups.flatMap((group) =>
+// Keep the reference's scattered composition, with individually placed tags
+// that clear the headings and stay within their coloured quadrants.
+const nodePositions: Partial<Record<string, Box>> = {
+    tcm: { x: 1066, y: 156, width: 212, height: 68 },
+    xia: { x: 1086, y: 285, width: 224, height: 84 },
+    skincare: { x: 1295, y: 179, width: 224, height: 92 },
+    modelling: { x: 1305, y: 351, width: 196, height: 76 },
+    biomaterials: { x: 1068, y: 428, width: 220, height: 88 },
+    immunologist: { x: 1690, y: 203, width: 180, height: 72 },
+    surgeon: { x: 1693, y: 332, width: 180, height: 78 },
+    formulation: { x: 1692, y: 440, width: 188, height: 108 },
+    "environmental-cheng-kai": {
+        x: 1288,
+        y: 451,
+        width: 196,
+        height: 100,
+    },
+    "environmental-zhang-linbao": {
+        x: 1508,
+        y: 278,
+        width: 180,
+        height: 100,
+    },
+    "environmental-li-guanghui": {
+        x: 1500,
+        y: 425,
+        width: 180,
+        height: 104,
+    },
+    "emc-director": { x: 1502, y: 152, width: 180, height: 76 },
+    sociologist: { x: 430, y: 665, width: 220, height: 76 },
+    ai4s: { x: 180, y: 735, width: 190, height: 76 },
+    psychiatrist: { x: 450, y: 790, width: 190, height: 76 },
+    counsellor: { x: 200, y: 930, width: 220, height: 122 },
+    "school-counsellor": { x: 500, y: 910, width: 210, height: 112 },
+    teachers: { x: 755, y: 952, width: 210, height: 82 },
+    anthropologist: { x: 735, y: 720, width: 220, height: 76 },
+    amcor: { x: 1140, y: 670, width: 220, height: 76 },
+    evonik: { x: 1080, y: 870, width: 220, height: 76 },
+};
+const groups = data.groups.map((group) => ({
+    ...group,
+    nodes: group.nodes.map((node) => ({
+        ...node,
+        position: nodePositions[node.id] ?? node.position,
+    })),
+}));
+const nodes = groups.flatMap((group) =>
     group.nodes.map((node) => ({
         ...node,
         edgeColor: groupStyles[group.id]?.["--edge-color"],
@@ -116,30 +165,8 @@ function inside(point: Point, box: Box, radius: number) {
     return dx * dx + dy * dy <= radius * radius;
 }
 const round = (value: number) => Number(value.toFixed(3));
-const controlRatios: Partial<Record<string, Point>> = {
-    tcm: { x: 0.6, y: 0.3 },
-    xia: { x: 0.4, y: 0.3 },
-    counsellor: { x: 0.5, y: 0.4 },
-};
-const expertEndpoints: Partial<
-    Record<
-        string,
-        { centerX: number; nodeAngle: number | null; nodeOffsetX?: number }
-    >
-> = {
-    tcm: { centerX: 976, nodeAngle: null, nodeOffsetX: 28 },
-    skincare: { centerX: 1002, nodeAngle: 135 },
-    modelling: { centerX: 1025, nodeAngle: 150 },
-    biomaterials: { centerX: 1048, nodeAngle: 142 },
-    immunologist: { centerX: 1080, nodeAngle: null },
-    surgeon: { centerX: 1089, nodeAngle: 125 },
-    formulation: { centerX: 1094, nodeAngle: 110 },
-};
 const edges = nodes.map((node) => {
-    const a = {
-            ...node.position,
-            x: node.position.x + (node.id === "link-spider" ? 24 : 0),
-        },
+    const a = node.position,
         center = data.center,
         group = node.groupBox,
         isTopGroup = group.y < center.y;
@@ -161,7 +188,7 @@ const edges = nodes.map((node) => {
               )
             : Math.max(group.y + inset, center.y + center.height / 2 - 24),
     };
-    const ratio = controlRatios[node.id] ?? { x: 0.5, y: 0.3 };
+    const ratio = { x: 0.5, y: 0.3 };
     // Ordered ports and a control point inside the group keep the arcs shallow.
     const c = {
         x: b.x + (a.x - b.x) * ratio.x,
@@ -189,65 +216,11 @@ const edges = nodes.map((node) => {
         false,
     );
     const first = at(t0),
-        last =
-            node.id === "link-spider"
-                ? {
-                      x: node.position.x + 34,
-                      y: node.position.y - node.position.height / 2,
-                  }
-                : at(t1);
+        last = at(t1);
     const control = {
         x: first.x + (t1 - t0) * ((1 - t0) * (c.x - b.x) + t0 * (a.x - c.x)),
         y: first.y + (t1 - t0) * ((1 - t0) * (c.y - b.y) + t0 * (a.y - c.y)),
     };
-    if (node.id === "link-spider") control.x += 16;
-    if (node.id === "teachers") {
-        first.x -= 20;
-        control.x -= 12;
-    }
-    if (node.id === "surgery") {
-        const radius = 1827 * 0.0165;
-        const angle = (105 * Math.PI) / 180;
-        first.x =
-            center.x - center.width / 2 + radius + radius * Math.cos(angle);
-        first.y =
-            center.y - center.height / 2 + radius - radius * Math.sin(angle);
-    }
-    if (node.id === "hotel") {
-        first.x = center.x - center.width / 2 + 75;
-        first.y = center.y - center.height / 2;
-    }
-    if (node.id === "counsellor") {
-        first.x = center.x - center.width / 2 + 1827 * 0.0165;
-        first.y = center.y + center.height / 2;
-        const radius = Math.min(1827 * 0.0265, a.height / 2);
-        const angle = (40 * Math.PI) / 180;
-        last.x = a.x + a.width / 2 - radius + radius * Math.cos(angle);
-        last.y = a.y - a.height / 2 + radius - radius * Math.sin(angle);
-    }
-    const expertEndpoint = expertEndpoints[node.id];
-    if (expertEndpoint) {
-        const centerRadius = 1827 * 0.0165;
-        const cornerX = center.x + center.width / 2 - centerRadius;
-        const dx = Math.max(0, expertEndpoint.centerX - cornerX);
-        first.x = expertEndpoint.centerX;
-        first.y =
-            center.y -
-            center.height / 2 +
-            centerRadius -
-            Math.sqrt(centerRadius ** 2 - dx ** 2);
-        if (expertEndpoint.nodeAngle === null) {
-            last.x = a.x + (expertEndpoint.nodeOffsetX ?? -64);
-            last.y = a.y + a.height / 2;
-        } else {
-            const radius = Math.min(1827 * 0.0265, a.height / 2);
-            const angle = (expertEndpoint.nodeAngle * Math.PI) / 180;
-            last.x = a.x - a.width / 2 + radius + radius * Math.cos(angle);
-            last.y = a.y + a.height / 2 - radius + radius * Math.sin(angle);
-        }
-        control.x = (first.x + last.x) / 2;
-        control.y = (first.y + last.y) / 2 + 8;
-    }
     const point = (p: Point) => round(p.x) + " " + round(p.y);
     // Draw arrowheads directly at the same endpoints as the curve. Animating
     // ordinary paths avoids browser inconsistencies with animated SVG markers.
@@ -326,7 +299,7 @@ const edges = nodes.map((node) => {
                     {{ data.center.name }}
                 </div>
                 <section
-                    v-for="group in data.groups"
+                    v-for="group in groups"
                     :key="group.id"
                     class="stakeholder-group"
                     :style="groupStyles[group.id]"
@@ -649,7 +622,7 @@ const edges = nodes.map((node) => {
     border: 2px solid transparent;
     border-radius: 2.65cqi;
     padding: 0.25em 0.55em;
-    font-size: 1.4cqi;
+    font-size: var(--node-font-size, 1.4cqi);
     font-weight: 650;
     line-height: 1.25;
     cursor: pointer;
