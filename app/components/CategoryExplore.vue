@@ -37,6 +37,13 @@ const groups = computed(() => {
         }),
     );
 });
+
+const referenceGroup = computed(() =>
+    groups.value.find((group) => group.slug === "reference"),
+);
+const exploreGroups = computed(() =>
+    groups.value.filter((group) => group !== referenceGroup.value),
+);
 </script>
 
 <template>
@@ -44,34 +51,18 @@ const groups = computed(() => {
         :aria-labelledby="headingId"
         class="category-explore border-t border-outline-variant pt-8 sm:pt-10"
     >
-        <header class="mb-6 flex flex-wrap items-end justify-between gap-4">
-            <div class="min-w-0">
-                <p
-                    class="mb-2 font-belanosima text-sm tracking-widest text-on-surface uppercase"
-                >
-                    Continue exploring
-                </p>
-                <h2
-                    :id="headingId"
-                    class="font-momo-trust-display text-2xl leading-tight wrap-anywhere text-on-surface sm:text-3xl"
-                >
-                    Explore {{ categoryTitle }}
-                </h2>
-                <p class="mt-3 max-w-prose text-base text-on-surface">
-                    Take a closer look. Choose a document to keep reading.
-                </p>
-            </div>
-            <span
-                class="shrink-0 rounded-full border border-outline-variant px-4 py-2 font-belanosima text-sm text-on-surface"
+        <header class="mb-6">
+            <h2
+                :id="headingId"
+                class="font-momo-trust-display text-2xl leading-tight wrap-anywhere text-on-surface sm:text-3xl"
             >
-                {{ pages.length }}
-                {{ pages.length === 1 ? "document" : "documents" }}
-            </span>
+                Explore {{ categoryTitle }}
+            </h2>
         </header>
 
-        <ul class="explore-grid grid gap-4">
+        <ul v-if="exploreGroups.length" class="explore-grid grid gap-4">
             <li
-                v-for="(group, index) in groups"
+                v-for="(group, index) in exploreGroups"
                 :key="group.id"
                 class="flex min-w-0 flex-col rounded-3xl border border-outline-variant bg-secondary text-on-secondary"
             >
@@ -143,6 +134,28 @@ const groups = computed(() => {
                 </details>
             </li>
         </ul>
+
+        <div
+            v-if="referenceGroup?.path"
+            class="mt-6 border-t border-outline-variant/60 pt-4"
+        >
+            <NuxtLink
+                :to="referenceGroup.path"
+                class="inline-flex items-center gap-2 font-belanosima text-lg text-on-surface/70 underline-offset-4 transition-colors hover:text-on-surface hover:underline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-outline sm:text-xl"
+            >
+                <Icon
+                    icon="lucide:book-open"
+                    aria-hidden="true"
+                    class="size-5 shrink-0"
+                />
+                <span>{{ referenceGroup.label }}</span>
+                <Icon
+                    icon="lucide:arrow-right"
+                    aria-hidden="true"
+                    class="size-5 shrink-0"
+                />
+            </NuxtLink>
+        </div>
     </nav>
 </template>
 

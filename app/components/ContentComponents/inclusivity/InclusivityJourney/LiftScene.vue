@@ -52,7 +52,7 @@ const clouds = [
         shape: "round",
         color: "#ff547e",
         points: [
-            "Dialogue and interviews with target groups and relevant experts",
+            "Dialogues and interviews with target groups and relevant experts",
             "Reflection on our methods",
         ],
     },

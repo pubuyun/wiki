@@ -1,0 +1,383 @@
+{
+    "https://static.igem.wiki/teams/6133/wiki/drylab/model/cgtase-characterize-fig4a.avif": [
+        4000, 2000
+    ],
+    "https://static.igem.wiki/teams/6133/wiki/drylab/model/cgtase-md-simulation-fig1a.avif": [
+        2800, 1600
+    ],
+    "https://static.igem.wiki/teams/6133/wiki/drylab/model/optimization-cgtase-thermostability-fig2a.avif": [
+        4000, 3921
+    ],
+    "https://static.igem.wiki/teams/6133/wiki/drylab/model/overview-fig1.avif": [
+        1600, 1200
+    ],
+    "https://static.igem.wiki/teams/6133/wiki/drylab/model/overview-fig13a.avif": [
+        4000, 2000
+    ],
+    "https://static.igem.wiki/teams/6133/wiki/drylab/model/overview-fig14a.avif": [
+        2800, 1600
+    ],
+    "https://static.igem.wiki/teams/6133/wiki/drylab/model/overview-fig17a.avif": [
+        4000, 3921
+    ],
+    "https://static.igem.wiki/teams/6133/wiki/drylab/model/overview-fig2.avif": [
+        1400, 900
+    ],
+    "https://static.igem.wiki/teams/6133/wiki/drylab/model/overview-fig4a.avif": [
+        2400, 2400
+    ],
+    "https://static.igem.wiki/teams/6133/wiki/drylab/model/overview-fig4c.avif": [
+        3200, 1813
+    ],
+    "https://static.igem.wiki/teams/6133/wiki/drylab/model/overview-fig6a.avif": [
+        3450, 1140
+    ],
+    "https://static.igem.wiki/teams/6133/wiki/drylab/model/overview-fig8a.avif": [
+        2100, 2100
+    ],
+    "https://static.igem.wiki/teams/6133/wiki/drylab/model/overview-fig9a.avif": [
+        2600, 2200
+    ],
+    "https://static.igem.wiki/teams/6133/wiki/drylab/model/precursor-binder-discussion-fig1a.avif": [
+        3450, 2940
+    ],
+    "https://static.igem.wiki/teams/6133/wiki/drylab/model/transporter-binder-characterize-fig1a.avif": [
+        2100, 2100
+    ],
+    "https://static.igem.wiki/teams/6133/wiki/drylab/model/transporter-binder-characterize-fig2a.avif": [
+        2600, 2200
+    ],
+    "https://static.igem.wiki/teams/6133/wiki/drylab/software/example-workflows-ligand-binder-fig3-a.avif": [
+        1818, 1358
+    ],
+    "https://static.igem.wiki/teams/6133/wiki/drylab/software/example-workflows-protein-binder-fig3-a.avif": [
+        1813, 1369
+    ],
+    "https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig10-a.avif": [
+        960, 1282
+    ],
+    "https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig10-b.avif": [
+        960, 1282
+    ],
+    "https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig10-c.avif": [
+        4032, 3024
+    ],
+    "https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig11-a.avif": [
+        1280, 960
+    ],
+    "https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig11-b.avif": [
+        2275, 1279
+    ],
+    "https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig11-c.avif": [
+        1702, 1276
+    ],
+    "https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig12-a.avif": [
+        5184, 3456
+    ],
+    "https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig12-b.avif": [
+        5184, 3456
+    ],
+    "https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig12-c.avif": [
+        3000, 4000
+    ],
+    "https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig13-en.avif": [
+        2021, 778
+    ],
+    "https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig13-zh.avif": [
+        3104, 1194
+    ],
+    "https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig14-a.avif": [
+        5087, 3391
+    ],
+    "https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig14-b.avif": [
+        6000, 4000
+    ],
+    "https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig14-c.avif": [
+        4032, 3024
+    ],
+    "https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig15-a-en.avif": [
+        1086, 1448
+    ],
+    "https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig15-a-zh.avif": [
+        3024, 4032
+    ],
+    "https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig15-b-en.avif": [
+        1086, 1448
+    ],
+    "https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig15-b-zh.avif": [
+        3024, 4032
+    ],
+    "https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig15-c-en.avif": [
+        1086, 1448
+    ],
+    "https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig15-c-zh.avif": [
+        3024, 4032
+    ],
+    "https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig16-a.avif": [
+        2439, 1279
+    ],
+    "https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig16-b.avif": [
+        4032, 3024
+    ],
+    "https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig16-c.avif": [
+        4032, 3024
+    ],
+    "https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig17-a-en.avif": [
+        915, 1718
+    ],
+    "https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig17-a-zh.avif": [
+        1014, 1784
+    ],
+    "https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig17-b-en.avif": [
+        1610, 977
+    ],
+    "https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig17-b-zh.avif": [
+        840, 510
+    ],
+    "https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig18-a-en.avif": [
+        1039, 1514
+    ],
+    "https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig18-a-zh.avif": [
+        1148, 1672
+    ],
+    "https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig18-b-en.avif": [
+        1100, 1429
+    ],
+    "https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig18-b-zh.avif": [
+        1012, 1314
+    ],
+    "https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig19-a-en.avif": [
+        1034, 1520
+    ],
+    "https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig19-a-zh.avif": [
+        1012, 1446
+    ],
+    "https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig19-b-en.avif": [
+        1598, 1638
+    ],
+    "https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig19-b-zh.avif": [
+        1600, 1644
+    ],
+    "https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig2-a.avif": [
+        2301, 935
+    ],
+    "https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig2-b.avif": [
+        4000, 3000
+    ],
+    "https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig2-c.avif": [
+        4000, 3000
+    ],
+    "https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig20-a.avif": [
+        6048, 4032
+    ],
+    "https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig20-b.avif": [
+        4528, 3024
+    ],
+    "https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig20-c.avif": [
+        4184, 3010
+    ],
+    "https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig20-d.avif": [
+        1173, 870
+    ],
+    "https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig21-a.avif": [
+        1933, 1280
+    ],
+    "https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig21-b.avif": [
+        1707, 1280
+    ],
+    "https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig21-c.avif": [
+        1450, 960
+    ],
+    "https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig21-d.avif": [
+        1920, 1280
+    ],
+    "https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig22-a-en.avif": [
+        1248, 1768
+    ],
+    "https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig22-a-zh.avif": [
+        1246, 1764
+    ],
+    "https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig22-b-en.avif": [
+        1088, 1532
+    ],
+    "https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig22-b-zh.avif": [
+        1100, 1554
+    ],
+    "https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig23-a.avif": [
+        1708, 962
+    ],
+    "https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig23-b.avif": [
+        1280, 1707
+    ],
+    "https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig23-c.avif": [
+        1707, 1280
+    ],
+    "https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig23-d.avif": [
+        1707, 1280
+    ],
+    "https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig24-a.avif": [
+        2522, 3928
+    ],
+    "https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig24-b.avif": [
+        2108, 3071
+    ],
+    "https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig24-c.avif": [
+        1786, 1278
+    ],
+    "https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig24-d.avif": [
+        1788, 1278
+    ],
+    "https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig25-a.avif": [
+        612, 459
+    ],
+    "https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig25-b.avif": [
+        1224, 918
+    ],
+    "https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig25-c.avif": [
+        1224, 918
+    ],
+    "https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig26-a.avif": [
+        4032, 3024
+    ],
+    "https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig26-b.avif": [
+        4284, 5712
+    ],
+    "https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig26-c.avif": [
+        1280, 1707
+    ],
+    "https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig27-a-en.avif": [
+        1672, 941
+    ],
+    "https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig27-a-zh.avif": [
+        2560, 1440
+    ],
+    "https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig27-b-en.avif": [
+        1584, 993
+    ],
+    "https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig27-b-zh.avif": [
+        2402, 1506
+    ],
+    "https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig28-a.avif": [
+        5712, 4284
+    ],
+    "https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig28-b.avif": [
+        5712, 4284
+    ],
+    "https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig28-c.avif": [
+        5712, 4284
+    ],
+    "https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig29-a.avif": [
+        1774, 1943
+    ],
+    "https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig29-b.avif": [
+        1711, 2393
+    ],
+    "https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig3-en.avif": [
+        2128, 739
+    ],
+    "https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig3-zh.avif": [
+        1784, 620
+    ],
+    "https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig30-a.avif": [
+        2940, 1912
+    ],
+    "https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig30-b.avif": [
+        1529, 871
+    ],
+    "https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig30-c.avif": [
+        3420, 1922
+    ],
+    "https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig32-a.avif": [
+        1278, 1704
+    ],
+    "https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig32-b.avif": [
+        2940, 1912
+    ],
+    "https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig32-c.avif": [
+        2940, 1912
+    ],
+    "https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig4-a-en.avif": [
+        1838, 856
+    ],
+    "https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig4-a-zh.avif": [
+        2750, 1279
+    ],
+    "https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig4-b-en.avif": [
+        1821, 864
+    ],
+    "https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig4-b-zh.avif": [
+        2699, 1279
+    ],
+    "https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig5-a.avif": [
+        4000, 1859
+    ],
+    "https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig5-b.avif": [
+        4000, 1859
+    ],
+    "https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig5-c.avif": [
+        4000, 1859
+    ],
+    "https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig5-d.avif": [
+        2588, 1180
+    ],
+    "https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig6-a-en.avif": [
+        1199, 1312
+    ],
+    "https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig6-a-zh.avif": [
+        1554, 1701
+    ],
+    "https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig6-b-en.avif": [
+        1331, 1181
+    ],
+    "https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig6-b-zh.avif": [
+        1939, 1720
+    ],
+    "https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig6-c-en.avif": [
+        1558, 1010
+    ],
+    "https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig6-c-zh.avif": [
+        2463, 1595
+    ],
+    "https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig6-d-en.avif": [
+        1408, 1117
+    ],
+    "https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig6-d-zh.avif": [
+        2441, 1936
+    ],
+    "https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig7-a.avif": [
+        3234, 1920
+    ],
+    "https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig7-b.avif": [
+        2798, 1348
+    ],
+    "https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig8-en.avif": [
+        1154, 1363
+    ],
+    "https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig8-zh.avif": [
+        1252, 1326
+    ],
+    "https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig9-a.avif": [
+        4032, 3024
+    ],
+    "https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig9-b.avif": [
+        4032, 3024
+    ],
+    "https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig9-c.avif": [
+        5712, 4284
+    ],
+    "https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-fig9-d.avif": [
+        1279, 1706
+    ],
+    "https://static.igem.wiki/teams/6133/wiki/project/safety/safety-safety-fig2-a.avif": [
+        1280, 960
+    ],
+    "https://static.igem.wiki/teams/6133/wiki/project/safety/safety-safety-fig4-a.avif": [
+        4000, 3317
+    ],
+    "https://static.igem.wiki/teams/6133/wiki/project/safety/safety-safety-fig5-a.avif": [
+        2184, 841
+    ],
+    "https://static.igem.wiki/teams/6133/wiki/wetlab/measurement/measurement-measurement-fig2a.avif": [
+        2105, 1438
+    ]
+}

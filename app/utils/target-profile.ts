@@ -59,13 +59,13 @@ function readExplainedDimension(
         entry.length !== 2 ||
         typeof entry[0] !== "number" ||
         !Number.isFinite(entry[0]) ||
-        entry[0] < 1 ||
+        entry[0] < 0 ||
         entry[0] > 5 ||
         typeof entry[1] !== "string" ||
         !entry[1].trim()
     ) {
         throw new Error(
-            `${dimension.key} must contain a score from 1 to 5 and an explanation: [score, "explanation"].`,
+            `${dimension.key} must contain a score from 0 to 5 and an explanation: [score, "explanation"].`,
         );
     }
     return { ...dimension, score: entry[0], explanation: entry[1].trim() };
@@ -85,11 +85,11 @@ export function readEducationImpact(
                 entry.length !== 3 ||
                 typeof entry[0] !== "number" ||
                 !Number.isFinite(entry[0]) ||
-                entry[0] < 1 ||
+                entry[0] < 0 ||
                 entry[0] > 5
             ) {
                 throw new Error(
-                    `${dimension.key} must contain two scores from 1 to 5 and one description: [before, after, "description"].`,
+                    `${dimension.key} must contain two scores from 0 to 5 and one description: [before, after, "description"].`,
                 );
             }
             return readExplainedDimension(dimension, [entry[1], entry[2]]);
@@ -98,10 +98,10 @@ export function readEducationImpact(
         if (
             typeof score !== "number" ||
             !Number.isFinite(score) ||
-            score < 1 ||
+            score < 0 ||
             score > 5
         ) {
-            throw new Error(`${dimension.key} must be a score from 1 to 5.`);
+            throw new Error(`${dimension.key} must be a score from 0 to 5.`);
         }
         return { ...dimension, score, explanation: "" };
     });

@@ -114,7 +114,7 @@
                                         <span
                                             class="min-w-0 flex-1 truncate pr-2"
                                         >
-                                            {{ item.value.label }}
+                                            {{ treeNodeLabel(item.value) }}
                                         </span>
                                     </TreeItem>
                                 </template>
@@ -274,11 +274,6 @@
                                 </template>
                             </ClientOnly>
                         </TabsContent>
-
-                        <TabsContent
-                            value="experiment-result"
-                            class="min-h-0 flex-1"
-                        />
                     </TabsRoot>
                 </aside>
             </SplitterPanel>
@@ -318,6 +313,7 @@ type BinderRecord = Record<string, BinderValue> & {
 type TreeNode = {
     key: string;
     label: string;
+    expname?: string;
     children?: TreeNode[];
     loadRecord?: () => Promise<BinderRecord>;
 };
@@ -333,6 +329,23 @@ function titleCase(segment: string) {
     }
 
     return segment.charAt(0).toUpperCase() + segment.slice(1);
+}
+
+function treeNodeLabel(node: TreeNode) {
+    return node.expname ? `(${node.expname}) ${node.label}` : node.label;
+}
+
+function sortTree(nodes: TreeNode[]) {
+    nodes.sort(
+        (a, b) =>
+            Number(a.key === "enzyme") - Number(b.key === "enzyme") ||
+            treeNodeLabel(a).localeCompare(treeNodeLabel(b), undefined, {
+                numeric: true,
+            }),
+    );
+    for (const node of nodes) {
+        if (node.children) sortTree(node.children);
+    }
 }
 
 function buildTree(): TreeNode[] {
@@ -363,7 +376,15 @@ function buildTree(): TreeNode[] {
                     label: isFile
                         ? segment.replace(/\.json$/i, "")
                         : titleCase(segment),
-                    ...(isFile ? { loadRecord } : { children: [] }),
+                    ...(isFile
+                        ? {
+                              loadRecord,
+                              expname:
+                                  typeof record.expname === "string"
+                                      ? record.expname.trim()
+                                      : undefined,
+                          }
+                        : { children: [] }),
                 };
                 siblings.push(node);
             }
@@ -372,6 +393,7 @@ function buildTree(): TreeNode[] {
         });
     }
 
+    sortTree(roots);
     return roots;
 }
 
@@ -392,7 +414,7 @@ const isUnsupportedViewport = ref(false);
 const treeScrollContainerRef = ref<HTMLElement | null>(null);
 let viewportQuery: MediaQueryList | undefined;
 
-const tabValues = ["info", "md-graph", "experiment-result"] as const;
+const tabValues = ["info", "md-graph"] as const;
 type TabValue = (typeof tabValues)[number];
 
 function isTabValue(value: string | undefined): value is TabValue {
@@ -451,7 +473,6 @@ const selectedBinder = shallowRef<BinderRecord>();
 const tabs = [
     { value: "info" as const, label: "Info" },
     { value: "md-graph" as const, label: "MD Graph" },
-    { value: "experiment-result" as const, label: "Experiment Result" },
 ];
 
 watch(

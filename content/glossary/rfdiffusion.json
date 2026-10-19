@@ -1,0 +1,5 @@
+{
+    "term": "RFdiffusion",
+    "detail": "A diffusion model for generating protein structures, including new protein backbones and binding proteins subject to specified structural constraints.",
+    "link": "https://github.com/RosettaCommons/RFdiffusion"
+}

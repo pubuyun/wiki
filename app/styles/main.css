@@ -34,6 +34,7 @@
     --color-on-primary: var(--on-primary);
 
     --color-accent: var(--accent);
+    --color-accent-text: var(--accent-text);
     --color-on-accent: var(--on-accent);
 
     --color-secondary: var(--secondary);
@@ -243,6 +244,7 @@ input[type="submit"],
     --on-primary: #000000;
 
     --accent: #ffd60a;
+    --accent-text: var(--accent);
     --on-accent: #000000;
 
     --secondary: #000000;
@@ -264,6 +266,7 @@ input[type="submit"],
     --on-primary: #ffffff;
 
     --accent: #6b21a8;
+    --accent-text: var(--accent);
     --on-accent: #ffffff;
 
     --secondary: #ffffff;
@@ -287,6 +290,7 @@ input[type="submit"],
     /* --accent: #a8d9f9;
     --on-accent: #03316d; */
     --accent: #f4a261;
+    --accent-text: var(--accent);
     --on-accent: #03316d;
 
     --secondary: #0a4296;
@@ -310,6 +314,7 @@ input[type="submit"],
     /* --accent: #2b6cbf;
     --on-accent: #ffffff; */
     --accent: #efaf62;
+    --accent-text: #9C5700;
     --on-accent: #3f2500;
 
     --secondary: #f7fafc;
@@ -324,6 +329,15 @@ input[type="submit"],
 
     --outline: #58798c;
     --outline-variant: #8fb5c9;
+}
+
+@supports (color: color-contrast(white vs black)) {
+    .high-contrast {
+        --accent-text: color-contrast(
+            var(--surface) vs var(--accent),
+            var(--on-accent)
+        );
+    }
 }
 
 /* :root { 只换文本框

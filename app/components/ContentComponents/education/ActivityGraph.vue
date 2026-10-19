@@ -19,6 +19,7 @@ import {
 } from "~/utils/activity-graph-labels";
 
 const uid = useId();
+const { scrollToHash } = useHashScroll();
 const root = ref<HTMLElement | null>(null);
 const plot = ref<HTMLElement | null>(null);
 const selectedNode = ref<string | null>(null);
@@ -227,6 +228,9 @@ function enableMotion(id: string, event: AnimationEvent) {
 function close() {
     activeCategory.value = null;
     selectedNode.value = null;
+}
+function navigateToActivity(event: MouseEvent, activity: Activity) {
+    if (scrollToHash(event, activity.href)) close();
 }
 function selectNode(id: string) {
     activeCategory.value = null;
@@ -613,7 +617,18 @@ onBeforeUnmount(() => {
                                                 >×</PopoverClose
                                             >
                                         </header>
-                                        <h3>{{ activity.title }}</h3>
+                                        <h3>
+                                            <a
+                                                :href="activity.href"
+                                                @click="
+                                                    navigateToActivity(
+                                                        $event,
+                                                        activity,
+                                                    )
+                                                "
+                                                >{{ activity.title }}</a
+                                            >
+                                        </h3>
                                         <p
                                             v-if="activity.info"
                                             class="activity-callout__info"
@@ -1027,6 +1042,16 @@ onBeforeUnmount(() => {
     font-family: var(--font-belanosima);
     font-size: 1.15rem;
     line-height: 1.1;
+}
+.activity-callout h3 a {
+    color: var(--primary);
+    text-decoration: underline;
+    text-underline-offset: 0.15em;
+}
+.activity-callout h3 a:focus-visible {
+    outline: 2px solid var(--outline);
+    outline-offset: 3px;
+    border-radius: 2px;
 }
 .activity-callout p {
     margin: 0.4rem 0 0;

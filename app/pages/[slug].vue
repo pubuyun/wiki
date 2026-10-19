@@ -15,6 +15,34 @@ const pagePath = computed(() => `/${slug.value}`);
 const { data: page } = await useContentPageData(pagePath);
 const tocLinks = computed(() => contentTocLinks(page.value?.body));
 
+// Keep the Education summary in Markdown, but render it outside the reading column.
+const educationConclusion = computed(() => {
+    if (slug.value !== "education" || !page.value) return null;
+    const body = page.value.body as {
+        children?: unknown[];
+        value?: unknown[];
+    };
+    const nodes = body?.children ?? body?.value ?? [];
+    const index = nodes.findIndex((node) => {
+        const tag = Array.isArray(node)
+            ? node[0]
+            : (node as { tag?: string })?.tag;
+        return tag === "content-components-education-age-timeline";
+    });
+    if (index < 0) return null;
+    const withNodes = (children: unknown[]) => ({
+        ...page.value!,
+        body: body.value ? { ...body, value: children } : { ...body, children },
+    });
+    return {
+        main: withNodes(nodes.slice(0, index)),
+        content: withNodes(nodes.slice(index)),
+    };
+});
+const documentPage = computed(
+    () => educationConclusion.value?.main ?? page.value,
+);
+
 const contentGraphViews = new Set(runtimeConfig.public.contentGraphViews);
 const graphView = computed(() => {
     const candidate = page.value?.stem
@@ -87,7 +115,7 @@ useSeoMeta({
                 :class="{ 'content-reading-layout--with-toc': tocLinks.length }"
             >
                 <ContentDocument
-                    :page="page"
+                    :page="documentPage"
                     :navigation-pages="pages"
                     :show-header="children.length > 0"
                     :heading-level="2"
@@ -112,6 +140,17 @@ useSeoMeta({
                 class="mt-10 sm:mt-14"
             />
         </div>
+
+        <section
+            v-if="educationConclusion"
+            class="education-conclusion mt-6 mb-4 min-w-0 px-4 font-main sm:px-6 lg:px-8 xl:px-12"
+            aria-label="Education outreach summary"
+        >
+            <ContentRenderer
+                :value="educationConclusion.content"
+                class="content paragraph min-w-0 rounded-2xl bg-secondary p-4 text-on-secondary sm:rounded-3xl sm:p-5 lg:rounded-4xl lg:p-6"
+            />
+        </section>
     </article>
 </template>
 
@@ -128,5 +167,10 @@ useSeoMeta({
 
 .category-overview-content--expanded :deep(> section) {
     max-width: 100%;
+}
+
+.education-conclusion :deep(figure > button),
+.education-conclusion :deep(figure img) {
+    width: 100%;
 }
 </style>

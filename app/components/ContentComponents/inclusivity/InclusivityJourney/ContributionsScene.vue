@@ -426,9 +426,14 @@ onBeforeUnmount(() => {
                                                 :key="item.title"
                                                 class="contribution-result"
                                             >
-                                                <strong class="result-label">{{
-                                                    item.title
-                                                }}</strong>
+                                                <strong class="result-label">
+                                                    <template v-if="item.italicTitle">{{
+                                                        item.title.split(item.italicTitle)[0]
+                                                    }}<i>{{ item.italicTitle }}</i>{{
+                                                        item.title.split(item.italicTitle)[1]
+                                                    }}</template>
+                                                    <template v-else>{{ item.title }}</template>
+                                                </strong>
                                                 <p v-if="item.intro">
                                                     {{ item.intro }}
                                                 </p>
@@ -617,7 +622,8 @@ onBeforeUnmount(() => {
 .intro-copy .group-name--older {
     color: var(--group-older);
 }
-.contribution-result em {
+.contribution-result em,
+.contribution-result i {
     font-style: italic;
 }
 .intro-scroll {

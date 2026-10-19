@@ -49,6 +49,7 @@
     "activities": [
         {
             "id": "synbio-intro-lecture",
+            "href": "#synbio-intro-lecture",
             "title": "High School SynBio Intro Lecture",
             "info": "Nanning No. 3 High School, Guangxi",
             "description": "We delivered an introductory session on synthetic biology for Grade 10 and 11 students. The session covered gene circuits and protein design, introducing how biology, engineering, and computation come together in synthetic biology.",
@@ -66,6 +67,7 @@
         },
         {
             "id": "protein-design-lecture",
+            "href": "#protein-design-lecture",
             "title": "High School Protein Design Lecture",
             "info": "Nanning No.3 High School",
             "description": "We introduced rational and AI-assisted protein design through published examples and our own project. The lecture explained how researchers use protein structures to guide mutations and develop new designs through repeated testing and improvement.",
@@ -83,6 +85,7 @@
         },
         {
             "id": "online-market-analysis",
+            "href": "#online-synbio-market-and-career-analysis-lecture",
             "title": "High School SynBio Market and Career Analysis Lecture",
             "info": "Nanning No. 3 High School",
             "description": "This online session explored the synthetic biology industry and related career opportunities. Using industry data and company examples, we introduced different job roles and discussed how research becomes commercial products, helping students considering further study in the field.",
@@ -100,6 +103,7 @@
         },
         {
             "id": "primary-school-workshop",
+            "href": "#primary-school-synbio-intro-workshop",
             "title": "Primary School SynBio Intro Workshop",
             "info": "Shenzhen Keyuan Primary School",
             "description": "We introduced synthetic biology to Grade 5 students through familiar examples and practical activities. Students made clay models of organisms they imagined creating, extracted DNA from strawberries, and took part in a team quiz to review what they had learned.",
@@ -117,6 +121,7 @@
         },
         {
             "id": "geranio-lab-session",
+            "href": "#geraniol-lab-session",
             "title": "Geraniol Lab Session",
             "info": "Shenzhen College of International Education (SCIE)",
             "description": "During this two-day workshop, students carried out a series of experiments to produce geraniol. One team member guided each group of three through transformation, colony PCR, gel electrophoresis, and induction, explaining the science and safety practices along the way.",
@@ -134,6 +139,7 @@
         },
         {
             "id": "middle-school-workshop",
+            "href": "#middle-school-synbio-intro-workshop",
             "title": "Middle School SynBio Intro Workshops",
             "info": "Nanshan Foreign Language Middle School & Nanning No. 3 Middle School",
             "description": "Students at two middle schools explored basic synthetic biology concepts and carried out strawberry DNA extraction activity. One workshop included an ethical debate on using gene editing to create superheroes, while the other featured an English reading activity on the benefits and risks of synthetic biology.",
@@ -151,6 +157,7 @@
         },
         {
             "id": "online-chat-group",
+            "href": "#online-chat-group",
             "title": "Online Discussion Group",
             "info": "QQ, WeChat",
             "description": "We kept an online group open after our lectures so students could ask further questions and share ideas. Discussions covered protein modeling, synthetic biology applications, industry challenges, and university choices, with our team providing resources and individual support when needed.",
@@ -168,6 +175,7 @@
         },
         {
             "id": "offline-igem-club",
+            "href": "#igem-club",
             "title": "iGEM Club",
             "info": "Shenzhen College of International Education (SCIE)",
             "description": "Our school club introduced students to synthetic biology and the iGEM competition. Sessions covered topics from the central dogma to DNA assembly, alongside laboratory activities, mystery games, and debates that gave members different ways to explore the subject.",
@@ -185,6 +193,7 @@
         },
         {
             "id": "ethical-debate",
+            "href": "#ethical-debate",
             "title": "SynBio Ethics Debate",
             "info": "Shenzhen College of International Education (SCIE)",
             "description": "Eight student debaters discussed whether synthetic biology should prioritize improving human functions or preserving the original state of human life. Preparing for and attending the debate gave students an opportunity to learn about the science and consider its ethical implications.",
@@ -202,6 +211,7 @@
         },
         {
             "id": "collaboration-fair",
+            "href": "#synbio-collaboration-fair",
             "title": "SynBio Collaboration Fair",
             "info": "Honey park",
             "description": "Together with the SMS and Yucai SZ iGEM teams, we held a synthetic biology fair for park visitors and families. Participants built microbial clay models, explored everyday applications through posters, and learned signs for scientific terms in a sign language challenge.",
@@ -219,6 +229,7 @@
         },
         {
             "id": "english-learning-seminar",
+            "href": "#synbio-vocab-learning-seminar",
             "title": "SynBio-Vocab Seminar",
             "info": "Xiang'an community",
             "description": "Families joined us to discuss difficulties with learning English and share useful learning strategies. We also introduced a bilingual biology vocabulary booklet that explained scientific terms through word roots, suffixes, diagrams, and short quizzes.",
@@ -236,6 +247,7 @@
         },
         {
             "id": "bacterial-fungi-kit",
+            "href": "#bacterial-fungi-clay-kit",
             "title": "Bacteria-Fungi Clay Kit",
             "info": "",
             "description": "We created a kit for building bacterial and fungal cell models using clay and slime. Microbial identity cards and illustrated instructions explained cell structures and their functions, with examples such as fermentation connecting the models to everyday life.",
@@ -254,6 +266,7 @@
         },
         {
             "id": "fuse-beads-kit",
+            "href": "#fuse-beads",
             "title": "Bacteria-Fungi Fuse Beads Kit",
             "info": "",
             "description": "We shared free microbial fuse-bead patterns online for participants to use at home. The patterns included labels and short explanations of cell structures, their functions, and the microorganisms’ everyday applications, combining a craft activity with biology learning.",
@@ -266,16 +279,13 @@
             "labelFont": 11,
             "labelAbove": false,
             "nodeId": "fuse-beads-kit",
-<<<<<<< HEAD
             "labelLines": ["Bacteria-Fungi", "Fuse beeds Kit"],
-=======
-            "labelLines": ["Bacteria-Fungi", "Fuse Beads Kit"],
->>>>>>> 08d6f67 (fix: edu overview graph capitalisation)
             "imageWidth": 1280,
             "imageHeight": 720
         },
         {
             "id": "murder-mystery-game",
+            "href": "#lab-themed-murder-mystery-game",
             "title": "Lab-Themed Jubensha Mystery Game",
             "info": "",
             "description": "Students first practised PCR and gel electrophoresis, then took part in a mystery game about a failed experiment. Working from gel images, reagent records, and PCR settings, they discussed the evidence and applied what they had learned to identify the experimental error.",
@@ -293,6 +303,7 @@
         },
         {
             "id": "song-genetic-engineering",
+            "href": "#song-of-synbio",
             "title": "Song of SynBio",
             "info": "",
             "description": "We wrote a song to the melody of “Do-Re-Mi” to help students review molecular biology and genetic engineering. Its three verses covered the central dogma, concepts such as codons and base pairing, and techniques including PCR, gel electrophoresis, and transformation.",
@@ -310,6 +321,7 @@
         },
         {
             "id": "central-dogma-dance",
+            "href": "#dance-of-central-dogma",
             "title": "Dance of Central Dogma",
             "info": "",
             "description": "Students acted out transcription and translation in a dance, taking on roles such as nucleotides, tRNA, and amino acids. Their movements showed how the different components work together, making the flow of genetic information easier to visualize.",
@@ -327,6 +339,7 @@
         },
         {
             "id": "long-videos",
+            "href": "#long-videos",
             "title": "Long Videos",
             "info": "",
             "description": "We made a video about Craig Venter and the Human Genome Project, combining scientific explanations with storytelling, humor, and archival materials. It introduced whole-genome shotgun sequencing and explored questions about public and private access to genomic information.",
@@ -344,6 +357,7 @@
         },
         {
             "id": "short-videos",
+            "href": "#short-videos",
             "title": "Short Videos",
             "info": "",
             "description": "Our short videos used humor and familiar laboratory situations to introduce experimental procedures and safety practices. Topics included cultivation, protective equipment, and keeping food and drinks out of the lab, offering an accessible introduction for viewers without laboratory experience.",
@@ -361,6 +375,7 @@
         },
         {
             "id": "infographics",
+            "href": "#infographics",
             "title": "Infographics",
             "info": "",
             "description": "We published illustrated posts explaining synthetic biology through our own iGEM project and related research. Topics included the biology of body odor, fragrance production using engineered organisms, and AI-assisted protein design, showing how scientific ideas can be developed into practical applications.",

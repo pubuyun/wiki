@@ -10,7 +10,8 @@ withDefaults(
         label?: string;
         imageBackground?: string;
         autoLabels?: boolean;
-        layout?: "grid" | "stack";
+        layout?: "grid" | "stack" | "top" | "left";
+        columns?: number | string;
     }>(),
     { autoLabels: true },
 );
@@ -31,6 +32,7 @@ withDefaults(
                 :label="label ?? caption ?? 'Figure panels'"
                 :auto-labels="autoLabels ?? true"
                 :layout="layout"
+                :columns="columns"
                 @open="open"
             />
         </template>

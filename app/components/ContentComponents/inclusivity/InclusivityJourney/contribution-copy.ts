@@ -1,5 +1,6 @@
 export type ContributionItem = {
     title: string;
+    italicTitle?: string;
     intro?: string;
     points?: {
         label?: string;
@@ -44,6 +45,7 @@ export const contributionCopy: Record<
     deaf: [
         {
             title: "3 SignBio Series Videos",
+            italicTitle: "SignBio",
             intro: "Covering 3 topics:",
             points: [
                 { text: "Synthetic Biology" },
@@ -51,12 +53,16 @@ export const contributionCopy: Record<
                 { text: "Molecules of Life" },
             ],
         },
-        { title: "1 Sign Language Version of our SynBio Song" },
+        {
+            title: "1 Sign Language Version of our Song of SynBio",
+            italicTitle: "Song of SynBio",
+        },
         { title: "1 Sign Language Game on our iGEM wiki" },
     ],
     autism: [
         {
             title: "4 Superb Course Teaching Kits",
+            italicTitle: "Superb Course",
             intro: "Covering 4 topics:",
             points: [
                 { text: "Plants" },
@@ -69,6 +75,7 @@ export const contributionCopy: Record<
     lowIncome: [
         {
             title: "1 Handy Lab Experimental Toolkit",
+            italicTitle: "Handy Lab",
             intro: "Featuring 6 experiments across 3 scientific disciplines:",
             points: [
                 { label: "Physics", text: "Floating Egg, Bending Water" },

@@ -1,16 +1,23 @@
 ---
 title: "Design: RFdiffusion"
-description: "RFdiffusion3 backbone generation, LigandMPNN sequence design, RF3 co-folding, and chirality-aware ranking of precursor binders."
+citationIds:
+  - "9"
+  - "10"
+  - "11"
+description: RFdiffusion3 backbone generation, LigandMPNN sequence design, RF3 co-folding, and chirality-aware ranking of precursor binders.
 hasReference: false
 order: 2
 ---
 
-::content-components-collapsible-paragraph{title="Summary" id="summary" preview=true}
-
+::content-components-collapsible-paragraph
+---
+id: summary
+preview: "true"
+title: Summary
+---
 Starting from the three-dimensional structure of Cys-Gly-3M3SH, *RFdiffusion3* :fn-ref{#9} (RFD3) used atom-based diffusion to generate candidate protein backbones around the ligand. Each generated structure specifies a three-dimensional backbone conformation and a potential binding pocket but does not specify the final amino acid sequence.
 
 *LigandMPNN* :fn-ref{#10} subsequently designed sequences for each backbone using the local chemical environment (protein Cα atoms and ligand) as context. We then used *RoseTTAFold3* (RF3) :fn-ref{#11} to refold every sequence with Cys-Gly-3M3SH and assess whether the intended complex structure was confidently recovered. Confidence and protein–ligand interface metrics from these predictions were used to rank the candidates.
-
 ::
 
 ## Generation

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
+import panelImageDimensions from "~/data/panel-image-dimensions.json";
 import VideoPanel from "./VideoPanel.vue";
 
 const props = withDefaults(
@@ -9,7 +10,8 @@ const props = withDefaults(
         label?: string;
         imageBackground?: string;
         autoLabels?: boolean;
-        layout?: "grid" | "stack";
+        layout?: "grid" | "stack" | "top" | "left";
+        columns?: number | string;
         mediaType?: "image" | "video";
         videoAspectRatio?: "16 / 9" | "4 / 5";
     }>(),
@@ -17,6 +19,7 @@ const props = withDefaults(
         autoLabels: true,
         label: "Figure panels",
         layout: "grid",
+        columns: 2,
         mediaType: "image",
         videoAspectRatio: "16 / 9",
     },
@@ -27,9 +30,20 @@ const imageAlt = (index: number) =>
     Array.isArray(props.alt) ? (props.alt[index] ?? "") : (props.alt ?? "");
 
 const aspectRatios = ref<Record<string, number>>({});
+const dimensions: Record<string, number[]> = panelImageDimensions;
+const aspectRatio = (src: string) => {
+    const size = dimensions[src];
+    return size ? size[0] / size[1] : (aspectRatios.value[src] ?? 1);
+};
 const rows = computed(() => {
-    const rowSize = props.layout === "stack" ? 1 : 2;
+    const columns = Number(props.columns);
+    const gridColumns = Number.isInteger(columns) && columns > 0 ? columns : 2;
+    const rowSize = props.layout === "stack" ? 1 : gridColumns;
     const panels = props.src.map((src, index) => ({ src, index }));
+    if (props.layout === "top" && panels.length === 3) {
+        return [panels.slice(0, 1), panels.slice(1)];
+    }
+    if (props.layout === "left" && panels.length === 3) return [panels];
     return Array.from(
         { length: Math.ceil(panels.length / rowSize) },
         (_, row) => panels.slice(row * rowSize, (row + 1) * rowSize),
@@ -52,13 +66,20 @@ function recordAspectRatio(src: string, image: HTMLImageElement | null) {
                 v-for="(row, rowIndex) in rows"
                 :key="rowIndex"
                 class="image-panels__row"
+                :class="{
+                    'image-panels__row--left':
+                        layout === 'left' && src.length === 3,
+                }"
                 :style="{
-                    gridTemplateColumns: row
-                        .map(
-                            ({ src }) =>
-                                `minmax(0, ${aspectRatios[src] ?? 1}fr)`,
-                        )
-                        .join(' '),
+                    gridTemplateColumns:
+                        layout === 'left' && src.length === 3
+                            ? 'minmax(0, 1fr) minmax(0, 1fr)'
+                            : row
+                                  .map(
+                                      ({ src }) =>
+                                          `minmax(0, ${aspectRatio(src)}fr)`,
+                                  )
+                                  .join(' '),
                 }"
             >
                 <template
@@ -96,7 +117,12 @@ function recordAspectRatio(src: string, image: HTMLImageElement | null) {
                             "
                             :src="imageSrc"
                             :alt="imageAlt(index)"
-                            :style="{ backgroundColor: imageBackground }"
+                            :width="dimensions[imageSrc]?.[0]"
+                            :height="dimensions[imageSrc]?.[1]"
+                            :style="{
+                                backgroundColor: imageBackground,
+                                aspectRatio: `auto ${aspectRatio(imageSrc)}`,
+                            }"
                             class="rounded-2xl"
                             loading="lazy"
                             decoding="async"
@@ -156,6 +182,14 @@ function recordAspectRatio(src: string, image: HTMLImageElement | null) {
     margin: 0;
 }
 
+.image-panels__row--left > :first-child {
+    grid-row: span 2;
+}
+
+.image-panels__row--left > :not(:first-child) {
+    grid-column: 2;
+}
+
 .image-panels__label {
     position: absolute;
     inset: 0.4rem auto auto 0.4rem;
@@ -173,6 +207,10 @@ function recordAspectRatio(src: string, image: HTMLImageElement | null) {
 @container (width < 24rem) {
     .image-panels__row {
         grid-template-columns: minmax(0, 1fr) !important;
+    }
+    .image-panels__row--left > * {
+        grid-row: auto;
+        grid-column: auto;
     }
 }
 </style>

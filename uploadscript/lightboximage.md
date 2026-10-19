@@ -44,6 +44,8 @@ Replace the example URLs and descriptions with your own. `src` must be a list, e
 
 For two to four panels of the same figure, use `content-components-lightbox-panels`. This wrapper uses one `LightboxImage` gallery and a dedicated `ImagePanelLayout` with `autoLabels` enabled. Images keep their natural proportions and expand the grid height, without internal scrollbars. The gap is `0.75rem`. Supply `src` and `alt` in row order: upper left, upper right, lower left, lower right. With three images, the third spans the full bottom row. On narrow containers, images stack in the same reading order. Set `layout: stack` for a full-width, top-to-bottom comparison at every screen size, and describe its images as top/bottom in the caption. The grid supplies `(a)`, `(b)`, and subsequent labels; use `autoLabels: false` when labels are already embedded in the images. A shared caption appears once below the panels; bold panel markers with `**(a)**`, `**(b)**`, etc.
 
+For three images, `layout: top` places `(a)` across the upper row with `(b)` and `(c)` below. `layout: left` places `(a)` on the left and `(b)` above `(c)` on the right. Use `columns: 3` for a single row of three images. These layouts keep the same reading order when stacked on narrow screens. `content-components-bilingual-image-panels` also accepts `layout` and `columns`, applying the same arrangement to both languages.
+
 ```markdown
 ::content-components-lightbox-panels
 ---

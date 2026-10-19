@@ -10,7 +10,18 @@ provide("wiki-table-caption-id", captionId);
 
 <template>
     <div class="my-8 max-w-full min-w-0">
+        <DocumentCaption
+            :id="captionId"
+            class="table-caption"
+            as="p"
+            :text="caption"
+        />
         <slot />
-        <DocumentCaption :id="captionId" as="p" :text="caption" />
     </div>
 </template>
+
+<style scoped>
+.document-caption.table-caption {
+    margin: 0 0 1rem;
+}
+</style>

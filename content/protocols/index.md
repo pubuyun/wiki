@@ -112,7 +112,7 @@ order: 999
 - TransStart® FastPfu DNA Polymerase (TransGen Biotech)
 - ddH₂O
 
-*Other high-fidelity polymerases also work, follow their instruction manual for preparing reaction mixtures and setting PCR parameters*{.block .my-6}
+*Other high-fidelity polymerases also work, follow their instruction manual for preparing reaction mixtures and setting PCR parameters*{.block .my-2}
 
 
 
@@ -130,7 +130,7 @@ order: 999
 2. First Round PCR (25 μL Total Reaction Volume)
     1. Reaction mixture setup
 
-        *Prepare on ice; add Pfu polymerase last, take enzyme from -20 °C freezer right before use*{.block .my-6}
+        *Prepare on ice; add Pfu polymerase last, take enzyme from -20 °C freezer right before use*{.block .my-2}
 
 
 
@@ -141,7 +141,7 @@ order: 999
         - ddH₂O: 16.5 μL
         - Total Volume: 25 μL
 
-        *Mix gently by flicking the tube, then briefly centrifuge to collect the solution.*{.block .my-6}
+        *Mix gently by flicking the tube, then briefly centrifuge to collect the solution.*{.block .my-2}
 
 
 
@@ -152,7 +152,7 @@ order: 999
             - Annealing: 56 °C, 20 s
             - Extension: 72 °C, 15 s
 
-            *Annealing and extension parameters may be adjusted depending on Tm & length of fragment*{.block .my-6}
+            *Annealing and extension parameters may be adjusted depending on Tm & length of fragment*{.block .my-2}
 
 
 
@@ -162,7 +162,7 @@ order: 999
 3. Second Round PCR (50μL Total Reaction Volume)
     1. Reaction mixture setup
 
-        *Prepare on ice; add Pfu polymerase last*{.block .my-6}
+        *Prepare on ice; add Pfu polymerase last*{.block .my-2}
 
 
 
@@ -176,7 +176,7 @@ order: 999
         - Total Volume: 50 μL
     2. Amplification Program
 
-        *Use identical thermal cycling program as described in Section 2b*{.block .my-6}
+        *Use identical thermal cycling program as described in Section 2b*{.block .my-2}
 
 
 
@@ -237,7 +237,7 @@ order: 999
         - Annealing: 58 °C, 15 s
         - Extension: 72 °C, 20 s
 
-        *Annealing and extension parameters may be adjusted depending on Tm & length of fragment*{.block .my-6}
+        *Annealing and extension parameters may be adjusted depending on Tm & length of fragment*{.block .my-2}
 
 
 
@@ -505,16 +505,16 @@ Correct band size = positive clone; no band / incorrect size = negative clone.
    | ddH₂O | Up to 20 |
    | Total volume | 20 |
 
-    *Calculate the volume of vectors and inserts needed using the following formula:*{.block .my-6}
+    *Calculate the volume of vectors and inserts needed using the following formula:*{.block .my-2}
 
-    *X  = 3 Y \* (C vector \* M fragment) / (C fragment \* M vector)*{.block .my-6}
+    *X  = 3 Y \* (C vector \* M fragment) / (C fragment \* M vector)*{.block .my-2}
 
-    *C = concentration*{.block .my-6}
+    *C = concentration*{.block .my-2}
 
-    *M = length of the fragment or plasmid*{.block .my-6}
+    *M = length of the fragment or plasmid*{.block .my-2}
 
 
-    *Keep the enzymes on ice while pipetting*{.block .my-6}
+    *Keep the enzymes on ice while pipetting*{.block .my-2}
 
 
 
@@ -696,7 +696,7 @@ Correct band size = positive clone; no band / incorrect size = negative clone.
 5. Incubate in an ice bath for 30 minutes. During this incubation, preheat the dry block heater to 42 °C.
 6. Place the competent cells in the dry block heater at 42°C for heat shock.
 
-    *Different competent cells require different heat-shock durations; refer to the table below.*{.block .my-6}
+    *Different competent cells require different heat-shock durations; refer to the table below.*{.block .my-2}
 
 
 
@@ -1083,7 +1083,7 @@ caption: 'Fig. 1 | Streaking guide. Numbers 1–5 correspond to the stroke direc
    | PepT<sub>Sh</sub> resting cells | 160 µL | 0 µL | 160 µL | 0 µL |
    | Empty vector resting cells | 0 µL | 0 µL | 0 µL | 160 µL |
 
-*Total volume of mixture should be 200µL, replenish volume of controls with the solution the main ingredient is dissolved in, e.g. ddH2O for controls without S-Cys-Gly-3M3SH, M9 salt for controls without E. coli resting cells.*{.block .my-6}
+*Total volume of mixture should be 200µL, replenish volume of controls with the solution the main ingredient is dissolved in, e.g. ddH2O for controls without S-Cys-Gly-3M3SH, M9 salt for controls without E. coli resting cells.*{.block .my-2}
 
 
 
@@ -1390,7 +1390,7 @@ Mix by pipetting up and down and incubate at room temperature for 15 min to comp
 5. Wash the beads with 3 column volumes (CV) of purified water.
 6. Wash the beads with 3 CV of binding buffer.
 
-*From the next step onwards, store the eluate of every "Wash" step separately*{.block .my-6}
+*From the next step onwards, store the eluate of every "Wash" step separately*{.block .my-2}
 
 
 
@@ -1399,7 +1399,7 @@ Mix by pipetting up and down and incubate at room temperature for 15 min to comp
 9. Wash with 10 CV 20 mM elution buffer.
 10. Wash with 10 CV 70 mM elution buffer.
 
-*Omit step 10 because wet lab results showed that washing with 70 mM elution buffer did not remove any impurities, but decreased yields.*{.block .my-6}
+*Omit step 10 because wet lab results showed that washing with 70 mM elution buffer did not remove any impurities, but decreased yields.*{.block .my-2}
 
 
 

@@ -44,7 +44,22 @@ Ellman's assay is based on the reaction between 5,5′-dithiobis(2-nitrobenzoic 
 5. Measure absorbance at 412 nm using a microplate reader.
 6. Plot absorbance against GSH concentration to generate a standard curve. Use the resulting calibration equation to determine free thiol concentrations in experimental samples.
 
-**Table 1 | Preparation of GSH standard concentrations.** Each dilution is prepared using the solution from the preceding concentration.
+::content-components-captioned-table
+---
+caption: "Table 1 | **Preparation of GSH standard concentrations.** Each dilution is prepared using the solution from the preceding concentration."
+---
+
+| **GSH concentration (mM)** | **GSH solution (µL)** | **Assay Buffer (µL)** |
+| :-----------------------: | :------------------: | :-------------------: |
+|             4             |   200 (8 mM stock)   |          200          |
+|             2             |      200 (4 mM)      |          200          |
+|             1             |      200 (2 mM)      |          200          |
+|            0.5            |      200 (1 mM)      |          200          |
+|           0.25            |     200 (0.5 mM)     |          200          |
+|           0.125           |    200 (0.25 mM)     |          200          |
+|             0             |          0           |          200          |
+
+::
 
 ::content-components-lightbox-image
 ---

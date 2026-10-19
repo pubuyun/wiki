@@ -134,7 +134,7 @@ useSeoMeta({
                                 :to="previousPage.path"
                             >
                                 <div
-                                    class="relative font-momo-trust-display text-sm text-primary"
+                                    class="relative font-momo-trust-display text-sm text-accent-text"
                                 >
                                     <Icon
                                         icon="lucide:chevron-left"
@@ -159,7 +159,7 @@ useSeoMeta({
                                 :to="nextPage.path"
                             >
                                 <div
-                                    class="relative font-momo-trust-display text-sm text-primary"
+                                    class="relative font-momo-trust-display text-sm text-accent-text"
                                 >
                                     <span>Next</span>
                                     <Icon

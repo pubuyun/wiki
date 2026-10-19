@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed, ref } from "vue";
 import { TabsContent, TabsList, TabsRoot, TabsTrigger } from "reka-ui";
 import ImagePanelLayout from "./ImagePanelLayout.vue";
 import LightboxImage from "./LightboxImage.vue";
@@ -15,6 +15,8 @@ const props = withDefaults(
         imageBackground?: string;
         autoLabels?: boolean;
         defaultLanguage?: "en" | "zh";
+        layout?: "grid" | "stack" | "top" | "left";
+        columns?: number | string;
     }>(),
     {
         label: "Image language",
@@ -23,6 +25,8 @@ const props = withDefaults(
         defaultLanguage: "en",
     },
 );
+
+const language = ref(props.defaultLanguage);
 
 const versions = computed(() => [
     {
@@ -43,7 +47,7 @@ const versions = computed(() => [
 </script>
 
 <template>
-    <TabsRoot :default-value="defaultLanguage" class="my-6 max-w-full min-w-0">
+    <TabsRoot v-model="language" class="my-6 max-w-full min-w-0">
         <TabsList
             :aria-label="label"
             class="bilingual-image-tabs__list not-prose"
@@ -59,35 +63,59 @@ const versions = computed(() => [
             </TabsTrigger>
         </TabsList>
 
-        <TabsContent
-            v-for="version in versions"
-            :key="version.value"
-            :value="version.value"
-            :lang="version.lang"
-            class="min-w-0 rounded-xl focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-outline"
-        >
-            <LightboxImage
-                :src="version.src"
-                :alt="version.alt"
-                :caption="caption"
-                :image-background="imageBackground"
+        <div class="bilingual-image-tabs__panels">
+            <TabsContent
+                v-for="version in versions"
+                :key="version.value"
+                :value="version.value"
+                :lang="version.lang"
+                force-mount
+                :inert="language !== version.value"
+                :aria-hidden="language !== version.value"
+                :tabindex="language === version.value ? 0 : -1"
+                class="bilingual-image-tabs__panel min-w-0 rounded-xl focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-outline"
             >
-                <template #default="{ open }">
-                    <ImagePanelLayout
-                        :src="version.src"
-                        :alt="version.alt"
-                        :label="caption ?? label"
-                        :image-background="imageBackground"
-                        :auto-labels="autoLabels ?? version.src.length > 1"
-                        @open="open"
-                    />
-                </template>
-            </LightboxImage>
-        </TabsContent>
+                <LightboxImage
+                    :src="version.src"
+                    :alt="version.alt"
+                    :caption="caption"
+                    :image-background="imageBackground"
+                >
+                    <template #default="{ open }">
+                        <ImagePanelLayout
+                            :src="version.src"
+                            :alt="version.alt"
+                            :label="caption ?? label"
+                            :image-background="imageBackground"
+                            :auto-labels="autoLabels ?? version.src.length > 1"
+                            :layout="layout"
+                            :columns="columns"
+                            @open="open"
+                        />
+                    </template>
+                </LightboxImage>
+            </TabsContent>
+        </div>
     </TabsRoot>
 </template>
 
 <style scoped>
+.bilingual-image-tabs__panels {
+    display: grid;
+}
+
+/* Both languages size the same grid track, including while inactive. */
+.bilingual-image-tabs__panel {
+    grid-area: 1 / 1;
+    align-self: start;
+    display: flow-root;
+}
+
+.bilingual-image-tabs__panel[data-state="inactive"] {
+    visibility: hidden;
+    pointer-events: none;
+}
+
 .bilingual-image-tabs__list {
     display: flex;
     gap: 1.75rem;
