@@ -535,7 +535,7 @@ def has_valid_chirality(row):
     return get_chirality_of_c1(pdb_path) is not False
 
 
-def filter_top_n_binders(input_csv, top_n=20):
+def filter_top_n_binders(input_csv, top_n=40):
     print("1. Reading CSV...")
     df = pd.read_csv(input_csv)
     df.columns = df.columns.str.strip()
@@ -587,7 +587,7 @@ def filter_top_n_binders(input_csv, top_n=20):
 
 
 if __name__ == "__main__":
-    filter_top_n_binders("all_successes_ligand_binders_orig.csv", top_n=20)
+    filter_top_n_binders("all_successes_ligand_binders_orig.csv", top_n=40)
 ```
 
 ::

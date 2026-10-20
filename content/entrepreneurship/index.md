@@ -90,7 +90,7 @@ Expelliodor features a broad group of **secondary end‑users**, largely individ
 
 - Corporate office employees
 
-These secondary end-users are not our direct customers. As they are spread across a wide range of public and commercial settings, we target the **organisations**that operate these venues as our **B2B customers**.
+These secondary end-users are not our direct customers. As they are spread across a wide range of public and commercial settings, we target the **organisations&#x20;**&#x74;hat operate these venues as our **B2B customers**.&#x20;
 
 Rather than relying primarily on direct-to-consumer outreach, we adopt a B2B wholesale model, supplying products to partners such as airlines, hotels, and gyms at wholesale prices. These partners can then resell our products or make them available to their staff and customers, allowing us to reach end-users at scale.
 
@@ -281,11 +281,11 @@ Dr. Wang reviewed our two-year cash flow projections and the assumptions behind 
 src:
   - https://static.igem.wiki/teams/6133/wiki/hp/entrepreneurship/entrepreneurship-index-fig9.avif
 alt: ""
-caption: "Fig. 9 | Online discussion with Han Zhifei on entrepreneurship planning and wiki presentation"
+caption: "Fig. 9 | Online discussion with Han Zhifei on entrepreneurship planning and Wiki presentation"
 ---
 ::
 
-Han provided constructive advice on the structure of our wiki presentation of Entrepreneurship. He also gave us guidance on building connections between our iHP engagement and Entrepreneurship, particularly for marketing and unmet needs identification, which are closely interconnected with our iHP engagement.
+Han provided constructive advice on the structure of our Wiki presentation of Entrepreneurship. He also gave us guidance on building connections between our iHP engagement and Entrepreneurship, particularly for marketing and unmet needs identification, which are closely interconnected with our iHP engagement.
 
 #### Su Rongsheng
 
@@ -661,7 +661,7 @@ We will seek early regulatory guidance, confirm ingredient status and the approp
 
 7. Santos YR, Andréo-Filho N, Lopes PS, Leite-Silva VR. A review of skin microbiome and new challenges to cosmetic microbiome-friendly formulations. Int J Cosmet Sci. 2026;00:1–18. doi: [10.1111/ics.70073](https://doi.org/10.1111/ics.70073).
 
-8. Dreno B, Araviiskaia E, Berardesca E, Bieber T, Hawk J, Sanchez Viera M, et al. The changing landscape of cosmetic dermatology: microbiome and beyond. J Eur Acad Dermatol Venereol. 2020;34(3):473–481. doi: [10.1111/jdv.16060](https://doi.org/10.1111/jdv.16060).
+8. Dréno B, Araviiskaia E, Berardesca E, Gontijo G, Sanchez Viera M, Xiang LF, Martin R, Bieber T. Microbiome in healthy skin, update for dermatologists. J Eur Acad Dermatol Venereol. 2016;30(12):2038–2047. doi: 10.1111/jdv.13965.&#x20;
 
 9. Grand View Research. Synthetic biology market size, share & trends analysis report, 2026–2033 \[Internet\]. Grand View Research; 2026 \[cited 2026 Oct 14\]. Available from: [Grand View Research](https://www.grandviewresearch.com/industry-analysis/synthetic-biology-market)
 

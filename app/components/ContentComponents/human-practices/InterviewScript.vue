@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import type { ContentCollectionItem } from "@nuxt/content";
+import { readStaticContent } from "~/composables/useStaticContent";
 const props = defineProps<{
     /** Markdown filename relative to content/, including the .md extension. */
     src: string;
@@ -13,7 +15,16 @@ const {
     error,
 } = await useAsyncData(
     computed(() => `interview-script-${stem.value}`),
-    () => queryCollection("content").where("stem", "=", stem.value).first(),
+    () => {
+        if (import.meta.server || !import.meta.env.WIKI_STATIC_CONTENT) {
+            return queryCollection("content")
+                .where("stem", "=", stem.value)
+                .first();
+        }
+        return readStaticContent<ContentCollectionItem | null>(
+            `interview-script-${stem.value}`,
+        );
+    },
 );
 
 const metadata = computed(() => {

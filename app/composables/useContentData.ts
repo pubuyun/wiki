@@ -1,11 +1,24 @@
 import { computed, toValue, type MaybeRefOrGetter } from "vue";
+import type { ContentCollectionItem } from "@nuxt/content";
+import { readStaticContent } from "./useStaticContent";
+
+interface ContentNavigationItem {
+    path: string;
+    title: string;
+    order: number;
+    description: string;
+    icon?: string;
+}
 
 export function useContentPageData(path: MaybeRefOrGetter<string>) {
     const key = computed(() => `content-${toValue(path)}`);
 
-    return useAsyncData(key, () =>
-        queryCollection("content").path(toValue(path)).first(),
-    );
+    return useAsyncData(key, () => {
+        if (import.meta.server || !import.meta.env.WIKI_STATIC_CONTENT) {
+            return queryCollection("content").path(toValue(path)).first();
+        }
+        return readStaticContent<ContentCollectionItem | null>(key.value);
+    });
 }
 
 export function useContentNavigationData(category: MaybeRefOrGetter<string>) {
@@ -15,44 +28,37 @@ export function useContentNavigationData(category: MaybeRefOrGetter<string>) {
     });
     const key = computed(() => `content-navigation-${categoryPath.value}`);
 
-    return useAsyncData(
-        key,
-        () => {
-            const path = categoryPath.value;
-            if (!path) return Promise.resolve([]);
+    return useAsyncData(key, async () => {
+        if (import.meta.client && import.meta.env.WIKI_STATIC_CONTENT) {
+            return readStaticContent<ContentNavigationItem[]>(key.value);
+        }
+        const path = categoryPath.value;
+        if (!path) return [];
 
-            return queryCollection("content")
-                .orWhere((query) =>
-                    query
-                        .where("path", "=", path)
-                        .where("path", "LIKE", `${path}/%`),
-                )
-                .select("path", "title", "description", "meta", "order")
-                .all();
-        },
-        {
-            transform: (pages) =>
-                pages
-                    .filter(
-                        (page) =>
-                            !page.path.startsWith(
-                                "/human-practices/transcript/",
-                            ),
-                    )
-                    .map((page) => ({
-                        path: page.path,
-                        title: page.title,
-                        order: page.order,
-                        description:
-                            page.description ||
-                            (typeof page.meta?.description === "string"
-                                ? page.meta.description
-                                : ""),
-                        ...(typeof page.meta?.icon === "string" &&
-                        page.meta.icon.trim()
-                            ? { icon: page.meta.icon.trim() }
-                            : {}),
-                    })),
-        },
-    );
+        const pages = await queryCollection("content")
+            .orWhere((query) =>
+                query
+                    .where("path", "=", path)
+                    .where("path", "LIKE", `${path}/%`),
+            )
+            .select("path", "title", "description", "meta", "order")
+            .all();
+        return pages
+            .filter(
+                (page) => !page.path.startsWith("/human-practices/transcript/"),
+            )
+            .map((page) => ({
+                path: page.path,
+                title: page.title,
+                order: page.order,
+                description:
+                    page.description ||
+                    (typeof page.meta?.description === "string"
+                        ? page.meta.description
+                        : ""),
+                ...(typeof page.meta?.icon === "string" && page.meta.icon.trim()
+                    ? { icon: page.meta.icon.trim() }
+                    : {}),
+            }));
+    });
 }

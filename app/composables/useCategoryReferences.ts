@@ -2,6 +2,13 @@ import {
     citationDestination,
     referenceDestination,
 } from "~/utils/content-references";
+import type { ContentCollectionItem } from "@nuxt/content";
+import { readStaticContent } from "./useStaticContent";
+
+type ReferencePage = Pick<
+    ContentCollectionItem,
+    "path" | "title" | "hasReference" | "referenceIds" | "citationIds"
+>;
 
 export async function useCategoryReferences() {
     const route = useRoute();
@@ -14,8 +21,11 @@ export async function useCategoryReferences() {
         () => ({}),
     );
 
-    const { data: pages } = await useAsyncData(key, () =>
-        queryCollection("content")
+    const { data: pages } = await useAsyncData(key, () => {
+        if (import.meta.client && import.meta.env.WIKI_STATIC_CONTENT) {
+            return readStaticContent<ReferencePage[]>(key.value);
+        }
+        return queryCollection("content")
             .orWhere((query) =>
                 query
                     .where("path", "=", categoryPath.value)
@@ -29,8 +39,8 @@ export async function useCategoryReferences() {
                 "citationIds",
             )
             .order("path", "ASC")
-            .all(),
-    );
+            .all();
+    });
 
     function rememberCitation(id: string, event: MouseEvent) {
         if (
@@ -59,7 +69,7 @@ export async function useCategoryReferences() {
     }
 
     function withCitationSource(destination: string, id: string) {
-        const [pathAndQuery, hash = ""] = destination.split("#", 2);
+        const [pathAndQuery = "", hash = ""] = destination.split("#", 2);
         const source = `${route.path}#ref-${encodeURIComponent(id)}`;
         const separator = pathAndQuery.includes("?") ? "&" : "?";
         return `${pathAndQuery}${separator}from=${encodeURIComponent(source)}${

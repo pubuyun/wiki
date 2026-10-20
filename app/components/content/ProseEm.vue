@@ -75,17 +75,15 @@ const tooltipOpen = ref(false);
 const triggerEl = ref<HTMLElement | null>(null);
 const contentEl = ref<HTMLElement | null>(null);
 
-// Studio sets import.meta.preview; retain live database queries while editing.
-const glossaryTerms =
-    import.meta.dev || import.meta.preview
-        ? (
-              await useAsyncData("glossary-terms", () =>
-                  queryCollection("glossary")
-                      .select("term", "detail", "link")
-                      .all(),
-              )
-          ).data
-        : null;
+const glossaryTerms = import.meta.dev
+    ? (
+          await useAsyncData("glossary-terms", () =>
+              queryCollection("glossary")
+                  .select("term", "detail", "link")
+                  .all(),
+          )
+      ).data
+    : null;
 const termIndex = computed(() =>
     glossaryTerms
         ? createGlossaryIndex(glossaryTerms.value ?? [])

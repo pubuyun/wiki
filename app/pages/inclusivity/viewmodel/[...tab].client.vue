@@ -310,8 +310,8 @@ const tabValues = ["description-en", "description-cn"] as const;
 type TabValue = (typeof tabValues)[number];
 
 const tabs = [
-    { value: "description-en" as const, label: ["English", "Description"] },
-    { value: "description-cn" as const, label: ["Chinese", "Description"] },
+    { value: "description-en" as const, label: ["Audio", "Description (EN)"] },
+    { value: "description-cn" as const, label: ["Audio", "Description (CN)"] },
 ];
 const modelViewerMeshoptDecoderLocation =
     "https://cdn.jsdelivr.net/npm/meshoptimizer@0.18.1/meshopt_decoder.js";

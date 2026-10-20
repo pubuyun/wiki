@@ -40,6 +40,7 @@ const stages = timelineStages.map((stage, stageIndex) => ({
 const plot = ref<HTMLElement | null>(null);
 type Point = { x: number; y: number };
 type Label = Point & {
+    textX: number;
     left: number;
     right: number;
     top: number;
@@ -71,6 +72,16 @@ function curvePoint(
     };
 }
 
+function connectionBend(axis: number, index: number, distance: number) {
+    return Math.max(
+        12,
+        Math.min(
+            axis * (0.12 + index * 0.095),
+            axis - Math.min(22 + distance * 0.3, axis * 0.65),
+        ),
+    );
+}
+
 function measure() {
     const element = plot.value;
     if (!element) return;
@@ -87,6 +98,29 @@ function measure() {
     const points = Object.values(nodes);
     if (!points.length) return;
     const axis = points[0]!.x;
+    // Sample all connection curves so ending labels also avoid earlier stages.
+    const occupied: Point[] = [];
+    timelineThreads.forEach((thread, index) => {
+        thread.nodes.slice(1).forEach((id, i) => {
+            const start = nodes[thread.nodes[i]!]!;
+            const end = nodes[id]!;
+            const distance = end.y - start.y;
+            const bend = connectionBend(axis, index, distance);
+            const steps = Math.ceil((distance + 2 * (axis - bend)) / 3);
+            for (let step = 0; step <= steps; step++) {
+                const t = step / steps;
+                const u = 1 - t;
+                occupied.push({
+                    x: (u ** 3 + t ** 3) * axis + 3 * u * t * bend,
+                    y:
+                        u ** 3 * start.y +
+                        3 * u * u * t * (start.y + distance * 0.22) +
+                        3 * u * t * t * (end.y - distance * 0.22) +
+                        t ** 3 * end.y,
+                });
+            }
+        });
+    });
     const contentEnd =
         element.querySelector(".stages")!.getBoundingClientRect().bottom -
         bounds.top;
@@ -118,8 +152,8 @@ function measure() {
     let nextY = 0;
     for (const thread of endings) {
         const size = metrics.get(thread.id)!;
-        const minX = size.width / 2 + 10;
-        const maxX = axis - size.width / 2 - 18;
+        const minX = size.width + 22;
+        const maxX = axis - 18;
         const phase =
             (thread.index * 0.618034 + thread.nodes.length * 0.137) % 1;
         let y = Math.max(thread.start.y + 64, nextY);
@@ -130,12 +164,30 @@ function measure() {
             for (let attempt = 0; attempt < 12 && !placed; attempt++) {
                 const fraction = (phase + attempt * 0.381966) % 1;
                 const x = minX + Math.max(0, maxX - minX) * fraction;
+                const textX = x - size.width / 2 - 12;
+                const labelBox = {
+                    left: textX - size.width / 2 - 6,
+                    right: textX + size.width / 2 + 6,
+                    top: y + 6,
+                    bottom: y + 18 + size.height,
+                };
+                if (
+                    occupied.some(
+                        (point) =>
+                            point.x >= labelBox.left &&
+                            point.x <= labelBox.right &&
+                            point.y >= labelBox.top &&
+                            point.y <= labelBox.bottom,
+                    )
+                )
+                    continue;
                 const control = {
                     x: axis,
                     y,
                 };
                 const steps = Math.ceil((axis - x + y - thread.start.y) / 4);
                 const obstacles = Object.values(labels);
+                const endingPoints: Point[] = [];
                 let clear = true;
                 for (let step = 0; step <= steps && clear; step++) {
                     const point = curvePoint(
@@ -144,6 +196,7 @@ function measure() {
                         { x, y },
                         step / steps,
                     );
+                    endingPoints.push(point);
                     clear = !obstacles.some(
                         (box) =>
                             point.x >= box.left &&
@@ -156,13 +209,12 @@ function measure() {
                 labels[thread.id] = {
                     x,
                     y,
-                    left: x - size.width / 2 - 6,
-                    right: x + size.width / 2 + 6,
-                    top: y + 6,
-                    bottom: y + 12 + size.height + 6,
+                    textX,
+                    ...labelBox,
                     buttonTop: y + 12 - size.inset,
                     curve: `M ${axis} ${thread.start.y} Q ${control.x} ${control.y}, ${x} ${y}`,
                 };
+                occupied.push(...endingPoints);
                 nextY = y + size.height + 34 + fraction * 16;
                 placed = true;
             }
@@ -213,17 +265,10 @@ const routes = computed(() => {
             .map((id) => nodes[id])
             .filter((point): point is Point => !!point);
         // Each theme has its own lane. Larger jumps bow farther to the left.
-        const lane = axis * (0.12 + index * 0.095);
         const segments = points.slice(1).map((point, i) => {
             const previous = points[i]!;
             const distance = point.y - previous.y;
-            const bend = Math.max(
-                12,
-                Math.min(
-                    lane,
-                    axis - Math.min(22 + distance * 0.3, axis * 0.65),
-                ),
-            );
+            const bend = connectionBend(axis, index, distance);
             return `M ${axis} ${previous.y} C ${bend} ${previous.y + distance * 0.22}, ${bend} ${point.y - distance * 0.22}, ${axis} ${point.y}`;
         });
         const ending = labels[thread.id]?.curve ?? "";
@@ -253,7 +298,7 @@ function threadStyle(id: string) {
 function labelStyle(id: string) {
     const label = geometry.value.labels[id];
     return label
-        ? { left: `${label.x}px`, top: `${label.buttonTop}px` }
+        ? { left: `${label.textX}px`, top: `${label.buttonTop}px` }
         : { visibility: "hidden" as const };
 }
 function ribbonTitle(title: string) {
@@ -480,22 +525,23 @@ function ribbonLines(title: string) {
 .hp-timeline {
     --ribbon-height: clamp(78px, 10cqi, 104px);
     --ribbon-offset: var(--category-header-height, 3.5rem);
-    --science: #167b9e;
-    --safety: #c23863;
-    --stability: #96710b;
-    --market: #ae5709;
-    --needs: #2f6bc1;
-    --awareness: #996332;
-    --sustainability: #117d69;
-    --inclusivity: #7551bf;
-    --science-ribbon: #5cbbdf;
-    --safety-ribbon: #ff718d;
-    --stability-ribbon: #ffe075;
-    --market-ribbon: #ffac33;
-    --needs-ribbon: #72a9ef;
-    --awareness-ribbon: #e7b580;
-    --sustainability-ribbon: #64d3b9;
-    --inclusivity-ribbon: #ab95f0;
+    /* Reference palette, left to right, converted from Display P3 to sRGB. */
+    --science: #ff6e85;
+    --safety: #ffa120;
+    --stability: #fdde69;
+    --market: #6ae9cb;
+    --needs: #5dd3ff;
+    --awareness: #4a98fe;
+    --sustainability: #a388fd;
+    --inclusivity: #d292fd;
+    --science-ribbon: var(--science);
+    --safety-ribbon: var(--safety);
+    --stability-ribbon: var(--stability);
+    --market-ribbon: var(--market);
+    --needs-ribbon: var(--needs);
+    --awareness-ribbon: var(--awareness);
+    --sustainability-ribbon: var(--sustainability);
+    --inclusivity-ribbon: var(--inclusivity);
     --timeline-paper: var(--surface-bright);
     --axis-color: #387fc9;
     --stop-color: #7ecff3;
@@ -509,14 +555,6 @@ function ribbonLines(title: string) {
     --ribbon-offset: 0px;
 }
 .hp-timeline:where(.dark *) {
-    --science: #5cbbdf;
-    --safety: #ff718d;
-    --stability: #ffe075;
-    --market: #ffac33;
-    --needs: #72a9ef;
-    --awareness: #e7b580;
-    --sustainability: #64d3b9;
-    --inclusivity: #ab95f0;
     --timeline-paper: var(--surface);
 }
 .hp-timeline ol {
@@ -670,7 +708,7 @@ function ribbonLines(title: string) {
     box-shadow: 0 0 0 3px color-mix(in srgb, var(--thread) 30%, transparent);
 }
 .cycle.is-connected .cycle-title {
-    color: var(--thread);
+    color: color-mix(in srgb, var(--thread) 55%, var(--on-surface));
 }
 .cycle.is-muted {
     opacity: 0.3;
@@ -696,7 +734,7 @@ function ribbonLines(title: string) {
     border: 0;
     padding: 0.25rem;
     background: transparent;
-    color: var(--thread);
+    color: color-mix(in srgb, var(--thread) 55%, var(--on-surface));
     text-shadow:
         0 1px 3px var(--timeline-paper),
         0 -1px 3px var(--timeline-paper);

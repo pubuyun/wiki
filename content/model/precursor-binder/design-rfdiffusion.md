@@ -56,7 +56,7 @@ Candidate backbones were generated using the atom-based diffusion model RFD3 wit
 
 The designed sequences were subsequently co-folded with the target ligand using RoseTTAFold3 :fn-ref{#11}.
 
-To prioritize candidates with both favorable predicted binding performance and the correct ligand stereoisomer, we ranked the designs using the **ranking score** reported by RF3. Only predictions containing the required (S)-Cys-Gly-3M3SH stereoisomer and configuration were retained. From this filtered set, the 40 designs with Cα RMSD to the backbone < 2 Å and highest RF3 ranking score were selected for subsequent analysis.
+To prioritize candidates with both favorable predicted binding performance and the correct ligand stereoisomer, we ranked the designs using the **ranking score** reported by RF3. Only predictions containing the required (S)-Cys-Gly-3M3SH stereoisomer and configuration were retained. From this filtered set, the 40 designs with Cα RMSD to the backbone < 2 Å, ligand heavy-atom scRMSD after binder alignment < 5 Å, and highest RF3 ranking score were selected for subsequent analysis.
 
 ### Parameter
 
@@ -166,7 +166,7 @@ def main():
             "--out_directory",
             mpnn_outputs_dir,
             "--batch_size",
-            "5",
+            "2",
             "--write_fasta",
             "True",
             "--write_structures",
@@ -316,7 +316,7 @@ if __name__ == "__main__":
 
 ### Rank and Extract Top Candidates
 
-This script [checks the chirality of the C1 atom](/model/precursor-binder/characterize#stereochemical-constraint), extracts confidence outputs and ranks structures. The top 40 structures with the highest RF3 ranking scores are extracted. Their parameters are saved to a CSV file.
+This script [checks the chirality of the C0 atom](/model/precursor-binder/characterize#stereochemical-constraint), extracts confidence outputs and ranks structures. Candidates must have binder Cα scRMSD < 2 Å and ligand heavy-atom scRMSD after binder alignment < 5 Å. The top 40 passing structures with the highest RF3 ranking scores are extracted. Their parameters are saved to a CSV file.
 
 ::content-components-code-group
 ---
@@ -631,7 +631,7 @@ def calculate_scrmsd_metrics(predicted_file, reference_file):
     return binder_scrmsd_ca, ligand_scrmsd_aligned
 
 
-def get_chirality_of_C1_from_cif(cif_file):
+def get_chirality_of_C0_from_cif(cif_file):
     try:
         structure = load_structure(cif_file)
     except Exception as error:
@@ -657,17 +657,17 @@ def get_chirality_of_C1_from_cif(cif_file):
 
     rdCIPLabeler.AssignCIPLabels(mol)
 
-    c1_atom = None
+    c0_atom = None
     for atom in mol.GetAtoms():
         pdb_info = atom.GetPDBResidueInfo()
         if pdb_info is not None and pdb_info.GetName().strip() == "C0":
-            c1_atom = atom
+            c0_atom = atom
             break
 
-    if c1_atom is None or not c1_atom.HasProp("_CIPCode"):
+    if c0_atom is None or not c0_atom.HasProp("_CIPCode"):
         return None
 
-    cip = c1_atom.GetProp("_CIPCode")
+    cip = c0_atom.GetProp("_CIPCode")
     if cip == "S":
         return True
     if cip == "R":
@@ -700,7 +700,7 @@ def main():
             continue
 
         cif_file = cif_files[0]
-        is_s = get_chirality_of_C1_from_cif(cif_file)
+        is_s = get_chirality_of_C0_from_cif(cif_file)
 
         if is_s is not True:
             continue
@@ -783,7 +783,7 @@ def main():
                 "binder_scRMSD_ca": round(binder_scrmsd_ca, 4),
                 "ligand_scRMSD_aligned": round(ligand_scrmsd_aligned, 4),
                 "has_clash": has_clash,
-                "C1_Chirality": "S",
+                "C0_Chirality": "S",
             }
         )
 

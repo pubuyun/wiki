@@ -73,6 +73,8 @@ Predicted structures were subsequently filtered according to whether the binder 
 
 A binder was considered to contact the intended interface when at least **three** target residues were located within **5 Å** of binder heavy atoms :fn-ref{#21} and at least **50%** of all contacted receptor residues belonged to the predefined extracellular regions.
 
+Candidates were also required to have binder Cα scRMSD < 2 Å relative to the ProteinMPNN design structure after binder alignment.
+
 ### Ranking
 
 Candidates that passed the interface filter were ranked using a normalized composite score.
@@ -221,7 +223,7 @@ def main():
     parser.add_argument(
         "--sequences",
         type=int,
-        default=8,
+        default=2,
         help="Sequences generated per backbone",
     )
     parser.add_argument("--temperature", type=float, default=0.1)
@@ -703,7 +705,7 @@ def main():
     parser.add_argument(
         "--diffusion-batch-size",
         type=int,
-        default=5,
+        default=3,
         help="Number of RF3 predictions per binder",
     )
     parser.add_argument(
@@ -865,7 +867,7 @@ if __name__ == "__main__":
 
 #### Interface Filtering and Candidate Ranking
 
-This script first checks interface-contact requirements, excluding all failed binders. For accepted candidates, weighted scores are calculated and the 20 highest-ranking binders are exported.
+This script first checks interface-contact requirements and requires binder Cα scRMSD < 2 Å relative to the ProteinMPNN design structure after binder alignment, excluding all failed binders. For accepted candidates, weighted scores are calculated and the 20 highest-ranking binders are exported.
 
 ::content-components-code-group{defaultValue="0" sync="rf3-binder-ranking" label="Workflow and source code"}
 
@@ -1828,7 +1830,7 @@ def main():
     parser.add_argument(
         "--min-desired-contact-fraction",
         type=float,
-        default=0.0,
+        default=0.5,
         help=(
             "Minimum fraction of contacted receptor residues "
             "inside the desired interface"

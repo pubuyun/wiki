@@ -165,7 +165,7 @@ The initial scan encountered 404 responses for `/model/Baidu.com` and `/model/Go
 - Desktop: 1440 × 900. Mobile: 390 × 844, with mobile and touch emulation.
 - Browser preference: reduced motion. Lazy content is requested by scrolling up to 30,000 pixels.
 - The crawler follows same-origin links and strips query strings and fragments. It stops at 200 URLs and records any remaining URLs.
-- Nuxt DevTools elements and a11y badges are excluded. Nuxt Studio findings are retained and classified as development tooling.
+- Nuxt DevTools elements and a11y badges are excluded.
 - Initial page states are scanned. Open menus, dialogs, form errors, alternate accessibility modes, unlinked routes, and external embedded content need additional checks.
 - `incomplete` results require human review. Automated results alone do not establish WCAG AA conformance.
 

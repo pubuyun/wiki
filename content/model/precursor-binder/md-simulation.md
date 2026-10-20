@@ -3,7 +3,7 @@ title: MD Simulation
 citationIds:
   - "16"
   - "17"
-description: GROMACS simulations, RMSD analysis, and MM/PBSA estimates evaluate precursor-binder stability and support candidate selection.
+description: GROMACS simulations, RMSD analysis, and MM/GBSA estimates evaluate precursor-binder stability and support candidate selection.
 hasReference: false
 order: 4
 ---
@@ -23,32 +23,7 @@ While a predicted protein-ligand complex is a good static representation of the 
 
 ### System Preparation
 
-Each system underwent energy minimization, ion equilibration, constant-volume, constant-temperature (NVT) equilibration, and constant-pressure, constant-temperature (NPT) equilibration before the production simulation. We then evaluated protein and ligand root-mean-square deviation (RMSD) and estimated binding free energy using *gmx\_MMPBSA* :fn-ref{#17}. These metrics were used to compare candidates from the *RFdiffusion3* and *Proteina-Complexa* routes.
-
-**Ion Equilibration (ION)**
-Counterions and solvent conditions were introduced to neutralize the system and establish the desired axillary environment.
-
-::content-components-code-group
----
-default-value: "0"
-label: Ion-addition preprocessing parameters
-sync: md-ion-addition
----
-```dict [Summary]
-{"Algorithm": "Steepest descent", "Convergence Threshold": "1,000 kJ mol⁻¹ nm⁻¹", "Maximum Steps": 50000, "Nonbonded Cutoffs": "1.0 nm"}
-```
-
-```ini [Configuration]
-integrator  = steep
-emtol       = 1000.0
-nsteps      = 50000
-cutoff-scheme = Verlet
-coulombtype = cutoff
-rcoulomb    = 1.0
-rvdw        = 1.0
-pbc         = xyz
-```
-::
+Each system underwent energy minimization, constant-volume, constant-temperature (NVT) equilibration, and constant-pressure, constant-temperature (NPT) equilibration before the production simulation. We then evaluated protein and ligand root-mean-square deviation (RMSD) and estimated binding free energy using *gmx\_MMPBSA* :fn-ref{#17}. These metrics were used to compare candidates from the *RFdiffusion3* and *Proteina-Complexa* routes.
 
 ### Simulation Protocol
 
@@ -209,13 +184,13 @@ portrait: true
 
 Each production MD frame was least-squares fitted to the initial protein Cα coordinates before calculating ligand heavy-atom RMSD; the ligand was not independently fitted. **Protein Cα RMSD** was calculated using the same protein fit. These RMSD values were used to evaluate binder structural stability and ligand-binding pose retention. Candidates exhibiting protein structural stability (protein Cα RMSD < 2 Å) and retained ligand-binding poses (**ligand RMSD < 4 Å**) were retained for further evaluation.
 
-### MM/PBSA Free Energy
+### MM/GBSA Free Energy
 
-Binding free energies were estimated using the **MM/PBSA** :fn-ref{#17} approach for the last 80 frames (10–50 ns) to evaluate the energetic favorability of protein–ligand interactions. Candidates with calculated binding free energies **below −20 kcal/mol** were considered to exhibit favorable predicted binding stability.
+Binding free energies were estimated using the **MM/GBSA** :fn-ref{#17} approach for the last 80 frames (10–50 ns) to evaluate the energetic favorability of protein–ligand interactions. Candidates with calculated binding free energies **below −20 kcal/mol** were considered to exhibit favorable predicted binding stability.
 
 ### Binder Selection
 
-Candidates satisfying both RMSD stability criteria and the MM/PBSA free energy threshold were selected as final designs for experimental validation. Following MD-based filtering, 22 binders (11 from each design route) were selected for planned testing in [Precursor Binder Cycle 1]; 9 were successfully tested (4 RFdiffusion3 and 5 Proteina-Complexa).
+Candidates satisfying both RMSD stability criteria and the MM/GBSA free energy threshold were selected as final designs for experimental validation. Following MD-based filtering, 22 binders (11 from each design route) were selected for planned testing in [Precursor Binder Cycle 1]; 9 were successfully tested (4 RFdiffusion3 and 5 Proteina-Complexa).
 
 :content-components-model-document-rmsd-xvg-chart{collection="precursor-binder"}
 
@@ -223,7 +198,7 @@ Candidates satisfying both RMSD stability criteria and the MM/PBSA free energy t
 
 ### Automated MD
 
-This script reads all structures, runs the five steps using GROMACS and calculates free energy by MMPBSA automatically for each structure.
+This script reads all structures, runs system preparation, energy minimization, equilibration, and production MD using GROMACS, and calculates MM/GBSA binding free energy automatically for each structure.
 
 ::content-components-code-group
 ---

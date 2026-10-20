@@ -37,11 +37,14 @@ export default defineNuxtConfig({
     },
     modules: [
         "@nuxt/content",
-        ...(process.env.NUXT_STUDIO !== "false" ? ["nuxt-studio"] : []),
+        "~~/modules/static-content",
         "nuxt-echarts",
         ...(isDevServer ? ["@nuxt/a11y"] : []),
     ],
     vite: {
+        define: {
+            "import.meta.env.WIKI_STATIC_CONTENT": !isDevServer,
+        },
         resolve: {
             // Use local icon storage with no API fallback across all components.
             alias: [
@@ -79,14 +82,6 @@ export default defineNuxtConfig({
         renderer: [],
         charts: [],
         components: [],
-    },
-    studio: {
-        repository: {
-            provider: "github", // 'github' or 'gitlab'
-            owner: "pubuyun",
-            repo: "wiki",
-            branch: "main",
-        },
     },
     runtimeConfig: {
         public: {
