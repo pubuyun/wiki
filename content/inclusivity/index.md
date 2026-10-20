@@ -1753,14 +1753,8 @@ The **accessibility tools menu** in the bottom-right corner provides some useful
 Accessibility is continuously evaluated during development using [_Nuxt A11y_](https://nuxt.com/modules/a11y), which integrates the **_axe-core_ accessibility engine** into the development workflow. This allows us to identify and correct issues as pages and components are developed, rather than checking after the website is finished.
 
 We additionally use **Google Lighthouse accessibility audits** and **axe-core full-site scanning** as an independent automated check, and our website passes both:
-
-::content-components-panel-layout{height="40rem" label="Website accessibility audit reports"}
-#left
-<iframe src="/a11yreports/lighthouse.html" title="Google Lighthouse accessibility report" width="100%" height="560" loading="lazy"></iframe>
-
-#right
-<iframe src="/a11yreports/axe-core.html" title="axe-core full-site accessibility report" width="100%" height="560" loading="lazy"></iframe>
-::
+[Google Lighthouse document page accessibility report](https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/lighthouse.pdf)
+[axe-core full-site accessibility report](https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/axe-core.pdf)
 
 ### WCAG 2.2 Compliance
 
