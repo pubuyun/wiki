@@ -15,6 +15,7 @@ const props = withDefaults(
         imageBackground?: string;
         width?: number | string;
         height?: number | string;
+        maxHeight?: number | string;
     }>(),
     { imageBackground: "#fff" },
 );
@@ -87,7 +88,16 @@ defineExpose({ open });
                         :alt="imageAlt(imageIndex)"
                         :width="width"
                         :height="height"
-                        :style="{ backgroundColor: imageBackground }"
+                        :style="{
+                            backgroundColor: imageBackground,
+                            maxHeight:
+                                maxHeight === undefined
+                                    ? undefined
+                                    : typeof maxHeight === 'number' ||
+                                        /^\\d+$/.test(String(maxHeight))
+                                      ? `${maxHeight}px`
+                                      : maxHeight,
+                        }"
                         class="h-auto max-w-full rounded-2xl"
                         decoding="async"
                         loading="lazy"

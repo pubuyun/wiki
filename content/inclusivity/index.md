@@ -114,6 +114,24 @@ To guide our inclusion efforts and consistently track our progress, we establish
 
 Guided by our LIFT+ framework, we began with six target groups we could reach in China who often face barriers to accessing synthetic biology and broader science: the **blind** community, the **Deaf** community, children on the **autism spectrum**, individuals from **low socioeconomic backgrounds**, **modeling beginners**, and older adults with **limited formal education**.
 
+::content-components-panel-layout
+---
+height: none
+label: Blind community contributions
+---
+#left
+  :::content-components-lightbox-image
+  ---
+  caption: "Fig. 4 | What if my biology textbook had tactile graphics...? :fn-ref{#13}"
+  src:
+    - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig4.avif"
+  alt:
+    - "A learner asks for tactile biology graphics beside a statistic of 8.92 million blind people in China in 2026."
+  imageBackground: transparent
+  ---
+  :::
+
+#right
 <h5 id="overview-blind-community">Blind Community</h5>
 
 ###### What We Did
@@ -131,7 +149,26 @@ Covering 20 topics across 5 categories:
 - **Organs** - Ear Structure, Eye Structure, Heart Structure
 
 - **Specialized Anatomical Structures** - Alveoli, Nephron
+::
 
+::content-components-panel-layout
+---
+height: none
+label: Deaf community contributions
+---
+#left
+  :::content-components-lightbox-image
+  ---
+  caption: "Fig. 10 | What if there were signs for scientific terms…? :fn-ref{#17}"
+  src:
+    - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig10.avif"
+  alt:
+    - "A learner asks how to sign promoter beside a statistic of 7.39 million people with complete hearing loss in China in 2022."
+  imageBackground: transparent
+  ---
+  :::
+
+#right
 <h5 id="overview-deaf-community">Deaf Community</h5>
 
 ###### What We Did
@@ -149,7 +186,26 @@ Covering 3 topics:
 **1 Sign Language Version of our _Song of SynBio_**
 
 **1 Sign Language Game on our iGEM Wiki**
+::
 
+::content-components-panel-layout
+---
+height: none
+label: Autism spectrum contributions
+---
+#left
+  :::content-components-lightbox-image
+  ---
+  caption: "Fig. 23 | What if science materials were designed around my interests...? :fn-ref{#19}"
+  src:
+    - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig23.avif"
+  alt:
+    - "A learner asks for science materials designed around their interests beside a statistic of over 13 million autistic people in China in 2026."
+  imageBackground: transparent
+  ---
+  :::
+
+#right
 <h5 id="overview-children-on-the-autism-spectrum">Children On The Autism Spectrum</h5>
 
 ###### What We Did
@@ -165,7 +221,26 @@ Covering 4 topics:
 - Bacteria
 
 - Humans
+::
 
+::content-components-panel-layout
+---
+height: none
+label: Low socioeconomic background contributions
+---
+#left
+  :::content-components-lightbox-image
+  ---
+  caption: "Fig. 27 | What if our school had a lab...? :fn-ref{#21}"
+  src:
+    - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig27.avif"
+  alt:
+    - "A student asks for a school laboratory beside a statistic of 281 million people in China with annual per capita disposable income of approximately US$1,420 or less in 2025."
+  imageBackground: transparent
+  ---
+  :::
+
+#right
 <h5 id="overview-individuals-from-low-socioeconomic-backgrounds">Individuals From Low Socioeconomic Backgrounds</h5>
 
 ###### What We Did
@@ -179,7 +254,26 @@ Featuring 6 experiments across 3 scientific disciplines:
 - **Chemistry** - Red Cabbage pH Indicator, Mini “Volcano”
 
 - **Biology** - Strawberry DNA Extraction, Thirsty Celery.
+::
 
+::content-components-panel-layout
+---
+height: none
+label: Modeling beginner contributions
+---
+#left
+  :::content-components-lightbox-image
+  ---
+  caption: "Fig. 35 | What if I could understand all this code...? :fn-ref{#23}"
+  src:
+    - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig35.avif"
+  alt:
+    - "A beginner struggles with code beside a statistic that 92.9% of Chinese internet users aged 10–19 could not proficiently write computer programs in 2025."
+  imageBackground: transparent
+  ---
+  :::
+
+#right
 <h5 id="overview-modeling-beginners">Modeling Beginners</h5>
 
 ###### What We Did
@@ -205,7 +299,26 @@ Covering 3 modeling workflows:
 - Ligand Binder
 
 - Protein Binder
+::
 
+::content-components-panel-layout
+---
+height: none
+label: Older adult contributions
+---
+#left
+  :::content-components-lightbox-image
+  ---
+  caption: "Fig. 40 | What if I could tell facts from misinformation…?"
+  src:
+    - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig40.avif"
+  alt:
+    - "An older adult asks how to distinguish facts from misinformation beside a statistic of 15.87% of adults aged 65 and above in China with college education or higher in 2026."
+  imageBackground: transparent
+  ---
+  :::
+
+#right
 <h5 id="overview-older-adults-with-limited-formal-education">Older Adults With Limited Formal Education</h5>
 
 ###### What We Did
@@ -215,7 +328,7 @@ Covering 3 modeling workflows:
 - Designed and organized a sachet-making activity linking traditional crafts with synthetic biology.
 
 - Created science education posters to communicate scientific knowledge and address common misconceptions about GM food.
-
+::
 ::
 
 ## Blind Community
@@ -600,6 +713,7 @@ src:
   - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig4.avif"
 alt:
   - "A learner asks for tactile biology graphics beside a statistic of 8.92 million blind people in China in 2026."
+imageBackground: transparent
 ---
 ::
 
@@ -754,6 +868,7 @@ src:
   - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig10.avif"
 alt:
   - "A learner asks how to sign promoter beside a statistic of 7.39 million people with complete hearing loss in China in 2022."
+imageBackground: transparent
 ---
 ::
 
@@ -1195,6 +1310,7 @@ src:
   - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig23.avif"
 alt:
   - "A learner asks for science materials designed around their interests beside a statistic of over 13 million autistic people in China in 2026."
+imageBackground: transparent
 ---
 ::
 
@@ -1313,6 +1429,7 @@ src:
   - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig26.avif"
 alt:
   - ""
+maxHeight: 1000
 ---
 ::
 
@@ -1329,6 +1446,7 @@ src:
   - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig27.avif"
 alt:
   - "A student asks for a school laboratory beside a statistic of 281 million people in China with annual per capita disposable income of approximately US$1,420 or less in 2025."
+imageBackground: transparent
 ---
 ::
 
@@ -1497,6 +1615,7 @@ src:
   - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig35.avif"
 alt:
   - "A beginner struggles with code beside a statistic that 92.9% of Chinese internet users aged 10–19 could not proficiently write computer programs in 2025."
+imageBackground: transparent
 ---
 ::
 
@@ -1621,6 +1740,7 @@ src:
   - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig40.avif"
 alt:
   - "An older adult asks how to distinguish facts from misinformation beside a statistic of 15.87% of adults aged 65 and above in China with college education or higher in 2026."
+imageBackground: transparent
 ---
 ::
 
