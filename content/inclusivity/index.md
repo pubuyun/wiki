@@ -1722,20 +1722,6 @@ This foundation is used throughout several interactive components of our website
 
 :content-components-inclusivity-accessible-wiki-accessibility-playground
 
-- **Splitter** — allows users to adjust the layout by keyboard.
-
-- **Accordion** — enables expansion and collapse of parent documents in the sidebar, operational by keyboard.
-
-- **Collapsible** — provides accessible expandable paragraphs.
-
-- **Dialog** — used for the search interface.
-
-- **Tabs** — enables keyboard navigation between panels.
-
-- **Tooltip** — provides accessible inline annotations.
-
-- **Tree** — allows users to navigate between directories using the keyboard.
-
 As a result, the majority of interactive parts of the website can be operated without a mouse. This particularly supports users who rely on keyboards, screen readers, or other assistive technologies to interact with web interfaces, such as users with motor impairments, blind users, and temporarily injured users.
 
 ### Accessibility Tools
@@ -1753,7 +1739,9 @@ The **accessibility tools menu** in the bottom-right corner provides some useful
 Accessibility is continuously evaluated during development using [_Nuxt A11y_](https://nuxt.com/modules/a11y), which integrates the **_axe-core_ accessibility engine** into the development workflow. This allows us to identify and correct issues as pages and components are developed, rather than checking after the website is finished.
 
 We additionally use **Google Lighthouse accessibility audits** and **axe-core full-site scanning** as an independent automated check, and our website passes both:
+
 [Google Lighthouse document page accessibility report](https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/lighthouse.pdf)
+
 [axe-core full-site accessibility report](https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/axe-core.pdf)
 
 ### WCAG 2.2 Compliance
