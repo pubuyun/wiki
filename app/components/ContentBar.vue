@@ -223,7 +223,7 @@ function linkClass(link: ToCLink) {
         activeId.value === link.id
             ? "text-primary"
             : link.depth === 3
-              ? "text-on-surface/70"
+              ? "text-on-surface/85"
               : "text-on-surface",
     ];
 }

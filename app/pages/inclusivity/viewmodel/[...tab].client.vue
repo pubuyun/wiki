@@ -36,7 +36,7 @@
                         >
                             <h2
                                 id="inclusivity-model-files-heading"
-                                class="font-momo-trust-display text-lg leading-tight text-primary"
+                                class="font-momo-trust-display text-lg leading-tight text-on-surface"
                             >
                                 Model Files
                             </h2>
@@ -202,7 +202,7 @@
                                 :key="tab.value"
                                 :value="tab.value"
                                 :aria-label="tab.label.join(' ')"
-                                class="flex min-w-0 flex-1 items-center justify-center rounded-full px-2 py-2 text-center text-sm leading-tight text-primary transition-colors outline-none hover:bg-primary/20 focus-visible:ring-2 focus-visible:ring-outline data-[state=active]:bg-primary data-[state=active]:text-on-primary xl:text-base"
+                                class="flex min-w-0 flex-1 items-center justify-center rounded-full px-2 py-2 text-center text-sm leading-tight text-on-surface transition-colors outline-none hover:bg-primary/20 focus-visible:ring-2 focus-visible:ring-outline data-[state=active]:bg-primary data-[state=active]:text-on-primary xl:text-base"
                             >
                                 <span aria-hidden="true">
                                     <span class="block">{{

@@ -542,7 +542,7 @@ kbd {
     min-height: 44px;
     padding: 0.5rem;
     border-radius: 999px;
-    color: var(--primary);
+    color: var(--on-surface);
     cursor: pointer;
     font-size: 0.875rem;
     line-height: 1.25;

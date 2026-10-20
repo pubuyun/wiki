@@ -164,7 +164,7 @@ function toggleGroup(id: string) {
                 </p>
             </div>
         </div>
-        <div class="age-timeline__legend" aria-label="Connection legend">
+        <div class="age-timeline__legend" role="group" aria-label="Connection legend">
             <span class="age-timeline__legend-item">
                 <span
                     class="age-timeline__legend-line age-timeline__legend-line--solid"
@@ -264,7 +264,7 @@ function toggleGroup(id: string) {
     border: 2px solid transparent;
     border-radius: 2rem;
     background: var(--activity-color);
-    color: #061b30;
+    color: #031323;
     font-size: 1.48cqi;
     font-weight: 400;
     line-height: 1.02;

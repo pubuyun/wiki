@@ -153,7 +153,7 @@ function measure() {
     for (const thread of endings) {
         const size = metrics.get(thread.id)!;
         const minX = size.width + 22;
-        const maxX = axis - 18;
+        const maxX = axis - 48;
         const phase =
             (thread.index * 0.618034 + thread.nodes.length * 0.137) % 1;
         let y = Math.max(thread.start.y + 64, nextY);
@@ -165,11 +165,13 @@ function measure() {
                 const fraction = (phase + attempt * 0.381966) % 1;
                 const x = minX + Math.max(0, maxX - minX) * fraction;
                 const textX = x - size.width / 2 - 12;
+                // The left-pointing arrow meets the right edge of the text.
+                // Reserve space around its tip as well as the centered label.
                 const labelBox = {
                     left: textX - size.width / 2 - 6,
-                    right: textX + size.width / 2 + 6,
-                    top: y + 6,
-                    bottom: y + 18 + size.height,
+                    right: x + 20,
+                    top: y - size.height / 2 - 10,
+                    bottom: y + size.height / 2 + 10,
                 };
                 if (
                     occupied.some(
@@ -211,7 +213,7 @@ function measure() {
                     y,
                     textX,
                     ...labelBox,
-                    buttonTop: y + 12 - size.inset,
+                    buttonTop: y - size.height / 2 - size.inset,
                     curve: `M ${axis} ${thread.start.y} Q ${control.x} ${control.y}, ${x} ${y}`,
                 };
                 occupied.push(...endingPoints);
@@ -489,7 +491,7 @@ function ribbonLines(title: string) {
                 </li>
             </ol>
 
-            <div class="thread-endings" aria-label="Timeline themes">
+            <div class="thread-endings" role="group" aria-label="Timeline themes">
                 <button
                     v-for="thread in timelineThreads"
                     :key="thread.id"

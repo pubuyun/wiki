@@ -13,7 +13,7 @@ order: 删除文档前的有序列表编号，填写order
 - Overview标题的文档改为index.md, 如果只有一个category同名md，直接放在index.md内,reference也放在index.md内，不建新reference文档，如果是多个，建一个reference文档并把全部reference放进去。
 - 修复明显的拼写和语法错误，不要更改内容
 - 确保所有引用按Vancouver 标准，所有正文上标(如^42)按正文出现顺序重排序。Reference文档中的顺序按照正文重排重排.
-- 确保图表编号正确 Fig. n
+- 确保图表编号正确 Fig. n, 正文的图标引用也要对应调整。
 - 如果有图片或内容需要四宫格排版(比如声明了2x2 grid,或图例里写了(a), (b), (c), (d) 等)， 阅读LayoutPanelGuide.md并实现排版. 需要时使用PanelLayout的autolabels
 - 如果遇到图片，按照uploadscript/PROMPT.md的指示，上传图片，不要在远端目录再新建文件夹，全部放在一个目录，命名为 目录*-文档名-fign，如 precursor-binder/characterize.md下的fig1 为 precursor-binder-characterize-fig1.avif。 然后查看lightboximage.md，保证md文档内使用LightBox组件正确显示图片，注意查看图片并按照无障碍标准自动写相应图片的替代文字(alt属性)。如果图注已经完全描述图片，alt留空。 在上传的文档内，图注一般写在图片下面,斜体或引用格式,确保把图注加到lightbox里。出现只有(a)(b)的图片时，默认左右，除非说明了是上下如 (a up) (b down)， 此时删除图注内的up 和 down并排成上下。
 - 遇到附件pdf, 上传pdf并根据文档内容添加链接或渲染. iframe要加#page=1&view=Fit

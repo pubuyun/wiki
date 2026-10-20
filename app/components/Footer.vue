@@ -186,11 +186,6 @@ const footerLinkClass =
 
         <div class="-mt-px bg-surface-elevated px-4 pb-5 sm:px-6 lg:px-8">
             <div
-                class="mx-8 border-t border-on-surface sm:mx-6 lg:mx-4"
-                aria-hidden="true"
-            />
-
-            <div
                 class="mx-auto grid max-w-7xl gap-10 pb-8 xl:grid-cols-[minmax(0,1fr)_minmax(20rem,1fr)] xl:gap-14"
             >
                 <div class="order-2 min-w-0 space-y-8 xl:order-1">

@@ -211,7 +211,7 @@ onBeforeUnmount(stopVisibilityTracking);
 
         <div class="p-3">
             <div class="mb-2 flex items-center justify-between gap-2 text-xs">
-                <span class="font-semibold text-on-surface/70">
+                <span class="font-semibold text-on-surface/85">
                     Sign {{ index + 1 }}
                 </span>
                 <span
@@ -242,7 +242,7 @@ onBeforeUnmount(stopVisibilityTracking);
                           ? 'border-red-500 bg-red-500/10 text-red-800 dark:text-red-200'
                           : assignment
                             ? 'border-primary bg-primary text-on-primary'
-                            : 'border-outline-variant bg-surface text-on-surface/65 hover:border-primary hover:bg-primary/10',
+                            : 'border-outline-variant bg-surface text-on-surface/85 hover:border-primary hover:bg-primary/10',
                 ]"
                 :aria-label="
                     assignment

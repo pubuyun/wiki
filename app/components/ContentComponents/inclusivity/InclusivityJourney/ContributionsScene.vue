@@ -39,7 +39,7 @@ const groups = [
         left: 220,
         visibleWidth: 2572,
         statistic: "Illustration: 8.92 million blind people in China, 2026.",
-        destination: "/inclusivity/blind-community",
+        destination: "/inclusivity#blind-community",
         contributions: contributionCopy.blind,
         colorKey: "blind",
     },
@@ -67,7 +67,7 @@ const groups = [
         visibleWidth: 2223,
         statistic:
             "Illustration: 13+ million people on the autism spectrum in China, 2026.",
-        destination: "/inclusivity#autism-spectrum",
+        destination: "/inclusivity#children-on-the-autism-spectrum",
         contributions: contributionCopy.autism,
         colorKey: "autism",
     },
@@ -81,7 +81,7 @@ const groups = [
         visibleWidth: 2360,
         statistic:
             "Illustration: 281 million people in China had annual disposable income of approximately US$1,420 per person or less, 2025.",
-        destination: "/inclusivity#low-socio-economic-backgrounds",
+        destination: "/inclusivity#individuals-from-low-socioeconomic-backgrounds",
         contributions: contributionCopy.lowIncome,
         colorKey: "income",
     },
@@ -109,7 +109,7 @@ const groups = [
         visibleWidth: 1704,
         statistic:
             "Illustration: 15.87% of people aged 65 and above in China had a college education or higher, 2026.",
-        destination: "/inclusivity#older-adults",
+        destination: "/inclusivity#older-adults-with-limited-formal-education",
         contributions: contributionCopy.olderAdults,
         colorKey: "older",
     },

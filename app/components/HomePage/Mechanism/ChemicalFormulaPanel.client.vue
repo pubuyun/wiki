@@ -167,7 +167,7 @@ defineExpose({ getAnimationTargets });
         >
             <span
                 data-pathway-reveal="pepV"
-                class="reaction-arrow__enzyme invisible absolute top-[24%] left-[76%] z-1 translate-y-3 rounded-sm bg-[#b6fbf1] px-[0.3rem] py-[0.12rem] text-[clamp(0.78rem,1.5svh,1.05rem)] font-bold opacity-0 portrait:top-[-12%] portrait:left-1/2 portrait:-translate-x-1/2 portrait:-translate-y-1/2 portrait:text-[clamp(0.62rem,2.2vw,0.8rem)]"
+                class="reaction-arrow__enzyme text-[#985400] invisible absolute top-[24%] left-[76%] z-1 translate-y-3 rounded-sm bg-[#b6fbf1] px-[0.3rem] py-[0.12rem] text-[clamp(0.78rem,1.5svh,1.05rem)] font-bold opacity-0 portrait:top-[-12%] portrait:left-1/2 portrait:-translate-x-1/2 portrait:-translate-y-1/2 portrait:text-[clamp(0.62rem,2.2vw,0.8rem)]"
                 >PepV</span
             >
             <svg
@@ -247,7 +247,7 @@ defineExpose({ getAnimationTargets });
                     />
                 </div>
                 <h2
-                    class="m-0 translate-y-[clamp(-0.8rem,-1.2svh,-0.3rem)] text-[clamp(0.9rem,1.7svh,1.2rem)] leading-[1.08] text-[#f18d0c] portrait:translate-y-0 portrait:text-[clamp(0.58rem,2.1vw,0.82rem)] portrait:leading-none"
+                    class="m-0 translate-y-[clamp(-0.8rem,-1.2svh,-0.3rem)] text-[clamp(0.9rem,1.7svh,1.2rem)] leading-[1.08] text-[#985400] portrait:translate-y-0 portrait:text-[clamp(0.58rem,2.1vw,0.82rem)] portrait:leading-none"
                 >
                     {{ compounds.cys3m3sh.name }}
                 </h2>
@@ -367,7 +367,7 @@ defineExpose({ getAnimationTargets });
                     />
                 </div>
                 <h2
-                    class="m-0 translate-y-[clamp(-2.2rem,-3.4svh,-1rem)] text-[clamp(0.9rem,1.7svh,1.2rem)] leading-[1.08] text-[#ff3e89] portrait:translate-y-0 portrait:text-[clamp(0.58rem,2.1vw,0.82rem)] portrait:leading-none"
+                    class="m-0 translate-y-[clamp(-2.2rem,-3.4svh,-1rem)] text-[clamp(0.9rem,1.7svh,1.2rem)] leading-[1.08] text-[#b8215c] portrait:translate-y-0 portrait:text-[clamp(0.58rem,2.1vw,0.82rem)] portrait:leading-none"
                 >
                     {{ compounds.product.name }}
                 </h2>

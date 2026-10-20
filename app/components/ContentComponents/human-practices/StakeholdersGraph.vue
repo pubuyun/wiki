@@ -18,7 +18,7 @@ let closeTimer: ReturnType<typeof setTimeout> | undefined;
 const groupStyles: Record<string, Record<string, string>> = {
     customers: {
         "--group-color": "color-mix(in srgb, #56b4df 92%, var(--surface))",
-        "--title-color": "#ffffff",
+        "--title-color": "#08346a",
         "--node-color": "#dff3ee",
         "--node-text-color": "#08346a",
         "--edge-color": "#dff3ee",

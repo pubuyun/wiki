@@ -2,6 +2,7 @@
 import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import tailwindcss from "@tailwindcss/vite";
+import githubLight from "@shikijs/themes/github-light";
 import { contentGraphLayouts } from "./app/utils/content-graph-layout";
 import { markdownDocumentsPlugin } from "./app/utils/build/markdown-documents";
 import { katexFontsPlugin } from "./app/utils/build/katex-fonts";
@@ -126,7 +127,12 @@ export default defineNuxtConfig({
                         "yaml",
                     ],
                     theme: {
-                        default: "github-light",
+                        default: {
+                            ...githubLight,
+                            name: "github-light-accessible",
+                            // Keep the palette; darken orange text to reach 4.5:1 on white.
+                            colorReplacements: { "#e36209": "#a74400" },
+                        },
                         dark: "github-dark",
                     },
                 },

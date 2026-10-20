@@ -13,7 +13,7 @@ const darkMode = useState<boolean>("dark-mode", () => true);
         }"
     >
         <div class="radar-plot"><slot /></div>
-        <div class="radar-legends" aria-label="Chart legend">
+        <div class="radar-legends" role="group" aria-label="Chart legend">
             <span class="radar-legend-item"
                 ><span
                     class="radar-legend radar-legend--fixed"

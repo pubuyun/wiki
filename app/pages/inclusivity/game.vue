@@ -74,7 +74,7 @@ onBeforeUnmount(() => {
                             v-for="category in SIGN_LANGUAGE_CATEGORIES"
                             :key="category.id"
                             :value="category.id"
-                            class="min-w-0 rounded-xl px-2 py-2.5 text-sm text-primary transition-colors outline-none hover:bg-primary/15 focus-visible:ring-3 focus-visible:ring-outline data-[state=active]:bg-primary data-[state=active]:text-on-primary sm:px-4 sm:text-base lg:text-lg"
+                            class="min-w-0 rounded-xl px-2 py-2.5 text-sm text-on-surface transition-colors outline-none hover:bg-primary/15 focus-visible:ring-3 focus-visible:ring-outline data-[state=active]:bg-primary data-[state=active]:text-on-primary sm:px-4 sm:text-base lg:text-lg"
                         >
                             <span class="hidden sm:inline">{{
                                 category.label
@@ -101,7 +101,7 @@ onBeforeUnmount(() => {
             </div>
 
             <p
-                class="mx-auto mt-8 max-w-3xl text-center text-sm leading-6 text-on-surface/70"
+                class="mx-auto mt-8 max-w-3xl text-center text-sm leading-6 text-on-surface/85"
             >
                 The signs in this activity follow references from
                 <a

@@ -54,7 +54,7 @@
             :class="contentClass"
         >
             <p
-                class="mx-6 mb-1 shrink-0 font-belanosima text-xs leading-5 tracking-wide text-on-surface/70"
+                class="mx-6 mb-1 shrink-0 font-belanosima text-xs leading-5 tracking-wide text-on-surface"
             >
                 Documents
             </p>
@@ -204,7 +204,7 @@
         </div>
         <button
             type="button"
-            class="flex w-full shrink-0 cursor-pointer items-center justify-center bg-surface-sidebar text-on-surface/75 transition-colors hover:bg-secondary hover:text-on-secondary focus-visible:ring-2 focus-visible:ring-outline focus-visible:outline-none focus-visible:ring-inset"
+            class="flex w-full shrink-0 cursor-pointer items-center justify-center bg-surface-sidebar text-on-surface/85 transition-colors hover:bg-secondary hover:text-on-secondary focus-visible:ring-2 focus-visible:ring-outline focus-visible:outline-none focus-visible:ring-inset"
             :class="collapsed ? 'h-full' : 'mt-auto h-11'"
             :aria-controls="contentRendered ? contentId : undefined"
             :aria-expanded="!collapsed"

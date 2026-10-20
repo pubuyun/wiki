@@ -6,13 +6,11 @@
         <!-- Desktop / larger than lg -->
         <DialogTrigger
             v-else
-            aria-label="Search wiki"
             aria-keyshortcuts="Control+K Meta+K"
             class="flex size-11 shrink-0 items-center justify-center rounded-full border-2 border-accent bg-accent text-on-accent shadow-sm transition-colors duration-200 ease-out focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-outline sm:mr-8 sm:ml-5 sm:h-10 sm:max-w-56 sm:min-w-40 sm:flex-1 sm:bg-secondary sm:px-3 sm:text-on-secondary sm:hover:bg-surface-navigation sm:hover:text-on-surface"
         >
             <div
                 class="flex h-full w-full min-w-0 items-center justify-center gap-2 sm:justify-start"
-                aria-hidden="true"
             >
                 <Icon
                     icon="lucide:search"
@@ -20,7 +18,7 @@
                     aria-hidden="true"
                 />
                 <span
-                    class="hidden min-w-0 flex-1 truncate text-left text-sm sm:block"
+                    class="sr-only min-w-0 flex-1 truncate text-left text-sm sm:not-sr-only sm:block"
                 >
                     Search wiki…
                 </span>

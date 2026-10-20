@@ -113,7 +113,7 @@ const photoUrl = (path: string) =>
     padding: 0.2rem 0.6rem;
     border-radius: 0.5rem;
     background: transparent;
-    color: var(--accent);
+    color: var(--accent-text);
     font-family: var(--font-righteous);
     font-size: 1.75rem;
     line-height: 1.2;

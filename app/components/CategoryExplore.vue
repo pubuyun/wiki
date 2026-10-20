@@ -141,7 +141,7 @@ const exploreGroups = computed(() =>
         >
             <NuxtLink
                 :to="referenceGroup.path"
-                class="inline-flex items-center gap-2 font-belanosima text-lg text-on-surface/70 underline-offset-4 transition-colors hover:text-on-surface hover:underline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-outline sm:text-xl"
+                class="inline-flex items-center gap-2 font-belanosima text-lg text-on-surface underline-offset-4 transition-colors hover:text-on-surface hover:underline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-outline sm:text-xl"
             >
                 <Icon
                     icon="lucide:book-open"

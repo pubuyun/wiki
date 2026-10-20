@@ -134,7 +134,7 @@ const versions = computed(() => [
     border-bottom: 2px solid transparent;
     padding: 0.5rem 0.125rem 0.75rem;
     background: transparent;
-    color: color-mix(in srgb, var(--on-surface) 60%, transparent);
+    color: color-mix(in srgb, var(--on-surface) 85%, transparent);
     font-family: var(--font-main);
     font-size: 0.875rem;
     font-weight: 500;
@@ -148,7 +148,7 @@ const versions = computed(() => [
 
 .bilingual-image-tabs__trigger:hover,
 .bilingual-image-tabs__trigger[data-state="active"] {
-    color: var(--accent);
+    color: var(--accent-text);
 }
 
 .bilingual-image-tabs__trigger[data-state="active"] {

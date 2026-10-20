@@ -176,7 +176,7 @@ onBeforeUnmount(() =>
                             </p>
                         </div>
                         <span
-                            class="rounded-full bg-primary/15 px-3 py-1 text-sm font-semibold text-primary"
+                            class="rounded-full bg-primary/15 px-3 py-1 text-sm font-semibold text-on-surface"
                         >
                             {{ correctIds.size }} correct
                         </span>
@@ -276,7 +276,7 @@ onBeforeUnmount(() =>
                             <h3 class="font-momo-trust-display text-xl">
                                 Word bank
                             </h3>
-                            <span class="text-sm text-on-surface/65"
+                            <span class="text-sm text-on-surface/85"
                                 >{{ availableWords.length }} left</span
                             >
                         </div>
@@ -337,7 +337,7 @@ onBeforeUnmount(() =>
                         </button>
                         <p
                             v-if="!canSubmit && !isComplete"
-                            class="text-center text-xs text-on-surface/65 sm:col-span-2"
+                            class="text-center text-xs text-on-surface/85 sm:col-span-2"
                         >
                             Fill every answer slot to submit.
                         </p>

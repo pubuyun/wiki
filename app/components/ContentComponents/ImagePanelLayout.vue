@@ -104,7 +104,7 @@ function recordAspectRatio(src: string, image: HTMLImageElement | null) {
                         v-else
                         type="button"
                         class="image-panels__panel cursor-zoom-in rounded-2xl focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-outline"
-                        :aria-label="`Open image ${index + 1} of ${src.length}${imageAlt(index) ? `: ${imageAlt(index)}` : ''}`"
+                        :aria-label="`${autoLabels ? `(${String.fromCharCode(97 + index)}) ` : ''}Open image ${index + 1} of ${src.length}${imageAlt(index) ? `: ${imageAlt(index)}` : ''}`"
                         @click="emit('open', index)"
                     >
                         <img
