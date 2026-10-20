@@ -23,3 +23,4 @@ content/human-practices/stage-5-expanding-impact.md: Inclusive Packaging origina
 content/human-practices/stage-5-expanding-impact.md: Inclusive Packaging original citation ^4 — source details pending, as requested by the author.
 content/human-practices/stage-5-expanding-impact.md: Inclusive Packaging original citation ^34 — source details pending, as requested by the author.
 Overview stakeholder graph: AI4S Experts has empty incoming/outgoing source sections; no impact descriptions were invented.
+content/contribution/index.md: [experimental characterization] — /engineering exists but still contains starter placeholder text; the substantive characterization page is not yet available.

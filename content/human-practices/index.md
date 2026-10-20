@@ -227,12 +227,5 @@ Guided by the following questions, we analysed **how Expelliodor affects our sta
 
 ## Timeline
 
-::content-components-lightbox-image
----
-src:
-  - "https://static.igem.wiki/teams/6133/wiki/hp/ihp/human-practices-index-fig7.avif"
-alt:
-  - "A timeline connects stakeholder activities across five stages to safety, technology, entrepreneurship, sustainability, education, society, and inclusivity."
-caption: "Fig. 7 | Timeline linking the five stages of our Human Practices work with safety, technology, entrepreneurship, sustainability, education, society and inclusivity."
----
+::content-components-human-practices-time-line
 ::

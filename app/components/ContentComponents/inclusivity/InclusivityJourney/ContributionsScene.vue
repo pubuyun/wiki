@@ -542,7 +542,7 @@ onBeforeUnmount(() => {
     --group-autism: #8a4f00;
     --group-income: #a32252;
     --group-modeling: #604aa3;
-    --group-older: #7b4a00;
+    --group-older: #4f6200;
     position: relative;
     isolation: isolate;
     background: var(--journey-background);
@@ -557,7 +557,7 @@ onBeforeUnmount(() => {
     --group-autism: #ffc56e;
     --group-income: #ffa6c4;
     --group-modeling: #c9c0ff;
-    --group-older: #efb74f;
+    --group-older: #d3e878;
 }
 .contributions-intro {
     position: relative;
