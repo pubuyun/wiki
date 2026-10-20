@@ -3,12 +3,20 @@ title: Safety
 citationIds:
   - "1"
   - "2"
+  - "3"
+  - "4"
+  - "5"
+  - "6"
 description: Safety considerations in project design, computational protein screening, laboratory work, education, inclusivity, and Human Practices.
 hasReference: true
 order: 0
 referenceIds:
   - "1"
   - "2"
+  - "3"
+  - "4"
+  - "5"
+  - "6"
 banner: https://static.igem.wiki/teams/6133/wiki/general/banners/safety.avif
 bannerPosition: 50% 70%
 bannerWidth: 2077
@@ -18,15 +26,15 @@ bannerMobilePosition: 50% 50%
 
 ## Safety in Project Design
 
-The main components proposed for Expelliodor are precursor-binding proteins, *PepT*Sh-binding proteins, an engineered cyclodextrin glycosyltransferase (CGTase), and the fragrance compounds bornyl acetate and geranyl butyrate.
+The main components proposed for Expelliodor are precursor-binding proteins, PepTSh-binding proteins, an engineered cyclodextrin glycosyltransferase (CGTase), and the fragrance compounds bornyl acetate and geranyl butyrate.
 
-Our design focuses on the pathway that produces the odour compound 3M3SH. The binders are designed to capture its precursor, Cys-Gly-3M3SH, or interfere with its uptake by PepTSh, while CGTase is engineered to modify the precursor. This approach aims to reduce odour formation without relying on broad-spectrum antibacterial action or aluminium salts that block sweat glands. Bornyl acetate and geranyl butyrate are being explored as fragrance ingredients. These design choices do not establish the safety of the final formulation. We therefore carried out preliminary computational screening of our protein candidates, with further safety assessment still needed.
+Our design focuses on the pathway that produces the odour compound 3M3SH. :fn-ref{#1} The binders are designed to capture its precursor, Cys-Gly-3M3SH, or interfere with its uptake by PepTSh, while CGTase is engineered to modify the precursor. This approach aims to reduce odour formation without relying on broad-spectrum antibacterial action or aluminium salts that block sweat glands. :fn-ref{#2} Bornyl acetate and geranyl butyrate are being explored as fragrance ingredients. These design choices do not establish the safety of the final formulation. We therefore carried out preliminary computational screening of our protein candidates, with further safety assessment still needed.
 
-We developed the binder sequences through *de novo* protein design, engineered CGTase variants, and adapted published pathways for fragrance biosynthesis. Selected DNA constructs were commercially synthesised and introduced into laboratory *Escherichia coli* strains for expression and functional testing. For precursor-transport assays, we expressed PepTSh from *Staphylococcus hominis* in *E. coli* BL21(DE3), creating a surrogate system for studying precursor uptake. We chose this system to avoid directly culturing *S. hominis* and keep the assays within the biosafety capabilities of our high-school laboratory.
+We developed the binder sequences through *de novo* protein design, engineered CGTase variants, and adapted published pathways for fragrance biosynthesis. Selected DNA constructs were commercially synthesised and introduced into laboratory *Escherichia coli* strains for expression and functional testing. For precursor-transport assays, we expressed PepTSh from *Staphylococcus hominis* in *E. coli* BL21(DE3), creating a surrogate system for studying precursor uptake. :fn-ref{#1} We chose this system to avoid directly culturing *S. hominis* and keep the assays within the biosafety capabilities of our high-school laboratory.
 
 ## Protein Safety
 
-Following our consultation with immunology expert Professor Yang Jianbo, we performed *in silico* screens for potential HLA-II presentation and sequence similarity to known allergens, using *NetMHCIIpan-4.3* :fn-ref{#1} and *AllergenOnline* :fn-ref{#2}, respectively. All 14 candidates contained predicted strong-binding cores across the selected panel of 27 HLA-II molecules, with minimum %Rank\_EL values of 0.01–0.55%, 5–21 distinct strong-binding core positions, and predictions involving 4–18 HLA molecules per candidate. PB3 had the lowest core count, length-normalised core density, and number of implicated HLA molecules, which provides a favourable profile for future testing. AllergenOnline searches using the complete candidate sequences returned local alignments with E-values <1 for 11 candidates; BR8, BR10, and PB4 had no matches meeting this cutoff. BC11 was the only candidate flagged by the >35% identity sliding 80-aa screen, with a maximum reported identity of 36.29% to GI 2498579, prioritising further investigation into its safety.
+Following our consultation with immunology expert Professor Yang Jianbo, we performed *in silico* screens for potential HLA-II presentation and sequence similarity to known allergens, using NetMHCIIpan-4.3 :fn-ref{#3} and AllergenOnline :fn-ref{#4}, respectively. All 14 candidates contained predicted strong-binding cores across the selected panel of 27 HLA-II molecules, with minimum %Rank\_EL values of 0.01–0.55%, 5–21 distinct strong-binding core positions, and predictions involving 4–18 HLA molecules per candidate. PB3 had the lowest core count, length-normalised core density, and number of implicated HLA molecules, which provides a favourable profile for future testing. AllergenOnline searches using the complete candidate sequences returned local alignments with E-values <1 for 11 candidates; BR8, BR10, and PB4 had no matches meeting this cutoff. BC11 was the only candidate flagged by the >35% identity sliding 80-aa screen, with a maximum reported identity of 36.29% to GI 2498579, prioritising further investigation into its safety.
 
 These results inform future candidate selection from a safety perspective. In particular, the BC11 match requires additional verification, while the HLA-II predictions indicate sequence regions that may need to be optimised in future designs. The findings highlight the need for experimental assessment of skin compatibility before topical use.
 
@@ -55,13 +63,13 @@ caption: Table 1 | Computational screening of candidate proteins.
 **Parameter definitions**
 
 - **length\_aa:** protein length in amino acids.
-- **min\_rank\_el\_pct:** lowest NetMHCIIpan %Rank\_EL across all peptide–HLA combinations.
-- **strong\_core\_count:** number of distinct 9-aa core starting positions with a strong-binder (SB) prediction.
+- **min\_rank\_el\_pct:** lowest NetMHCIIpan %Rank\_EL across all peptide–HLA combinations. :fn-ref{#5}
+- **strong\_core\_count:** number of distinct 9-aa core starting positions with a strong-binder (SB) prediction. :fn-ref{#5}
 - **strong\_core\_density\_per\_100aa:** strong-core count per 100 amino acids.
 - **strong\_hla\_count\_27:** number of HLA molecules with ≥1 SB prediction among the 27 tested.
 - **full\_query\_hits\_e\_lt\_1:** number of distinct AllergenOnline GI entries with E-value <1 in complete-sequence searches.
 - **best\_full\_hit\_gi / evalue / identity\_pct / alignment\_aa:** GI identifier, E-value, percentage identity and alignment length of the lowest-E-value hit.
-- **sliding\_80aa\_hits\_gt\_35pct:** number of distinct GI entries exceeding 35% identity in the 80-aa sliding-window search.
+- **sliding\_80aa\_hits\_gt\_35pct:** number of distinct GI entries exceeding 35% identity in the 80-aa sliding-window search. :fn-ref{#6}
 - **max\_sliding\_80aa\_identity\_pct / best\_sliding\_80aa\_hit\_gi:** highest sliding-window identity and corresponding GI identifier.
 
 **aa**, amino acids; **GI**, GenInfo Identifier; **n.a.**, no qualifying hit.
@@ -195,5 +203,9 @@ For public surveys, we informed respondents of the research purpose and treated 
 
 ## Reference
 
-1. :ref-fn[Nilsson JB, Kaabinejadian S, Yari H, Kester MGD, van Balen P, Hildebrand WH, et al. Accurate prediction of HLA class II antigen presentation across all loci using tailored data acquisition and refined machine learning. Sci Adv. 2023;9(47)\:eadj6367. doi: [10.1126/sciadv.adj6367](https://doi.org/10.1126/sciadv.adj6367).]{#1}
-2. :ref-fn[Goodman RE, Ebisawa M, Ferreira F, Sampson HA, van Ree R, Vieths S, et al. AllergenOnline: a peer-reviewed, curated allergen database to assess novel food proteins for potential cross-reactivity. Mol Nutr Food Res. 2016;60(5):1183–98. doi: [10.1002/mnfr.201500769](https://doi.org/10.1002/mnfr.201500769).]{#2}
+1. :ref-fn[Minhas GS, Bawdon D, Herman R, Rudden M, Stone AP, James AG, et al. Structural basis of malodour precursor transport in the human axilla. eLife. 2018;7:e34995. doi: [10.7554/eLife.34995](https://doi.org/10.7554/eLife.34995).]{#1}
+2. :ref-fn[Sakhawoth Y, Dupire J, Leonforte F, Chardon M, Monti F, Tabeling P, et al. Real time observation of the interaction between aluminium salts and sweat under microfluidic conditions. Sci Rep. 2021;11:6376. doi: [10.1038/s41598-021-85691-8](https://doi.org/10.1038/s41598-021-85691-8).]{#2}
+3. :ref-fn[Nilsson JB, Kaabinejadian S, Yari H, Kester MGD, van Balen P, Hildebrand WH, et al. Accurate prediction of HLA class II antigen presentation across all loci using tailored data acquisition and refined machine learning. Sci Adv. 2023;9(47)\:eadj6367. doi: [10.1126/sciadv.adj6367](https://doi.org/10.1126/sciadv.adj6367).]{#3}
+4. :ref-fn[Goodman RE, Ebisawa M, Ferreira F, Sampson HA, van Ree R, Vieths S, et al. AllergenOnline: a peer-reviewed, curated allergen database to assess novel food proteins for potential cross-reactivity. Mol Nutr Food Res. 2016;60(5):1183–98. doi: [10.1002/mnfr.201500769](https://doi.org/10.1002/mnfr.201500769).]{#4}
+5. :ref-fn[Technical University of Denmark. NetMHCIIpan 4.3: instructions and output format \[Internet\]. \[cited 2026 Oct 20\]. Available from: [NetMHCIIpan 4.3](https://services.healthtech.dtu.dk/services/NetMHCIIpan-4.3/).]{#5}
+6. :ref-fn[Food Allergy Research and Resource Program, University of Nebraska–Lincoln. AllergenOnline: About Search Routines \[Internet\]. \[cited 2026 Oct 20\]. Available from: [AllergenOnline search routines](https://www.allergenonline.org/databasehelp.shtml).]{#6}
