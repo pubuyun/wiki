@@ -131,8 +131,8 @@ function measure() {
                 const fraction = (phase + attempt * 0.381966) % 1;
                 const x = minX + Math.max(0, maxX - minX) * fraction;
                 const control = {
-                    x: axis + (x - axis) * 0.72,
-                    y: thread.start.y + (y - thread.start.y) * 0.38,
+                    x: axis,
+                    y,
                 };
                 const steps = Math.ceil((axis - x + y - thread.start.y) / 4);
                 const obstacles = Object.values(labels);
