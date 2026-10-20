@@ -1,0 +1,4 @@
+{
+    "term": "DCCM",
+    "detail": "Dynamic cross-correlation matrix: a matrix summarizing correlations between the displacements of atoms or residues during a molecular dynamics trajectory. Positive and negative values indicate correlated and anticorrelated movement, respectively."
+}

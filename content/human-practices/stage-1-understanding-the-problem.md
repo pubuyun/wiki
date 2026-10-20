@@ -67,7 +67,7 @@ Finally, we observed that **73.55%** of responses showed a positive attitude tow
 
 As we identified **physical discomfort** as a common concern among respondents, we were prompted to investigate the underlying mechanism responsible for these adverse reactions.
 
-To meet the preferences of desired fragrance, we carried out literature research and identified [**geranyl butyrate** (responsible for fruity and floral scents) and **bornyl acetate** (responsible for woody scents)] as suitable candidates for our source of scent.
+To meet the preferences of desired fragrance, we carried out literature research and identified [**geranyl butyrate** (responsible for fruity and floral scents) and **bornyl acetate** (responsible for woody scents)](/engineering/terpenoid-ester) as suitable candidates for our source of scent.
 
 Finally, we noticed **26.45%** of responses expressing unwillingness towards using synthetic biology products. We accredit this to a lack of understanding of this field, particularly its mechanisms, applications and potential value in products. This motivated us to carry out many [**educational initiatives**](/education) in hopes of educating the general public about this matter.
 

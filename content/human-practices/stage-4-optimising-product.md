@@ -81,7 +81,7 @@ Evonik **expressed interest** in our mechanism-based approach to odor control an
 
 ### Refine
 
-Based on the insights provided by KleanK, we began designing the formulation of our own product based on the six major types of ingredients typically found in cosmetic formulations. We also conducted [thermal stability testing for our proteins] inspired by KleanK's provided cosmetic stability standards.
+Based on the insights provided by KleanK, we began designing the formulation of our own product based on the six major types of ingredients typically found in cosmetic formulations. We also conducted [thermal stability testing for our proteins](/engineering/cgtase#cgtase-cycle-2) inspired by KleanK's provided cosmetic stability standards.
 
 To address **regulatory and intellectual property** considerations, we began preparing for future applications for novel cosmetic ingredients and patent protection. For **a novel cosmetic ingredient registration**, we reviewed the relevant regulatory requirements and started organizing the technical documentation and sequence data needed for submission. For our **AI-designed protein patent protection,** we also considered potential sequence variants as part of our patent strategy, with the aim of securing broader protection for our design.
 
@@ -171,7 +171,7 @@ In terms of **stability**, we revised our proposed production process so that th
 
 2. Packaging compatibility testing of PP under temperature cycling and light exposure to assess its compatibility with our formulation.
 
-In the aspect of **efficacy**, our PepT<sub>Sh</sub> binder candidate TB2 achieved a 26.70% reduction in thiol concentration, while our CGTase enzyme achieved a 46% inhibition rate against odor molecules generated from 2 mM precursor compounds within one hour. However, our precursor binder candidates achieved more modest reductions of approximately 7.9% to 11.6%. This highlighted the need to further optimize our precursor binders, prompting us to focus on improving their binding affinity in the [next engineering cycle.]
+In the aspect of **efficacy**, our PepT<sub>Sh</sub> binder candidate TB2 achieved a 26.70% reduction in thiol concentration, while our CGTase enzyme achieved a 46% inhibition rate against odor molecules generated from 2 mM precursor compounds within one hour. However, our precursor binder candidates achieved more modest reductions of approximately 7.9% to 11.6%. This highlighted the need to further optimize our precursor binders, prompting us to focus on improving their binding affinity in the [next engineering cycle.](/engineering/precursor-binder#precursor-binder-cycle-2)
 
 We also eliminated the freeze-dried format, chosing a gel-based roll-on format instead.
 

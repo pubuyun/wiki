@@ -102,7 +102,7 @@ autoLabels: false
 
 Final candidates are chosen by comparing designs from both mutants. Candidate pairs with fewer identical mutations are preferred, followed by those with the lowest combined SPURS scores. These predictions are tested experimentally by adding two mutations each time, to test the method's reliability as the number of mutations increases.
 
-The counts of 2, 4, 6, and 8 mutations refer to additional substitutions relative to the T370K or T370R/F183W parent, rather than total substitutions from wild type. The following computational designs were selected for testing in [CGTase Cycle 2]:
+The counts of 2, 4, 6, and 8 mutations refer to additional substitutions relative to the T370K or T370R/F183W parent, rather than total substitutions from wild type. The following computational designs were selected for testing in [CGTase Cycle 2](/engineering/cgtase#cgtase-cycle-2):
 
 - **T370K**
 

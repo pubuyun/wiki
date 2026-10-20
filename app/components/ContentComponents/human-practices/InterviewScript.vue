@@ -3,11 +3,15 @@ import type { ContentCollectionItem } from "@nuxt/content";
 import { readStaticContent } from "~/composables/useStaticContent";
 const props = defineProps<{
     /** Markdown filename relative to content/, including the .md extension. */
-    src: string;
+    src?: string;
+    title?: string;
+    topic?: string;
+    interviewee?: string;
+    interviewers?: string;
 }>();
 
 const stem = computed(() =>
-    props.src.replace(/^\/?(?:content\/)?/, "").replace(/\.md$/, ""),
+    (props.src ?? "").replace(/^\/?(?:content\/)?/, "").replace(/\.md$/, ""),
 );
 const {
     data: interview,
@@ -16,6 +20,7 @@ const {
 } = await useAsyncData(
     computed(() => `interview-script-${stem.value}`),
     () => {
+        if (!stem.value) return Promise.resolve(null);
         if (import.meta.server || !import.meta.env.WIKI_STATIC_CONTENT) {
             return queryCollection("content")
                 .where("stem", "=", stem.value)
@@ -32,9 +37,9 @@ const metadata = computed(() => {
     const text = (key: string) =>
         typeof meta?.[key] === "string" ? meta[key] : "";
     return {
-        topic: text("topic"),
-        interviewee: text("interviewee"),
-        interviewers: text("interviewers"),
+        topic: props.topic ?? text("topic"),
+        interviewee: props.interviewee ?? text("interviewee"),
+        interviewers: props.interviewers ?? text("interviewers"),
     };
 });
 </script>
@@ -42,10 +47,10 @@ const metadata = computed(() => {
 <template>
     <section
         class="my-6 min-w-0 overflow-hidden rounded-xl border-2 border-outline bg-surface text-on-surface shadow-sm"
-        :aria-label="interview?.title || 'Interview transcript'"
+        :aria-label="props.title || interview?.title || 'Interview transcript'"
         :aria-busy="status === 'pending'"
     >
-        <template v-if="interview">
+        <template v-if="interview || $slots.default">
             <header
                 class="grid gap-5 bg-secondary px-5 py-5 text-on-secondary sm:grid-cols-[minmax(0,1fr)_minmax(10rem,0.45fr)] sm:gap-8 sm:px-6 sm:py-6"
             >
@@ -57,7 +62,7 @@ const metadata = computed(() => {
                     <p
                         class="m-0 font-belanosima text-2xl leading-tight break-words sm:text-3xl"
                     >
-                        {{ interview.title }}
+                        {{ props.title || interview?.title }}
                     </p>
                     <p
                         v-if="metadata.topic"
@@ -120,7 +125,14 @@ const metadata = computed(() => {
                     </svg>
                 </summary>
                 <div class="border-t-2 border-outline px-4 py-4 sm:px-6">
+                    <div
+                        v-if="$slots.default"
+                        class="interview-transcript min-w-0 break-words"
+                    >
+                        <slot />
+                    </div>
                     <ContentRenderer
+                        v-else-if="interview"
                         :value="interview"
                         class="interview-transcript min-w-0 break-words"
                     />

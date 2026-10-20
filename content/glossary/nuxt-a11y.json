@@ -1,0 +1,5 @@
+{
+    "term": "Nuxt A11y",
+    "detail": "A Nuxt development module that integrates axe-core accessibility checks into the developer workflow.",
+    "link": "https://github.com/nuxt/a11y"
+}

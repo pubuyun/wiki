@@ -7,7 +7,7 @@ withDefaults(
     defineProps<{
         text: string;
         body?: MinimarkTree | null;
-        as?: "span" | "figcaption" | "p";
+        as?: "span" | "figcaption" | "p" | "div";
     }>(),
     { as: "span" },
 );
@@ -20,7 +20,7 @@ withDefaults(
             :value="body"
             :prose="false"
             :components="{ em: ProseEm, strong: ProseStrong, p: 'span' }"
-            tag="span"
+            :tag="as === 'div' ? 'div' : 'span'"
         />
         <template v-else>{{ text }}</template>
     </component>

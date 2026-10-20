@@ -14,7 +14,7 @@ provide("wiki-table-caption-id", captionId);
         <DocumentCaption
             :id="captionId"
             class="table-caption"
-            as="p"
+            as="div"
             :text="caption"
             :body="captionBody"
         />

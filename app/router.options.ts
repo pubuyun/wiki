@@ -9,6 +9,16 @@ export default <RouterConfig>{
 
         const nuxtApp = useNuxtApp();
         const router = useRouter();
+        const isCurrent = () =>
+            router.currentRoute.value.fullPath === to.fullPath;
+        if (!isCurrent()) return false;
+
+        // Reset ordinary navigation immediately, while Suspense prepares the
+        // next page. Only history restoration and anchors need the new DOM.
+        if (to.path !== from.path && !savedPosition && !to.hash) {
+            return { left: 0, top: 0, behavior: "instant" };
+        }
+
         if (to.path !== from.path && useRoute().path !== to.path) {
             await new Promise<void>((resolve) => {
                 nuxtApp.hooks.hookOnce("page:finish", () => resolve());
@@ -16,8 +26,6 @@ export default <RouterConfig>{
         }
         await nextTick();
 
-        const isCurrent = () =>
-            router.currentRoute.value.fullPath === to.fullPath;
         if (!isCurrent()) return false;
         if (savedPosition) return savedPosition;
 
@@ -39,6 +47,6 @@ export default <RouterConfig>{
             return false;
         }
 
-        return to.path === from.path ? false : { left: 0, top: 0 };
+        return false;
     },
 };

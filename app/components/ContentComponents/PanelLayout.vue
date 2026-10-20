@@ -6,10 +6,12 @@ const props = withDefaults(
     defineProps<{
         height?: string;
         label?: string;
+        portrait?: boolean;
     }>(),
     {
         height: "32rem",
         label: "Panel layout",
+        portrait: false,
     },
 );
 
@@ -56,7 +58,7 @@ function preserveManualLayout(event: PointerEvent | KeyboardEvent) {
 function fitColumns() {
     const root = container.value;
     const group = root?.querySelector<HTMLElement>(".panel-layout__group");
-    if (!root || !group || manuallyResized) return;
+    if (!root || !group || manuallyResized || props.portrait) return;
     if (getComputedStyle(group).flexDirection !== "row") return;
 
     const handle = group.querySelector<HTMLElement>(
@@ -188,6 +190,7 @@ onBeforeUnmount(() => {
     <div
         ref="container"
         class="panel-layout"
+        :class="portrait ? 'panel-layout--portrait' : 'panel-layout--standard'"
         :aria-label="label"
         role="group"
         @load.capture="scheduleSizing"
@@ -201,7 +204,7 @@ onBeforeUnmount(() => {
                     $slots['left-bottom'] || $slots['right-bottom']
                         ? height
                         : 'auto',
-                maxHeight: height,
+                maxHeight: portrait ? undefined : height,
             }"
         >
             <template v-for="(side, sideIndex) in sides" :key="side">
@@ -213,13 +216,12 @@ onBeforeUnmount(() => {
                     @pointerdown="preserveManualLayout"
                     @keydown="preserveManualLayout"
                 >
-                    <span aria-hidden="true" />
                 </SplitterResizeHandle>
                 <SplitterPanel
                     ref="columns"
                     :id="`${layoutId}-${side}`"
                     :order="sideIndex"
-                    :default-size="50"
+                    :default-size="portrait ? (sideIndex === 0 ? 35 : 65) : 50"
                     :min-size="20"
                     class="panel-layout__column"
                 >
@@ -365,6 +367,15 @@ onBeforeUnmount(() => {
     cursor: col-resize;
 }
 
+.panel-layout--portrait .panel-layout__handle--columns {
+    width: 1rem;
+}
+
+.panel-layout--portrait .panel-layout__pane {
+    overflow: visible;
+    padding: 0.75rem;
+}
+
 .panel-layout__handle--rows {
     height: 2.5rem;
     cursor: row-resize;
@@ -400,8 +411,8 @@ onBeforeUnmount(() => {
 
 /* Let content determine height in narrow containers, including doc sidebars. */
 @container (width < 40rem) {
-    .panel-layout__group,
-    .panel-layout__stack {
+    .panel-layout--standard .panel-layout__group,
+    .panel-layout--standard .panel-layout__stack {
         flex-direction: column !important;
         height: auto !important;
         max-height: none !important;
@@ -409,17 +420,37 @@ onBeforeUnmount(() => {
         gap: 1rem;
     }
 
-    .panel-layout__column,
-    .panel-layout__row {
+    .panel-layout--standard .panel-layout__column,
+    .panel-layout--standard .panel-layout__row {
         flex: none !important;
         overflow: visible !important;
     }
 
-    .panel-layout__pane {
+    .panel-layout--standard .panel-layout__pane {
         height: auto;
     }
 
-    .panel-layout__handle {
+    .panel-layout--standard .panel-layout__handle {
+        display: none;
+    }
+}
+
+/* Portraits need less width than the document/report panels. */
+@container (width < 24rem) {
+    .panel-layout--portrait .panel-layout__group {
+        flex-direction: column !important;
+        height: auto !important;
+        max-height: none !important;
+        overflow: visible !important;
+        gap: 1rem;
+    }
+
+    .panel-layout--portrait .panel-layout__column {
+        flex: none !important;
+        overflow: visible !important;
+    }
+
+    .panel-layout--portrait .panel-layout__handle {
         display: none;
     }
 }

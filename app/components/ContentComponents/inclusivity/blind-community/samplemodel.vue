@@ -169,10 +169,25 @@ onMounted(async () => {
             aria-label="Explore all our 3D models, starting with Plant Cell Structure"
         >
             <span class="sample-model__speech">
-                Wanna see<br />all our models?
+                Wanna check out<br />all 20 graphics?
                 <span class="sample-model__cta"
-                    >Explore models <span aria-hidden="true">↗</span></span
-                >
+                    >Explore graphics
+                    <svg
+                        aria-hidden="true"
+                        viewBox="0 0 24 24"
+                        width="20"
+                        height="20"
+                        style="display: inline; vertical-align: middle"
+                    >
+                        <path
+                            d="M5 19 19 5M5 5h14v14"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        /></svg
+                ></span>
             </span>
             <img
                 class="sample-model__character"

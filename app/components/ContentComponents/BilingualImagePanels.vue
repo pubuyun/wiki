@@ -103,20 +103,17 @@ const versions = computed(() => [
 </template>
 
 <style scoped>
-.bilingual-image-tabs__panels {
-    display: grid;
-}
-
-/* Both languages size the same grid track, including while inactive. */
 .bilingual-image-tabs__panel {
-    grid-area: 1 / 1;
-    align-self: start;
     display: flow-root;
 }
 
+/* Hidden translations must not reserve the taller version's height. */
 .bilingual-image-tabs__panel[data-state="inactive"] {
-    visibility: hidden;
-    pointer-events: none;
+    display: none;
+}
+
+.bilingual-image-tabs__panel :deep(.document-figure) {
+    margin-block: 0;
 }
 
 .bilingual-image-tabs__list {

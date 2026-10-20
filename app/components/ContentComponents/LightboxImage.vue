@@ -58,7 +58,7 @@ defineExpose({ open });
                     .replace(/<[^>]+>/g, '')
                     .replace(/\*/g, '')
             "
-            class="my-8 block max-w-full min-w-0"
+            class="document-figure block max-w-full min-w-0"
         >
             <slot :open="open" />
             <DocumentCaption
@@ -70,7 +70,7 @@ defineExpose({ open });
             <figure
                 v-for="(imageSrc, imageIndex) in src"
                 :key="`${imageSrc}-${imageIndex}`"
-                class="m-0 max-w-full min-w-0"
+                class="document-figure max-w-full min-w-0"
                 :class="{
                     'mb-6':
                         imageCaption(imageIndex) && imageIndex < src.length - 1,
@@ -114,3 +114,13 @@ defineExpose({ open });
         />
     </span>
 </template>
+
+<style scoped>
+.document-figure {
+    margin: 1.5rem 0;
+}
+
+.document-figure :deep(.image-panels) {
+    margin-block: 0;
+}
+</style>

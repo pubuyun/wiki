@@ -33,8 +33,36 @@ export function isCollapsibleParagraph(node: unknown): boolean {
 }
 
 export function contentTocLinks(body?: ContentBody | null): ToCLink[] {
-    const links = [...(body?.toc?.links ?? [])];
     const children = body?.children ?? body?.value ?? [];
+    const collapsedHeadingIds = new Set<string>();
+    function collectCollapsedHeadings(node: unknown, collapsed = false) {
+        const tag = nodeTag(node);
+        const insideTitle =
+            collapsed ||
+            [
+                "collapsible-title",
+                "content-components-collapsible-title",
+            ].includes(tag ?? "");
+        const id = nodeProps(node)?.id;
+        if (collapsed && /^h[1-6]$/.test(tag ?? "") && typeof id === "string") {
+            collapsedHeadingIds.add(id);
+        }
+        const nested = Array.isArray(node)
+            ? node.slice(2)
+            : (node as { children?: unknown[] } | null)?.children ?? [];
+        for (const child of nested) collectCollapsedHeadings(child, insideTitle);
+    }
+    for (const child of children) collectCollapsedHeadings(child);
+
+    function visibleLinks(links: ToCLink[]): ToCLink[] {
+        return links
+            .filter((link) => !collapsedHeadingIds.has(link.id))
+            .map((link) => ({
+                ...link,
+                ...(link.children ? { children: visibleLinks(link.children) } : {}),
+            }));
+    }
+    const links = visibleLinks(body?.toc?.links ?? []);
 
     for (const [index, child] of children.entries()) {
         if (!isCollapsibleParagraph(child)) continue;

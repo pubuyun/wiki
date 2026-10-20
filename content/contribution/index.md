@@ -150,7 +150,7 @@ caption: "Fig. 5 | The FoundryUI workbench showing a complete protein-design wor
 
 ### Accessibility
 
-We provide **future** iGEM teams with a practical reference for building accessible and responsive wikis. :fn-ref{#7} We documented our [accessible designs](/inclusivity/accessibility), and introduced a development workflow that combines several automated accessibility testing tools. :fn-ref{#8} We also prioritize readability on different devices through responsive design. :fn-ref{#7} Other iGEM teams can adapt the design strategy to improve their own documentation.
+We provide **future** iGEM teams with a practical reference for building accessible and responsive wikis. :fn-ref{#7} We documented our [accessible designs](/inclusivity#accessible-wiki), and introduced a development workflow that combines several automated accessibility testing tools. :fn-ref{#8} We also prioritize readability on different devices through responsive design. :fn-ref{#7} Other iGEM teams can adapt the design strategy to improve their own documentation.
 
 ::content-components-lightbox-panels
 ---

@@ -1,6 +1,8 @@
 ---
-title: Engineering
-description:
+title: "Abstract/Overview"
+description: "Engineering strategies for reducing odor precursor uptake, modifying the precursor, and producing terpenoid fragrances."
+hasReference: false
+order: 1
 banner: https://static.igem.wiki/teams/6133/wiki/general/banners/engineering.avif
 bannerPosition: 50% 10%
 bannerWidth: 2053
@@ -12,17 +14,12 @@ bannerBackground: "#090909"
 
 ## Overview
 
+Expelliodor is a targeted deodorant designed to reduce the uptake of the malodor precursor *S*‑(1‑hydroxy‑3‑methylhexan‑3‑yl)‑ʟ‑cysteinylglycine (Cys-Gly-3M3SH) into *Staphylococcus hominis* cells via its peptide transporter (peptide transporter from *S. hominis*; *PepT<sub>Sh</sub>*) :fn-ref{#1}. The reduced availability of intracellular Cys-Gly-3M3SH may consequently limit its downstream conversion into 3-methyl-3-sulfanylhexan-1-ol (3M3SH), a volatile sulfur compound that contributes significantly to axillary odor :fn-ref{#2}.
 
-This is the main page displaying Markdown located at [content/index.md](https://github.com/nuxt/starter/blob/content/content/index.md).
+The product incorporates three protein-based strategies: *de novo* designed precursor binders designed to capture extracellular Cys-Gly-3M3SH and form complexes that are not recognized by PepT<sub>Sh</sub>; *de novo* designed transporter binders designed to restrict conformational transitions of PepT<sub>Sh</sub>, thereby reducing its transport activity; and engineered cyclodextrin glucanotransferase (CGTase) variants derived from *Niallia circulans*, designed to glycosylate the hydroxyl group of Cys-Gly-3M3SH, decreasing its affinity for PepT<sub>Sh</sub>. In addition, bornyl acetate and geranyl butyrate are incorporated to provide pleasant woody and floral scents :fn-ref{#3}, :fn-ref{#4}. All protein components were expressed in *Escherichia coli*, while the two terpenoid esters were produced using separate two-strain *E. coli* co-culture systems :fn-ref{#5}.
 
-### Manage your Contents
+The precursor binders were optimized using ligand-aware sequence engineering message-passing neural network (*LASErMPNN*) :fn-ref{#6} to improve their binding affinity for the target precursor, while CGTase variants were engineered through *SPURS* :fn-ref{#7}-guided mutagenesis and pairwise mutation compatibility analysis to improve their thermostability.
 
-Create new pages or modify the existing ones in `content/` directory.
+To evaluate the three strategies under our laboratory conditions, we established a surrogate experimental platform by heterologously expressing PepT<sub>Sh</sub> in *E. coli*. This platform enabled functional assessment of the three approaches without requiring experiments involving *S. hominis*.
 
-### Query & Render Pages
-
-You can find an example of querying contents and rendering them in a [catch-all page](https://github.com/nuxt/starter/blob/content/app/pages/%5B...slug%5D.vue)
-
-### Integrate Vue Component
-
-Checkout out the [documentation](https://content.nuxt.com/docs/getting-started) to learn more.
+Together, these components form a targeted axillary odor management system designed to reduce odor formation without relying on aluminum salts commonly used in conventional antiperspirants or broad-spectrum bacterial elimination. Expelliodor aims to offer a potentially eco-friendly alternative to conventional deodorants while minimizing disruption to the skin microbiota.

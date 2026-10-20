@@ -15,8 +15,17 @@ const figureComponents = new Set([
 export function numberDocumentFigures<T extends DocumentBody>(body: T): T {
     let figureNumber = 0;
 
-    function numberCaption(text: unknown): unknown {
+    function numberCaption(text: unknown, preserveNumber = false): unknown {
         if (typeof text !== "string" || !text.trim()) return text;
+
+        // Some article series share figure numbers across separate pages.
+        if (preserveNumber) {
+            const explicitNumber = text.match(
+                /^\s*Fig(?:ure)?\.?\s*(\d+)[a-z]?\b/i,
+            );
+            if (explicitNumber) figureNumber = Number(explicitNumber[1]);
+            return text;
+        }
 
         const description = text.replace(
             /^\s*(?:\*{1,2})?Fig(?:ure)?\.?\s*\d+\.?(?:\*{1,2})?\s*(?:[|:：—–-]\s*)?/i,
@@ -55,6 +64,11 @@ export function numberDocumentFigures<T extends DocumentBody>(body: T): T {
         const captionKey = component === "img" ? "title" : "caption";
 
         if (component === "img" || figureComponents.has(component)) {
+            const preserveNumber =
+                readProp(props, "preserveFigureNumber") === true;
+            // This is a document-transform option, not a rendered attribute.
+            delete props.preserveFigureNumber;
+            delete props[":preserveFigureNumber"];
             const caption = readProp(props, captionKey);
             if (caption !== undefined) {
                 const sources = readProp(props, "src");
@@ -68,10 +82,12 @@ export function numberDocumentFigures<T extends DocumentBody>(body: T): T {
                     ? sources.map((_, index) =>
                           numberCaption(
                               Array.isArray(caption) ? caption[index] : caption,
+                              preserveNumber,
                           ),
                       )
                     : numberCaption(
                           Array.isArray(caption) ? caption[0] : caption,
+                          preserveNumber,
                       );
 
                 if (`:${captionKey}` in props) {
@@ -82,7 +98,7 @@ export function numberDocumentFigures<T extends DocumentBody>(body: T): T {
 
                 const body = readProp(props, "captionBody") as
                     CaptionBody | undefined;
-                if (body) {
+                if (body && !preserveNumber) {
                     const numberedBody = Array.isArray(numbered)
                         ? numbered.map((text, index) =>
                               renumberCaptionBody(
