@@ -1,9 +1,7 @@
 <script setup>
 import { contentTocLinks, isCollapsibleParagraph } from "~/utils/content-toc";
 import { numberDocumentFigures } from "~/utils/document-figures";
-import katexMainFont from "katex/dist/fonts/KaTeX_Main-Regular.woff2?url";
-import katexMathFont from "katex/dist/fonts/KaTeX_Math-Italic.woff2?url";
-import katexSizeFont from "katex/dist/fonts/KaTeX_Size2-Regular.woff2?url";
+import { fontAssetUrl } from "~/utils/font-assets";
 
 const props = defineProps({
     page: { type: Object, required: true },
@@ -50,12 +48,16 @@ const breadcrumbs = computed(() => {
 
 useHead(() => ({
     link: JSON.stringify(page.value.body ?? {}).includes("katex")
-        ? [katexMainFont, katexMathFont, katexSizeFont].map((href) => ({
+        ? [
+              "KaTeX_Main-Regular.woff2",
+              "KaTeX_Math-Italic.woff2",
+              "KaTeX_Size2-Regular.woff2",
+          ].map((filename) => ({
               rel: "preload",
               as: "font",
               type: "font/woff2",
               crossorigin: "anonymous",
-              href,
+              href: fontAssetUrl(filename),
           }))
         : [],
 }));

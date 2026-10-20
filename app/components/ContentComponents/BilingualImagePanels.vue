@@ -3,6 +3,7 @@ import { computed, ref } from "vue";
 import { TabsContent, TabsList, TabsRoot, TabsTrigger } from "reka-ui";
 import ImagePanelLayout from "./ImagePanelLayout.vue";
 import LightboxImage from "./LightboxImage.vue";
+import type { MinimarkTree } from "minimark";
 
 const props = withDefaults(
     defineProps<{
@@ -11,6 +12,7 @@ const props = withDefaults(
         altEn?: string | string[];
         altZh?: string | string[];
         caption?: string;
+        captionBody?: MinimarkTree;
         label?: string;
         imageBackground?: string;
         autoLabels?: boolean;
@@ -79,6 +81,7 @@ const versions = computed(() => [
                     :src="version.src"
                     :alt="version.alt"
                     :caption="caption"
+                    :caption-body="captionBody"
                     :image-background="imageBackground"
                 >
                     <template #default="{ open }">

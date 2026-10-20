@@ -1,12 +1,14 @@
 <script setup lang="ts">
 import LightboxImage from "./LightboxImage.vue";
 import ImagePanelLayout from "./ImagePanelLayout.vue";
+import type { MinimarkTree } from "minimark";
 
 withDefaults(
     defineProps<{
         src: string[];
         alt?: string | string[];
         caption?: string;
+        captionBody?: MinimarkTree;
         label?: string;
         imageBackground?: string;
         autoLabels?: boolean;
@@ -22,6 +24,7 @@ withDefaults(
         :src="src"
         :alt="alt"
         :caption="caption"
+        :caption-body="captionBody"
         :image-background="imageBackground"
     >
         <template #default="{ open }">

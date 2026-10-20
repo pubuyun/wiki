@@ -1,3 +1,5 @@
+import { renumberCaptionBody, type CaptionBody } from "./document-captions";
+
 interface DocumentBody {
     children?: unknown[];
     value?: unknown[];
@@ -76,6 +78,24 @@ export function numberDocumentFigures<T extends DocumentBody>(body: T): T {
                     props[`:${captionKey}`] = JSON.stringify(numbered);
                 } else {
                     props[captionKey] = numbered;
+                }
+
+                const body = readProp(props, "captionBody") as
+                    CaptionBody | undefined;
+                if (body) {
+                    const numberedBody = Array.isArray(numbered)
+                        ? numbered.map((text, index) =>
+                              renumberCaptionBody(
+                                  Array.isArray(body) ? body[index] : body,
+                                  text,
+                              ),
+                          )
+                        : renumberCaptionBody(
+                              Array.isArray(body) ? body[0] : body,
+                              numbered,
+                          );
+                    props[":captionBody"] = JSON.stringify(numberedBody);
+                    delete props.captionBody;
                 }
             }
         }

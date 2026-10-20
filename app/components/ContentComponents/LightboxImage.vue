@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { defineAsyncComponent } from "vue";
 import DocumentCaption from "./DocumentCaption.vue";
+import type { CaptionBody } from "~/utils/document-captions";
 
 const LightboxImageOverlay = defineAsyncComponent(
     () => import("./LightBox/LightboxImageOverlay.client.vue"),
@@ -10,6 +11,7 @@ const props = withDefaults(
         src: string[];
         alt?: string | string[];
         caption?: string | string[];
+        captionBody?: CaptionBody;
         imageBackground?: string;
         width?: number | string;
         height?: number | string;
@@ -30,6 +32,11 @@ const imageCaption = (imageIndex: number) =>
     Array.isArray(props.caption)
         ? (props.caption[imageIndex] ?? "")
         : (props.caption ?? "");
+
+const imageCaptionBody = (imageIndex: number) =>
+    Array.isArray(props.captionBody)
+        ? props.captionBody[imageIndex]
+        : props.captionBody;
 
 const open = (imageIndex = 0) => {
     if (!props.src.length) return;
@@ -54,7 +61,10 @@ defineExpose({ open });
             class="my-8 block max-w-full min-w-0"
         >
             <slot :open="open" />
-            <DocumentCaption :text="imageCaption(0)" />
+            <DocumentCaption
+                :text="imageCaption(0)"
+                :body="imageCaptionBody(0)"
+            />
         </span>
         <slot v-else :open="open">
             <figure
@@ -87,6 +97,7 @@ defineExpose({ open });
                     v-if="imageCaption(imageIndex)"
                     as="figcaption"
                     :text="imageCaption(imageIndex)"
+                    :body="imageCaptionBody(imageIndex)"
                 />
             </figure>
         </slot>

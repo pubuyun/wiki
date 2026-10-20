@@ -4,6 +4,8 @@ definePageMeta({
 });
 
 import StakeholdersGraph from "~/components/ContentComponents/human-practices/StakeholdersGraph.vue";
+import TimeLine from "~/components/ContentComponents/human-practices/TimeLine.vue";
+import ProseH2 from "~/components/content/ProseH2.vue";
 import { contentTocLinks } from "~/utils/content-toc";
 import { numberDocumentFigures } from "~/utils/document-figures";
 
@@ -14,7 +16,16 @@ const categoryTitle = computed(() => titleizeSlug(slug.value));
 const pagePath = computed(() => `/${slug.value}`);
 
 const { data: page } = await useContentPageData(pagePath);
-const tocLinks = computed(() => contentTocLinks(page.value?.body));
+const tocLinks = computed(() => {
+    const links = contentTocLinks(page.value?.body);
+    if (
+        slug.value === "human-practices" &&
+        !links.some((link) => link.id === "timeline")
+    ) {
+        links.push({ id: "timeline", depth: 2, text: "Timeline" });
+    }
+    return links;
+});
 
 // Keep the Education summary in Markdown, but render it outside the reading column.
 const educationConclusion = computed(() => {
@@ -47,7 +58,7 @@ const documentPage = computed(
         page.value,
 );
 
-// Extract the stakeholder graph and timeline to show them before the document.
+// Keep the stakeholder graph outside the document's reading column.
 const humanPracticesOverview = computed(() => {
     if (slug.value !== "human-practices" || !page.value) return null;
     const body = numberDocumentFigures(page.value.body) as {
@@ -69,7 +80,6 @@ const humanPracticesOverview = computed(() => {
     });
     return {
         main: withNodes(nodes.slice(0, index)),
-        timeline: withNodes(nodes.slice(index + 1)),
     };
 });
 
@@ -135,13 +145,6 @@ useSeoMeta({
         >
             <template v-if="humanPracticesOverview">
                 <StakeholdersGraph class="my-8" />
-                <ContentDocument
-                    :page="humanPracticesOverview.timeline"
-                    :navigation-pages="pages"
-                    :show-header="false"
-                    :number-figures="false"
-                    :heading-level="2"
-                />
             </template>
             <div
                 v-if="page"
@@ -173,6 +176,14 @@ useSeoMeta({
                 :category-title="categoryTitle"
                 class="mt-10 sm:mt-14"
             />
+            <section
+                v-if="humanPracticesOverview"
+                class="mt-10 min-w-0 sm:mt-14"
+                aria-labelledby="timeline"
+            >
+                <ProseH2 id="timeline">Timeline</ProseH2>
+                <TimeLine class="mt-6 w-full" />
+            </section>
         </div>
 
         <section

@@ -4,6 +4,7 @@ import { fileURLToPath } from "node:url";
 import tailwindcss from "@tailwindcss/vite";
 import { contentGraphLayouts } from "./app/utils/content-graph-layout";
 import { markdownDocumentsPlugin } from "./app/utils/build/markdown-documents";
+import { katexFontsPlugin } from "./app/utils/build/katex-fonts";
 
 const isDevServer = process.env.NODE_ENV === "development";
 const contentGraphDirectory = fileURLToPath(
@@ -71,50 +72,7 @@ export default defineNuxtConfig({
                 "lenis",
             ],
         },
-        plugins: [
-            tailwindcss(),
-            markdownDocumentsPlugin(),
-            {
-                name: "katex-fonts",
-                enforce: "pre",
-                transform(code, id) {
-                    if (
-                        !/[/\\]katex[/\\]dist[/\\]katex(?:\.min)?\.css(?:\?|$)/.test(
-                            id,
-                        )
-                    ) {
-                        return;
-                    }
-
-                    // Keep math visible while loading only modern WOFF2 fonts.
-                    return {
-                        code: code
-                            .replace(
-                                /font-display\s*:\s*\w+/g,
-                                "font-display: swap",
-                            )
-                            .replace(
-                                /src\s*:\s*([^;}]+)/g,
-                                (declaration, sources: string) => {
-                                    const woff2 = sources
-                                        .split(",")
-                                        .filter((source) =>
-                                            /format\(\s*["']?woff2["']?\s*\)/.test(
-                                                source,
-                                            ),
-                                        )
-                                        .join(",");
-
-                                    return woff2
-                                        ? `src: ${woff2}`
-                                        : declaration;
-                                },
-                            ),
-                        map: null,
-                    };
-                },
-            },
-        ],
+        plugins: [tailwindcss(), markdownDocumentsPlugin(), katexFontsPlugin()],
     },
     echarts: {
         // Keep the VChart component, with features registered by each consumer.
@@ -148,7 +106,10 @@ export default defineNuxtConfig({
             sqliteConnector: "native",
         },
         build: {
-            transformers: ["~~/app/utils/transformer"],
+            transformers: [
+                "~~/app/utils/transformer",
+                "~~/app/utils/build/caption-transformer",
+            ],
             markdown: {
                 remarkPlugins: {
                     "remark-math": {

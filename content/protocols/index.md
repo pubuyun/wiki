@@ -27,23 +27,23 @@ order: 999
 #equipment
 
 - Lab scale
-- 50mL centrifuge tubes
+- 50 mL centrifuge tubes
 - 1.5 mL microcentrifuge tubes
 - 0.22 μm syringe filter
 - Syringe
 
 #procedure
 
-- Prepare the corresponding stock solutions in 50mL centrifuge tubes according to the ratios in the following table:
+- Prepare the corresponding stock solutions in 50 mL centrifuge tubes according to the ratios in the following table:
 
   | Antibiotic type | Solute mass (g) | Solvent | Solvent volume (mL) | Concentration (mg/mL) |
   | --- | --- | --- | --- | --- |
   | Ampicillin | 2 | H₂O | 20 | 100 |
-  | Chloramphenicol | 0.7 | 100% Ethanol | 20 | 35 |
+  | Chloramphenicol | 0.7 | 100 % Ethanol | 20 | 35 |
   | Kanamycin | 1 | H₂O | 20 | 50 |
 
 - Filter the solutions using a 0.22 μm syringe filter and aliquot them into 1.5 mL microcentrifuge tubes.
-- Store the solutions at -20°C.
+- Store the solutions at −20 °C.
 - Add the antibiotic stock solutions to LB at a 1:1000 ratio (v/v) to achieve the working concentrations.
 
 ::
@@ -60,7 +60,7 @@ order: 999
 - NaCl
 - Yeast extract
 - Purified water
-- (for solid LB) agar 15g+/L, recommended 18-20g/L
+- (for solid LB) agar ≥15 g/L, recommended 18–20 g/L
 - (optional) antibiotics
 
 #equipment
@@ -83,17 +83,17 @@ order: 999
    | NaCl | 10 |
    | Yeast extract | 5 |
 
-2. (For solid LB) Weigh 18g/L of agar and add it to a beaker of the desired volume.
-3. Add purified water to approximately 60% of the desired volume and stir until all solids are fully dissolved. Agar will not fully dissolve, but make sure that no clumping occurs.
+2. (For solid LB) Weigh 18 g/L of agar and add it to a beaker of the desired volume.
+3. Add purified water to approximately 60 % of the desired volume and stir until all solids are fully dissolved. Agar will not fully dissolve, but make sure that no clumping occurs.
 4. Transfer the solution to a graduated cylinder and top up with purified water to the desired volume.
 5. Transfer the solution to one or more media bottles, ensuring that the liquid volume is less than 2/3 of the bottle volume.
 6. Transfer the media bottles containing LB to the autoclave, leaving the caps loose enough to allow air to flow into and out of the bottles.
-7. **(Let a teacher do this if possible)** Autoclave at 121°C for 20 minutes. **Only open the autoclave when temperature \<80°C AND pressure gauge reaches 0.**
+7. **(Let a teacher do this if possible)** Autoclave at 121 °C for 20 minutes. **Only open the autoclave when temperature is <80 °C AND pressure gauge reaches 0.**
 
 **Adding antibiotics:**
-1. Remove the sterile media bottle containing LB from the autoclave, screw the cap shut, and let it cool to below 50°C (until you can hold it without getting burned).
+1. Remove the sterile media bottle containing LB from the autoclave, screw the cap shut, and let it cool to below 50 °C (until you can hold it without getting burned).
 2. Transfer the media bottle containing LB and the antibiotic stock solution to the laminar flow hood.
-3. Calculate the required volume of antibiotic stock solution using $C_1V_1=C_2V_2$. As the antibiotic stock solution is 1000× the working concentration, add 1 μL of antibiotic stock solution per 1 mL of LB medium. The volume of antibiotic added can be considered negligible compared to the LB medium volume.
+3. Calculate the required volume of antibiotic stock solution using $C_1V_1 = C_2V_2$. As the antibiotic stock solution is $1000\times$ the working concentration, add 1 μL of antibiotic stock solution per 1 mL of LB medium. The volume of antibiotic added can be considered negligible compared to the LB medium volume.
 4. Transfer the calculated amount of antibiotic stock solution to the media bottle containing LB and mix thoroughly.
 
 ::
@@ -159,7 +159,7 @@ order: 999
             Total 30 cycles
         - Final extension: 72 °C, 5 min
         - Hold: 10 °C indefinitely
-3. Second Round PCR (50μL Total Reaction Volume)
+3. Second Round PCR (50 μL Total Reaction Volume)
     1. Reaction mixture setup
 
         *Prepare on ice; add Pfu polymerase last*{.block .my-2}
@@ -213,7 +213,7 @@ order: 999
     - One positive-control tube, if positive-control DNA is available
 
 4. In a sterile microcentrifuge tube, prepare the PCR master mix. For one 25 μL reaction, add:
-    - 12.5 μL 2× Flash PCR Master Mix
+    - 12.5 μL 2× Phanta PCR Master Mix
     - 1.0 μL 10 μM forward primer
     - 1.0 μL 10 μM reverse primer
     - 10.5 μL nuclease-free water
@@ -231,7 +231,7 @@ order: 999
 13. Place the PCR tubes into the Thermocycler.
 14. Program the Thermocycler using the following conditions:
 15. Amplification Program
-    - Initial denaturation: 98°C, 30 s
+    - Initial denaturation: 98 °C, 30 s
     - Cycling stage:
         - Denaturation: 94 °C, 10 s
         - Annealing: 58 °C, 15 s
@@ -286,11 +286,11 @@ Do not pick overgrown merged colonies or excess agar.
     1. Initial denaturation: 98 °C, 3 min (lyse bacterial cells fully)
     2. 25–30 cycles:
      Denaturation: 95 °C, 30 s
-     Annealing: Tm-5 °C, 15 s
-     Extension: 72 °C, 20-30s per kb of target fragment
+     Annealing: $T_\mathrm{m} - 5\ ^\circ\mathrm{C}$, 15 s
+     Extension: 72 °C, 20–30 s per kb of target fragment
     3. Final extension: 72 °C, 5–10 min
     4. Hold at 4 °C indefinitely
-7. Incubate the replica plate.
+7. Incubate the replica plate at 37 °C.
 8. Run agarose gel electrophoresis to check band size against DNA Marker:
 Correct band size = positive clone; no band / incorrect size = negative clone.
 9. If positive clones are present, you could recover the strain from the corresponding grid on the replica plate.
@@ -323,12 +323,12 @@ Correct band size = positive clone; no band / incorrect size = negative clone.
 2. Add 150 μL of Buffer P1 (**make sure RNase A is already added to Buffer P1 and the color of the solution is red;** do not use if the buffer is pale) to the microcentrifuge tube and vortex until the bacterial pellet is completely resuspended. The suspension should appear uniformly cloudy and red.
 3. Add 150 μL of Buffer P2, mix gently by inverting until solution turns fully purple and clear. **Do not vortex!**
 4. Add 350 μL of Buffer P5, mix immediately and quickly by inverting. The solution should become yellow and cloudy. Centrifuge at 12000 rpm for 2 min, repeat if free-floating solids are still present.
-5. Transfer the supernatant into the Spin Column CP3 (put in a collection tube). Centrifuge for 30s at 12000 rpm. Discard the eluate and set the spin column back into the collection tube.
-6. Wash the Spin Column CP3 by adding 300 µl Buffer PWT **(Make sure that anhydrous ethanol has been added to Buffer PWT)** and centrifuging for 30s at 12,000 rpm. Discard the eluate, and put the spin column back into the collection tube.
+5. Transfer the supernatant into the Spin Column CP3 (put in a collection tube). Centrifuge for 30 s at 12000 rpm. Discard the eluate and set the spin column back into the collection tube.
+6. Wash the Spin Column CP3 by adding 300 µL Buffer PWT **(Make sure that anhydrous ethanol has been added to Buffer PWT)** and centrifuging for 30 s at 12,000 rpm. Discard the eluate, and put the spin column back into the collection tube.
 7. Centrifuge for 1 min at 12000 rpm to remove residual wash buffer.
 8. Place the spin column in a clean 1.5 mL microcentrifuge tube. (Optional) Heat the column and tube at 42 °C to evaporate residual ethanol.
 9. Add 50-100 μl Buffer TB to the center of the spin column. **Do not touch the silica membrane with pipette tip!** Centrifuge for 30 s at 12000 rpm. Remove the spin column and keep the eluate.
-10. Measure concentration and purity by measuring 260nm/280nm absorbance with microplate reader.
+10. Measure concentration and purity by measuring absorbance at 260 nm and 280 nm with a microplate reader.
 11. Store the remaining solution in -20 °C fridge.
 
 ::
@@ -359,13 +359,13 @@ Correct band size = positive clone; no band / incorrect size = negative clone.
 
 **Preparing the gel**
 1. Choose the well size and gel size according to your sample.
-2. Measure out ingredients according to the gel size (1% agarose):
+2. Measure out ingredients according to the gel size (1 % agarose):
     Large gel: 1 g agarose, 100 mL 1XTAE buffer
     Medium gel: 0.5 g agarose, 50 mL 1XTAE buffer
     Small gel: 0.25 g agarose, 25 mL 1XTAE buffer
     (for very long/short fragments, you could adjust the agarose concentration for better separation)
     Add to conical flask, mix thoroughly
-3. Heat the mixture in the microwave at high heat. Remove from microwave immediately and shake to dissolve the agarose. If there are still solids, repeat this step.
+3. Heat the mixture in the microwave at high heat for 30 s and shake to dissolve the agarose. Repeat this step until there is no solid agarose.
 4. While the mixture cools down, assemble the gel casting tray according to your well size and gel size.
 5. When the mixture stops emitting fumes, add SYBR Safe according to your gel size with micropipette, mix thoroughly while minimizing bubble formation.
     Large gel: 10 μL dye
@@ -384,7 +384,7 @@ Correct band size = positive clone; no band / incorrect size = negative clone.
 3. Add marker to the leftmost intact well of the gel. Add 8 μL for large wells, and 5 μL for small wells. Pipette gently while the tip is suspended about halfway in the well to prevent the marker from being launched out of the well.
 4. Add your samples into the wells with the same caution as adding the marker. Add 5 μL for each small well, and 45 μL for each large well. Take extra caution when adding samples into large wells, as it's very easy to overflow. If you have a lot more wells than samples, it is best to leave one or more well(s) empty as a barrier between different (categories of) samples.
 5. (Optional) For medium/large gels (especially with small wells), it is best to add another well with marker in the middle/right for easier comparison.
-6. Place the tank lid on and connect it to the DC power supply. Run at 150V 250mA until the marker moves below 2/3 length of the gel. (set time at 20-30min first)
+6. Place the tank lid on and connect it to the DC power supply. Run at 150 V and 250 mA until the marker moves below 2/3 length of the gel. (set time at 20–30 min first)
 7. Turn off the power supply, remove the gel from the tank. Use the gel transilluminator to take pictures
 
 ::
@@ -415,17 +415,17 @@ Correct band size = positive clone; no band / incorrect size = negative clone.
 **Below is an example using Vazyme FastPure Gel DNA Extraction Mini Kit, please refer to the instruction manual of the exact gel DNA extraction kit being used.**
 1. Excise desired DNA band from agarose gel in blue light transilluminator using a razor blade and place it into a 1.5 mL microcentrifuge tube.
 2. Measure the mass of the DNA band using a lab scale. (tare the weight of an empty tube)
-3. Add buffer GDP in a volume equal to the mass of the excised gel (0.1 g=100μL); Place the tube in a 53°C metal bath and wait for 5-10min to melt the gel completely.
+3. Add buffer GDP in a volume equal to the mass of the excised gel ($0.1\ \mathrm{g} = 100\ \mu\mathrm{L}$); Place the tube in a 53 °C metal bath and wait for 5–10 min to melt the gel completely.
 4. Transfer the gel solution into the FastPure DNA Mini Columns-G placed in a collection tube. Centrifuge for 1 min at 12,000 rpm.
 5. Retransfer solution in the collection tube to the column and centrifuge for 1 min at 12,000 rpm.
-6. Discard the solution in the collection tube; add 300 μL buffer GDP into the column and wait for 1min. Then centrifuge for 1 min at 12,000 rpm.
-7. Discard the solution in the collection tube; add 700μL buffer GW (with anhydrous ethanol added according to the manual) into the column, and then centrifuge for 1 min at 12,000 rpm.
+6. Discard the solution in the collection tube; add 300 μL buffer GDP into the column and wait for 1 min. Then centrifuge for 1 min at 12,000 rpm.
+7. Discard the solution in the collection tube; add 700 μL buffer GW (with anhydrous ethanol added according to the manual) into the column, and then centrifuge for 1 min at 12,000 rpm.
 8. Repeat step 7.
 9. Discard the solution in the collection tube and centrifuge for 2 min at 12,000 rpm.
 10. Place the column in metal bath to dry for 2-3 min with the lid open; make sure no ethanol is left in the column
 11. Discard the collection tube; transfer column to a centrifuge tube (1.5 mL).
-12. Add 20-30 μL Elution Buffer into column on the membrane; wait for 2min and centrifuge for 2 min at 12000 rpm. Discard FastPure DNA Mini Columns-G.
-13. Measure concentration and purity by measuring 260nm/280nm absorbance with microplate reader.
+12. Add 20–30 μL Elution Buffer into column on the membrane; wait for 2 min and centrifuge for 2 min at 12000 rpm. Discard FastPure DNA Mini Columns-G.
+13. Measure concentration and purity by measuring absorbance at 260 nm and 280 nm with a microplate reader.
 14. Store the remaining solution in -20 °C fridge.
 
 ::
@@ -452,7 +452,7 @@ Correct band size = positive clone; no band / incorrect size = negative clone.
 
 1. Carry out the following actions in an ice bucket.
 2. Calculate the volume of vectors and inserts needed using the following formula:
-    X  = 3 Y \* (C vector \* M fragment) / (C fragment \* M vector)
+    $X = 3Y\dfrac{C_{\mathrm{vector}}M_{\mathrm{fragment}}}{C_{\mathrm{fragment}}M_{\mathrm{vector}}}$
 3. Follow the following table, add all the components into a PCR tube:
 
    | Chemicals | Volume (µL) |
@@ -507,7 +507,7 @@ Correct band size = positive clone; no band / incorrect size = negative clone.
 
     *Calculate the volume of vectors and inserts needed using the following formula:*{.block .my-2}
 
-    *X  = 3 Y \* (C vector \* M fragment) / (C fragment \* M vector)*{.block .my-2}
+    *$X = 3Y\dfrac{C_{\mathrm{vector}}M_{\mathrm{fragment}}}{C_{\mathrm{fragment}}M_{\mathrm{vector}}}$*{.block .my-2}
 
     *C = concentration*{.block .my-2}
 
@@ -974,7 +974,7 @@ caption: 'Fig. 1 | Streaking guide. Numbers 1–5 correspond to the stroke direc
 **Gel Preparation**
 2. Clean and dry the short plate and spacer plate.
 3. Assemble the glass plates in the gel casting frame and secure the frame onto the casting stand.
-4. Fill the gap between the two plates with tap water and leave for 5 minutes to check for leakage.
+4. Fill the gap between the two plates with water and leave for 5 minutes to check for leakage.
 5. If no leakage is observed, discard the water.
 6. Prepare the gel solution according to the following table:
 

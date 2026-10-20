@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { provide, useId } from "vue";
 import DocumentCaption from "./DocumentCaption.vue";
+import type { MinimarkTree } from "minimark";
 
-defineProps<{ caption: string }>();
+defineProps<{ caption: string; captionBody?: MinimarkTree }>();
 
 const captionId = `table-caption-${useId()}`;
 provide("wiki-table-caption-id", captionId);
@@ -15,6 +16,7 @@ provide("wiki-table-caption-id", captionId);
             class="table-caption"
             as="p"
             :text="caption"
+            :body="captionBody"
         />
         <slot />
     </div>

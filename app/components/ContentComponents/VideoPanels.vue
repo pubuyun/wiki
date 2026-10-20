@@ -1,11 +1,13 @@
 <script setup lang="ts">
 import DocumentCaption from "./DocumentCaption.vue";
 import ImagePanelLayout from "./ImagePanelLayout.vue";
+import type { MinimarkTree } from "minimark";
 
 defineProps<{
     src: string[];
     titles: string[];
     caption: string;
+    captionBody?: MinimarkTree;
     label?: string;
     portrait?: boolean;
 }>();
@@ -24,7 +26,7 @@ defineProps<{
             media-type="video"
             :video-aspect-ratio="portrait ? '4 / 5' : '16 / 9'"
         />
-        <DocumentCaption as="figcaption" :text="caption" />
+        <DocumentCaption as="figcaption" :text="caption" :body="captionBody" />
     </figure>
 </template>
 

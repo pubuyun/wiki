@@ -3,6 +3,7 @@
         :src="[refinedSrc]"
         :alt="props.alt"
         :caption="props.title"
+        :caption-body="props.captionBody"
     >
         <template #default="{ open }">
             <button
@@ -45,6 +46,8 @@ import { withTrailingSlash, withLeadingSlash, joinURL } from "ufo";
 import { useRuntimeConfig, computed } from "#imports";
 
 import ImageComponent from "#build/mdc-image-component.mjs";
+import type { PropType } from "vue";
+import type { MinimarkTree } from "minimark";
 
 const props = defineProps({
     src: {
@@ -58,6 +61,10 @@ const props = defineProps({
     title: {
         type: String,
         default: "",
+    },
+    captionBody: {
+        type: Object as PropType<MinimarkTree>,
+        default: undefined,
     },
     width: {
         type: [String, Number],

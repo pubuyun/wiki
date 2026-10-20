@@ -4,12 +4,14 @@ import { parseMarkdown } from "@nuxtjs/mdc/runtime";
 import { fromHast } from "minimark/hast";
 import type { Plugin } from "vite";
 import type { MarkdownDocument } from "../../types/markdown-document";
+import { compileDocumentCaptions } from "./document-captions";
 
 export async function compileMarkdownDocument(
     markdown: string,
     filename: string,
 ): Promise<MarkdownDocument> {
     const parsed = await parseMarkdown(markdown, { highlight: false });
+    await compileDocumentCaptions(parsed.body);
     const id = basename(filename, ".md");
 
     return {
@@ -34,7 +36,7 @@ export function markdownDocumentsPlugin(): Plugin {
         name: "wiki-markdown-documents",
         enforce: "pre",
         async load(id) {
-            const [filename, query = ""] = id.split("?");
+            const [filename = "", query = ""] = id.split("?");
             if (
                 !filename.endsWith(".md") ||
                 !new URLSearchParams(query).has("compiled-markdown")

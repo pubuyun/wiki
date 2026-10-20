@@ -4,7 +4,7 @@
     font-style: normal;
     font-display: swap;
     font-weight: 400;
-    src: url("@fontsource/momo-trust-display/files/momo-trust-display-latin-400-normal.woff2")
+    src: url("https://static.igem.wiki/teams/6133/wiki/fonts/momo-trust-display-latin-400-normal.woff2")
         format("woff2");
 }
 
@@ -13,7 +13,7 @@
     font-style: normal;
     font-display: swap;
     font-weight: 400;
-    src: url("@fontsource/righteous/files/righteous-latin-400-normal.woff2")
+    src: url("https://static.igem.wiki/teams/6133/wiki/fonts/righteous-latin-400-normal.woff2")
         format("woff2");
 }
 
@@ -22,7 +22,7 @@
     font-style: normal;
     font-display: swap;
     font-weight: 400;
-    src: url("@fontsource/belanosima/files/belanosima-latin-400-normal.woff2")
+    src: url("https://static.igem.wiki/teams/6133/wiki/fonts/belanosima-latin-400-normal.woff2")
         format("woff2");
 }
 

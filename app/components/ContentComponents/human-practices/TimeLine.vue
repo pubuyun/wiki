@@ -6,11 +6,15 @@ import {
 } from "~/data/human-practices/timeline";
 
 const uid = useId();
+const navigationHidden = useState<boolean>(
+    "navigation-bar-hidden",
+    () => false,
+);
 const hovered = ref<string | null>(null);
 const focused = ref<string | null>(null);
 const selected = ref<string | null>(null);
 const activeId = computed(
-    () => hovered.value ?? focused.value ?? selected.value,
+    () => selected.value ?? hovered.value ?? focused.value,
 );
 const activeThread = computed(() =>
     timelineThreads.find((thread) => thread.id === activeId.value),
@@ -33,28 +37,46 @@ const stages = timelineStages.map((stage, stageIndex) => ({
         };
     }),
 }));
-const totalCycles = stages.reduce(
-    (count, stage) => count + stage.cycles.length,
-    0,
-);
 const plot = ref<HTMLElement | null>(null);
 type Point = { x: number; y: number };
+type Label = Point & {
+    left: number;
+    right: number;
+    top: number;
+    bottom: number;
+    buttonTop: number;
+    curve: string;
+};
 const geometry = shallowRef({
     width: 0,
     height: 0,
     axis: 0,
     start: 0,
     end: 0,
+    footerHeight: 384,
     nodes: {} as Record<string, Point>,
-    labels: {} as Record<string, Point>,
+    labels: {} as Record<string, Label>,
 });
+
+function curvePoint(
+    start: Point,
+    control: Point,
+    end: Point,
+    t: number,
+): Point {
+    const u = 1 - t;
+    return {
+        x: u * u * start.x + 2 * u * t * control.x + t * t * end.x,
+        y: u * u * start.y + 2 * u * t * control.y + t * t * end.y,
+    };
+}
 
 function measure() {
     const element = plot.value;
     if (!element) return;
     const bounds = element.getBoundingClientRect();
     const nodes: Record<string, Point> = {};
-    const labels: Record<string, Point> = {};
+    const labels: Record<string, Label> = {};
     element.querySelectorAll<HTMLElement>("[data-cycle]").forEach((node) => {
         const box = node.getBoundingClientRect();
         nodes[node.dataset.cycle!] = {
@@ -62,23 +84,102 @@ function measure() {
             y: box.top - bounds.top + box.height / 2,
         };
     });
-    element
-        .querySelectorAll<HTMLElement>("[data-thread-label]")
-        .forEach((label) => {
-            const box = label.getBoundingClientRect();
-            labels[label.dataset.threadLabel!] = {
-                x: box.left - bounds.left + box.width / 2,
-                y: box.top - bounds.top - 10,
-            };
-        });
     const points = Object.values(nodes);
     if (!points.length) return;
+    const axis = points[0]!.x;
+    const contentEnd =
+        element.querySelector(".stages")!.getBoundingClientRect().bottom -
+        bounds.top;
+    const metrics = new Map(
+        Array.from(
+            element.querySelectorAll<HTMLElement>("[data-thread-label]"),
+            (button) => {
+                const text = button
+                    .querySelector(".thread-end-label")!
+                    .getBoundingClientRect();
+                return [
+                    button.dataset.threadLabel!,
+                    {
+                        width: text.width,
+                        height: text.height,
+                        inset: text.top - button.getBoundingClientRect().top,
+                    },
+                ] as const;
+            },
+        ),
+    );
+    const endings = timelineThreads
+        .map((thread, index) => ({
+            ...thread,
+            index,
+            start: nodes[thread.nodes[thread.nodes.length - 1]!]!,
+        }))
+        .sort((a, b) => a.start.y - b.start.y || a.index - b.index);
+    let nextY = 0;
+    for (const thread of endings) {
+        const size = metrics.get(thread.id)!;
+        const minX = size.width / 2 + 10;
+        const maxX = axis - size.width / 2 - 18;
+        const phase =
+            (thread.index * 0.618034 + thread.nodes.length * 0.137) % 1;
+        let y = Math.max(thread.start.y + 64, nextY);
+        let placed = false;
+        // Move labels, rather than adding bends to the arrow. Every ending is
+        // one quadratic with monotonic x/y coordinates and no inflection.
+        while (!placed) {
+            for (let attempt = 0; attempt < 12 && !placed; attempt++) {
+                const fraction = (phase + attempt * 0.381966) % 1;
+                const x = minX + Math.max(0, maxX - minX) * fraction;
+                const control = {
+                    x: axis + (x - axis) * 0.72,
+                    y: thread.start.y + (y - thread.start.y) * 0.38,
+                };
+                const steps = Math.ceil((axis - x + y - thread.start.y) / 4);
+                const obstacles = Object.values(labels);
+                let clear = true;
+                for (let step = 0; step <= steps && clear; step++) {
+                    const point = curvePoint(
+                        thread.start,
+                        control,
+                        { x, y },
+                        step / steps,
+                    );
+                    clear = !obstacles.some(
+                        (box) =>
+                            point.x >= box.left &&
+                            point.x <= box.right &&
+                            point.y >= box.top &&
+                            point.y <= box.bottom,
+                    );
+                }
+                if (!clear) continue;
+                labels[thread.id] = {
+                    x,
+                    y,
+                    left: x - size.width / 2 - 6,
+                    right: x + size.width / 2 + 6,
+                    top: y + 6,
+                    bottom: y + 12 + size.height + 6,
+                    buttonTop: y + 12 - size.inset,
+                    curve: `M ${axis} ${thread.start.y} Q ${control.x} ${control.y}, ${x} ${y}`,
+                };
+                nextY = y + size.height + 34 + fraction * 16;
+                placed = true;
+            }
+            if (!placed) y += 28;
+        }
+    }
+    const height = Math.max(
+        contentEnd + 50,
+        ...Object.values(labels).map((label) => label.bottom + 30),
+    );
     geometry.value = {
         width: bounds.width,
-        height: bounds.height,
-        axis: points[0]!.x,
-        start: points[0]!.y - 40,
-        end: points[points.length - 1]!.y + 46,
+        height,
+        axis,
+        start: 25,
+        end: height - 10,
+        footerHeight: height - contentEnd,
         nodes,
         labels,
     };
@@ -107,77 +208,82 @@ onBeforeUnmount(() => {
 
 const routes = computed(() => {
     const { axis, nodes, labels } = geometry.value;
-    return timelineThreads
-        .map((thread, index) => {
-            const points = thread.nodes
-                .map((id) => nodes[id])
-                .filter((point): point is Point => !!point);
-            // Each theme has its own lane. Larger jumps bow farther to the left.
-            const lane = axis * (0.12 + index * 0.095);
-            const segments = points.slice(1).map((point, i) => {
-                const previous = points[i]!;
-                const distance = point.y - previous.y;
-                const bend = Math.max(
-                    12,
-                    Math.min(
-                        lane,
-                        axis - Math.min(22 + distance * 0.3, axis * 0.65),
-                    ),
-                );
-                return `M ${axis} ${previous.y} C ${bend} ${previous.y + distance * 0.22}, ${bend} ${point.y - distance * 0.22}, ${axis} ${point.y}`;
-            });
-            const last = points[points.length - 1];
-            const label = labels[thread.id];
-            const ending =
-                last && label
-                    ? `M ${axis} ${last.y} C ${lane} ${last.y + 50}, ${lane} ${label.y - 60}, ${label.x} ${label.y}`
-                    : "";
-            return { ...thread, segments, ending };
-        })
-        .sort(
-            (a, b) =>
-                Number(a.id === activeId.value) -
-                Number(b.id === activeId.value),
-        );
+    return timelineThreads.map((thread, index) => {
+        const points = thread.nodes
+            .map((id) => nodes[id])
+            .filter((point): point is Point => !!point);
+        // Each theme has its own lane. Larger jumps bow farther to the left.
+        const lane = axis * (0.12 + index * 0.095);
+        const segments = points.slice(1).map((point, i) => {
+            const previous = points[i]!;
+            const distance = point.y - previous.y;
+            const bend = Math.max(
+                12,
+                Math.min(
+                    lane,
+                    axis - Math.min(22 + distance * 0.3, axis * 0.65),
+                ),
+            );
+            return `M ${axis} ${previous.y} C ${bend} ${previous.y + distance * 0.22}, ${bend} ${point.y - distance * 0.22}, ${axis} ${point.y}`;
+        });
+        const ending = labels[thread.id]?.curve ?? "";
+        return { ...thread, segments, ending };
+    });
 });
+const drawnRoutes = computed(() =>
+    [...routes.value].sort(
+        (a, b) =>
+            Number(a.id === activeId.value) - Number(b.id === activeId.value),
+    ),
+);
 
 function toggle(id: string) {
-    selected.value = selected.value === id ? null : id;
+    if (selected.value === id) {
+        reset();
+    } else {
+        selected.value = id;
+    }
 }
 function reset() {
     selected.value = hovered.value = focused.value = null;
 }
 function threadStyle(id: string) {
-    return { "--thread": `var(--${id})` };
+    return { "--thread": `var(--${id})`, "--ribbon": `var(--${id}-ribbon)` };
+}
+function labelStyle(id: string) {
+    const label = geometry.value.labels[id];
+    return label
+        ? { left: `${label.x}px`, top: `${label.buttonTop}px` }
+        : { visibility: "hidden" as const };
+}
+function ribbonTitle(title: string) {
+    return title
+        .replace("Technology", "Techno\u00adlogy")
+        .replace("Stability", "Stab\u00adility")
+        .replace("Industry", "Indus\u00adtry")
+        .replace("Awareness", "Aware\u00adness")
+        .replace("Sustainability", "Sustain\u00adability")
+        .replace("Inclusivity", "Inclus\u00adivity");
+}
+function ribbonLines(title: string) {
+    const split = title.lastIndexOf(" ");
+    return split < 0
+        ? [ribbonTitle(title)]
+        : [title.slice(0, split), ribbonTitle(title.slice(split + 1))];
 }
 </script>
 
 <template>
     <section
         class="hp-timeline"
-        :aria-labelledby="`${uid}-title`"
+        :class="{ 'is-nav-hidden': navigationHidden }"
+        aria-label="Human Practices timeline"
         @keydown.esc="reset"
     >
-        <header class="timeline-header">
-            <div>
-                <p class="eyebrow">INTEGRATED HUMAN PRACTICES</p>
-                <h3 :id="`${uid}-title`">A journey shaped by people</h3>
-                <p class="timeline-intro">
-                    Follow the threads that connect our conversations to our
-                    decisions.
-                </p>
-            </div>
-            <p class="journey-count">
-                <strong>05</strong> stages <span>/</span>
-                <strong>{{ totalCycles }}</strong> cycles
-            </p>
-        </header>
-
         <div
             class="thread-controls"
             role="group"
             aria-label="Highlight a timeline theme"
-            :aria-describedby="`${uid}-help`"
         >
             <button
                 v-for="thread in timelineThreads"
@@ -190,7 +296,8 @@ function threadStyle(id: string) {
                 }"
                 :style="threadStyle(thread.id)"
                 :aria-pressed="selected === thread.id"
-                :aria-controls="`${uid}-plot ${uid}-detail`"
+                :aria-label="thread.title"
+                :aria-controls="`${uid}-plot`"
                 @pointerenter="
                     hovered = $event.pointerType === 'mouse' ? thread.id : null
                 "
@@ -199,50 +306,22 @@ function threadStyle(id: string) {
                 @blur="focused = null"
                 @click="toggle(thread.id)"
             >
-                <span class="thread-swatch" aria-hidden="true"></span>
-                <span>{{ thread.title }}</span>
-                <span class="thread-count" aria-hidden="true">{{
-                    thread.nodes.length
-                }}</span>
+                <span class="thread-button-label"
+                    ><span
+                        v-for="line in ribbonLines(thread.title)"
+                        :key="line"
+                        >{{ line }}</span
+                    ></span
+                >
             </button>
         </div>
 
-        <div class="timeline-guide">
-            <p :id="`${uid}-help`">
-                Hover or focus to trace a theme. Click to pin. Select a cycle to
-                read its story.
-            </p>
-            <button type="button" class="reset-button" @click="reset">
-                Show all <span aria-hidden="true">↗</span>
-            </button>
-        </div>
         <div
-            :id="`${uid}-detail`"
-            class="thread-detail"
-            :style="activeThread ? threadStyle(activeThread.id) : undefined"
+            :id="`${uid}-plot`"
+            ref="plot"
+            class="timeline-plot"
+            :style="{ '--ending-space': `${geometry.footerHeight}px` }"
         >
-            <p class="detail-title">
-                {{
-                    activeThread?.title ??
-                    "Every conversation moves us forward."
-                }}
-            </p>
-            <p>
-                {{
-                    activeThread?.description ??
-                    "Explore how 23 stakeholder cycles shaped our project across eight connected themes — from understanding the science to building a safer, more sustainable and inclusive solution."
-                }}
-            </p>
-            <p class="selection-status" role="status">
-                {{
-                    selected
-                        ? `Pinned: ${timelineThreads.find((thread) => thread.id === selected)?.title}. Press Escape or Show all to clear.`
-                        : "All themes available. Choose a thread to explore."
-                }}
-            </p>
-        </div>
-
-        <div :id="`${uid}-plot`" ref="plot" class="timeline-plot">
             <svg
                 v-if="geometry.width"
                 class="timeline-lines"
@@ -258,8 +337,8 @@ function threadStyle(id: string) {
                         viewBox="0 0 10 10"
                         refX="8"
                         refY="5"
-                        markerWidth="7"
-                        markerHeight="7"
+                        markerWidth="8"
+                        markerHeight="8"
                         orient="auto-start-reverse"
                         markerUnits="userSpaceOnUse"
                     >
@@ -279,10 +358,10 @@ function threadStyle(id: string) {
                 />
                 <path
                     class="spine-arrow"
-                    :d="`M ${geometry.axis - 7} ${geometry.end - 7} L ${geometry.axis} ${geometry.end} L ${geometry.axis + 7} ${geometry.end - 7}`"
+                    :d="`M ${geometry.axis - 12} ${geometry.end - 14} L ${geometry.axis} ${geometry.end} L ${geometry.axis + 12} ${geometry.end - 14}`"
                 />
                 <g
-                    v-for="thread in routes"
+                    v-for="thread in drawnRoutes"
                     :key="thread.id"
                     class="thread-route"
                     :class="{
@@ -309,19 +388,7 @@ function threadStyle(id: string) {
                 aria-label="Five stages of our Human Practices journey"
             >
                 <li v-for="stage in stages" :key="stage.number" class="stage">
-                    <div class="stage-heading">
-                        <span class="stage-number" aria-hidden="true">{{
-                            String(stage.number).padStart(2, "0")
-                        }}</span>
-                        <h4>
-                            <span class="stage-kicker"
-                                >Stage {{ stage.number }}</span
-                            >{{ stage.title }}
-                        </h4>
-                        <span class="stage-count"
-                            >{{ stage.cycles.length }} cycles</span
-                        >
-                    </div>
+                    <h3 class="stage-heading">Stage {{ stage.number }}</h3>
                     <ol
                         class="cycles"
                         :aria-label="`Stage ${stage.number} cycles`"
@@ -355,18 +422,11 @@ function threadStyle(id: string) {
                                     aria-hidden="true"
                                 ></span>
                                 <span class="cycle-copy">
-                                    <span class="cycle-kicker"
-                                        >Cycle
-                                        {{
-                                            String(cycle.number).padStart(
-                                                2,
-                                                "0",
-                                            )
+                                    <span class="cycle-title"
+                                        >Cycle{{ cycle.number }}-{{
+                                            cycle.title
                                         }}</span
                                     >
-                                    <span class="cycle-title">{{
-                                        cycle.title
-                                    }}</span>
                                     <span
                                         class="cycle-themes"
                                         aria-hidden="true"
@@ -378,9 +438,6 @@ function threadStyle(id: string) {
                                         ></span
                                     ></span>
                                 </span>
-                                <span class="cycle-arrow" aria-hidden="true"
-                                    >↗</span
-                                >
                             </NuxtLink>
                         </li>
                     </ol>
@@ -392,13 +449,16 @@ function threadStyle(id: string) {
                     v-for="thread in timelineThreads"
                     :key="thread.id"
                     type="button"
-                    class="thread-end"
+                    :class="[
+                        'thread-end',
+                        `thread-end-${thread.id}`,
+                        {
+                            'is-active': activeId === thread.id,
+                            'is-muted': activeId && activeId !== thread.id,
+                        },
+                    ]"
                     :data-thread-label="thread.id"
-                    :style="threadStyle(thread.id)"
-                    :class="{
-                        'is-active': activeId === thread.id,
-                        'is-muted': activeId && activeId !== thread.id,
-                    }"
+                    :style="[threadStyle(thread.id), labelStyle(thread.id)]"
                     :aria-pressed="selected === thread.id"
                     @pointerenter="
                         hovered =
@@ -409,356 +469,194 @@ function threadStyle(id: string) {
                     @blur="focused = null"
                     @click="toggle(thread.id)"
                 >
-                    <span class="thread-swatch" aria-hidden="true"></span
-                    >{{ thread.title }}
+                    <span class="thread-end-label">{{ thread.title }}</span>
                 </button>
             </div>
         </div>
-        <p class="timeline-caption">
-            Five stages. Eight threads. One continuously evolving project.
-        </p>
     </section>
 </template>
 
 <style scoped>
 .hp-timeline {
-    --science: #207e9a;
-    --safety: #bd4165;
-    --stability: #8d6a0d;
-    --market: #b75c17;
-    --needs: #3268b5;
-    --awareness: #92652f;
-    --sustainability: #17836b;
-    --inclusivity: #7752b8;
-    --timeline-paper: color-mix(
-        in srgb,
-        var(--surface-bright) 82%,
-        var(--surface)
-    );
-    --timeline-rule: color-mix(
-        in srgb,
-        var(--outline-variant) 35%,
-        transparent
-    );
+    --ribbon-height: clamp(78px, 10cqi, 104px);
+    --ribbon-offset: var(--category-header-height, 3.5rem);
+    --science: #167b9e;
+    --safety: #c23863;
+    --stability: #96710b;
+    --market: #ae5709;
+    --needs: #2f6bc1;
+    --awareness: #996332;
+    --sustainability: #117d69;
+    --inclusivity: #7551bf;
+    --science-ribbon: #5cbbdf;
+    --safety-ribbon: #ff718d;
+    --stability-ribbon: #ffe075;
+    --market-ribbon: #ffac33;
+    --needs-ribbon: #72a9ef;
+    --awareness-ribbon: #e7b580;
+    --sustainability-ribbon: #64d3b9;
+    --inclusivity-ribbon: #ab95f0;
+    --timeline-paper: var(--surface-bright);
+    --axis-color: #387fc9;
+    --stop-color: #7ecff3;
     color: var(--on-surface);
     background: var(--timeline-paper);
-    border: 1px solid var(--timeline-rule);
-    border-radius: 1.5rem;
-    padding: clamp(1rem, 3.5%, 2rem);
-    margin-block: 1.5rem;
     font-family: var(--font-main);
     isolation: isolate;
     container-type: inline-size;
 }
-.hp-timeline:where(.dark *) {
-    --science: #70cce9;
-    --safety: #ff859f;
-    --stability: #e8ca64;
-    --market: #ffb16a;
-    --needs: #82b3ff;
-    --awareness: #d7b086;
-    --sustainability: #6bdbc0;
-    --inclusivity: #b9a0ff;
-    --timeline-paper: color-mix(in srgb, var(--surface) 93%, #071f45);
+.hp-timeline.is-nav-hidden {
+    --ribbon-offset: 0px;
 }
-.hp-timeline p,
-.hp-timeline h3,
-.hp-timeline h4,
+.hp-timeline:where(.dark *) {
+    --science: #5cbbdf;
+    --safety: #ff718d;
+    --stability: #ffe075;
+    --market: #ffac33;
+    --needs: #72a9ef;
+    --awareness: #e7b580;
+    --sustainability: #64d3b9;
+    --inclusivity: #ab95f0;
+    --timeline-paper: var(--surface);
+}
 .hp-timeline ol {
     margin: 0;
-}
-.hp-timeline ol {
     padding: 0;
     list-style: none;
 }
-.timeline-header {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 1rem;
-    margin-bottom: 1.5rem;
-}
-.hp-timeline .eyebrow {
-    color: var(--primary);
-    font-size: 0.66rem;
-    font-weight: 750;
-    letter-spacing: 0.15em;
-    margin-bottom: 0.65rem;
-}
-.hp-timeline h3 {
-    font-family: var(--font-belanosima);
-    font-size: clamp(1.6rem, 4cqi, 2.4rem);
-    font-weight: 400;
-    line-height: 1.12;
-}
-.hp-timeline .timeline-intro {
-    margin-top: 0.7rem;
-    font-size: 0.84rem;
-    line-height: 1.6;
-}
-.journey-count {
-    display: flex;
-    align-items: baseline;
-    flex-wrap: wrap;
-    justify-content: flex-end;
-    gap: 0.4rem;
-    flex-shrink: 0;
-    font-size: 0.7rem;
-    color: var(--primary);
-}
-.journey-count strong {
-    font-size: 1.35rem;
-    font-family: var(--font-belanosima);
-    font-weight: 400;
-}
-.journey-count > span {
-    opacity: 0.45;
-    margin-inline: 0.2rem;
-}
 .thread-controls {
     position: sticky;
-    top: 5rem;
+    top: 0;
     z-index: 4;
     display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 0.4rem;
-    padding: 0.6rem;
-    margin-inline: -0.6rem;
-    background: var(--timeline-paper);
-    border: 1px solid var(--timeline-rule);
-    border-radius: 1rem;
-    box-shadow: 0 5px 18px color-mix(in srgb, var(--surface) 35%, transparent);
-}
-.thread-button,
-.thread-end {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    min-height: 44px;
-    cursor: pointer;
-    font: inherit;
-    text-align: left;
-    line-height: 1.35;
-    transition:
-        opacity 180ms ease,
-        background 180ms ease,
-        border-color 180ms ease;
+    grid-template-columns: repeat(8, minmax(0, 1fr));
+    align-items: start;
+    height: calc(var(--ribbon-height) + var(--category-header-height, 3.5rem));
+    pointer-events: none;
 }
 .thread-button {
-    padding: 0.65rem;
-    border: 1px solid color-mix(in srgb, var(--thread) 28%, transparent);
-    border-radius: 0.65rem;
-    background: color-mix(in srgb, var(--thread) 5%, var(--timeline-paper));
-    color: var(--on-surface);
-    font-size: 0.73rem;
-    font-weight: 650;
-}
-.thread-swatch {
-    width: 0.5rem;
-    height: 0.5rem;
-    flex-shrink: 0;
-    border-radius: 50%;
-    background: var(--thread);
-}
-.thread-count {
-    margin-left: auto;
-    flex-shrink: 0;
-    white-space: nowrap;
-    color: var(--thread);
-    font-size: 0.65rem;
-    font-variant-numeric: tabular-nums;
-}
-.thread-button.is-active,
-.thread-end.is-active {
-    background: color-mix(in srgb, var(--thread) 14%, var(--timeline-paper));
-    border-color: var(--thread);
-}
-.timeline-guide {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
-    padding-block: 0.9rem;
-    font-size: 0.7rem;
-    line-height: 1.5;
-}
-.reset-button {
-    flex-shrink: 0;
-    cursor: pointer;
-    min-height: 44px;
-    color: var(--primary);
-    font: inherit;
-    font-weight: 650;
-    background: none;
+    justify-content: center;
+    min-width: 0;
+    height: calc(var(--ribbon-height) + var(--ribbon-offset));
+    padding: calc(0.4rem + var(--ribbon-offset)) 0.3rem 0.8rem;
     border: 0;
-    padding: 0.25rem;
+    border-radius: 0 0 50% 50% / 0 0 28% 28%;
+    background: var(--ribbon);
+    color: #082f64;
+    font: 400 clamp(0.65rem, 1.8cqi, 1.2rem)/1.12 var(--font-belanosima);
+    text-align: center;
+    overflow-wrap: anywhere;
+    hyphens: manual;
+    cursor: pointer;
+    pointer-events: auto;
+    transition:
+        opacity 150ms ease,
+        height 300ms ease-out,
+        padding 300ms ease-out;
 }
-.thread-detail {
-    border-left: 3px solid var(--thread, var(--primary));
-    background: color-mix(
-        in srgb,
-        var(--thread, var(--primary)) 5%,
-        transparent
-    );
-    padding: 1rem 1.2rem;
-    min-height: 12rem;
-    margin-bottom: 1rem;
-    border-radius: 0 0.7rem 0.7rem 0;
-    font-size: 0.8rem;
-    line-height: 1.7;
+.thread-button.is-active {
+    box-shadow: inset 0 -5px 0 #082f64;
 }
-.hp-timeline .detail-title {
-    font-weight: 750;
-    margin-bottom: 0.4rem;
-    color: var(--thread, var(--primary));
-    font-size: 0.9rem;
+.thread-button-label > span {
+    display: block;
 }
-.hp-timeline .selection-status {
-    margin-top: 0.6rem;
-    font-size: 0.68rem;
+.thread-button.is-muted {
+    opacity: 0.45;
 }
 .timeline-plot {
     position: relative;
-    --axis: 38%;
+    --axis: 51%;
+    padding-block: 1.1rem var(--ending-space, 24rem);
 }
 .timeline-lines {
     position: absolute;
     inset: 0;
     width: 100%;
     height: 100%;
-    overflow: visible;
     pointer-events: none;
+    overflow: visible;
 }
 .timeline-spine,
 .spine-arrow {
     fill: none;
-    stroke: var(--primary);
-    stroke-width: 5;
+    stroke: var(--axis-color);
+    stroke-width: 8;
     stroke-linecap: round;
     stroke-linejoin: round;
-    opacity: 0.45;
 }
 .thread-route {
     fill: none;
     stroke: var(--thread);
-    stroke-width: 1.7;
+    stroke-width: 1.8;
     stroke-linecap: round;
-    opacity: 0.68;
+    opacity: 0.9;
     transition:
-        opacity 180ms ease,
-        stroke-width 180ms ease;
+        opacity 150ms ease,
+        stroke-width 150ms ease;
 }
 .thread-route.is-active {
     opacity: 1;
-    stroke-width: 3;
+    stroke-width: 3.2;
 }
 .thread-route.is-muted {
-    opacity: 0.08;
+    opacity: 0.1;
 }
 .stage {
     position: relative;
-    padding-bottom: 1.25rem;
+    padding-bottom: 0.4rem;
 }
-.stage-heading {
+.hp-timeline .stage-heading {
     position: relative;
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    min-height: 100px;
-    padding-top: 0.75rem;
-    border-top: 1px dashed var(--timeline-rule);
-}
-.stage-number {
-    flex: 0 0 var(--axis);
-    font-family: var(--font-belanosima);
-    font-size: clamp(2.5rem, 8cqi, 4.5rem);
-    line-height: 1;
-    letter-spacing: -0.05em;
-    color: color-mix(in srgb, var(--primary) 22%, var(--timeline-paper));
-}
-.hp-timeline h4 {
-    position: relative;
-    padding-block: 0.5rem;
-    background: var(--timeline-paper);
-    color: var(--primary);
-    font-family: var(--font-belanosima);
-    font-size: clamp(1.15rem, 2.9cqi, 1.65rem);
-    line-height: 1.15;
-    font-weight: 400;
-}
-.stage-kicker {
-    display: block;
-    margin-bottom: 0.35rem;
-    font: 700 0.62rem var(--font-main);
-    text-transform: uppercase;
-    letter-spacing: 0.14em;
-    color: var(--on-surface);
-}
-.stage-count {
-    margin-left: auto;
-    flex-shrink: 0;
-    color: var(--primary);
-    font-size: 0.65rem;
+    width: max-content;
+    max-width: 90%;
+    margin: 0.25rem 0 0.6rem var(--axis);
+    transform: translateX(-50%);
+    padding: 0.4rem 0.6rem;
+    border-radius: 0.8rem;
+    background: #f8ffff;
+    color: #084999;
+    font: 700 clamp(1.3rem, 4.8cqi, 2rem)/1.15 var(--font-main);
 }
 .cycle {
     position: relative;
-    margin-left: calc(var(--axis) - 18px);
-    transition: opacity 180ms ease;
+    margin-left: calc(var(--axis) - 4.5%);
+    transition: opacity 150ms ease;
 }
 .cycle-link {
-    position: relative;
     display: flex;
     align-items: center;
-    gap: 1rem;
-    min-height: 82px;
-    padding: 0.65rem 0.65rem 0.65rem 0;
+    gap: 0.7rem;
+    min-height: 66px;
+    padding-block: 0.35rem;
     color: var(--on-surface);
     text-decoration: none;
-    border-radius: 0.7rem;
-    transition: background 180ms ease;
 }
 .cycle-stop {
     display: block;
-    width: 36px;
-    height: 12px;
+    width: 9cqi;
+    height: 13px;
     flex-shrink: 0;
     border-radius: 20px;
-    background: var(--primary);
-    border: 3px solid var(--timeline-paper);
-    box-sizing: content-box;
-    margin-left: -3px;
+    background: var(--stop-color);
 }
 .cycle-copy {
-    flex: 1;
     min-width: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-}
-.cycle-kicker {
-    font-size: 0.6rem;
-    font-weight: 700;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    margin-bottom: 0.3rem;
-    color: var(--primary);
+    flex: 1;
+    padding-right: 0.4rem;
 }
 .cycle-title {
-    font-size: clamp(0.8rem, 1.9cqi, 0.95rem);
-    line-height: 1.45;
-    font-weight: 650;
+    display: block;
+    font-size: clamp(0.75rem, 1.85cqi, 1.13rem);
+    line-height: 1.3;
+    font-weight: 700;
     overflow-wrap: anywhere;
-}
-.cycle-arrow {
-    align-self: center;
-    color: var(--primary);
-    font-size: 1.15rem;
-    padding-left: 0.25rem;
 }
 .cycle-themes {
     display: flex;
     gap: 4px;
-    margin-top: 0.4rem;
+    margin-top: 0.35rem;
 }
 .cycle-themes > span {
     display: block;
@@ -767,123 +665,85 @@ function threadStyle(id: string) {
     border-radius: 50%;
     background: var(--thread);
 }
-.cycle.is-connected .cycle-link {
-    background: color-mix(in srgb, var(--thread) 9%, transparent);
-}
 .cycle.is-connected .cycle-stop {
     background: var(--thread);
-    box-shadow: 0 0 0 2px color-mix(in srgb, var(--thread) 35%, transparent);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--thread) 30%, transparent);
+}
+.cycle.is-connected .cycle-title {
+    color: var(--thread);
 }
 .cycle.is-muted {
     opacity: 0.3;
-}
-.cycle-link:hover,
-.cycle-link:focus-visible {
-    background: color-mix(in srgb, var(--primary) 10%, var(--timeline-paper));
-}
-.cycle-link:hover .cycle-title {
-    text-decoration: underline;
-    text-underline-offset: 0.2em;
 }
 .cycle:focus-within,
 .cycle:hover {
     opacity: 1;
 }
+.cycle-link:hover .cycle-title {
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+}
 .thread-endings {
-    position: relative;
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    column-gap: 1rem;
-    row-gap: 4rem;
-    padding-top: 7rem;
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
 }
 .thread-end {
-    position: relative;
-    justify-content: center;
-    padding: 0.6rem;
-    background: var(--timeline-paper);
-    border: 1px solid color-mix(in srgb, var(--thread) 35%, transparent);
-    border-radius: 0.7rem;
+    position: absolute;
+    transform: translateX(-50%);
+    width: 24%;
+    min-height: 44px;
+    border: 0;
+    padding: 0.25rem;
+    background: transparent;
     color: var(--thread);
-    font-size: 0.72rem;
-    font-weight: 650;
-}
-.thread-button.is-muted,
-.thread-end.is-muted {
-    opacity: 0.5;
-}
-.hp-timeline .timeline-caption {
+    text-shadow:
+        0 1px 3px var(--timeline-paper),
+        0 -1px 3px var(--timeline-paper);
+    font: 700 clamp(0.58rem, 1.8cqi, 0.9rem)/1.2 var(--font-main);
     text-align: center;
-    font-size: 0.7rem;
-    line-height: 1.5;
-    color: var(--primary);
-    margin-top: 2rem;
+    pointer-events: auto;
+    cursor: pointer;
+    transition: opacity 150ms ease;
+}
+.thread-end.is-muted {
+    opacity: 0.3;
+}
+.thread-end-label {
+    display: inline-block;
+    max-width: 100%;
+}
+.thread-end.is-active {
+    text-decoration: underline;
+    text-underline-offset: 0.25em;
 }
 .hp-timeline button:focus-visible,
 .hp-timeline a:focus-visible {
     outline: 3px solid var(--thread, var(--primary));
-    outline-offset: 4px;
+    outline-offset: 3px;
 }
-@container (max-width: 560px) {
-    .timeline-header {
-        flex-direction: column;
-        gap: 0.75rem;
-    }
-    .thread-controls {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 0.3rem;
-        padding: 0.4rem;
-    }
+@container (max-width: 400px) {
     .thread-button {
-        font-size: 0.67rem;
-        padding: 0.45rem;
-    }
-    .thread-detail {
-        min-height: 17rem;
-        font-size: 0.75rem;
-        padding: 0.85rem;
-    }
-    .timeline-guide {
-        align-items: flex-start;
-        gap: 0.5rem;
-    }
-    .timeline-plot {
-        --axis: 29%;
-    }
-    .stage-heading {
-        gap: 0.5rem;
-        min-height: 95px;
-    }
-    .stage-count {
-        display: none;
+        font-size: 0.65rem;
+        padding-inline: 0.12rem;
     }
     .cycle-link {
-        gap: 0.6rem;
-        min-height: 94px;
-        padding-right: 0.25rem;
+        gap: 0.4rem;
+        min-height: 64px;
+    }
+    .cycle-stop {
+        height: 11px;
     }
     .cycle-title {
-        font-size: 0.8rem;
-    }
-    .cycle-arrow {
-        font-size: 0.9rem;
-        padding: 0;
-    }
-    .thread-endings {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        row-gap: 3rem;
-        column-gap: 0.75rem;
+        font-size: 0.75rem;
     }
 }
 @media (prefers-reduced-motion: reduce) {
-    .hp-timeline *,
-    .hp-timeline *::before,
-    .hp-timeline *::after {
+    .hp-timeline * {
         transition: none !important;
     }
 }
 @media (forced-colors: active) {
-    .thread-swatch,
     .cycle-stop {
         background: CanvasText;
     }

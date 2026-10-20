@@ -25,9 +25,7 @@
 
 <script setup lang="ts">
 import "./styles/opendyslexic.css";
-import momoFont from "@fontsource/momo-trust-display/files/momo-trust-display-latin-400-normal.woff2?url";
-import righteousFont from "@fontsource/righteous/files/righteous-latin-400-normal.woff2?url";
-import belanosimaFont from "@fontsource/belanosima/files/belanosima-latin-400-normal.woff2?url";
+import { fontAssetUrl } from "~/utils/font-assets";
 
 const DARK_MODE_COOKIE = "wiki-dark-mode";
 const HIGH_CONTRAST_MODE_COOKIE = "wiki-high-contrast-mode";
@@ -77,14 +75,18 @@ useHead({
             type: "image/x-icon",
             href: faviconHref,
         },
-        ...[momoFont, righteousFont, belanosimaFont].map(
-            (href) =>
+        ...[
+            "momo-trust-display-latin-400-normal.woff2",
+            "righteous-latin-400-normal.woff2",
+            "belanosima-latin-400-normal.woff2",
+        ].map(
+            (filename) =>
                 ({
                     rel: "preload",
                     as: "font",
                     type: "font/woff2",
                     crossorigin: "anonymous",
-                    href,
+                    href: fontAssetUrl(filename),
                 }) as const,
         ),
     ],
