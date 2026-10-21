@@ -96,6 +96,8 @@ label: "Image language"
 
 Additionally, multiple users contacted us through our **RedNote account** to enquire about purchasing the product, further validating market interest and motivating us to advance our proposed solution.
 
+#### Institutional collaborators
+
 ::content-components-bilingual-image-panels
 ---
 srcEn:

@@ -1274,7 +1274,7 @@ title: Online Chat Group — Before and after
 
 ## Debate
 
-### Ethical Debate
+### Ethics Debate
 
 Our SynBio ethics debate invited students from different academic backgrounds to explore a thought-provoking question: “If synthetic biology could eliminate human suffering, should we prioritise enhancing human capabilities or preserving human life in its natural state?” Through preparation, debate and interviews, participants explored the possibilities of SynBio while reflecting on the ethical boundaries.
 
