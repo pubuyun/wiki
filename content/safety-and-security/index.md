@@ -102,7 +102,7 @@ caption: Fig. 1 | Lab area designated for experiments.
 
 For lab sessions, including lab-themed murder mystery games and geraniol workshops, we made sure that all participants were informed of the safety rules. Before each lab session began, we distributed safety protocols and verbally reminded participants to wear appropriate PPE and not to eat or drink in the laboratory. We also divided participants into small groups of three or four, with each group supervised by one of our team members, to prevent unsafe behaviour and ensure that laboratory procedures were followed properly.
 
-For primary and middle school workshops, participants extracted DNA from strawberries using strawberries, washing-up liquid, alcohol, and salt. Before the experiment began, we repeatedly reminded participants not to eat any of the materials and required them to wear gloves throughout the activity. With our team members supervising the activity and teachers providing additional assistance, we ensured that participants followed the procedures properly and safely.
+For primary and middle school workshops, participants extracted DNA from strawberries using strawberries, washing-up liquid, alcohol, and salt. Before the experiment began, participants were instructed not to taste or ingest any materials and to keep their hands away from their mouths and eyes. Participants were instructed to wear gloves throughout the activity. With our team members supervising the activity and teachers providing additional assistance, we ensured that participants followed the procedures properly and safely.
 
 ::content-components-lightbox-panels
 ---
@@ -143,7 +143,7 @@ caption: Fig. 3 | One-to-one guidance during the leaf-rubbing activity.
 ---
 ::
 
-For *Handy Lab*, each experiment included safety tips alongside the materials, steps and scientific explanation. The toolkit contained gloves and safety goggles, with demonstration videos providing additional guidance for students and teachers.
+For handy lab, each experiment included safety tips alongside the materials, steps and scientific explanation. The toolkit contained gloves and safety goggles, with demonstration videos providing additional guidance for students and teachers.
 
 ::content-components-lightbox-panels
 ---
@@ -156,10 +156,10 @@ autoLabels: true
 src:
   - https://static.igem.wiki/teams/6133/wiki/project/safety/safety-safety-fig4-a.avif
   - https://static.igem.wiki/teams/6133/wiki/project/safety/safety-safety-fig4-b.avif
-caption: Fig. 4 | **(a)** The *Handy Lab* toolkit, including gloves, safety
+caption: Fig. 4 | **(a)** The handy lab toolkit, including gloves, safety
   goggles and the experiment booklet. **(b)** Demonstration videos showing
   step-by-step procedures with safety tips.
-label: Handy Lab safety toolkit and demonstration videos
+label: handy lab safety toolkit and demonstration videos
 ---
 ::
 
