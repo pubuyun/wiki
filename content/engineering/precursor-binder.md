@@ -75,14 +75,17 @@ autoLabels: false
 ::content-components-lightbox-panels
 ---
 src:
-  - https://static.igem.wiki/teams/6133/wiki/wetlab/engineering/engineering-precursor-binder-fig5a-4-updated.avif
-  - https://static.igem.wiki/teams/6133/wiki/wetlab/engineering/engineering-precursor-binder-fig5a-5-updated.avif
+  - https://static.igem.wiki/teams/6133/wiki/wetlab/engineering/engineering-precursor-binder-fig5a-4-updated2.avif
+  - https://static.igem.wiki/teams/6133/wiki/wetlab/engineering/engineering-precursor-binder-fig5a-5-updated2.avif
+  - https://static.igem.wiki/teams/6133/wiki/wetlab/engineering/engineering-precursor-binder-fig5a-6-updated2.avif
 alt:
-  - "Gel panels show soluble, pellet, and imidazole-eluted fractions of precursor binders."
-  - "Gel panels compare precursor binder expression and purified fractions."
+  - "SDS-PAGE compares soluble and pellet fractions of BR4, BR6, BC10, and BR11."
+  - "SDS-PAGE compares soluble and pellet fractions of BR1, BR2, BR3, BC4, and BC5."
+  - "SDS-PAGE compares soluble and pellet fractions of BC9 and BC8."
 caption: "Fig. 5a | SDS-PAGE results showing the protein expression of the 22 binders in BL21(DE3); cell fractions of untransformed BL21(DE3) were used as control (S: supernatant after cell lysis; P: pellet after cell lysis; 250: fractions eluted with 250 mM imidazole)."
 imageBackground: "#ffffff"
 preserveFigureNumber: true
+columns: 3
 autoLabels: false
 ---
 
