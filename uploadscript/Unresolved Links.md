@@ -10,8 +10,5 @@ content/human-practices/stage-5-expanding-impact.md: Inclusive Packaging origina
 content/human-practices/stage-5-expanding-impact.md: Inclusive Packaging original citation ^34 — source details pending, as requested by the author.
 Overview stakeholder graph: AI4S Experts has empty incoming/outgoing source sections; no impact descriptions were invented.
 content/inclusivity/index.md: Reference 8 (OECD, 2025) — source title and URL were not provided in the manuscript; citation retained pending author details.
-content/hardware/index.md: Protein-centric requirements and User-centric requirements — both headings have no source body text; retained without inventing requirements.
 content/hardware/index.md: Fragrances section — original “（图）” placeholder has no corresponding supplied image; placeholder retained.
-content/hardware/index.md: Packaging specifies a 25 mm ball, while the validation roadmap specifies 23 mm; both source values retained pending author confirmation.
-content/hardware/index.md: User feedback at scale states 582 respondents, while the earlier domestic and international counts are 486 and 105; source values retained pending author confirmation.
 content/sustainability/index.md: [European Commission report: aerosol deodorants can contain up to 95% VOCs] — source manuscript cites the EPA Ground-level Ozone Basics page (original references 8 and 9, consolidated as reference 8), which does not identify the claimed European Commission report. Original claim retained; report title and URL are needed.

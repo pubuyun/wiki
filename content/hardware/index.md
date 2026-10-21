@@ -40,7 +40,23 @@ Two categories of constraints define the design approach.
 
 #### Protein-centric requirements
 
+|Requirement|Rationale|
+|---|---|
+|Minimise polymer–protein and air–liquid interfacial contact|Reduces absorption and aggregation|
+|Avoid leachables from packaging material|Prevents conformational change and aggregation seeding|
+|Maintain pH at 6.0 ± 0.2|Matches MES buffer optimum and CGTase stability range|
+|Protect against thermal and oxidative stress during storage|Preserves activity over shelf life|
+|Avoid aerosolisation|Prevents inhalation of untested proteins|
+
 #### User-centric requirements
+
+|Requirement|Rationale|
+|---|---|
+|Ergonomic grip and one-handed operation|Accommodates limited grip strength and dexterity|
+|Tactile and visual identifiability|Supports users with low vision|
+|Low application effort|Reduces friction for users with motor impairments|
+|Non-sticky, light skin feel|Determined by expert consultation as a key usability factor|
+|Recyclability and reduced virgin plastic|Aligns with sustainability commitments|
 
 ### Learn
 
@@ -336,6 +352,11 @@ A deliberate constraint was the exclusion of terpene-class soothing agents; none
 
 ### Fragrances
 
+|Component|Function|Concentration|Rationale|
+|---|---|---|---|
+|Geranyl butyrate|Fruity, floral fragrance|0.01%/0.02%|Biosynthesised in engineered E. coli; biodegradable; low irritation potential|
+|Bornyl acetate|Woody, camphoraceous fragrance|0.01%/0.02%|Biosynthesised in engineered E. coli; biodegradable; low irritation potential|
+
 Both fragrances are produced through engineered microbial fermentation rather than petrochemical synthesis or plant extraction. This approach avoids the environmental persistence and bioaccumulation of synthetic fragrance ingredients such as synthetic musks :fn-ref{#15}, and avoids the land, water, and solvent demands of plant extraction :fn-ref{#16}. The fragrance profile was selected based on our public survey, in which floral/fruity (41.0%) and woody (35.2%) scents were the most preferred.
 
 （图）
@@ -481,9 +502,9 @@ Our [engineering page reports how the binder binds Cys-Gly-3M3SH](/engineering/p
 
 1. **Protein-in-bottle stability** — Activity retention of the formulation stored in PP at 25 °C and 40 °C, compared against the same formulation in glass. Measured at 0, 1, 2, 3, and 6 months using the DTNB thiol-release assay (for the precursor binder) and ITC (for binding affinity). Success criterion: ≥90% activity retention at 3 months at 40 °C. If PP fails stability testing, switch to HDPE with hydrophilic coating. PP packaging compatibility is additionally probed under temperature cycling and light exposure.
 
-2. **Stain & residue** — fabric test on light-coloured textiles to confirm the roll-on leaves no residue or yellowing across the 23 mm ball contact track, both fresh and after the film dries;
+2. **Stain & residue** — fabric test on light-coloured textiles to confirm the roll-on leaves no residue or yellowing across the 25 mm ball contact track, both fresh and after the film dries;
 
-3. **Functionality** — delivery volume and axillary coverage of the 23 mm ball, consistent dosing per swipe, and seal integrity of the press-to-open hinged lid under transport agitation.
+3. **Functionality** — delivery volume and axillary coverage of the 25 mm ball, consistent dosing per swipe, and seal integrity of the press-to-open hinged lid under transport agitation.
 
 Beyond the device, the validation roadmap extends to the formulation and its journey to the user:
 
@@ -539,7 +560,7 @@ Plan: run a staged protocol with KleanK
 
 (i) a small pilot (dozens to hundreds of users) to validate efficacy, skin compatibility, usability and packaging accessibility;
 
-(ii) scale-up toward the 50,000-user cohort with structured surveys plus open responses, reusing the infrastructure from our 19-country / 582-respondent survey. Analyse by subgroup (sensitive skin, adolescents, low-vision users, limited grip and dexterity) and feed results back into formulation, packaging and instruction iterations. Privacy stays central: All responses remain confidential and are used only for product development.
+(ii) scale-up toward the 50,000-user cohort with structured surveys plus open responses, reusing the infrastructure from our domestic survey of local Chinese communities (486 responses) and our international survey distributed across 19 countries (105 respondents). Analyse by subgroup (sensitive skin, adolescents, low-vision users, limited grip and dexterity) and feed results back into formulation, packaging and instruction iterations. Privacy stays central: All responses remain confidential and are used only for product development.
 
 ### Accessible usage instructions, with Braille
 
