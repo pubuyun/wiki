@@ -124,7 +124,7 @@ caption: Fig. 4 | Our mission in stage 3
 
 #right
 
-With these unmet needs in mind, we began developing our novel, mechanism-based approach to underarm odor control. **Interviews** with a protein modeling specialist and a synbio expert as well as **inspiration** from the GreatBay-SCIE 2025 team helped us refine our binder designs, explore a complementary enzyme strategy, and overcome challenges in experimental validation. Meanwhile, KleanK, an established deodorant brand with a strong presence in China's e-commerce market **reached out to u**s for further discussion, offering industry-level recognition of the potential of our mechanism-based approach.
+With these unmet needs in mind, we began developing our novel, mechanism-based approach to underarm odor control. **Interviews** with a protein modeling specialist and a synbio expert as well as **inspiration** from the GreatBay-SCIE 2025 team helped us refine our binder designs, explore a complementary enzyme strategy, and overcome challenges in experimental validation. Meanwhile, KleanK, an established deodorant brand with a strong presence in China's e-commerce market **reached out to us** for further discussion, offering industry-level recognition of the potential of our mechanism-based approach.
 
 ::
 

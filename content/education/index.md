@@ -16,7 +16,7 @@ bannerMobilePosition: 45% 55%
 
 ## Introduction
 
-At the beginning of our project, while reviewing our survey results, we found that **26.45%** of respondents were unwilling to use synthetic biology products. When we asked them why, we received comments such as “What is synthetic biology?” and “It sounds unnatural.”
+At the beginning of our project, while reviewing our survey results, we found that **a significant proportion** of respondents expressed concerns regarding using synthetic biology products. We received comments such as “What is synthetic biology?” and “It sounds unnatural.”
 
 These responses made us realise that even if we successfully produced de novo designed proteins for our deodorant product in the laboratory, **gaps in public understanding of synthetic biology and the concerns arising from them would remain significant challenges**. We recognised that bridging these knowledge gaps was essential to helping people better understand this emerging field and develop their own informed perspectives on synthetic biology.
 
@@ -898,29 +898,6 @@ The lab section received a lot of positive feedback; one student said, "I was re
 
 However, some students found the theoretical content rather dry, while limited background knowledge made it difficult to develop in-depth discussions. We took these comments into account and adjusted our approach in the following session.
 
-::content-components-education-impact-radar
----
-fixed:
-  Age: 2.3
-  Educational level: 2.5
-  Size: 3.2
-impact:
-  Knowledge of synbio:
-    - 1.5
-    - 0
-    - Score pending; temporarily set to 0.0.
-  Interest in synbio:
-    - 2.5
-    - 0
-    - Score pending; temporarily set to 0.0.
-  Engagement with synbio:
-    - 1.5
-    - 0
-    - Score pending; temporarily set to 0.0.
-title: Nanning No. 3 Middle School, Guangxi — Before and after
----
-::
-
 #### Nanshan Foreign Language Middle School, Shenzhen
 
 ##### Method
@@ -1009,7 +986,7 @@ impact:
     - 2.3
     - Students gained basic knowledge of SynBio and its applications,
       potentially increasing their openness to SynBio products.
-title: Nanshan Foreign Language Middle School, Shenzhen — Before and after
+title: Middle school SynBio Workshop — Before and after
 ---
 ::
 
@@ -1267,7 +1244,7 @@ layout: grid
 
 #### Reflection
 
-Through these discussions, we realised that online education can be a process of \*\*mutual learning.\*\*Students gained new knowledge and support from our team, while we also learned from their questions and ideas. For example, a discussion about Amyris encouraged us to think more deeply about the factors that determine whether a technological breakthrough can become a viable business.
+Through these discussions, we realised that online education can be a process of **mutual learning.**Students gained new knowledge and support from our team, while we also learned from their questions and ideas. For example, a discussion about Amyris encouraged us to think more deeply about the factors that determine whether a technological breakthrough can become a viable business.
 
 ::content-components-education-impact-radar
 ---
@@ -1517,7 +1494,7 @@ impact:
     - "Many visitors showed curiosity about SynBio through their active participation in the activities and positive feedback."
   Engagement with synbio:
     - 1.2
-    - 1.2
+    - 1.6
     - "With a basic understanding of SynBio, participants may become more open to SynBio products and better able to explain the field to others."
 title: SynBio Collaboration Fair — Before and after
 ---
