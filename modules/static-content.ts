@@ -1,7 +1,10 @@
 import { addVitePlugin, defineNuxtModule } from "@nuxt/kit";
 import { mkdir, readFile, readdir, writeFile } from "node:fs/promises";
 import { dirname, join, relative, sep } from "node:path";
-import { createContentPayloadIndex } from "../app/utils/build/content-payload-index";
+import {
+    compactContentPayloads,
+    createContentPayloadIndex,
+} from "../app/utils/build/content-payload-index";
 
 export default defineNuxtModule({
     meta: { name: "wiki-static-content" },
@@ -90,7 +93,18 @@ export default defineNuxtModule({
                         };
                     }),
                 );
-                const index = createContentPayloadIndex(payloads);
+                const compacted = compactContentPayloads(
+                    payloads.map((payload) => ({
+                        ...payload,
+                        file: join(payload.parentPath, payload.name),
+                    })),
+                );
+                await Promise.all(
+                    compacted.map((payload) =>
+                        writeFile(payload.file!, payload.contents),
+                    ),
+                );
+                const index = createContentPayloadIndex(compacted);
                 if (!Object.keys(index).length)
                     throw new Error("No content payloads were prerendered");
                 const target = join(root, "content/payload-index.json");
