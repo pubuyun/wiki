@@ -63,7 +63,7 @@ For [**marketing**](/entrepreneurship#marketing-strategies), we plan to collabor
 
 In our second meeting with KleanK, we raised several questions regarding the design, formulation, and packaging of protein-based cosmetic products.
 
-However, as their expertise primarily lies in conventional aluminum salt-based deodorants, they suggested we consult stakeholders with more specialized expertise in **protein-based cosmetics**.
+However, their expertise primarily lies in **conventional aluminum salt-based** deodorants. Adopting their suggestion of us consulting stakeholders with more specialized expertise in protein-based cosmetics, we wanted to enhance our understanding on the design and considerations in protein-specific formulations.
 
 ### Determine
 

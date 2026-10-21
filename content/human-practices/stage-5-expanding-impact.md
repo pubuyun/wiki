@@ -343,7 +343,7 @@ First, we added a **hydrophilic inner layer** to our proposed PP packaging to im
 
 Second, we plan to investigate **regional consumer preferences and regulatory requirements** related to sustainability to help ensure that our product meets local expectations and relevant standards. We also **integrated sustainability into our company philosophy**, making it a guiding principle in our future product development.
 
-Additionally, we **adopted a refillable packaging system** and offered a **5%** discount to encourage customers to reuse their containers.
+Additionally, we plan to **adopt a refillable packaging system** and offer a **5%** discount to encourage customers to reuse their containers.
 
 Finally, building on Ms. Chen's insights into consumer education, we also plan to develop **educational posters and short videos** explaining how refillable packaging can reduce packaging waste and how consumers can reuse and dispose of packaging responsibly. We aim to share these materials on social media and our product website to raise awareness of sustainable packaging and help consumers make more informed environmental choices.
 
@@ -351,11 +351,13 @@ Finally, building on Ms. Chen's insights into consumer education, we also plan t
 
 ### Observe
 
-After deciding to make **sustainability** a core part of our company philosophy, we wanted to understand the environmental impacts of our proposed PP packaging with a hydrophobic inner layer during production, use, and recycling. We also wanted to learn about relevant **environmental regulations** to prepare for selling our product in different regions.
+After deciding to make sustainability a core part of our company philosophy, we recognized the importance of evaluating the environmental impact of our proposed PP packaging with a hydrophobic inner layer.
 
 ### Determine
 
-To explore these questions, we consulted four environmental experts: **Mr. Cheng Kai**, specializing in materials science, **Ms. Zhang Linbao**, specializing in marine microplastics, **Mr. Li Guanghui**, specializing in air pollution control and **Director Lu Xiejun,** from an environmental monitoring center.
+To better understand these impacts, we aimed to investigate the environmental effects of our packaging throughout its production, use, and recycling stages, as well as relevant environmental regulations that could affect its sale in different regions.
+
+To gain expert insights, we consulted four environmental professionals: **Mr. Cheng Kai**, specializing in materials science; **Ms. Zhang Linbao**, specializing in marine microplastics; **Mr. Li Guanghui**, specializing in air pollution control; and **Director Lu Xiejun**, from an environmental monitoring center.
 
 ::content-components-lightbox-panels
 ---
@@ -397,11 +399,13 @@ Following **Director Lu's** words, we plan to conduct a **life cycle assessment 
 
 ### Observe
 
-Building on Mr. Wood's account of how some older men in Africa view underarm odor as a **sign of masculinity**, we wanted to better understand how different attitudes toward underarm odor developed and why underarm odor became something that people are expected to control.
+Building on Mr. Wood's account of how some older men in Africa view underarm odor as a **sign of masculinity**, we recognized that attitudes toward body odor vary across cultures and may be shaped by historical and social influences.
 
 ### Determine
 
-To explore these questions from a professional perspective, we interviewed two experts in Anthropology: **Ms Mary Ann**, who completed postdoctoral research in Anthropology at Brown University, and **Ms Charley Troy**, who earned an MA in Socio-Cultural Anthropology at Durham University.
+To better understand these differences, we aimed to investigate how cultural attitudes toward underarm odor developed and why controlling body odor became a social expectation in certain societies.
+
+To gain professional insights, we interviewed two anthropology experts: **Ms. Mary Ann**, who completed postdoctoral research in Anthropology at Brown University, and **Ms. Charley Troy**, who earned an MA in Socio-Cultural Anthropology at Durham University.
 
 ::content-components-lightbox-panels
 ---

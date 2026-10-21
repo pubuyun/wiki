@@ -234,7 +234,7 @@ Each plan is linked to feedback from specific stakeholders and their correspondi
 
 #### Short-term
 
-- Develop a specialized product line for adolescents **(Inspired by anonymous teammate from Stage 2 Cycle 1)**
+- Develop a specialized product line for adolescents, tailored to their changing body odor needs during puberty and with a relatively more affordable price. **(Inspired by an anonymous teammate from Stage 2, Cycle 1)**
 
 - Explore bio-based packaging alternatives and conduct compatibility tests to assess their suitability for our formulation **(Inspired by Mr. Cheng from Stage 5 Cycle 6)**
 
