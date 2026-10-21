@@ -1,4 +1,4 @@
-# Run another axe accessibility scan
+# Run another axe accessibility scan 
 
 Scan the existing website at `http://localhost:3000` with Playwright and axe-core. Save JSON and HTML reports outside this repository. Do not build the Nuxt project or start a development server as part of the scan.
 
