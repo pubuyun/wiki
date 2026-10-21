@@ -35,10 +35,14 @@
 }
 
 .brand-decoration {
+    width: 58%;
+    height: 58%;
+    margin-top: 18%;
+    margin-left: 28%;
+    border-radius: 60% 40% 45% 55% / 55% 45% 55% 45%;
+    transform: rotate(-18deg);
     background: currentColor;
     color: var(--color-accent);
-    mask: url("/brand-blob.svg") center / contain no-repeat;
-    -webkit-mask: url("/brand-blob.svg") center / contain no-repeat;
 }
 
 .brand-eye {
@@ -50,12 +54,12 @@
 }
 
 .brand-eye-left {
-    left: 79%;
-    top: 48%;
+    left: 58%;
+    top: 39%;
 }
 
 .brand-eye-right {
-    left: 84%;
-    top: 46%;
+    left: 69%;
+    top: 36%;
 }
 </style>

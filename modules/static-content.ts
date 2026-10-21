@@ -89,16 +89,12 @@ export default defineNuxtModule({
                             relative(root, dirname(file)).split(sep).join("/");
                         return {
                             route,
+                            file,
                             contents: await readFile(file, "utf8"),
                         };
                     }),
                 );
-                const compacted = compactContentPayloads(
-                    payloads.map((payload) => ({
-                        ...payload,
-                        file: join(payload.parentPath, payload.name),
-                    })),
-                );
+                const compacted = compactContentPayloads(payloads);
                 await Promise.all(
                     compacted.map((payload) =>
                         writeFile(payload.file!, payload.contents),
