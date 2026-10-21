@@ -125,7 +125,10 @@ useSeoMeta({
                     <ContentBar :toc="tocLinks" />
                 </aside>
             </div>
-            <StakeholdersGraph v-if="humanPracticesOverview" class="my-8" />
+            <ContentComponentsHumanPracticesStakeholdersGraph
+                v-if="slug === 'human-practices'"
+                class="my-8 w-full min-w-0"
+            />
             <CategoryExplore
                 v-if="children.length > 1"
                 :pages="children"

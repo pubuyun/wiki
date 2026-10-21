@@ -49,7 +49,7 @@ Evonik **expressed interest** in our mechanism-based approach to odor control an
 
 ### Refine
 
-Based on the insights provided by KleanK, we began designing the formulation of our own product based on the six major types of ingredients typically found in cosmetic formulations. We also conducted [thermal stability testing for our proteins](/engineering/cgtase#cgtase-cycle-2) inspired by KleanK's provided cosmetic stability standards.
+Based on the insights provided by KleanK, we began designing the formulation of our own product based on the six major types of ingredients typically found in cosmetic formulations. We also conducted [thermostability testing for our proteins](/engineering/cgtase#cgtase-cycle-2) inspired by KleanK's provided cosmetic stability standards.
 
 To address **regulatory and intellectual property** considerations, we began preparing for future applications for novel cosmetic ingredients and [patent protection](/human-practices/stage-4-optimising-product#cycle-4-patent-expert). For **a novel cosmetic ingredient registration**, we reviewed the relevant regulatory requirements and started organizing the technical documentation and sequence data needed for submission. For our **AI-designed protein patent protection,** we also considered potential sequence variants as part of our patent strategy, with the aim of securing broader protection for our design.
 

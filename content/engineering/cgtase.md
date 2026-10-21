@@ -1,6 +1,6 @@
 ---
 title: "CGTase"
-description: "Engineering cyclodextrin glucanotransferase for precursor modification and improved thermal stability."
+description: "Engineering cyclodextrin glucanotransferase for precursor modification and improved thermostability."
 hasReference: false
 order: 4
 ---
@@ -90,13 +90,13 @@ layout: stack
 
 Although both engineered CGTase variants reduced thiol production compared with the negative control, wild-type CGTase exhibited the lowest mean thiol concentration under the tested conditions. This suggests that the tested variants offered no clear improvement over wild-type CGTase in this assay. However, because only T370R/F183W was tested as designed, while the intended T370K variant was obtained as T370L, the effectiveness of our rational design strategy remains inconclusive.
 
-During the [second meeting with KleanK Company](/human-practices/stage-4-optimising-product#cycle-1-evonik-and-second-meeting-with-kleank), we were reminded that enzymes can be denatured by high temperatures during warehouse storage and transportation. According to Kelly et al., CGTase from *B. circulans* strain 251 retained only 50% of its β-cyclization activity after heating at 66.1 °C for 30 min :fn-ref{#10}, raising concern regarding its ability to retain activity during warehouse storage and transportation, when products may encounter elevated temperatures or temperature fluctuations. Therefore, we planned to optimize the sequences of these CGTase variants to improve their thermal stability and industrial applicability.
+During the [second meeting with KleanK Company](/human-practices/stage-4-optimising-product#cycle-1-evonik-and-second-meeting-with-kleank), we were reminded that enzymes can be denatured by high temperatures during warehouse storage and transportation. According to Kelly et al., CGTase from *B. circulans* strain 251 retained only 50% of its β-cyclization activity after heating at 66.1 °C for 30 min :fn-ref{#10}, raising concern regarding its ability to retain activity during warehouse storage and transportation, when products may encounter elevated temperatures or temperature fluctuations. Therefore, we planned to optimize the sequences of these CGTase variants to improve their thermostability and industrial applicability.
 
 ## CGTase Cycle 2
 
 ### Design
 
-To optimize the thermal stability of CGTase tested, we developed a workflow using *SPURS* :fn-ref{#7} (a deep-learning-based thermal stability prediction tool) to introduce multi-point mutations improving thermal stability of CGTase. First, single point mutations with stabilizing effects were selected. Then, pairwise compatibility testing and a diverse beam search algorithm were used to build up increasingly higher-order mutants while avoiding predicted pairwise conflicts.
+To optimize the thermostability of CGTase tested, we developed a workflow using *SPURS* :fn-ref{#7} (a deep-learning-based thermostability prediction tool) to introduce multi-point mutations improving thermostability of CGTase. First, single point mutations with stabilizing effects were selected. Then, pairwise compatibility testing and a diverse beam search algorithm were used to build up increasingly higher-order mutants while avoiding predicted pairwise conflicts.
 
 Finally, variants carrying 2, 4, 6, or 8 additional substitutions relative to each parent variant were selected for testing.
 
@@ -123,7 +123,7 @@ preserveFigureNumber: true
 
 SDS-PAGE verified the soluble expression of the available CGTase variants (Fig. 11). A qualitative heat-induced precipitation assay was then performed using purified protein samples. Samples underwent two 5-min heating cycles at 85 °C, while corresponding samples maintained at room temperature served as unheated controls.
 
-Following heat treatment, visible white precipitates were observed in the wild-type, T370L, and T370R/F183W samples. In contrast, little visible precipitation was observed in T370R, WR2, WR4, and WR8. The remaining redesigned variants showed some visible precipitation (Fig. 11).
+Following heat treatment, visible white precipitate were observed in the wild-type, T370L, and T370R/F183W samples. In contrast, little visible precipitation was observed in T370R, WR2, WR4, and WR8. The remaining redesigned variants showed some visible precipitation (Fig. 11).
 
 ::content-components-lightbox-panels
 ---
@@ -132,7 +132,7 @@ src:
   - https://static.igem.wiki/teams/6133/wiki/wetlab/engineering/engineering-cgtase-fig11b.avif
 alt:
   - "SDS-PAGE shows expression of redesigned KR and WR CGTase variants in soluble and pellet fractions."
-  - "Heated tubes show visible precipitates in wild-type, T370L, and T370R/F183W samples, with little precipitation in T370R and WR2, WR4, and WR8; unheated controls appear below."
+  - "Heated tubes show visible precipitate in wild-type, T370L, and T370R/F183W samples, with little precipitation in T370R and WR2, WR4, and WR8; unheated controls appear below."
 caption: "Fig. 11 | SDS-PAGE analysis and heat-induced precipitation assay of CGTase variants; **(a)** protein expression of mutants of CGTase in *E. coli* BL21(DE3); cell fractions of untransformed BL21(DE3) were used as control (S: supernatant after cell lysis; P: pellet after cell lysis); **(b)** heat-induced precipitation assay results of all the purified CGTase samples; corresponding samples maintained at room temperature served as unheated controls."
 imageBackground: "#ffffff"
 preserveFigureNumber: true
@@ -142,4 +142,4 @@ preserveFigureNumber: true
 
 ### Learn
 
-WR2, WR4, and WR8 showed little visible precipitation after heat treatment, in contrast to the visible precipitates observed in the wild-type, T370L, and T370R/F183W samples. These results provide initial experimental support for our computational redesign strategy by demonstrating reduced heat-induced precipitation in these variants under the tested conditions. Further quantitative assays are needed to assess enzymatic activity after heating.
+WR2, WR4, and WR8 showed little visible precipitation after heat treatment, in contrast to the visible precipitate observed in the wild-type, T370L, and T370R/F183W samples. These results provide initial experimental support for our computational redesign strategy by demonstrating reduced heat-induced precipitation in these variants under the tested conditions. Further quantitative assays are needed to assess enzymatic activity after heating.

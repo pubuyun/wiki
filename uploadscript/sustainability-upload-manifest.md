@@ -29,8 +29,8 @@
 
 - 原始参考文献 8 和 9 为同一 EPA 页面，合并为 8；原 10–12 重排为 9–11。正文共 13 处引用，对应 11 条独立参考文献。
 - “欧盟报告称气雾剂含 VOC 可达 95%”与原附 EPA 页面不匹配，保留主张并记录于 `uploadscript/Unresolved Links.md`。
-- 主文参考文献保留在 `content/sustainability/index.md`，四篇访谈保留在原来的附件子目录结构内。
+- 主文参考文献保留在 `content/sustainability/index.md`，四篇访谈保留在 `content/sustainability/interviews/` 子目录内。
 - 保留已有页面横幅。没有运行 Nuxt 构建或启动开发服务。
 - 5 篇文档已通过 Markdown/MDC 解析核对：7 个图组件、9 个图片地址、13 处引用和 11 条参考文献均对应完整。
-- 附件目录在文件系统中保留为 `图片和附件`；访谈页用显式 `path` 指定 `/sustainability/interviews/...` 英文路径，避免默认路径生成器移除中文目录名。
+- 访谈目录已统一为 `content/sustainability/interviews/`；访谈页继续使用显式 `path` 指定 `/sustainability/interviews/...` 英文路径。
 - 主文 Interviews 部分使用与 iHP 相同的 `content-components-human-practices-interview-script` 可折叠组件读取四篇访谈；原始访谈 Markdown 从侧栏导航隐藏。

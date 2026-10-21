@@ -124,7 +124,7 @@ Mainly in terms of irritation. The formulation is quite acidic overall, which ma
 We do not yet know your final product format or specific ingredients, so the earlier questions ultimately depend on how you design the formulation. However, when we discussed your questions this morning, we felt that the third one might be particularly important: can the protein withstand room-temperature storage and the seventy to eighty degrees Celsius that processing may involve? Will it lose activity when combined with other ingredients?
 
 **GreatBay-SCIE 2026**
-We have not yet experimentally validated protein thermal stability in the wet lab. The dry-lab predictions are around seventy to eighty degrees Celsius, but they are not very accurate. We use a deep learning model, and it may predict roughly the same temperature for every protein.
+We have not yet experimentally validated protein thermostability in the wet lab. The dry-lab predictions are around seventy to eighty degrees Celsius, but they are not very accurate. We use a deep learning model, and it may predict roughly the same temperature for every protein.
 
 **JingZhou company**
 So can I understand this as still being based on simulation, without testing it in the actual formulation?
@@ -385,9 +385,9 @@ If the research is complex, you can subdivide the scientific stage further. That
 
 As for "how to be honest," honesty is honesty, and dishonesty is dishonesty. You cannot use well-intentioned packaging to tell a well-intentioned lie.
 
-We encountered a similar situation in our own ingredient development. We suspected that an ingredient might have poor thermal stability, while storage, shipping, and processing all involve high temperatures. So we reported honestly that the project might fail and was very likely to fail. We then examined the experimental data. If the results were good, we would continue; if they were poor but we still considered the project valuable, we would try to solve the problem. Research funding also requires management approval, so the situation needs to be clearly explained.
+We encountered a similar situation in our own ingredient development. We suspected that an ingredient might have poor thermostability, while storage, shipping, and processing all involve high temperatures. So we reported honestly that the project might fail and was very likely to fail. We then examined the experimental data. If the results were good, we would continue; if they were poor but we still considered the project valuable, we would try to solve the problem. Research funding also requires management approval, so the situation needs to be clearly explained.
 
-If you have decided to pursue something and thermal stability remains unresolved, keep experimenting and looking for solutions. That is why I asked at the beginning whether this was an innovative discovery or something you genuinely wanted to turn into a business. Much of our work has to be implemented commercially.
+If you have decided to pursue something and thermostability remains unresolved, keep experimenting and looking for solutions. That is why I asked at the beginning whether this was an innovative discovery or something you genuinely wanted to turn into a business. Much of our work has to be implemented commercially.
 
 As mentioned earlier, many proteins have this problem, and approaches such as encapsulation may help. For your next interviews, consider protein-related companies, whether in biopharmaceuticals or cosmetics, to discuss solutions. Internally, we also report success as success and failure as failure. One of our ingredient projects took more than six months from initial research to passing our assessment, with many experiments, just to determine whether it could move forward.
 

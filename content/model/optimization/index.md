@@ -5,7 +5,7 @@ hasReference: false
 order: 5
 ---
 
-Two computationally designed CGTase parents (T370K and T370R/F183W) were selected for further thermal stability optimization. Sequencing identified the intended experimental T370K variant as T370L, which is labeled T370L in the experimental result plots.
+Two computationally designed CGTase parents (T370K and T370R/F183W) were selected for further thermostability optimization. Sequencing identified the intended experimental T370K variant as T370L, which is labeled T370L in the experimental result plots.
 
 ::content-components-lightbox-image
 ---
@@ -13,7 +13,7 @@ src:
   - https://static.igem.wiki/teams/6133/wiki/drylab/model/optimization-fig1.avif
 alt:
   - "Functionally important positions are excluded before stability scoring, pairwise compatibility analysis, diverse beam search, and experimental testing of multipoint mutants."
-caption: "Fig. 1 | **Schematic of thermal stability optimization workflow.**
+caption: "Fig. 1 | **Schematic of thermostability optimization workflow.**
   Starting from T370K and T370R/F183W parent enzymes, important residues are
   excluded from mutation. Remaining positions are screened with SPURS for
   favorable single substitutions. Pairwise compatibility analysis and a diverse

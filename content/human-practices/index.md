@@ -267,6 +267,3 @@ Guided by the following questions, we analysed **how Expelliodor affects our sta
 
 ::
 
----
-
-:content-components-human-practices-stakeholders-graph

@@ -119,7 +119,7 @@ KleanK's interest provided preliminary industry validation of the market potenti
 
 If technical feasibility is established, such a collaboration could help advance our project from laboratory proof of concept through formulation optimization and pilot testing to large-scale consumer evaluation and, ultimately, potential commercialization.
 
-Based on Mr. Deng's advice, we added **freeze-dried protein** as a potential product format and incorporated **thermal stability** into our development considerations. In subsequent development, we plan to evaluate our [protein stability]() under relevant storage conditions to assess its suitability for practical deodorant applications.
+Based on Mr. Deng's advice, we added **freeze-dried protein** as a potential product format and incorporated **thermostability** into our development considerations. In subsequent development, we plan to evaluate our [protein stability]() under relevant storage conditions to assess its suitability for practical deodorant applications.
 
 ## Cycle 3 SynBio Expert
 

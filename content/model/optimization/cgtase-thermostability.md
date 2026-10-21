@@ -11,7 +11,7 @@ src:
   - https://static.igem.wiki/teams/6133/wiki/drylab/model/optimization-cgtase-thermostability-fig1.avif
 alt:
   - "Conserved and functionally important positions are excluded, single mutations are scored, a pairwise graph guides diverse beam search, and multipoint designs proceed to testing."
-caption: "Fig. 1 | **Schematic of thermal stability optimization workflow.**
+caption: "Fig. 1 | **Schematic of thermostability optimization workflow.**
   Starting from T370K and T370R/F183W parent enzymes, important residues are
   excluded from mutation. Remaining positions are screened with SPURS for
   favorable single substitutions. Pairwise compatibility analysis and a diverse

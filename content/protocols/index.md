@@ -1451,9 +1451,9 @@ Mix by pipetting up and down and incubate at room temperature for 15 min to comp
 
 ::
 
-### Protein Thermal Stability Assay
+### Protein Thermostability Assay
 
-::content-components-protocol-table{title="Protein Thermal Stability Assay"}
+::content-components-protocol-table{title="Protein Thermostability Assay"}
 
 #materials
 

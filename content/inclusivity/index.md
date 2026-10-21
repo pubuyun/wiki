@@ -1787,6 +1787,8 @@ We additionally use **Google Lighthouse accessibility audits** and **axe-core fu
 
 [axe-core full-site accessibility report](https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/axe-core.pdf)
 
+Some special designs, such as the interactive graph in /model, are implemented by external libraries, thus, their violation is unavoidable. However, we have manually checked keyboard behaviour to make it accessible.
+
 ### WCAG 2.2 Compliance
 
 We designed and reviewed our documentation pages against the **Web Content Accessibility Guidelines (_WCAG_) 2.2**, targeting **Level AA compliance**.

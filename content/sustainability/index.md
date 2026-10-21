@@ -435,20 +435,20 @@ Through the exploration of more environmentally responsible approaches to produc
 
 ### Interview with Mr. Lu
 
-::content-components-human-practices-interview-script{src="sustainability/图片和附件/interview-with-mr.-lu.md"}
+::content-components-human-practices-interview-script{src="sustainability/interviews/interview-with-mr.-lu.md"}
 ::
 
 ### Interview with Ms. Chen
 
-::content-components-human-practices-interview-script{src="sustainability/图片和附件/interview-with-ms.-chen.md"}
+::content-components-human-practices-interview-script{src="sustainability/interviews/interview-with-ms.-chen.md"}
 ::
 
 ### Interview with Mr. Li
 
-::content-components-human-practices-interview-script{src="sustainability/图片和附件/interview-with-mr.-li.md"}
+::content-components-human-practices-interview-script{src="sustainability/interviews/interview-with-mr.-li.md"}
 ::
 
 ### Interview with Mr. Cheng
 
-::content-components-human-practices-interview-script{src="sustainability/图片和附件/interview-with-mr.-cheng.md"}
+::content-components-human-practices-interview-script{src="sustainability/interviews/interview-with-mr.-cheng.md"}
 ::

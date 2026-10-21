@@ -329,7 +329,7 @@ caption: "Fig. 14 | Interview with Ms. Chen, product manager at Amcor"
 
 ### Outcome
 
-Ms. Chen emphasized that packaging **must** **first protect its contents**. Important properties include resistance to oxygen and moisture, durability, and thermal stability. She cautioned that **sustainability should not be considered in isolation** from product protection and performance.
+Ms. Chen emphasized that packaging **must** **first protect its contents**. Important properties include resistance to oxygen and moisture, durability, and thermostability. She cautioned that **sustainability should not be considered in isolation** from product protection and performance.
 
 **Cost** was another important factor, as more sustainable materials can be more expensive. She explained that packaging sustainability also depends on **local regulations, consumer habits, and available recycling systems**. In China, where sustainable packaging regulations are less established and cost remains a major consideration, promoting sustainable packaging can be challenging. In contrast, environmental requirements such as the EU's Packaging and Packaging Waste Regulation (PPWR) make sustainability an important consideration in European markets.
 

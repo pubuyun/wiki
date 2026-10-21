@@ -359,7 +359,17 @@ A deliberate constraint was the exclusion of terpene-class soothing agents; none
 
 Both fragrances are produced through engineered microbial fermentation rather than petrochemical synthesis or plant extraction. This approach avoids the environmental persistence and bioaccumulation of synthetic fragrance ingredients such as synthetic musks :fn-ref{#15}, and avoids the land, water, and solvent demands of plant extraction :fn-ref{#16}. The fragrance profile was selected based on our public survey, in which floral/fruity (41.0%) and woody (35.2%) scents were the most preferred.
 
-（图）
+::content-components-bilingual-image-panels
+---
+srcEn: "https://static.igem.wiki/teams/6133/wiki/drylab/hardware/pie-en.avif"
+srcZh: "https://static.igem.wiki/teams/6133/wiki/drylab/hardware/pie-cn.avif"
+altEn: "Public survey fragrance preferences: floral/fruity scents (41.0%) and woody scents (35.2%) were the most preferred."
+altZh: "公众调查中的香型偏好：花果香（41.0%）和木质香（35.2%）最受欢迎。"
+label: "Fragrance preference survey — image language"
+caption: "Public survey results on fragrance preferences."
+defaultLanguage: "en"
+---
+::
 
 Because both compounds are hydrophobic, they require solubilisation by CO40. The concentration of CO40 was set at the minimum effective level for complete solubilisation, so that the solubiliser does not compromise the active proteins.
 
