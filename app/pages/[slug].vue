@@ -143,9 +143,6 @@ useSeoMeta({
         <div
             class="category-content-shell content-reading-container flex min-w-0 flex-col"
         >
-            <template v-if="humanPracticesOverview">
-                <StakeholdersGraph class="my-8" />
-            </template>
             <div
                 v-if="page"
                 class="category-overview-layout content-reading-layout"
@@ -169,6 +166,7 @@ useSeoMeta({
                     <ContentBar :toc="tocLinks" />
                 </aside>
             </div>
+            <StakeholdersGraph v-if="humanPracticesOverview" class="my-8" />
             <CategoryExplore
                 v-if="children.length > 1"
                 :pages="children"

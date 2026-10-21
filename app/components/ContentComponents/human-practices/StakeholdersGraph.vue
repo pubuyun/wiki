@@ -670,6 +670,9 @@ const edges = nodes.map((node) => {
     border-radius: 50%;
     cursor: pointer;
 }
+:global(.dark) .switch-button {
+    color: #dff3ee;
+}
 .switch-button svg {
     width: 100%;
     height: 100%;

@@ -391,7 +391,9 @@ onBeforeUnmount(() => {
         @pointerleave="hoveredCategory = null"
         @keydown.esc="close"
     >
-        <h2 :id="uid + '-title'" class="sr-only">Education activities</h2>
+        <h2 :id="uid + '-title'" class="activity-graph__title">
+            Activities Matrix
+        </h2>
         <div class="activity-graph__layout">
             <div class="activity-graph__canvas">
                 <div ref="plot" class="activity-graph__plot">
@@ -706,6 +708,16 @@ onBeforeUnmount(() => {
     margin-block: 1rem 2rem;
     font-size: max(1rem, 1em);
     container-type: inline-size;
+}
+.activity-graph__title {
+    margin: 0 0 1rem;
+    padding-inline: 0.75rem;
+    color: var(--on-surface);
+    font-family: var(--font-belanosima);
+    font-size: clamp(1.25rem, 2.5vw, 2rem);
+    font-weight: 400;
+    line-height: 1.2;
+    text-align: center;
 }
 .activity-graph__layout {
     display: grid;
