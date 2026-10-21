@@ -1533,7 +1533,7 @@ imageBackground: transparent
 
 ### Intervene 1
 
-To help beginners understand the workflow and take their first steps in computational modeling, Willes developed a step-by-step **guidebook**based on the team’s existing modeling process.
+To help beginners understand the workflow and take their first steps in computational modeling, Willes developed a step-by-step **guidebook** based on the team’s existing modeling process.
 
 Rather than presenting the modeling process as a collection of isolated commands, the guidebook organized it into a clear sequence. It explained the purpose of each stage and showed how the output of one step became the input of the next. In this way, knowledge that had previously depended on verbal explanations from experienced members became easier to follow and share.
 

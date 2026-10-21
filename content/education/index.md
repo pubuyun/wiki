@@ -84,10 +84,10 @@ Here is an example of our edu target radar for one lecture at high school.
 ---
 profile:
   Age:
-    - 1.8
+    - 2.8
     - Teenagers are generally curious, receptive, and open-minded.
   Educational level:
-    - 2.6
+    - 3.6
     - Public high school students, mainly in Grades 10 and 11.
   Size:
     - 3.5

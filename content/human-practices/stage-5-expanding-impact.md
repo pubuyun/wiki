@@ -144,7 +144,7 @@ Following the community psychological counselor's advice, we **developed a handb
 
 ### Observe
 
-But before sharing the handbook with a wider audience, we wanted to make sure that its **content was appropriate** and that the **wording would not offend or stigmatize** people with underarm odor.
+Before sharing the handbook with a wider audience, we wanted to make sure that its **content was appropriate** and that the **wording would not offend or stigmatize** people with underarm odor.
 
 ### Determine
 
