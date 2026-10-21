@@ -1,4 +1,4 @@
-import { addCollection } from "@iconify/vue/offline";
+import { addCollection } from "@iconify/vue";
 import collections from "~/data/icons.json";
 
 export default defineNuxtPlugin({

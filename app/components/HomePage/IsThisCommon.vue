@@ -233,7 +233,7 @@ onBeforeUnmount(() => {
 
             <p class="common-scene__copy">
                 For an estimated
-                <strong class="common-scene__number">160 million</strong>
+                <strong class="common-scene__number">4.95 billion</strong>
                 people worldwide, axillary odor is not a mere inconvenience but
                 a daily burden, significantly affecting
                 <strong class="common-scene__emphasis">aspects of life</strong>

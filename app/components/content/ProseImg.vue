@@ -9,8 +9,11 @@
             <button
                 v-if="props.alt"
                 type="button"
-                class="block w-full cursor-zoom-in rounded-lg border border-outline bg-secondary p-0 shadow-sm focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-outline"
-                :class="{ 'my-8': !props.title }"
+                class="block w-full cursor-zoom-in rounded-lg bg-secondary p-0 focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-outline"
+                :class="{
+                    'my-8': !props.title,
+                    'border border-outline shadow-sm': !props.noBorder,
+                }"
                 :aria-label="`Open enlarged image: ${props.alt}`"
                 @click="open(0)"
             >
@@ -32,8 +35,11 @@
                 alt=""
                 :width="props.width"
                 :height="props.height"
-                class="h-auto w-full rounded-lg border border-outline bg-secondary object-cover shadow-sm"
-                :class="{ 'my-8': !props.title }"
+                class="h-auto w-full rounded-lg bg-secondary object-cover"
+                :class="{
+                    'my-8': !props.title,
+                    'border border-outline shadow-sm': !props.noBorder,
+                }"
                 decoding="async"
                 loading="lazy"
             />
@@ -61,6 +67,10 @@ const props = defineProps({
     title: {
         type: String,
         default: "",
+    },
+    noBorder: {
+        type: Boolean,
+        default: false,
     },
     captionBody: {
         type: Object as PropType<MinimarkTree>,

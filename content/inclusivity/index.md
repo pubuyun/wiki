@@ -116,7 +116,7 @@ Guided by our LIFT+ framework, we began with six target groups we could reach in
 
   :::content-components-panel-layout{:portrait="true" label="Blind community contributions"}
   #left
-  ![A learner asks for tactile biology graphics beside a statistic of 8.92 million blind people in China in 2026.](https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig4-u.avif)
+  ![A learner asks for tactile biology graphics beside a statistic of 8.92 million blind people in China in 2026.](https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig4-u.avif){:no-border="true"}
 
   #right
   <h5 id="overview-blind-community">Blind Community</h5>
@@ -140,7 +140,7 @@ Guided by our LIFT+ framework, we began with six target groups we could reach in
 
   :::content-components-panel-layout{:portrait="true" label="Deaf community contributions"}
   #left
-  ![A learner asks how to sign promoter beside a statistic of 7.39 million people with complete hearing loss in China in 2022.](https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig10-u.avif)
+  ![A learner asks how to sign promoter beside a statistic of 7.39 million people with complete hearing loss in China in 2022.](https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig10-u.avif){:no-border="true"}
 
   #right
   <h5 id="overview-deaf-community">Deaf Community</h5>
@@ -164,7 +164,7 @@ Guided by our LIFT+ framework, we began with six target groups we could reach in
 
   :::content-components-panel-layout{:portrait="true" label="Autism spectrum contributions"}
   #left
-  ![A learner asks for science materials designed around their interests beside a statistic of over 13 million autistic people in China in 2026.](https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig23-u.avif)
+  ![A learner asks for science materials designed around their interests beside a statistic of over 13 million autistic people in China in 2026.](https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig23-u.avif){:no-border="true"}
 
   #right
   <h5 id="overview-children-on-the-autism-spectrum">Children On The Autism Spectrum</h5>
@@ -186,7 +186,7 @@ Guided by our LIFT+ framework, we began with six target groups we could reach in
 
   :::content-components-panel-layout{:portrait="true" label="Low socioeconomic background contributions"}
   #left
-  ![A student asks for a school laboratory beside a statistic of 281 million people in China with annual per capita disposable income of approximately US$1,420 or less in 2025.](https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig27-u.avif)
+  ![A student asks for a school laboratory beside a statistic of 281 million people in China with annual per capita disposable income of approximately US$1,420 or less in 2025.](https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig27-u.avif){:no-border="true"}
 
   #right
   <h5 id="overview-individuals-from-low-socioeconomic-backgrounds">Individuals From Low Socioeconomic Backgrounds</h5>
@@ -206,7 +206,7 @@ Guided by our LIFT+ framework, we began with six target groups we could reach in
 
   :::content-components-panel-layout{:portrait="true" label="Modeling beginner contributions"}
   #left
-  ![A beginner struggles with code beside a statistic that 92.9% of Chinese internet users aged 10–19 could not proficiently write computer programs in 2025.](https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig35-u.avif)
+  ![A beginner struggles with code beside a statistic that 92.9% of Chinese internet users aged 10–19 could not proficiently write computer programs in 2025.](https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig35-u.avif){:no-border="true"}
 
   #right
   <h5 id="overview-modeling-beginners">Modeling Beginners</h5>
@@ -238,7 +238,7 @@ Guided by our LIFT+ framework, we began with six target groups we could reach in
 
   :::content-components-panel-layout{:portrait="true" label="Older adult contributions"}
   #left
-  ![An older adult asks how to distinguish facts from misinformation beside a statistic of 15.87% of adults aged 65 and above in China with college education or higher in 2026.](https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig40-u.avif)
+  ![An older adult asks how to distinguish facts from misinformation beside a statistic of 15.87% of adults aged 65 and above in China with college education or higher in 2026.](https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig40-u.avif){:no-border="true"}
 
   #right
   <h5 id="overview-older-adults-with-limited-formal-education">Older Adults With Limited Formal Education</h5>

@@ -103,6 +103,10 @@ const versions = computed(() => [
 </template>
 
 <style scoped>
+.bilingual-image-tabs__panels {
+    padding-top: 1rem;
+}
+
 .bilingual-image-tabs__panel {
     display: flow-root;
 }

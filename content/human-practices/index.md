@@ -175,10 +175,6 @@ Reflecting on these ethical considerations led us to look beyond AI and technica
 
 ::
 
-## Timeline
-
-:content-components-human-practices-time-line
-
 ## Cycles Description
 
 We organized our Human Practices work into iterative **ODOR cycles**, each centered around **one stakeholder interaction or a small group of closely related interactions.** This structure traces how we moved from an initial observation to further investigation, new insights then to concrete changes to our project.
@@ -214,7 +210,11 @@ caption: Fig. 7 | Visual representation of our iterative ODOR cycle
 
 Using this **iterative structure**, we ensure that stakeholder engagement is a two-way exchange, allowing their perspectives to shape our project while ensuring that our work responds to their needs.
 
-## Stakeholder Analysis:
+## Timeline
+
+:content-components-human-practices-time-line
+
+## Stakeholder Analysis
 
 > “*Human Practices is the study of how your work affects the world, and how the world affects your work*.”
 >

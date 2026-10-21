@@ -18,7 +18,7 @@ bannerBackground: "#001b3a"
 
 ### Motivation
 
-The efficacy of our product depends on three proteins: a precursor binder that sequesters Cys-Gly-3M3SH, a conformation-selective transporter binder that inhibits *PepT<sub>Sh</sub>*, and a CGTase that modifies newly secreted precursors. Each one operates at a molecular level and is correspondingly sensitive to its immediate environment.
+The efficacy of our product depends on three proteins: a precursor binder that sequesters Cys-Gly-3M3SH, a conformation-selective transporter binder that inhibits PepTSh, and a CGTase that modifies newly secreted precursors. Each one operates at a molecular level and is correspondingly sensitive to its immediate environment.
 
 ::content-components-lightbox-image
 ---
@@ -32,7 +32,21 @@ height: 960
 
 ::
 
-Conventional plastic deodorant packaging is unsuitable for biological actives for three reasons. First, adsorption: proteins accumulate at the polymer–liquid and air–liquid interfaces, where they unfold and aggregate; this process is self-limiting in bulk but continuous at the interface. Second, leachables: plasticisers, antioxidants, and residual monomers migrate from the polymer into the formulation, altering protein conformation or nucleating aggregation. Third, surface-induced degradation: certain polymers promote unfolding, an effect amplified by the mechanical agitation of daily use. A proteome-scale study demonstrated that protein loss under these conditions is not primarily driven by nucleation in bulk solution, but by destabilisation at material surfaces, followed by aggregation at the sheared air–liquid interface. :fn-ref{#1}
+#### Current limitations
+
+Conventional plastic deodorant packaging is unsuitable for biologically active ingredients due to the following three reasons.
+
+##### Adsorption
+
+proteins accumulate at the polymer–liquid and air–liquid interfaces, where they unfold and aggregate; this process is self-limiting in bulk but continuous at the interface.
+
+##### Leaching
+
+plasticisers, antioxidants, and residual monomers migrate from the polymer into the formulation, altering protein conformation or nucleating aggregation.
+
+##### Surface-induced degradation
+
+certain polymers promote unfolding, an effect amplified by the mechanical agitation of daily use. A proteome-scale study demonstrated that protein loss under these conditions is not primarily driven by nucleation in bulk solution, but by destabilisation at material surfaces, followed by aggregation at the sheared air–liquid interface. :fn-ref{#1}
 
 ### Analysis
 
@@ -60,17 +74,17 @@ Two categories of constraints define the design approach.
 
 ### Learn
 
-Design decisions were informed by [formulation experts](/human-practices/stage-4-optimising-product#cycle-2-skincare-product-expert-and-cosmetic-formulation-expert), [industry practitioners](/human-practices/stage-4-optimising-product#cycle-1-evonik-and-second-meeting-with-kleank), and published literature. :fn-ref{#1} :fn-ref{#2} :fn-ref{#3} :fn-ref{#4} :fn-ref{#5} :fn-ref{#6} :fn-ref{#7} Formulation experts identified stability, safety, efficacy, and usability as the four properties a cosmetic product must balance, and recommended specific measures: cooling the base before adding proteins, using solubilisers only where necessary, selecting thickeners for light skin feel, and avoiding freeze-dried formats. [Industry consultation](/human-practices/stage-3-developing-solutions#cycle-2-first-meeting-with-kleank) clarified the six functional categories of cosmetic formulations and advised consulting specialists in protein-based cosmetics. Literature established that polypropylene is among the least favourable polymers for protein stability, and that reducing either material contact, air exposure, or agitation confers protection. :fn-ref{#1}
+Design decisions were informed by [formulation experts](/human-practices/stage-4-optimising-product#cycle-2-skincare-product-expert-and-cosmetic-formulation-expert), [industry practitioners](/human-practices/stage-4-optimising-product#cycle-1-evonik-and-second-meeting-with-kleank), and according to published literature. :fn-ref{#1} :fn-ref{#5} :fn-ref{#6} :fn-ref{#15} :fn-ref{#16} :fn-ref{#17} :fn-ref{#18} Formulation experts identified stability, safety, efficacy, and usability as the four properties a cosmetic product must balance, and recommended specific measures: cooling the base before adding proteins, using solubilisers only where necessary, selecting thickeners for light skin feel, and avoiding freeze-dried formats. [Industry consultation](/human-practices/stage-3-developing-solutions#cycle-2-first-meeting-with-kleank) clarified the six functional categories of cosmetic formulations and advised consulting specialists in protein-based cosmetics. Literature established that polypropylene is among the least favourable polymers for protein stability, and that reducing either material contact, air exposure, or agitation confers protection. :fn-ref{#1}
 
 ### Design
 
 Our packaging design features a roll-on applicator in a PP bottle. The roll-on form — selected over spray, stick, freeze-dried powder and gel on protein stability, safety, usability and cost — avoids aerosolisation, protects the formulation in a sealed environment, and delivers active ingredients directly to the axillary surface. The PP material is paired with a high-barrier coating, a hydrophilic inner coating and an optimised ball fit to keep the protein stable. The formulation inside is engineered alongside the packaging, with stabilisers, a protein-compatible buffer, and a solubiliser selected for minimum interference with protein activity.
 
-Accessibility was treated as an important part of our product format. Inspired by *Degree Inclusive*, our packaging concept incorporates a press-to-open hinged lid, enhanced grip geometry, tactile opening cues, Braille labelling, etc. :fn-ref{#8} :fn-ref{#9} :fn-ref{#10}
+Accessibility was treated as an important part of our product format. Inspired by Degree Inclusive, our packaging concept incorporates a press-to-open hinged lid, enhanced grip geometry, tactile opening cues, braille labelling, etc. :fn-ref{#2} :fn-ref{#3} :fn-ref{#4}
 
-We also designed accessories for users to personalise Expelliodor, including a necklace pendant and a star-shaped keychain. By turning deodorant into something to display rather than hide, we used trendiness deliberately to challenge stigma surrounding underarm odour and encourage people to use deodorant without shame.
+We also designed accessories for users to personalize Expelliodor, including a necklace pendant and a star-shaped keychain. By turning deodorant into something to display rather than hide, we used trendiness deliberately to challenge stigma surrounding underarm odor and encourage people to use deodorant without shame.
 
-Cost is estimated at approximately ¥1.18 per 50 mL bottle at pilot scale, comprising packaging and formulation materials (excluding the terpenoid esters):
+Cost is estimated at approximately ¥1.18 per 50 mL bottle at pilot scale, comprising packaging and formulation materials (excluding the terpenoid esters)：
 
 Validation of protein stability in the final container, fabric compatibility, and delivery performance is ongoing and reported separately. The rationale, evidence base, and full specifications are documented in the sections that follow.
 
@@ -78,7 +92,7 @@ Validation of protein stability in the final container, fabric compatibility, an
 
 ### Format
 
-The choice of delivery format determines how active proteins reach the skin, how stable they remain, and how users experience the product. We compared five candidate formats against our dual constraints: preserving protein activity and ensuring user accessibility. We analysed each format through both the consumer and producer perspectives, with interview content as support.
+The choice of delivery format determines how active proteins reach the skin, how stable they remain, and how users experience the product. We compared five candidate formats against our dual constraints: preserving protein activity and ensuring user accessibility. We analysed each format through both the consumer and producer perspective, with interview content as support.
 
 #### Spray
 
@@ -88,11 +102,11 @@ The choice of delivery format determines how active proteins reach the skin, how
 
 - Producer perspective: Mature aerosol/pump filling process with high throughput; standardised containers for good shelf display and controllable unit cost.
 
-- Interview support: A [gym manager](/human-practices/stage-2-identifying-unmet-needs#cycle-3-gym-and-hotel-owners) prefers spray-type products as they are convenient, clean and can instantly control odour.
+- Interview support: A [gym manager](/human-practices/stage-2-identifying-unmet-needs#cycle-3-gym-and-hotel-owners) prefers spray-type products as they are convenient, clean and can instantly control odor.
 
 ##### Cons
 
-- Consumer perspective: Mist can be inhaled and the strong scent may be irritating to some; needs a few seconds to dry, so it might feel cold in winter; dosage is hard to control, so it is easy to over-spray. Unsuitable scenarios: restricted on flights (aerosol cans), inconvenient for travel.
+- Consumer perspective: Mist can be inhaled and the strong scent may be irritatable to some; needs a few seconds to dry, so it might feel cold in winter; dosage is hard to control, so it is easy to over-spray. Unsuitable scenarios: restricted on flights (aerosol cans), inconvenient for travel.
 
 - Producer perspective: Aerosol cans involve pressure vessels and propellants, raising licensing and safety requirements and requiring large production-line investment; includes valve and pump, so costs more than other formats; shipping is treated as dangerous goods, increasing logistics and compliance costs.
 
@@ -112,19 +126,37 @@ The choice of delivery format determines how active proteins reach the skin, how
 
 - Consumer perspective: Leaves residue on hands that requires washing; sticky feel and long drying time; white cream can leave marks on dark clothes and is less effective with heavy sweating. Unsuitable scenarios include: not suitable for rushed outings or hot summer days. Unsuitable user groups: users seeking a dry, fresh feel.
 
-- Producer perspective: Filling weight consistency is hard to control and tube-seal leak prevention is a QC (quality control) pain point; cream stability across high and low temperatures needs repeated testing; low unit price combined with fast consumption leaves thin profit margins.
+- Producer perspective: Filling weight consistency is hard to control and tube-seal leak prevention is a QC(Quality Control) pain point; cream stability across high and low temperatures needs repeated testing; low unit price combined with fast consumption leaves thin profit margins.
 
 - Interview support: [Formulation experts](/human-practices/stage-4-optimising-product#cycle-2-skincare-product-expert-and-cosmetic-formulation-expert) generally rank solid stick above roll-on and above spray on stability grounds, noting that alcohol-free cream formats suit protein formulas. While no expert explicitly opposes ointment, Mr. Su mentions that stick is more stable for protein activity, which is why the team weighed both.
+
+#### Stick
+
+##### Pros
+
+- Consumer perspective: Instant dry feel with no waiting time; highly portable and leak-proof for travel; familiar and easy one-step application; provides precise, targeted dosage directly to the underarm without wetting the skin.
+
+- Producer perspective: The solid or semi-solid matrix offers exceptional formulation stability, preventing hydrolysis of the active proteins and better preserving protein activity; simpler manufacturing and filling process with mature supply chains; no risk of liquid leakage or aerosolisation during transport; long shelf life and low packaging costs.
+
+- Interview support: Skincare expert [Ms. Zhu](/human-practices/stage-4-optimising-product#cycle-2-skincare-product-expert-and-cosmetic-formulation-expert) ranked solid stick above roll-on and spray on stability grounds; formulation expert [Mr. Su](/human-practices/stage-4-optimising-product#cycle-2-skincare-product-expert-and-cosmetic-formulation-expert) specifically noted that stick formats are more stable for prolonging protein effectiveness
+
+##### Cons
+
+- Consumer perspective: Can leave a visible chalky or white residue on the skin and transfer onto dark clothing; the waxy texture can feel heavy, occlusive, or tacky, especially in hot weather; less precise for contouring the underarm compared to a roll-on ball; dragging the stick across sensitive skin may cause friction or irritation.
+
+- Producer perspective: Traditional solid sticks rely on a wax or oil matrix that requires high heat (usually 70–80 °C) to melt and mould. This heat is likely to be incompatible with our engineered proteins, which must be added after the base has cooled. Furthermore, incorporating an aqueous protein gel into a solid hydrophobic wax matrix requires complex emulsification, which risks denaturing the proteins during manufacturing.
+
+- Interview support: formulation expert [Mr. Su](/human-practices/stage-4-optimising-product#cycle-2-skincare-product-expert-and-cosmetic-formulation-expert) ultimately recommended an aqueous gel-based format (roll-on) rather than a solid stick, because it distributes the active proteins more evenly across the underarm without the need for a hot-melt wax base.
 
 #### Patch
 
 ##### Pros
 
-- Consumer perspective: Stick-and-go application with no skin contact and no drying time, invisible under most clothes and the contents leave no stains or residue. Useful scenarios include: weddings, interviews and long events where reapplication is inconvenient; lightweight for travel. Target user groups: people who wear heavy sweaters, people who care about keeping clothes clean, and sensitive-skin users who avoid contact application.
+- Consumer perspective: Stick-and-go application with no skin contact and no drying time, invisible under most clothes and contents leaves no stains nor residue. Useful scenarios include: weddings, interviews and long events where reapplication is inconvenient; lightweight for travel. Target user groups: people who wear heavy sweaters, people who care about keeping clothes clean, and sensitive-skin users who avoid contact application.
 
 - Producer perspective: Strong product differentiation with a novel concept that supports a marketing premium; once the multi-layer composite process (absorbent + adhesive + functional layers) is standardised, it can be mass-produced steadily, and single-piece format suits bundle sales with stable repurchase.
 
-- Interview support: Patches are endorsed by a [hotel proprietor](/human-practices/stage-2-identifying-unmet-needs#cycle-3-gym-and-hotel-owners), who commends their hygiene and convenience.
+- Interview support: Patches are endorsed by a [hotel proprietor](/human-practices/stage-2-identifying-unmet-needs#cycle-3-gym-and-hotel-owners), who commends its sanitation and convenience
 
 ##### Cons
 
@@ -146,7 +178,7 @@ The choice of delivery format determines how active proteins reach the skin, how
 
 ##### Cons
 
-- Consumer perspective: Brief wet feeling on application and requires about 10+ seconds to dry; alcohol formulas can sting after shaving; hygiene concerns when shared as the ball touches the skin directly; inefficient for large areas such as the back. Unsuitable scenarios: slower than spray when instant dryness is needed.
+- Consumer perspective: Brief wet feeling on application and requires about 10+ seconds to dry; hygiene concerns when shared as the ball touches the skin directly; inefficient for large areas such as the back. Unsuitable scenarios: slower than spray when instant dryness is needed.
 
 - Producer perspective: Ball-head (ball + neck ring) sealing and leak prevention is a QC challenge and leakage triggers complaints; ball smoothness needs consistency control; glass bottles risk breakage while plastic bottles feel slightly lower in perceived quality.
 
@@ -212,7 +244,7 @@ Spray was opposed by experts due to the toxicologically unacceptable inhalation 
 
 - Producer perspective: Ordinary PP provides very limited oxygen barrier, which is inadequate for protein formulations — a high-barrier coating (e.g. silicon-oxide sputtered layer) is required; protein tends to adsorb onto the inner wall, and PP is among the least favourable plastics for protein stability (unfolding and aggregation under shaking). :fn-ref{#1}
 
-- Interview support: [Ms. Chen](/human-practices/stage-5-expanding-impact#cycle-5-amcor) stated pure single-PP without barrier treatment will not satisfy shelf-life requirements for protein-containing formulas, and any barrier modification must not break single-material recyclability.
+- interview support: [Ms. Chen](/human-practices/stage-5-expanding-impact#cycle-5-amcor) stated pure single-PP without barrier treatment will not satisfy shelf-life requirements for protein-containing formulas, and any barrier modification must not break single-material recyclability.
 
 #### PE
 
@@ -230,7 +262,7 @@ Spray was opposed by experts due to the toxicologically unacceptable inhalation 
 
 - Producer perspective: Plastic has very long degradation times (hundreds of years), low recycling efficiency and toxic-gas release when burned; protein adsorption onto inner walls and leachables remain risks; PE is more typical for flexible soft packaging, and for rigid protein roll-on bottles barrier performance still needs verification.
 
-- Interview support: [Mr. Cheng](/human-practices/stage-5-expanding-impact#cycle-6-environmental-experts) described plastics’ main environmental problems as extremely slow degradation, low reuse rates and burning pollution; [Mr. Lu](/human-practices/stage-5-expanding-impact#cycle-6-environmental-experts) noted plastics’ burden concentrates on petroleum extraction and end-of-life microplastic pollution.
+- interview support: [Mr. Cheng](/human-practices/stage-5-expanding-impact#cycle-6-environmental-experts) described plastics main environmental problems as extremely slow degradation, low reuse rates and burning pollution; [Mr. Lu](/human-practices/stage-5-expanding-impact#cycle-6-environmental-experts) noted plastics burden concentrates on petroleum extraction and end-of-life microplastic pollution.
 
 #### PET
 
@@ -266,7 +298,7 @@ Spray was opposed by experts due to the toxicologically unacceptable inhalation 
 
 - Producer perspective: Protein adsorption onto inner walls and leachables remain risks, and HDPE oxygen barrier is still limited for protein protection; plastic degrades extremely slowly and recycling efficiency is low, with burning releasing toxic gas.
 
-- Interview support: [Mr. Cheng](/human-practices/stage-5-expanding-impact#cycle-6-environmental-experts) described plastics’ main environmental problems as very slow degradation, low reuse rates and burning pollution; [Mr. Lu](/human-practices/stage-5-expanding-impact#cycle-6-environmental-experts) noted plastics’ burden concentrates on petroleum extraction and end-of-life microplastic pollution.
+- Interview support: [Mr. Cheng](/human-practices/stage-5-expanding-impact#cycle-6-environmental-experts) described plastics main environmental problems as very slow degradation, low reuse rates and burning pollution; [Mr. Lu](/human-practices/stage-5-expanding-impact#cycle-6-environmental-experts) noted plastics burden concentrates on petroleum extraction and end-of-life microplastic pollution.
 
 ### Design features
 
@@ -276,11 +308,11 @@ Key engineering choices for the protein
 
 - Smaller-radius ball: minimises the air-liquid interface inside the bottle, further limiting protein unfolding and aggregation.
 
-- High-barrier coating (silicon-oxide layer): compensates for ordinary PP’s limited oxygen barrier while keeping single-material recyclability.
+- High-barrier coating (silicon-oxide layer): compensates ordinary PP limited oxygen barrier while keeping single-material recyclability.
 
 - Optimised ball-fit clearance and smooth surface finish: reduces residual liquid trapped in the roll-on assembly, avoiding waste and odour build-up.
 
-- pH-matched substrate and PCR-ready cap: aligns formulation pH with the material’s chemical resistance; PCR content supports the green story.
+- pH-matched substrate and PCR-ready cap: aligns formulation pH with the material chemical resistance; PCR content supports the green story.
 
 - Microbial-growth-resistant inner materials: inner materials should also resist microbial growth in the product; this requires professional packaging-technician evaluation.
 
@@ -326,7 +358,7 @@ The formulation of Expelliodor follows the six functional categories identified 
 
 The active ingredients are the three engineered proteins that constitute the therapeutic mechanism of Expelliodor.
 
-Substrate pair: β-cyclodextrin and maltodextrin (DE 10–20) at 2% serve as the donor/substrate pair for CGTase. Maltodextrin is the primary glycosyl donor, while β-cyclodextrin provides an additional donor source and acts as a trap for volatile odorants. The choice of maltodextrin over higher-cost cyclodextrin alone reflects the finding that at sufficiently high concentrations, maltodextrin can serve as an efficient alternative donor for transglycosylation. :fn-ref{#2}
+Substrate pair: β-cyclodextrin and maltodextrin (DE 10–20) at 2% serve as the donor/substrate pair for CGTase. Maltodextrin is the primary glycosyl donor, while β-cyclodextrin provides an additional donor source and acts as a trap for volatile odorants. The choice of maltodextrin over higher-cost cyclodextrin alone reflects the finding that at sufficiently high concentrations, maltodextrin can serve as an efficient alternative donor for transglycosylation. :fn-ref{#5}
 
 All three proteins are produced in-house at pilot scale, at an estimated cost of ¥0.106 per kg of finished product.
 
@@ -334,21 +366,23 @@ All three proteins are produced in-house at pilot scale, at an estimated cost of
 
 Carrier ingredients form the bulk of the formulation and dissolve or disperse the active components.
 
-Glycerin was retained below 5% to avoid the tacky residue that higher concentrations produce, which would be inconsistent with the light skin feel recommended by formulation experts. :fn-ref{#3} Butylene glycol was selected over propylene glycol because the latter carries a higher irritation risk for sensitive skin. :fn-ref{#11} :fn-ref{#12}
+Glycerin was retained below 5% to avoid the tacky residue that higher concentrations produce, which would be inconsistent with the light skin feel recommended by formulation experts. :fn-ref{#6} Butylene glycol was selected over propylene glycol because the latter carries a higher irritation risk for sensitive skin. :fn-ref{#7} :fn-ref{#8}
 
 ### Structural and emulsifying agents
 
 These components provide the physical structure of the gel, maintain pH, and keep the hydrophobic fragrance components dispersed in the aqueous phase.
 
-**Thickener selection:** CMC-Na was excluded because its anionic nature risks electrostatic interaction with the positively charged binder protein. :fn-ref{#13} Xanthan gum was considered but rejected because its stringy texture is less suitable for a leave-on product. HEC was selected as the best balance of protein compatibility and skin feel.
+**Thickener selection:** CMC-Na was excluded because its anionic nature risks electrostatic interaction with the positively charged binder protein. :fn-ref{#9} Xanthan gum was considered but rejected because its stringy texture is less suitable for a leave-on product. HEC was selected as the best balance of protein compatibility and skin feel.
 
-**Solubiliser selection:** The terpene esters are hydrophobic and require a solubiliser to remain dispersed in the aqueous gel. CO40 was chosen over the Tween series after evaluating solubilisation efficiency, oxidation stability, and skin tolerance. Tween 80 was specifically avoided due to its susceptibility to autoxidation, which could generate peroxides capable of oxidising the active proteins. :fn-ref{#14}
+**Solubiliser selection:** The terpene esters are hydrophobic and require a solubiliser to remain dispersed in the aqueous gel. CO40 was chosen over the Tween series after evaluating solubilisation efficiency, oxidation stability, and skin tolerance. Tween 80 was specifically avoided due to its susceptibility to autoxidation, which could generate peroxides capable of oxidising the active proteins. :fn-ref{#10}
 
 ### Sensory modifiers
 
 Sensory modifiers improve the user experience and provide soothing benefits to reduce the risk of skin irritation.
 
-A deliberate constraint was the exclusion of terpene-class soothing agents; none of these components are terpenes. The selection prioritises ingredients with established safety profiles and compatibility with the protein actives.
+Although our terpenoid esters are considered to have low irritation potential, it is still possible for them to generate irritating peroxides on exposure to light and oxygen via a free-radical initiated pathway. Moreover, reactive oxygen species generated by these radicals can also oxidize the active proteins and reduce effect. Thus, we incorporated dipotassium glycyrrhizate and niacinamide, strong free-radical scavengers, to capture free radicals and prevent autoxidation of active ingredients in our product.
+
+A deliberate constraint was the exclusion of terpene-class soothing agents; none of these components are terpenes. The selection prioritises ingredients with established safety profiles and compatibility with the active proteins.
 
 ### Fragrances
 
@@ -357,7 +391,7 @@ A deliberate constraint was the exclusion of terpene-class soothing agents; none
 |Geranyl butyrate|Fruity, floral fragrance|0.01%/0.02%|Biosynthesised in engineered E. coli; biodegradable; low irritation potential|
 |Bornyl acetate|Woody, camphoraceous fragrance|0.01%/0.02%|Biosynthesised in engineered E. coli; biodegradable; low irritation potential|
 
-Both fragrances are produced through engineered microbial fermentation rather than petrochemical synthesis or plant extraction. This approach avoids the environmental persistence and bioaccumulation of synthetic fragrance ingredients such as synthetic musks :fn-ref{#15}, and avoids the land, water, and solvent demands of plant extraction :fn-ref{#16}. The fragrance profile was selected based on our public survey, in which floral/fruity (41.0%) and woody (35.2%) scents were the most preferred.
+Both fragrances are produced through engineered microbial fermentation rather than petrochemical synthesis or plant extraction. This approach avoids the environmental persistence and bioaccumulation of synthetic fragrance ingredients such as synthetic musks :fn-ref{#11}, and avoids the land, water, energy, and solvent demands of plant extraction :fn-ref{#12}. The fragrance profile was selected based on our public survey, in which floral/fruity (41.0%) and woody (35.2%) scents were the most preferred.
 
 ::content-components-bilingual-image-panels
 ---
@@ -374,9 +408,9 @@ Because both compounds are hydrophobic, they require solubilisation by CO40. The
 
 ### Preservative
 
-The preservative system was selected to replace conventional phenoxyethanol-based systems: published patch-test data show that the sensory irritation of preservatives depends on the preservative combination and formulation type rather than a fixed ingredient ranking. :fn-ref{#17} The three-component combination is intended to provide broad-spectrum protection at low individual concentrations and to maintain compatibility with the protein actives; both properties remain to be confirmed by *ISO 11930* challenge testing and formulation stability studies.
+The preservative system was selected to replace conventional phenoxyethanol-based systems: published patch-test data show that the sensory irritation of preservatives depends on the preservative combination and formulation type rather than a fixed ingredient ranking. :fn-ref{#13} The three-component combination is intended to provide broad-spectrum protection at low individual concentrations and to maintain compatibility with the protein actives; both properties remain to be confirmed by ISO 11930 challenge testing and formulation stability studies.
 
-Important note on validation: This preservative system has not yet been evaluated through an ISO 11930 challenge test. :fn-ref{#18} We therefore describe its efficacy as anticipated rather than validated. Future work includes challenge testing against standard organisms (*Staphylococcus aureus*, *Escherichia coli*, *Pseudomonas aeruginosa*, *Candida albicans*, *Aspergillus brasiliensis*) to confirm that the system meets preservative efficacy criteria and to provide microbiological evidence supporting determination of the period-after-opening (PAO).
+Important note on validation: This preservative system has not yet been evaluated through an ISO 11930 challenge test. :fn-ref{#14} We therefore describe its efficacy as anticipated rather than validated. Future work includes challenge testing against standard organisms (*Staphylococcus aureus*, *Escherichia coli*, *Pseudomonas aeruginosa*, *Candida albicans*, *Aspergillus brasiliensis*) to confirm that the system meets preservative efficacy criteria and to provide microbiological evidence supporting determination of the period-after-opening (PAO).
 
 ### Cost estimation
 
@@ -400,7 +434,7 @@ Important note on validation: This preservative system has not yet been evaluate
 |Buffer|MES buffer|0.2 g (20 mM)|70 ¥/kg|0.014|0.0021|
 |Active|CGTase enzyme|0.005 g|300 ¥/kg|0.002|0.0003|
 |Active|Binder protein|0.0075 g|380 ¥/kg (self-produced)|0.003|0.00045|
-|Active|PepT<sub>Sh</sub> plug protein|0.0025 g|380 ¥/kg (self-produced)|0.001|0.00015|
+|Active|PepTSh plug protein|0.0025 g|380 ¥/kg (self-produced)|0.001|0.00015|
 |Substrate|Maltodextrin DE 10–20|1 g|6 ¥/kg|0.006|0.0009|
 |Fragrance|Bornyl acetate (BA, self-made)|0.005–0.01 g|≈3,300 ¥/g|16.5–33|2.46–4.93|
 |Fragrance|Geranyl butyrate (GB, self-made)|0.005–0.01 g|≈2,300 ¥/g|11.5–23|1.72–3.43|
@@ -411,17 +445,17 @@ Note: Unit prices are raw-material quotes from Chinese suppliers, excluding proc
 
 #### How we measured the cost of the three proteins
 
-All three proteins are dosed by what they must do, not by weight:
+All three proteins are dosed by their mechanisms with stoichiometry calculation:
 
-- **Precursor binder** — a stoichiometric capture agent (one binder binds one precursor molecule), so its dose follows the measured axillary precursor flux: Cys-Gly-3M3SH is present at 1–22 µM in axillary sweat. :fn-ref{#4} At Mr ≈ 15 kDa, a Kd ≈ 0.5 µM and 90% target capture (≈5× excess), the working dose is 0.15 g/kg. At the self-produced pilot cost of 0.38 ¥/g (40% of OEM), that is 0.057 ¥/kg ≈ 0.003 ¥ per bottle.
+- **Precursor binder** — a stoichiometric capture agent (one binder binds one precursor molecule), so its dose follows the measured axillary precursor flux: Cys-Gly-3M3SH is present at 1–22 µM in axillary sweat. :fn-ref{#15} At Mr ≈ 15 kDa, a Kd ≈ 0.5 µM and 90% target capture (≈5× excess), the working dose is 0.15 g/kg. At the self-produced pilot cost of 0.38 ¥/g (40% of OEM), that is 0.057 ¥/kg ≈ 0.003 ¥ per bottle.
 
-- **Transporter binder** — binds the transporter PepT<sub>Sh</sub>; dosed by transporter stoichiometry at 0.05 g/kg × 0.38 ¥/g = 0.019 ¥/kg ≈ 0.001 ¥ per bottle.
+- **Transporter binder** — binds the Transporter PepTSh; dosed by transporter stoichiometry at 0.05 g/kg × 0.38 ¥/g = 0.019 ¥/kg ≈ 0.001 ¥ per bottle.
 
 - **CGTase** — an enzyme, dosed at 0.01% (0.1 g/kg) at the food-grade mid-price of 300 ¥/kg = 0.03 ¥/kg ≈ 0.002 ¥ per bottle.
 
 #### How we measured the cost of terpenoid esters
 
-Geranyl butyrate and bornyl acetate are produced in two-strain engineered *E. coli* co-cultures, at GC-MS titers of 1.67 mg/L (GB) and 1.17 mg/L (BA). Dividing the ≈3.9 ¥/L fermentation input by those titers gives ≈2,300 ¥/g (GB) and ≈3,300 ¥/g (BA). The lowest effective loading is 0.01–0.02% (0.1–0.2 g/kg): bornyl acetate has an odour threshold of 75 ppb in water :fn-ref{#5} and geranyl butyrate >1 ppm in air :fn-ref{#6}, so 0.01% (100 ppm) already sits ≈1,300× above the BA water-phase threshold and ≥50× above the GB air-phase threshold. At that loading, a self-made fragrance adds ≈¥16.5–33 (BA) / ≈¥11.5–23 (GB) per bottle. We therefore keep lab-made terpenes as mechanism-validation material only; a commercial fragrance module needs either titers 2–3 orders of magnitude higher or food-grade purchased esters.
+Geranyl butyrate and bornyl acetate are produced in two-strain engineered *E. coli* co-cultures, at GC-MS titers of 1.67 mg/L (GB) and 1.17 mg/L (BA). Dividing the ≈3.9 ¥/L fermentation input by those titers gives ≈2,300 ¥/g (GB) and ≈3,300 ¥/g (BA). The lowest effective loading is 0.01–0.02% (0.1–0.2 g/kg): bornyl acetate has an odour threshold of 75 ppb in water :fn-ref{#16} and geranyl butyrate >1 ppm in air :fn-ref{#17}, so 0.01% (100 ppm) already sits ≈1,300× above the BA water-phase threshold and ≥50× above the GB air-phase threshold. At that loading, a self-made fragrance adds ≈¥16.5–33 (BA) / ≈¥11.5–23 (GB) per bottle. We therefore keep lab-made terpenoid esters as mechanism-validation material only; a commercial fragrance module needs either titers 2–3 orders of magnitude higher or food-grade purchased esters.
 
 ## Inclusive Design
 
@@ -429,7 +463,7 @@ Geranyl butyrate and bornyl acetate are produced in two-strain engineered *E. co
 
 Guided by our commitment to inclusivity, we incorporated inclusive design principles into Expelliodor’s packaging to accommodate users with visual impairments or limited grip strength and dexterity, who may face difficulties locating, opening, or handling conventional deodorant packaging.
 
-After analysing Degree Inclusive, we identified several accessible design features that could be adapted for Expelliodor, particularly its enhanced grip placement and Braille instructions. :fn-ref{#7} Building on this inspiration, we developed our own packaging design with additional features to address the diverse needs of our target users.
+After analysing Degree Inclusive, we identified several accessible design features that could be adapted for Expelliodor, particularly its enhanced grip placement and Braille instructions.  :fn-ref{#18} Building on this inspiration, we developed our own packaging design with additional features to address the diverse needs of our target users.
 
 ::content-components-lightbox-image
 ---
@@ -465,7 +499,7 @@ height: 2160
 
 ### Key Value
 
-To make Expelliodor more appealing to young adults, we created two trendy designs: a necklace and a keychain. Through these designs, we hope to make deodorant a natural part of users’ everyday lives, encouraging a more open and accepting attitude towards underarm odour.
+To make Expelliodor more appealing to young adults, we designed 2 special trendy designs: Necklace and Keychain. Through these designs, we hope to make deodorant a natural part of users’ everyday lives, encouraging a more open and accepting attitude towards underarm odor.
 
 **The meaning behind our design:**
 
@@ -527,7 +561,7 @@ Beyond the device, the validation roadmap extends to the formulation and its jou
 
 #### Scale-up
 
-- Switch to the M2 medium (12 g/L tryptone, 24 g/L yeast extract, 26.6 g/L KH₂PO₄ + 8 g/L (NH₄)₂HPO₄ phosphate buffer, 10 g/L glycerol, pH 7.0) in place of LB — on this medium the shake-flask coculture reached 2.40 mg/L bornyl acetate (BA), vs 1.17 mg/L in our LB flask: a ~2× gap from medium richness and phosphate buffering. :fn-ref{#19}
+- Switch to the M2 medium (12 g/L tryptone, 24 g/L yeast extract, 26.6 g/L KH₂PO₄ + 8 g/L (NH₄)₂HPO₄ phosphate buffer, 10 g/L glycerol, pH 7.0) in place of LB — on this medium the shake-flask coculture reached 2.40 mg/L bornyl acetate(BA), vs 1.17 mg/L in our LB flask: a ~2× gap from medium richness and phosphate buffering. :fn-ref{#19}
 
 - Move to 1-L fed-batch with pH control. In a 1-L fed-batch (pH 7.0, ammonia/phosphoric acid, continuous aeration, ~12 h glycerol feeding), Yang et al. (Nat. Commun. 2026) reached 11.50 g/L linalyl acetate and 3.16 g/L geranyl butyrate (GB) — ~3.6× and ~10× above that paper's own shake-flask cocultures, versus our current mg/L-level shake-flask titers; :fn-ref{#19} fed-batch gains of 100–1000× over shake flasks are documented across terpenoid systems (e.g., amorphadiene, 24 mg/L to 27.4 g/L, Martin 2003 to Tsuruta 2009, a ~1100× cumulative gain from strain and process engineering). :fn-ref{#20}
 
@@ -539,9 +573,9 @@ Beyond the device, the validation roadmap extends to the formulation and its jou
 
 #### Sustainable refillable soft-pack
 
-We plan to keep the rigid roll-on bottle and offer refills in a lightweight stand-up pouch (the shampoo / laundry-detergent model): the same bottle, a fraction of the plastic. Our packaging research already lists the soft-pack refill as a future-plan option ([Packaging](#packaging)): the pouch avoids the hundreds-of-thousands-to-a-million RMB mould investment of a second rigid design, cuts plastic per use, and slashes transport weight and carbon; single-material refill packs are already the domestic mainstream in daily chemicals.
+We plan to keep the rigid roll-on bottle and offer refills in a lightweight stand-up pouch (the shampoo / laundry-detergent model): the same bottle, a fraction of the plastic. Our packaging research already lists the soft-pack refill as a future-plan option ([Packaging](#packaging)): the pouch avoids the hundreds-of-thousands-to-a-million RMB mould investment of a second rigid design, cuts plastic per use, and slashes transport weight and carbon emissions; single-material refill packs are already the domestic mainstream in daily chemicals.
 
-The market is moving the same way: refillable systems reduce per-unit packaging material by ~78% across a multi-year lifecycle, and refill pouches use ~85% less plastic by weight than new bottles. Dove's first refillable antiperspirant (2026) pairs a durable case with refills in 97% plant-based packaging. For us, refill also reinforces the accessibility story — the bottle with Braille, tactile cues and the press-to-open lid stays in the user's hand.
+The market is moving the same way: refillable systems reduce per-unit packaging material by ~78% across a multi-year lifecycle, and refill pouches use ~85% less plastic by weight than new bottles. Dove's first refillable antiperspirant (2026) pairs a durable case with refills in 97% plant-based packaging. For us, refill also reinforces the accessibility story — the bottle with braille, tactile cues and the press-to-open lid stays in the user's hand.
 
 What must be validated before committing: PE-film barrier performance against our protein formulation (oxygen and leachables), protein activity inside a thin flexible film over time, refill hygiene (pouch-to-bottle workflow), and shelf perception in China, where refills sell best when rigid and soft packs sit side by side. Next steps: screen barrier films, run a protein-in-pouch stability study with the same activity assay as in the validation section, and pilot the refill workflow inside the KleanK user cohort. We will also offer a 5% discount on refill pouches to encourage packaging reuse and drive adoption of the refill hardware.
 
@@ -553,13 +587,13 @@ Our formula is largely bio-based — the protein actives, the self-made terpenoi
 
 **Why we do not do it today:** bio-based grades cost several times more than the petrochemical route and are supplied by few vendors with large minimum orders — unrealistic at lab scale, but the first upgrade once we move to commercial formulation.
 
-**Screen plant-based solubilisers to replace CO40 (medium-term).** CO40 is the hardest to replace: PEG-type solubilisers are ethoxylated from petroleum-derived ethylene oxide, are rated persistent by OECD and are flagged for ethylene-oxide / 1,4-dioxane residues (PEG-40 profile :fn-ref{#26}; EWG Skin Deep :fn-ref{#27}). Candidates: polyglyceryl esters and sucrose esters — plant-based, non-ethoxylated and more readily biodegradable.
+**Screen plant-based solubilisers to replace CO40 (medium-term).** CO40 is the hardest to replace: PEG-type solubilisers are ethoxylated from petroleum-derived ethylene oxide, are rated persistent by OECD and are flagged for ethylene-oxide / 1,4-dioxane residues (PEG-40 profile  :fn-ref{#26} ;  EWG Skin Deep :fn-ref{#27}). Candidates: polyglyceryl esters and sucrose esters — plant-based, non-ethoxylated and more readily biodegradable.
 
-**Why we do not do it today:** These natural solubilisers may not dissolve our hydrophobic terpenoid esters as efficiently as PEG-40; changing the solubiliser alters fragrance loading, protein stability and skin feel, so the whole formulation would need re-validation (activity retention, cloud point, shelf stability, sensory) — a full reformulation cycle, not a swap.
+**Why we do not do it today:** these natural solubilisers may not dissolve our hydrophobic terpenoid esters as efficiently as PEG-40; changing the solubiliser alters fragrance loading, protein stability and skin feel, so the whole formulation would need re-validation (activity retention, cloud point, shelf stability, sensory) — a full reformulation cycle, not a swap.
 
-**Re-evaluate the preservative system (long-term).** p-Hydroxyacetophenone and ethylhexylglycerin could eventually give way to a milder, more natural preservation strategy (e.g. sorbic/benzoic salts or plant-derived actives) — but only after passing the ISO 11930 preservative-efficacy challenge and protein-compatibility testing already in our validation roadmap.
+**Re-evaluate the preservative system (long-term).** p-hydroxyacetophenone and ethylhexylglycerin could eventually give way to a milder, more natural preservation strategy (e.g. sorbic/benzoic salts or plant-derived actives) — but only after passing the ISO 11930 preservative-efficacy challenge and protein-compatibility testing already in our validation roadmap.
 
-**Why we do not do it today:** A weaker system risks microbial growth and protein degradation; the current trio was chosen for mildness and low yellowing, and any change must be re-validated end to end before human contact.
+**Why we do not do it today:** a weaker system risks microbial growth and protein degradation; the current trio was chosen for mildness and low yellowing, and any change must be re-validated end to end before human contact.
 
 ### User feedback at scale
 
@@ -585,64 +619,62 @@ Our roll-on has honest limitations, and how it is used decides how well it works
 
 - **Sensitive skin** — patch-test on the inner arm first and stop use if irritation occurs; the soothing system (panthenol, niacinamide, allantoin) is there to help;
 
-- **Tone** — instructions are written as supportive, non-stigmatising self-care, never shame-based messaging.
+- **Tone** — instructions are written as supportive, non-stigmatizing self-care, never shame-based messaging.
 
-Accessibility: we will extend our inclusive packaging (press-to-open hinged lid, Braille “Deodorant” label, tactile opening cues, large lettering, raised grip) to the instructions themselves — a Braille instruction leaflet, plus a tactile-marked QR code linking to audio and large-print digital versions. This is also forward-looking regulation: China's 2023 Law on Building a Barrier-Free Environment encourages accessible-format labels and instructions for consumer goods, South Korea's MFDS is drafting Braille-label guidelines for cosmetics, and *ISO 19809* sets the accessible-design standard for packaging information.
+Accessibility: we will extend our inclusive packaging (press-to-open hinged lid, braille “Deodorant” label, tactile opening cues, large lettering, raised grip) to the instructions themselves — a Braille instruction leaflet, plus a tactile-marked QR code linking to audio and large-print digital versions. This is also forward-looking regulation: China's 2023 Law on Building a Barrier-Free Environment encourages accessible-format labels and instructions for consumer goods, South Korea's MFDS is drafting braille-label guidelines for cosmetics, and ISO 19809 sets the accessible-design standard for packaging information.
 
-## Reference
+## References
 
 1. Commissariat à l'énergie atomique et aux énergies alternatives (CEA). Instability of proteins in the presence of plastics [Internet]. IRAMIS. 2024 May 6 [cited 2026 Oct 10]. Available from: https://iramis.cea.fr/en/2024/05/instability-of-proteins-in-the-presence-of-plastics/
 
-2. Lim CH, Rasti B, Sulistyo J, Hamid MA. Comprehensive study on transglycosylation of CGTase from various sources. *Heliyon*. 2021;7(2):e06305. doi:10.1016/j.heliyon.2021.e06305.
+2. Unilever. The world's first deodorant designed for people with disabilities [Internet]. 2021 Apr 27 [cited 2026 Oct 10]. Available from: https://www.unilever.com/news/news-search/2021/the-worlds-first-deodorant-designed-for-people-with-disabilities/
 
-3. Wells FV. Glycerin as a constituent of cosmetics and toilet preparations. *J Soc Cosmet Chem*. 1958;9(1):19-25. Available from: https://library.scconline.org/is-cacheable/1708620049291/Glycerin-Constituent-Cosmetics-Toilet-Preparations.pdf
+3. Degree. Degree Inclusive — advertising film [Internet]. YouTube. 2021 [cited 2026 Oct 10]. Available from: https://www.youtube.com/watch?v=dUecdeQw_dk
 
-4. Troccaz M, Borchard G, Vuilleumier C, Raviot-Derrien S, Niclass Y, Beccucci S, et al. Gender-specific differences between the concentrations of nonvolatile (R)/(S)-3-methyl-3-sulfanylhexan-1-ol and (R)/(S)-3-hydroxy-3-methyl-hexanoic acid odor precursors in axillary secretions. *Chem Senses*. 2009;34(3):203-210. doi:10.1093/chemse/bjn076.
+4. Degree. Degree Inclusive — advertising film with audio description [Internet]. YouTube. 2021 [cited 2026 Oct 10]. Available from: https://www.youtube.com/watch?v=mhh9Vx_W350
 
-5. Leffingwell & Associates. Odor & flavor detection thresholds in water (in parts per billion) [Internet]. Winter Haven (FL): Leffingwell & Associates; [cited 2026 Oct 18]. Available from: http://www.leffingwell.com/odorthre.htm
+5. Lim CH, Rasti B, Sulistyo J, Hamid MA. Comprehensive study on transglycosylation of CGTase from various sources. *Heliyon*. 2021;7(2):e06305.
 
-6. van Gemert LJ. Odour thresholds: compilations of odour threshold values in air, water and other media. 2nd ed. Utrecht: Oliemans Punter & Partners; 2011.
+6. Wells FV. Glycerin as a constituent of cosmetics and toilet preparations. *J Soc Cosmet Chem*. 1957. Available from: https://library.scconline.org/is-cacheable/1708620049291/Glycerin-Constituent-Cosmetics-Toilet-Preparations.pdf
 
-7. VML. Degree Inclusive [Internet]. [date unknown] [cited 2026 Oct 21]. Available from: https://www.vml.com/work/degree-inclusive
+7. Jacob SE, Scheman A, McGowan MA. Propylene glycol. *Dermatitis*. 2018;29(1):3-5.
 
-8. Unilever. The world's first deodorant designed for people with disabilities [Internet]. 2021 Apr 27 [cited 2026 Oct 10]. Available from: https://www.unilever.com/news/news-search/2021/the-worlds-first-deodorant-designed-for-people-with-disabilities/
+8. Liebert MA. Final report on the safety assessment of butylene glycol, hexylene glycol, ethoxydiglycol, and dipropylene glycol. *J Am Coll Toxicol*. 1985;4(3):223-248.
 
-9. Degree. Degree Inclusive — advertising film [Internet]. YouTube. 2021 [cited 2026 Oct 10]. Available from: https://www.youtube.com/watch?v=dUecdeQw_dk
+9. Xiong W, Ren C, Xu X, Li J, Wang L, Li B. Thermally induced gelation behavior and fractal analysis of ovalbumin–carboxymethylcellulose electrostatic complexes. *Food Hydrocoll*. 2019;91:214-223.
 
-10. Degree. Degree Inclusive — advertising film with audio description [Internet]. YouTube. 2021 [cited 2026 Oct 10]. Available from: https://www.youtube.com/watch?v=mhh9Vx_W350
+10. Schröter A, Koulov AV, Huwyler J, Mahler HC, Jahn M. 4-Hydroxynonenal is an oxidative degradation product of polysorbate 80. *J Pharm Sci*. 2021;110(6):2524-2530.
 
-11. Jacob SE, Scheman A, McGowan MA. Propylene glycol. *Dermatitis*. 2018;29(1):3-5.
+11. Tanabe S. Synthetic musks—arising new environmental menace? *Mar Pollut Bull*. 2005;50(10):1025-1026.
 
-12. Final report on the safety assessment of butylene glycol, hexylene glycol, ethoxydiglycol, and dipropylene glycol. *J Am Coll Toxicol*. 1985;4(5):223-248. doi:10.3109/10915818509078692.
+12. Chemat F, Abert Vian M, Cravotto G. Green extraction of natural products: concept and principles. *Int J Mol Sci*. 2012;13(7):8615-8627.
 
-13. Xiong W, Ren C, Xu X, Li J, Wang L, Li B. Thermally induced gelation behavior and fractal analysis of ovalbumin–carboxymethylcellulose electrostatic complexes. *Food Hydrocoll*. 2019;91:214-223.
+13. Lee E, An S, Choi D, Moon S, Chang I. Comparison of objective and sensory skin irritations of several cosmetic preservatives. *Contact Dermatitis*. 2007;56(3):131-136.
 
-14. Schröter A, Koulov AV, Huwyler J, Mahler HC, Jahn M. 4-Hydroxynonenal is an oxidative degradation product of polysorbate 80. *J Pharm Sci*. 2021;110(6):2524-2530.
+14. International Organization for Standardization. ISO 11930:2019 *Cosmetics — Microbiology — Evaluation of the antimicrobial protection of a cosmetic product*. Geneva: ISO; 2019.
 
-15. Tanabe S. Synthetic musks—arising new environmental menace? *Mar Pollut Bull*. 2005;50(10):1025-1026.
+15. Troccaz M, Borchard G, Vuilleumier C, et al. Gender-specific differences between the concentrations of nonvolatile (R)/(S)-3-methyl-3-sulfanylhexan-1-ol and (R)/(S)-3-hydroxy-3-methyl-hexanoic acid odor precursors in axillary secretions. *Chem Senses*. 2009;34(3):203-210.
 
-16. Chemat F, Abert Vian M, Cravotto G. Green extraction of natural products: concept and principles. *Int J Mol Sci*. 2012;13(7):8615-8627.
+16. Leffingwell & Associates. Odor & flavor detection thresholds in water (in parts per billion) [Internet]. Winter Haven (FL): Leffingwell & Associates; [cited 2026 Oct 18]. Available from: http://www.leffingwell.com/odorthre.htm
 
-17. Lee E, An S, Choi D, Moon S, Chang I. Comparison of objective and sensory skin irritations of several cosmetic preservatives. *Contact Dermatitis*. 2007;56(3):131-136.
+17. van Gemert LJ. Odour thresholds: compilations of odour threshold values in air, water and other media. 2nd ed. Utrecht: Oliemans Punter & Partners; 2011.
 
-18. International Organization for Standardization. ISO 11930:2019. Cosmetics — Microbiology — Evaluation of the antimicrobial protection of a cosmetic product. Geneva: ISO; 2019.
+18. VML. (2021). *Degree Inclusive*. [https://www.vml.com/work/degree-inclusive](https://www.vml.com/work/degree-inclusive)
 
-19. Yang D, Liang H, Li X, Wang B, Zhang C, Yuan M, et al. A microbial platform for selective biosynthesis of monoterpene esters. *Nat Commun*. 2026;17:4851. doi:10.1038/s41467-026-71681-9.
+19. Yang D, Liang H, et al. A microbial platform for selective biosynthesis of monoterpene esters. *Nat Commun*. 2026;17(1):4851. doi:10.1038/s41467-026-71681-9.
 
-20. Tsuruta H, Paddon CJ, Eng D, Lenihan JR, Horning T, Anthony LC, et al. High-level production of amorpha-4,11-diene, a precursor of the antimalarial agent artemisinin, in *Escherichia coli*. *PLoS One*. 2009;4(2):e4489. doi:10.1371/journal.pone.0004489.
+20. Tsuruta H, Paddon CJ, Eng D, Lenihan JR, Horning T, Anthony LC, Regentin R, Keasling JD, Renninger NS, Newman JD. High-level production of amorpha-4,11-diene, a precursor of the antimalarial agent artemisinin, in *Escherichia coli*. *PLoS One*. 2009;4(2):e4489. doi:10.1371/journal.pone.0004489.
 
-21. Wang X, Zhang X, Zhang J, Xiao L, Zhou Y, Zhang Y, et al. Genetic and bioprocess engineering for the selective and high-level production of geranyl acetate in *Escherichia coli*. *ACS Sustain Chem Eng*. 2022;10(9):2881–2889. doi:10.1021/acssuschemeng.1c07336.
+21. Wang X, Zhang X, et al. Genetic and bioprocess engineering for the selective and high-level production of geranyl acetate in *Escherichia coli*. *ACS Sustainable Chem. Eng.* 2022;10(9):2881–2889. doi:10.1021/acssuschemeng.1c07336.
 
 22. Chacón MG, Marriott A, Kendrick EG, Styles MQ, Leak DJ. Esterification of geraniol as a strategy for increasing product titre and specificity in engineered *Escherichia coli*. *Microb Cell Fact*. 2019;18:105. doi:10.1186/s12934-019-1130-0.
 
-23. US EPA. Green Chemistry Challenge: 2020 Greener Synthetic Pathways Award — Genomatica bio-1,3-BG (Brontide™) [Internet]. [cited 2026 Oct 21]. Available from: https://19january2025snapshot.epa.gov/greenchemistry/green-chemistry-challenge-2020-greener-synthetic-pathways-award
+23. US EPA. Green Chemistry Challenge: 2020 Greener Synthetic Pathways Award — Genomatica bio-1,3-BG (Brontide™) [Internet]. Available from: https://19january2025snapshot.epa.gov/greenchemistry/green-chemistry-challenge-2020-greener-synthetic-pathways-award
 
-24. Juventude. Is butylene glycol natural or synthetic? Where it comes from [Internet]. [cited 2026 Oct 21]. Available from: https://www.juventudeskincare.com/blogs/founders-journal/is-butylene-glycol-natural-or-synthetic-where-it-comes-from
+24. Juventude. Is butylene glycol natural or synthetic? Where it comes from [Internet]. Available from: https://www.juventudeskincare.com/blogs/founders-journal/is-butylene-glycol-natural-or-synthetic-where-it-comes-from
 
-25. SEQENS. AdvensProtect Green Range — AdvensProtect 6 Green: 100% biobased 1,2-hexanediol [Internet]. [cited 2026 Oct 21]. Available from: https://www.seqens.com/personal-care/advensprotect-green-range/
+25. SEQENS. AdvensProtect Green Range — AdvensProtect 6 Green: 100% biobased 1,2-hexanediol [Internet]. Available from: https://www.seqens.com/personal-care/advensprotect-green-range/
 
-26. RAU Cosmetics. PEG-40 hydrogenated castor oil — ingredient profile [Internet]. [cited 2026 Oct 21]. Available from: https://rau.hk/peg-40
+26. RAU Cosmetics. PEG-40 hydrogenated castor oil — ingredient profile [Internet]. Available from: https://rau.hk/peg-40
 
-27. EWG. PEG-40 hydrogenated castor oil — EWG Skin Deep® ingredient profile [Internet]. [cited 2026 Oct 21]. Available from: https://www.ewg.org/skindeep/ingredients/704597-peg-40-hydrogenated-castor-oil/
-
-> （注：部分内容由豆包工作 AI 生成）
+27. EWG. PEG-40 hydrogenated castor oil — EWG Skin Deep® ingredient profile [Internet]. Available from: https://www.ewg.org/skindeep/ingredients/704597-peg-40-hydrogenated-castor-oil/
