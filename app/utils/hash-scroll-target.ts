@@ -1,3 +1,20 @@
+export function focusHashTarget(target: HTMLElement) {
+    const needsTemporaryTabIndex = !target.matches(
+        "a[href], button, input, select, textarea, [tabindex]",
+    );
+
+    if (needsTemporaryTabIndex) {
+        target.setAttribute("tabindex", "-1");
+        target.addEventListener(
+            "blur",
+            () => target.removeAttribute("tabindex"),
+            { once: true },
+        );
+    }
+
+    target.focus({ preventScroll: true });
+}
+
 export function waitForHashTarget(
     hash: string,
     isCurrent: () => boolean,

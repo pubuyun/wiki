@@ -1,6 +1,6 @@
 import type { RouterConfig } from "@nuxt/schema";
 import { nextTick } from "vue";
-import { waitForHashTarget } from "./utils/hash-scroll-target";
+import { focusHashTarget, waitForHashTarget } from "./utils/hash-scroll-target";
 
 export default <RouterConfig>{
     async scrollBehavior(to, from, savedPosition) {
@@ -41,9 +41,7 @@ export default <RouterConfig>{
             // Native anchor scrolling respects CSS scroll-padding and
             // scroll-margin without a second coordinate correction.
             target.scrollIntoView({ behavior: "instant", block: "start" });
-            if (to.path !== from.path && /^#(?:fnref|ref)-/.test(to.hash)) {
-                target.focus({ preventScroll: true });
-            }
+            focusHashTarget(target);
             return false;
         }
 

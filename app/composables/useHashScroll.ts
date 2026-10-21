@@ -1,11 +1,7 @@
 export function useHashScroll() {
     const router = useRouter();
 
-    function scrollToHash(
-        event: MouseEvent,
-        hashOrId?: string | null,
-        options: { focus?: boolean } = { focus: true },
-    ) {
+    function scrollToHash(event: MouseEvent, hashOrId?: string | null) {
         if (
             event.button !== 0 ||
             event.ctrlKey ||
@@ -14,53 +10,56 @@ export function useHashScroll() {
             event.altKey
         )
             return false;
-        const id = normalizeHashId(hashOrId);
-        if (!id) return false;
+        const destination = resolveHashLocation(hashOrId);
+        if (!destination) return false;
 
-        const target = document.getElementById(id);
+        const target = document.getElementById(destination.hash.slice(1));
         if (!target) return false;
 
+        // NuxtLink/RouterLink runs its own navigation handler before fallthrough
+        // click listeners. Do not start a second, competing navigation.
+        if (event.defaultPrevented) return true;
         event.preventDefault();
 
-        // Let the router preserve the current entry's scroll position and
-        // perform the anchor scroll once through scrollBehavior.
-        void router
-            .push({ hash: `#${id}`, query: router.currentRoute.value.query })
-            .then(() => {
-                if (options.focus && target.isConnected) focusTarget(target);
-            });
+        // Plain anchors use the same destination and scrollBehavior as NuxtLink.
+        // Keep the destination's query, including a reference's citation source.
+        void router.push(destination.fullPath);
 
         return true;
     }
 
-    return { scrollToHash };
-}
+    function resolveHashLocation(hashOrId?: string | null) {
+        const value = hashOrId?.trim();
+        if (!value) return undefined;
 
-function normalizeHashId(hashOrId?: string | null) {
-    if (!hashOrId) return undefined;
-
-    const value = hashOrId.trim();
-    if (!value) return undefined;
-
-    if (value.startsWith("#")) {
-        return decodeHash(value.slice(1));
-    }
-
-    try {
-        const url = new URL(value, window.location.href);
-        if (
-            url.origin === window.location.origin &&
-            url.pathname === window.location.pathname &&
-            url.search === window.location.search &&
-            url.hash
-        ) {
-            return decodeHash(url.hash.slice(1));
+        if (!value.includes("#") || value.startsWith("#")) {
+            const id = decodeHash(value.replace(/^#/, ""));
+            if (!id) return undefined;
+            return router.resolve({
+                hash: `#${id}`,
+                query: router.currentRoute.value.query,
+            });
         }
-    } catch {
-        return value;
+
+        let url: URL;
+        try {
+            url = new URL(value, window.location.href);
+        } catch {
+            return undefined;
+        }
+        if (
+            url.origin !== window.location.origin ||
+            url.pathname !== window.location.pathname ||
+            !url.hash
+        )
+            return undefined;
+
+        return router.resolve(
+            `${router.currentRoute.value.path}${url.search}${url.hash}`,
+        );
     }
 
-    return value.includes("#") ? undefined : value;
+    return { scrollToHash };
 }
 
 function decodeHash(value: string) {
@@ -69,21 +68,4 @@ function decodeHash(value: string) {
     } catch {
         return value;
     }
-}
-
-function focusTarget(target: HTMLElement) {
-    const needsTemporaryTabIndex = !target.matches(
-        "a[href], button, input, select, textarea, [tabindex]",
-    );
-
-    if (needsTemporaryTabIndex) {
-        target.setAttribute("tabindex", "-1");
-        target.addEventListener(
-            "blur",
-            () => target.removeAttribute("tabindex"),
-            { once: true },
-        );
-    }
-
-    target.focus({ preventScroll: true });
 }

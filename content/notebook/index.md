@@ -8,4 +8,4 @@ bannerHeight: 1232
 bannerMobilePosition: 50% 55%
 ---
 
-:iframe{loading="lazy" src="https://static.igem.wiki/teams/6133/wiki/wetlab/gb-scie-notebook.pdf" title="GB SCIE Notebook" width="100%" style="height: 90vh; border: 0;"}
+:iframe{loading="lazy" src="https://static.igem.wiki/teams/6133/wiki/wetlab/gb-scie-26-notebook.pdf" title="GB SCIE Notebook" width="100%" style="height: 90vh; border: 0;"}

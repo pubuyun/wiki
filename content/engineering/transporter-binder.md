@@ -44,7 +44,7 @@ Ellman’s assay was then performed to evaluate the effects of the five transpor
 ::content-components-lightbox-panels
 ---
 src:
-  - https://static.igem.wiki/teams/6133/wiki/wetlab/engineering/engineering-transporter-binder-fig13a.avif
+  - https://static.igem.wiki/teams/6133/wiki/wetlab/engineering/engineering-transporter-binder-fig13a-updated.avif
   - https://static.igem.wiki/teams/6133/wiki/wetlab/engineering/engineering-transporter-binder-fig13b.avif
 alt:
   - "Gel lanes show soluble expression of all five transporter binders, alongside pellet and purified fractions."

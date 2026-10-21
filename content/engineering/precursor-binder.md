@@ -57,9 +57,9 @@ Nine binder candidates (BC1, BC2, BC6, BR5, BC7, BC11, BR7, BR8, and BR10) were 
 ::content-components-lightbox-panels
 ---
 src:
-  - https://static.igem.wiki/teams/6133/wiki/wetlab/engineering/engineering-precursor-binder-fig5a-1.avif
-  - https://static.igem.wiki/teams/6133/wiki/wetlab/engineering/engineering-precursor-binder-fig5a-2.avif
-  - https://static.igem.wiki/teams/6133/wiki/wetlab/engineering/engineering-precursor-binder-fig5a-3.avif
+  - https://static.igem.wiki/teams/6133/wiki/wetlab/engineering/engineering-precursor-binder-fig5a-1-updated.avif
+  - https://static.igem.wiki/teams/6133/wiki/wetlab/engineering/engineering-precursor-binder-fig5a-2-updated.avif
+  - https://static.igem.wiki/teams/6133/wiki/wetlab/engineering/engineering-precursor-binder-fig5a-3-updated.avif
 alt:
   - "SDS-PAGE of precursor binder expression, with yellow arrows marking candidate bands."
   - "Gel panels compare soluble and pellet fractions of precursor binders."
@@ -75,8 +75,8 @@ autoLabels: false
 ::content-components-lightbox-panels
 ---
 src:
-  - https://static.igem.wiki/teams/6133/wiki/wetlab/engineering/engineering-precursor-binder-fig5a-4.avif
-  - https://static.igem.wiki/teams/6133/wiki/wetlab/engineering/engineering-precursor-binder-fig5a-5.avif
+  - https://static.igem.wiki/teams/6133/wiki/wetlab/engineering/engineering-precursor-binder-fig5a-4-updated.avif
+  - https://static.igem.wiki/teams/6133/wiki/wetlab/engineering/engineering-precursor-binder-fig5a-5-updated.avif
 alt:
   - "Gel panels show soluble, pellet, and imidazole-eluted fractions of precursor binders."
   - "Gel panels compare precursor binder expression and purified fractions."

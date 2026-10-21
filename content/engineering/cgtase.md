@@ -73,7 +73,7 @@ The results (Fig. 9b) showed that thiol concentrations in the mixtures treated w
 ::content-components-lightbox-panels
 ---
 src:
-  - https://static.igem.wiki/teams/6133/wiki/wetlab/engineering/engineering-cgtase-fig9a.avif
+  - https://static.igem.wiki/teams/6133/wiki/wetlab/engineering/engineering-cgtase-fig9a-updated.avif
   - https://static.igem.wiki/teams/6133/wiki/wetlab/engineering/engineering-cgtase-fig9b.avif
 alt:
   - "Gel lanes compare CGTase variants, soluble and pellet fractions, and purified proteins; arrows mark bands near 78 kDa."
@@ -128,7 +128,7 @@ Following heat treatment, visible white precipitates were observed in the wild-t
 ::content-components-lightbox-panels
 ---
 src:
-  - https://static.igem.wiki/teams/6133/wiki/wetlab/engineering/engineering-cgtase-fig11a.avif
+  - https://static.igem.wiki/teams/6133/wiki/wetlab/engineering/engineering-cgtase-fig11a-updated.avif
   - https://static.igem.wiki/teams/6133/wiki/wetlab/engineering/engineering-cgtase-fig11b.avif
 alt:
   - "SDS-PAGE shows expression of redesigned KR and WR CGTase variants in soluble and pellet fractions."

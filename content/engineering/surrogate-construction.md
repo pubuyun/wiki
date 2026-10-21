@@ -38,14 +38,14 @@ The positive results of colony PCR (Fig. 2) and sequencing verified the successf
 ::content-components-lightbox-image
 ---
 src:
-  - https://static.igem.wiki/teams/6133/wiki/wetlab/engineering/engineering-surrogate-construction-fig2.avif
+  - https://static.igem.wiki/teams/6133/wiki/wetlab/engineering/engineering-surrogate-construction-fig2-updated.avif
 alt:
   - "Colony PCR gels show the expected 3462 bp insert and an additional approximately 250 bp promoter-region product."
 caption: "Fig. 2 | Colony PCR of protein coding fragment for PepT<sub>Sh</sub>."
 imageBackground: "#ffffff"
 preserveFigureNumber: true
-width: 1110
-height: 950
+width: 945
+height: 804
 ---
 
 ::
@@ -61,7 +61,7 @@ The results supported the ability of our engineered *E. coli* BL21(DE3) strain t
 ::content-components-lightbox-panels
 ---
 src:
-  - https://static.igem.wiki/teams/6133/wiki/wetlab/engineering/engineering-surrogate-construction-fig3a.avif
+  - https://static.igem.wiki/teams/6133/wiki/wetlab/engineering/engineering-surrogate-construction-fig3a-updated.avif
   - https://static.igem.wiki/teams/6133/wiki/wetlab/engineering/engineering-surrogate-construction-fig3b.avif
 alt:
   - "SDS-PAGE compares soluble and pellet fractions of PepTSh-expressing cells with untransformed BL21(DE3)."

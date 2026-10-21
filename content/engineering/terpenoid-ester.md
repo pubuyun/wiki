@@ -40,14 +40,14 @@ The DNA fragments were synthesized by CoWin Biotech and assembled into pW1-t86Ag
 ::content-components-lightbox-image
 ---
 src:
-  - https://static.igem.wiki/teams/6133/wiki/wetlab/engineering/engineering-terpenoid-ester-fig15.avif
+  - https://static.igem.wiki/teams/6133/wiki/wetlab/engineering/engineering-terpenoid-ester-fig15-updated.avif
 alt:
   - "Colony PCR gel shows products labeled 3899 bp and 3324 bp for the two bornyl acetate pathway constructs."
 caption: "Fig. 15 | Colony PCR of pW1-t86AgGPPS2-DiBPPS-EcNudJ and pW1-LiAAT4-CaBACT in DH5α."
 imageBackground: "#ffffff"
 preserveFigureNumber: true
-width: 1109
-height: 1280
+width: 669
+height: 746
 ---
 
 ::
@@ -118,14 +118,14 @@ A 1:1 co-culture system consisting of the geraniol-producing strain and the este
 ::content-components-lightbox-image
 ---
 src:
-  - https://static.igem.wiki/teams/6133/wiki/wetlab/engineering/engineering-terpenoid-ester-fig18.avif
+  - https://static.igem.wiki/teams/6133/wiki/wetlab/engineering/engineering-terpenoid-ester-fig18-updated.avif
 alt:
   - "Colony PCR gel shows the pW1-FaAAT2-I303G-CaBACT product labeled 3455 bp."
 caption: "Fig. 18 | Colony PCR result of *E. coli* DH5α harboring pW1-FaAAT2-I303G-CaBACT."
 imageBackground: "#ffffff"
 preserveFigureNumber: true
-width: 882
-height: 1280
+width: 556
+height: 772
 ---
 
 ::

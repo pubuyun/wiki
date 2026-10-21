@@ -53,11 +53,7 @@ caption: Fig. 1 | **Core values guiding our synthetic biology education**
 
 ## Overview
 
-### SynBio education activities matrix
-
 In total, we carried out **19 educational activities**, ranging from traditional lectures and workshops to innovative forms of entertainment and performing arts, as well as interactive seminars, fairs, and online and offline communities that allowed us to maintain ongoing engagement with our target audiences. To further expand our outreach, we also published a variety of educational content on social media, including long-form videos, short videos, and infographics.
-
-Explore our SynBio education activities using the interactive matrix at the top of this page!
 
 ### Teaching Framework
 
@@ -281,6 +277,8 @@ title: Documentation
 
 ### Protein Design Lecture
 
+We introduced rational and AI-assisted protein design using published case studies and examples from our own project. The lecture explored how researchers use protein structures to guide mutations and develop new designs through an iterative process of testing and refinement.
+
 #### Target
 
 During the after-class discussion following our SynBio Intro Lecture in Nanning No.3 High School, several students approached us to ask about our project. As we introduced it, they became particularly interested in the protein-engineering workflow and expressed that they wished to learn more about the methodologies used to design proteins in real-world SynBio research. Feedback collected through sticky notes also showed the same expectations. In response, we designed a lecture focused on protein design.
@@ -387,7 +385,7 @@ layout: grid
 
 To support their continued exploration, we created an [Online Chat Group](#online-chat-group) where we shared additional SynBio resources and encouraged further discussion. One student later had an in-depth conversation with us about cultivated meat, while another reached out for help with molecular dynamics simulations.
 
-Students' interest in the SynBio industry also inspired us to organise a follow-up lecture on [Online SynBio Market Analysis](#online-synbio-market-and-career-analysis-lecture), giving them more information to explore possible university majors and career paths.
+Students' interest in the SynBio industry also inspired us to organise a follow-up lecture on [SynBio Market Analysis](#synbio-market-and-career-analysis-lecture), giving them more information to explore possible university majors and career paths.
 
 ::content-components-education-impact-radar
 ---
@@ -427,7 +425,7 @@ title: Documentation
 :content-components-pdf-embed{src="https://static.igem.wiki/teams/6133/wiki/hp/education/education-index-protein-design-slides-english-version.pdf" title="Protein Design Slides (English Version)"}
 ::
 
-### Online SynBio Market And Career Analysis Lecture
+### SynBio Market And Career Analysis Lecture
 
 This online session introduced students to the synthetic biology industry and its career opportunities. We explored different career paths and how scientific research can be turned into commercial products, helping students better understand the field before choosing their future studies.
 
@@ -1527,8 +1525,6 @@ title: SynBio Collaboration Fair — Before and after
 
 ## Seminar
 
-Overview
-
 ### SynBio-vocab Learning Seminar
 
 At Xiang'an Community in Shenzhen, we organised a SynBio Vocabulary Learning Seminar for local families. Participants shared their challenges and strategies in learning scientific English, while our Biology Vocabulary Booklet introduced a different approach to understanding scientific terminology. Through explanations of word roots and suffixes, biological examples and short quizzes, participants explored how language learning could support their understanding of SynBio.
@@ -1635,11 +1631,11 @@ fixed:
 impact:
   Knowledge of synbio:
     - 1.5
-    - 3.2
+    - 2.5
     - "Participants learnt how scientific word roots and suffixes connect to synbio terms, and can recognise the pattern behind biological vocabulary."
   Interest in synbio:
     - 3.5
-    - 3.3
+    - 3.7
     - "Participants realised the practical value of synbio scientific English, and became more willing to keep exploring related content."
   Engagement with synbio:
     - 1.5
@@ -1660,9 +1656,9 @@ title: Documentation
 
 ## Entertainment
 
-Overview
-
 ### Bacterial-Fungi Clay Kit
+
+We created a clay kit for building bacterial and fungal cell models. The kit also included microbial identity cards and instruction booklets introducing microbial cell structures, their functions and the everyday applications of these microorganisms.
 
 #### Target
 
@@ -1812,6 +1808,8 @@ title: Documentation
 
 ### Fuse Beads
 
+We published free, downloadable fuse bead patterns featuring different microorganisms, allowing people to explore SynBio through a creative activity at home. Each design was accompanied by brief notes highlighting key cellular structures, their roles and how these microorganisms are used in everyday life.
+
 #### Target
 
 We chose fuse bead art, a craft that has become increasingly popular among students and young adults on Chinese social media in recent years. As young people are generally active on social media and play an important role in spreading online trends, we hoped to use this popular craft to introduce basic SynBio concepts and reach a wider audience through online platforms.
@@ -1916,7 +1914,7 @@ title: Documentation
 
 ### Lab-Themed Murder Mystery Game
 
-Students first gained hands-on experience with PCR and gel electrophoresis before taking part in a lab-themed Jubensha centred on a failed experiment. By analysing gel images, reagent records and PCR settings, they worked together to uncover the cause of the PCR failure, applying their laboratory knowledge through collaborative problem-solving and evidence-based reasoning.
+Students took part in a lab-themed Jubensha (murder mystery game) centred on a failed PCR experiment. By analysing gel images, reagent records and PCR settings, they worked together to identify the cause of the failure, applying their laboratory knowledge through evidence-based reasoning and collaborative problem-solving.
 
 #### Target
 
@@ -2524,6 +2522,14 @@ title: Infographics — Before and after
 
 ## Conclusion
 
+Guided by our four core values—**Adaptive, Reflective, Mutual Learning and Creative**—and supported by the **TFMFR teaching framework** and **Edu Target Profile Radar**, we have gradually shaped our Education journey through continuous exploration, practice and reflection.
+
+Throughout this journey, our education has always centred on the **people** we hoped to reach. By continuously adapting our teaching methods to different audiences, we engaged people across a wide range of **ages and backgrounds**. From clay modelling kits for young children and strawberry DNA extraction workshops for primary and middle school students, to protein design and market analysis lectures for curious high school students, we explored different ways to make SynBio accessible. We also drew inspiration from activities popular among young people, such as Jubensha and fuse bead art, while organising scientific vocabulary learning seminars for adults who actively engaged in local community activities.
+
+[Explore activities and related age groups.](#education-age-timeline)
+
+At the same time, we continuously expanded the **geographical reach** of our education. Starting from our iGEM Club at SCIE, we brought SynBio education into nearby communities through SynBio Vocabulary Learning Seminar. Our outreach then extended across Shenzhen, including introductory SynBio workshops at Nanshan Foreign Language Primary School and Middle School, and eventually beyond the city to Nanning No. 3 High School in Guangxi, where we established an ongoing educational collaboration. Through social media, we further broke down geographical barriers, making our educational content accessible to audiences far beyond the places we could physically reach.
+
 ::content-components-lightbox-image
 ---
 alt:
@@ -2538,8 +2544,18 @@ caption: Fig. 37 | Expanding the Reach of SynBio Education from local community
 ---
 ::
 
+Looking back, we realised that the value of education goes beyond helping learners memorize SynBio terms or learn basic SynBio principles. More importantly, it lies in **sparking curiosity**, **encouraging independent thinking** and **inspiring people to continue exploring the field** on their own.
+
+We also came to understand that education does not have to take place within the walls of a classroom. It can happen on a **stage**, in a **park**, during a **debate**, inside a box of **clay kit**, or even through a **social media post.**
+
+Throughout our Education journey, we were not only the ones sharing knowledge, but also learners ourselves, continually inspired by those we met. We witnessed primary school children proudly presenting their clay creations—a “glowing mosquito” and a “thousand-legged chicken”; high school students so absorbed in asking questions after a lecture that they almost forgot about dinner; curious visitors gathering around our SynBio Fair on a bright autumn afternoon; and parents exchanging ideas and experiences over lively conversations at our community seminar.
+
+These moments stayed with us long after the activities ended. They reminded us that education is never simply a one-way transfer of knowledge, but an **exchange of curiosity, enthusiasm and inspiration**.
+
+Our journey of education is not going to end here of course. We will continue to carry this belief forward, not only to educate others, but also to be educated in return.
+
 ## Reference
 
 1. :ref-fn[Science. About the annual Science/AAAS Dance Your Ph.D. contest [Internet]. Washington (DC): American Association for the Advancement of Science; [cited 2026 Oct 19]. Available from: <https://www.science.org/content/page/about-annual-science-aaas-dance-your-ph-d-contest>]{#1}
 
-:content-components-education-age-timeline
+:content-components-education-age-timeline{#education-age-timeline}
