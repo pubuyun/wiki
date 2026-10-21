@@ -13,8 +13,8 @@ src:
   - https://static.igem.wiki/teams/6133/wiki/drylab/model/precursor-binder-discussion-fig1a.avif
   - https://static.igem.wiki/teams/6133/wiki/drylab/model/precursor-binder-discussion-fig1b.avif
 alt:
-  - ""
-  - ""
+  - "Nine scatter plots for four RFdiffusion3 binders compare A412 signal reduction with folding, interface, and MD metrics. Lower interface PAE and MD ligand RMSD and higher ipTM associate with greater reduction; aligned ligand scRMSD trends opposite to expectations."
+  - "Nine scatter plots for five Proteina-Complexa binders compare A412 signal reduction with folding, interface, and MD metrics. Most show weak associations, and MD metrics do not consistently follow the expected screening direction."
 caption: "Fig. 1 | Relationships between computational metrics and experimental responses of precursor binders designed by *RFdiffusion3* and *Proteina-Complexa*. Top: RFdiffusion3 designs (n = 4). Bottom: Proteina-Complexa designs (n = 5). Each point represents one tested binder, with A412 signal (an indicator of 3M3SH concentration, with lower values indicating lower odorant concentrations) reduction calculated as 100 × (1 − mean binder A412/mean control A412). (A/J) *pLDDT*; (B/K) interface PAE; (C/L) ipTM; (D/M) aligned ligand scRMSD; (E/N) *RF3* confidence ranking score; (F/O) *pTM*; (G/P) estimated binding free energy (ΔG) from MM/PBSA; (H–I/Q–R) the mean and SD of MD ligand RMSD, over 10–50 ns. Pearson r and Spearman ρ are reported in each plot. OLS regression lines are plotted when |r| > 0.50; the blue line indicates an anticipated trend, while orange lines indicate trends not expected."
 imageBackground: white
 layout: stack
@@ -65,7 +65,7 @@ Mean and SD of ligand RMSD showed limited alignment with experimental results (r
 src:
   - https://static.igem.wiki/teams/6133/wiki/drylab/model/precursor-binder-discussion-fig2.avif
 alt:
-  - ""
+  - "Five Proteina-Complexa binders show a positive association between custom composite score and A412 signal reduction (Pearson r = 0.76; Spearman rho = 0.60)."
 caption: "Fig. 2 | **Relationship between the custom composite score and experimental responses of Proteina-Complexa-designed precursor binders.** Each point represents one tested binder (n = 5), with A412 signal (an indicator of 3M3SH concentration, with lower values indicating lower odorant concentrations) reduction calculated as 100 × (1 − mean binder A412/mean control A412). The composite score was calculated as 200 × pLDDT − i_pAE − 62 × min_ipAE + 50 × min_ipSAE − 5 × binder_scRMSD_ca − 2 × ligand_scRMSD − 2 × ligand_scRMSD_aligned, using pLDDT on a 0–1 scale. Pearson r = 0.76 and Spearman ρ = 0.60 are reported. An OLS regression line is plotted."
 imageBackground: white
 ---
@@ -79,7 +79,7 @@ The custom composite score showed the strongest linear association with experime
 src:
   - https://static.igem.wiki/teams/6133/wiki/drylab/model/precursor-binder-discussion-fig3.avif
 alt:
-  - ""
+  - "Aligned rows compare seven weighted score contributions with A412 signal reduction for five Proteina-Complexa binders. min_ipSAE and aligned ligand scRMSD substantially affect score ordering, which differs from experimental response."
 caption: "Fig. 3 | **Composite score contributions and experimental responses of Proteina-Complexa binders.** (A) Colored bars show the seven weighted score contributions to the composite score; black diamonds show each composite score minus the candidate mean. (B) Experimental response, expressed as A412 signal reduction: 100 × (1 − mean binder A412/mean control A412). Corresponding binders share the same row."
 imageBackground: white
 ---

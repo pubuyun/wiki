@@ -47,7 +47,7 @@ Since Cys-Gly-3M3SH first needs to be imported into the *S. hominis* cytoplasm v
 ::content-components-lightbox-image
 ---
 alt:
-  - ""
+  - "Three strategies interrupt precursor uptake and subsequent 3M3SH release: CGTase glycosylates Cys-Gly-3M3SH, a precursor binder sequesters it, and a transporter binder targets PepTSh."
 src:
   - https://static.igem.wiki/teams/6133/wiki/drylab/model/overview-fig1.avif
 caption: Fig. 1 | Schematic for the three solutions. The precursor binder sequesters
@@ -144,7 +144,7 @@ We organized candidate selection as a decision-gated workflow, which progressive
 ::content-components-lightbox-image
 ---
 alt:
-  - ""
+  - "A narrowing funnel shows successive evaluation gates removing protein designs from the design space until a small testing set remains."
 src:
   - https://static.igem.wiki/teams/6133/wiki/drylab/model/overview-fig3.avif
 caption: Fig. 3 | **Schematic for the funnel-shaped decision-gated workflow.**
@@ -253,8 +253,8 @@ portrait: true
 ::content-components-lightbox-panels
 ---
 alt:
-  - ""
-  - ""
+  - "Four RFdiffusion3 binders show greater A412 signal reduction with more favorable MM/PBSA binding energy and lower mean and variability of MD ligand RMSD."
+  - "Five Proteina-Complexa binders show a positive association between custom composite score and A412 signal reduction (Pearson r = 0.76; Spearman rho = 0.60)."
 src:
   - https://static.igem.wiki/teams/6133/wiki/drylab/model/overview-fig6a.avif
   - https://static.igem.wiki/teams/6133/wiki/drylab/model/overview-fig6b.avif
@@ -321,10 +321,10 @@ Molecular dynamics studies of PepT<sub>Sh</sub> indicated that the transition fr
 ::content-components-lightbox-panels
 ---
 alt:
-  - ""
-  - ""
-  - ""
-  - ""
+  - "Inward-facing PepTSh (6EXS) viewed from the extracellular side, with a boxed region spanning the blue N-terminal and green C-terminal bundles; TMA and TMB are orange."
+  - "Close-up of inward-facing PepTSh shows dashed electrostatic contacts linking K64 to E323 and connecting R184, D182, E340, and R337."
+  - "Outward-facing PepTSh homology model shows the blue N-terminal and green C-terminal bundles separated at the boxed extracellular interface."
+  - "Close-up of outward-facing PepTSh shows K64, E323, R184, D182, E340, and R337 separated, disrupting the inward-facing electrostatic network."
 src:
   - https://static.igem.wiki/teams/6133/wiki/drylab/model/overview-fig8a.avif
   - https://static.igem.wiki/teams/6133/wiki/drylab/model/overview-fig8b.avif
@@ -395,7 +395,7 @@ Selected candidates were tested experimentally in our wet lab efforts [Transport
 ::content-components-lightbox-image
 ---
 alt:
-  - ""
+  - "Five PepTSh binders show a positive association between custom composite score and A412 signal reduction (Pearson r = 0.56; Spearman rho = 0.80)."
 src:
   - https://static.igem.wiki/teams/6133/wiki/drylab/model/overview-fig10.avif
 caption: Fig. 11 | **Relationships between the custom composite score and
@@ -469,9 +469,9 @@ Previous structural and biochemical studies :fn-ref{#6} on CGTase had identified
 ::content-components-lightbox-panels
 ---
 alt:
-  - ""
-  - ""
-  - ""
+  - "Dendrogram groups 86 CGTase docking poses into nine clusters using the dotted ligand RMSD cutoff."
+  - "Nine representative precursor docking poses, one per cluster, show different ligand orientations in the CGTase binding pocket."
+  - "MD-derived binding pose places the precursor hydroxyl near the green C1 atom of the D229-linked glycosyl intermediate in the CGTase pocket."
 src:
   - https://static.igem.wiki/teams/6133/wiki/drylab/model/overview-fig13a.avif
   - https://static.igem.wiki/teams/6133/wiki/drylab/model/overview-fig13b.avif
@@ -595,8 +595,8 @@ We aim to test whether AI can learn patterns that enable it to predict multipoin
 ::content-components-lightbox-panels
 ---
 alt:
-  - ""
-  - ""
+  - "T370K optimization: single-mutation scores and a 40-candidate compatibility matrix guide multi-mutation selection. Best SPURS scores decrease as mutations accumulate, while added-mutation benefits diminish."
+  - "T370R/F183W optimization: single-mutation scores and a 40-candidate compatibility matrix guide multi-mutation selection. Best SPURS scores decrease as mutations accumulate, while added-mutation benefits diminish."
 autoLabels: false
 src:
   - https://static.igem.wiki/teams/6133/wiki/drylab/model/overview-fig17a.avif

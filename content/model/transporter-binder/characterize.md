@@ -39,10 +39,10 @@ src:
   - https://static.igem.wiki/teams/6133/wiki/drylab/model/transporter-binder-characterize-fig1c.avif
   - https://static.igem.wiki/teams/6133/wiki/drylab/model/transporter-binder-characterize-fig1d.avif
 alt:
-  - ""
-  - ""
-  - ""
-  - ""
+  - "Inward-facing PepTSh (6EXS) viewed from the extracellular side, with a boxed region spanning the blue N-terminal and green C-terminal bundles; TMA and TMB are orange."
+  - "Close-up of inward-facing PepTSh shows dashed electrostatic contacts linking K64 to E323 and connecting R184, D182, E340, and R337."
+  - "Outward-facing PepTSh homology model shows the blue N-terminal and green C-terminal bundles separated at the boxed extracellular interface."
+  - "Close-up of outward-facing PepTSh shows K64, E323, R184, D182, E340, and R337 separated, disrupting the inward-facing electrostatic network."
 caption: "Fig. 1 | **Structure and extracellular surface of PepT<sub>Sh</sub>.** **(a)** Inward-facing conformation of PepT<sub>Sh</sub> (PDB 6EXS); **(b)** detailed view of the electrostatic interaction network identified in structural analysis. A close-up of the highlighted region in **(a)**; **(c)** outward-facing conformation of PepT<sub>Sh</sub> (homology modelled by SWISS-MODEL :fn-ref{#8}); **(d)** broken electrostatic interaction in outward-facing PepT<sub>Sh</sub>, a close-up of the highlighted region in **(c)**. Green: C-terminal bundle; blue: N-terminal bundle; orange: TMA and TMB."
 imageBackground: white
 label: "Characterize — Fig. 1"

@@ -107,7 +107,17 @@ caption: "Table 1 | Success thresholds for binders designed by Proteina-Complexa
 
 Filtered candidates were ranked using a composite score. The coefficients were chosen to reflect the relative importance of each metric and were scaled according to its observed range in the filtered set.
 
-Score = 200 × *pLDDT* − 1 × i_pAE − 62 × min_ipAE + 50 × min_ipSAE − 5 × binder_scRMSD_ca − 2 × ligand_scRMSD − 2 × ligand_scRMSD_aligned
+$$
+\begin{aligned}
+\mathrm{Score} ={}& 200 \times \mathrm{pLDDT}
+- 1 \times \mathrm{i\_pAE}
+- 62 \times \mathrm{min\_ipAE} \\
+&+ 50 \times \mathrm{min\_ipSAE}
+- 5 \times \mathrm{binder\_scRMSD\_ca} \\
+&- 2 \times \mathrm{ligand\_scRMSD}
+- 2 \times \mathrm{ligand\_scRMSD\_aligned}
+\end{aligned}
+$$
 
 The search result contained only 30–40 filtered binders, all with similar scores.
 

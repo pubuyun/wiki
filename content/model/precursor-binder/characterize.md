@@ -24,7 +24,7 @@ Cys-Gly-3M3SH has two stereoisomers: Cys-Gly-(S)-3M3SH and Cys-Gly-(R)-3M3SH, wh
 ::content-components-lightbox-image
 ---
 alt:
-  - ""
+  - "Cys-Gly-(S)-3M3SH yields sweat- and onion-like (S)-3M3SH, whereas Cys-Gly-(R)-3M3SH yields fruity and grapefruit-like (R)-3M3SH; structures show the differing stereochemistry."
 src:
   - https://static.igem.wiki/teams/6133/wiki/drylab/model/precursor-binder-characterize-fig1.avif
 caption: Fig. 1 | Structure formulae of Cys-Gly-(S)-3M3SH and Cys-Gly-(R)-3M3SH

@@ -17,6 +17,8 @@ const props = defineProps<{
     imageBackground?: string;
 }>();
 
+const overlay = ref<HTMLElement | null>(null);
+
 const images = computed(() =>
     props.src.map((src, imageIndex) => ({
         src,
@@ -40,6 +42,13 @@ watch(
         const root = document.documentElement;
         const previousOverflowY = root.style.overflowY;
         root.style.overflowY = "hidden";
+        void nextTick(() => {
+            if (props.visible) {
+                overlay.value
+                    ?.querySelector<HTMLButtonElement>("button")
+                    ?.focus({ preventScroll: true });
+            }
+        });
 
         onCleanup(() => {
             root.style.overflowY = previousOverflowY;
@@ -52,7 +61,12 @@ watch(
 <template>
     <Teleport to="body">
         <div
+            ref="overlay"
             class="contents"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Image preview"
+            @keydown.esc.stop.prevent="$emit('hide')"
             :style="{
                 '--lightbox-image-background': imageBackground ?? 'transparent',
             }"

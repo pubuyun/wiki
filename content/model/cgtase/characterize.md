@@ -22,7 +22,7 @@ To function under axillary conditions, the donor molecule should be readily avai
 src:
   - https://static.igem.wiki/teams/6133/wiki/drylab/model/cgtase-characterize-fig1.avif
 alt:
-  - ""
+  - "Cys-Gly-3M3SH structure marks three possible modification sites: the terminal hydroxyl in green, amino group in blue, and carboxyl group in red."
 caption: "Fig. 1 | Potential functional groups for modification on Cys-Gly-3M3SH: hydroxyl (green), amino (blue), carboxyl (red)."
 imageBackground: white
 ---
@@ -90,9 +90,9 @@ src:
   - https://static.igem.wiki/teams/6133/wiki/drylab/model/cgtase-characterize-fig4b.avif
   - https://static.igem.wiki/teams/6133/wiki/drylab/model/cgtase-characterize-fig4c.avif
 alt:
-  - ""
-  - ""
-  - ""
+  - "Dendrogram groups 86 CGTase docking poses into nine clusters using the dotted ligand RMSD cutoff."
+  - "Nine representative precursor docking poses, one per cluster, show different ligand orientations in the CGTase binding pocket."
+  - "MD-derived binding pose places the precursor hydroxyl near the green C1 atom of the D229-linked glycosyl intermediate in the CGTase pocket."
 caption: "Fig. 4 | **Characterization process of CGTase.** **(a)** Tree diagram of clustered docking poses. The dotted line represents the ligand RMSD threshold for clustering. **(b)** 9 representative docking poses. **(c)** Proposed interaction between Cys-Gly-3M3SH and glycosyl-CGTase intermediate, derived from an MD run. The electrophilic carbon (C1 of the sugar residue, linked to D229 in the glycosyl–enzyme intermediate) of the sugar donor is shown in green."
 imageBackground: white
 label: "Characterize — Fig. 4"

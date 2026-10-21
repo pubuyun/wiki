@@ -23,6 +23,7 @@ const props = withDefaults(
 const visible = ref(false);
 const hasOpened = ref(false);
 const index = ref(0);
+let returnFocusTarget: HTMLElement | null = null;
 
 const imageAlt = (imageIndex: number) =>
     Array.isArray(props.alt)
@@ -41,9 +42,26 @@ const imageCaptionBody = (imageIndex: number) =>
 
 const open = (imageIndex = 0) => {
     if (!props.src.length) return;
+    if (!visible.value && import.meta.client) {
+        returnFocusTarget =
+            document.activeElement instanceof HTMLElement
+                ? document.activeElement
+                : null;
+    }
     hasOpened.value = true;
     index.value = Math.min(Math.max(imageIndex, 0), props.src.length - 1);
     visible.value = true;
+};
+
+const close = async () => {
+    visible.value = false;
+    const target = returnFocusTarget;
+    returnFocusTarget = null;
+    // Wait for the overlay and its scroll lock to update before restoring focus.
+    await nextTick();
+    if (!visible.value && target?.isConnected) {
+        target.focus({ preventScroll: true });
+    }
 };
 
 defineExpose({ open });
@@ -119,7 +137,7 @@ defineExpose({ open });
             :alt="alt"
             :index="index"
             :image-background="imageBackground"
-            @hide="visible = false"
+            @hide="close"
             @update:index="index = $event"
         />
     </span>

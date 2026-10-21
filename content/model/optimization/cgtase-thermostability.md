@@ -89,8 +89,8 @@ src:
   - https://static.igem.wiki/teams/6133/wiki/drylab/model/optimization-cgtase-thermostability-fig2a.avif
   - https://static.igem.wiki/teams/6133/wiki/drylab/model/optimization-cgtase-thermostability-fig2b.avif
 alt:
-  - ""
-  - ""
+  - "T370K optimization: single-mutation scores and a 40-candidate compatibility matrix guide multi-mutation selection. Best SPURS scores decrease as mutations accumulate, while added-mutation benefits diminish."
+  - "T370R/F183W optimization: single-mutation scores and a 40-candidate compatibility matrix guide multi-mutation selection. Best SPURS scores decrease as mutations accumulate, while added-mutation benefits diminish."
 caption: "Fig. 2 | **SPURS-guided mutation optimization of T370K (top panel) and T370R/F183W (bottom panel).** The embedded plots (a–d) show: **(a)** single-mutation score distribution; **(b)** pairwise compatibility of the 40 top-ranked candidates; **(c)** selected multi-mutation scores across search depths; the blue line represents the lowest score per depth. **(d)** Added-mutation score contributions; the dashed line represents the marginal threshold. Boxes show medians and interquartile ranges; whiskers indicate 1.5× interquartile range."
 imageBackground: white
 layout: stack

@@ -1889,7 +1889,7 @@ alt:
 
 7. Civic Science Media. From poverty to science [Internet]. [date unknown] [cited 2026 Oct 19]. Available from: [https://civicsciencemedia.org/from-poverty-to-science/](https://civicsciencemedia.org/from-poverty-to-science/)
 
-8. Organisation for Economic Co-operation and Development (OECD). [Source title not provided]. 2025.
+8. Organisation for Economic Co-operation and Development (OECD). Student performance in PISA 2025. In: PISA 2025 Results (Volume I): Future-Ready Students [Internet]. Paris: OECD Publishing; 2026 [cited 2026 Oct 21]. Available from: [OECD: Student performance in PISA 2025](https://www.oecd.org/en/publications/pisa-2025-results-volume-i_73451bc5-en/full-report/student-performance-in-pisa-2025_23e075c2.html)
 
 9. Smith DR. Bringing bioinformatics to the scientific masses: as the demand for high-level bioinformatics is growing, training students in the field becomes ever more important. EMBO Rep. 2018;19(6):e46262. doi:10.15252/embr.201846262.
 
