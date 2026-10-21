@@ -9,9 +9,9 @@ order: 3
 
 ### Characterize
 
-We aim to engineer a protein binder to sequester the odor precursor. Cys-Gly-3M3SH can have either the (S) or (R) configuration at the stereocenter within its 3M3SH moiety, yielding the corresponding 3M3SH enantiomer upon metabolism. (S)-3M3SH has a sweat and onion-like odor, whereas (R)-3M3SH is described as fruity and grapefruit-like. :fn-ref{#2}
+We aim to engineer a protein binder to sequester the odor precursor. Cys-Gly-3M3SH can have either the (S) or (R) configuration at the stereocenter within its 3M3SH moiety, yielding the corresponding 3M3SH enantiomer upon metabolism. (S)-3M3SH has a sweaty and onion-like odor, whereas (R)-3M3SH is described as fruity and grapefruit-like. :fn-ref{#2}
 
-To reduce characteristic axillary odor, we selected Cys-Gly-(S)-3M3SH as the target for precursor binder design as it is the most prominent source of axillary odor.
+To reduce characteristic axillary odor, we selected Cys-Gly-(S)-3M3SH as the target for precursor binder design as it is a precursor of a key contributor to characteristic axillary malodor.
 
 ### Design
 
@@ -40,15 +40,15 @@ preserveFigureNumber: true
 
 ### Build
 
-The plasmids containing the codon-optimized coding sequences of the designed precursor binders (BC1–11 and BR1–11) were synthesized by CoWin Biotech (Fig. 4), and were transformed into *E. coli* BL21(DE3) cells.
+The plasmids containing the codon-optimized coding sequences of the designed precursor binders (BC1–11 and BR1–11) were synthesized by CoWin Biotech, and were transformed into *E. coli* BL21(DE3) cells. However, transformation of BC9 was unsuccessful, and BC9 was therefore not tested further.
 
-A single transformed colony was used to inoculate a 4 mL LB starter culture supplemented with kanamycin. After overnight culture, this starter was used to inoculate 50 mL of LB medium, which was incubated at 37 °C with shaking at 220 rpm until the OD₆₀₀ reached 0.8–1.0. Protein expression was induced by adding 0.3 mM isopropyl-β-D-thiogalactopyranoside (IPTG), followed by incubation at 16 °C for 16 h. The cells were then harvested by centrifugation at 7500 rpm for 10 min at 4 °C.
+A single transformed colony was used to inoculate a 4 mL LB starter culture supplemented with kanamycin. After overnight culture, this starter was used to inoculate 50 mL of LB medium, which was incubated at 37 °C with shaking at 220 rpm until the OD₆₀₀ reached 0.8–1.0. Protein expression was induced by adding 0.3 mM isopropyl-β-D-thiogalactopyranoside (IPTG), followed by incubation at 16 °C and 220 rpm for 16 h. The cells were then harvested by centrifugation at 7500 rpm for 10 min at 4 °C.
 
 ### Test
 
-SDS-PAGE was used to verify the expression of the binders. Induced cultures were normalized to the same cell density (OD₆₀₀ = 10.0), harvested by centrifugation, and resuspended in Tris–EDTA–sucrose buffer for cell lysis. The lysate was then centrifuged to separate the soluble supernatant from the insoluble pellet. The pellet was resuspended in Tris buffer. The supernatant and resuspended pellet were analyzed by gel electrophoresis. Results showed that BC1, BC2, BC6, BR5, BC7, BC11, BR7, BR8, and BR10 were successfully expressed in supernatant (Fig. 5a).
+SDS-PAGE was used to verify the expression of the binders. Induced cultures were normalized to the same cell density (OD₆₀₀ = 10.0), harvested by centrifugation, and resuspended in Tris–EDTA–sucrose buffer for cell lysis. The lysate was then centrifuged to separate the soluble supernatant from the insoluble pellet. The pellet was resuspended in Tris buffer. The supernatant and resuspended pellet were analyzed by gel electrophoresis. Results showed that BC1, BC2, BC6, BR5, BC7, BC11, BR7, BR8, and BR10 were successfully expressed in the supernatant (Fig. 5a). However, BC5, BR6, and BR11 showed only faint bands after purification, suggesting low recovered protein yields. These candidates were therefore excluded from subsequent analyses.
 
-The soluble binder proteins were subsequently purified using Ni-NTA Sepharose resin. The resin was first equilibrated with binding buffer, followed by sample loading and washing. The bound proteins were then eluted with buffer containing 250 mM imidazole.
+The soluble binder proteins were subsequently purified using Ni-NTA Sepharose resin. The resin was first equilibrated with binding buffer, followed by sample loading and washing. Bound proteins were then eluted with buffer containing 250 mM imidazole.
 
 To evaluate the ability of the designed precursor binders to limit Cys-Gly-3M3SH uptake, Ellman's assay was conducted using PepT<sub>Sh</sub>-expressing *E. coli* resting cells. Purified binder proteins were pre-incubated with 1 mM Cys-Gly-3M3SH at 37 °C for 1 h, followed by the addition of PepT<sub>Sh</sub>-expressing *E. coli* cell suspension and a further 1 h incubation at 37 °C. The subsequent steps followed the procedure established in the Surrogate Construction Cycle to determine thiol concentrations.
 
@@ -82,7 +82,7 @@ alt:
   - "SDS-PAGE compares soluble and pellet fractions of BR4, BR6, BC10, and BR11."
   - "SDS-PAGE compares soluble and pellet fractions of BR1, BR2, BR3, BC4, and BC5."
   - "SDS-PAGE compares soluble and pellet fractions of BC9 and BC8."
-caption: "Fig. 5a | SDS-PAGE results showing the protein expression of the 22 binders in BL21(DE3); cell fractions of untransformed BL21(DE3) were used as control (S: supernatant after cell lysis; P: pellet after cell lysis; 250: fractions eluted with 250 mM imidazole)."
+caption: "Fig. 5a | SDS-PAGE results showing the protein expression of the 21 binders in BL21(DE3); cell fractions of untransformed BL21(DE3) were used as control (S: supernatant after cell lysis; P: pellet after cell lysis; 250: fractions eluted with 250 mM imidazole)."
 imageBackground: "#ffffff"
 preserveFigureNumber: true
 columns: 3
@@ -97,7 +97,7 @@ src:
   - https://static.igem.wiki/teams/6133/wiki/wetlab/engineering/engineering-precursor-binder-fig5b.avif
 alt:
   - "BC6, BC7, BR8, and BR10 have significantly lower thiol levels than the negative control; the lowest mean is about 0.20 mM GSH equivalents."
-caption: "Fig. 5b | Ellman's assay of the precursor binders; error bars represent ±SD (*n* = 3); PBS served as the negative control, in place of the purified binder proteins; Welch’s unpaired two-tailed t-test was used to compare each binder with the negative control; significant differences relative to the negative control are marked with asterisks; *p < 0.05, **p < 0.01; unmarked comparisons were not significant."
+caption: "Fig. 5b | Ellman's assay of the precursor binders; error bars represent ±SD (*n* = 3); PBS served as the negative control, in place of the purified binder proteins; Welch’s unpaired two-tailed t-test was used to compare each binder with the negative control; significant differences relative to the negative control are marked with asterisks; * indicates p < 0.05; ** indicates p < 0.01; unmarked comparisons were not significant."
 imageBackground: "#ffffff"
 preserveFigureNumber: true
 width: 1463
@@ -110,7 +110,7 @@ height: 1025
 
 The reduction in thiol concentrations shown by the four binders - BC6, BC7, BR8, and BR10 - indicates their potential of effectively binding with the precursor and reducing its uptake by the PepT<sub>Sh</sub>-expressing *E. coli*.
 
-Although these four candidates demonstrated the potential to reduce precursor uptake, their performance indicated room for further improvement. Increasing their binding affinity for the precursor could improve capture efficiency, further reducing precursor availability. Therefore, in the next cycle, we focused on optimizing the binding affinity of the selected candidates.
+Despite the observed reductions, there was still scope to improve the effectiveness of these binders. Increasing their binding affinity for the precursor could improve capture efficiency, further reducing precursor availability. Therefore, in the next cycle, we focused on optimizing the binding affinity of the selected candidates.
 
 ## Precursor Binder Cycle 2
 
@@ -118,7 +118,7 @@ Although these four candidates demonstrated the potential to reduce precursor up
 
 We aim to improve the affinity of BC7, BR8, and BR10 for Cys-Gly-(S)-3M3SH.
 
-We adapted the *LASErMPNN* neural proofreading strategy described by Fry et al. :fn-ref{#6} to identify mutations. The predicted complexes are minimized. Residues within 5 Å of the ligand are then evaluated.
+We adapted the *LASErMPNN* neural proofreading strategy described by Fry et al. :fn-ref{#6} to identify mutations. The predicted complexes were minimized. Residues within 5 Å of the ligand were then evaluated.
 
 We selected the mutations that the deep-learning model favors (the model has a higher possibility to choose the mutated residue than the original residue). Among all mutations ranked by possibility advantage, we prioritize candidates at buried, ligand-contacting positions, then predict and minimize their structures to filter any buried polar residues introduced without suitable hydrogen bond interactions.
 

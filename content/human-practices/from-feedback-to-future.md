@@ -90,7 +90,6 @@ altZh:
   - "Comment received on RedNote asking how to buy Expelliodor."
   - "RedNote conversation with a user asking about purchasing Expelliodor."
 caption: "Fig. 4 | **(a)** Comment received on our RedNote account asking for ways of purchase **(b)**User who reached out to us on our RedNote account asking for purchase channel"
-defaultLanguage: "en"
 label: "Image language"
 ---
 ::
@@ -108,7 +107,6 @@ altEn:
 altZh:
   - "Follow-up conversation with the gym owner about institutional interest in Expelliodor."
 caption: "Fig. 5 | Revisiting gym owner for institutional potential customer feedback"
-defaultLanguage: "en"
 label: "Image language"
 ---
 ::
@@ -137,7 +135,6 @@ altZh:
   - "李先生肯定计算与实验相结合的流程，并建议扩充实验数据和进行迭代优化。"
 label: "Fig. 5 | Feedback from modelling expert Mr. Li — image language"
 caption: "Fig. 6 | Feedback from modelling expert Mr. Li"
-defaultLanguage: "en"
 ---
 ::
 
@@ -155,7 +152,6 @@ altZh:
   - "Voice call and chat history with KleanK's Director of the Medical R&D Department, Mr. Deng for feedback"
 label: "Fig. 6 | Voice call and chat history with KleanK's Director of the Medical R&D Department, Mr. Deng for feedback — image language"
 caption: "Fig. 7 | Voice call and chat history with KleanK's Director of the Medical R&D Department, Mr. Deng for feedback"
-defaultLanguage: "en"
 ---
 ::
 

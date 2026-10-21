@@ -39,7 +39,6 @@ altZh:
   - "精神科医生介绍三位因腋下气味而产生严重情绪困扰的患者的情况。"
 label: "Fig. 2 | Message from psychiatrist — image language"
 caption: "Fig. 2 | Message from psychiatrist"
-defaultLanguage: "en"
 ---
 ::
 
@@ -109,7 +108,6 @@ altZh:
   - "讲座前的回答将腋下气味归因于卫生、饮食、出汗、细菌和遗传因素。"
 label: "Fig. 5 | Sample answers given from participants before seminar in response to question \"What do you think causes underarm odor?\" — image language"
 caption: "Fig. 5 | Sample answers given from participants before seminar in response to question \"What do you think causes underarm odor?\""
-defaultLanguage: "en"
 ---
 ::
 
@@ -133,7 +131,6 @@ altZh:
   - "Feedback from participants"
 label: "Fig. 6 | (a) Feedback from participants (b) Feedback from participants — image language"
 caption: "Fig. 6 | **(a)** Feedback from participants **(b)** Feedback from participants"
-defaultLanguage: "en"
 ---
 ::
 
@@ -215,7 +212,6 @@ altZh:
   - "Our axillary odor mental health handbook shared on Instagram."
 label: "Fig. 9 | (a) Our axillary odor mental health handbook shared through WeChat. (b) Our axillary odor mental health handbook shared on Rednote. (c) Our axillary odor mental health handbook shared on Instagram. — image language"
 caption: "Fig. 9 | **(a)** Our axillary odor mental health handbook shared through WeChat. **(b)** Our axillary odor mental health handbook shared on Rednote. **(c)** Our axillary odor mental health handbook shared on Instagram."
-defaultLanguage: "en"
 ---
 ::
 
@@ -467,9 +463,9 @@ caption: "Fig. 17 | Unilever’s Degree Inclusive concept, examined as a referen
 
 Our further research :fn-ref{id="5"} into the needs of people with disabilities found that around **21%** of people with physical or mental impairments **experience difficulties applying personal-care products**. For example, limited hand mobility can make it difficult to open a twist cap or press the spray of conventional deodorant packaging. Furthermore, difficulty in finding products can impact daily personal-care routines. The data showed that people with disabilities are **twice as likely to skip such activities** compared with people without those difficulties.
 
-We also identified some difficulties faced by older adults with weaker grip strength and dexterity. Research:fn-ref{id="6"} reflected that **14% of participants over 81, were unable to open a screw cap bottle.** Similarly, older participants from another **research:fn-ref{id="7"} reported difficulties with gripping, twisting, and turning.**
+We also identified some difficulties faced by older adults with weaker grip strength and dexterity. Research :fn-ref{id="6"} reflected that **14% of participants over 81, were unable to open a screw cap bottle.** Similarly, older participants from another research :fn-ref{id="7"} **reported difficulties with gripping, twisting, and turning.**
 
-After identifying these challenges, we analysed Degree Inclusive to understand how its design addresses the needs of users with different abilities. Its enhanced **"hooked container"** :fn-ref{id="8"} enables one-hand usage, while the cap incorporates **"a grip placement and magnetic 'click' closures"** :fn-ref{id="8"}, simplifying the process of removing and replacing the cap for users with limited grip strength or sight. Compared with conventional roll-on deodorants, its **"larger roll-on applicator"**:fn-ref{id="8"} covers a greater surface area per swipe, reducing the number of swipes required for application. Furthermore, **braille instructions** were added to the label, improving the accessibility of users with visual impairments.
+After identifying these challenges, we analysed Degree Inclusive to understand how its design addresses the needs of users with different abilities. Its enhanced **"hooked container"** :fn-ref{id="8"} enables one-hand usage, while the cap incorporates **"a grip placement and magnetic 'click' closures"** :fn-ref{id="8"}, simplifying the process of removing and replacing the cap for users with limited grip strength or sight. Compared with conventional roll-on deodorants, its **"larger roll-on applicator"** :fn-ref{id="8"} covers a greater surface area per swipe, reducing the number of swipes required for application. Furthermore, **braille instructions** were added to the label, improving the accessibility of users with visual impairments.
 
 ### Refine
 

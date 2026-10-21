@@ -27,7 +27,6 @@ altZh:
   - "An online review expressing itchiness from a deodorant product."
 label: "Fig. 1 | (a) An online product review reporting skin irritation after deodorant use.  (b) An online review expressing dissatisfaction with a deodorant product. — image language"
 caption: "Fig. 1 | **(a)** An online product review reporting skin irritation after deodorant use.  **(b)** An online review expressing itchiness from a deodorant product."
-defaultLanguage: "en"
 ---
 ::
 
@@ -75,7 +74,6 @@ altZh:
   - "本地问卷的香味偏好：无香54.21%，花香41.12%，木香34.58%，薄荷或清新30.84%，果香24.30%，其他0.93%。"
 label: "Fig. 2 | Local survey responses on fragrance preferences. — image language"
 caption: "Fig. 3 | Local survey responses on fragrance preferences."
-defaultLanguage: "en"
 ---
 ::
 

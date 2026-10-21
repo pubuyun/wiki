@@ -23,7 +23,7 @@ src:
 alt:
   - ""
   - "T7-driven pET-28a(+) construct encodes an N-terminal DsbA signal peptide, a TB1–TB5 binder, and a C-terminal 6×His tag."
-caption: "Fig. 12 | **(a)** Predicted structure of transporter binder (green) bound to PepT<sub>Sh</sub> (gray); **(b)** plasmid construct of TB1–TB5."
+caption: "Fig. 12 | **(a)** predicted structure of transporter binder (green) bound to PepT<sub>Sh</sub> (gray); **(b)** plasmid construct of TB1–TB5."
 imageBackground: "#ffffff"
 preserveFigureNumber: true
 layout: stack
@@ -49,7 +49,7 @@ src:
 alt:
   - "Gel lanes show soluble expression of all five transporter binders, alongside pellet and purified fractions."
   - "TB1–TB4 significantly reduce thiol content relative to the empty-vector control; TB2 has the lowest mean, about 0.26 mM."
-caption: "Fig. 13 | SDS-PAGE and Ellman's Assay results for TB1–TB5. **(a)** Expression of transporter binders in BL21(DE3); cell fractions of untransformed BL21(DE3) were used as control (S: supernatant after cell lysis; P: pellet after cell lysis, 250: fractions eluted with 250 mM imidazole); **(b)** Ellman's assay for the transporter binders; Error bars represent ±SD (*n* = 3); Statistical significance was determined using ordinary one-way ANOVA followed by Dunnett’s multiple comparisons test, with each transporter binder group compared against the empty vector control; ** indicates p < 0.01, **** indicates p < 0.0001."
+caption: "Fig. 13 | SDS-PAGE and Ellman's assay results for TB1–TB5; **(a)** expression of transporter binders in BL21(DE3); cell fractions of untransformed BL21(DE3) were used as control (S: supernatant after cell lysis; P: pellet after cell lysis, 250: fractions eluted with 250 mM imidazole); **(b)** Ellman's assay for the transporter binders; Error bars represent ±SD (*n* = 3); Statistical significance was determined using ordinary one-way ANOVA followed by Dunnett’s multiple comparisons test, with each transporter binder group compared against the empty vector control; ** indicates p < 0.01, **** indicates p < 0.0001."
 imageBackground: "#ffffff"
 preserveFigureNumber: true
 layout: stack

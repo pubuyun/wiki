@@ -17,7 +17,7 @@ const props = withDefaults(
         imageBackground?: string;
         autoLabels?: boolean;
         defaultLanguage?: "en" | "zh";
-        layout?: "grid" | "stack" | "top" | "left";
+        layout?: "grid" | "stack" | "top" | "left" | "right";
         columns?: number | string;
     }>(),
     {

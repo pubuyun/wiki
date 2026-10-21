@@ -27,9 +27,9 @@ layout: stack
 
 ::
 
-Recent research has shown that monoterpenyl esters can be efficiently produced via co-culturing two *E. coli* strains :fn-ref{#5}. In bornyl acetate production, strain one produces the monoterpene alcohol, borneol, through the MVA pathway and a borneol synthesis module, including bornyl pyrophosphate synthase from *Dipterocarpus intricatus*(DiBPPS), a truncated geranyl diphosphate synthase from *Abies grandis* (t86AgGPPS2), and a Nudix hydrolase J from *E. coli* (EcNudJ).
+Recent research has shown that monoterpenyl esters can be efficiently produced via co-culturing two *E. coli* strains :fn-ref{#5}. In bornyl acetate production, strain one produces the monoterpene alcohol, borneol, through the MVA pathway and a borneol synthesis module, including a truncated geranyl diphosphate synthase from *Abies grandis* (t86AgGPPS2), a bornyl pyrophosphate synthase from *Dipterocarpus intricatus* (DiBPPS), and a Nudix hydrolase J from *E. coli* (EcNudJ).
 
-The second strain produces an alcohol acyltransferase from *Lavandula × intermedia*(LiAAT4), catalyzing the esterification of the acyl-CoA and the monoterpene alcohol, and a butyrate acetoacetate CoA-transferase from *Clostridium acetobutylicum*(CaBACT) for activating short-chain fatty acids into their corresponding acyl-CoAs (Fig. 14a).
+The second strain produces an alcohol acyltransferase from *Lavandula × intermedia* (LiAAT4), catalyzing the esterification of the acyl-CoA and the monoterpene alcohol, and a butyrate acetoacetate CoA-transferase from *Clostridium acetobutylicum*(CaBACT) for activating short-chain fatty acids into their corresponding acyl-CoAs (Fig. 14a).
 
 Both the borneol synthesis module and the esterification module in strain 1 and strain 2 respectively, use pW1 (pET28a-ptac-RiboJ-BsaI) as cloning vector. This vector is derived from pET-28a, with the T7 promoter replaced by Ptac (IPTG-inducible, LacI-regulated) promoter, but the kanamycin resistance marker and pBR322-type origin were retained. A *RiboJ* was inserted downstream of the Ptac promoter, standardizing the 5′ untranslated region (5′ UTR). The pMVA plasmid constructed by GreatBay-China 2018 for high-yield production of IPP and DMAPP was also used, forming a dual-plasmid system in the borneol-synthesis strain (Fig. 14b).
 
@@ -58,7 +58,7 @@ The two strains were co-cultured at a volume ratio of 15:1 (borneol-producing st
 
 ### Test
 
-The production of bornyl acetate was qualitatively confirmed using gas chromatography–mass spectrometry (GC–MS). The mass spectrum of our product sample was compared with the reference spectrum in the spectral library. The characteristic base peak at **m/z 95**, along with other major fragment ions, were consistent with those in the reference spectrum of bornyl acetate (Fig. 16b), supporting the identification of bornyl acetate.
+The production of bornyl acetate was qualitatively confirmed using gas chromatography–mass spectrometry (GC–MS). The mass spectrum of our product sample was compared with the reference spectrum in the spectral library. The characteristic base peak at **m/z 95**, along with other major fragment ions, was consistent with those in the reference spectrum (Fig. 16b), supporting the identification of bornyl acetate in the sample.
 
 Subsequent GC analysis quantified bornyl acetate production using a standard curve, yielding a concentration of 1.2269 μg/mL (Fig. 16a).
 

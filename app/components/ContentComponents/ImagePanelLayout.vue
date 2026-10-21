@@ -10,7 +10,7 @@ const props = withDefaults(
         label?: string;
         imageBackground?: string;
         autoLabels?: boolean;
-        layout?: "grid" | "stack" | "top" | "left";
+        layout?: "grid" | "stack" | "top" | "left" | "right";
         columns?: number | string;
         mediaType?: "image" | "video";
         videoAspectRatio?: "16 / 9" | "4 / 5";
@@ -35,6 +35,20 @@ const aspectRatio = (src: string) => {
     const size = dimensions[src];
     return size ? size[0] / size[1] : (aspectRatios.value[src] ?? 1);
 };
+const sideColumns = computed(() => {
+    const singleIndex = props.layout === "right" ? 2 : 0;
+    const singleRatio = aspectRatio(props.src[singleIndex]);
+    const stackedHeight = props.src.reduce(
+        (sum, src, index) =>
+            index === singleIndex ? sum : sum + 1 / aspectRatio(src),
+        0,
+    );
+    // Include the gap between stacked images when balancing column heights.
+    const stackedWidth = `minmax(0, calc((100% - ${1 + singleRatio} * var(--panel-gap)) / ${1 + singleRatio * stackedHeight}))`;
+    return props.layout === "right"
+        ? `${stackedWidth} minmax(0, 1fr)`
+        : `minmax(0, 1fr) ${stackedWidth}`;
+});
 const rows = computed(() => {
     const columns = Number(props.columns);
     const gridColumns = Number.isInteger(columns) && columns > 0 ? columns : 2;
@@ -43,7 +57,8 @@ const rows = computed(() => {
     if (props.layout === "top" && panels.length === 3) {
         return [panels.slice(0, 1), panels.slice(1)];
     }
-    if (props.layout === "left" && panels.length === 3) return [panels];
+    if (["left", "right"].includes(props.layout) && panels.length === 3)
+        return [panels];
     return Array.from(
         { length: Math.ceil(panels.length / rowSize) },
         (_, row) => panels.slice(row * rowSize, (row + 1) * rowSize),
@@ -69,11 +84,13 @@ function recordAspectRatio(src: string, image: HTMLImageElement | null) {
                 :class="{
                     'image-panels__row--left':
                         layout === 'left' && src.length === 3,
+                    'image-panels__row--right':
+                        layout === 'right' && src.length === 3,
                 }"
                 :style="{
                     gridTemplateColumns:
-                        layout === 'left' && src.length === 3
-                            ? 'minmax(0, 1fr) minmax(0, 1fr)'
+                        (layout === 'left' || layout === 'right') && src.length === 3
+                            ? sideColumns
                             : row
                                   .map(
                                       ({ src }) =>
@@ -161,9 +178,10 @@ function recordAspectRatio(src: string, image: HTMLImageElement | null) {
 
 /* Proportional columns give each image in a row the same uncropped height. */
 .image-panels__row {
+    --panel-gap: 0.75rem;
     display: grid;
     align-items: start;
-    gap: 0.75rem;
+    gap: var(--panel-gap);
 }
 
 .image-panels__panel {
@@ -190,6 +208,31 @@ function recordAspectRatio(src: string, image: HTMLImageElement | null) {
     grid-column: 2;
 }
 
+.image-panels__row--right > :first-child {
+    grid-area: 1 / 1;
+}
+
+.image-panels__row--right > :nth-child(2) {
+    grid-area: 2 / 1;
+}
+
+.image-panels__row--right > :last-child {
+    grid-area: 1 / 2 / span 2;
+}
+
+.image-panels__row--left,
+.image-panels__row--right {
+    align-items: stretch;
+}
+
+.image-panels__row--left > :first-child img,
+.image-panels__row--right > :last-child img {
+    position: absolute;
+    inset: 0;
+    height: 100%;
+    object-fit: contain;
+}
+
 .image-panels__label {
     position: absolute;
     inset: 0.4rem auto auto 0.4rem;
@@ -208,9 +251,15 @@ function recordAspectRatio(src: string, image: HTMLImageElement | null) {
     .image-panels__row {
         grid-template-columns: minmax(0, 1fr) !important;
     }
-    .image-panels__row--left > * {
+    .image-panels__row--left > *,
+    .image-panels__row--right > * {
         grid-row: auto;
         grid-column: auto;
+    }
+    .image-panels__row--left > :first-child img,
+    .image-panels__row--right > :last-child img {
+        position: static;
+        height: auto;
     }
 }
 </style>

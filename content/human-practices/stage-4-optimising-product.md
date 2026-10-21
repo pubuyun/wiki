@@ -57,8 +57,6 @@ Furthermore, we incorporated **positive and supportive messages** into our produ
 
 For [**marketing**](/entrepreneurship#marketing-strategies), we plan to collaborate with influencers and promote our product on social media platforms such as Douyin to reach consumers in the Chinese market. At the same time, we recognized that marketing should not create additional anxiety or shame around underarm odor. We therefore plan to develop our promotional content around a **comfortable** and **inclusive** user experience. Furthermore, we recognized the importance of public education in improving understanding of underarm odor and fostering greater acceptance of people who use deodorant products.
 
-*Evonik - leading beyond chemistry*. (2026, October 14). Evonik Industries AG. https://www.evonik.com/en.html
-
 ## Cycle 2 Skincare Product Expert and Cosmetic Formulation Expert
 
 ### Observe
@@ -73,40 +71,28 @@ Therefore, we consulted **skincare product expert** **Ms. Zhu** to understand ho
 
 Additionally, we interviewed **Mr. Su Rongsheng**, a **cosmetic formulation expert** with over 35 years of experience in the industry, to obtain more specialized advice on the **formulation** and **packaging** of protein-based cosmetic products. We presented our preliminary formulation for his review and sought his advice on the packaging, storage, and testing required to develop our laboratory protein samples into a viable consumer product.
 
-::content-components-panel-layout{height="none" label="Skincare expert correspondence and formulation expert interview"}
-#left
-
-:::content-components-bilingual-image-panels
+::content-components-bilingual-image-panels
 ---
 srcEn:
   - "https://static.igem.wiki/teams/6133/wiki/hp/ihp/human-practices-stage-4-optimising-product-fig3-4.avif"
   - "https://static.igem.wiki/teams/6133/wiki/hp/ihp/human-practices-stage-4-optimising-product-fig3-5.avif"
+  - "https://static.igem.wiki/teams/6133/wiki/hp/ihp/human-practices-stage-4-optimising-product-fig3-3.avif"
 srcZh:
   - "https://static.igem.wiki/teams/6133/wiki/hp/ihp/human-practices-stage-4-optimising-product-fig3-1.avif"
   - "https://static.igem.wiki/teams/6133/wiki/hp/ihp/human-practices-stage-4-optimising-product-fig3-2.avif"
+  - "https://static.igem.wiki/teams/6133/wiki/hp/ihp/human-practices-stage-4-optimising-product-fig3-3.avif"
 altEn:
   - "Questions shared with skincare product expert Ms. Zhu"
   - "Correspondence accompanying Ms. Zhu’s written response to our questions."
+  - "Panel (c): online interview with cosmetic formulation expert Mr. Su."
 altZh:
   - "Questions shared with skincare product expert Ms. Zhu"
   - "Correspondence accompanying Ms. Zhu’s written response to our questions."
-defaultLanguage: "en"
-layout: "stack"
-label: "Skincare expert correspondence language"
+  - "Panel (c): online interview with cosmetic formulation expert Mr. Su."
+layout: "right"
+label: "Skincare expert correspondence and formulation expert interview language"
 caption: "Fig. 2 | **(a)** Questions shared with skincare product expert Ms. Zhu **(b)** Correspondence accompanying Ms. Zhu’s written response to our questions. **(c)** Interview with cosmetic formulation expert Mr. Su"
 ---
-:::
-
-#right
-
-:::content-components-lightbox-image
----
-src:
-  - "https://static.igem.wiki/teams/6133/wiki/hp/ihp/human-practices-stage-4-optimising-product-fig3-3.avif"
-alt:
-  - "Panel (c): online interview with cosmetic formulation expert Mr. Su."
----
-:::
 ::
 
 ### Outcome

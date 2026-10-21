@@ -672,7 +672,7 @@ onUnmounted(() => {
                         color: label.color,
                     }"
                 >
-                    {{ label.text }}<sub v-if="label.id === 'pepTsh'">Sh</sub>
+                    {{ label.text }}
                 </span>
 
                 <!-- Cross-scene visibility stays on a separate gate because
@@ -712,7 +712,7 @@ onUnmounted(() => {
                             class="mechanism-scene__precursor-label invisible absolute inset-0 opacity-0 portrait:rotate-90"
                         >
                             <span
-                                class="absolute top-[calc(100%+0.25rem)] left-1/2 -translate-x-1/2 text-[clamp(0.72rem,1.15vw,1.2rem)] leading-none whitespace-nowrap text-white"
+                                class="absolute top-[calc(100%+0.25rem)] left-1/2 -translate-x-1/2 font-belanosima text-[clamp(0.72rem,1.15vw,1.2rem)] leading-none whitespace-nowrap text-white"
                             >
                                 Cys-Gly-3M3SH
                             </span>
@@ -745,7 +745,7 @@ onUnmounted(() => {
                 class="mechanism-scene__copy-panel absolute right-20 left-20 m-0 box-border h-auto w-auto max-w-none text-[clamp(1.4rem,2.0vw,2.0rem)] leading-[1.55] [overflow-wrap:break-word] whitespace-normal text-[#f7fbff] will-change-[transform,opacity] portrait:relative portrait:right-auto portrait:left-auto portrait:w-full portrait:text-[clamp(0.95rem,3.8vw,1.25rem)] portrait:leading-[1.42] portrait:[grid-area:copy]"
             >
                 This precursor is transported into <em>S. hominis</em> cells by
-                <strong class="text-[#b0e5fd]">PepT<sub>Sh</sub></strong> , a
+                <strong class="text-[#b0e5fd]">PepT</strong> , a
                 member of the
                 <strong>POT</strong>
                 (Proton-dependent Oligopeptide Transporter) family.

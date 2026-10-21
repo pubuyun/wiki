@@ -21,7 +21,7 @@ Our findings from **Stage 1 & 2** prompted us to explore whether we could develo
 
 ### Observe
 
-From the research paper shared by **dermatologist Dr. Xia**, we learnt that *Staphylococcus hominis* takes up the odorless precursor **Cys-Gly-3M3SH** through the membrane transporter **PepTSh** and converts it into **3M3SH**, a volatile sulfur compound responsible for underarm odor.:fn-ref{id="1"} Since existing solutions offered few suitable ingredients that met our requirements for safety and effectiveness, we began exploring whether **targeting the underlying mechanism** could offer an alternative approach to odor control.
+From the research paper shared by **dermatologist Dr. Xia**, we learnt that *Staphylococcus hominis* takes up the odorless precursor **Cys-Gly-3M3SH** through the membrane transporter **PepTSh** and converts it into **3M3SH**, a volatile sulfur compound responsible for underarm odor. :fn-ref{id="1"} Since existing solutions offered few suitable ingredients that met our requirements for safety and effectiveness, we began exploring whether **targeting the underlying mechanism** could offer an alternative approach to odor control.
 
 However, our literature review revealed **few existing approaches** that intervened with odor formation directly while meeting our requirements. We therefore proposed using deep-learning models to design a ***de novo* protein binder targeting PepTSh**. By interfering with the transporter, we hoped to reduce precursor uptake. As we were new to computational modeling, we wished to seek guidance on establishing a reliable dry-lab workflow for candidate generation, screening and validation.
 
@@ -77,8 +77,6 @@ The potential limitations of precursor binders and transporter binders prompted 
 
 Our **three strategies** target complementary points in the same pathway: sequestering free precursor, blocking bacterial uptake and modifying newly secreted precursor. Together, they could provide more robust and sustained odor control than any single strategy alone.
 
-1. Minhas, Gurdeep S, et al. “Structural Basis of Malodour Precursor Transport in the Human Axilla.” *eLife*, vol. 7, 3 July 2018, p. e34995, https://doi.org/10.7554/eLife.34995. PubMed Central.
-
 ## Cycle 2 First meeting with KleanK
 
 ### Observe
@@ -97,7 +95,6 @@ altZh:
   - "Text messages from KleanK on chinese social media RedNote asking for collaboration"
 label: "Fig. 3 | Text messages from KleanK on chinese social media RedNote asking for collaboration — image language"
 caption: "Fig. 3 | Text messages from KleanK on chinese social media RedNote asking for collaboration"
-defaultLanguage: "en"
 ---
 ::
 
@@ -157,7 +154,7 @@ Following the discussion with Professor Meng, we **redesigned our transporter bi
 
 Although periplasmic expression allows us to test the transporter binders' affinity to PepTSh and reactivity, it doesn't account for the effect of the *S. hominis* cell wall. Therefore, we plan to conduct an **assay with *Staphylococcus hominis*** in the future under appropriate protection.
 
-Additionally, following Professor Meng's suggestion, we conducted further literature research and identified **bornyl acetate** and **geranyl butyrate** as promising fragrance candidates. Bornyl acetate has a **woody, camphorous scent**, while geranyl butyrate has a **floral scent**, aligning with the fragrance preferences identified in our survey. Inspired by the paper *"A microbial platform for selective biosynthesis of monoterpene esters" (Yang et al., 2026)*, which demonstrated the feasibility of producing monoterpene esters using engineered microbial systems, we explored the potential of biosynthesizing these compounds through *E. coli* co-culture systems, informing our [subsequent fragrance biosynthesis design](/engineering/terpenoid-ester).:fn-ref{id="2"}
+Additionally, following Professor Meng's suggestion, we conducted further literature research and identified **bornyl acetate** and **geranyl butyrate** as promising fragrance candidates. Bornyl acetate has a **woody, camphorous scent**, while geranyl butyrate has a **floral scent**, aligning with the fragrance preferences identified in our survey. Inspired by the paper *"A microbial platform for selective biosynthesis of monoterpene esters" (Yang et al., 2026)*, which demonstrated the feasibility of producing monoterpene esters using engineered microbial systems, we explored the potential of biosynthesizing these compounds through *E. coli* co-culture systems, informing our [subsequent fragrance biosynthesis design](/engineering/terpenoid-ester). :fn-ref{id="2"}
 
 ## Moving on
 

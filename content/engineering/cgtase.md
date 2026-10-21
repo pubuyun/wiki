@@ -64,9 +64,9 @@ However, a later review of our records revealed that the intended T370K variant 
 
 ### Test
 
-After TES cell lysis and centrifugation, SDS-PAGE demonstrated successful protein expression of all mutants of CGTase in supernatant (Fig. 9a). However, T370R yielded a faint band after purification, suggesting low protein production, and was therefore excluded from subsequent experiments.
+After TES cell lysis and centrifugation, SDS-PAGE demonstrated successful protein expression of all mutants of CGTase in the supernatant (Fig. 9a). However, T370R yielded a faint band after purification, suggesting low protein production, and was therefore excluded from subsequent experiments.
 
-To evaluate the effects of the wild-type CGTase and the engineered variants on 3M3SH production, Ellman’s assay was conducted. The CGTase candidates were incubated with the precursor and maltodextrin for 1 h. The resultant mixtures were then incubated with PepT<sub>Sh</sub>-expressing *E. coli* BL21(DE3). Absorbance at 412 nm was subsequently measured and converted to thiol concentrations using a GSH standard curve.
+To evaluate the effects of the wild-type CGTase and the engineered variants on 3M3SH production, Ellman’s assay was conducted. The CGTase candidates were incubated with the precursor and maltodextrin for 1 h. The resultant mixtures were then incubated with PepT<sub>Sh</sub>-expressing *E. coli* BL21(DE3). Subsequent measurement follows the procedure established in [Precursor Binder Cycle 1](/engineering/precursor-binder#precursor-binder-cycle-1).
 
 The results (Fig. 9b) showed that thiol concentrations in the mixtures treated with wild-type CGTase, CGTase T370L, and CGTase T370R/F183W were 0.282 ± 0.004 mM, 0.328 ± 0.063 mM, and 0.314 ± 0.011 mM, respectively. The mean thiol concentration in each treatment group was more than 50% lower than that of the negative control (0.676 ± 0.108 mM GSH equivalents), in which the precursor and maltodextrin were incubated with phosphate-buffered saline (PBS) before PepT<sub>Sh</sub>-expressing *E. coli* were added.
 
@@ -78,7 +78,7 @@ src:
 alt:
   - "Gel lanes compare CGTase variants, soluble and pellet fractions, and purified proteins; arrows mark bands near 78 kDa."
   - "Wild-type, T370L, and T370R/F183W CGTase reduce thiol content to about 0.28–0.33 mM versus about 0.68 mM in the negative control."
-caption: "Fig. 9 | SDS-PAGE and Ellman's Assay results of mutants of CGTase; **(a)** SDS-PAGE analysis of CGTase expressed in E. coli BL21(DE3); cell fractions of untransformed BL21(DE3) were used as control; S, supernatant; P, pellet; 250, fractions eluted with 250 mM imidazole; WT, wild-type CGTase; yellow arrows indicate bands near 78 kDa, consistent with the expected size of CGTase; **(b)** Ellman's Assay of the CGTase; PBS served as the negative control; error bars represent ±SD (*n* = 3); statistical analysis used one-way ANOVA followed by Dunnett’s multiple comparisons test; asterisks indicate significant differences compared with the negative control; *** indicates p < 0.001."
+caption: "Fig. 9 | SDS-PAGE and Ellman's assay results of mutants of CGTase; **(a)** SDS-PAGE analysis of CGTase expressed in E. coli BL21(DE3); cell fractions of untransformed BL21(DE3) were used as control; S, supernatant; P, pellet; 250, fractions eluted with 250 mM imidazole; WT, wild-type CGTase; yellow arrows indicate bands near 78 kDa, consistent with the expected size of CGTase; **(b)** Ellman's Assay of the CGTase; PBS served as the negative control; error bars represent ±SD (*n* = 3); statistical analysis used one-way ANOVA followed by Dunnett’s multiple comparisons test; asterisks indicate significant differences compared with the negative control; *** indicates p < 0.001."
 imageBackground: "#ffffff"
 preserveFigureNumber: true
 layout: stack
@@ -98,7 +98,7 @@ During the [second meeting with KleanK Company](/human-practices/stage-4-optimis
 
 To optimize the thermostability of CGTase tested, we developed a workflow using *SPURS* :fn-ref{#7} (a deep-learning-based thermostability prediction tool) to introduce multi-point mutations improving thermostability of CGTase. First, single point mutations with stabilizing effects were selected. Then, pairwise compatibility testing and a diverse beam search algorithm were used to build up increasingly higher-order mutants while avoiding predicted pairwise conflicts.
 
-Finally, variants carrying 2, 4, 6, or 8 additional substitutions relative to each parent variant were selected for testing.
+Finally, variants carrying 2, 4, 6, or 8 additional substitutions were selected for testing. The abbreviations KR and WR are used below to denote variants based on T370K and T370R/F183W, respectively, with numerical suffixes indicating the number of additional substitutions.
 
 ### Build
 

@@ -19,40 +19,58 @@ const WORLD_MAP_SCALE = 1;
 
 const regions = [
     {
-        name: "South Asia",
-        value: 70,
-        display: "70%",
+        name: "Southern Asian",
+        value: 62.22,
+        display: "62.22%",
         className: "world-stat-card--south-asia",
         origin: "48% 100%",
         fromX: "1vw",
         fromY: "14vh",
     },
     {
-        name: "East Asia",
-        value: 5,
-        display: "5%",
+        name: "Eastern Asian",
+        value: 21.54,
+        display: "21.54%",
         className: "world-stat-card--east-asia",
         origin: "0% 92%",
         fromX: "-10vw",
         fromY: "14vh",
     },
     {
-        name: "Europe",
-        value: 85,
-        display: "85%",
+        name: "European",
+        value: 97.48,
+        display: "97.48%",
         className: "world-stat-card--europe",
         origin: "82% 70%",
         fromX: "11vw",
         fromY: "10vh",
     },
     {
-        name: "Africa",
-        value: 99.9,
-        display: "99.9%",
+        name: "African",
+        value: 99.99,
+        display: "99.99%",
         className: "world-stat-card--africa",
         origin: "50% 50%",
         fromX: "0vw",
         fromY: "-5vh",
+    },
+    {
+        name: "Oceanian",
+        value: 96.05,
+        display: "96.05%",
+        className: "world-stat-card--oceania",
+        origin: "0% 50%",
+        fromX: "-10vw",
+        fromY: "-8vh",
+    },
+    {
+        name: "American",
+        value: 92.42,
+        display: "92.42%",
+        className: "world-stat-card--america",
+        origin: "100% 50%",
+        fromX: "10vw",
+        fromY: "-8vh",
     },
 ] as const;
 
@@ -167,7 +185,7 @@ onMounted(() => {
                                 valueElement.textContent = `${
                                     region.value % 1 === 0
                                         ? Math.round(counter.value)
-                                        : counter.value.toFixed(1)
+                                        : counter.value.toFixed(2)
                                 }%`;
                             },
                         },
@@ -265,7 +283,7 @@ onUnmounted(() => {
     z-index: 1;
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    grid-template-rows: repeat(2, minmax(0, 1fr));
+    grid-template-rows: repeat(3, minmax(0, 1fr));
     gap: clamp(1rem, 3.5vw, 2.5rem);
     flex: 1;
     min-height: 0;
@@ -312,6 +330,12 @@ onUnmounted(() => {
 }
 .world-stat-card--africa {
     background: #88b5df;
+}
+.world-stat-card--oceania {
+    background: #74c6ce;
+}
+.world-stat-card--america {
+    background: #8dc4cf;
 }
 .world-stat-scene__footer {
     position: relative;

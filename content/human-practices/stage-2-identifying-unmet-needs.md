@@ -34,7 +34,6 @@ altZh:
   - "Interview with deodorant user Mr. Chen."
   - "Interview with deodorant user Mr. Wu, showing the interview questions."
 caption: "Fig. 1 | **(a)** Interview with anonymous teammate **(b)** Interview with deodorant user Mr. Chen **(c)** Interview with deodorant user Mr. Wu"
-defaultLanguage: "en"
 label: "Image language"
 ---
 ::

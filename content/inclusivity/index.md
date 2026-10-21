@@ -711,7 +711,6 @@ altZh:
   - "Mr. Zhang recommends one learning objective per graphic, clearer tactile features and softer printing materials."
 altEn:
   - "English translation: Mr. Zhang recommends one learning objective per graphic, clearer tactile features and softer printing materials."
-defaultLanguage: "en"
 label: "Figure 7 image language"
 ---
 ::
@@ -939,7 +938,6 @@ altZh:
   - "CADHOH replies that sign language is a simple natural language and written words can convey complex information."
 altEn:
   - "English translation of CADHOH’s response about sign language and the use of written language for complex information."
-defaultLanguage: "en"
 label: "Figure 11 image language"
 ---
 ::
@@ -967,7 +965,6 @@ altEn:
   - "English translation of a Deaf blogger’s experience learning sign language and advice on technical vocabulary."
   - "English translation discussing scientific signing barriers, community participation and sharing new signs."
   - "English translation explaining limited scientific signs and how researchers and interpreters can support their development."
-defaultLanguage: "en"
 label: "Figure 12 image language"
 ---
 ::
@@ -1053,7 +1050,6 @@ altZh:
   - "A Deaf sign language teacher comments enthusiastically on our SignBio video and expresses interest in collaboration."
 altEn:
   - "English translation of a Deaf sign language teacher’s encouragement and interest in collaboration."
-defaultLanguage: "en"
 label: "Figure 14 image language"
 ---
 ::
@@ -1089,7 +1085,6 @@ altEn:
   - "English translation of the conversation with Mr. Gou, part 2: reviewing and refining scientific signs for Song of SynBio."
   - "English translation of the conversation with Mr. Gou, part 3: reviewing and refining scientific signs for Song of SynBio."
   - "English translation of the conversation with Mr. Gou, part 4: reviewing and refining scientific signs for Song of SynBio."
-defaultLanguage: "en"
 label: "Figure 15 image language"
 ---
 ::
@@ -1113,7 +1108,6 @@ altZh:
 altEn:
   - "English translation of the conversation with Mr. Gou, part 5: reviewing and refining scientific signs for Song of SynBio."
   - "English translation of the conversation with Mr. Gou, part 6: reviewing and refining scientific signs for Song of SynBio."
-defaultLanguage: "en"
 label: "Figure 16 image language"
 ---
 ::
@@ -1154,7 +1148,6 @@ altZh:
   - "Chinese poster invites participants to a bacteria–fungi clay activity and a sign language challenge based on SignBio videos."
 altEn:
   - "English poster invites participants to a bacteria–fungi clay activity and a sign language challenge based on SignBio videos."
-defaultLanguage: "en"
 label: "Figure 18 image language"
 ---
 ::
@@ -1171,7 +1164,6 @@ altZh:
   - "Participants describe sign language as expressive and reflect on including Deaf people in science."
 altEn:
   - "English translations of participants’ messages about expressive sign language and including Deaf people in science."
-defaultLanguage: "en"
 label: "Figure 19 image language"
 ---
 ::
@@ -1520,7 +1512,6 @@ altEn:
   - "English translation of troubleshooting missing chain and residue names and duplicated atom names."
   - "English translation explaining how to fix atom ordering in a PDB file."
   - "English translation of a discussion of dynamic cross-correlation matrices and simulations with and without a ligand."
-defaultLanguage: "en"
 label: "Figure 34 image language"
 ---
 ::
@@ -1723,7 +1714,6 @@ altZh:
 altEn:
   - "English poster distinguishes genetic modification from selective breeding and contrasts common GM food claims with scientific explanations."
   - "English poster describes potential GM crop benefits, including grain yield, pesticide use and nutritional value."
-defaultLanguage: "en"
 label: "Figure 43 image language"
 ---
 ::

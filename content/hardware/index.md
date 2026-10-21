@@ -361,13 +361,12 @@ Both fragrances are produced through engineered microbial fermentation rather th
 
 ::content-components-bilingual-image-panels
 ---
-srcEn: "https://static.igem.wiki/teams/6133/wiki/drylab/hardware/pie-en.avif"
-srcZh: "https://static.igem.wiki/teams/6133/wiki/drylab/hardware/pie-cn.avif"
+srcEn: "https://static.igem.wiki/teams/6133/wiki/drylab/hardware/pie-cn.avif"
+srcZh: "https://static.igem.wiki/teams/6133/wiki/drylab/hardware/pie-en.avif"
 altEn: "Public survey fragrance preferences: floral/fruity scents (41.0%) and woody scents (35.2%) were the most preferred."
 altZh: "公众调查中的香型偏好：花果香（41.0%）和木质香（35.2%）最受欢迎。"
 label: "Fragrance preference survey — image language"
 caption: "Public survey results on fragrance preferences."
-defaultLanguage: "en"
 ---
 ::
 

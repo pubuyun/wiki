@@ -58,6 +58,9 @@ const exploreGroups = computed(() =>
             >
                 Explore {{ categoryTitle }}
             </h2>
+            <p class="mt-3 leading-relaxed text-on-surface">
+                Please view the detailed documentation of our work here.
+            </p>
         </header>
 
         <ul v-if="exploreGroups.length" class="explore-grid grid gap-4">
