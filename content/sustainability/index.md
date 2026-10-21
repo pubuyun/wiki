@@ -106,17 +106,17 @@ These discussions encouraged us to consider resource use and chemical management
 
 For Target 12.2, our project explores microbial production of protein actives and the fragrance compounds geranyl butyrate and bornyl acetate. This provides an alternative production route that could reduce reliance on particular petrochemical feedstocks or plant-extraction processes. However, its resource efficiency will depend on fermentation yield, feedstock requirements, energy consumption and purification.
 
-We also chose PP as the material for our package. By adopting an all-PP construction except for a hydrophilic layer, our packaging requires fewer raw materials and enters recycling streams most cleanly without the need for separation. Further assessment will consider packaging weight, material composition, cost, formulation compatibility and local recovery options. We aim to minimize unnecessary components and investigate opportunities for simpler material combinations and reuse.
+We also chose PP as the material for our package. By adopting an all-PP construction except for a hydrophilic layer, our packaging requires fewer raw materials and enters recycling streams most cleanly without the need for separation. :fn-ref{#2} Further assessment will consider packaging weight, material composition, cost, formulation compatibility and local recovery options. We aim to minimize unnecessary components and investigate opportunities for simpler material combinations and reuse.
 
 To reduce resource consumption and packaging waste, we plan to implement a refillable soft-pack system, building on Ms. Chen's advice. We will offer lightweight stand-up pouches for refilling instead of manufacturing a new rigid bottle with every purchase. This model could cut plastic use per application by roughly 85% and reduce transport weight and carbon emissions.
 
-Additionally, to reduce our reliance on petrochemical feedstocks, we are actively transitioning our formulation. While our active proteins and fragrance esters are already bio-based, we plan to replace petrochemical-derived excipients such as 1,3-butylene glycol and 1,2-hexanediol, with 100% bio-based, fermentation-derived grades. :fn-ref{#2}, :fn-ref{#3}, :fn-ref{#4} Because the chemical structures are identical, this supplier swap ensures formulation stability while significantly improving the renewability of our product.
+Additionally, to reduce our reliance on petrochemical feedstocks, we are actively transitioning our formulation. While our active proteins and fragrance esters are already bio-based, we plan to replace petrochemical-derived excipients such as 1,3-butylene glycol and 1,2-hexanediol, with 100% bio-based, fermentation-derived grades. :fn-ref{#3}, :fn-ref{#4}, :fn-ref{#5} Because the chemical structures are identical, this supplier swap ensures formulation stability while significantly improving the renewability of our product.
 
 For Target 12.4, our odor-control strategy targets precursor uptake rather than relying on broad-spectrum inhibition of underarm bacteria. Our protein actives and biosynthesized fragrances are intended as alternatives to selected conventional ingredients, but their biological origin does not automatically establish their safety or biodegradability.
 
 To avoid using complex multi-layer plastics, we kept the PP structure but added a high-barrier silicon-oxide coating. This protects the protein from oxidation while keeping the material fully recyclable. To address Ms. Chen's warning about product residue, we incorporated a hydrophilic inner-wall treatment and a smaller-radius ball design. This significantly reduces protein adsorption and shrinks the air-liquid interface (the main route of protein inactivation), minimizing residual product left in the bottle.
 
-Furthermore, after talking with Ms. Zhang, we are addressing our most environmentally persistent excipient - CO40 (PEG-40 hydrogenated castor oil). Because PEG-type solubilisers are ethoxylated from petroleum-derived ethylene oxide, are rated persistent by the OECD, and are flagged for ethylene-oxide / 1,4-dioxane residues, :fn-ref{#5}, :fn-ref{#6} we plan to screen plant-based alternatives (e.g., polyglyceryl esters, sucrose esters) in the medium term.
+Furthermore, after talking with Ms. Zhang, we are addressing our most environmentally persistent excipient - CO40 (PEG-40 hydrogenated castor oil). Because PEG-type solubilisers are ethoxylated from petroleum-derived ethylene oxide, are rated persistent by the OECD, and are flagged for ethylene-oxide / 1,4-dioxane residues, :fn-ref{#6}, :fn-ref{#7} we plan to screen plant-based alternatives (e.g., polyglyceryl esters, sucrose esters) in the medium term.
 
 Following the environmental and marine experts' advice, we plan to assess ingredient degradation and potential ecotoxicity, while also examining fermentation waste and wastewater management. These evaluations will help us determine whether our design reduces environmental burdens or shifts them to another stage of production.
 
@@ -160,7 +160,7 @@ A transition toward biological manufacturing may require different technical ski
 
 ### Identifying the problem
 
-Conventional deodorants can introduce harmful chemical ingredients into wastewater during daily use and washing. Some antimicrobial ingredients, such as triclosan (TCS), have been studied for their occurrence in wastewater and potential environmental effects. Although wastewater treatment plants (WWTPs) achieve a median TCS removal efficiency of approximately 90%, residual TCS may still be released into domestic water or accumulate in sewage sludge and biosolids. Reported WWTP influent concentrations of TCS range from 1.86 to 26.8 μg·L⁻¹ with effluent concentrations ranging from 0.027 to 2.7 μg·L⁻¹. Furthermore, studies have identified the formation of toxic byproducts during oxidation of TCS. :fn-ref{#7} Aluminium salts are also widely used to block sweat glands. During daily use and washing, residues may enter domestic wastewater, adding to the chemical load that must be managed during wastewater treatment. These chemicals would pollute the aquatic environment and exert toxic effects on aquatic organisms and aquatic ecosystems. They can also bioaccumulate in organisms and circulate in ecosystems, creating long-term effects without being noticed.
+Conventional deodorants can introduce harmful chemical ingredients into wastewater during daily use and washing. Some antimicrobial ingredients, such as triclosan (TCS), have been studied for their occurrence in wastewater and potential environmental effects. Although wastewater treatment plants (WWTPs) achieve a median TCS removal efficiency of approximately 90%, residual TCS may still be released into domestic water or accumulate in sewage sludge and biosolids. Reported WWTP influent concentrations of TCS range from 1.86 to 26.8 μg·L⁻¹ with effluent concentrations ranging from 0.027 to 2.7 μg·L⁻¹. Furthermore, studies have identified the formation of toxic byproducts during oxidation of TCS. :fn-ref{#8} Aluminium salts are also widely used to block sweat glands. During daily use and washing, residues may enter domestic wastewater, adding to the chemical load that must be managed during wastewater treatment. These chemicals would pollute the aquatic environment and exert toxic effects on aquatic organisms and aquatic ecosystems. They can also bioaccumulate in organisms and circulate in ecosystems, creating long-term effects without being noticed.
 
 ### Interviewing stakeholders
 
@@ -214,9 +214,11 @@ Our contribution is indirect: we incorporate climate considerations into product
 
 ### Identifying the problem
 
-We considered spraying as one of our product formats. However, some conventional deodorants use volatile organic compound (VOC)-based propellants, such as propane and butane, which can react with other pollutants to form ground-level ozone, a major component of smog that can harm human health.
+We considered spraying as one of our product formats. However, some conventional deodorants use volatile organic compound (VOC)-based propellants, such as propane and butane, which can react with other pollutants to form ground-level ozone, a major component of smog that can harm human health. :fn-ref{#9}
 
-Beyond emissions during product use, we also considered the environmental impact of ingredient production. Replacing conventional ingredients with biological alternatives does not automatically reduce greenhouse gas emissions. A study of fermentation-derived protein reported production footprints of 5.5–17.6 kg CO₂e/kg protein across different modeled scenarios, demonstrating the importance of production conditions. :fn-ref{#9}
+A report prepared for the European Commission states that traditional aerosol deodorants can contain up to 95% VOCs (including solvents and propellants). :fn-ref{#10} Reducing these emissions is therefore an important environmental consideration in our product design.
+
+Beyond emissions during product use, we also considered the environmental impact of ingredient production. Replacing conventional ingredients with biological alternatives does not automatically reduce greenhouse gas emissions. A study of fermentation-derived protein reported production footprints of 5.5–17.6 kg CO₂e/kg protein across different modeled scenarios, demonstrating the importance of production conditions. :fn-ref{#11}
 
 For Expelliodor, we wanted to investigate whether the low proposed loading of our protein actives could offer a smaller ingredient-production footprint than an aluminum-containing reference formulation. We therefore used published data for a preliminary screening calculation, while recognizing that these data do not represent our actual manufacturing process.
 
@@ -256,9 +258,9 @@ Applying the published protein-production range gives:
 
 0.00030 × 5.5–17.6 = 0.00165–0.00528 kg CO₂e/kg formulation.
 
-This corresponds to **1.65–5.28 g CO₂e per kg of formulation** under the protein proxy scenario. The underlying study modeled fungal production of a different protein, so this is not a measurement of our protein-production footprint. :fn-ref{#9}
+This corresponds to **1.65–5.28 g CO₂e per kg of formulation** under the protein proxy scenario. The underlying study modeled fungal production of a different protein, so this is not a measurement of our protein-production footprint. :fn-ref{#11}
 
-For an illustrative reference, an Australian government evaluation reports a roll-on formulation containing 14.5% aluminum chlorohydrate, equivalent to approximately 3.6% elemental aluminum. :fn-ref{#10} An industry assessment reports approximately 1.5–4.5 kg CO₂e per kg of elemental aluminum contained in aluminum-based water-treatment coagulants. :fn-ref{#11}
+For an illustrative reference, an Australian government evaluation reports a roll-on formulation containing 14.5% aluminum chlorohydrate, equivalent to approximately 3.6% elemental aluminum. :fn-ref{#12} An industry assessment reports approximately 1.5–4.5 kg CO₂e per kg of elemental aluminum contained in aluminum-based water-treatment coagulants. :fn-ref{#13}
 
 Applying this proxy gives:
 
@@ -411,25 +413,29 @@ Through the exploration of more environmentally responsible approaches to produc
 
 1. :ref-fn[United Nations. Sustainability [Internet]. New York: United Nations; [cited 2026 Oct 21]. Available from: <https://www.un.org/en/academic-impact/sustainability>]{#1}
 
-2. :ref-fn[United States Environmental Protection Agency. Green Chemistry Challenge: 2020 Greener Synthetic Pathways Award [Internet]. Washington (DC): EPA; 2020 [cited 2026 Oct 21]. Available from: <https://19january2025snapshot.epa.gov/greenchemistry/green-chemistry-challenge-2020-greener-synthetic-pathways-award>]{#2}
+2. :ref-fn[VLM Poliplast. Monomaterial PP for flexible packaging [Internet]. VLM Poliplast; [cited 2026 Oct 21]. Available from: <https://vlmpoliplast.ro/en/materials/monomaterial-pp/>]{#2}
 
-3. :ref-fn[Walsh L. Is butylene glycol natural or synthetic? Where it comes from [Internet]. Juventude; 2026 Jun 1 [cited 2026 Oct 21]. Available from: <https://www.juventudeskincare.com/blogs/founders-journal/is-butylene-glycol-natural-or-synthetic-where-it-comes-from>]{#3}
+3. :ref-fn[United States Environmental Protection Agency. Green Chemistry Challenge: 2020 Greener Synthetic Pathways Award [Internet]. Washington (DC): EPA; 2020 [cited 2026 Oct 21]. Available from: <https://19january2025snapshot.epa.gov/greenchemistry/green-chemistry-challenge-2020-greener-synthetic-pathways-award>]{#3}
 
-4. :ref-fn[SEQENS. AdvensProtect Green range [Internet]. SEQENS; [cited 2026 Oct 21]. Available from: <https://www.seqens.com/personal-care/advensprotect-green-range/>]{#4}
+4. :ref-fn[Walsh L. Is butylene glycol natural or synthetic? Where it comes from [Internet]. Juventude; 2026 Jun 1 [cited 2026 Oct 21]. Available from: <https://www.juventudeskincare.com/blogs/founders-journal/is-butylene-glycol-natural-or-synthetic-where-it-comes-from>]{#4}
 
-5. :ref-fn[RAU Cosmetics. PEG-40 hydrogenated castor oil [Internet]. RAU Cosmetics Hong Kong; [cited 2026 Oct 21]. Available from: <https://rau.hk/peg-40>]{#5}
+5. :ref-fn[SEQENS. AdvensProtect Green range [Internet]. SEQENS; [cited 2026 Oct 21]. Available from: <https://www.seqens.com/personal-care/advensprotect-green-range/>]{#5}
 
-6. :ref-fn[Environmental Working Group. PEG-40 hydrogenated castor oil [Internet]. Washington (DC): EWG; [cited 2026 Oct 21]. Available from: <https://www.ewg.org/skindeep/ingredients/704597-peg-40-hydrogenated-castor-oil/>]{#6}
+6. :ref-fn[RAU Cosmetics. PEG-40 hydrogenated castor oil [Internet]. RAU Cosmetics Hong Kong; [cited 2026 Oct 21]. Available from: <https://rau.hk/peg-40>]{#6}
 
-7. :ref-fn[Dhillon GS, Kaur S, Pulicharla R, Brar SK, Cledón M, Verma M, et al. Triclosan: current status, occurrence, environmental risks and bioaccumulation potential. Int J Environ Res Public Health. 2015;12(5):5657-84. doi: [10.3390/ijerph120505657](https://doi.org/10.3390/ijerph120505657).]{#7}
+7. :ref-fn[Environmental Working Group. PEG-40 hydrogenated castor oil [Internet]. Washington (DC): EWG; [cited 2026 Oct 21]. Available from: <https://www.ewg.org/skindeep/ingredients/704597-peg-40-hydrogenated-castor-oil/>]{#7}
 
-8. :ref-fn[United States Environmental Protection Agency. Ground-level ozone basics [Internet]. Washington (DC): EPA; [cited 2026 Oct 21]. Available from: <https://www.epa.gov/ground-level-ozone-pollution/ground-level-ozone-basics>]{#8}
+8. :ref-fn[Dhillon GS, Kaur S, Pulicharla R, Brar SK, Cledón M, Verma M, et al. Triclosan: current status, occurrence, environmental risks and bioaccumulation potential. Int J Environ Res Public Health. 2015;12(5):5657-84. doi: [10.3390/ijerph120505657](https://doi.org/10.3390/ijerph120505657).]{#8}
 
-9. :ref-fn[Behm K, Nappa M, Aro N, Welman A, Ledgard S, Suomalainen M, et al. Comparison of carbon footprint and water scarcity footprint of milk protein produced by cellular agriculture and the dairy industry. Int J Life Cycle Assess. 2022;27(8):1017-34. doi: [10.1007/s11367-022-02087-0](https://doi.org/10.1007/s11367-022-02087-0).]{#9}
+9. :ref-fn[United States Environmental Protection Agency. Ground-level ozone basics [Internet]. Washington (DC): EPA; [cited 2026 Oct 21]. Available from: <https://www.epa.gov/ground-level-ozone-pollution/ground-level-ozone-basics>]{#9}
 
-10. :ref-fn[Australian Industrial Chemicals Introduction Scheme. Use of aluminium in antiperspirants: evaluation statement EVA00100 [Internet]. AICIS; 2022 Dec 22 [cited 2026 Oct 21]. Available from: <https://www.industrialchemicals.gov.au/sites/default/files/2022-12/EVA00100%20-%20Evaluation%20statement%20-%2022%20December%202022.pdf>]{#10}
+10. :ref-fn[Tebert C, Krause S, Terwoert J, Kallay TK. Implementation and review of Directive 2004/42/EC: interim report [Internet]. Hamburg: Ökopol; 2009 Feb 16 [cited 2026 Oct 21]. European Commission service contract No. 070307/2007/483710/MAR/C3. Available from: <https://www.schildersvak.nl/download/EU-DECOPAINT_Interim-report_%C3%96kopol.pdf>]{#10}
 
-11. :ref-fn[IVL Swedish Environmental Research Institute. Carbon footprints of inorganic coagulants produced by INCOPA member organisations: an executive summary [Internet]. INCOPA; 2023 Oct [updated 2024 Aug; cited 2026 Oct 21]. Available from: <https://www.incopa.org/wp-content/uploads/2024/10/INCOPA-ExecutiveSummary_A4-Booklet-30102023.pdf>]{#11}
+11. :ref-fn[Behm K, Nappa M, Aro N, Welman A, Ledgard S, Suomalainen M, et al. Comparison of carbon footprint and water scarcity footprint of milk protein produced by cellular agriculture and the dairy industry. Int J Life Cycle Assess. 2022;27(8):1017-34. doi: [10.1007/s11367-022-02087-0](https://doi.org/10.1007/s11367-022-02087-0).]{#11}
+
+12. :ref-fn[Australian Industrial Chemicals Introduction Scheme. Use of aluminium in antiperspirants: evaluation statement EVA00100 [Internet]. AICIS; 2022 Dec 22 [cited 2026 Oct 21]. Available from: <https://www.industrialchemicals.gov.au/sites/default/files/2022-12/EVA00100%20-%20Evaluation%20statement%20-%2022%20December%202022.pdf>]{#12}
+
+13. :ref-fn[IVL Swedish Environmental Research Institute. Carbon footprints of inorganic coagulants produced by INCOPA member organisations: an executive summary [Internet]. INCOPA; 2023 Oct [updated 2024 Aug; cited 2026 Oct 21]. Available from: <https://www.incopa.org/wp-content/uploads/2024/10/INCOPA-ExecutiveSummary_A4-Booklet-30102023.pdf>]{#13}
 
 ## Interviews
 

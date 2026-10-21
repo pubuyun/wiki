@@ -27,7 +27,7 @@ The Characterize stage successfully identified CGTase as a functional starting e
 
 ### Rational Design
 
-The feasibility of the rational design, however, is not fully verified because of the limited dataset. Only T370R/F183W was successfully tested as designed. Comparing this double mutant with the unintended T370L variant provides limited evidence that the proposed design strategy deserves further evaluation.
+The feasibility of the rational design, however, is not fully verified because of the limited dataset. Only T370R/F183W was successfully tested as designed. Comparing this double mutant with the unintended T370L variant provides limited evidence.
 
 ### Limitation and Next Step
 

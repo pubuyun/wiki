@@ -554,7 +554,7 @@ The Characterize stage successfully identified CGTase as a functional starting e
 
 However, in the experiment, the intended T370K mutant was unexpectedly obtained as T370L.
 
-Thus, the feasibility of the rational design is not fully verified because of the limited dataset. Only T370R/F183W was successfully tested as designed. Comparing this double mutant with the unintended T370L variant provides limited evidence that the proposed design strategy deserves further evaluation.
+Thus, the feasibility of the rational design is not fully verified because of the limited dataset. Only T370R/F183W was successfully tested as designed. Comparing this double mutant with the unintended T370L variant provides limited evidence.
 
 Future work should test more mutants, especially T370K, T370R, and combination mutants, with more experimental replicates.
 

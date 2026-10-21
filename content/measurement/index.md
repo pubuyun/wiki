@@ -94,9 +94,9 @@ caption: "Fig. 1 | GSH standard curve for the DTNB–Ellman's assay. Error bars 
 ---
 src:
   - https://static.igem.wiki/teams/6133/wiki/wetlab/measurement/measurement-measurement-fig2a.avif
-  - https://static.igem.wiki/teams/6133/wiki/wetlab/measurement/measurement-measurement-fig2b.avif
+  - https://static.igem.wiki/teams/6133/wiki/wetlab/engineering/engineering-precursor-binder-fig5b.avif
   - https://static.igem.wiki/teams/6133/wiki/wetlab/measurement/measurement-measurement-fig2c.avif
-  - https://static.igem.wiki/teams/6133/wiki/wetlab/measurement/measurement-measurement-fig2d.avif
+  - https://static.igem.wiki/teams/6133/wiki/wetlab/engineering/engineering-cgtase-fig9b.avif
 alt:
   - ""
   - ""

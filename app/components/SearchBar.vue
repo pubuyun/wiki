@@ -354,6 +354,14 @@ async function loadSearchIndex() {
 }
 
 const hasResults = computed(() => result.value.length > 0 && query.value);
+const documentTitles = computed(
+    () =>
+        new Map(
+            searchSections.value
+                .filter((section) => section.level === 1)
+                .map((section) => [searchDocumentPath(section.id), section.title]),
+        ),
+);
 const categoryLabels = new Map(
     siteNavGroups.flatMap((group) =>
         flattenNavLinks(group.links).map((link) => [
@@ -502,7 +510,9 @@ function groupSearchResults(links) {
         if (!documentGroup) {
             documentGroup = {
                 key: documentKey,
-                label: displayDocumentPath(pathSegments),
+                label:
+                    documentTitles.value.get(path) ||
+                    displayDocumentPath(pathSegments),
                 links: [],
             };
             categoryGroup.documentLookup.set(documentKey, documentGroup);
