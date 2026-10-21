@@ -24,7 +24,7 @@ Alternatively, a text-based overview is also available below.
 
   :::content-components-panel-layout{:portrait="true" label="Voices inspiring scientific inclusion"}
   #left
-  ![Illustrated portrait of Wanda Díaz Merced holding a white cane.](https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-overview-1.avif)
+  ![Illustrated portrait of Wanda Díaz Merced holding a white cane.](https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-overview-1-u.avif)
 
   #right
   [“Science is for everyone. It has to be available to everyone, because we are all natural explorers.”](https://www.ted.com/talks/wanda_diaz_merced_how_a_blind_astronomer_found_a_way_to_hear_the_stars?view=transcript) :fn-ref{#1}
@@ -36,7 +36,7 @@ Alternatively, a text-based overview is also available below.
 
   :::content-components-panel-layout{:portrait="true" label="Voices inspiring scientific inclusion"}
   #left
-  ![Illustrated portrait of Temple Grandin holding a microphone.](https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-overview-2.avif)
+  ![Illustrated portrait of Temple Grandin holding a microphone.](https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-overview-2-u.avif)
 
   #right
   [“Our educational system may be screening out creative people in the fields of art, music, science, and computer programming.”](https://www.ted.com/talks/temple_grandin_educating_different_kinds_of_minds) :fn-ref{#3}
@@ -48,7 +48,7 @@ Alternatively, a text-based overview is also available below.
 
   :::content-components-panel-layout{:portrait="true" label="Voices inspiring scientific inclusion"}
   #left
-  ![Illustrated portrait of Derek Braun.](https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-overview-3.avif)
+  ![Illustrated portrait of Derek Braun.](https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-overview-3-u.avif)
 
   #right
   [“I originally thought I’d probably run into another deaf scientist there because it was such a large conference, but I didn’t.”](https://gallaudet.edu/science-technology-accessibility-mathematics-public-health/department-of-science-technology-and-mathematics-works-to-narrow-gap-for-deaf-students-in-stem-fields/) :fn-ref{#5}
@@ -60,7 +60,7 @@ Alternatively, a text-based overview is also available below.
 
   :::content-components-panel-layout{:portrait="true" label="Voices inspiring scientific inclusion"}
   #left
-  ![Illustrated portrait of Gabriel Reyes.](https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-overview-4.avif)
+  ![Illustrated portrait of Gabriel Reyes.](https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-overview-4-u.avif)
 
   #right
   [“Part of me wants to be angry and frustrated that no matter how hard I work or how enthusiastic I am, the socioeconomic class I was born into will be a hidden barrier.”](https://civicsciencemedia.org/from-poverty-to-science/) :fn-ref{#7}
@@ -72,7 +72,7 @@ Alternatively, a text-based overview is also available below.
 
   :::content-components-panel-layout{:portrait="true" label="Voices inspiring scientific inclusion"}
   #left
-  ![Illustrated portrait of Craig Venter.](https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-overview-5.avif)
+  ![Illustrated portrait of Craig Venter.](https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-overview-5-u.avif)
 
   #right
   [“Craig Venter is celebrated in the fields of synthetic biology and genome sequencing—fields where coding and biology blend together—yet, to the best of my knowledge, he is neither an expert programmer nor a software developer.”](https://pmc.ncbi.nlm.nih.gov/articles/PMC5989772/) :fn-ref{#9}
@@ -84,7 +84,7 @@ Alternatively, a text-based overview is also available below.
 
   :::content-components-panel-layout{:portrait="true" label="Voices inspiring scientific inclusion"}
   #left
-  ![Illustrated portrait of Jia Lanpo.](https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-overview-6.avif)
+  ![Illustrated portrait of Jia Lanpo.](https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-overview-6-u.avif)
 
   #right
   [“The spread of scientific knowledge is slow because too little effort is devoted to communicating science.”](https://www.cas.cn/xzfc/202212/t20221214_4858023.shtml) :fn-ref{#11}
@@ -104,7 +104,7 @@ To guide our inclusion efforts and consistently track our progress, we establish
   ---
   caption: "Fig. 1 | LIFT+ framework, comprising Learn, Intervene, Feedback, Transfer and Beyond"
   src:
-    - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig1.avif"
+    - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig1-u.avif"
   alt:
     - "LIFT+ cycle: Learn identifies barriers; Intervene develops solutions; Feedback guides refinements; Transfer shares resources; Beyond plans future development."
   ---
@@ -116,7 +116,7 @@ Guided by our LIFT+ framework, we began with six target groups we could reach in
 
   :::content-components-panel-layout{:portrait="true" label="Blind community contributions"}
   #left
-  ![A learner asks for tactile biology graphics beside a statistic of 8.92 million blind people in China in 2026.](https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig4.avif)
+  ![A learner asks for tactile biology graphics beside a statistic of 8.92 million blind people in China in 2026.](https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig4-u.avif)
 
   #right
   <h5 id="overview-blind-community">Blind Community</h5>
@@ -140,7 +140,7 @@ Guided by our LIFT+ framework, we began with six target groups we could reach in
 
   :::content-components-panel-layout{:portrait="true" label="Deaf community contributions"}
   #left
-  ![A learner asks how to sign promoter beside a statistic of 7.39 million people with complete hearing loss in China in 2022.](https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig10.avif)
+  ![A learner asks how to sign promoter beside a statistic of 7.39 million people with complete hearing loss in China in 2022.](https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig10-u.avif)
 
   #right
   <h5 id="overview-deaf-community">Deaf Community</h5>
@@ -164,7 +164,7 @@ Guided by our LIFT+ framework, we began with six target groups we could reach in
 
   :::content-components-panel-layout{:portrait="true" label="Autism spectrum contributions"}
   #left
-  ![A learner asks for science materials designed around their interests beside a statistic of over 13 million autistic people in China in 2026.](https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig23.avif)
+  ![A learner asks for science materials designed around their interests beside a statistic of over 13 million autistic people in China in 2026.](https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig23-u.avif)
 
   #right
   <h5 id="overview-children-on-the-autism-spectrum">Children On The Autism Spectrum</h5>
@@ -186,7 +186,7 @@ Guided by our LIFT+ framework, we began with six target groups we could reach in
 
   :::content-components-panel-layout{:portrait="true" label="Low socioeconomic background contributions"}
   #left
-  ![A student asks for a school laboratory beside a statistic of 281 million people in China with annual per capita disposable income of approximately US$1,420 or less in 2025.](https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig27.avif)
+  ![A student asks for a school laboratory beside a statistic of 281 million people in China with annual per capita disposable income of approximately US$1,420 or less in 2025.](https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig27-u.avif)
 
   #right
   <h5 id="overview-individuals-from-low-socioeconomic-backgrounds">Individuals From Low Socioeconomic Backgrounds</h5>
@@ -206,7 +206,7 @@ Guided by our LIFT+ framework, we began with six target groups we could reach in
 
   :::content-components-panel-layout{:portrait="true" label="Modeling beginner contributions"}
   #left
-  ![A beginner struggles with code beside a statistic that 92.9% of Chinese internet users aged 10–19 could not proficiently write computer programs in 2025.](https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig35.avif)
+  ![A beginner struggles with code beside a statistic that 92.9% of Chinese internet users aged 10–19 could not proficiently write computer programs in 2025.](https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig35-u.avif)
 
   #right
   <h5 id="overview-modeling-beginners">Modeling Beginners</h5>
@@ -238,7 +238,7 @@ Guided by our LIFT+ framework, we began with six target groups we could reach in
 
   :::content-components-panel-layout{:portrait="true" label="Older adult contributions"}
   #left
-  ![An older adult asks how to distinguish facts from misinformation beside a statistic of 15.87% of adults aged 65 and above in China with college education or higher in 2026.](https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig40.avif)
+  ![An older adult asks how to distinguish facts from misinformation beside a statistic of 15.87% of adults aged 65 and above in China with college education or higher in 2026.](https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig40-u.avif)
 
   #right
   <h5 id="overview-older-adults-with-limited-formal-education">Older Adults With Limited Formal Education</h5>
@@ -266,7 +266,7 @@ To find out whether this was a genuine issue experienced by the blind community,
 ---
 caption: "Fig. 2 | Online interview with Ms. Guan"
 src:
-  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig2.avif"
+  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig2-u.avif"
 alt:
   - ""
 ---
@@ -280,7 +280,7 @@ She also acknowledged that while official Braille version of textbooks exists, m
 ---
 caption: "Fig. 3 | Online interview with Mr. Chen"
 src:
-  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig3.avif"
+  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig3-u.avif"
 alt:
   - ""
 ---
@@ -633,7 +633,7 @@ After considering the barriers we identified and our own capabilities, we decide
 ---
 caption: "Fig. 4 | What if my biology textbook had tactile graphics...?  :fn-ref{#13}"
 src:
-  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig4.avif"
+  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig4-u.avif"
 alt:
   - "A learner asks for tactile biology graphics beside a statistic of 8.92 million blind people in China in 2026."
 imageBackground: transparent
@@ -654,9 +654,9 @@ caption: "Fig. 5 | **(a-c)** Photographs shared by Ms. Guan showing her testing 
 autoLabels: true
 columns: 3
 src:
-  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig5-a.avif"
-  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig5-b.avif"
-  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig5-c.avif"
+  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig5-a-u.avif"
+  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig5-b-u.avif"
+  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig5-c-u.avif"
 alt:
   - ""
   - ""
@@ -687,8 +687,8 @@ This round, we carried out follow-up testing sessions with Ms. Guan and her part
 caption: "Fig. 6 | **(a-b)** Photographs from the follow-up testing session with Ms. Guan and her partner at Guangzhou Library"
 autoLabels: true
 src:
-  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig6-a.avif"
-  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig6-b.avif"
+  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig6-a-u.avif"
+  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig6-b-u.avif"
 alt:
   - ""
   - ""
@@ -704,9 +704,9 @@ Additionally, we reached out to Mr. Zhang, a second-year master's student in Spe
 caption: "Fig. 7 | Mr. Zhang’s feedback on learning objectives, tactile detail and printing materials"
 autoLabels: false
 srcZh:
-  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig7.avif"
+  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig7-u.avif"
 srcEn:
-  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig7-en.avif"
+  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig7-en-u.avif"
 altZh:
   - "Mr. Zhang recommends one learning objective per graphic, clearer tactile features and softer printing materials."
 altEn:
@@ -738,9 +738,9 @@ caption: "Fig. 8 | A social media post **(a)** introducing the tactile biology g
 autoLabels: true
 columns: 3
 src:
-  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig8-a.avif"
-  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig8-b.avif"
-  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig8-c.avif"
+  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig8-a-u.avif"
+  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig8-b-u.avif"
+  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig8-c-u.avif"
 alt:
   - ""
   - ""
@@ -766,7 +766,7 @@ Building on the remaining areas for improvement identified through feedback and 
 ---
 caption: "Fig. 9 | Concept sketches for future tactile models with Braille labels, built-in audio and fully three-dimensional forms"
 src:
-  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig9.avif"
+  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig9-u.avif"
 alt:
   - ""
 ---
@@ -788,7 +788,7 @@ Nina and several teammates began looking into it. We found that "promoter" is no
 ---
 caption: "Fig. 10 | What if there were signs for scientific terms…? :fn-ref{#17}"
 src:
-  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig10.avif"
+  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig10-u.avif"
 alt:
   - "A learner asks how to sign promoter beside a statistic of 7.39 million people with complete hearing loss in China in 2022."
 imageBackground: transparent
@@ -932,9 +932,9 @@ The response from CADHOH did not directly address our concern about the lack of 
 caption: "Fig. 11 | The response from CADHOH"
 autoLabels: false
 srcZh:
-  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig11.avif"
+  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig11-u.avif"
 srcEn:
-  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig11-en.avif"
+  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig11-en-u.avif"
 altZh:
   - "CADHOH replies that sign language is a simple natural language and written words can convey complex information."
 altEn:
@@ -952,13 +952,13 @@ caption: "Fig. 12 | **(a)** A Deaf blogger’s account of learning sign language
 autoLabels: true
 columns: 3
 srcZh:
-  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig12-a.avif"
-  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig12-b.avif"
-  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig12-c.avif"
+  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig12-a-u.avif"
+  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig12-b-u.avif"
+  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig12-c-u.avif"
 srcEn:
-  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig12-a-en.avif"
-  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig12-b-en.avif"
-  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig12-c-en.avif"
+  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig12-a-en-u.avif"
+  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig12-b-en-u.avif"
+  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig12-c-en-u.avif"
 altZh:
   - "A Deaf blogger describes learning sign language and recommends collaboration with Deaf signers when sharing technical vocabulary."
   - "A Deaf blogger describes scientific signing barriers, community participation and channels for sharing new signs."
@@ -986,7 +986,7 @@ Through these videos, we aimed to: **share scientific terms** with both Deaf and
 ---
 caption: "Fig. 13 | The *SignBio* ASL vocabulary videos"
 src:
-  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig13.avif"
+  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig13-u.avif"
 alt:
   - "Three SignBio video covers introduce ASL vocabulary for molecules of life, cell structures, and synthetic biology."
 ---
@@ -1046,9 +1046,9 @@ After sharing _SignBio_ on RedNote, we received positive feedback from a profess
 caption: "Fig. 14 | Feedback from a Deaf sign language teacher on a *SignBio* video"
 autoLabels: false
 srcZh:
-  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig14.avif"
+  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig14-u.avif"
 srcEn:
-  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig14-en.avif"
+  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig14-en-u.avif"
 altZh:
   - "A Deaf sign language teacher comments enthusiastically on our SignBio video and expresses interest in collaboration."
 altEn:
@@ -1070,15 +1070,15 @@ caption: "Fig. 15 | **(a-d)** Chat history with Mr. Gou discussing how to transl
 autoLabels: true
 columns: 4
 srcZh:
-  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig15-a.avif"
-  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig15-b.avif"
-  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig15-c.avif"
-  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig15-d.avif"
+  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig15-a-u.avif"
+  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig15-b-u.avif"
+  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig15-c-u.avif"
+  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig15-d-u.avif"
 srcEn:
-  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig15-a-en.avif"
-  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig15-b-en.avif"
-  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig15-c-en.avif"
-  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig15-d-en.avif"
+  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig15-a-en-u.avif"
+  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig15-b-en-u.avif"
+  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig15-c-en-u.avif"
+  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig15-d-en-u.avif"
 altZh:
   - "Conversation with Mr. Gou, part 1: reviewing and refining scientific signs for Song of SynBio."
   - "Conversation with Mr. Gou, part 2: reviewing and refining scientific signs for Song of SynBio."
@@ -1102,11 +1102,11 @@ caption: "Fig. 16 | **(a-b)** Chat history with Mr. Gou confirming the signs in 
 autoLabels: true
 columns: 2
 srcZh:
-  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig16-a.avif"
-  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig16-b.avif"
+  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig16-a-u.avif"
+  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig16-b-u.avif"
 srcEn:
-  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig16-a-en.avif"
-  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig16-b-en.avif"
+  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig16-a-en-u.avif"
+  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig16-b-en-u.avif"
 altZh:
   - "Conversation with Mr. Gou, part 5: reviewing and refining scientific signs for Song of SynBio."
   - "Conversation with Mr. Gou, part 6: reviewing and refining scientific signs for Song of SynBio."
@@ -1124,7 +1124,7 @@ Following his final review, we shared the completed video on our social media pl
 ---
 caption: "Fig. 17 | The *Song of SynBio* in CSL video"
 src:
-  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig17.avif"
+  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig17-u.avif"
 alt:
   - "Song of SynBio video cover shows a sign language interpreter beside illustrations of cells and molecules."
 ---
@@ -1147,9 +1147,9 @@ We also organised a **sign language challenge** at the [collaboration fair](/edu
 caption: "Fig. 18 | Poster promoting our sign language challenge at the collaboration fair"
 autoLabels: false
 srcZh:
-  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig18.avif"
+  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig18-u.avif"
 srcEn:
-  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig18-en.avif"
+  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig18-en-u.avif"
 altZh:
   - "Chinese poster invites participants to a bacteria–fungi clay activity and a sign language challenge based on SignBio videos."
 altEn:
@@ -1164,9 +1164,9 @@ label: "Figure 18 image language"
 caption: "Fig. 19 | Participant messages reflecting on the sign language challenge and inclusive society"
 autoLabels: false
 srcZh:
-  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig19.avif"
+  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig19-u.avif"
 srcEn:
-  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig19-en.avif"
+  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig19-en-u.avif"
 altZh:
   - "Participants describe sign language as expressive and reflect on including Deaf people in science."
 altEn:
@@ -1194,7 +1194,7 @@ The Superb School is a social welfare program initially launched at the Vcare Ce
 ---
 caption: "Fig. 20 | A learning session at Superb School, where our team members volunteered"
 src:
-  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig20.avif"
+  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig20-u.avif"
 alt:
   - ""
 ---
@@ -1208,7 +1208,7 @@ To help us design an appropriate and effective lesson for children on the autism
 ---
 caption: "Fig. 21 | Online interview with Ms. Zheng"
 src:
-  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig21.avif"
+  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig21-u.avif"
 alt:
   - ""
 ---
@@ -1220,7 +1220,7 @@ We also had a dialogue with an individual on the spectrum, Ms. Oren (alias). She
 ---
 caption: "Fig. 22 | Online interview with Ms. Oren"
 src:
-  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig22.avif"
+  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig22-u.avif"
 alt:
   - ""
 ---
@@ -1230,7 +1230,7 @@ alt:
 ---
 caption: "Fig. 23 | What if science materials were designed around my interests...?  :fn-ref{#19}"
 src:
-  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig23.avif"
+  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig23-u.avif"
 alt:
   - "A learner asks for science materials designed around their interests beside a statistic of over 13 million autistic people in China in 2026."
 imageBackground: transparent
@@ -1249,9 +1249,9 @@ caption: "Fig. 24 | **(a-c)** Photographs from our plant science course at Super
 autoLabels: true
 columns: 3
 src:
-  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig24-a.avif"
-  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig24-b.avif"
-  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig24-c.avif"
+  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig24-a-u.avif"
+  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig24-b-u.avif"
+  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig24-c-u.avif"
 alt:
   - ""
   - ""
@@ -1271,10 +1271,10 @@ caption: "Fig. 25 | **(a-d)** Students' works from the leaf-drawing activity"
 autoLabels: true
 columns: 2
 src:
-  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig25-a.avif"
-  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig25-b.avif"
-  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig25-c.avif"
-  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig25-d.avif"
+  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig25-a-u.avif"
+  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig25-b-u.avif"
+  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig25-c-u.avif"
+  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig25-d-u.avif"
 alt:
   - ""
   - ""
@@ -1349,7 +1349,7 @@ Looking ahead, we hope to establish a long-term collaboration with Superb School
 ---
 caption: "Fig. 26 | The social media post that inspired us  :fn-ref{#20}"
 src:
-  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig26.avif"
+  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig26-u.avif"
 alt:
   - ""
 maxHeight: 1000
@@ -1366,7 +1366,7 @@ Together, these findings helped us identify a key barrier: although China’s ni
 ---
 caption: "Fig. 27 | What if our school had a lab...? :fn-ref{#21}"
 src:
-  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig27.avif"
+  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig27-u.avif"
 alt:
   - "A student asks for a school laboratory beside a statistic of 281 million people in China with annual per capita disposable income of approximately US$1,420 or less in 2025."
 imageBackground: transparent
@@ -1382,8 +1382,8 @@ In response, we developed _**Handy Lab**_, an experimental toolkit designed to m
 caption: "Fig. 28 | **(a-b)** The physical *Handy Lab* experimental toolkits"
 autoLabels: true
 src:
-  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig28-a.avif"
-  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig28-b.avif"
+  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig28-a-u.avif"
+  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig28-b-u.avif"
 alt:
   - ""
   - ""
@@ -1396,7 +1396,7 @@ Additionally, we created **demonstration videos** showing each experimental proc
 ---
 caption: "Fig. 29 | Demonstration videos of *Handy Lab* experiments"
 src:
-  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig29.avif"
+  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig29-u.avif"
 alt:
   - "Six Handy Lab demonstration video covers: mini volcano, red cabbage indicator, strawberry DNA extraction, floating egg, bending water, and thirsty celery."
 ---
@@ -1416,7 +1416,7 @@ To put _Handy Lab_ into practice and evaluate its usability, we visited Baixu, a
 ---
 caption: "Fig. 30 | A group photograph of students displaying their *Handy Lab* toolkits at Baixu Middle School."
 src:
-  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig30.avif"
+  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig30-u.avif"
 alt:
   - ""
 ---
@@ -1427,10 +1427,10 @@ alt:
 caption: "Fig. 31 | **(a-d)** A *Handy Lab* toolkit distribution and introduction session at Baixu Middle School."
 autoLabels: true
 src:
-  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig31-a.avif"
-  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig31-b.avif"
-  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig31-c.avif"
-  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig31-d.avif"
+  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig31-a-u.avif"
+  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig31-b-u.avif"
+  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig31-c-u.avif"
+  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig31-d-u.avif"
 alt:
   - ""
   - ""
@@ -1453,7 +1453,7 @@ Having seen how well students responded to learning through hands-on activities 
 ---
 caption: "Fig. 32 | Students displaying the *Bacteria–Fungi Clay Kits* sent to their school"
 src:
-  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig32.avif"
+  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig32-u.avif"
 alt:
   - ""
 ---
@@ -1465,12 +1465,12 @@ caption: "Fig. 33 | **(a-f)** Students exploring our *Bacteria-Fungi Clay Kits* 
 autoLabels: true
 columns: 3
 src:
-  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig33-a.avif"
-  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig33-b.avif"
-  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig33-c.avif"
-  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig33-d.avif"
-  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig33-e.avif"
-  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig33-f.avif"
+  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig33-a-u.avif"
+  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig33-b-u.avif"
+  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig33-c-u.avif"
+  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig33-d-u.avif"
+  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig33-e-u.avif"
+  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig33-f-u.avif"
 alt:
   - ""
   - ""
@@ -1505,13 +1505,13 @@ caption: "Fig. 34 | **(a)** Troubleshooting a protein-design input file with mis
 autoLabels: true
 columns: 3
 srcZh:
-  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig34-a.avif"
-  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig34-b.avif"
-  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig34-c.avif"
+  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig34-a-u.avif"
+  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig34-b-u.avif"
+  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig34-c-u.avif"
 srcEn:
-  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig34-a-en.avif"
-  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig34-b-en.avif"
-  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig34-c-en.avif"
+  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig34-a-en-u.avif"
+  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig34-b-en-u.avif"
+  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig34-c-en-u.avif"
 altZh:
   - "Team members troubleshoot missing chain and residue names and duplicated atom names in a protein-design input."
   - "Team members discuss an atom-ordering error and how to reorder atoms in a PDB file."
@@ -1535,7 +1535,7 @@ These experiences highlighted the barrier we wanted to address: **technical entr
 ---
 caption: "Fig. 35 | What if I could understand all this code...? :fn-ref{#23}"
 src:
-  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig35.avif"
+  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig35-u.avif"
 alt:
   - "A beginner struggles with code beside a statistic that 92.9% of Chinese internet users aged 10–19 could not proficiently write computer programs in 2025."
 imageBackground: transparent
@@ -1567,7 +1567,7 @@ The guidebook helped members with some previous computing experience adapt to th
 ---
 caption: "Fig. 36 | Team members working together on the computational modeling workflow"
 src:
-  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig36.avif"
+  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig36-u.avif"
 alt:
   - ""
 ---
@@ -1587,7 +1587,7 @@ To make the workflow more intuitive for beginners, we developed [_FoundryUI_](/s
 ---
 caption: "Fig. 37 | A protein design workflow in FoundryUI’s node-based interface"
 src:
-  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig37.avif"
+  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig37-u.avif"
 alt:
   - ""
 ---
@@ -1607,8 +1607,8 @@ caption: "Fig. 38 | **(a)** The FoundryUI Colab notebook showing project downloa
 autoLabels: true
 columns: 2
 src:
-  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig38-a.avif"
-  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig38-b.avif"
+  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig38-a-u.avif"
+  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig38-b-u.avif"
 alt:
   - ""
   - ""
@@ -1632,8 +1632,8 @@ We introduced FoundryUI during a **school club session**, where students with di
 caption: "Fig. 39 | **(a–b)** A school club session introducing computational protein design and FoundryUI"
 autoLabels: true
 src:
-  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig39-a.avif"
-  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig39-b.avif"
+  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig39-a-u.avif"
+  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig39-b-u.avif"
 alt:
   - ""
   - ""
@@ -1660,7 +1660,7 @@ That same day, we each went home and spoke with our grandparents about how they 
 ---
 caption: "Fig. 40 | What if I could tell facts from misinformation…?"
 src:
-  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig40.avif"
+  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig40-u.avif"
 alt:
   - "An older adult asks how to distinguish facts from misinformation beside a statistic of 15.87% of adults aged 65 and above in China with college education or higher in 2026."
 imageBackground: transparent
@@ -1677,10 +1677,10 @@ caption: "Fig. 41 | **(a)** A group photograph from the Dragon Boat Festival act
 autoLabels: true
 columns: 2
 src:
-  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig41-a.avif"
-  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig41-b.avif"
-  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig41-c.avif"
-  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig41-d.avif"
+  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig41-a-u.avif"
+  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig41-b-u.avif"
+  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig41-c-u.avif"
+  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig41-d-u.avif"
 alt:
   - ""
   - ""
@@ -1699,8 +1699,8 @@ caption: "Fig. 42 | **(a-b)** Discussing science and GM food information with ol
 autoLabels: true
 columns: 2
 src:
-  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig42-a.avif"
-  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig42-b.avif"
+  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig42-a-u.avif"
+  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig42-b-u.avif"
 alt:
   - ""
   - ""
@@ -1712,11 +1712,11 @@ alt:
 caption: "Fig. 43 | **(a)** Poster comparing GM food myths with scientific facts **(b)** Poster introducing potential benefits of GM crops"
 autoLabels: true
 srcZh:
-  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig43-a.avif"
-  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig43-b.avif"
+  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig43-a-u.avif"
+  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig43-b-u.avif"
 srcEn:
-  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig43-a-en.avif"
-  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig43-b-en.avif"
+  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig43-a-en-u.avif"
+  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig43-b-en-u.avif"
 altZh:
   - "Chinese poster distinguishes genetic modification from selective breeding and contrasts common GM food claims with scientific explanations."
   - "Chinese poster describes potential GM crop benefits, including grain yield, pesticide use and nutritional value."
@@ -1833,9 +1833,9 @@ caption: "Fig. 44 | Layout of our website on three different devices **(a)** por
 autoLabels: true
 columns: 3
 src:
-  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig44-a.avif"
-  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig44-b.avif"
-  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig44-c.avif"
+  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig44-a-u.avif"
+  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig44-b-u.avif"
+  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig44-c-u.avif"
 alt:
   - ""
   - ""
@@ -1859,7 +1859,7 @@ After analysing Degree Inclusive, we identified several accessible design featur
 ---
 caption: "Fig. 45 | Annotated packaging design showing the adaptive features"
 src:
-  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig45.avif"
+  - "https://static.igem.wiki/teams/6133/wiki/hp/inclusivity/inclusivity-index-fig45-u.avif"
 alt:
   - ""
 ---
