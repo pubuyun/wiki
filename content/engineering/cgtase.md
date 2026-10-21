@@ -64,9 +64,9 @@ However, a later review of our records revealed that the intended T370K variant 
 
 ### Test
 
-After TES cell lysis and centrifugation, SDS-PAGE demonstrated successful protein expression of all mutants of CGTase in the supernatant (Fig. 9a). However, T370R yielded a faint band after purification, suggesting low protein production, and was therefore excluded from subsequent experiments.
+After TES cell lysis and centrifugation, SDS-PAGE demonstrated successful protein expression of all mutants of CGTase in the supernatant (Fig. 9a). However, T370R yielded a faint band after purification, suggesting low protein production, and was therefore excluded from subsequent qualitative experiments.
 
-To evaluate the effects of the wild-type CGTase and the engineered variants on 3M3SH production, Ellman’s assay was conducted. The CGTase candidates were incubated with the precursor and maltodextrin for 1 h. The resultant mixtures were then incubated with PepT<sub>Sh</sub>-expressing *E. coli* BL21(DE3). Subsequent measurement follows the procedure established in [Precursor Binder Cycle 1](/engineering/precursor-binder#precursor-binder-cycle-1).
+To evaluate the effects of the wild-type CGTase and the engineered variants on 3M3SH production, Ellman’s assay was conducted. The CGTase candidates were incubated with the precursor and maltodextrin for 1 h. The resultant mixtures were then incubated with PepT<sub>Sh</sub>-expressing *E. coli* BL21(DE3). Subsequent thiol measurements followed the procedure described in [Precursor Binder Cycle 1](/engineering/precursor-binder#precursor-binder-cycle-1).
 
 The results (Fig. 9b) showed that thiol concentrations in the mixtures treated with wild-type CGTase, CGTase T370L, and CGTase T370R/F183W were 0.282 ± 0.004 mM, 0.328 ± 0.063 mM, and 0.314 ± 0.011 mM, respectively. The mean thiol concentration in each treatment group was more than 50% lower than that of the negative control (0.676 ± 0.108 mM GSH equivalents), in which the precursor and maltodextrin were incubated with phosphate-buffered saline (PBS) before PepT<sub>Sh</sub>-expressing *E. coli* were added.
 

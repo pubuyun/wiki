@@ -11,9 +11,9 @@ order: 8
 
 2. Troccaz M, Starkenmann C, Niclass Y, van de Waal M, Clark AJ. 3-Methyl-3-sulfanylhexan-1-ol as a major descriptor for the human axilla-sweat odour profile. Chem Biodivers. 2004;1(7):1022-35. doi: [10.1002/cbdv.200490077](https://doi.org/10.1002/cbdv.200490077).
 
-3. The Good Scents Company. Bornyl acetate [Internet]. [place unknown]: The Good Scents Company; [date unknown] [cited 2026 Oct 20]. Available from: [Bornyl acetate monograph](https://www.thegoodscentscompany.com/data/rw1106081.html)
+3. PubChem. Bornyl acetate, (-)- [Internet]. Nih.gov. PubChem; 2025 [cited 2026 Oct 21]. Available from: [https://pubchem.ncbi.nlm.nih.gov/compound/93009](https://pubchem.ncbi.nlm.nih.gov/compound/93009)
 
-4. The Good Scents Company. Geranyl butyrate [Internet]. [place unknown]: The Good Scents Company; [date unknown] [cited 2026 Oct 20]. Available from: [Geranyl butyrate monograph](https://www.thegoodscentscompany.com/data/rw1025351.html)
+4. PubChem. Geranyl butyrate [Internet]. Nih.gov. PubChem; [cited 2026 Oct 21]. Available from: [https://pubchem.ncbi.nlm.nih.gov/compound/Geranyl-butyrate](https://pubchem.ncbi.nlm.nih.gov/compound/Geranyl-butyrate)
 
 5. Yang D, Liang H, Li X, Wang B, Zhang C, Yuan M, et al. A microbial platform for selective biosynthesis of monoterpene esters. Nat Commun. 2026;17:4851. doi: [10.1038/s41467-026-71681-9](https://doi.org/10.1038/s41467-026-71681-9).
 
