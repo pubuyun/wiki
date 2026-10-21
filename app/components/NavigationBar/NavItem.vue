@@ -95,19 +95,10 @@ onUnmounted(() => observer?.disconnect());
                                     @pointerdown.stop
                                     class="group flex min-h-12 items-center gap-3 py-3 pr-5 pl-11 text-base text-on-surface no-underline -outline-offset-2 focus-visible:outline-2 focus-visible:outline-outline"
                                 >
-                                    <svg
-                                        class="h-5 w-3 shrink-0"
-                                        viewBox="0 0 12 20"
-                                        fill="none"
+                                    <span
+                                        class="h-4 w-3 shrink-0 rounded-bl border-b-2 border-l-2 border-current"
                                         aria-hidden="true"
-                                        focusable="false"
-                                    >
-                                        <path
-                                            d="M2 2v14h8"
-                                            stroke="currentColor"
-                                            stroke-width="1.5"
-                                        />
-                                    </svg>
+                                    ></span>
                                     <span
                                         class="transition-transform duration-150 ease-out group-hover:translate-x-1"
                                         >{{ child.label }}</span
