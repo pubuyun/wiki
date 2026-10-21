@@ -11,6 +11,9 @@ const contentGraphDirectory = fileURLToPath(
 );
 
 export default defineNuxtConfig({
+    features: {
+        inlineStyles: false,
+    },
     app: {
         head: {
             title: "Expelliodor",
@@ -132,7 +135,11 @@ export default defineNuxtConfig({
     },
     nitro: {
         prerender: {
-            routes: ["/api/search-index.json"],
+            routes: [
+                "/api/search-index.json",
+                "/api/interview-metadata.json",
+                "/api/interview-scripts.json",
+            ],
             // Query variants cannot be written to static files; keep query handling client-side.
             ignore: [(route) => route.includes("?")],
         },

@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import type { ContentCollectionItem } from "@nuxt/content";
-import { readStaticContent } from "~/composables/useStaticContent";
 const props = defineProps<{
     /** Markdown filename relative to content/, including the .md extension. */
     src?: string;
@@ -14,26 +13,59 @@ const stem = computed(() =>
     (props.src ?? "").replace(/^\/?(?:content\/)?/, "").replace(/\.md$/, ""),
 );
 const {
-    data: interview,
+    data: interviewMetadata,
     status,
     error,
 } = await useAsyncData(
-    computed(() => `interview-script-${stem.value}`),
+    computed(() => `interview-metadata-${stem.value}`),
     () => {
         if (!stem.value) return Promise.resolve(null);
         if (import.meta.server || !import.meta.env.WIKI_STATIC_CONTENT) {
             return queryCollection("content")
                 .where("stem", "=", stem.value)
+                .select("stem", "path", "title", "meta")
                 .first();
         }
-        return readStaticContent<ContentCollectionItem | null>(
-            `interview-script-${stem.value}`,
-        );
+        return $fetch<Record<string, ContentCollectionItem>>(
+            `${useRuntimeConfig().app.baseURL}api/interview-metadata.json`,
+        ).then((items) => items[stem.value] ?? null);
     },
 );
 
+const interview = shallowRef<ContentCollectionItem | null>(null);
+const transcriptStatus = ref<"idle" | "pending" | "success" | "error">("idle");
+const transcriptError = ref<unknown>(null);
+let transcriptPromise: Promise<Record<string, ContentCollectionItem>> | null =
+    null;
+
+async function loadTranscript() {
+    if (interview.value || transcriptStatus.value === "pending") return;
+    transcriptStatus.value = "pending";
+    transcriptError.value = null;
+    try {
+        if (import.meta.env.WIKI_STATIC_CONTENT) {
+            transcriptPromise ??= $fetch<Record<string, ContentCollectionItem>>(
+                `${useRuntimeConfig().app.baseURL}api/interview-scripts.json`,
+            );
+            interview.value = (await transcriptPromise)[stem.value] ?? null;
+        } else {
+            interview.value = await queryCollection("content")
+                .where("stem", "=", stem.value)
+                .first();
+        }
+        transcriptStatus.value = "success";
+    } catch (loadError) {
+        transcriptError.value = loadError;
+        transcriptStatus.value = "error";
+    }
+}
+
+function onToggle(event: Event) {
+    if ((event.target as HTMLDetailsElement).open) void loadTranscript();
+}
+
 const metadata = computed(() => {
-    const meta = interview.value?.meta;
+    const meta = interviewMetadata.value?.meta;
     const text = (key: string) =>
         typeof meta?.[key] === "string" ? meta[key] : "";
     return {
@@ -47,10 +79,12 @@ const metadata = computed(() => {
 <template>
     <section
         class="my-6 min-w-0 overflow-hidden rounded-xl border-2 border-outline bg-surface text-on-surface shadow-sm"
-        :aria-label="props.title || interview?.title || 'Interview transcript'"
+        :aria-label="
+            props.title || interviewMetadata?.title || 'Interview transcript'
+        "
         :aria-busy="status === 'pending'"
     >
-        <template v-if="interview || $slots.default">
+        <template v-if="interviewMetadata || $slots.default">
             <header
                 class="grid gap-5 bg-secondary px-5 py-5 text-on-secondary sm:grid-cols-[minmax(0,1fr)_minmax(10rem,0.45fr)] sm:gap-8 sm:px-6 sm:py-6"
             >
@@ -62,7 +96,7 @@ const metadata = computed(() => {
                     <p
                         class="m-0 font-belanosima text-2xl leading-tight break-words sm:text-3xl"
                     >
-                        {{ props.title || interview?.title }}
+                        {{ props.title || interviewMetadata?.title }}
                     </p>
                     <p
                         v-if="metadata.topic"
@@ -108,6 +142,7 @@ const metadata = computed(() => {
             <details
                 :key="stem"
                 class="interview-disclosure border-t-2 border-outline"
+                @toggle="onToggle"
             >
                 <summary
                     class="flex min-h-12 cursor-pointer list-none items-center justify-between gap-3 bg-secondary px-5 py-3 font-belanosima text-sm text-on-secondary transition-colors hover:bg-surface-bright hover:text-on-surface focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-outline sm:px-6"
@@ -131,6 +166,12 @@ const metadata = computed(() => {
                     >
                         <slot />
                     </div>
+                    <p v-else-if="transcriptStatus === 'pending'" role="status">
+                        Loading interview…
+                    </p>
+                    <p v-else-if="transcriptError" role="alert">
+                        Unable to load this interview.
+                    </p>
                     <ContentRenderer
                         v-else-if="interview"
                         :value="interview"

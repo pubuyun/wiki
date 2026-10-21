@@ -391,14 +391,14 @@ A deliberate constraint was the exclusion of terpene-class soothing agents; none
 |Geranyl butyrate|Fruity, floral fragrance|0.01%/0.02%|Biosynthesised in engineered E. coli; biodegradable; low irritation potential|
 |Bornyl acetate|Woody, camphoraceous fragrance|0.01%/0.02%|Biosynthesised in engineered E. coli; biodegradable; low irritation potential|
 
-Both fragrances are produced through engineered microbial fermentation rather than petrochemical synthesis or plant extraction. This approach avoids the environmental persistence and bioaccumulation of synthetic fragrance ingredients such as synthetic musks :fn-ref{#11}, and avoids the land, water, energy, and solvent demands of plant extraction :fn-ref{#12}. The fragrance profile was selected based on our public survey, in which floral/fruity (41.0%) and woody (35.2%) scents were the most preferred.
+Both fragrances are produced through engineered microbial fermentation rather than petrochemical synthesis or plant extraction. This approach avoids the environmental persistence and bioaccumulation of synthetic fragrance ingredients such as synthetic musks :fn-ref{#11}, and avoids the land, water, energy, and solvent demands of plant extraction :fn-ref{#12}. The fragrance profile was selected based on our public survey, in which floral/fruity (41.2%) and woody (34.6%) scents were the most preferred.
 
 ::content-components-bilingual-image-panels
 ---
 srcEn: "https://static.igem.wiki/teams/6133/wiki/drylab/hardware/pie-cn.avif"
 srcZh: "https://static.igem.wiki/teams/6133/wiki/drylab/hardware/pie-en.avif"
-altEn: "Public survey fragrance preferences: floral/fruity scents (41.0%) and woody scents (35.2%) were the most preferred."
-altZh: "公众调查中的香型偏好：花果香（41.0%）和木质香（35.2%）最受欢迎。"
+altEn: "Public survey fragrance preferences: floral/fruity scents (41.2%) and woody scents (34.6%) were the most preferred."
+altZh: "公众调查中的香型偏好：花果香（41.2%）和木质香（34.6%）最受欢迎。"
 label: "Fragrance preference survey — image language"
 caption: "Public survey results on fragrance preferences."
 ---
