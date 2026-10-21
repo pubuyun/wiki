@@ -1,5 +1,5 @@
 import { interviewMap, queryInterviewPages } from "../utils/interviews";
 
-export default defineEventHandler(async () =>
-    interviewMap(await queryInterviewPages(false)),
+export default defineEventHandler(async (event) =>
+    interviewMap(await queryInterviewPages(event, false)),
 );

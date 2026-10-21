@@ -1,5 +1,5 @@
-export async function queryInterviewPages(includeBody) {
-    return queryCollection("content")
+export async function queryInterviewPages(event, includeBody) {
+    return queryCollection(event, "content")
         .where("path", "LIKE", "/human-practices/transcript/%")
         .orWhere((query) =>
             query.where("path", "LIKE", "/human-practices/transcript/%"),
