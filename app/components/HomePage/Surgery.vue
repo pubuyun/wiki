@@ -768,8 +768,9 @@ onUnmounted(() => {
                         >
                             <ul class="m-0 grid gap-[1.1rem] pl-[1.2em]">
                                 <li>
-                                    Deodorant use increases the diversity of the
-                                    axillary microbiome.
+                                    Deodorant use can disrupt a stable axillary
+                                    microbiome and encourage transient microbes
+                                    to reside.
                                 </li>
                                 <li>
                                     Antiperspirant use can stimulate activity of

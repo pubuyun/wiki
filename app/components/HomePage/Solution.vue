@@ -199,7 +199,7 @@ const SOLUTIONS = [
         id: "precursor-binder",
         title: "Precursor Binder",
         description:
-            'Design <span class="text-[#ffd368]">protein binders</span> that capture the <span class="text-[#b0e5fd]">Cys-Gly-3M3SH</span> before it is taken up by <span class="text-[#de8949]">Staphylococcus hominis</span>.',
+            'Design <span class="text-[#ffd368]">protein binders</span> that capture the <span class="text-[#b0e5fd]">Cys-Gly-3M3SH</span> before it is taken up by <em class="text-[#de8949]">Staphylococcus hominis</em>.',
         color: "#ffd368",
         image: "https://static.igem.wiki/teams/6133/wiki/homepage/binderoutlined.avif",
         angle: -90,
@@ -210,7 +210,7 @@ const SOLUTIONS = [
         id: "transporter-binder",
         title: "Transporter Binder",
         description:
-            'Design <span class="text-[#b0e5fd]">PepTsh</span> plugs that bind to the <span class="text-[#b0e5fd]">PepTsh</span> transporters, reducing the uptake efficiency of <span class="text-[#b0e5fd]">Cys-Gly-3M3SH</span>.',
+            'Design <span class="text-[#b0e5fd]">PepT<sub>Sh</sub></span> plugs that bind to the <span class="text-[#b0e5fd]">PepT<sub>Sh</sub></span> transporters, reducing the uptake efficiency of <span class="text-[#b0e5fd]">Cys-Gly-3M3SH</span>.',
         color: "#b0e5fd",
         image: "https://static.igem.wiki/teams/6133/wiki/homepage/plugoutlined1.avif",
         angle: 30,
@@ -221,7 +221,7 @@ const SOLUTIONS = [
         id: "cgtase",
         title: "CGTase",
         description:
-            'Engineer <span class="text-[#a8f4d2]">CGTase</span> to transfer glucosyl groups to the hydroxyl of <span class="text-[#b0e5fd]">Cys-Gly-3M3SH</span>, reducing its affinity to the <span class="text-[#b0e5fd]">PepTsh</span> transporter.',
+            'Engineer <span class="text-[#a8f4d2]">CGTase</span> to transfer glucosyl groups to the hydroxyl of <span class="text-[#b0e5fd]">Cys-Gly-3M3SH</span>, reducing its affinity to the <span class="text-[#b0e5fd]">PepT<sub>Sh</sub></span> transporter.',
         color: "#a8f4d2",
         image: "https://static.igem.wiki/teams/6133/wiki/homepage/cgtasseoutlined.avif",
         angle: 150,
@@ -1251,7 +1251,7 @@ onUnmounted(() => {
         <p class="sr-only">
             Three approaches prevent the odor precursor from entering the
             bacterial transporter: capturing it with a precursor binder,
-            blocking PepTsh with a transporter binder, or modifying the
+            blocking PepT<sub>Sh</sub> with a transporter binder, or modifying the
             precursor with CGTase.
         </p>
     </section>

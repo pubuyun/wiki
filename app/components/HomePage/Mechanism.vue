@@ -672,7 +672,7 @@ onUnmounted(() => {
                         color: label.color,
                     }"
                 >
-                    {{ label.text }}
+                    {{ label.text }}<sub v-if="label.id === 'pepTsh'">Sh</sub>
                 </span>
 
                 <!-- Cross-scene visibility stays on a separate gate because
@@ -712,7 +712,7 @@ onUnmounted(() => {
                             class="mechanism-scene__precursor-label invisible absolute inset-0 opacity-0 portrait:rotate-90"
                         >
                             <span
-                                class="absolute top-full left-1/2 mt-1 -translate-x-1/2 rounded-md bg-[#b6fbf1]/95 px-2 py-1 font-belanosima text-[clamp(0.7rem,1.65svh,1.05rem)] leading-none font-bold whitespace-nowrap text-[#124c96]"
+                                class="absolute top-[calc(100%+0.25rem)] left-1/2 -translate-x-1/2 text-[clamp(0.72rem,1.15vw,1.2rem)] leading-none whitespace-nowrap text-white"
                             >
                                 Cys-Gly-3M3SH
                             </span>
@@ -745,7 +745,7 @@ onUnmounted(() => {
                 class="mechanism-scene__copy-panel absolute right-20 left-20 m-0 box-border h-auto w-auto max-w-none text-[clamp(1.4rem,2.0vw,2.0rem)] leading-[1.55] [overflow-wrap:break-word] whitespace-normal text-[#f7fbff] will-change-[transform,opacity] portrait:relative portrait:right-auto portrait:left-auto portrait:w-full portrait:text-[clamp(0.95rem,3.8vw,1.25rem)] portrait:leading-[1.42] portrait:[grid-area:copy]"
             >
                 This precursor is transported into <em>S. hominis</em> cells by
-                <strong class="text-[#b0e5fd]">PepT<sub>sh</sub></strong> , a
+                <strong class="text-[#b0e5fd]">PepT<sub>Sh</sub></strong> , a
                 member of the
                 <strong>POT</strong>
                 (Proton-dependent Oligopeptide Transporter) family.
@@ -776,7 +776,7 @@ onUnmounted(() => {
                 <strong class="text-[#b0e5fd]">ammonia</strong> and
                 <strong>pyruvic acid</strong> as coproducts.
                 <strong class="text-[#ff91b8]">3M3SH</strong> is one of the
-                primary compounds responsible for axillary body odor.
+                primary compounds responsible for axillary odor.
             </p>
             <p
                 ref="copyFour"
@@ -784,7 +784,7 @@ onUnmounted(() => {
             >
                 <strong class="text-[#ff91b8]">3M3SH</strong>
                 (3-methyl-3-sulfanylhexan-1-ol), a volatile thiol compound, is
-                one of the major contributors to axillary body odor.
+                one of the major contributors to axillary odor.
             </p>
         </div>
     </section>

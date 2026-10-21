@@ -45,7 +45,9 @@ export function useContentNavigationData(category: MaybeRefOrGetter<string>) {
             .all();
         return pages
             .filter(
-                (page) => !page.path.startsWith("/human-practices/transcript/"),
+                (page) =>
+                    !page.path.startsWith("/human-practices/transcript/") &&
+                    !page.path.startsWith("/sustainability/interviews/"),
             )
             .map((page) => ({
                 path: page.path,

@@ -1006,9 +1006,8 @@ onUnmounted(() => {
                     ref="secondCopy"
                     class="current-solution__second-copy absolute top-1/2 left-[43%] z-4 m-0 w-[52%] -translate-y-1/2 text-center text-[clamp(1.75rem,2.75vw,3rem)] leading-[1.36] [text-wrap:balance] max-[52rem]:text-[clamp(1.3rem,5vw,2rem)] max-[52rem]:leading-[1.3] portrait:text-[clamp(1.3rem,5vw,2rem)] portrait:leading-[1.3]"
                 >
-                    Existing antiperspirants, deodorants and physical treatments
-                    primarily block sweat or cover up smell after it is
-                    produced.
+                    Conventional antiperspirants and deodorants primarily block
+                    sweat glands or Kill a broad spectrum of bacteria.
                 </p>
             </div>
 

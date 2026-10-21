@@ -20,7 +20,7 @@ useHead({
         <PaintedReveal
             ><div class="hero__copy">
                 <h1 id="expelliodor-title">Expelliodor</h1>
-                <h2>Greatbay 2026</h2>
+                <h2>GreatBay-SCIE</h2>
             </div></PaintedReveal
         >
     </section>
