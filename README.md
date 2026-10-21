@@ -1,75 +1,48 @@
-# Nuxt Content Starter
+﻿# Greatbay-SCIE 2026 iGEM Wiki
 
-Look at the [Nuxt Content documentation](https://content.nuxt.com) to learn more.
+The wiki for the Greatbay-SCIE team in the 2026 iGEM competition, documenting our project, research, experimental results, and team activities.
 
-## Setup
+## Tech Stack
 
-Make sure to install dependencies:
+- Nuxt 4, Vue 3, and TypeScript
+- Nuxt Content for Markdown-based content
+- Tailwind CSS 4 for styling
+- GSAP, ECharts, and Three.js for animations and visualizations
 
-```bash
-# npm
-npm install
+## Getting Started
 
-# pnpm
-pnpm install
+Use Node.js 22 and Yarn 4.9.1.
 
-# yarn
+```sh
+corepack enable
 yarn install
-
-# bun
-bun install
-```
-
-## Development Server
-
-Start the development server on `http://localhost:3000`:
-
-```bash
-# npm
-npm run dev
-
-# pnpm
-pnpm dev
-
-# yarn
 yarn dev
-
-# bun
-bun run dev
 ```
 
-## Production
+The development site is available at [localhost:3000](http://localhost:3000). If a development server is already running, reuse it.
 
-Build the application for production:
+## Project Structure
 
-```bash
-# npm
-npm run build
+- `app/` — pages, components, styles, and application utilities
+- `content/` — wiki content written in Markdown
+- `public/` — static assets served directly
+- `modules/` — custom Nuxt modules
+- `server/` — server routes and API handlers
 
-# pnpm
-pnpm build
+## Deployment
 
-# yarn
-yarn build
-
-# bun
-bun run build
+```sh
+yarn generate
 ```
 
-Locally preview production build:
+Generates the static site in `.output/public/` with the `/greatbay-scie/` base path for iGEM hosting. The GitLab CI pipeline publishes this output on pushes to the default branch.
 
-```bash
-# npm
-npm run preview
+For deployment at the domain root, use `yarn generate:vercel`.
 
-# pnpm
-pnpm preview
+## Contributing
 
-# yarn
-yarn preview
+Edit wiki content in `content/` and site features in `app/`. Check your changes in the local development site before opening a merge request.
 
-# bun
-bun run preview
-```
+## License
 
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+This repository is licensed under [Creative Commons Attribution 4.0 International](LICENSE).
