@@ -349,7 +349,7 @@ Finally, building on Ms. Chen's insights into consumer education, we also plan t
 
 ### Observe
 
-After deciding to make sustainability a core part of our company philosophy, we recognized the importance of evaluating the environmental impact of our proposed PP packaging with a hydrophobic inner layer.
+After deciding to make sustainability a core part of our company philosophy, we recognized the importance of evaluating the environmental impact of our proposed PP packaging with a hydrophillic inner layer.
 
 ### Determine
 

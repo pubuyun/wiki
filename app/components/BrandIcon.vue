@@ -7,19 +7,13 @@
             height="201"
             class="relative h-full w-full"
         />
-        <svg
-            class="animate-float absolute inset-0 h-full w-full"
-            preserveAspectRatio="none"
-            viewBox="10 10 65 58"
+        <span
+            class="brand-decoration animate-float absolute inset-0"
+            aria-hidden="true"
         >
-            <path
-                d="M 12.557 -3.3646 Q 9.71 -13.9898 -5.7448 -9.8487 Q -15.404 -7.2605 -12.2982 4.3306 Q -9.9688 13.0239 3.5541 9.4004 Q 15.1452 6.2946 12.557 -3.3646 Z"
-                transform="translate(56,27) scale(0.6)"
-                class="fill-accent"
-            />
-            <ellipse cx="52" cy="29" rx="0.7" ry="1.5" class="fill-white" />
-            <ellipse cx="55" cy="28.5" rx="0.7" ry="1.5" class="fill-white" />
-        </svg>
+            <span class="brand-eye brand-eye-left"></span>
+            <span class="brand-eye brand-eye-right"></span>
+        </span>
     </div>
 </template>
 
@@ -38,5 +32,30 @@
 
 .animate-float {
     animation: float 6s ease-in-out infinite;
+}
+
+.brand-decoration {
+    background: currentColor;
+    color: var(--color-accent);
+    mask: url("/brand-blob.svg") center / contain no-repeat;
+    -webkit-mask: url("/brand-blob.svg") center / contain no-repeat;
+}
+
+.brand-eye {
+    position: absolute;
+    width: 1.4%;
+    height: 7%;
+    border-radius: 9999px;
+    background: white;
+}
+
+.brand-eye-left {
+    left: 79%;
+    top: 48%;
+}
+
+.brand-eye-right {
+    left: 84%;
+    top: 46%;
 }
 </style>
