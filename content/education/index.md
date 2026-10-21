@@ -16,9 +16,29 @@ bannerMobilePosition: 45% 55%
 
 ## Introduction
 
-Inspo,
+At the beginning of our project, while reviewing our survey results, we found that **26.45%** of respondents were unwilling to use synthetic biology products. When we asked them why, we received comments such as “What is synthetic biology?” and “It sounds unnatural.”
+
+These responses made us realise that even if we successfully produced de novo designed proteins for our deodorant product in the laboratory, **gaps in public understanding of synthetic biology and the concerns arising from them would remain significant challenges**. We recognised that bridging these knowledge gaps was essential to helping people better understand this emerging field and develop their own informed perspectives on synthetic biology.
+
+Guided by our four core values—Adaptive, Reflective, Mutual Learning, and Creative—we thus began our journey of synthetic biology education.
 
 ### Core Values
+
+#### **Adaptive** — Tailoring Education to Our Audience
+
+We recognise that different audiences have **distinct needs, interests, and backgrounds**. Rather than adopting a one-size-fits-all approach, we tailor our teaching methods to each target group to ensure that our educational activities are **accessible and effective.**
+
+#### **Reflective** — Learning Through Continuous Improvement
+
+We believe that effective education requires **continuous reflection and improvement.** By collecting and analysing feedback after each activity, we identify both the strengths and limitations of our teaching methods, using these insights to refine our approaches in future sessions.
+
+#### **Mutual Learning** — Education as a Two-Way Exchange
+
+We view education as a **reciprocal process** rather than a one-way transfer of knowledge. While sharing our understanding of synthetic biology, we also learn from our audiences' experiences, perspectives, and insights, allowing both educators and learners to grow through meaningful interactions.
+
+#### **Creative** — Exploring Education Beyond the Classroom
+
+We believe that learning can take place in **diverse and creative** ways. Moving beyond conventional lectures, we explore a wide spectrum of educational formats, from interactive workshops and hands-on activities to entertainment and performing arts, making synthetic biology **more engaging and approachable.**
 
 ::content-components-lightbox-image
 ---
@@ -31,19 +51,19 @@ caption: Fig. 1 | **Core values guiding our synthetic biology education**
 ---
 ::
 
-Adaptive
-
-Reflective
-
-Mutual Learning
-
-Creative
-
 ## Overview
 
-Overview 文本
+### SynBio education activities matrix
+
+In total, we carried out **19 educational activities**, ranging from traditional lectures and workshops to innovative forms of entertainment and performing arts, as well as interactive seminars, fairs, and online and offline communities that allowed us to maintain ongoing engagement with our target audiences. To further expand our outreach, we also published a variety of educational content on social media, including long-form videos, short videos, and infographics.
+
+Explore our SynBio education activities using the interactive matrix at the top of this page!
 
 ### Teaching Framework
+
+All of our education activities follow the **TFMFR teaching framework: Target, Feature, Method, Feedback, and Reflection**. We begin by identifying the **target group** for each activity. By analysing their **characteristics**, including factors such as age and educational background, we design **teaching methods** that best suit their needs. After implementing these methods, we collect **feedback** through written notes, short quizzes, and participants’ reactions. We then analyse feedback and **reflect** on what went well and what could be improved. These reflections guide **adjustments to our subsequent sessions.**
+
+The framework places learners at the centre of the educational process, from designing activities around their needs to incorporating their feedback into future sessions. By following this framework, we can plan and carry out each educational activity **thoughtfully** while **continuously improving** our teaching methods.
 
 ::content-components-lightbox-image
 ---
@@ -58,9 +78,11 @@ caption: Fig. 2 | **Teaching framework**
 
 ### Edu Target Profile Radar
 
-We consider six dimensions when planning an education activity. Age, educational level, and audience size are fixed characteristics that we have limited influence over. Knowledge of synbio, interest in synbio, and engagement with synbio are dimensions that our activities can help develop.
+To better understand the characteristics of our target groups, we developed the **Edu Target Profile Radar**, which assesses learners across six dimensions: **age, educational background, group size, interest in SynBio, knowledge of SynBio, and potential engagement with SynBio**. By visualising these factors in a radar chart, we can identify the characteristics of each group and select suitable teaching methods.
 
-Each dimension is scored from 0 to 5. Scores that have not yet been provided are temporarily set to 0.0. The profile below describes an audience of public high school students.
+While age, educational background, and group size remain unchanged, the other three dimensions—interest, knowledge, and potential engagement with SynBio—may change as a result of our educational activities. By comparing the radar charts before and after each session, we can visually assess changes in these dimensions and evaluate the effectiveness of our teaching.
+
+Here is an example of our edu target radar for one lecture at high school.
 
 ::content-components-education-target-profile-radar
 ---
@@ -90,6 +112,15 @@ profile:
       considering studying synbio-related subjects at university or pursuing
       future careers in the field.
 ---
+::
+
+::content-components-collapsible-title
+---
+heading-tag: h4
+id: edu-target-profile-radar-documentation
+title: Documentation
+---
+:content-components-pdf-embed{src="https://static.igem.wiki/teams/6133/wiki/hp/education/edu-target-profile-radar-scoring-criteria-en.pdf" title="Edu Target Profile Radar Scoring Criteria (English)"}
 ::
 
 ## Lecture
@@ -316,9 +347,9 @@ layout: grid
 
 #### Feedback
 
-After the class, many students chose to stay behind to ask further questions about protein design, project development, ethical issues and experimental methods.
+After the lecture, many students stayed behind to ask further questions about protein design, project development, ethical issues and experimental methods. Their curiosity and enthusiasm for the topic were clear from these conversations.
 
-We also found that many students were interested in how SynBio research is translated into real-world applications and how the industry is developing. Those considering biology-related university majors were particularly curious about relevant career pathways and the future prospects of the field.
+The handwritten feedback notes also revealed students' interest in how SynBio research can be applied in the real world and how the industry is developing. Those considering biology-related university majors were particularly curious about possible career pathways and the future prospects of the field.
 
 ::content-components-bilingual-image-panels
 ---
@@ -354,9 +385,9 @@ layout: grid
 
 #### Reflection
 
-To support their continued exploration, we created an [Online chat group](#online-chat-group)where we shared additional SynBio resources and encouraged further discussion. One student later engaged in an in-depth conversation with us about cultivated meat, while another sought technical support for molecular dynamics simulations.
+To support their continued exploration, we created an [Online Chat Group](#online-chat-group) where we shared additional SynBio resources and encouraged further discussion. One student later had an in-depth conversation with us about cultivated meat, while another reached out for help with molecular dynamics simulations.
 
-Students' particular interest in the development of SynBio industry also inspired us to create a follow-up lecture of [Online SynBio Market analysis](#online-synbio-market-and-career-analysis-lecture), providing them with extra information when choosing future major and career pathways.
+Students' interest in the SynBio industry also inspired us to organise a follow-up lecture on [Online SynBio Market Analysis](#online-synbio-market-and-career-analysis-lecture), giving them more information to explore possible university majors and career paths.
 
 ::content-components-education-impact-radar
 ---
@@ -368,16 +399,15 @@ impact:
   Knowledge of synbio:
     - 4.1
     - 4.6
-    - "Reported score: 4.6 out of 5."
+    - "Building on their existing knowledge, students explored protein design methods during the session."
   Interest in synbio:
     - 4
     - 4.5
-    - "Reported score: 4.5 out of 5."
+    - "Many students stayed after the lecture to ask further questions, showing a strong interest in SynBio."
   Engagement with synbio:
     - 3.6
     - 3.9
-    - many students were planning or considering to choose SynBio-related future
-      major or career
+    - "Many students were considering or planning to pursue SynBio-related university majors or careers."
 title: Protein Design Lecture — Before and after
 ---
 ::
@@ -1271,9 +1301,11 @@ title: Online Chat Group — Before and after
 
 ### Ethical Debate
 
+Our SynBio ethics debate invited students from different academic backgrounds to explore a thought-provoking question: “If synthetic biology could eliminate human suffering, should we prioritise enhancing human capabilities or preserving human life in its natural state?” Through preparation, debate and interviews, participants explored the possibilities of SynBio while reflecting on the ethical boundaries.
+
 #### Target
 
-We targeted high school students with diverse interests in science and social ethics. Many debate club members and ethical topic enthusiasts lack basic knowledge of synthetic biology, while students interested in biology rarely consider its ethical dimensions. We therefore held a synthetic biology ethics debate to introduce fundamental SynBio knowledge to non-science-oriented students, and guide science-focused students to think critically about technological ethics through this interdisciplinary, interactive activity.
+For this debate session, we targeted both debaters and student audiences with different academic interests. While students interested in debating and ethical issues may have limited exposure to synthetic biology, those more familiar with the science may have fewer opportunities to explore its ethical implications. Through this debate, we hoped to bridge these two perspectives, introducing fundamental SynBio concepts to non-science-oriented students while encouraging science-focused students to reflect on the ethical questions raised by emerging technologies.
 
 #### Feature
 
@@ -1281,34 +1313,32 @@ We targeted high school students with diverse interests in science and social et
 ---
 profile:
   Age:
-    - 2
-    - high school students
+    - 2.7
+    - "high school students, aged between 15-18"
   Educational level:
-    - 3
-    - students from our school, with different levels of prior knowledge of
-      synthetic biology
+    - 3.4
+    - "High school students from different grades at SCIE"
   Size:
-    - 3
-    - there were 20~30 people participated in this debate activity
+    - 3.5
+    - "there were 50-60 audiences come hearing this debate, along with several organizers, instructors and debaters"
   Knowledge of synbio:
-    - 1
-    - most students, including the debaters,  have limited knowledge of
-      synthetic biology, although some may have encountered basic concepts
-      through biology classes or other school activities
+    - 1.8
+    - "some of the audiences have participated in our iGEM club sessions and may have basic concepts of SynBio; however, most debators show limited prior knowledge of SynBio"
   Interest in synbio:
     - 3
-    - students are curious about emerging technologies and interested in the
-      ethical questions that may arise from scientific development
+    - "students are curious about emerging technologies and interested in the ethical questions that may arise from scientific development"
   Engagement with synbio:
     - 2
-    - students accept and understand the concept of synthetic biology
+    - "students are generally receptive to new technologies and have basic understanding of SynBio"
 title: Ethical Debate — Before the session
 ---
 ::
 
 #### Method
 
-Centered on the topic “When synthetic biology can eliminate human suffering, should we prioritize optimizing the functions of human life, or preserving the original state of human life?”, we recruited eight student debaters schoolwide. Since most participants had little synthetic biology background, they completed pre-debate research to learn core concepts and associated controversies. This debate format makes synthetic biology accessible to students outside science-focused groups. As debaters examined the benefits and risks of SynBio development, they encouraged the audience to consider synthetic biology alongside human ethics.
+The debate centred on the question: “If synthetic biology could eliminate human suffering, should we prioritise enhancing human capabilities or preserving human life in its natural state?” Through this question, we hoped to encourage students to explore both the possibilities of SynBio and the ethical boundaries of its applications.
+
+We recruited eight student debaters from across the school. As most had limited background knowledge of synthetic biology, they conducted research beforehand to familiarise themselves with key concepts and related ethical controversies. We also invited iGEM Club members, other students and teachers to attend the debate.
 
 ::content-components-lightbox-panels
 ---
@@ -1331,38 +1361,39 @@ layout: grid
 
 #### Feedback
 
-We measured the debate’s educational impact using pre‑and post‑debate votes, self‑reported understanding scores, and interviews with debaters and audience members.
+We evaluated the debate’s educational impact through pre- and post-debate votes and interviews with both debaters and audience members.
 
-Interviews brought forward both positive and critical feedback. Some debaters and audience members reported new knowledge and greater interest in synthetic biology, with average self-rated understanding rising from 4.38 out of 10 to 6.59 out of 10. Meanwhile, several audience members noted that discussion occasionally drifted from synthetic biology into wider debates on technology and ethics.
+The voting results showed that some audience members changed their positions after the debate, while others maintained their original views. During the interviews, one debater shared: “I used to think synthetic biology was a futuristic, highly advanced technology. But after learning more about the field and participating in this debate, regardless of the side I represented, I now see its great potential for future development and real-world applications, although certain restrictions and regulations are still necessary.”
+
+However, several audience members pointed out that the discussion occasionally drifted away from synthetic biology towards broader questions of technology and ethics, and even philosophical discussions about the nature of human suffering.
 
 #### Reflection
 
-The debate successfully encouraged students to examine ethical questions around synthetic biology. However, this activity could be further improved to provide students with a stronger understanding of the field.
+The changes in some students' positions suggested that the debate encouraged them to reconsider the relationship between technological advancement and ethical boundaries. Nevertheless, we also recognised several areas for improvement.
 
-For future debates, we plan to provide more structured scientific preparation, such as introductory presentations or information packages on the basic concepts and applications of synthetic biology. We will also design debate topics that cover social, economic and regulatory impacts, so we can engage students with interests from a wider range of disciplines.
+For future debates, we plan to provide more structured scientific preparation for both debaters and audience members, such as introductory presentations or information packs covering fundamental SynBio concepts and applications. We also realised that the debate question could be more specific to encourage deeper, more focused discussions on the ethical implications of synthetic biology.
+
+The debate format could also be adapted to explore other controversial topics in SynBio, such as the environmental risks of releasing engineered organisms and the regulation of emerging biotechnologies.
 
 ::content-components-education-impact-radar
 ---
 fixed:
-  Age: 2
-  Educational level: 3
-  Size: 3
+  Age: 2.7
+  Educational level: 3.4
+  Size: 3.5
 impact:
   Knowledge of synbio:
-    - 1
-    - 1
-    - most students, including the debaters,  have limited knowledge of
-      synthetic biology, although some may have encountered basic concepts
-      through biology classes or other school activities
+    - 1.8
+    - 2
+    - "Although the debate itself lacked in-depth discussion of SynBio mechanisms, the post-debate lectures introduced basic SynBio concepts and applications to both debaters and audience members."
   Interest in synbio:
     - 3
-    - 3
-    - students are curious about emerging technologies and interested in the
-      ethical questions that may arise from scientific development
+    - 3.3
+    - "Both debaters and audience members expressed a willingness to explore SynBio further to reconsider the debate question from a more informed and comprehensive perspective."
   Engagement with synbio:
     - 2
-    - 2
-    - students accept and understand the concept of synthetic biology
+    - 2.5
+    - "Both debaters and audience members reflected further on the ethical implications of SynBio, as indicated by post-debate interviews and voting results."
 title: Ethical Debate — Before and after
 ---
 ::
@@ -1380,11 +1411,11 @@ title: Documentation
 
 ### SynBio Collaboration Fair
 
-（collaboration with Yucai SZ, SMS)
+In collaboration with the SMS and Yucai SZ iGEM teams, we organised a SynBio fair at Honey Park, inviting local families and park visitors to explore synthetic biology through hands-on activities. Visitors built microbial cell models using clay, discovered everyday applications of SynBio through posters, and learned signs for scientific terms in an interactive Sign Language Challenge.
 
 #### Target
 
-We collaborated with the SMS and Yucai SZ iGEM teams to hold a synthetic biology fair at Honey Park, aiming to reach park visitors, families, and nearby residents looking for fun and relaxing activities during their visit.
+As three local iGEM teams based in Futian District, Shenzhen, we collaborated with SMS and Yucai SZ to organise a Synthetic Biology Fair at Honey Park. Our target audience was park visitors, mainly families and nearby residents looking for fun and relaxing activities. We therefore chose engaging, hands-on activities that would allow visitors to explore SynBio in an enjoyable and accessible way.
 
 #### Feature
 
@@ -1392,30 +1423,30 @@ We collaborated with the SMS and Yucai SZ iGEM teams to hold a synthetic biology
 ---
 profile:
   Age:
-    - 0
-    - Score pending; temporarily set to 0.0.
+    - 3
+    - "Mainly families, including young or middle-aged parents and grandparents taking their children to the park during the National Day holiday."
   Educational level:
-    - 0
-    - Score pending; temporarily set to 0.0.
+    - 2.5
+    - "Educational backgrounds varied among participants. Most adults had likely received secondary or higher education, while children were mainly primary or middle school students."
   Size:
-    - 0
-    - Score pending; temporarily set to 0.0.
+    - 2.5
+    - "The total number of participants was unknown. Honey Park attracted large numbers of visitors during the National Day holiday, and our booth could accommodate approximately 5–10 participants at a time."
   Knowledge of synbio:
-    - 0
-    - Score pending; temporarily set to 0.0.
+    - 1.2
+    - "Prior knowledge varied among individuals, but most had never heard of synthetic biology before."
   Interest in synbio:
-    - 0
-    - Score pending; temporarily set to 0.0.
+    - 1.7
+    - "Most visitors who stopped at our booth showed some curiosity about SynBio."
   Engagement with synbio:
-    - 0
-    - Score pending; temporarily set to 0.0.
+    - 1.2
+    - "Most participants were completely new to SynBio and had little prior engagement with the field."
 title: SynBio Collaboration Fair — Before the session
 ---
 ::
 
 #### Method
 
-We designed three activities to introduce synthetic biology in a fun and approachable way. Families with children could use modelling clay to build bacterial and fungal cell structures, while science posters introduced everyday applications of synthetic biology. In the sign language challenge, participants learned the signs for synthetic biology terms while exploring how science can be made more accessible to the Deaf community.
+We designed activities to introduce synthetic biology in interactive and informative ways. Families with children could use modelling clay to build bacterial and fungal cell structures, while science posters introduced everyday applications of synthetic biology. In the "Sign Language Challenge", participants learned signs for SynBio-related terms while exploring how science can be made more accessible to the Deaf community.
 
 ::content-components-lightbox-panels
 ---
@@ -1463,31 +1494,33 @@ layout: grid
 
 #### Feedback
 
-During the activity, we observed that most children who joined the clay modelling activity had limited biological knowledge and were unfamiliar with basic concepts such as microorganisms and cell structures. In contrast, participants in the sign language challenge were mostly older students with stronger biology backgrounds, who could often infer the meanings of scientific terms from the corresponding signs.
+During the activity, we received comments from participants such as “This is my first time hearing about this field!” and “This clay model is such a useful educational tool. I would love to get more for my child!” These responses suggested that our activities were well received by visitors.
+
+However, we also noticed that most children who participated in the clay modelling activity had limited biological knowledge and were unfamiliar with basic concepts such as microorganisms and cell structures. In contrast, participants in the Sign Language Challenge were mostly older students and young adults with stronger biology backgrounds, who could often work out the meanings of scientific terms from the corresponding signs.
 
 #### Reflection
 
-The differences between participants reminded us that science outreach needs to account for both age and prior knowledge. For younger children, we could use more visual comparisons and familiar everyday examples to explain microorganisms and cell structures. For older participants, we could build on their existing knowledge and use sign language challenges to help them explore scientific vocabulary in a new way.
+The differences between participants reminded us that science outreach needs to take both age and prior knowledge into account. For younger children, we realised that more visual comparisons, analogies and familiar everyday examples would help us explain microorganisms and cell structures in ways they could better understand.
 
 ::content-components-education-impact-radar
 ---
 fixed:
-  Age: 0
-  Educational level: 0
-  Size: 0
+  Age: 3
+  Educational level: 2.5
+  Size: 2.5
 impact:
   Knowledge of synbio:
-    - 0
-    - 0
-    - Score pending; temporarily set to 0.0.
+    - 1.2
+    - 1.5
+    - "Participants were introduced to basic SynBio concepts and everyday applications of SynBio technologies."
   Interest in synbio:
-    - 0
-    - 0
-    - Score pending; temporarily set to 0.0.
+    - 1.7
+    - 2.2
+    - "Many visitors showed curiosity about SynBio through their active participation in the activities and positive feedback."
   Engagement with synbio:
-    - 0
-    - 0
-    - Score pending; temporarily set to 0.0.
+    - 1.2
+    - 1.2
+    - "With a basic understanding of SynBio, participants may become more open to SynBio products and better able to explain the field to others."
 title: SynBio Collaboration Fair — Before and after
 ---
 ::
@@ -1498,50 +1531,44 @@ Overview
 
 ### SynBio-vocab Learning Seminar
 
+At Xiang'an Community in Shenzhen, we organised a SynBio Vocabulary Learning Seminar for local families. Participants shared their challenges and strategies in learning scientific English, while our Biology Vocabulary Booklet introduced a different approach to understanding scientific terminology. Through explanations of word roots and suffixes, biological examples and short quizzes, participants explored how language learning could support their understanding of SynBio.
+
 #### Target
 
-Research in biology often requires researchers to access and understand English-language literature, especially in a rapidly developing and internationally connected field such as synthetic biology. For Chinese learners who do not study biology in English, understanding scientific literature can be challenging. Although translation tools can help, their translations may sometimes be inaccurate, imprecise, or unnatural, creating additional barriers to understanding scientific concepts and conducting research.
-
-With this in mind, our English-learning seminar primarily targeted families in nearby communities. Parents may encounter difficulties in learning English themselves or supporting their children's English learning. These challenges can be particularly relevant for families whose children are considering biology as a future major, as English proficiency may affect their ability to engage with university-level study and scientific literature. More specifically, biological terminology can be difficult to understand when learners are unfamiliar with the English roots and affixes used to form scientific words.
+Our SynBio Vocabulary Learning Seminar primarily targeted families in nearby communities. Parents may face challenges in learning English themselves or supporting their children's English learning. This is particularly relevant for families whose children are considering SynBio-related university majors, as synthetic biology is a highly international field in which English proficiency is essential for accessing scientific literature and pursuing further studies.
 
 #### Feature
-
-Families around the Xiang'an community
 
 ::content-components-education-target-profile-radar
 ---
 profile:
   Age:
-    - 3.1
-    - Mainly parents with their children
+    - 3
+    - "Mainly families, including young or middle-aged parents and their children."
   Educational level:
-    - 3.5
-    - Assuming participants have a basic understanding of biology
+    - 2.5
+    - "Educational backgrounds varied among participants. Most adults had likely received secondary or higher education, while children were mainly primary or middle school students."
   Size:
     - 2.5
-    - Approximately 20 people
+    - "Approximately 20 people attended the session."
   Knowledge of synbio:
-    - 2.3
-    - Participants may have learned SynBio in high school, but most likely have
-      forgotten it by now
+    - 1.5
+    - "Most participants had little prior knowledge of SynBio, as parents rarely encountered the field in their daily lives, while children had not yet been introduced to it at school."
   Interest in synbio:
-    - 2.5
-    - Most participants were willing to receive knowledge about SynBio
+    - 3.5
+    - "Some parents were interested in SynBio as a potential future field of study for their children, given its perceived career prospects and potential for future development."
   Engagement with synbio:
     - 1.5
-    - The participants have limited knowledge of SynBio, but they can accept
-      SynBio products
+    - "Although participants had limited knowledge of SynBio, they were generally open to new ideas."
 title: SynBio-vocab Learning Seminar — Before the session
 ---
 ::
 
 #### Method
 
-During the seminar, participants took turns sharing the difficulties and obstacles they encountered when learning English. We also exchanged learning experiences and strategies so that we can learn from one another. In addition, we introduced and distributed a biology vocabulary booklet as a supplementary resource, focusing on one specific challenge in learning English for biology: understanding subject-specific terminology.
+During the seminar, participants took turns sharing the challenges they faced when learning scientific English, as well as their learning experiences and strategies. We also introduced and distributed a biology vocabulary booklet as a supplementary resource, focusing on a common difficulty in learning scientific English: understanding subject-specific terminology.
 
-Rather than simply listing biological terms alongside their Chinese translations, the booklet was designed to help readers understand how scientific vocabulary is formed and how it relates to biological concepts. For example, when introducing *lipase*, we explained that it is an enzyme that breaks down lipids. The root *lip-* is associated with lipids, while the suffix *-ase* commonly indicates an enzyme. By explaining the meanings of common biological roots and suffixes, the booklet helps readers recognize patterns in scientific vocabulary and makes unfamiliar terms easier to remember.
-
-In addition to explaining word formation, the booklet provides Chinese explanations and visual aids to support comprehension. For example, when introducing vocabulary related to cell structures, we provided a diagram of a cell to help readers connect the terms with the structures they describe. Finally, the booklet contains short quizzes that allow readers to assess their own understanding of the biological concepts covered.
+The booklet was designed to help readers understand how biological terms are formed and how they relate to their own concepts. For example, when introducing *lipase*, we explained that it is an enzyme that breaks down lipids. The root *lip-* refers to lipids, while the suffix *-ase* commonly indicates an enzyme. By introducing common biological roots and suffixes, the booklet helps readers recognise patterns in scientific vocabulary and remember unfamiliar terms more easily. It also includes short quizzes before and after the explanatory sections, allowing readers to assess their understanding of the biological concepts covered.
 
 ::content-components-lightbox-panels
 ---
@@ -1565,9 +1592,9 @@ layout: grid
 
 #### Feedback
 
-During the seminar, participants shared positive feedback on the practical English-learning strategies discussed. For example, when a parent expressed difficulty remembering English vocabulary, we suggested learning words in context, such as through English-language science videos or books. Similarly, when a student identified speaking as a weakness, other participants suggested practicing speaking through video shadowing. These exchanges allowed participants to explore different approaches to overcoming their individual learning challenges. One participant also noted that the strategies discussed could be applied not only to English learning but also to learning other languages, highlighting their broader applicability.
+Some parents commented that the booklet would be useful for their children, while others suggested that learning vocabulary through roots and affixes could also be applied to other languages.
 
-After the seminar, one student reported that the biology vocabulary booklet had been helpful. After working through the booklet, the student was able to answer many of the questions in the final self-assessment quiz correctly. The student also appreciated being able to revisit the booklet whenever they forgot a term, making it a useful reference for continued learning beyond the seminar.
+After the seminar, one student reported that the biology vocabulary booklet had been helpful. After working through the booklet, she was able to answer most questions in the final self-assessment quiz correctly. She also noticed that many biological terms follow recognisable patterns in their word formation. Understanding these patterns made unfamiliar terms easier to learn and less easily to be forgotten.
 
 ::content-components-lightbox-panels
 ---
@@ -1595,31 +1622,29 @@ layout: grid
 
 #### Reflection
 
-Through this seminar, we realized the value of direct interaction with our target audience. The friendly and enthusiastic atmosphere encouraged participants to share their difficulties openly, allowing us to gain a deeper understanding of their actual needs and provide more relevant suggestions.
+One student suggested adding phonetic transcriptions to help readers learn how to pronounce unfamiliar terms. This reminded us that, when designing vocabulary learning materials, we should consider pronunciation alongside word recognition and conceptual understanding.
 
-One student suggested including phonetic transcriptions to make it easier for readers to learn the pronunciation of each term. This feedback reminded us to consider not only vocabulary recognition and conceptual understanding, but also pronunciation when designing learning materials.
-
-Building on these experiences, we plan to develop a series of biology vocabulary booklets covering different topics and make them freely available at community activity centers. This would allow more families to access resources and revisit them at their own pace, extending the educational impact of our seminar beyond a single event.
+Building on what we learned from the seminar, we plan to create a series of biology vocabulary booklets covering different topics and make them freely available at local community centres.
 
 ::content-components-education-impact-radar
 ---
 fixed:
-  Age: 3.1
-  Educational level: 3.5
+  Age: 3
+  Educational level: 2.5
   Size: 2.5
 impact:
   Knowledge of synbio:
-    - 2.3
-    - 0
-    - Score pending; temporarily set to 0.0.
+    - 1.5
+    - 3.2
+    - "Participants learnt how scientific word roots and suffixes connect to synbio terms, and can recognise the pattern behind biological vocabulary."
   Interest in synbio:
-    - 2.5
-    - 0
-    - Score pending; temporarily set to 0.0.
+    - 3.5
+    - 3.3
+    - "Participants realised the practical value of synbio scientific English, and became more willing to keep exploring related content."
   Engagement with synbio:
     - 1.5
-    - 0
-    - Score pending; temporarily set to 0.0.
+    - 2.3
+    - "Participants built positive attitude towards synbio, and some expressed willingness to continue self-study with the booklet."
 title: SynBio-vocab Learning Seminar — Before and after
 ---
 ::
@@ -1641,7 +1666,7 @@ Overview
 
 #### Target
 
-We recognised that many learners, especially young children and those new to synthetic biology, lack familiarity with the three-dimensional structures of microorganisms or might not be able to understand what microorganisms are as they are too small and not tangible. To address this gap, we adopted modelling clay as a tactile, visual activity for learners to construct these structures independently.
+We recognised that many learners, especially young children and those new to synthetic biology, find it difficult to visualise microorganisms and understand their structures, as these organisms are too small to be seen with the naked eye. To make these abstract concepts more tangible, we developed a hands-on clay modelling kit that allows learners to build and explore three-dimensional models of microorganisms themselves.
 
 #### Feature
 
@@ -1649,35 +1674,30 @@ We recognised that many learners, especially young children and those new to syn
 ---
 profile:
   Age:
-    - 1.5
-    - young children and teenagers who cannot comprehend the 3d structure of
-      microorganisms
+    - 1.8
+    - "Mainly young children and early teenagers who may struggle to understand three-dimensional microbial structures through flat textbook diagrams."
   Educational level:
-    - 2
-    - mainly students who have some understanding of synthetic biology and is
-      interested in it
-  Size:
-    - 5
-    - modeling clay is distributed to the participants of fair, as well as
-      posted onto the social media for general public to view on
-  Knowledge of synbio:
     - 1.5
-    - mostly general public without understanding of SynBio's basic concept,
-      some may have heard about it before
+    - "Most participants were primary school students."
+  Size:
+    - 3.5
+    - "We prepared 50 sets of Bacteria–Fungi Clay Kits, most of which were used at the Honey Park fairs or distributed through our [Inclusivity – Low Socioeconomic Status](/inclusivity#individuals-from-low-socioeconomic-backgrounds) initiative."
+  Knowledge of synbio:
+    - 1
+    - "Most children had never heard of synthetic biology and had only learnt about the existence of microorganisms at school."
   Interest in synbio:
-    - 2
-    - people who tend not to actively research on the SynBio related knowledge,
-      but will passively listen to it when provided
+    - 1.5
+    - "Most participants were initially attracted by the clay modelling activity rather than SynBio itself."
   Engagement with synbio:
-    - 0
-    - Score pending; temporarily set to 0.0.
+    - 1
+    - "Most participants had little to no understanding of SynBio or its applications."
 title: Bacterial-Fungi Clay Kit — Before the session
 ---
 ::
 
 #### Method
 
-We designed the blind-box kit containing ultra-light clay, slime, crafting tools, microbial identity cards, and detailed instruction booklets. This process allows students to observe microbial shapes, sizes and internal structures directly, establishing solid three-dimensional cognition beyond flat textbook diagrams. The synthetic biology fun facts embedded in the cards and booklets connect microbial traits to everyday life. For example, we introduced how lactobacillus drives fermentation and produces sourdough.
+We designed a Bacteria-Fungi blind-box kit containing ultra-light clay, slime, crafting tools, microbial identity cards and instruction booklets. The kit featured microorganisms commonly used in synthetic biology, particularly as engineered hosts. By building three-dimensional microbial models, students could better understand their shapes and internal structures beyond flat textbook diagrams. SynBio fun facts included in microbial identity cards and instruction booklets also introduced participants to the field in a fun, natural way. For example, we explained how *Lactobacillus* contributes to fermentation and gives sourdough its characteristic sour flavour.
 
 ::content-components-lightbox-panels
 ---
@@ -1698,7 +1718,9 @@ layout: grid
 
 #### Feedback
 
-During our Honey Park fair, we invited visitors to experience our bacterial and fungal clay modelling activity. One participant shared, “I had never learned about microbial structures before, but putting the clay model together helped me picture how lactobacillus works in fermentation.” We also noticed that young children, our primary target audience, often lack foundational biological background, making it difficult for them to fully understand the written microbial descriptions
+During our Honey Park fair, we invited visitors to try our bacterial and fungal clay modelling activity. Participants generally found the kits enjoyable, and some parents commented that “This is a more effective way to introduce six-year-old children to bacteria, than using abstract concepts from textbooks."
+
+However, we also noticed that young children, our primary target audience, often lacked basic biological knowledge and reading skills, making it difficult for them to fully understand the written descriptions of microorganisms in the booklets.
 
 ::content-components-lightbox-panels
 ---
@@ -1718,34 +1740,32 @@ layout: grid
 
 #### Reflection
 
-Based on the feedback we gathered, we plan to redesign child-oriented instruction booklets with simplified language, enhanced visual illustrations and life-based analogies, enabling younger learners to easily grasp corresponding synthetic biology knowledge.
-
-We will also extend this effective 3D modelling pedagogy to cover more core synthetic biology concepts, including microbial chassis functions, basic fermentation principles, and common microbial engineering applications in daily life.
+Based on the feedback we received, we plan to redesign our instruction booklets for younger children, using simpler language, more visual illustrations and familiar everyday analogies to help them better understand the SynBio concepts introduced in the kits.
 
 ::content-components-education-impact-radar
 ---
 fixed:
-  Age: 1.5
-  Educational level: 2
-  Size: 5
+  Age: 1.8
+  Educational level: 1.5
+  Size: 3.5
 impact:
   Knowledge of synbio:
+    - 1
     - 1.5
-    - 1.5
-    - mostly general public without understanding of SynBio's basic concept,
-      some may have heard about it before
+    - "Through hands-on modelling, participants developed a basic three-dimensional understanding of bacterial and fungal structures and connected them to simple SynBio applications such as fermentation."
   Interest in synbio:
+    - 1.5
     - 2
-    - 2
-    - people who tend not to actively research on the SynBio related knowledge,
-      but will passively listen to it when provided
+    - "The hands-on activity sparked participants' curiosity about microorganisms and their applications in SynBio."
   Engagement with synbio:
-    - 0
-    - 0
-    - Score pending; temporarily set to 0.0.
+    - 1
+    - 1.5
+    - "Participants gained a basic understanding of microbe-based SynBio applications, such as fermentation, and became more open to them."
 title: Bacterial-Fungi Clay Kit — Before and after
 ---
 ::
+
+Click to view our instruction booklets!
 
 ::content-components-collapsible-title
 ---
@@ -1794,7 +1814,7 @@ title: Documentation
 
 #### Target
 
-We selected the popular craft of perler‑bead art, a viral trend across Chinese and global social‑media platforms with a very low barrier to entry — participants can take part with little prior experience or effort. We target socially‑active students and young adults, whose synthetic‑biology background varies among individuals but is mostly limited. At the same time, they are very active on social media and have a wide influence on it. Through the online platforms, we expand public outreach of basic understanding of synthetic biology.
+We chose fuse bead art, a craft that has become increasingly popular among students and young adults on Chinese social media in recent years. As young people are generally active on social media and play an important role in spreading online trends, we hoped to use this popular craft to introduce basic SynBio concepts and reach a wider audience through online platforms.
 
 #### Feature
 
@@ -1802,37 +1822,30 @@ We selected the popular craft of perler‑bead art, a viral trend across Chinese
 ---
 profile:
   Age:
-    - 2.5
-    - teenagers and young adults who are interested in the trending contents on
-      social media, who are open minded and receptive.
+    - 3
+    - "Fuse bead crafts are particularly popular among teenagers and young adults."
   Educational level:
-    - 2.5
-    - general public with varied scientific educational background, most have an
-      essential understanding of biology, possibly to high school level, but
-      lacks systematic knowledge of synthetic biology
+    - 3.5
+    - "Most of the target audience had a high school education or above."
   Size:
     - 5
-    - "contents: drawings and written text posted online, facing the entire
-      general public"
+    - "Fuse bead patterns were shared online and made freely accessible to the general public."
   Knowledge of synbio:
-    - 1
-    - some targeted people may not have SynBio related knowledge before, but can
-      still participate and learn from it
+    - 1.3
+    - "Prior knowledge varied among individuals, but most had little understanding of SynBio."
   Interest in synbio:
-    - 1.5
-    - not SynBio interest driven, but some are keen to see the general
-      introduction of different cells and organisms, related to SynBio
+    - 1.8
+    - "Most participants were initially attracted by the fuse beads activity rather than SynBio itself."
   Engagement with synbio:
-    - 1.5
-    - some can accept SynBio products after reading the texts attached, while
-      others may still hold a negative attitude
+    - 1.4
+    - "Most had little prior exposure to SynBio or its applications."
 title: Fuse Beads — Before the session
 ---
 ::
 
 #### Method
 
-We created downloadable perler‑bead pattern templates of a wide range of microorganisms and released these resources publicly online for free use. Each pattern labels key microbial organelles, paired with brief introductions of their biological functions. This creative approach allows abstract cellular concepts to be tangible and interesting for the participants, At the end of our instructional material, we also include a short overview of the everyday applications for these microorganisms, linking textbook biology to people’s daily lives.
+We created a series of downloadable fuse bead patterns featuring different microorganisms and shared them online for free. Similar to our Bacteria–Fungi Clay Kit, the patterns were accompanied by brief explanations of key cellular structures, their functions, the microorganisms' everyday applications as well as its SynBio fun facts.
 
 ::content-components-bilingual-image-panels
 ---
@@ -1860,40 +1873,56 @@ layout: grid
 
 #### Feedback
 
-Following the online release of our resources, we received encouraging feedback from audience comments. Many viewers commented, “Completing this perler‑bead piece brought back all my high‑school biology knowledge — it's such a fun way to learn!” They also shared photos of their finished bead‑art works. The outcome proved our educational approach effective: participants could acquire new knowledge through hands‑on enjoyment, rather than relying on rote memorisation.
+Following the online release of our resources, we received encouraging feedback from audience comments.  Many viewers commented, “Completing this perler‑bead piece brought back all my high‑school biology knowledge — it's such a fun way to learn!” They also shared photos of their finished bead‑art works.
 
 #### Reflection
 
-By integrating recreational craft into science learning, our activity makes scientific knowledge far more approachable and entertaining for non‑expert audiences. Our perler‑bead patterns remain published on our social‑media accounts, forming a persistent, reusable resource that can continue to introduce synthetic‑biology‑related science to public audiences over time.
+By combining a popular craft with science education, we made biological concepts more approachable and enjoyable for audiences without a scientific background. Our fuse bead patterns remain freely available on social media, providing reusable resources that can continue to introduce SynBio-related knowledge to a wider audience.
 
 ::content-components-education-impact-radar
 ---
 fixed:
-  Age: 2.5
-  Educational level: 2.5
+  Age: 3
+  Educational level: 3.5
   Size: 5
 impact:
   Knowledge of synbio:
-    - 1
-    - 0
-    - Score pending; temporarily set to 0.0.
+    - 1.3
+    - 1.6
+    - "Viewers learnt about microbial cell structures and everyday SynBio applications through the labelled fuse bead patterns."
   Interest in synbio:
-    - 1.5
-    - 0
-    - Score pending; temporarily set to 0.0.
+    - 1.8
+    - 2.1
+    - "Many participants completed the craft and left positive comments, showing a genuine interest in the biological content."
   Engagement with synbio:
-    - 1.5
-    - 0
-    - Score pending; temporarily set to 0.0.
+    - 1.4
+    - 1.8
+    - "Viewers became more familiar with SynBio through an accessible activity and voluntarily shared their finished creations online."
 title: Fuse Beads — Before and after
 ---
 ::
 
+::content-components-collapsible-title
+---
+heading-tag: h4
+id: fuse-beads-documentation
+title: Documentation
+---
+:content-components-pdf-embed{src="https://static.igem.wiki/teams/6133/wiki/hp/education/fuse-beads-instruction-booklet-b-subtilis-chi-ver.pdf" title="Fuse Beads B. subtilis Instruction Booklet (Chinese)"}
+
+:content-components-pdf-embed{src="https://static.igem.wiki/teams/6133/wiki/hp/education/fuse-beads-b-subtilis-english.pdf" title="Fuse Beads B. subtilis Instruction Booklet (English)"}
+
+::
+
 ### Lab-Themed Murder Mystery Game
+
+Students first gained hands-on experience with PCR and gel electrophoresis before taking part in a lab-themed Jubensha centred on a failed experiment. By analysing gel images, reagent records and PCR settings, they worked together to uncover the cause of the PCR failure, applying their laboratory knowledge through collaborative problem-solving and evidence-based reasoning.
 
 #### Target
 
-We recognised that high school students usually learn synthetic biology through passive lectures with few interactive opportunities to reason and discuss. We therefore designed a synthetic biology mystery role-play game — a role‑playing crime deduction game where players receive character scripts and uncover the culprit by sharing clues and reasoning together — which puts core biology ideas directly into the game’s clues and tasks for students to use what they have learned while working in groups.
+Jubensha, also known as a murder mystery game, is an interactive role-playing activity in which participants take on different characters, uncover clues and work together to solve a fictional mystery.
+
+Jubensha has become increasingly popular among young people in China in recent years due to its immersive storytelling, intriguing mysteries and engaging social interactions. Inspired by its popularity, we designed a synthetic biology lab-themed Jubensha that integrates core laboratory techniques and SynBio concepts into the game's clues and tasks, allowing students to apply what they have learnt while working together to solve the mystery.
 
 #### Feature
 
@@ -1902,44 +1931,31 @@ We recognised that high school students usually learn synthetic biology through 
 profile:
   Age:
     - 2.5
-    - High school students, typically aged 15–18, who are developing
-      intellectual independence and beginning to form their own perspectives on
-      science and society
+    - "High school students aged 15–18, mainly members of our iGEM Club."
   Educational level:
-    - 3
-    - Students have completed foundational biology coursework, including basic
-      genetics and molecular biology techniques such as PCR and gel
-      electrophoresis
+    - 3.3
+    - "High school students at SCIE."
   Size:
     - 1.6
-    - The activity is designed for four participants plus one host, keeping the
-      group small to ensure active participation and in-depth discussion
+    - "Designed for four players and one host, allowing everyone to participate fully in group discussions."
   Knowledge of synbio:
-    - 2.5
-    - Students possess a foundational understanding of molecular biology, but
-      their knowledge is primarily theoretical, with limited opportunities to
-      apply these concepts in problem-solving contexts or experience the
-      realities of laboratory work
+    - 3
+    - "Students had learnt basic SynBio concepts through our club sessions but had limited experience troubleshooting problems in real laboratory scenarios."
   Interest in synbio:
     - 3.5
-    - Students exhibit strong curiosity about where conclusions are derived from
-      and value activities that are intellectually stimulating. They are also
-      highly social learners who thrive in collaborative environments, enjoy
-      peer discussion, and are motivated by challenges that require teamwork and
-      communication
+    - "Students enjoyed collaborative problem-solving challenges and were curious about how laboratory procedures work in practice."
   Engagement with synbio:
-    - 2.8
-    - Students are beginning to form independent interests in science and
-      technology. Through the game, they develop a stronger understanding of
-      scientific reasoning, laboratory practice, which may encourage some to
-      pursue further study or careers in SynBio-related fields
+    - 2.7
+    - "Some students were considering biology-related further studies or joining the iGEM team the following year, although their understanding of SynBio research was still limited."
 title: Lab-Themed Murder Mystery Game — Before the session
 ---
 ::
 
 #### Method
 
-Before the deduction activity, students completed a hands-on PCR and gel electrophoresis experiment to accumulate basic operational experience. Afterwards, students participated in our structured PCR-themed mystery game with four players and one host. Each participant received a character script defining their role and specific misoperation in a failed PCR trial. After brief role introduction, students analyzed real experimental clues including gel images, PCR protocols and reagent records to identify the error causing missing DNA bands. Specifically, participants calculated the theoretical extension time based on plasmid maps and compared it with the actual program settings to spot parameter mismatches. Through collective discussion and evidence-based reasoning, students determined which operational mistake led to the experimental failure, actively applying their PCR and electrophoresis knowledge throughout the process.
+During the session, students first carried out PCR and gel electrophoresis experiments under the guidance of our team members to gain hands-on laboratory experience. Afterwards, they took part in our lab-themed Jubensha in groups of four players and one host. Each player received a character script describing their role and a mistake they had made during a failed PCR experiment. After introducing their own characters, students examined experimental clues, including gel images, PCR protocols and reagent records, to find out what had caused the missing DNA bands.
+
+To solve the mystery, participants had to apply what they had learnt to realistic laboratory scenarios. For example, they calculated the expected PCR extension time based on the plasmid length and the instructions provided for the enzyme master mix, then compared it with the actual PCR settings to identify possible errors. Through group discussions and evidence-based reasoning, students worked together to uncover the cause of the experimental failure.
 
 ::content-components-lightbox-panels
 ---
@@ -1960,8 +1976,6 @@ layout: grid
 
 #### Feedback
 
-before:
-
 ::content-components-lightbox-panels
 ---
 alt:
@@ -1979,35 +1993,37 @@ layout: grid
 ---
 ::
 
-Pre- and post-activity surveys showed 105.8% improvement in PCR knowledge, 171.1% in gel electrophoresis and 90.1% in lab safety. One student commented: “When I was trying to defend myself, I actually had to go back and think about what each PCR component does. I realized that without template DNA, nothing gets amplified at all, while with other errors like wrong extension time or diluted primers there must still be something amplified. It is indeed really helpful in helping me understand PCR troubleshooting.”
+Pre- and post-activity surveys showed substantial improvements in students' understanding of PCR, gel electrophoresis and laboratory safety. These results suggested that our Jubensha helped students strengthen their theoretical knowledge while developing practical laboratory skills.
 
-However, we found several students were unfamiliar with standard lab workflows. Since the game was held right after basic lab training, they failed to absorb core knowledge sufficiently and struggled to identify experimental errors during deduction.
+One student commented, “Although solving the mystery was quite challenging for beginners like me, I felt a real sense of achievement when I finally figured out who was responsible for the failed PCR experiment!”
+
+However, some students found the problem-solving tasks particularly challenging. As the game took place immediately after the introductory lab training, they had limited time to fully absorb what they had learnt and struggled to identify experimental errors during the investigation.
 
 #### Reflection
 
-This activity offered high school students immersive hands-on reasoning practice, and this gameplay framework can be adapted for more synthetic biology topics such as bacterial transformation in later learning.
+Based on the feedback we collected, we identified some weaknesses in our original script. A few ambiguous details may have confused beginners and led them to incorrect conclusions. For future sessions, we plan to make the clues clearer or provide additional hints or guidance during the game when needed.
 
-However, we noticed weaknesses in our original script. A few ambiguous details, such as failing to state whether a character closed the PCR lid, confused participants and caused incorrect deductions. For our future activities, we will revise the script and evidence cards to remove unclear descriptions.
+Furthermore, this game format could also be adapted to other SynBio topics, such as bacterial transformation and protein expression in later learning.
 
 ::content-components-education-impact-radar
 ---
 fixed:
   Age: 2.5
-  Educational level: 3
+  Educational level: 3.3
   Size: 1.6
 impact:
   Knowledge of synbio:
-    - 2.5
-    - 0
-    - Score pending; temporarily set to 0.0.
+    - 3
+    - 3.4
+    - "Participants applied their knowledge of PCR and gel electrophoresis to identify experimental errors and developed a better understanding of laboratory troubleshooting."
   Interest in synbio:
     - 3.5
-    - 0
-    - Score pending; temporarily set to 0.0.
+    - 3.9
+    - "The role-playing game increased students' enthusiasm for lab-based SynBio problem-solving. Many actively asked follow-up questions when they encountered difficulties or unclear details."
   Engagement with synbio:
-    - 2.8
-    - 0
-    - Score pending; temporarily set to 0.0.
+    - 2.7
+    - 3.5
+    - "Some students expressed interest in conducting SynBio experiments and even participating in iGEM in the future."
 title: Lab-Themed Murder Mystery Game — Before and after
 ---
 ::
@@ -2243,11 +2259,11 @@ title: Documentation
 
 ### Long Videos
 
+We published long-form videos on Bilibili and YouTube, exploring different ways to introduce SynBio. Our video on Craig Venter and the Human Genome Project explored the history of genome sequencing, while our other videos included a recording of an AI-assisted protein design club session and a laboratory ASMR video capturing everyday lab sounds.
+
 #### Target
 
-Our target audience is mainly **young viewers**who watch long-form videos for entertainment rather than formal learning. If we present scientific or historical information as a long sequence of facts, viewers can easily lose interest.
-
-At the same time, long-form videos give us more room to explain complicated topics properly. We therefore wanted to make use of that extra space without making the video feel like a lesson. Our approach was to build the content around stories, people, conflicts, and memorable events, while introducing scientific ideas naturally along the way.
+Our long-form videos mainly targeted young people who use platforms such as Bilibili and YouTube not only for entertainment but also as resources for learning and exploring their interests. Compared with short-form video platforms, these platforms often encourage more sustained engagement with educational content, allowing viewers to explore scientific topics in greater depth.
 
 #### Feature
 
@@ -2256,35 +2272,29 @@ At the same time, long-form videos give us more room to explain complicated topi
 profile:
   Age:
     - 2.5
-    - "Reported score: 2.5 out of 5."
+    - "Mainly young viewers on long-form video platforms."
   Educational level:
     - 2.7
-    - "Reported score: 2.7 out of 5."
+    - "Students and young adults, generally at middle school level or above."
   Size:
     - 5
-    - "Reported score: 5.0 out of 5."
+    - "Videos were publicly available to a broad online audience."
   Knowledge of synbio:
-    - 1.8
-    - "Reported score: 1.8 out of 5."
+    - 1.4
+    - "Viewers may have heard of SynBio but had limited understanding of the field."
   Interest in synbio:
-    - 2.8
-    - "Reported score: 2.8 out of 5."
+    - 2.4
+    - "viewers were expected to have some interest in SynBio or the specific topics covered."
   Engagement with synbio:
-    - 2.3
-    - "Reported score: 2.3 out of 5."
+    - 1.5
+    - "Most viewers had limited prior engagement with SynBio."
 title: Long Videos — Before the session
 ---
 ::
 
 #### Methods
 
-For our long-form content, we treated storytelling as the main structure. Instead of pausing the video for separate scientific explanations, we introduced the science when the story actually needed it.
-
-We used this approach in our video on Craig Venter and the Human Genome Project. Rather than going through the history of genome sequencing step by step, we built the video around Venter’s career, the major turning points in the project, and the competition between his team and the publicly funded Human Genome Project.
-
-We also used humor, music, archival materials, and memorable moments from Venter’s career to keep the video from feeling too heavy. When scientific concepts became important to the story, we explained them directly. For example, we introduced the basic idea of whole-genome shotgun sequencing when explaining why Venter’s team was able to work faster than the public project.
-
-The conflict between the two projects also gave us a natural way to raise a broader question: should important scientific knowledge, especially genomic information, remain public, or can it be controlled by private organizations? We wanted viewers to think about this question as part of the story rather than as a separate discussion added at the end.
+We adopted different approaches depending on the content of each video. For example, our video on Craig Venter and the Human Genome Project combined humour and storytelling to introduce the history of genome sequencing. Beyond explaining scientific developments, we also raised an ethical question: should important scientific knowledge, particularly genomic information, remain publicly accessible or be controlled by private organisations?
 
 ::content-components-lightbox-panels
 ---
@@ -2305,19 +2315,11 @@ layout: left
 
 #### Feedback
 
-We looked at audience responses to see how people reacted to this format. The comments were limited, but the responses we received were positive. Some viewers described the videos as high-quality, while others left positive emojis and casual comments.
-
-One viewer said that these videos were “great to watch while eating.” Although this was a very informal comment, we found it useful because it suggested that the video worked not only as science content, but also as something people could casually enjoy.
-
-For us, this was a good sign that the combination of storytelling, humor, music, visuals, and scientific explanation helped make a relatively complex topic easier to watch.
+We received positive responses from viewers, including encouraging comments, stickers and memes. One viewer even described our videos as “great to watch while eating”. This feedback suggested that our content could be enjoyed as casual entertainment while introducing scientific knowledge, allowing viewers to explore SynBio-related topics in a relaxed and enjoyable way.
 
 #### Reflection
 
-This video helped us understand that the main advantage of long-form content is not simply that it gives us more time to explain science. It also gives us space to connect scientific ideas with people, historical events, and wider social or ethical questions.
-
-We also learned that more time does not automatically make a video better. A longer video still needs clear pacing, visual changes, and a story that gives viewers a reason to keep watching.
-
-Our evaluation is based mainly on one long-form video, so we cannot draw a very broad conclusion from it. However, The audiences' responses gave us enough confidence to keep this general approach in future long-form content: tell a clear story first, bring in the science when it becomes relevant, and make sure the video is enjoyable to watch as well as informative.
+Our experience showed us that long-form videos can combine entertainment with scientific learning, making complex topics more approachable. In the future, we hope to develop a more structured series exploring the history of SynBio through storytelling. We also plan to produce more detailed educational videos for viewers who wish to deepen their scientific knowledge or develop practical skills.
 
 ::content-components-education-impact-radar
 ---
@@ -2327,26 +2329,30 @@ fixed:
   Size: 5
 impact:
   Knowledge of synbio:
-    - 1.8
-    - 2.6
-    - "Reported score: 2.6 out of 5."
+    - 1.4
+    - 1.6
+    - "Viewers were introduced to the history of genome sequencing, key techniques and related ethical debates through Craig Venter's story."
   Interest in synbio:
+    - 2.4
     - 2.8
-    - 3.2
-    - "Reported score: 3.2 out of 5."
+    - "Story-driven content attracted positive responses and encouraged curiosity about SynBio-related research."
   Engagement with synbio:
-    - 2.3
-    - 2.6
-    - "Reported score: 2.6 out of 5."
+    - 1.5
+    - 1.7
+    - "The videos encouraged viewers to explore scientific developments and consider their wider social and ethical implications."
 title: Long Videos — Before and after
 ---
 ::
 
 ### Short Videos
 
+We published 13 short videos on RedNote and WeChat Channels. Our official RedNote account, GreatBay-SCIE 2026, has gained over 92,000 likes and saves, along with more than 5,200 followers.
+
+Our short videos combined humour with familiar laboratory scenarios to introduce basic experimental procedures and safety practices. Topics included microbial cultivation, the use of personal protective equipment (PPE), and the importance of keeping food and drinks out of the laboratory, making laboratory knowledge more accessible to viewers with little or no practical experience.
+
 #### Target
 
-Our short-video outreach targeted a broad online audience, ranging from individuals with little or no laboratory experience to those with scientific training or professional laboratory experience. Recognizing that these audiences may differ in their familiarity with laboratory procedures and safety protocols, we sought to make our content accessible to beginners while remaining relatable to more experienced viewers.
+Our short-video outreach targeted a broad online audience, from beginners with little laboratory experience to those with scientific training or professional experience. Given their varying familiarity with laboratory procedures and safety protocols, we aimed to make our content accessible to beginners while remaining relatable to experienced viewers.
 
 #### Feature
 
@@ -2354,32 +2360,32 @@ Our short-video outreach targeted a broad online audience, ranging from individu
 ---
 profile:
   Age:
-    - 0
-    - Score pending; temporarily set to 0.0.
+    - 3
+    - "A diverse online audience, including teenagers, young adults and middle-aged viewers."
   Educational level:
-    - 0
-    - Score pending; temporarily set to 0.0.
+    - 2.4
+    - "Educational backgrounds varied considerably among viewers."
   Size:
-    - 0
-    - Score pending; temporarily set to 0.0.
+    - 5
+    - "Publicly available social media posts with the potential to reach a large audience."
   Knowledge of synbio:
-    - 0
-    - Score pending; temporarily set to 0.0.
+    - 1.3
+    - "Prior knowledge varied among viewers, but most had little or no understanding of SynBio."
   Interest in synbio:
-    - 0
-    - Score pending; temporarily set to 0.0.
+    - 1.5
+    - "Most viewers encountered our videos while casually browsing social media rather than actively seeking SynBio-related content."
   Engagement with synbio:
-    - 0
-    - Score pending; temporarily set to 0.0.
+    - 1.5
+    - "Viewers were primarily passive recipients of information, with limited active engagement in SynBio."
 title: Short Videos — Before the session
 ---
 ::
 
 #### Method
 
-In particular, we used creative and humorous storytelling to communicate laboratory rules and safety practices, such as wearing laboratory coats and appropriate personal protective equipment, as well as prohibiting food and drinks in the laboratory. For example, in our video *“A Day in the Life of a Girl doing scale up cultivation in lab”* we presented the steps and practical techniques involved in laboratory cultivation through an accessible, relatable narrative, highlighting key details such as disinfecting the tools with alcohol before use. Other videos adopted similarly engaging approaches to communicate laboratory safety practices and laboratory procedures.
+We used creative and humorous storytelling to introduce laboratory rules and safety practices, such as wearing lab coats and appropriate personal protective equipment (PPE), and keeping food and drinks out of the laboratory.
 
-For audiences without laboratory experience, these videos offered an engaging introduction to everyday laboratory practices and sparked curiosity about experimental science, while for those with laboratory experience, the content provided relatable scenarios that reinforced the importance of following safety guidelines and performing procedures correctly.
+For beginners, the videos offered a glimpse into real laboratory work and helped spark an interest in SynBio experiments. For experienced viewers, they served as entertaining reminders of standard safety practices.
 
 ::content-components-lightbox-image
 ---
@@ -2394,7 +2400,7 @@ caption: Fig. 34 | screenshots of short videos we published on Rednote
 
 #### Feedback
 
-To date, we have published 11 short videos across our social media accounts, with each video receiving an average of more than 1,000 views. One of our laboratory safety videos, focusing on the importance of not having food or drinks in the laboratory, gained particular popularity on RedNote, receiving 58,000 likes. We received comments like “last time my friend forgot to add antibiotic when doing scale up cultivation” sharing similar awkward experiences from their own laboratories, while others expressed surprise at how interesting everyday laboratory work can be.
+To date, we have published 13 short videos across our social media accounts, each receiving over 1,000 views on average. One laboratory safety video about keeping food and drinks out of the lab became particularly popular on RedNote, receiving over 73,000 likes. Some viewers shared similar experiences from their own laboratories, such as “Last time, my friend forgot to add antibiotics during scale-up cultivation”, while others expressed surprise at how interesting everyday laboratory work could be.
 
 ::content-components-lightbox-image
 ---
@@ -2409,40 +2415,38 @@ caption: Fig. 35 | Analytics panel showing 471k impressions (+6839%) and 338.5k
 
 #### Reflection
 
-The success of our short videos on social media demonstrated how creative and entertaining communication can attract public attention and help extend the reach of scientific and laboratory safety education beyond traditional educational settings. However, some audiences also pointed out that certain safety rules were missing or insufficiently explained when we prioritized humor and entertainment.
-
-This feedback prompted us to reflect on the balance between engagement and scientific accuracy. Moving forward, we aim to maintain the humorous and approachable style of our videos while ensuring that laboratory safety information is professional, accurate, and sufficiently comprehensive.
+The success of our short videos on social media demonstrated how creative and entertaining communication can attract public attention and extend the reach of science education beyond traditional educational settings. Encouraged by the responses, we plan to create more engaging and creative short videos to further expand our outreach.
 
 ::content-components-education-impact-radar
 ---
 fixed:
-  Age: 0
-  Educational level: 0
-  Size: 0
+  Age: 3
+  Educational level: 2.4
+  Size: 5
 impact:
   Knowledge of synbio:
-    - 0
-    - 0
-    - Score pending; temporarily set to 0.0.
+    - 1.3
+    - 1.5
+    - "The short videos introduced laboratory safety rules and everyday SynBio laboratory practices to a broad online audience."
   Interest in synbio:
-    - 0
-    - 0
-    - Score pending; temporarily set to 0.0.
+    - 1.5
+    - 1.9
+    - "Humorous laboratory stories attracted viewers' attention and sparked their curiosity about SynBio experiments."
   Engagement with synbio:
-    - 0
-    - 0
-    - Score pending; temporarily set to 0.0.
+    - 1.5
+    - 1.8
+    - "Viewers actively commented and shared their own laboratory experiences, showing greater engagement with SynBio-related content."
 title: Short Videos — Before and after
 ---
 ::
 
 ### Infographics
 
+We published a series of illustrated posts exploring synthetic biology through our iGEM project and related scientific research. Covering topics such as the biological basis of body odour, fragrance production using engineered microorganisms and AI-assisted protein design, these posts helped readers understand the scientific principles behind SynBio and how they can be applied to real-world problems.
+
 #### Target
 
-Our target audience of the infographics on synthetic biology primarily comprises high school and university students with a foundational understanding of biology who seek to explore scientific topics beyond the standard curriculum, as well as individuals working in or interested in biotechnology and scientific innovation.
-
-Beyond their general interest in biology, these readers are particularly interested in understanding the scientific principles behind emerging technologies, such as synthetic biology, and their potential real-world applications. We therefore aim to provide scientifically grounded, in-depth content that builds on their existing knowledge while introducing advanced concepts in an accessible and coherent manner.
+Our SynBio infographics primarily targeted students and adults with foundational biological knowledge who wished to explore more advanced topics, as well as professionals, practitioners and entrepreneurs in the field. We aimed to build on their existing knowledge by providing in-depth, scientifically grounded content that explains emerging technologies and complex SynBio concepts in an accessible way.
 
 #### Feature
 
@@ -2450,42 +2454,30 @@ Beyond their general interest in biology, these readers are particularly interes
 ---
 profile:
   Age:
-    - 3.2
-    - mainly consists of young adults aged roughly 18–30
+    - 3.5
+    - "Our target audience covered a wide age range, including high school students, young adults and middle-aged individuals."
   Educational level:
     - 4
-    - generally educated at the university level or above, possessing a basic
-      foundation in biological knowledge
+    - "Generally educated at university level or above, with a solid foundation in biological knowledge."
   Size:
     - 5
-    - Our outreach was delivered through social media to the general public,
-      requiring content that remained accessible to a wide range of viewers
-      while retaining enough depth for those with stronger scientific
-      backgrounds
+    - "Our infographics were shared publicly on social media, making them accessible to a broad online audience."
   Knowledge of synbio:
-    - 2.5
-    - Most of our audience had some prior exposure to synthetic biology, but few
-      had systematic training, needing a bridge from fundamental biology to
-      SynBio as an applied discipline.
+    - 3
+    - "Most of our target readers had some prior exposure to SynBio, allowing them to engage with more advanced scientific content."
   Interest in synbio:
     - 3.5
-    - Our audience showed genuine interest in scientific innovation and actively
-      engaged with the content by asking questions and seeking further
-      information.
+    - "Our audience showed a strong interest in scientific innovation and actively sought further information about emerging technologies."
   Engagement with synbio:
-    - 2.8
-    - Our audience represents potential consumers and advocates who can
-      understand and accept SynBio concepts, with some practitioners and
-      investors demonstrating the potential to contribute at a higher level.
+    - 3.4
+    - "Some readers were researchers or professionals working in the field, while others were generally supportive of SynBio and open to its applications and products."
 title: Infographics — Before the session
 ---
 ::
 
 #### Method
 
-To make the process of synthetic biology more tangible, we used our own iGEM project as a recurring case study, guiding readers through the development of a project, from identifying a real-world problem to exploring potential solutions through biological engineering. For example, in *“What?! The Genetic Basis of Body Odor Turns Out to Be...?”*, we introduced the biological and genetic factors associated with axillary odor, drawing on findings from scientific literature, including a 2024 study. In *“Expelliodor! We found these eudemons for you"*, we then used our own project as an example to illustrate how synthetic biology can be applied to address this issue.
-
-We also explored broader developments in the field by introducing how engineered terpene biosynthesis pathways are advancing fragrance production and how AI models are being applied to protein design. In this way, we aimed to help readers connect established scientific concepts with innovative applications of synthetic biology.
+To make the real-world applications of synthetic biology more tangible, we used our iGEM project as a recurring case study, showing readers how SynBio can address real-world problems step by step. For example, in *“What?! The Genetic Basis of Body Odor Turns Out to Be...?”*, we explored the biological and genetic factors behind axillary odour based on scientific literature. In *“Expelliodor! We Found These Eudemons for You”*, we used our project to illustrate how SynBio could help tackle this issue.
 
 ::content-components-lightbox-image
 ---
@@ -2501,37 +2493,31 @@ caption: Fig. 36 | mobile phone screenshots displaying a series of popular
 
 #### Feedback
 
-In total, we posted 8 infographic posts on our wechat official account, and the educational posts achieved significant reach: our content accumulated more than 3,500 views, while sharing activity generated additional exposure beyond the original audience. Notably, KleanK, a Chinese deodorant brand, expressed interest in our post introducing de novo protein design as a potential approach to addressing body odor and subsequently reached out to us. This led to our discussions about the commercial potential of our proposed solution with crews from KleanK company, through which we gained valuable insights into the Chinese deodorant industry and the practical considerations involved in translating a scientific concept into a potential product. For more details, please visit [#meeting with KleanK company]
+We published eight infographic posts on our official WeChat account, attracting over 3,500 views in total. Notably, KleanK, a Chinese deodorant brand, came across our post introducing de novo protein design as a potential solution to body odour and reached out to us. This led to further discussions with the company about the commercial potential of our proposed solution. For more details, please visit [iHP – First Meeting with KleanK](/human-practices/stage-3-developing-solutions#cycle-2-first-meeting-with-kleank).
 
 #### Reflection
 
-We successfully balanced scientific rigor with accessibility, presenting complex concepts in a clear and approachable manner without oversimplifying the science.
-
-For future improvement, we will optimize how advanced concepts are presented to audiences with different levels of scientific knowledge, potentially incorporating more visual storytelling, interactive elements, and progressively structured explanations. We could also incorporate short quizzes or surveys to assess readers’ understanding, identify concepts that require clearer explanations, and refine our content accordingly.
+We managed to balance scientific rigour with accessibility, presenting complex SynBio concepts in a clear and approachable way without oversimplifying the science. Our experience also showed us that educational content can reach beyond its intended audience, sparking interest and creating opportunities for further exchange with professionals in the industry.
 
 ::content-components-education-impact-radar
 ---
 fixed:
-  Age: 3.2
+  Age: 3.5
   Educational level: 4
   Size: 5
 impact:
   Knowledge of synbio:
-    - 2.5
-    - 4
-    - Through our educational posts, our audience gained a clearer understanding
-      of synthetic biology as an applied field and were able to connect it to
-      concrete processes, products, and technologies
+    - 3
+    - 3.3
+    - "Through our educational posts, readers gained a clearer understanding of SynBio as an applied field and its connections to real-world processes, products and technologies."
   Interest in synbio:
     - 3.5
-    - 3.8
-    - Our positive guidance and practical elements helped deepen audience
-      interest
+    - 3.9
+    - "The practical examples and accessible explanations helped spark further interest in SynBio and its applications."
   Engagement with synbio:
-    - 2.8
-    - 3.2
-    - some viewers actively supporting the field and external parties taking
-      concrete steps toward collaboration
+    - 3.4
+    - 3.8
+    - "KleanK, a Chinese deodorant brand, contacted us to learn more about our de novo protein-based solution for axillary odour, showing how our educational outreach could encourage engagement and further exchanges with industry professionals."
 title: Infographics — Before and after
 ---
 ::
