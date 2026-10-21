@@ -21,7 +21,7 @@ const regions = [
     {
         name: "Southern Asian",
         value: 62.22,
-        display: "62.22%",
+        display: "62.2%",
         className: "world-stat-card--south-asia",
         origin: "48% 100%",
         fromX: "1vw",
@@ -30,7 +30,7 @@ const regions = [
     {
         name: "Eastern Asian",
         value: 21.54,
-        display: "21.54%",
+        display: "21.5%",
         className: "world-stat-card--east-asia",
         origin: "0% 92%",
         fromX: "-10vw",
@@ -39,7 +39,7 @@ const regions = [
     {
         name: "European",
         value: 97.48,
-        display: "97.48%",
+        display: "97.5%",
         className: "world-stat-card--europe",
         origin: "82% 70%",
         fromX: "11vw",
@@ -48,7 +48,7 @@ const regions = [
     {
         name: "African",
         value: 99.99,
-        display: "99.99%",
+        display: "100.0%",
         className: "world-stat-card--africa",
         origin: "50% 50%",
         fromX: "0vw",
@@ -57,7 +57,7 @@ const regions = [
     {
         name: "Oceanian",
         value: 96.05,
-        display: "96.05%",
+        display: "96.1%",
         className: "world-stat-card--oceania",
         origin: "0% 50%",
         fromX: "-10vw",
@@ -66,7 +66,7 @@ const regions = [
     {
         name: "American",
         value: 92.42,
-        display: "92.42%",
+        display: "92.4%",
         className: "world-stat-card--america",
         origin: "100% 50%",
         fromX: "10vw",
@@ -102,7 +102,7 @@ onMounted(() => {
             };
             const renderFinalValues = () => {
                 values.forEach((element, index) => {
-                    element.textContent = regions[index]?.display ?? "0%";
+                    element.textContent = regions[index]?.display ?? "0.0%";
                 });
             };
 
@@ -145,7 +145,7 @@ onMounted(() => {
 
                 const counter = { value: 0 };
                 const start = 0;
-                valueElement.textContent = "0%";
+                valueElement.textContent = "0.0%";
                 gsap.set(card, {
                     autoAlpha: 0,
                     scale: 0.08,
@@ -182,11 +182,7 @@ onMounted(() => {
                             duration: 0.7,
                             ease: "power2.out",
                             onUpdate: () => {
-                                valueElement.textContent = `${
-                                    region.value % 1 === 0
-                                        ? Math.round(counter.value)
-                                        : counter.value.toFixed(2)
-                                }%`;
+                                valueElement.textContent = `${counter.value.toFixed(1)}%`;
                             },
                         },
                         start + 0.72,

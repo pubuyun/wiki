@@ -70,19 +70,16 @@ const frameStyle = computed(() => ({
     --graph-navigation-height: 3rem;
 }
 
-/* Reserve the final canvas, caption and borders before the client chunk loads. */
 .content-graph-frame__surface {
-    height: calc(
-        min(
-                clamp(
-                    180px,
-                    calc((100cqw - 4px) / var(--graph-aspect-ratio) + 80px),
-                    var(--graph-max-height)
-                ),
-                calc(100dvh - var(--graph-navigation-height) - 2rem - 3.5rem)
-            ) +
-            3.5rem + 4px
+    --graph-canvas-height: min(
+        clamp(
+            180px,
+            calc((100cqw - 4px) / var(--graph-aspect-ratio) + 80px),
+            var(--graph-max-height)
+        ),
+        calc(100dvh - var(--graph-navigation-height) - 2rem - 3.5rem)
     );
+    height: calc(var(--graph-canvas-height) + 3.5rem + 4px);
 }
 
 .content-graph-frame__surface--full {

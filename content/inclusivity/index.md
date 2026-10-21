@@ -987,7 +987,7 @@ alt:
 ---
 ::
 
-<div class="my-8 flex flex-col items-center gap-12">
+<div class="my-8 flex flex-col items-center" style="display: flex; flex-direction: column; gap: 1.5rem;">
 
   <div
   class="w-full max-w-[800px]"

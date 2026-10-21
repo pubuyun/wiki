@@ -218,7 +218,7 @@ The psychiatrist, anthropologist, sociologist and counselors we consulted deepen
 ::content-components-lightbox-image
 ---
 src:
-  - https://static.igem.wiki/teams/6133/wiki/hp/entrepreneurship/entrepreneurship-index-fig4.avif
+  - https://static.igem.wiki/teams/6133/wiki/hp/entrepreneurship/matrix.avif
 alt: "Mendelow matrix positioning 34 stakeholders by interest and influence, grouped as Users and Beneficiaries, Experts and Professionals, Companies and Industry, and Society and Community."
 caption: "Fig. 4 | Mendelow's matrix showing our stakeholders"
 ---

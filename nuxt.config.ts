@@ -133,6 +133,8 @@ export default defineNuxtConfig({
     nitro: {
         prerender: {
             routes: ["/api/search-index.json"],
+            // Query variants cannot be written to static files; keep query handling client-side.
+            ignore: [(route) => route.includes("?")],
         },
         publicAssets: [
             {

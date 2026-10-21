@@ -23,6 +23,14 @@ pages:
     timeout: 10m
     cache:
         - <<: *install-cache
+        - key:
+              prefix: content-parser-v1
+              files:
+                  - yarn.lock
+                  - package.json
+          paths:
+              - .data/content/
+          policy: pull-push
     before_script:
         - corepack enable
     script:
@@ -32,6 +40,15 @@ pages:
             else
                 yarn install --immutable
             fi
+        - |
+            # Content checks Markdown changes itself; also invalidate on parser/config changes.
+            CONTENT_CACHE_HASH="$(git ls-files -z -- nuxt.config.ts content.config.ts app/utils modules | xargs -0 sha256sum | sha256sum | cut -d ' ' -f 1)"
+            if [ "$(cat .data/content/.ci-parser-hash 2>/dev/null)" != "$CONTENT_CACHE_HASH" ]; then
+                echo "Content parser/config changed, clearing content cache"
+                rm -rf .data/content
+            fi
+            mkdir -p .data/content
+            printf '%s\n' "$CONTENT_CACHE_HASH" > .data/content/.ci-parser-hash
         - yarn generate
         - mkdir -p public
         - cp -a .output/public/. public/

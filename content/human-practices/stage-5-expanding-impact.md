@@ -229,8 +229,6 @@ caption: "Fig. 10 | Our member introducing Mental Health Educational Handbook to
 
 ## Cycle 4 Overseas Market
 
-@Emma
-
 ### Observe
 
 Following our decision to **expand beyond China**, we wanted to better understand potential customers in overseas markets and how their views on deodorant might differ from those of Chinese customers.

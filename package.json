@@ -3,7 +3,6 @@
     "packageManager": "yarn@4.9.1",
     "type": "module",
     "scripts": {
-        "icons:update": "node scripts/update-icons.mjs",
         "build": "nuxt build",
         "dev": "nuxt dev",
         "generate": "NUXT_APP_BASE_URL=\"/greatbay-scie/\" nuxt generate",
