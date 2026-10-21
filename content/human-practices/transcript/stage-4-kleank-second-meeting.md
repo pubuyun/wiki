@@ -1,12 +1,12 @@
 ---
-title: "Second Meeting with KleanK"
+title: "Interview with JingZhou company"
 topic: "Experimental progress and product development for a synthetic biology approach to underarm odor: formulation development, protein stability, fragrance and packaging, consumer needs, market analysis, and commercialization"
 interviewee: "JingZhou company"
 interviewers: "GreatBay-SCIE 2026"
-description: "Full transcript: Stage 4, Cycle 1 — Second Meeting with KleanK"
 hasReference: false
-order: 8
+navigation: false
 ---
+
 
 **JingZhou company**
 Let me start with an introduction. This floor is our headquarters. The company was founded in July 2020, during the pandemic, and initially focused on medical science communication. If you search for skin conditions on Douyin or Xiaohongshu, our company has been involved in producing around seventy to eighty percent of the related content. Many of the doctors you see work with us on content production. That was our first business area, which also involved some sales of medicines and other products.

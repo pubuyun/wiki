@@ -1,12 +1,12 @@
 ---
-title: "First Meeting with KleanK"
+title: "Interview with JingZhou company"
 topic: "Research progress, consumer needs, and commercialization of underarm deodorizing technologies: ingredients and regulatory considerations, target groups including adolescents, existing formulations, product formats, and protein stability"
 interviewee: "JingZhou company"
 interviewers: "GreatBay-SCIE 2026"
-description: "Full transcript: Stage 3, Cycle 2 — First Meeting with KleanK"
 hasReference: false
-order: 7
+navigation: false
 ---
+
 
 **JingZhou company**
 Today, we would like to talk with you about the points our colleague just mentioned. What stage has your technology reached? Looking ahead, are you hoping to commercialize it, or do you have other plans? Would there be any opportunities for us to work together? Those are roughly the things we wanted to discuss. There is relatively little information on your WeChat official account, which is why we arranged this conversation. Have I explained that clearly?

@@ -1,219 +1,213 @@
 ---
-title: "Interview with Su Gong"
-topic: "Protein-based deodorant formulation, stability, packaging, commercialization, and product development"
-interviewee: "Su Gong"
+title: "Interview with Mr. Su Rongsheng"
+topic: "Feasibility of protein-based deodorant mechanisms, peptide formulation and delivery, safety assessment, regulatory considerations, and production costs"
+interviewee: "Mr. Su Rongsheng"
 interviewers: "GreatBay-SCIE 2026"
-description: "Full transcript: Stage 4, Cycle 2 — Cosmetic Formulation Expert"
 hasReference: false
-order: 9
+navigation: false
 ---
+
 
 **GreatBay-SCIE 2026**
 
-Thank you for joining us. We are participating in iGEM, an international competition focused on synthetic biology. Our project this year aims to develop a protein-based underarm deodorant. We are targeting the production pathway of 3M3SH, one of the major odor-causing molecules associated with axillary odor, using proteins designed with AI-assisted protein-design tools. Because proteins may introduce challenges in formulation, preservation, stability, packaging, and large-scale production, we would like to ask for your professional advice.
+How would you evaluate the feasibility and expected deodorizing effects of our three proposed strategies?
 
-Before we begin, do you agree to the interview being recorded and summarized on our project website? If necessary, would you also be comfortable with your identity and interview content being made public?
+**Mr. Su Rongsheng**
 
-**Su Gong**
+The precursor-binding strategy prevents bacteria from accessing odor precursors. Its expected deodorizing effect is moderate because binding is stoichiometric: each binding molecule can capture only a limited number of precursor molecules, so high application concentrations may be necessary. Designing proteins with high affinity and specificity for these small precursor molecules is difficult.
 
-Yes, that is fine. I agree to the recording and publication of the interview content.
+The engineered-enzyme strategy destroys the precursor structure. Its expected deodorizing effect is very high because catalytic amplification allows small amounts of enzyme to act on many substrate molecules. However, stability is a major challenge. Enzymes can become inactivated in complex cosmetic formulations and under challenging skin conditions.
 
----
-
-**GreatBay-SCIE 2026**
-
-What are the main differences between protein-based cosmetics and conventional cosmetics in terms of formulation and packaging design?
-
-**Su Gong**
-
-The main difference comes from the molecular properties of proteins. Conventional skincare formulations usually contain moisturizers, oils, emulsifiers, stabilizing polymers, preservatives, and other relatively small molecules. Proteins are much larger macromolecules composed of amino acids, so their behavior in a formulation is very different.
-
-In a water-based formulation, a protein may exist as a dispersed or gel-like system rather than behaving like a simple small molecule dissolved in water. Therefore, the formulation needs to maintain the protein in a stable state and avoid conditions that may cause denaturation, precipitation, or degradation.
-
-Several factors are particularly important. Strong acids and strong bases should be avoided because inappropriate pH can destabilize proteins. High concentrations of inorganic salts and electrolytes may also cause protein denaturation or precipitation. Proteases or other enzymes that may degrade the protein should be avoided. High-temperature processing should also be avoided. A practical approach is to prepare the other ingredients first, allow the mixture to cool, and then add the protein at a later stage.
-
-Packaging also matters. Common cosmetic packaging materials such as high-quality PE, PET, PP, acrylic, and glass can be considered, but compatibility must still be experimentally tested because different manufacturers and additives in plastics may influence the formulation. Metal packaging should be treated cautiously because metal ions may leach into the product and potentially affect protein stability.
-
-Light exposure, especially UV exposure, may also damage proteins. Therefore, opaque or light-protective packaging is preferable to transparent packaging. Ultimately, packaging compatibility should be confirmed using stability testing under conditions such as high temperature, low temperature, and light exposure.
-
----
+The transporter-blocking strategy competitively inhibits bacterial uptake and is expected to have a high deodorizing effect by preventing substrates from entering bacterial cells. Targeting complex transmembrane proteins is difficult. Protein blockers must maintain their three-dimensional structure, and bacteria may develop adaptive mutations.
 
 **GreatBay-SCIE 2026**
 
-Among common plastics such as PP, PET, and HDPE, which materials are more compatible with proteins and better for maintaining protein stability?
+How widely accepted is synthetic biology for producing active cosmetic ingredients?
 
-**Su Gong**
+**Mr. Su Rongsheng**
 
-If the plastic is high quality and relatively pure, materials such as PE, PET, PP, and acrylic can generally be suitable. The main issue is that commercial plastics are not made of 100% pure polymer. They may contain catalysts, plasticizers, processing additives, and trace impurities.
-
-Because the exact composition varies between suppliers and manufacturers, compatibility cannot be judged only from the polymer name. The most reliable method is experimental screening. The protein formulation should be stored in the selected packaging and subjected to accelerated stability tests, including temperature cycling and light exposure, over a period of time. This allows you to determine whether the packaging affects the stability of the product.
-
----
+Acceptance is very high. Ingredients such as recombinant collagen and ergothioneine are examples, and this is a rapidly growing field.
 
 **GreatBay-SCIE 2026**
 
-If the proteins are relatively small, are they still likely to form a colloidal or gel-like system? How does molecular weight affect this behavior?
+What challenges could arise when using AI-designed peptides as skincare actives?
 
-**Su Gong**
+**Mr. Su Rongsheng**
 
-Whether a protein forms a stable gel-like or dispersed system is not determined only by molecular weight. The surface functional groups of the protein are also very important. A protein with more hydrophilic groups on its surface can interact more strongly with water.
-
-Molecular weight can influence the viscosity of the resulting gel. In general, a larger protein may produce a higher-viscosity gel, while a smaller protein may produce a lower-viscosity system. However, the exact behavior depends on the specific structure and surface chemistry of the protein.
-
----
+The main issue is the gap between computational predictions and real-world performance. Predicted structures and binding affinities may look promising in silico, but salts, lipids, and changing pH in the actual skin environment can alter peptide folding and cause a loss of binding function.
 
 **GreatBay-SCIE 2026**
 
-Would gel formation promote or inhibit the deodorizing function of the protein?
+What technical and safety risks might arise from designing competitive inhibitory proteins that target bacterial precursor transporters? Could they cause resistance or disrupt the skin microbiome?
 
-**Su Gong**
+**Mr. Su Rongsheng**
 
-For this type of underarm deodorant, gel formation may be beneficial because it can help distribute the active protein more evenly over the skin.
+The main target is Staphylococcus. Blocking uptake of Cys-Gly-3M3SH may not directly kill the bacteria, so it is less likely to cause the severe microbiome disruption associated with broad-spectrum antibiotics.
 
-The underarm is an area rather than a single point, and odor-related substances can be produced across many sweat-gland or follicular openings. If the protein is distributed uniformly over this area, it has a better chance of interacting with the relevant odor precursor or odor-producing system. Therefore, a well-formed gel can improve coverage and may help the active ingredient perform more effectively.
-
----
+However, long-term use could lead to resistance. Bacteria might upregulate alternative transporters or develop mutations at the binding sites.
 
 **GreatBay-SCIE 2026**
 
-What problems need to be solved when moving from a laboratory protein sample to a cosmetic product that can actually be sold?
+How would blocking precursor transport affect bacterial metabolism and survival?
 
-**Su Gong**
+**Mr. Su Rongsheng**
 
-A commercial cosmetic product needs to satisfy several major requirements. I would summarize them as four key properties: stability, safety, usability, and efficacy.
-
-Stability means that the product remains physically and chemically stable during storage and use. Safety means that the formulation does not cause unacceptable harm or irritation. Efficacy means that the product actually performs its intended function. Usability means that consumers can use the product correctly, are willing to use it, and have a pleasant experience while using it.
-
-These requirements should not only be claimed by the company itself. They need to be supported by appropriate testing and, where required, evaluation by qualified third-party or regulatory institutions.
-
-For usability in particular, the product should be simple enough for ordinary consumers to use safely. The packaging and application method should not introduce unnecessary risks. In addition, the sensory experience matters. A deodorant should not only work; consumers should also feel comfortable using it and be willing to continue using it.
-
----
+It would not directly kill the bacteria, but it could reduce their production of odor molecules and affect their metabolic output.
 
 **GreatBay-SCIE 2026**
 
-We have considered using a freeze-dried protein format. How acceptable are freeze-dried products in the cosmetics industry, and what are their advantages and disadvantages?
+Could long-term use of transporter-blocking peptides cause resistance? How could this be detected or prevented?
 
-**Su Gong**
+**Mr. Su Rongsheng**
 
-Freeze-dried products are relatively uncommon compared with conventional skincare products, so they may give consumers a stronger impression of advanced technology or high efficacy. They are often used as two-component systems: one container holds the freeze-dried powder and another contains the solution used to reconstitute it before use.
-
-One important advantage is stability. Some active ingredients are unstable in water and gradually degrade during storage. Removing the water can improve storage stability, and the active ingredient can then be reconstituted immediately before use.
-
-However, freeze-dried products have clear disadvantages. First, the production cost is higher because freeze-drying requires specialized equipment, energy, and relatively low-throughput processing. Second, the product is more complicated for consumers to use because they may need to mix two components before application. This increases the need for instructions and consumer education.
-
-For these reasons, freeze-dried formats are more common in relatively high-value skincare products, such as products containing expensive or highly active ingredients, particularly when those ingredients are unstable in water. For an everyday deodorant, cost and convenience may make a water-based or gel-based format more practical.
-
----
+Yes. Resistance could arise through mutations or pathway adaptation. Possible approaches include using multiple targets, monitoring mutations in transporter genes, and tracking microbiome changes through sequencing.
 
 **GreatBay-SCIE 2026**
 
-For a water-based or gel-based protein deodorant, how long could the shelf life be expected to be?
+Could the design affect beneficial skin bacteria, such as Staphylococcus epidermidis? How could this be evaluated?
 
-**Su Gong**
+**Mr. Su Rongsheng**
 
-It is difficult to give a fixed shelf-life estimate without experimental data because the answer depends strongly on the exact protein structure and formulation.
-
-The key question is how stable the protein is in the solvent system. If it is resistant to hydrolysis and maintains its functional structure, the shelf life may be relatively long. If it degrades easily, the shelf life will be shorter.
-
-The appropriate way to determine this is through stability testing. The protein can be produced and then tested using analytical methods such as liquid chromatography or other suitable quantitative assays. Accelerated conditions such as elevated temperature and light exposure can be used to speed up degradation and reveal stability problems more quickly.
-
-From a thermodynamic point of view, a protein in water may have a tendency to undergo degradation, but the rate of that process is a kinetic question. It could be very slow or relatively fast. Therefore, the actual shelf life has to be determined experimentally rather than assumed.
-
----
+Evaluation could involve three-dimensional skin microbiome co-culture models, serial passaging experiments, and 16S rRNA sequencing or metagenomics to track microbial diversity and mutations.
 
 **GreatBay-SCIE 2026**
 
-What approaches could be used to extend the shelf life or improve the stability of a protein-based cosmetic ingredient?
+How stable are peptides in different cosmetic formulations?
 
-**Su Gong**
+**Mr. Su Rongsheng**
 
-The protein itself should first be studied systematically. You need to understand what happens when it is placed in water: whether it degrades, precipitates, aggregates, or changes in another way.
+In aqueous systems and emulsions, peptides can undergo hydrolysis, particularly at extreme pH. High ethanol concentrations can denature protein structures.
 
-There is no universal stabilization strategy that works for every protein. The formulation must be optimized for the specific protein.
-
-Important variables include pH, electrolyte concentration, temperature, light exposure, and the presence of other formulation components. The optimal pH needs to be experimentally determined. The relationship between the formulation pH and the protein's isoelectric point should also be considered because protein solubility changes around the isoelectric point.
-
-Electrolyte concentration should also be optimized. Excessive salt may be harmful to protein stability, although a small amount of electrolyte may sometimes be beneficial.
-
-Water-soluble polymers may also be useful as stabilizers. Some polymers can bind water and may help separate protein molecules from one another, reducing direct protein-protein interactions and potentially decreasing aggregation. However, these strategies still need experimental validation for the specific formulation.
-
-If the protein sequence itself can be redesigned to improve stability without reducing function, that can also be considered during ingredient development.
-
----
+Anhydrous solid sticks are the best option for minimizing degradation.
 
 **GreatBay-SCIE 2026**
 
-Are there examples in the cosmetics industry of active ingredients produced using synthetic biology, and how can batch-to-batch consistency be maintained during scale-up?
+How can peptides be protected in topical formulations?
 
-**Su Gong**
+**Mr. Su Rongsheng**
 
-Biological production methods are already used for a range of functional ingredients. For example, some bioactive polysaccharides such as beta-glucan can be produced through biological or fermentation-based processes.
-
-For large-scale production, batch consistency is a major issue. If microorganisms are used as the production system, the purity of the microbial strain must be maintained and contamination must be prevented. You also need to evaluate whether the strain remains stable after repeated passages or generations.
-
-The production process therefore requires basic research on strain stability, process control, and quality control. Laboratory-scale production is only the first stage. Before commercialization, the project should move step by step toward fermentation-scale production while evaluating efficacy, cost, market demand, potential customers, competitors, and the overall commercial return. A *SWOT* analysis and competitor analysis can also be useful.
-
----
+Common methods include liposomes, solid lipid nanoparticles, and microencapsulation. These help isolate peptides from water and environmental stress.
 
 **GreatBay-SCIE 2026**
 
-Could shaking during transportation, or shaking by the consumer, cause protein aggregation, adsorption, or denaturation?
+What commonly causes peptide inactivation on the skin?
 
-**Su Gong**
+**Mr. Su Rongsheng**
 
-Yes, it is possible. Transportation stability is part of overall cosmetic stability testing, and vibration can be simulated in the laboratory.
-
-Protein and polymer systems can show complex rheological behavior. Many high-molecular-weight systems are non-Newtonian and may show shear thinning. This means that the viscosity can decrease dramatically when the product is shaken or stirred.
-
-A sudden reduction in viscosity may change how protein or polymer molecules are dispersed and could contribute to aggregation or other physical changes. Some systems recover their original viscosity after resting, while others may not fully recover.
-
-There is no single solution for every formulation. One possible strategy is to combine the system with other polymers that show less severe shear thinning so that the formulation is less sensitive to vibration. However, this needs to be optimized experimentally for the specific product.
-
----
+Skin and bacterial proteases can degrade peptides. Changes in pH, including sweat pH of approximately 4.0–6.0, can also cause unfolding or precipitation.
 
 **GreatBay-SCIE 2026**
 
-Could you comment on our preliminary formulation? We are considering purified water, glycerol, butylene glycol, a thickening polymer such as HEC, xanthan gum or CMC, a solubilizer, preservative system, buffer, active protein, fragrance, and possibly trehalose or soothing ingredients.
+Which format is best for maintaining activity and retention: a roll-on, spray, or cream?
 
-**Su Gong**
+**Mr. Su Rongsheng**
 
-The overall formulation contains many of the major functional categories that would normally be considered: water, humectants, thickening polymers, a solubilizer or emulsifier where necessary, a preservation system, a pH buffer, active ingredients, and fragrance.
-
-However, the thickener should be chosen carefully based on sensory properties as well as stability. HEC, xanthan gum, and CMC can work as thickeners, but some may give a relatively sticky or heavy skin feel. For an underarm product, a cleaner and more refreshing sensory profile may be preferable.
-
-A solubilizer is only necessary if there is an ingredient that actually needs solubilization, such as fragrance or another oil-soluble component. Since solubilizers are surfactants, they may also affect protein stability and therefore should be used cautiously. If the main purpose of the solubilizer is only to dissolve fragrance, this should be evaluated against the risk of destabilizing the protein.
-
-Trehalose can function as a humectant and may also be worth evaluating for possible protein-protective effects, but that should be confirmed experimentally.
-
-Soothing ingredients should be included only if they are needed. If the final protein-based formulation is already mild and non-irritating, additional soothing ingredients may not be necessary. Their inclusion should be based on the actual safety profile of the product.
-
----
+I would rank a solid balm stick first, followed by a roll-on and then a spray. Aerosol and spray formats should be avoided for bioactive proteins because of inhalation-related toxicological concerns.
 
 **GreatBay-SCIE 2026**
 
-We also want to immobilize the protein or enzyme on the underarm so that it can remain on the skin and work for a longer period. What approaches could be considered?
+Are there known incompatibilities between peptides and other skincare ingredients?
 
-**Su Gong**
+**Mr. Su Rongsheng**
 
-There are two general approaches.
-
-The first is physical adhesion. A sticky or film-forming material can help keep the active ingredient on the skin. The disadvantage is that strong adhesion may create an unpleasant or sticky skin feel.
-
-The second approach is adsorption based on molecular interactions. For example, cationic surfactants in hair conditioners can adsorb strongly to negatively charged hair. A similar principle could potentially be explored for skin because the skin surface can also carry charge.
-
-In theory, cationic materials could interact with the skin and possibly with the protein. The protein's own charge depends on the pH relative to its isoelectric point, so pH would need to be adjusted carefully.
-
-However, electrostatic adsorption alone may not be strong enough to provide the desired retention. A more practical option may be to use a suitable adhesive or film-forming polymer. Polyvinyl alcohol is one example of a material with adhesive and film-forming properties.
-
-Rather than forcing the protein itself to perform both deodorizing and strong skin-adhesion functions, it may be easier to let the protein provide the biological activity while another formulation component provides retention on the skin. The final approach would still require experimental testing for efficacy, skin feel, stability, and safety.
-
----
+Potential incompatibilities include strong preservatives, such as phenoxyethanol and organic acids; metal ions, which may cause precipitation and require chelators such as EDTA; and anionic surfactants, which can disrupt protein charge balance and denature the structure.
 
 **GreatBay-SCIE 2026**
 
-Thank you very much. Your advice has helped us clarify many of the formulation, stability, packaging, and commercialization questions that we had been struggling with.
+What delivery systems could help maintain peptide activity and retention on underarm skin?
 
-**Su Gong**
+**Mr. Su Rongsheng**
 
-You're welcome. I am glad the discussion was helpful.
+Cationic polymers or liposomes could support electrostatic adhesion to negatively charged skin and hair, creating a micro-patch effect that prolongs retention.
+
+**GreatBay-SCIE 2026**
+
+How can aggregation and degradation be reduced in the formulation?
+
+**Mr. Su Rongsheng**
+
+Possible stabilizers include polyols such as glycerol and trehalose, amino acids such as arginine and glycine, and buffer systems that maintain a stable pH.
+
+**GreatBay-SCIE 2026**
+
+What toxicity and irritation tests would peptide-based deodorant actives require?
+
+**Mr. Su Rongsheng**
+
+Human Repeat Insult Patch Testing, phototoxicity and photoallergy testing, and standard cytotoxicity tests.
+
+**GreatBay-SCIE 2026**
+
+What concentration ranges are considered safe for bioactive peptides in cosmetics?
+
+**Mr. Su Rongsheng**
+
+Typically, concentrations at the parts-per-million level can be effective and safe. However, novel AI-designed proteins are foreign antigens and may present a high risk of immune or allergic reactions.
+
+**GreatBay-SCIE 2026**
+
+Could AI-designed proteins cause allergies, and how should this be assessed?
+
+**Mr. Su Rongsheng**
+
+Yes, that is possible. Assessment would require immunogenicity prediction models, in vitro immune cell assays, and human patch testing.
+
+**GreatBay-SCIE 2026**
+
+Would the product be classified as a cosmetic or a drug?
+
+**Mr. Su Rongsheng**
+
+It depends on the claims. Claims that a product kills bacteria or alters physiological functions could place it in the drug or disinfectant category. If it only prevents odor formation or masks odor without affecting physiology, it would be considered a cosmetic.
+
+**GreatBay-SCIE 2026**
+
+Which authorities would regulate it in China, and what requirements might apply?
+
+**Mr. Su Rongsheng**
+
+In China, it would be regulated by the National Medical Products Administration. New biological ingredients would require approval as new cosmetic ingredients, involving strict toxicology requirements and potentially lengthy approval timelines.
+
+**GreatBay-SCIE 2026**
+
+What evidence would be needed to support safety claims?
+
+**Mr. Su Rongsheng**
+
+Toxicology data, including systemic toxicity data; genotoxicity and mutagenicity studies; and, in more stringent cases, potentially reproductive toxicity studies.
+
+**GreatBay-SCIE 2026**
+
+How could peptide retention on the skin be measured? Are there standard methods?
+
+**Mr. Su Rongsheng**
+
+There is no specific standard for deodorant peptides. Methods could be adapted from sunscreen testing, such as ISO 24444 as a water-resistance framework, alongside tape stripping and LC-MS quantification of residual peptide.
+
+**GreatBay-SCIE 2026**
+
+How are cosmetic peptides produced?
+
+**Mr. Su Rongsheng**
+
+Solid-phase peptide synthesis is suitable for short peptides of fewer than 30 amino acids, but longer chains are expensive.
+
+Recombinant expression and fermentation are scalable, but purification is complex and costly, including the removal of endotoxins and host-cell proteins.
+
+**GreatBay-SCIE 2026**
+
+What are the main cost barriers for peptides in consumer skincare products?
+
+**Mr. Su Rongsheng**
+
+The cost of solid-phase synthesis increases exponentially with peptide length. Recombinant proteins have high purification costs, and safety validation adds a regulatory burden.
+
+**GreatBay-SCIE 2026**
+
+What formulation would you recommend for commercialization?
+
+**Mr. Su Rongsheng**
+
+If stability in aqueous systems is poor, dual-chamber packaging or freeze-dried single-use formats could suit the premium market.
+
+For the mass market, an anhydrous solid deodorant stick offers the best balance of cost, stability, and usability.

@@ -24,13 +24,13 @@ const stages = timelineStages.map((stage, stageIndex) => ({
     number: stageIndex + 1,
     cycles: stage.cycles.map((title, cycleIndex) => {
         const id = `${stageIndex + 1}-${cycleIndex + 1}`;
-        // The content renderer normalizes whitespace when it generates IDs.
+        // Match the content renderer's collapsed heading separators.
         const heading = `Cycle ${cycleIndex + 1} ${title}`;
         return {
             id,
             title,
             number: cycleIndex + 1,
-            href: `${stage.path}#${slug(heading)}`,
+            href: `${stage.path}#${slug(heading).replace(/-+/g, "-")}`,
             threads: timelineThreads.filter((thread) =>
                 thread.nodes.includes(id),
             ),
@@ -491,7 +491,11 @@ function ribbonLines(title: string) {
                 </li>
             </ol>
 
-            <div class="thread-endings" role="group" aria-label="Timeline themes">
+            <div
+                class="thread-endings"
+                role="group"
+                aria-label="Timeline themes"
+            >
                 <button
                     v-for="thread in timelineThreads"
                     :key="thread.id"

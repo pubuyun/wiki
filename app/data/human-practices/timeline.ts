@@ -4,7 +4,7 @@ export const timelineStages = [
         path: "/human-practices/stage-1-understanding-the-problem",
         cycles: [
             "Inspiration and Public Survey",
-            "Dermatologist",
+            "Dermatologists",
             "Axillary Surgeon",
             "Traditional Chinese Medicine Specialist",
         ],
@@ -31,7 +31,7 @@ export const timelineStages = [
         title: "Optimising Product",
         path: "/human-practices/stage-4-optimising-product",
         cycles: [
-            "Evonik and Second Meeting with KleanK",
+            "Second Meeting with KleanK & Evonik",
             "Skincare Product Expert and Cosmetic Formulation Expert",
             "Immunology Expert",
             "Patent Expert",

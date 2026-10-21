@@ -3,10 +3,10 @@ title: "Interview with Professor Yang Jianbo"
 topic: "Immunological safety assessment of AI-designed de novo proteins for long-term topical application"
 interviewee: "Professor Yang Jianbo"
 interviewers: "GreatBay-SCIE 26"
-description: "Full transcript: Stage 4, Cycle 3 — Immunology Expert"
 hasReference: false
-order: 10
+navigation: false
 ---
+
 
 **GreatBay-SCIE 26**
 

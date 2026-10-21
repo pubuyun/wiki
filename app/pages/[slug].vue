@@ -3,11 +3,7 @@ definePageMeta({
     layout: "category",
 });
 
-import StakeholdersGraph from "~/components/ContentComponents/human-practices/StakeholdersGraph.vue";
-import TimeLine from "~/components/ContentComponents/human-practices/TimeLine.vue";
-import ProseH2 from "~/components/content/ProseH2.vue";
 import { contentTocLinks } from "~/utils/content-toc";
-import { numberDocumentFigures } from "~/utils/document-figures";
 
 const route = useRoute();
 const runtimeConfig = useRuntimeConfig();
@@ -16,16 +12,7 @@ const categoryTitle = computed(() => titleizeSlug(slug.value));
 const pagePath = computed(() => `/${slug.value}`);
 
 const { data: page } = await useContentPageData(pagePath);
-const tocLinks = computed(() => {
-    const links = contentTocLinks(page.value?.body);
-    if (
-        slug.value === "human-practices" &&
-        !links.some((link) => link.id === "timeline")
-    ) {
-        links.push({ id: "timeline", depth: 2, text: "Timeline" });
-    }
-    return links;
-});
+const tocLinks = computed(() => contentTocLinks(page.value?.body));
 
 // Keep the Education summary in Markdown, but render it outside the reading column.
 const educationConclusion = computed(() => {
@@ -52,36 +39,8 @@ const educationConclusion = computed(() => {
     };
 });
 const documentPage = computed(
-    () =>
-        humanPracticesOverview.value?.main ??
-        educationConclusion.value?.main ??
-        page.value,
+    () => educationConclusion.value?.main ?? page.value,
 );
-
-// Keep the stakeholder graph outside the document's reading column.
-const humanPracticesOverview = computed(() => {
-    if (slug.value !== "human-practices" || !page.value) return null;
-    const body = numberDocumentFigures(page.value.body) as {
-        children?: unknown[];
-        value?: unknown[];
-    };
-    const nodes = body?.children ?? body?.value ?? [];
-    const index = nodes.findIndex(
-        (node) =>
-            (Array.isArray(node)
-                ? node[0]
-                : (node as { tag?: string })?.tag) ===
-            "content-components-human-practices-stakeholders-graph",
-    );
-    if (index < 0) return null;
-    const withNodes = (children: unknown[]) => ({
-        ...page.value!,
-        body: body.value ? { ...body, value: children } : { ...body, children },
-    });
-    return {
-        main: withNodes(nodes.slice(0, index)),
-    };
-});
 
 const contentGraphViews = new Set(runtimeConfig.public.contentGraphViews);
 const graphView = computed(() => {
@@ -174,14 +133,6 @@ useSeoMeta({
                 :category-title="categoryTitle"
                 class="mt-10 sm:mt-14"
             />
-            <section
-                v-if="humanPracticesOverview"
-                class="mt-10 min-w-0 sm:mt-14"
-                aria-labelledby="timeline"
-            >
-                <ProseH2 id="timeline">Timeline</ProseH2>
-                <TimeLine class="mt-6 w-full" />
-            </section>
         </div>
 
         <section

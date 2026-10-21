@@ -1,11 +1,15 @@
 ---
 title: "AI4S Expert Interview — Dr. Huang Wenkang"
 interviewee: "Dr. Huang Wenkang"
-interviewers: "GreatBay-SCIE 2026"
-description: "Full transcript: Stage 4, Cycle 5 — AI4S Expert Dr. Huang"
+interviewer: "GreatBay-SCIE 2026"
 hasReference: false
-order: 11
+navigation: false
 ---
+
+
+# AI4S Expert Interview with Dr. Huang Wenkang
+
+## Transcript
 
 **GreatBay-SCIE 2026**
 
@@ -45,7 +49,7 @@ Yes, I agree.
 
 **GreatBay-SCIE 2026**
 
-In our project, we added a **Characterize** stage before the traditional Design–Build–Test–Learn (*DBTL*) cycle in synthetic biology. This stage translates information about biological structures and mechanisms into specific design requirements. Traditional DBTL usually begins with Design. As AI becomes more deeply involved in biological design, do you think it is necessary to establish an independent Characterize stage to clarify the biological problem, mechanism of action, and design criteria before starting the design process?
+In our project, we added a **Characterize** stage before the traditional Design–Build–Test–Learn (DBTL) cycle in synthetic biology. This stage translates information about biological structures and mechanisms into specific design requirements. Traditional DBTL usually begins with Design. As AI becomes more deeply involved in biological design, do you think it is necessary to establish an independent Characterize stage to clarify the biological problem, mechanism of action, and design criteria before starting the design process?
 
 **Dr. Huang Wenkang**
 
@@ -131,7 +135,7 @@ If one researcher simply enters a short prompt and directly uses the model's out
 
 My view may be different from what people usually expect. In principle, I think these two researchers can be treated equally in terms of sharing in the outcome, depending on what their work contributes to the project.
 
-One of the most important contributions of modern large models is that they greatly reduce repetitive computational work. In the past, when models and computing hardware were less developed, repeatedly adjusting parameters, running calculations, and analyzing results could make a substantial difference to the accuracy of computational results. Today, at least in structure-based biological design, we have relatively mature algorithms and workflows, such as AlphaFold and *RFdiffusion*. These tools have reduced the additional gains in accuracy that can be achieved solely through extensive manual parameter adjustment.
+One of the most important contributions of modern large models is that they greatly reduce repetitive computational work. In the past, when models and computing hardware were less developed, repeatedly adjusting parameters, running calculations, and analyzing results could make a substantial difference to the accuracy of computational results. Today, at least in structure-based biological design, we have relatively mature algorithms and workflows, such as AlphaFold and RFdiffusion. These tools have reduced the additional gains in accuracy that can be achieved solely through extensive manual parameter adjustment.
 
 You can think of modern AI models as being somewhat similar to commercial kits used in wet-lab experiments. A kit standardizes and simplifies many experimental procedures. Even if someone does not fully understand every underlying mechanism or every individual step, they may still be able to complete the experiment by following the instructions.
 

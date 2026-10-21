@@ -2,13 +2,7 @@ content/model/precursor-binder/index.md: [an interview with a model specialist] 
 content/education/index.md: [#meeting with KleanK company] — no corresponding meeting section or external URL is present in the current content library.
 
 Transcript: anthropologist full name/spelling and individual interviewer names are not supplied in the source; team attribution is used.
-Stage 3: source note "+ modelling inclusivity" does not supply publication copy or a specific destination.
-content/human-practices/stage-5-expanding-impact.md: Inclusive Packaging original citation ^1 — source details pending, as requested by the author.
-content/human-practices/stage-5-expanding-impact.md: Inclusive Packaging original citation ^2 — source details pending, as requested by the author.
-content/human-practices/stage-5-expanding-impact.md: Inclusive Packaging original citation ^3 — source details pending, as requested by the author.
-content/human-practices/stage-5-expanding-impact.md: Inclusive Packaging original citation ^4 — source details pending, as requested by the author.
-content/human-practices/stage-5-expanding-impact.md: Inclusive Packaging original citation ^34 — source details pending, as requested by the author.
-Overview stakeholder graph: AI4S Experts has empty incoming/outgoing source sections; no impact descriptions were invented.
+Overview stakeholder graph: the hpupdate source still supplies no incoming/outgoing descriptions for AI4S Experts; existing empty descriptions are retained.
 content/inclusivity/index.md: Reference 8 (OECD, 2025) — source title and URL were not provided in the manuscript; citation retained pending author details.
 content/hardware/index.md: Fragrances section — original “（图）” placeholder has no corresponding supplied image; placeholder retained.
 content/sustainability/index.md: [European Commission report: aerosol deodorants can contain up to 95% VOCs] — source manuscript cites the EPA Ground-level Ozone Basics page (original references 8 and 9, consolidated as reference 8), which does not identify the claimed European Commission report. Original claim retained; report title and URL are needed.

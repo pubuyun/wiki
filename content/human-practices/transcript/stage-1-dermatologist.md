@@ -3,10 +3,10 @@ title: "Interview with Dr. Xia"
 topic: "Patient groups, clinical grading, and treatment of axillary bromhidrosis, and the advantages, stability, safety, formats, pricing, and fragrance design of protein-based deodorizing products"
 interviewee: "Dr. Xia Yihui (Yongzhou Central Hospital)"
 interviewers: "GreatBay-SCIE 2026"
-description: "Full transcript: Stage 1, Cycle 2 — Dermatologist"
 hasReference: false
-order: 1
+navigation: false
 ---
+
 
 **GreatBay-SCIE 2026**
 Hello, Dr. Xia. We are students from Shenzhen College of International Education participating in iGEM. We plan to develop a synthetic biology project to address underarm odor. Before we begin, we would like to confirm the privacy arrangements: do you consent to us taking notes and making audio and video recordings of this interview?

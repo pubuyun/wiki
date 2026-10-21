@@ -3,10 +3,10 @@ title: "Interview with Mr. Hu"
 topic: "Traditional Chinese Medicine approaches to axillary odor: internal and external treatments, theoretical explanations, mechanisms, side effects, treatment costs, and connections with synthetic biology"
 interviewee: "Mr. Hu"
 interviewers: "GreatBay-SCIE 2026"
-description: "Full transcript: Stage 1, Cycle 4 — Traditional Chinese Medicine Specialist"
 hasReference: false
-order: 5
+navigation: false
 ---
+
 
 **GreatBay-SCIE 2026**
 What Traditional Chinese Medicine treatments for underarm odor are commonly used in clinical practice today?

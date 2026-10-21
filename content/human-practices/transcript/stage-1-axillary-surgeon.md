@@ -3,10 +3,10 @@ title: "Interview with Dr. Yang"
 topic: "Types, effectiveness, costs, postoperative risks, and recurrence management of surgery for axillary bromhidrosis, and the clinical needs, safety, validation, and pricing of protein-based deodorizing products"
 interviewee: "Dr. Yang Jianhong (Associate Chief Physician)"
 interviewers: "GreatBay-SCIE 2026"
-description: "Full transcript: Stage 1, Cycle 3 — Axillary Surgeon"
 hasReference: false
-order: 3
+navigation: false
 ---
+
 
 **GreatBay-SCIE 2026**
 Hello, Doctor. We are the iGEM team from Shenzhen College of International Education, working on a synthetic biology project concerning body odor and axillary bromhidrosis. Before the interview, do you consent to us taking notes and making audio and video recordings? All questions and answers will be used only for our team project, without commercial use. Let us begin.

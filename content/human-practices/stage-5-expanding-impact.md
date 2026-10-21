@@ -9,16 +9,20 @@ order: 6
 
 ### Observe
 
-Our teammate, who initially brought underarm odor to our attention, also pointed out that this issue may cause **psychological effects**, potentially affecting a person's confidence and everyday behavior.
+When our teammate brought underarm odor to our attention, several other members recalled hearing classmates who had been given hurtful nicknames or socially excluded because of their underarm odor. These experiences helped us realize that this issue may cause **psychological effects**, potentially affecting a person's confidence and everyday behavior.
 
 ### Determine
+
+To better understand this issue, we interviewed a **psychiatrist** to explore its potential **effects on mental wellbeing**.
+
+We also spoke with two dermatologists, **Mr. Zhou**, a deputy chief physician with over 20 years of clinical experience, and **Mr. Hu**, a deputy dean and chief physician with expertise in medical aesthetics, to learn whether people experiencing underarm odor often express **psychological or emotional concerns** related to their condition.
 
 ::content-components-lightbox-image
 ---
 src:
   - "https://static.igem.wiki/teams/6133/wiki/hp/ihp/human-practices-stage-5-expanding-impact-fig1.avif"
 alt:
-  - ""
+  - "Interview with dermatologists Mr.Zhou and Mr.Hu"
 caption: "Fig. 1 | Interview with dermatologists Mr.Zhou and Mr.Hu"
 ---
 ::
@@ -39,10 +43,6 @@ defaultLanguage: "en"
 ---
 ::
 
-To better understand this issue, we interviewed a **psychiatrist** to explore its potential **effects on mental wellbeing**.
-
-We also spoke with two dermatologists, **Mr. Zhou**, a deputy chief physician with over 20 years of clinical experience, and **Mr. Hu**, a deputy dean and chief physician with expertise in medical aesthetics, to learn whether people experiencing underarm odor often express **psychological or emotional concerns** related to their condition.
-
 ### Outcome
 
 The psychiatrist shared that they have seen many patients who become self-conscious about their odor and worry that others may look down on them because of it. These concerns can lead some individuals to **withdraw from social interactions** and **may contribute to feelings of anxiety or depression**.
@@ -53,21 +53,21 @@ From the dermatology perspective, Mr. Zhou noted that many people **lack a clear
 
 ### Refine
 
-We recognized the importance of supporting people with axillary odor to understand that having axillary odor is not a disease or something to be ashamed of.
+We recognized the importance of supporting people with underarm odor to understand that having axillary odor is not a disease or something to be ashamed of.
 
 We also aim to **provide correct guidance** to the people around those affected. To achieve this, we took action on **two fronts:**
+
+We drafted a **written proposal** outlining the potential psychological effects of underarm odor on patients, particularly adolescents, and submitted it through **诉求通** (the hospital’s official feedback and suggestions platform).Through this submission, we sought professional guidance on how dermatologists could recognize signs of emotional distress, communicate empathetically with patients, and refer them to mental health professionals when appropriate.
 
 ::content-components-lightbox-image
 ---
 src:
   - "https://static.igem.wiki/teams/6133/wiki/hp/ihp/human-practices-stage-5-expanding-impact-fig3.avif"
 alt:
-  - ""
-caption: "Fig. 3 | Submitting our written proposal about the psychological effects of underarm odor to dermatologists."
+  - "One of our teammates submitting the proposal to a hospital"
+caption: "Fig. 3 | One of our teammates submitting the proposal to a hospital"
 ---
 ::
-
-We drafted a written proposal outlining the potential psychological effects of underarm odor on patients, particularly adolescents, and submitted it through 诉求通 (the hospital’s official feedback and suggestions platform) to seek professional input on how dermatologists can identify signs of emotional distress, communicate with patients empathetically, and refer them to mental health professionals when necessary.
 
 [Written proposal to dermatologists — English version](https://static.igem.wiki/teams/6133/wiki/hp/ihp/human-practices-stage-5-dermatologist-proposal-en.pdf#page=1&view=Fit)
 
@@ -83,17 +83,17 @@ Because underarm odor can be a personal issue, we wanted to create an opportunit
 
 ### Determine
 
+Therefore, we organized a **seminar in Xiang'an Community, Futian District, Shenzhen,** focusing on the causes of underarm odor, its potential effects on adolescents' mental wellbeing, and how families can provide appropriate support.
+
 ::content-components-lightbox-image
 ---
 src:
   - "https://static.igem.wiki/teams/6133/wiki/hp/ihp/human-practices-stage-5-expanding-impact-fig4.avif"
 alt:
-  - ""
+  - "Xiang'an community seminar"
 caption: "Fig. 4 | Xiang'an community seminar"
 ---
 ::
-
-Therefore, we organized a **seminar in Xiang'an Community, Futian District, Shenzhen,** focusing on the causes of underarm odor, its potential effects on adolescents' mental wellbeing, and how families can provide appropriate support.
 
 ### Outcome
 
@@ -126,18 +126,18 @@ srcZh:
   - "https://static.igem.wiki/teams/6133/wiki/hp/ihp/human-practices-stage-5-expanding-impact-fig6-1.avif"
   - "https://static.igem.wiki/teams/6133/wiki/hp/ihp/human-practices-stage-5-expanding-impact-fig6-2.avif"
 altEn:
-  - ""
-  - ""
+  - "Feedback from participants"
+  - "Feedback from participants"
 altZh:
-  - ""
-  - ""
+  - "Feedback from participants"
+  - "Feedback from participants"
 label: "Fig. 6 | (a) Feedback from participants (b) Feedback from participants — image language"
 caption: "Fig. 6 | **(a)** Feedback from participants **(b)** Feedback from participants"
 defaultLanguage: "en"
 ---
 ::
 
-A community psychological counsellor who attended the seminar shared that a child had mentioned witnessing someone being **bullied because of their body odor**. In response, she suggested compiling the information from our seminar into a **pamphlet for distribution in schools.**
+A community psychological counsellor who attended the seminar shared that a child had mentioned witnessing someone being **bullied because of their underarm odor**. In response, she suggested compiling the information from our seminar into a **pamphlet for distribution in schools.**
 
 ### Refine
 
@@ -151,23 +151,23 @@ But before sharing the handbook with a wider audience, we wanted to make sure th
 
 ### Determine
 
+We therefore consulted **Ms. Maria**, the wellbeing counselor at our school, drawing on her experience supporting students' emotional and social wellbeing to evaluate the handbook from a psychological perspective and ensure its messaging was **sensitive**, **inclusive**, and **respectful**.
+
 ::content-components-lightbox-image
 ---
 src:
   - "https://static.igem.wiki/teams/6133/wiki/hp/ihp/human-practices-stage-5-expanding-impact-fig7.avif"
 alt:
-  - ""
+  - "Discussion with school mental wellbeing counsellor Ms. Maria"
 caption: "Fig. 7 | Discussion with school mental wellbeing counsellor Ms. Maria"
 ---
 ::
-
-We therefore consulted **Ms. Maria**, the wellbeing counselor at our school.
 
 ### Outcome
 
 She said that she liked our design style and felt that it was suitable for teenagers, but suggested that **some of the language could be improved**.
 
-For example, she recommended using **"kind directness** " when discussing underarm odor. This meant communicating clearly and respectfully instead of indirectly hinting at the problem, as indirect hints may not always be understood.
+For example, she recommended using **"kind directness**" when discussing underarm odor. This meant communicating clearly and respectfully instead of indirectly hinting at the problem, as indirect hints may not always be understood.
 
 She also suggested having these conversations in more **private settings**, where the person would feel less self-conscious.
 
@@ -187,8 +187,8 @@ src:
   - "https://static.igem.wiki/teams/6133/wiki/hp/ihp/human-practices-stage-5-expanding-impact-fig8-1.avif"
   - "https://static.igem.wiki/teams/6133/wiki/hp/ihp/human-practices-stage-5-expanding-impact-fig8-2.avif"
 alt:
-  - ""
-  - ""
+  - "Mental Health handbook distributed in dormitory common rooms"
+  - "two students reading Mental Health handbook"
 caption: "Fig. 8 | **(a)** Mental Health handbook distributed in dormitory common rooms **(b)** two students reading Mental Health handbook"
 ---
 ::
@@ -206,30 +206,30 @@ srcZh:
   - "https://static.igem.wiki/teams/6133/wiki/hp/ihp/human-practices-stage-5-expanding-impact-fig9-2.avif"
   - "https://static.igem.wiki/teams/6133/wiki/hp/ihp/human-practices-stage-5-expanding-impact-fig9-3.avif"
 altEn:
-  - ""
-  - ""
-  - ""
+  - "Our axillary odor mental health handbook shared through WeChat."
+  - "Our axillary odor mental health handbook shared on Rednote."
+  - "Our axillary odor mental health handbook shared on Instagram."
 altZh:
-  - ""
-  - ""
-  - ""
+  - "Our axillary odor mental health handbook shared through WeChat."
+  - "Our axillary odor mental health handbook shared on Rednote."
+  - "Our axillary odor mental health handbook shared on Instagram."
 label: "Fig. 9 | (a) Our axillary odor mental health handbook shared through WeChat. (b) Our axillary odor mental health handbook shared on Rednote. (c) Our axillary odor mental health handbook shared on Instagram. — image language"
 caption: "Fig. 9 | **(a)** Our axillary odor mental health handbook shared through WeChat. **(b)** Our axillary odor mental health handbook shared on Rednote. **(c)** Our axillary odor mental health handbook shared on Instagram."
 defaultLanguage: "en"
 ---
 ::
 
+Additionally, we realized that our product could have significant market potential overseas. Therefore, we decided to **expand our target market** beyond China to other countries as well.
+
 ::content-components-lightbox-image
 ---
 src:
   - "https://static.igem.wiki/teams/6133/wiki/hp/ihp/human-practices-stage-5-expanding-impact-fig10.avif"
 alt:
-  - ""
+  - "Our member introducing Mental Health Educational Handbook to one participant in Honey Park Collaboration Fair."
 caption: "Fig. 10 | Our member introducing Mental Health Educational Handbook to one participant in Honey Park Collaboration Fair."
 ---
 ::
-
-Additionally, we realized that our product could have significant market potential overseas. Therefore, we decided to **expand our target market** beyond China to other countries as well.
 
 ## Cycle 4 Overseas Market
 
@@ -247,8 +247,8 @@ src:
   - "https://static.igem.wiki/teams/6133/wiki/hp/ihp/human-practices-stage-5-expanding-impact-fig11-1.avif"
   - "https://static.igem.wiki/teams/6133/wiki/hp/ihp/human-practices-stage-5-expanding-impact-fig11-2.avif"
 alt:
-  - ""
-  - ""
+  - "Interview with international potential customer Mr. Maz"
+  - "Follow up responses by Ms. Okungbowa regarding our initial interview"
 caption: "Fig. 11 | **(a)** Interview with international potential customer Mr. Maz **(b)** Follow up responses by Ms. Okungbowa regarding our initial interview"
 ---
 ::
@@ -262,7 +262,7 @@ To gain more in-depth insights into cultural differences, we also reached out to
 src:
   - "https://static.igem.wiki/teams/6133/wiki/hp/ihp/human-practices-stage-5-expanding-impact-fig12.avif"
 alt:
-  - ""
+  - "Response from Deonatulle about privacy"
 caption: "Fig. 12 | Response from Deonatulle about privacy"
 ---
 ::
@@ -289,23 +289,23 @@ caption: "Fig. 13 | **(a)** International survey responses on regular deodorant 
 ---
 ::
 
-Among the **105** respondents, **74** regularly used deodorant or antiperspirant products, indicating strong market potential for our product. However, only 43 respondents completely satisfied with their current products, suggesting that there is still room for improvement. In addition, **72** respondents were willing to use a synthetic biology-based solution, showing openness toward our proposed approach. Respondents particularly valued **fresh** and **non-irritating scents**, **long-lasting effects**, and **gentle formulations**, which were also consistent with the preferences we identified among Chinese customers.
+Among the **105** respondents, **74** regularly used deodorant or antiperspirant products, indicating strong market potential for our product. However, only **43** respondents completely satisfied with their current products, suggesting that there is still room for improvement. In addition, **72** respondents were willing to use a synthetic biology-based solution, showing openness toward our proposed approach. Respondents particularly valued **fresh** and **non-irritating scents**, **long-lasting effects**, and **gentle formulations**, which were also consistent with the preferences we identified among Chinese customers.
 
 The teachers we interviewed further confirmed these similarities, while also highlighting some **differences**. For example, Mr. Wood emphasized the importance of **environmentally friendly** features such as **refillable packaging**. He also criticized the formulation of conventional deodorant products, explaining that aluminium negatively impacts the environment because it can pollute oceans and requires large amounts of energy to extract, contributing to greenhouse gas emissions. Mr. Maz, meanwhile, stated that he would prefer a product that **does not leave stains on clothing.**
 
-All three teachers also mentioned that not controlling axillary odor can make someone **stand out negatively** from others, suggesting that odor control is a **cultural norm** in their communities. However, Mr. Wood described an exception from his experiences in **Africa**, where some older people, particularly men, view body odor as a **sign of masculinity**. He noted that younger generations are increasingly viewing this differently and are more likely to use deodorant.
+All three teachers also mentioned that not controlling axillary odor can make someone **stand out negatively** from others, suggesting that odor control is a **cultural norm** in their communities. However, Mr. Wood described an exception from his experiences in **Africa**, where some older people, particularly men, view underarm odor as a **sign of masculinity**. He noted that younger generations are increasingly viewing this differently and are more likely to use deodorant.
 
-Additionally, Ms. Okungbowa provided insights on how **advertisements** may **reinforce existing prejudices** surrounding body odor as they portray odor as abnormal and something that should be corrected.
+Additionally, Ms. Okungbowa provided insights on how **advertisements** may **reinforce existing prejudices** surrounding underarm odor as they portray odor as abnormal and something that should be corrected.
 
 ### Refine
 
 Based on Mr. Wood's suggestions, we went on to investigate the feasibility of **refillable packaging** and how we could make our product more **sustainable**.
 
-Furthermore, following Mr. Islam's concerns about clothing stains, we developed a **protocol for a staining test** to evaluate the extent of staining caused by Expelliodor, which we plan to conduct it within the competition scope.
+Furthermore, following Mr. Maz's concerns about clothing stains, we developed a **protocol for a staining test** to evaluate the extent of staining caused by expeliodor, which we plan to conduct it within the competition scope.
 
-To address the concern that **advertisements may reinforce negative attitudes** toward body odor, we plan to **email deodorant companies** whose advertisements suggest that people with axillary odor should be viewed negatively. Through these emails, we aim to **raise awareness** of the potential psychological impact of stigmatizing advertisements and **encourage** companies to adopt more respectful approaches when portraying axillary odor.
+To address the concern that **advertisements** **may** **reinforce negative attitudes** toward underarm odor, we plan to **email deodorant companies** whose advertisements suggest that people with axillary odor should be viewed negatively. Through these emails, we aim to **raise awareness** of the potential psychological impact of stigmatizing advertisements and **encourage** companies to adopt more respectful approaches when portraying axillary odor.
 
-Finally, inspired by Mr. Wood's experiences in Africa, we wanted to **explore how attitudes toward body odor have changed** over time, from being seen as a sign of masculinity in some contexts to being viewed negatively today.
+Finally, inspired by Mr. Wood's experiences in Africa, we wanted to **explore how attitudes toward underarm odor have changed** over time, from being seen as a sign of masculinity in some contexts to being viewed negatively today.
 
 ## Cycle 5 Amcor
 
@@ -315,23 +315,23 @@ Guided by Mr. Wood's feedback, we wanted to explore **sustainable packaging opti
 
 ### Determine
 
-To understand the technical and commercial considerations involved, we interviewed **Ms. Chen**, a product manager at **Amcor**, a global leader in developing & producing high-quality, responsible packaging solutions for food, beverage, pharmaceutical & other packaging requirements. :fn-ref{id="3"} We sought her advice on material selection, refillable designs, and sustainability.
+To understand the technical and commercial considerations involved, we interviewed **Ms. Chen**, a product manager at **Amcor**, a global leader in developing & producing high-quality, responsible packaging solutions for food, beverage, pharmaceutical & other packaging requirements. :fn-ref{id="4"} We sought her advice on material selection, refillable designs, and sustainability.
 
 ::content-components-lightbox-image
 ---
 src:
   - "https://static.igem.wiki/teams/6133/wiki/hp/ihp/human-practices-stage-5-expanding-impact-fig14.avif"
 alt:
-  - ""
+  - "Interview with Ms. Chen, product manager at Amcor"
 caption: "Fig. 14 | Interview with Ms. Chen, product manager at Amcor"
 ---
 ::
 
 ### Outcome
 
-Ms. Chen emphasized that packaging **must first protect its contents**. Important properties include resistance to oxygen and moisture, durability, and thermal stability. She cautioned that **sustainability should not be considered in isolation** from product protection and performance.
+Ms. Chen emphasized that packaging **must** **first protect its contents**. Important properties include resistance to oxygen and moisture, durability, and thermal stability. She cautioned that **sustainability should not be considered in isolation** from product protection and performance.
 
-**Cost** was another important factor, as more sustainable materials can be more expensive. She explained that packaging sustainability also depends on **local regulations, consumer habits, and available recycling systems**. In China, where sustainable packaging regulations are less established and cost remains a major consideration, promoting sustainable packaging can be challenging. In contrast, environmental requirements such as the EU's *Packaging and Packaging Waste Regulation* (PPWR) make sustainability an important consideration in European markets.
+**Cost** was another important factor, as more sustainable materials can be more expensive. She explained that packaging sustainability also depends on **local regulations, consumer habits, and available recycling systems**. In China, where sustainable packaging regulations are less established and cost remains a major consideration, promoting sustainable packaging can be challenging. In contrast, environmental requirements such as the EU's Packaging and Packaging Waste Regulation (PPWR) make sustainability an important consideration in European markets.
 
 Ms. Chen also highlighted the importance of consumer education, explaining that companies should **"let the consumer know what is environmentally friendly and let them make the choice voluntarily."**
 
@@ -353,22 +353,6 @@ Finally, building on Ms. Chen's insights into consumer education, we also plan t
 
 ## Cycle 6 Environmental Experts
 
-::content-components-lightbox-panels
----
-src:
-  - "https://static.igem.wiki/teams/6133/wiki/hp/ihp/human-practices-stage-5-expanding-impact-fig15-1.avif"
-  - "https://static.igem.wiki/teams/6133/wiki/hp/ihp/human-practices-stage-5-expanding-impact-fig15-2.avif"
-  - "https://static.igem.wiki/teams/6133/wiki/hp/ihp/human-practices-stage-5-expanding-impact-fig15-3.avif"
-  - "https://static.igem.wiki/teams/6133/wiki/hp/ihp/human-practices-stage-5-expanding-impact-fig15-4.avif"
-alt:
-  - ""
-  - ""
-  - ""
-  - ""
-caption: "Fig. 15 | **(a)** Interview with material science expert Mr. Cheng **(b)** Interview with air pollution control expert Mr. Li **(c)** Interview with marine microplastics expert Ms. Zhang **(d)** Interview with Environmental monitoring director Mr. Lu"
----
-::
-
 ### Observe
 
 After deciding to make **sustainability** a core part of our company philosophy, we wanted to understand the environmental impacts of our proposed PP packaging with a hydrophobic inner layer during production, use, and recycling. We also wanted to learn about relevant **environmental regulations** to prepare for selling our product in different regions.
@@ -377,21 +361,37 @@ After deciding to make **sustainability** a core part of our company philosophy,
 
 To explore these questions, we consulted four environmental experts: **Mr. Cheng Kai**, specializing in materials science, **Ms. Zhang Linbao**, specializing in marine microplastics, **Mr. Li Guanghui**, specializing in air pollution control and **Director Lu Xiejun,** from an environmental monitoring center.
 
+::content-components-lightbox-panels
+---
+src:
+  - "https://static.igem.wiki/teams/6133/wiki/hp/ihp/human-practices-stage-5-expanding-impact-fig15-1.avif"
+  - "https://static.igem.wiki/teams/6133/wiki/hp/ihp/human-practices-stage-5-expanding-impact-fig15-2.avif"
+  - "https://static.igem.wiki/teams/6133/wiki/hp/ihp/human-practices-stage-5-expanding-impact-fig15-3.avif"
+  - "https://static.igem.wiki/teams/6133/wiki/hp/ihp/human-practices-stage-5-expanding-impact-fig15-4.avif"
+alt:
+  - "Interview with material science expert Mr. Cheng"
+  - "Interview with air pollution control expert Mr. Li"
+  - "Interview with marine microplastics expert Ms. Zhang"
+  - "Interview with Environmental monitoring director Mr. Lu"
+caption: "Fig. 15 | **(a)** Interview with material science expert Mr. Cheng **(b)** Interview with air pollution control expert Mr. Li **(c)** Interview with marine microplastics expert Ms. Zhang **(d)** Interview with Environmental monitoring director Mr. Lu"
+---
+::
+
 ### Outcome
 
 Materials science expert **Mr. Cheng** explained that using a **single material** could improve recycling efficiency and increase the value of recovered materials. He also suggested considering **bio-based alternatives** derived from renewable resources such as corn, sugarcane, trehalose. Although these materials could reduce reliance on conventional plastics, their high costs remain a challenge. Nevertheless, some companies are adopting them, particularly in regions with stricter plastic regulations. He emphasized that sustainability could become a **competitive advantage** in the future, especially as environmental regulations become more stringent.
 
-Marine microplastics specialist **Ms. Zhang** explained that plastic waste can gradually **fragment into microplastics** in the marine environment. Although these particles may not always be highly toxic themselves, they can **attract other pollutants and be ingested by marine organisms**, potentially affecting their endocrine systems and causing intestinal inflammation. She emphasized that preventing plastic waste from entering the ocean is important, even though eliminating microplastic pollution entirely remains difficult. She also noted that our protein-based ingredient may offer an **environmental advantage** compared to traditional aluminium salts because proteins can be biodegradable under suitable conditions. However, we recognized that the environmental benefits of our product must be evaluated by considering the entire formulation and packaging, rather than the active ingredient alone.
+Marine microplastics specialist **Ms. Zhang** explained that plastic waste can gradually **fragment into microplastics** in the marine environment. Although these particles may not always be highly toxic themselves, they can **attract other pollutants and be ingested by marine organisms**, potentially affecting their endocrine systems and causing intestinal inflammation. She emphasized that preventing plastic waste from entering the ocean is important, even though eliminating microplastic pollution entirely remains difficult. She also noted that our protein-based ingredient may offer an **environmental advantage** compared to traditional aluminium salts because proteins can be biodegradable  under suitable conditions. However, we recognized that the environmental benefits of our product must be evaluated by considering the entire formulation and packaging, rather than the active ingredient alone.
 
 Air pollution control expert **Mr. Li** explained that plastic manufacturing can release **volatile organic compounds (VOCs)**, some of which contribute to secondary air pollution or are carcinogenic. He recommended choosing packaging suppliers with **effective air pollution control measures and a record of complying with environmental regulations**. He also encouraged us to consider alternative dispensing formats, as some newer spray systems use compressed air or other propellants instead of conventional aerosol propellants.
 
-**Director Lu** explained that the environmental impact of packaging should be evaluated across four stages: **raw-material acquisition, manufacturing and processing, transportation, and end-of-life management.** He noted that conventional plastics are generally derived from crude oil, while extraction and processing require energy and generate carbon emissions. He also highlighted the challenges of recycling plastics that are difficult to process or have limited recovery value. Since environmental regulations and recycling systems vary across countries, different markets may require different packaging solutions. He therefore recommended conducting a ***life cycle assessment* (LCA)** to evaluate environmental impacts and a ***life cycle costing* (LCC)** analysis to assess costs throughout the product's life cycle.
+**Director Lu** explained that the environmental impact of packaging should be evaluated across four stages: **raw-material acquisition, manufacturing and processing, transportation, and end-of-life management.** He noted that conventional plastics are generally derived from crude oil, while extraction and processing require energy and generate carbon emissions. He also highlighted the challenges of recycling plastics that are difficult to process or have limited recovery value. Since environmental regulations and recycling systems vary across countries, different markets may require different packaging solutions. He therefore recommended conducting a **life cycle assessment (LCA)** to evaluate environmental impacts and a **life cycle costing (LCC)** analysis to assess costs throughout the product's life cycle.
 
 ### Refine
 
 Based on **Mr. Cheng's** advice, we decided to **explore bio-based packaging** alternatives and plan to **conduct compatibility tests** to assess their suitability for our protein-based formulation.
 
-Following **Ms. Zhang's** insights, we plan to **evaluate the environmental impact** of our entire formulation, rather than focusing solely on the active ingredient. Given the importance of sustainability in overseas markets, particularly Europe, we decided to also decided to highlight the **environmental benefits of** our product's **100% aluminium-free formulation** in future marketing.
+Following **Ms. Zhang's** insights, we plan to **evaluate the environmental impact** of our entire formulation, rather than focusing solely on the active ingredient. Given the importance of sustainability in overseas markets, particularly Europe, we decided to highlight the **environmental benefits of** our product's **100% aluminium-free formulation** in future marketing.
 
 Based on **Mr. Li's** recommendations, we **will research packaging suppliers** with effective air pollution control measures. If we develop a spray-format product, we will also **investigate newer dispensing systems** that use alternatives to conventional aerosol propellants.
 
@@ -399,13 +399,13 @@ Following **Director Lu's** words, we plan to conduct a **life cycle assessment 
 
 ## Cycle 7 Social Science Specialists
 
-[Social science interview — English transcript](https://static.igem.wiki/teams/6133/wiki/hp/ihp/human-practices-stage-5-social-science-interview-zh.pdf#page=1&view=Fit)
-
 ### Observe
 
-Building on Mr. Wood's account of how some older men in Africa view body odor as a **sign of masculinity**, we wanted to better understand how different attitudes toward body odor developed and why body odor became something that people are expected to control.
+Building on Mr. Wood's account of how some older men in Africa view underarm odor as a **sign of masculinity**, we wanted to better understand how different attitudes toward underarm odor developed and why underarm odor became something that people are expected to control.
 
 ### Determine
+
+To explore these questions from a professional perspective, we interviewed two experts in Anthropology: **Ms Mary Ann**, who completed postdoctoral research in Anthropology at Brown University, and **Ms Charley Troy**, who earned an MA in Socio-Cultural Anthropology at Durham University.
 
 ::content-components-lightbox-panels
 ---
@@ -413,13 +413,11 @@ src:
   - "https://static.igem.wiki/teams/6133/wiki/hp/ihp/human-practices-stage-5-expanding-impact-fig16-1.avif"
   - "https://static.igem.wiki/teams/6133/wiki/hp/ihp/human-practices-stage-5-expanding-impact-fig16-2.avif"
 alt:
-  - ""
-  - ""
+  - "Interview with Anthropologist Ms Mary Ann"
+  - "Interview with Sociologist Ms Charley Troy"
 caption: "Fig. 16 | **(a)** Interview with Anthropologist Ms Mary Ann **(b)** Interview with Sociologist Ms Charley Troy"
 ---
 ::
-
-To explore these questions from a professional perspective, we interviewed two experts in Anthropology: **Ms Mary Ann**, who completed postdoctoral research in Anthropology at Brown University, and **Ms Charley Troy**, who earned an MA in Socio-Cultural Anthropology at Durham University.
 
 ### Outcome
 
@@ -427,17 +425,19 @@ Ms. Ann explained that our reactions to smell are partly **biological**. This is
 
 Next, she stated that our tolerance for smell can also depend on the **social setting**.  Because smell can naturally enter another person's personal space, it can feel **intrusive**, especially when there is little intimacy between people. In private spaces such as at home, people are more familiar with the smells of those around them, so there is generally a greater expectation of intimacy and thus tolerance. In contrast, people in public spaces may not have an intimate relationship with one another, creating stronger expectations around personal boundaries. As a result, an odor that is accepted among family members may be perceived as unacceptable in a public setting.
 
-Finally, Ms. Ann suggested that the very low tolerance for body odor seen today may also be connected to the rise of **American consumer culture after World War II**. Through **advertising**, companies could portray natural body odor as a problem or even as a disease, creating a need for products that could supposedly solve it.
+Finally, Ms. Ann suggested that the very low tolerance for underarm odor seen today may also be connected to the rise of **American consumer culture after World War II**. Through **advertising**, companies could portray natural underarm odor as a problem or even as a disease, creating a need for products that could supposedly solve it.
 
-Ms. Troy shared views similar to Ms. Ann on the social attitudes surrounding body odor. We asked whether the activities we had carried out earlier, such as the **community seminar** and **mental health handbook**, could help reduce prejudice toward people with underarm odor. She **agreed that these efforts were helpful** and could contribute to destigmatizing body odor. She also joked that we had been **"neglecting" the older generation,** since most of our outreach had focused on younger people and their families.
+Ms. Troy shared views similar to Ms. Ann on the social attitudes surrounding underarm odor. We asked whether the activities we had carried out earlier, such as the **community seminar** and **mental health handbook**, could help reduce prejudice toward people with underarm odor. She **agreed that these efforts were helpful** and could contribute to destigmatizing underarm odor. She also joked that we had been **"neglecting" the older generation,** since most of our outreach had focused on younger people and their families.
 
 ### Refine
 
-Based on these insights, we realized that choosing whether or not to manage body odor is a **personal decision**, and society should be more accepting of people with underarm odor. We recognized that advertising can play a pivotal role in contributing to negative attitudes toward body odor, so we reconsidered how our own product messaging might be interpreted.
+Through our discussions with Ms. Ann and Ms. Troy, we began to question why underarm odor is often treated as something inherently undesirable. We realized that underarm odor, much like hair or eye color, is a **natural physiological characteristic** influenced by biological factors. Yet, unlike these other physical traits, underarm odor is often associated with poor hygiene or a lack of self-care. This comparison helped us recognize that the negative attitudes surrounding underarm odor are not entirely rooted in biology, but are also shaped by **social expectations and historical perceptions of cleanliness.**
 
-When we first developed the name **"Expelliodor,"** we focused primarily on communicating our product’s function of reducing underarm odor, without fully considering how the name might be interpreted in a broader social context. We therefore decided to provide clearer explanations of the reasoning behind our name, helping consumers understand that **"Expell"** refers to our product's function rather than implying that natural body odor is undesirable or should always be eliminated. We also refined our slogan from **"Expelliodor — Expel Your Odor" to "Expelliodor — Expel Your Way,"** minimizing potential shame-based interpretations while emphasizing that whether and how to manage body odor remains a matter of personal choice.
+We also realized that the decision to manage underarm odor should be a matter of **personal choice** rather than social pressure. Just as individuals are not expected to change their natural hair or eye color to gain social acceptance, people with underarm odor **should not feel obligated to eliminate a natural bodily characteristic simply to avoid judgment.** While some may choose to use deodorizing products for their own comfort, others may choose not to, and both decisions deserve respect. However, as Ms. Ann pointed out, **advertising has historically contributed to the stigmatization of underarm odor by portraying it as an embarrassing problem that requires a commercial solution**. We realized that such messaging does not merely promote products, but can also shape social expectations and create pressure for individuals to eliminate their natural underarm odor. This prompted us to critically reconsider how our own product messaging might be interpreted.
 
-Additionally, to further address the stigma surrounding body odor, we designed trendy accessories that transform conventional deodorant packaging into wearable accessories, such as [a necklace and a keychain.](/hardware) By making deodorant a visible and fashionable part of everyday life, we hoped to challenge the idea that underarm odor should be hidden out of embarrassment.
+When we first developed the name **"Expelliodor,"** we focused primarily on communicating our product's function of reducing underarm odor, without fully considering how the name might be interpreted in a broader social context. We therefore decided to provide clearer explanations of the reasoning behind our name, helping consumers understand that **"Expel"** refers to our product's function rather than implying that natural underarm odor is undesirable or should always be eliminated. We also refined our slogan from **"Expelliodor — Expel the Odor" to "expeliodor — Expel the Odor, on Your Terms,"** minimizing potential shame-based interpretations while emphasizing that whether and how to manage underarm odor remains a matter of personal choice.
+
+Additionally, to further address the stigma surrounding underarm odor, we designed trendy accessories that transform conventional deodorant packaging into wearable accessories, such as [a necklace and a keychain.](/hardware) By making deodorant a visible and fashionable part of everyday life, we hoped to challenge the idea that underarm odor should be hidden out of embarrassment.
 
 Finally, although Ms. Troy meant her comment about us **"neglecting"** the older generation as a joke, it made us realize that our outreach should extend **beyond adolescents and teenagers** to include other groups who may have different needs.
 
@@ -465,11 +465,11 @@ caption: "Fig. 17 | Unilever’s Degree Inclusive concept, examined as a referen
 
 ### Outcome
 
-Our further research :fn-ref{id="4"} into the needs of people with disabilities found that around **21%** of people with physical or mental impairments **experience difficulties applying personal-care products**. For example, limited hand mobility can make it difficult to open a twist cap or press the spray of conventional deodorant packaging. Furthermore, difficulty in finding products can impact daily personal-care routines. The data showed that people with disabilities are **twice as likely to skip such activities** compared with people without those difficulties.
+Our further research :fn-ref{id="5"} into the needs of people with disabilities found that around **21%** of people with physical or mental impairments **experience difficulties applying personal-care products**. For example, limited hand mobility can make it difficult to open a twist cap or press the spray of conventional deodorant packaging. Furthermore, difficulty in finding products can impact daily personal-care routines. The data showed that people with disabilities are **twice as likely to skip such activities** compared with people without those difficulties.
 
-We also identified some difficulties faced by older adults with weaker grip strength and dexterity. Research:fn-ref{id="5"} reflected that **14% of participants over 81, were unable to open a screw cap bottle.** Similarly, elder participants from another **research:fn-ref{id="6"} reported difficulties with gripping, twisting, and turning.**
+We also identified some difficulties faced by older adults with weaker grip strength and dexterity. Research:fn-ref{id="6"} reflected that **14% of participants over 81, were unable to open a screw cap bottle.** Similarly, older participants from another **research:fn-ref{id="7"} reported difficulties with gripping, twisting, and turning.**
 
-After identifying these challenges, we analysed Degree Inclusive to understand how its design addresses the needs of users with different abilities. Its enhanced **"hooked container"** :fn-ref{id="7"} enables one-hand usage, while the cap incorporates **"a grip placement and magnetic 'click' closures"** :fn-ref{id="7"}, simplifying the process of removing and replacing the cap for users with limited grip strength or sight. Compared with conventional roll-on deodorants, its **"larger roll-on applicator"**:fn-ref{id="8"} covers a greater surface area per swipe, reducing the number of swipes required for application. Furthermore, **braille instructions** were added to the label, improving the accessibility of users with visual impairments.
+After identifying these challenges, we analysed Degree Inclusive to understand how its design addresses the needs of users with different abilities. Its enhanced **"hooked container"** :fn-ref{id="8"} enables one-hand usage, while the cap incorporates **"a grip placement and magnetic 'click' closures"** :fn-ref{id="8"}, simplifying the process of removing and replacing the cap for users with limited grip strength or sight. Compared with conventional roll-on deodorants, its **"larger roll-on applicator"**:fn-ref{id="8"} covers a greater surface area per swipe, reducing the number of swipes required for application. Furthermore, **braille instructions** were added to the label, improving the accessibility of users with visual impairments.
 
 ### Refine
 
@@ -485,10 +485,16 @@ caption: "Fig. 18 | Our inclusive packaging design"
 ---
 ::
 
-Here is the primary design of our [inclusive packaging](/human-practices/stage-5-expanding-impact#cycle-8-inclusive-packaging).
+Here is the primary design of our [inclusive packaging](/hardware#inclusive-design).
 
 In the future, we plan to **bring our product to volunteers with disabilities and older adults** for testing. Their experiences and suggestions will help us identify areas for improvement and further refine our inclusive design.
 
 We also plan to **share our experiences and findings from developing inclusive packaging with the public**. By sharing what we have learned, we hope to encourage other companies to consider more inclusive packaging designs.
 
 Finally, we plan to **provide education on underarm odor in communities with different needs**. For example, we could organize seminars and create educational flyers or handbooks specifically adapted to the needs of these communities, making the information more accessible and relevant to them.
+
+## Moving On
+
+Through **Stage 5**, we expanded our focus beyond odor control. Community engagement informed our mental health resources, while stakeholder feedback shaped our plans for sustainable packaging and more accessible product design. Social science perspectives also reinforced our commitment to presenting odor management as a **personal choice**, rather than a social obligation.
+
+These developments broadened our understanding of responsible implementation, but their intended benefits still required validation. We therefore revisited key stakeholders to reflect on our progress, identify unresolved concerns, and establish priorities for the project’s continued development.

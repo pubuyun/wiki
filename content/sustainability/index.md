@@ -214,9 +214,7 @@ Our contribution is indirect: we incorporate climate considerations into product
 
 ### Identifying the problem
 
-We considered spraying as one of our product formats. However, some conventional deodorants use volatile organic compound (VOC)-based propellants, such as propane and butane, which can react with other pollutants to form ground-level ozone, a major component of smog that can harm human health. :fn-ref{#8}
-
-A European Commission report states that traditional aerosol deodorants can contain up to 95% VOCs (including solvents and propellants). :fn-ref{#8} Reducing these emissions is therefore an important environmental consideration in our product design.
+We considered spraying as one of our product formats. However, some conventional deodorants use volatile organic compound (VOC)-based propellants, such as propane and butane, which can react with other pollutants to form ground-level ozone, a major component of smog that can harm human health.
 
 Beyond emissions during product use, we also considered the environmental impact of ingredient production. Replacing conventional ingredients with biological alternatives does not automatically reduce greenhouse gas emissions. A study of fermentation-derived protein reported production footprints of 5.5–17.6 kg CO₂e/kg protein across different modeled scenarios, demonstrating the importance of production conditions. :fn-ref{#9}
 
