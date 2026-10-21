@@ -12,6 +12,9 @@ const props = defineProps<{
 const stem = computed(() =>
     (props.src ?? "").replace(/^\/?(?:content\/)?/, "").replace(/\.md$/, ""),
 );
+let interviewMetadataPromise: Promise<
+    Record<string, ContentCollectionItem>
+> | null = null;
 const {
     data: interviewMetadata,
     status,
@@ -26,9 +29,12 @@ const {
                 .select("stem", "path", "title", "meta")
                 .first();
         }
-        return $fetch<Record<string, ContentCollectionItem>>(
-            `${useRuntimeConfig().app.baseURL}api/interview-metadata.json`,
-        ).then((items) => items[stem.value] ?? null);
+        interviewMetadataPromise ??= $fetch<
+            Record<string, ContentCollectionItem>
+        >(`${useRuntimeConfig().app.baseURL}api/interview-metadata.json`);
+        return interviewMetadataPromise.then(
+            (items) => items[stem.value] ?? null,
+        );
     },
 );
 
