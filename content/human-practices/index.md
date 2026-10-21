@@ -195,7 +195,7 @@ alt:
   - The ODOR cycle proceeds from Observe to Determine, Outcome, and Refine, then
     repeats.
 src:
-  - https://static.igem.wiki/teams/6133/wiki/hp/ihp/human-practices-index-fig6.avif
+  - https://static.igem.wiki/teams/6133/wiki/hp/ihp/ihpcycle.avif
 caption: Fig. 7 | Visual representation of our iterative ODOR cycle
 ---
 :::
