@@ -791,8 +791,8 @@ gmx_MMPBSA -O \
     -ci "${MMPBSA_INDEX}" \
     -cg "${RECEPTOR_GROUP}" "${LIGAND_GROUP}" \
     -cp "${TOP}" \
-    -o "${RESULT_DIR}/FINAL_RESULTS_MMPBSA.dat" \
-    -eo "${RESULT_DIR}/FINAL_RESULTS_MMPBSA.csv" \
+    -o "${RESULT_DIR}/FINAL_RESULTS_MMGBSA.dat" \
+    -eo "${RESULT_DIR}/FINAL_RESULTS_MMGBSA.csv" \
     -nogui
 
 echo
@@ -801,8 +801,8 @@ echo "Working files:"
 echo "  ${WORKDIR}/"
 echo
 echo "Result files:"
-echo "  ${RESULT_DIR}/FINAL_RESULTS_MMPBSA.dat"
-echo "  ${RESULT_DIR}/FINAL_RESULTS_MMPBSA.csv"
+echo "  ${RESULT_DIR}/FINAL_RESULTS_MMGBSA.dat"
+echo "  ${RESULT_DIR}/FINAL_RESULTS_MMGBSA.csv"
 ```
 
 ::

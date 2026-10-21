@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { defineAsyncComponent } from "vue";
+import layouts from "#build/content-graph-layouts";
 
 const ContentGraphInteractive = defineAsyncComponent(
     () => import("./ContentGraph/ContentGraphInteractive.client.vue"),
@@ -12,7 +13,6 @@ const props = defineProps<{
     fullHeight?: boolean;
 }>();
 
-const layouts = useRuntimeConfig().public.contentGraphLayouts;
 const layout = computed(() => layouts[props.view]);
 const frameStyle = computed(() => ({
     "--graph-aspect-ratio": layout.value?.aspectRatio ?? 1,

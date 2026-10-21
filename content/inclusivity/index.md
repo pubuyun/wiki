@@ -644,9 +644,7 @@ imageBackground: transparent
 
 During our previous conversation, Ms. Guan told us about another student group that had used 3D printing to create tactile models illustrating concepts in optics and suggested that we explore a similar approach. She also expressed her willingness to provide ongoing feedback as we developed our solution. Inspired by her suggestion, we decided to develop a comprehensive set of **tactile biology graphics** using 3D printing.
 
-We thoroughly reviewed China's compulsory education biology textbooks, which provide a solid foundation in general biology. We then identified and gathered concepts that rely heavily on graphical information for understanding and developed them into 3D models.
-
-We first designed and printed several sample graphics, including the plant cell and the human digestive system, and mailed them to Ms. Guan for her to evaluate.
+By reviewing China’s compulsory education biology textbooks, we identified concepts whose spatial relationships are difficult to convey through Braille text alone. We then translated these concepts into 3D tactile models, such as plant cells and the human digestive system. The initial samples were mailed to Ms. Guan for evaluation.
 
 ::content-components-lightbox-panels
 ---
@@ -924,7 +922,7 @@ Thank you very much for your time and consideration! We look forward to hearing 
 
 ### Feedback 1
 
-The response from CADHOH did not directly address our concern about the lack of scientific terminology in sign language. It also expressed the view that the further development of signs was not necessarily needed, as more complex information could be instead conveyed through written language. However, based on our background research into the Deaf community and Deaf culture, we questioned to what extent this response reflected the perspectives and needs of Deaf CSL users.
+CADHOH's response offered us a different perspective, suggesting that complex scientific information could also be conveyed through written language and that further development of signs was not necessarily needed. However, based on our background research into the Deaf community and Deaf culture, we felt it was important to consider whether this response fully reflected the perspectives and needs of Deaf CSL users
 
 ::content-components-bilingual-image-panels
 ---
@@ -942,7 +940,7 @@ label: "Figure 11 image language"
 ---
 ::
 
-We therefore focused on perspectives shared directly by sign language bloggers who are themselves members of the Deaf community. They acknowledged that the development of scientific terminology is necessary, while pointing out that the slow development of CSL is influenced by broader social factors. Limited public attention to Deaf people and understanding of Deaf culture, together with insufficient participation of Deaf people in science, can leave the need for scientific signs underrecognized and limit efforts to develop them.
+We therefore turned to perspectives shared directly by sign language bloggers who are themselves members of the Deaf community. They acknowledged that the development of scientific terminology is necessary, while pointing out that the slow development of CSL is influenced by broader social factors. Limited public attention to Deaf people and understanding of Deaf culture, together with insufficient participation of Deaf people in science, can leave the need for scientific signs underrecognized and limit efforts to develop them.
 
 ::content-components-bilingual-image-panels
 ---

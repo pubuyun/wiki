@@ -63,7 +63,7 @@ imageBackground: white
   - **Precursor Binder Affinity Optimization:** precursor binders that displayed binding ability were selected for further affinity optimization.
 - **Transporter Binder:** a protein binder that could limit this uptake by blocking the transporter.
 - **CGTase:** an enzyme that we characterized as being capable of glycosylating the precursor to prevent its uptake by the bacteria.
-  - **CGTase Thermostability Optimization:** two CGTase mutants were selected for further thermostability optimization for industrial production.
+  - **CGTase Thermostability Optimization:** two CGTase mutants were selected for further thermostability optimization for industrial production and transportation.
 
 ## Characterize–DBTL Framework
 
@@ -172,7 +172,7 @@ caption: >-
   targeting Cys-Gly-(S)-3M3SH are designed independently through two routes:
   RFdiffusion3 and Proteina-Complexa. Top-ranked binders from each route are
   evaluated by 50-ns molecular dynamics simulations using ligand RMSD and
-  MM/PBSA ΔG, and the most promising candidates are selected as final *in vitro*
+  MM/GBSA ΔG, and the most promising candidates are selected as final *in vitro*
   candidates :fn-ref{#9} :fn-ref{#12} :fn-ref{#13} :fn-ref{#14} :fn-ref{#15} :fn-ref{#17}.
 imageBackground: white
 label: Overview — Fig. 4
@@ -253,10 +253,10 @@ portrait: true
 ::content-components-lightbox-panels
 ---
 alt:
-  - "Four RFdiffusion3 binders show greater A412 signal reduction with more favorable MM/PBSA binding energy and lower mean and variability of MD ligand RMSD."
+  - "Four RFdiffusion3 binders show greater A412 signal reduction with more favorable MM/GBSA binding energy and lower mean and variability of MD ligand RMSD."
   - "Five Proteina-Complexa binders show a positive association between custom composite score and A412 signal reduction (Pearson r = 0.76; Spearman rho = 0.60)."
 src:
-  - https://static.igem.wiki/teams/6133/wiki/drylab/model/overview-fig6a.avif
+  - https://static.igem.wiki/teams/6133/wiki/drylab/model/overview-fig6a-u.avif
   - https://static.igem.wiki/teams/6133/wiki/drylab/model/overview-fig6b.avif
 caption: Fig. 7 | **Relationships between computational metrics and experimental
   responses of precursor binders designed by RFdiffusion3 and
@@ -264,7 +264,7 @@ caption: Fig. 7 | **Relationships between computational metrics and experimental
   RFdiffusion3 in the top panel **(a)**; n = 5 for Proteina-Complexa in the
   bottom panel **(b)**), with A412 signal (an indicator of 3M3SH concentration, with lower values indicating lower odorant concentrations) reduction calculated as 100 × (1 − mean binder A412/mean control A412). **(a)** MD metrics of 4 RFdiffusion3
   branch binders, including **(G)** estimated binding free energy (ΔG) from
-  MM/PBSA; **(H–I)** the mean and SD of MD ligand RMSD, over 10–50 ns. **(b)**
+  MM/GBSA; **(H–I)** the mean and SD of MD ligand RMSD, over 10–50 ns. **(b)**
   The composite score, calculated as 200 × *pLDDT* − i_pAE − 62 × min_ipAE + 50
   × min_ipSAE − 5 × binder_scRMSD_ca − 2 × ligand_scRMSD − 2 ×
   ligand_scRMSD_aligned, using pLDDT on a 0–1 scale. Pearson r and Spearman ρ
@@ -469,7 +469,7 @@ Previous structural and biochemical studies :fn-ref{#6} on CGTase had identified
 ::content-components-lightbox-panels
 ---
 alt:
-  - "Dendrogram groups 86 CGTase docking poses into nine clusters using the dotted ligand RMSD cutoff."
+  - "Dendrogram groups 87 CGTase docking poses into nine clusters using the dotted ligand RMSD cutoff."
   - "Nine representative precursor docking poses, one per cluster, show different ligand orientations in the CGTase binding pocket."
   - "MD-derived binding pose places the precursor hydroxyl near the green C1 atom of the D229-linked glycosyl intermediate in the CGTase pocket."
 src:
@@ -582,7 +582,7 @@ imageBackground: white
 ---
 ::
 
-We aim to optimize successful CGTase mutants to meet industrial production requirements and make the enzyme more resistant to denaturation caused by heat exposure during storage and transportation.
+We aim to optimize successful CGTase mutants to meet industrial production and transportation requirements and make the enzyme more resistant to denaturation caused by heat exposure during storage and transportation.
 
 We design potentially more thermally stable CGTase mutants through a stepwise computational screening process.
 

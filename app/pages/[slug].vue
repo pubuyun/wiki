@@ -4,9 +4,9 @@ definePageMeta({
 });
 
 import { contentTocLinks } from "~/utils/content-toc";
+import contentGraphLayouts from "#build/content-graph-layouts";
 
 const route = useRoute();
-const runtimeConfig = useRuntimeConfig();
 const slug = computed(() => String(route.params.slug ?? ""));
 const categoryTitle = computed(() => titleizeSlug(slug.value));
 const pagePath = computed(() => `/${slug.value}`);
@@ -42,7 +42,7 @@ const documentPage = computed(
     () => educationConclusion.value?.main ?? page.value,
 );
 
-const contentGraphViews = new Set(runtimeConfig.public.contentGraphViews);
+const contentGraphViews = new Set(Object.keys(contentGraphLayouts));
 const graphView = computed(() => {
     const candidate = page.value?.stem
         ? page.value.stem

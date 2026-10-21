@@ -484,7 +484,7 @@
                 },
                 {
                     "id": "mmpbsa",
-                    "label": "MM/PBSA ΔG",
+                    "label": "MM/GBSA ΔG",
                     "position": {
                         "x": 440,
                         "y": 205
@@ -826,7 +826,7 @@
                 },
                 {
                     "id": "docking",
-                    "label": "Glide: 86 Poses",
+                    "label": "Glide: 87 Poses",
                     "position": {
                         "x": 190,
                         "y": 100

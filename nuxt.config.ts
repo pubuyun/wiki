@@ -1,9 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
-import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import tailwindcss from "@tailwindcss/vite";
 import githubLight from "@shikijs/themes/github-light";
-import { contentGraphLayouts } from "./app/utils/content-graph-layout";
 import { markdownDocumentsPlugin } from "./app/utils/build/markdown-documents";
 import { katexFontsPlugin } from "./app/utils/build/katex-fonts";
 
@@ -11,13 +9,6 @@ const isDevServer = process.env.NODE_ENV === "development";
 const contentGraphDirectory = fileURLToPath(
     new URL("./content/model", import.meta.url),
 );
-const contentGraphRegistry = JSON.parse(
-    readFileSync(
-        new URL("./content/model/graphs.json", import.meta.url),
-        "utf8",
-    ),
-);
-const contentGraphViews = Object.keys(contentGraphRegistry.graphs);
 
 export default defineNuxtConfig({
     app: {
@@ -39,6 +30,7 @@ export default defineNuxtConfig({
     modules: [
         "@nuxt/content",
         "~~/modules/static-content",
+        "~~/modules/content-graph",
         "nuxt-echarts",
         ...(isDevServer ? ["@nuxt/a11y"] : []),
     ],
@@ -88,10 +80,6 @@ export default defineNuxtConfig({
         public: {
             molstarBaseUrl:
                 "https://static.igem.wiki/teams/6133/wiki/molstar/4-0-1",
-            contentGraphViews,
-            contentGraphLayouts: contentGraphLayouts(
-                contentGraphRegistry.graphs,
-            ),
         },
     },
     css: ["~/styles/main.css", "katex/dist/katex.min.css"],

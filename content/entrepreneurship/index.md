@@ -509,7 +509,7 @@ caption: "Fig. 16 | Milestones and timeline of Expelliodor"
 
 Our marketing values center on **choice**, **respect**, and **transparency**.
 
-**Choice**. We believe everyone should be free to decide whether and how to manage body odor. Reflecting this belief, we changed our slogan from “Expel Your Odor” to “Expel Your Way,” shifting the focus from eliminating odor to empowering personal choice.
+**Choice**. We believe everyone should be free to decide whether and how to manage body odor. Reflecting this belief, we changed our slogan from “Expel the Odor” to “Expelliodor — Expel the Odor, on Your Terms.” This shifts the focus from eliminating odor to empowering personal choice.
 
 **Respect**. We reject shame-based marketing that portrays natural body odor as a personal flaw or exploits body-related insecurities to drive market demand.
 
@@ -541,7 +541,7 @@ Expelliodor would therefore aim for eye-level or “golden zone” shelf placeme
 
 Roadshows bring several parts of the strategy together. They allow us to demonstrate the product, distribute samples, explain the science, and answer questions directly.
 
-They also give us space to communicate the idea behind **“Expel Your Way”**: body odor is a normal biological characteristic, while choosing whether and how to manage it remains a personal decision.
+They also give us space to communicate the idea behind **“Expelliodor — Expel the Odor, on Your Terms.”**: body odor is a normal biological characteristic, while choosing whether and how to manage it remains a personal decision.
 
 ### Business Plan
 

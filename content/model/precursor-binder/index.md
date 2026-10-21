@@ -18,7 +18,7 @@ caption: Fig. 1 | **Schematic for precursor binder design workflow.** Binders
   targeting Cys-Gly-(S)-3M3SH are designed independently through two routes:
   RFdiffusion3 and Proteina-Complexa. Top-ranked binders from each route are
   evaluated by 50-ns molecular dynamics simulations using ligand RMSD and
-  MM/PBSA ΔG, and the most promising candidates are selected as final *in vitro*
+  MM/GBSA ΔG, and the most promising candidates are selected as final *in vitro*
   candidates.
 imageBackground: white
 ---

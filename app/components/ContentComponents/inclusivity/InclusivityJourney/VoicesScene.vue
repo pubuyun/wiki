@@ -770,10 +770,11 @@ blockquote.quote-long {
     clip-path: polygon(0 0, 100% 0, 50% 100%);
 }
 .guide-line strong {
-    font-weight: 400;
+    font-weight: inherit;
     color: var(--journey-highlight);
 }
 .guide-line .lift-word {
+    font-weight: 400;
     color: var(--on-accent);
     background: var(--sun);
     box-decoration-break: clone;

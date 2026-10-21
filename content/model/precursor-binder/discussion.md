@@ -10,12 +10,12 @@ order: 5
 ::content-components-lightbox-panels
 ---
 src:
-  - https://static.igem.wiki/teams/6133/wiki/drylab/model/precursor-binder-discussion-fig1a.avif
-  - https://static.igem.wiki/teams/6133/wiki/drylab/model/precursor-binder-discussion-fig1b.avif
+  - https://static.igem.wiki/teams/6133/wiki/drylab/model/precursor-binder-discussion-fig1a-u.avif
+  - https://static.igem.wiki/teams/6133/wiki/drylab/model/precursor-binder-discussion-fig1b-u.avif
 alt:
   - "Nine scatter plots for four RFdiffusion3 binders compare A412 signal reduction with folding, interface, and MD metrics. Lower interface PAE and MD ligand RMSD and higher ipTM associate with greater reduction; aligned ligand scRMSD trends opposite to expectations."
   - "Nine scatter plots for five Proteina-Complexa binders compare A412 signal reduction with folding, interface, and MD metrics. Most show weak associations, and MD metrics do not consistently follow the expected screening direction."
-caption: "Fig. 1 | Relationships between computational metrics and experimental responses of precursor binders designed by *RFdiffusion3* and *Proteina-Complexa*. Top: RFdiffusion3 designs (n = 4). Bottom: Proteina-Complexa designs (n = 5). Each point represents one tested binder, with A412 signal (an indicator of 3M3SH concentration, with lower values indicating lower odorant concentrations) reduction calculated as 100 × (1 − mean binder A412/mean control A412). (A/J) *pLDDT*; (B/K) interface PAE; (C/L) ipTM; (D/M) aligned ligand scRMSD; (E/N) *RF3* confidence ranking score; (F/O) *pTM*; (G/P) estimated binding free energy (ΔG) from MM/PBSA; (H–I/Q–R) the mean and SD of MD ligand RMSD, over 10–50 ns. Pearson r and Spearman ρ are reported in each plot. OLS regression lines are plotted when |r| > 0.50; the blue line indicates an anticipated trend, while orange lines indicate trends not expected."
+caption: "Fig. 1 | Relationships between computational metrics and experimental responses of precursor binders designed by *RFdiffusion3* and *Proteina-Complexa*. Top: RFdiffusion3 designs (n = 4). Bottom: Proteina-Complexa designs (n = 5). Each point represents one tested binder, with A412 signal (an indicator of 3M3SH concentration, with lower values indicating lower odorant concentrations) reduction calculated as 100 × (1 − mean binder A412/mean control A412). (A/J) *pLDDT*; (B/K) interface PAE; (C/L) ipTM; (D/M) aligned ligand scRMSD; (E/N) *RF3* confidence ranking score; (F/O) *pTM*; (G/P) estimated binding free energy (ΔG) from MM/GBSA; (H–I/Q–R) the mean and SD of MD ligand RMSD, over 10–50 ns. Pearson r and Spearman ρ are reported in each plot. OLS regression lines are plotted when |r| > 0.50; the blue line indicates an anticipated trend, while orange lines indicate trends not expected."
 imageBackground: white
 layout: stack
 label: "Discussion — Fig. 1"
@@ -40,7 +40,7 @@ MD metrics showed strong agreement with the experimental results.
 
 Both the mean and standard deviation of ligand RMSD were negatively associated with experimental response (Pearson r = −0.97 and −0.92, respectively; Spearman ρ = −0.80 for both). These results are consistent with the hypothesis that stable binding poses may support experimental performance.
 
-MM/PBSA estimates also showed a consistent linear association: a more negative ΔG value generally corresponds to larger signal reductions, while showing limited agreement in ranking (r = −0.72; ρ = −0.40).
+MM/GBSA estimates also showed a consistent linear association: a more negative ΔG value generally corresponds to larger signal reductions, while showing limited agreement in ranking (r = −0.72; ρ = −0.40).
 
 ## Proteina-Complexa
 
@@ -56,7 +56,7 @@ These suggest that confidence and self-consistency metrics are insufficient indi
 
 The Proteina-Complexa candidates did not show the strong relationship between MD stability and experimental results observed in the RFdiffusion3 branch.
 
-Mean and SD of ligand RMSD showed limited alignment with experimental results (r = 0.24 and 0.48, respectively; ρ = 0.30 for both). As in the RFdiffusion3 branch, MM/PBSA estimates showed a directionally consistent negative association (r = −0.49; ρ = −0.60), but did not accurately indicate ordering.
+Mean and SD of ligand RMSD showed limited alignment with experimental results (r = 0.24 and 0.48, respectively; ρ = 0.30 for both). As in the RFdiffusion3 branch, MM/GBSA estimates showed a directionally consistent negative association (r = −0.49; ρ = −0.60), but did not accurately indicate ordering.
 
 ### Custom Composite Score
 
@@ -86,7 +86,7 @@ imageBackground: white
 
 ::
 
-Decomposition of the custom composite score showed that although pLDDT supplied the largest contribution, which is expected, the min_ipSAE and aligned ligand scRMSD also substantially influenced candidate ordering.
+Decomposition of the custom composite score showed that although pLDDT supplied the largest contribution, which is expected; the min_ipSAE and aligned ligand scRMSD also substantially influenced candidate ordering.
 
 An omission analysis showed that removing the aligned ligand scRMSD penalty reproduced the experimental order exactly, also increasing Pearson r from 0.76 to 0.91. This suggests that this factor contributes to the mismatch in the tested subset. However, more data are required to determine whether the current weight overemphasizes structural self-consistency.
 

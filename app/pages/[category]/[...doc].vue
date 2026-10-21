@@ -1,13 +1,13 @@
 <script setup>
 import { Icon } from "@iconify/vue";
 import { contentTocLinks } from "~/utils/content-toc";
+import contentGraphLayouts from "#build/content-graph-layouts";
 definePageMeta({
     layout: "doc",
     key: (route) => route.path,
 });
 
 const route = useRoute();
-const runtimeConfig = useRuntimeConfig();
 // This page is keyed by the route. Keep the outgoing document intact while
 // Nuxt prepares the next page inside Suspense.
 const activePath = ref(normalizeContentPath(route.path));
@@ -21,7 +21,7 @@ const pages = computed(() => allPages.value ?? []);
 const hasChildDocuments = computed(() =>
     pages.value.some((item) => item.path.startsWith(`${activePath.value}/`)),
 );
-const contentGraphViews = new Set(runtimeConfig.public.contentGraphViews);
+const contentGraphViews = new Set(Object.keys(contentGraphLayouts));
 const graphView = computed(() => {
     if (!hasChildDocuments.value) return null;
 

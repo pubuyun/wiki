@@ -242,7 +242,7 @@ sync: md-mmpbsa-workflow
     {
       "id": "analyze",
       "type": "subprocess",
-      "label": "Correct trajectory and calculate MMPBSA"
+      "label": "Correct trajectory and calculate MM/GBSA"
     },
     {
       "id": "more-files",
@@ -429,13 +429,13 @@ for pdb_file in "${INPUT_DIR}"/*.pdb; do
     [ -e "$pdb_file" ] || continue
 
     base_name=$(basename "$pdb_file" .pdb)
-    FINAL_RESULT_FILE="${OUTPUT_DIR}/${base_name}_307K_pH60_50ns_MMPBSA.dat"
+    FINAL_RESULT_FILE="${OUTPUT_DIR}/${base_name}_307K_pH60_50ns_MMGBSA.dat"
 
     echo "========================================="
     echo ">>>> Starting system: $base_name"
 
     if [ -f "$FINAL_RESULT_FILE" ]; then
-        echo ">>>> [Skipped] MMPBSA calculation already completed: $FINAL_RESULT_FILE"
+        echo ">>>> [Skipped] MM/GBSA calculation already completed: $FINAL_RESULT_FILE"
         echo "========================================="
         continue
     fi
@@ -519,14 +519,14 @@ for pdb_file in "${INPUT_DIR}"/*.pdb; do
 
     echo -e "1 | r LIG \n q" | gmx make_ndx -f md.tpr -o index.ndx -quiet
 
-    echo ">> Calculating MMPBSA from the final 40 ns of equilibrated data..."
+    echo ">> Calculating MMGBSA from the final 40 ns of equilibrated data..."
     gmx_MMPBSA -O -i ../mmpbsa.in -cs md.tpr -ci index.ndx -cg 1 13 -ct md.xtc -cp topol.top -nogui
 
-    if [ -f "FINAL_RESULTS_MMPBSA.dat" ]; then
-        cp FINAL_RESULTS_MMPBSA.dat "../$FINAL_RESULT_FILE"
+    if [ -f "FINAL_RESULTS_MMGBSA.dat" ]; then
+        cp FINAL_RESULTS_MMGBSA.dat "../$FINAL_RESULT_FILE"
         echo ">> Success: Free-energy calculation completed for $base_name; output saved to ${OUTPUT_DIR}/"
     else
-        echo ">> Failed: MMPBSA calculation did not complete successfully for $base_name."
+        echo ">> Failed: MMGBSA calculation did not complete successfully for $base_name."
     fi
 
     cd .. || exit 1

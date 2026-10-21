@@ -79,7 +79,7 @@ The CGTase receptor was prepared as a Glide receptor grid using the OPLS_2005 fo
 
 ::
 
-*Glide* :fn-ref{#28} generated 86 docking poses, which were clustered into nine groups based on the ligand RMSD. One representative pose from each cluster was selected for molecular dynamics simulation to evaluate whether the proposed binding modes remained stable under dynamic conditions.
+*Glide* :fn-ref{#28} generated 87 docking poses, which were clustered into nine groups based on the ligand RMSD. One representative pose from each cluster was selected for molecular dynamics simulation to evaluate whether the proposed binding modes remained stable under dynamic conditions.
 
 Among the nine representative conformations, one remained stably accommodated within the substrate-binding pocket throughout the 50-ns simulation. The stable conformation from MD simulation was selected as the reference binding pose for subsequent structural analysis.
 
@@ -90,7 +90,7 @@ src:
   - https://static.igem.wiki/teams/6133/wiki/drylab/model/cgtase-characterize-fig4b.avif
   - https://static.igem.wiki/teams/6133/wiki/drylab/model/cgtase-characterize-fig4c.avif
 alt:
-  - "Dendrogram groups 86 CGTase docking poses into nine clusters using the dotted ligand RMSD cutoff."
+  - "Dendrogram groups 87 CGTase docking poses into nine clusters using the dotted ligand RMSD cutoff."
   - "Nine representative precursor docking poses, one per cluster, show different ligand orientations in the CGTase binding pocket."
   - "MD-derived binding pose places the precursor hydroxyl near the green C1 atom of the D229-linked glycosyl intermediate in the CGTase pocket."
 caption: "Fig. 4 | **Characterization process of CGTase.** **(a)** Tree diagram of clustered docking poses. The dotted line represents the ligand RMSD threshold for clustering. **(b)** 9 representative docking poses. **(c)** Proposed interaction between Cys-Gly-3M3SH and glycosyl-CGTase intermediate, derived from an MD run. The electrophilic carbon (C1 of the sugar residue, linked to D229 in the glycosyl–enzyme intermediate) of the sugar donor is shown in green."
